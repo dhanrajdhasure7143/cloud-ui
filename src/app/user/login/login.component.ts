@@ -5,8 +5,6 @@ import { AuthenticationService } from 'src/app/_services';
 import { SessionService } from './../../_services/session/session';
 import { first } from 'rxjs/operators';
 import { CookieStore } from 'src/app/_services/cookie.store';
-import { SocialUser, AuthService, GoogleLoginProvider } from 'angularx-social-login';
-import { O365AuthService } from 'src/app/_services/o365/auth/o365auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,16 +20,13 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
-  user: SocialUser;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private session: SessionService,
-    private authService: AuthService,
-    private o365authService: O365AuthService
+    private session: SessionService
   ) {
     this.session.stopWatching();
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -62,12 +57,6 @@ export class LoginComponent implements OnInit {
         this.password.nativeElement.type = 'password';
       }
     };
-
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-    });
-
-    this.o365authService.initAuth();
   }
 
   get f() {
@@ -144,22 +133,6 @@ export class LoginComponent implements OnInit {
 
   authenticate() {
     this.router.navigate(['/pages/dashboard']);
-  }
-
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user) => {
-      if (user != null)  {
-        this.authenticate();
-      }
-    });
-  }
-
-  signInWithO365(): void {
-    this.o365authService.login();
-  }
-
-  signOut(): void {
-    this.authService.signOut();
   }
 
 }

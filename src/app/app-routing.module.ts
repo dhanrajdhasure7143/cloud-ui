@@ -4,6 +4,9 @@ import { AuthGuard } from './_guards';
 
 const routes: Routes = [{
   path: '',
+  loadChildren: './home/home.module#HomeModule'
+},{
+  path: 'user',
   loadChildren: './user/user.module#UserModule'
 }, {
   path: 'pages',

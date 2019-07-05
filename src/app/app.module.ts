@@ -11,7 +11,6 @@ import { APP_CONFIG, AppConfig } from './app.config';
 import { BackendURLProvider, JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { ContentfulModule } from './contentful/contentful.module';
 import { ContentfulConfig } from './contentful';
-import { AuthServiceConfig, GoogleLoginProvider, SocialLoginModule, LoginOpt } from 'angularx-social-login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { Subject } from 'rxjs';
@@ -49,7 +48,6 @@ export const contentfulConfig: ContentfulConfig = {
     DashboardModule,
     UserModule,
     HttpClientModule,
-    SocialLoginModule,
     PopoverModule.forRoot(),
     BotGridModule
   ],
