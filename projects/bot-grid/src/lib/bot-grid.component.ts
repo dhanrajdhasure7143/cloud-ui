@@ -3,7 +3,7 @@ import { AlertComponent } from './alert/alert.component';
 
 
 @Component({
-  selector: 'ez-bot-grid',
+  selector: 'aiotal-bot-grid',
   templateUrl: './bot-grid.component.html',
   styleUrls: ['./bot-grid.component.css']
 })

@@ -8,7 +8,7 @@ import { ContentfulConfigService } from './contentful/services/contentful-config
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ezBot';
+  title = 'Aiotal';
   columnDefs = [
     {
       headerName: 'Name',
