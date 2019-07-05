@@ -1,0 +1,11 @@
+<div *ngIf="!hidden">
+  <div class="backdrop" (click)="hide()"></div>
+
+  <div class="modal-popup">
+    <ng-content></ng-content>
+    <div>
+      <button (click)="confirm()">OK</button>
+      <button (click)="hide()">cancel</button>
+    </div>
+  </div>
+</div>
