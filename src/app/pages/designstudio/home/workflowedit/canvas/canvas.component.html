@@ -1,0 +1,28 @@
+<div class="canvas" dndDropzone (dndDrop)="onDrop($event)" (click)="removeFocus($event, null)" [ngClass]="{  'lightTheme': true }">
+  <ng-container *ngFor="let node of nodes; let i = index" class="drag-area">
+    <div id="{{node.id}}" (dblclick)="nodeDblClick(node,i);" class="dndDropzone" [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(assets/images/'+ node.group.Name + '/'+ node.Icon +')'}" [style.border]="node.isElemSele ? '1px solid #006DD5' : ''" dndDropzone (dndDrop)="onDrop1($event, node)" >
+      <div [ngClass]="{'test': node.isMenuOpen}" id="popover-{{node.id}}" (click)="addFocus($event, node)" #pop="bs-popover" [outsideClick]="true" [popover]="menu" placement="right" style='float: right;' ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></div>
+      <div class="node-delete node-action" style='float: left;' >
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 489.418 489.418" style="enable-background:new 0 0 489.418 489.418;" xml:space="preserve">
+     <g>
+       <path d="M244.709,389.496c18.736,0,34.332-14.355,35.91-33.026l24.359-290.927c1.418-16.873-4.303-33.553-15.756-46.011
+         C277.783,7.09,261.629,0,244.709,0s-33.074,7.09-44.514,19.532C188.74,31.99,183.022,48.67,184.44,65.543l24.359,290.927
+         C210.377,375.141,225.973,389.496,244.709,389.496z"/>
+       <path d="M244.709,410.908c-21.684,0-39.256,17.571-39.256,39.256c0,21.683,17.572,39.254,39.256,39.254
+         s39.256-17.571,39.256-39.254C283.965,428.479,266.393,410.908,244.709,410.908z"/>
+     </g>
+     </svg>
+
+      </div>
+      <div class="connector-name">{{node.name}}</div>
+    </div>
+    <ng-template #menu>
+        <div class="row">
+            <div (click)="pop.hide();clone($event, node)" id="clone" class="col-12"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><label>Clone</label></div>
+
+            <div (click)="pop.hide();delete($event, node)" id="delete" class="col-12"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg><label>Delete</label></div>
+        </div>
+    </ng-template>
+  </ng-container>
+</div>

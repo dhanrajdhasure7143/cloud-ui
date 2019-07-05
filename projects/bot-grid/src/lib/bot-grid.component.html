@@ -1,0 +1,48 @@
+<div class="workflow_table">
+
+<ez-loader [loading]="false"></ez-loader>
+
+<div class="col-2 table_search">
+  <input placeholder="Search ..." type="text" class="form-control table_search_io" [(ngModel)]="searchText">
+</div>
+
+<table class="table pd-b-5">
+  <thead>
+    <tr>
+      <ng-container *ngFor="let header of columnDefs | headerSelection: filterKeys; let i = index">
+        <th>{{header.headerName}}<span style="cursor:pointer" (click)="sortById(header.headerName)"> ^ </span></th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container
+      *ngFor="let row of rowData | pagination: pageSize : currentPage | selectionFilter : filterKeys  | searchFilter : searchText | sortingFilter: sortType : sortKey ">
+      <tr>
+        <ng-container *ngFor="let header of columnDefs; let i = index">
+          <td>{{ header.field && row[header.field] ? row[header.field] : '' }}</td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<div style="display: none">
+  <ng-container *ngFor="let header of columnDefs; let i = index">
+    <input type="checkbox" value="{{header.field}}" name="{{header.field}}" (change)="filterCall($event)" />
+    <span>{{header.field}}</span> <br />
+  </ng-container>
+</div>
+<div *ngIf="numbers.length > 1">
+  <nav aria-label="Page navigation ">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="setPagePrev()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg></a></li>
+      <li *ngFor="let page of  numbers" class="page-item"><a class="page-link" (click)="setPage(page)">{{page}}</a></li>
+      <li class="page-item"><a class="page-link" (click)="setPageNext()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a></li>
+    </ul>
+  </nav>
+</div>
+
+<ez-alert (confirmation)="handleConfirm($event)">My alert</ez-alert>
+<button (click)="showAlert()">Show Alert</button>
+
+</div>

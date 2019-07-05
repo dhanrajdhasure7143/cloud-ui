@@ -1,0 +1,239 @@
+<div class="container-fluid">
+  <div class="row">
+    <common-header>
+      <div class="col-6 text-left">
+        <label class="header_label">Dashboard</label>
+      </div>
+      <div class="col-6 text-right">
+        <button class="btn btn-full btn-add">Add Widget</button>
+      </div>
+    </common-header>
+
+    <bot-nav-bar></bot-nav-bar>
+
+    <!-- layout -->
+    <common-content>
+      <div class="row dashbaord">
+        <div class="col-9 left_cards no-padding-left">
+          <div class="row">
+            <div class="col-12 upper_cards">
+              <div class=" card_main col-12">
+                  <div class="card_header row">
+                    <div class="col-6">
+                      <h5>Header</h5>
+                    </div>
+                    <div class="col-6 t-right">
+                      <label class="from">from</label>
+                      <select class="custom_select">
+                        <option>Jan 2019</option>
+                        <option>Feb 2019</option>
+                        <option>Mar 2019</option>
+                        <option>Apr 2019</option>
+                        <option>May 2019</option>
+                        <option>Jun 2019</option>
+                        <option>July 2019</option>
+                        <option>Aug 2019</option>
+                        <option>Sep 2019</option>
+                        <option>Oct 2019</option>
+                        <option>Nov 2019</option>
+                        <option>Dec 2019</option>
+                      </select>
+                      <label class="to">to</label>
+                      <select class="custom_select">
+                        <option>Jan 2019</option>
+                        <option>Feb 2019</option>
+                        <option>Mar 2019</option>
+                        <option>Apr 2019</option>
+                        <option>May 2019</option>
+                        <option>Jun 2019</option>
+                        <option>July 2019</option>
+                        <option>Aug 2019</option>
+                        <option>Sep 2019</option>
+                        <option>Oct 2019</option>
+                        <option>Nov 2019</option>
+                        <option>Dec 2019</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="card_body">
+                        <div style="display: block" class="chart_height">
+                          <canvas baseChart
+                            [datasets]="barChartData"
+                            [labels]="barChartLabels"
+                            [options]="barChartOptions"
+                            [plugins]="barChartPlugins"
+                            [legend]="barChartLegend"
+                            [chartType]="barChartType">
+                          </canvas>
+                        </div>
+                      </div>
+              </div>
+            </div>
+
+            <div class="col-12 lower_cards">
+              <div class="row lower_cards_row">
+                <div class="col-6 lower_col-6 no-padding-left">
+                  <div class=" card_main col-12">
+                      <div class="card_header row">
+                        <div class="col-6">
+                          <h5>Header</h5>
+                        </div>
+                        <div class="col-6 t-right">
+                          <label class="from">from</label>
+                          <select class="custom_select">
+                            <option>Jan 2019</option>
+                            <option>Feb 2019</option>
+                            <option>Mar 2019</option>
+                            <option>Apr 2019</option>
+                            <option>May 2019</option>
+                            <option>Jun 2019</option>
+                            <option>July 2019</option>
+                            <option>Aug 2019</option>
+                            <option>Sep 2019</option>
+                            <option>Oct 2019</option>
+                            <option>Nov 2019</option>
+                            <option>Dec 2019</option>
+                          </select>
+                        </div>
+
+                      </div>
+
+                      <div class="card_body">
+
+                          <div class="chart chart_height">
+                            <canvas baseChart
+                              [data]="pieChartData"
+                              [labels]="pieChartLabels"
+                              [chartType]="pieChartType"
+                              [options]="pieChartOptions"
+                              [plugins]="pieChartPlugins"
+                              [colors]="pieChartColors"
+                              [legend]="pieChartLegend">
+                            </canvas>
+                          </div>
+
+
+
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="col-6 lower_col-6 no-padding-right">
+                  <div class=" card_main col-12">
+                      <div class="card_header row">
+                        <div class="col-6">
+                          <h5>Header</h5>
+                        </div>
+                        <div class="col-6 t-right">
+                          <label class="from">from</label>
+                          <select class="custom_select">
+                            <option>Jan 2019</option>
+                            <option>Feb 2019</option>
+                            <option>Mar 2019</option>
+                            <option>Apr 2019</option>
+                            <option>May 2019</option>
+                            <option>Jun 2019</option>
+                            <option>July 2019</option>
+                            <option>Aug 2019</option>
+                            <option>Sep 2019</option>
+                            <option>Oct 2019</option>
+                            <option>Nov 2019</option>
+                            <option>Dec 2019</option>
+                          </select>
+                        </div>
+
+                      </div>
+
+                      <div class="card_body">
+                        <div style="display: block" class="chart_height">
+                          <canvas baseChart
+                            [data]="doughnutChartData"
+                            [labels]="doughnutChartLabels"
+                            [chartType]="doughnutChartType">
+                          </canvas>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-3 right_cards no-padding-right">
+          <div class=" card_main">
+            <div class="col-12 no-padding">
+              <div class="card_header row">
+                <div class="col-12">
+                  <h5>Header</h5>
+                </div>
+
+              </div>
+
+              <div class="card_body">
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </common-content>
+
+
+    <!-- end of layout -->
+
+  </div>
+</div>
+
+<bot-infopanel>
+
+    <div>
+        <ng-template dynamic-comp-host></ng-template>
+    </div>
+    
+  <div class="profile">
+    <div class="row profile_img">
+      <div class="col-12 text-center">
+        <img src="../../../../assets/robot.png" alt="Profile Image" class="img_pro" />
+      </div>
+    </div>
+
+    <div class="row profile_name">
+      <div class="col-12">
+        <label class="name_pro">Srikanth Pothina</label>
+        <label class="design_pro">UI Developer</label>
+      </div>
+    </div>
+    <div class="col-12 edit_button">
+      <button class="btn btn-full btn-submit">Edit Profile</button>
+    </div>
+    <hr class="profile_hr">
+    <div class="row profile_info">
+      <div class="col-12 profile_info_main">
+        <div class="row">
+          <div class="col-12"><label class="profile_info_head">Role</label></div>
+          <div class="col-12"><label class="profile_info_body">Adminstrator</label></div>
+        </div>
+      </div>
+      <div class="col-12 profile_info_main">
+        <div class="row">
+          <div class="col-12"><label class="profile_info_head">Email</label></div>
+          <div class="col-12"><label class="profile_info_body email">maii_id@epsoftinc.com</label></div>
+        </div>
+      </div>
+      <div class="col-12 profile_info_main">
+        <div class="row">
+          <div class="col-12"><label class="profile_info_head">Phone</label></div>
+          <div class="col-12"><label class="profile_info_body">9876543210</label></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</bot-infopanel>

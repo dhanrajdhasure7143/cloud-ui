@@ -1,0 +1,157 @@
+<common-header>
+  <div class="col-6 text-left">
+    <label class="header_label">WorkFlows</label>
+  </div>
+  <div class="col-6 text-right">
+    <button class="btn btn-full btn-submit" (click)="showcreate = true;">Create</button>
+  </div>
+</common-header>
+
+<common-content>
+  <ng-container *ngIf="gridData && gridData.length > 0; then grid; else illustration">
+  </ng-container>
+
+  <ng-template #illustration>
+    <div class="workflow_image">
+      <img src="assets/workflow.svg">
+      <label class="workflow_text_main">You don't have any workflows</label>
+      <label class="workflow_text_sub">Create a workflow to get started</label>
+    </div>
+  </ng-template>
+  <ng-template #grid>
+    <ez-bot-grid [rowData]="gridData" [columnDefs]="columnDefs"></ez-bot-grid>
+  </ng-template>
+</common-content>
+
+
+<div class="create_panel" *ngIf="showcreate">
+  <div class="row create_row">
+    <!-- header -->
+    <div class="create_header">
+      <div class="row header_row">
+        <div class="col-6 text-left">
+          <label class="header_label">Create WorkFlows</label>
+        </div>
+        <div class="col-6 text-right">
+          <button class="btn btn-full btn-cancel" (click)="onCancel()">Cancel</button>
+          <button class="btn btn-full btn-submit" [disabled]="!model.WorkFlowProjectType" (click)="save(createBot)">Save</button>
+        </div>
+      </div>
+      <!-- header -->
+      <!-- body -->
+      <div class="create_body">
+          <form class="col-12" name="createBot" #createBot="ngForm" autocomplete="off" novalidate>
+        <!-- cards section -->
+        <div class="cards_section">
+          <label class="col-12 no-padding select_header">Select type</label>
+          <div class="col-12 no-padding">
+            <div class="row">
+              <!-- card -->
+              <div class="col-6">
+                <div class="create_card col-12">
+                    <i class="check_circle">
+                      <label class="label--radio">
+                          <input class="radio  form-control" (change)="updateModel()" #Workflow="ngModel" [(ngModel)]="model.WorkFlowProjectType" type="radio" id="Workflow" name="Workflow" value="Workflow">
+                      </label>
+                    </i>
+                  <div class="row">
+                    <div class="col-4 no-padding-right">
+                      <div class="create_icon">
+                        <i class="cre_sub_icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-clipboard">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                          </svg>
+                        </i>
+                      </div>
+                    </div>
+                    <div class="col-8 no-padding">
+                      <div class="cre_card_info">
+                          <label class="create_name">Workflow</label>
+                        <p class="info_des">Combine robots</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="create_card col-12">
+                  <i class="check_circle">
+                      <label class="label--radio">
+                          <input class="radio form-control" #Project="ngModel" (change)="updateModel()" type="radio" [(ngModel)]="model.WorkFlowProjectType" id="Project" name="Type" value="Project">
+                      </label>
+                  </i>
+                  <div class="row">
+                    <div class="col-4 no-padding-right">
+                      <div class="create_icon">
+
+                        <i class="cre_sub_icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-clipboard">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                          </svg>
+                        </i>
+                      </div>
+                    </div>
+                    <div class="col-8 no-padding">
+                      <div class="cre_card_info">
+                          <label class="create_name">Project</label>
+                        <p class="info_des">Create individual robots</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of card -->
+            </div>
+          </div>
+        </div>
+        <!-- end of cards section -->
+        <!-- details section -->
+        <div class="details_section" *ngIf="model.WorkFlowProjectType">
+          <label class="col-12 no-padding select_header">Details</label>
+          <div class="row">
+              <div class="col-12">
+                  <div class="row">
+            <div class="form-group col-6">
+              <div class="no-padding col-12">
+              <label for="name">Name<sup class="mand">&#x26B9;</sup></label>
+              <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="model.Name" id="name" placeholder="Workflow name" required>
+            </div>
+              <span *ngIf="((name.invalid && createBot.submitted) || (name.errors && name.touched) ) "
+              class="fa fa-info-circle errspan">
+              Name is required
+            </span>
+            </div>
+            <div class="form-group col-6" *ngIf="model.WorkFlowProjectType && model.WorkFlowProjectType === 'Project'">
+                <div class="no-padding col-12">
+              <label for="lineofbusiness">Line of business<sup class="mand">&#x26B9;</sup></label>
+              <ng-multiselect-dropdown name="lineofbusiness" #lineofbusiness="ngModel" [placeholder]="'Select'" [(ngModel)]="model.LOBId" [data]="lineOfBusiness" [ngClass]="{'single_sel': itemsShowLimit == 1}"
+                [disabled]="model.WorkFlowProjectType == 'Workflow'" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" required>
+              </ng-multiselect-dropdown>
+            </div>
+              <span *ngIf="((lineofbusiness.invalid && createBot.submitted) || (lineofbusiness.errors && lineofbusiness.touched) ) "
+              class="fa fa-info-circle errspan">
+              Line of Business is required for Project
+            </span>
+            </div>
+
+            <div class="form-group col-12">
+              <label for="textarea1">Description</label>
+              <textarea class="form-control" id="textarea1" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </form>
+      </div>
+      <!-- body -->
+    </div>
+  </div>
+</div>

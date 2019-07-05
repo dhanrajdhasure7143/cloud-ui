@@ -19,11 +19,11 @@
       "dom"
     ],
     "paths": {
-      "grid": [
-        "dist/grid"
+      "bot-grid": [
+        "dist/bot-grid"
       ],
-      "grid/*": [
-        "dist/grid/*"
+      "bot-grid/*": [
+        "dist/bot-grid/*"
       ]
     }
   }

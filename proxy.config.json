@@ -1,0 +1,12 @@
+[
+  {
+    "context": [
+      "/api/**"
+    ],
+    "target": "http://ez-bot.aiotal.in/services",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {"^/api" : ""}
+  }
+]

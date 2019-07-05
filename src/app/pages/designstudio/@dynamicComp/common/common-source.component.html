@@ -1,0 +1,44 @@
+<div class="modal-body">
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of groups">
+
+      <div *ngIf="field.PropertyType === 'Textbox'">
+        <textbox [inputType]="'text'"  [field]="field"></textbox>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'PASSWORD'">
+        <textbox [inputType]="'password'"  [field]="field"></textbox>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'INT' || field.PropertyType === 'LONG'">
+        <textbox [inputType]="'number'"  [field]="field"></textbox>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'DropDownList'">
+        <dropdown [multiple]="true" [searchable]="true"  [field]="field">
+        </dropdown>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'MULTIBOOLEAN'">
+        <radio  [field]="field"></radio>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'GRID1'">
+        <data-table  [field]="field"></data-table>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'BOOLEAN'">
+        <checkbox  [field]="field"></checkbox>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'MULTI-CHECKBOX'">
+        <checkbox [multiple]="true" [field]="field"></checkbox>
+      </div>
+
+      <div *ngIf="field.PropertyType === 'CHECKBOX'">
+        <checkbox  [multiple]="false" [field]="field"></checkbox>
+      </div>
+
+    </div>
+  </form>
+</div>

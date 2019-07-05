@@ -1,0 +1,53 @@
+.mypanel {
+  background-color: white;
+  color: #222;
+  height: calc(100% - 50px);
+  overflow:hidden;
+
+}
+
+.mypanel .title {
+  background-color: #f4f6fc;
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #e8e8e8;
+
+}
+
+.mypanel .body {
+  padding: 10px;
+  height: calc(100% - 50px);
+  overflow: auto;
+}
+
+.mypanel .body.hidden {
+  display: none;
+}
+
+.mypanel .mypanel .title {
+  border-bottom: none !important;
+  background: none !important;
+  text-align: center;
+}
+
+.mypanel .mypanel .body {
+  border-width: 1px 0px 1px 0px;
+  border-color: #eee;
+  border-style: solid;
+  height: auto;
+}
+
+.affix {
+  top: 0;
+  width: 100%;
+  z-index: 9999 !important;
+}
+
+.mypanel .body .mypanel {
+  height: auto !important;
+}
+
+.mypanel.hidden {
+  height: auto !important;
+}

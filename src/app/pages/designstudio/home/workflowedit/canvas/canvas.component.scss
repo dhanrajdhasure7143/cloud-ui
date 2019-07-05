@@ -1,0 +1,286 @@
+.canvas {
+  background: white;
+  width: calc(100% - 566px);
+  height: calc(100% - 32px);
+  position: relative;
+  left: 283px;
+  overflow: auto;
+  z-index: 0;
+}
+
+
+// .source{border-top: #ec6f82 3px solid !important;}
+// .transformation{border-top: #f87906 3px solid !important;}
+// .target{border-top: #3480e2 3px solid !important;}
+
+// .source{border-top: #ec6f82 3px solid !important;}
+
+// .source > .jtk-endpoint { fill:#ec6f82 !important}
+
+nav {
+  float: left;
+}
+ul li {
+  list-style: none;
+  // transform: rotate(270deg);
+  padding: 10px;
+  text-align: center;
+  // height: 48px;
+  // margin: 10px;
+  // margin-bottom: 58px;
+  /* width: 109px; */
+}
+li.act {
+  background: #ececec;
+}
+
+li > a:link {
+  // transform: rotate(270deg); commented for select in create bot dropdown
+}
+
+.close {
+  color: #fff !important;
+}
+
+.slide-btn {
+  /* margin-right: 50px; */
+  margin-top: -12px;
+  float: right;
+  height: 45px;
+  width: 45px;
+}
+
+.slide-menu {
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  /* padding-left: 15px;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px; */
+  padding: 15px;
+  background-color: rgb(247, 247, 247);
+  color: black;
+  font-weight: 500;
+  margin-right: 0px;
+  /* opacity: .8; */
+  min-height: 28rem;
+  float: right;
+  width: 300px;
+  position: absolute;
+  top: 107px;
+  right: 48px;
+  border-radius: 12px;
+  box-shadow: 2px 2px 23px rgba(0, 0, 0, 0.04);
+  z-index: 99;
+}
+
+.slide-menu span img {
+  padding: 4px 6px !important;
+}
+
+select {
+  width: 100%;
+  margin: auto;
+}
+
+/* .nodes {
+  background-color: wheat;
+  color: black;
+  padding: 5px;
+  font-weight: bold;
+} */
+
+.drag-area {
+  height: 400px;
+  width: 100%;
+  position: relative;
+  float: left;
+  border: 1px solid;
+  // display: inline;
+}
+
+.slideDiv {
+  /* width: 2%; */
+  float: right;
+  // display: inline;
+  /* position: absolute; */
+}
+
+.dndDropzone {
+  z-index: 24;
+  cursor: pointer;
+
+  // box-shadow: 2px 2px 19px #aaa;
+  // -o-box-shadow: 2px 2px 19px #aaa;
+  // -webkit-box-shadow: 2px 2px 19px #aaa;
+  // -moz-box-shadow: 2px 2px 19px #aaa;
+  -moz-border-radius: 0.5em;
+  border-radius: 3px;
+  position: absolute;
+  color: black;
+  padding-top: 5px;
+  height: 48px;
+  width: 48px;
+  line-height: 12px;
+  position: absolute;
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #BBBBBB;
+    z-index: -1;
+}
+
+.nodes-container {
+  height: 250px;
+  overflow: auto;
+  background: rgba(204, 204, 204, 0.2);
+  /* min-width: 106%; */
+}
+
+hr {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.disabled {
+  color: gray;
+  background-color: #e9dede;
+  cursor: not-allowed;
+}
+
+.path:before {
+  stroke: #999;
+  stroke-width: 6;
+  fill: transparent;
+}
+
+.path {
+  /* stroke: #8abeb7;   */
+    stroke-width: 4px;
+    fill: transparent;
+    stroke-dasharray: 16,30;
+    stroke-dashoffset: 6000;
+    animation: fadeInP 60s linear infinite;
+    stroke-linecap: round;
+    stroke: #000;
+}
+
+.node-delete{
+  float: right;
+  margin-top: -8px;
+ margin-right: -6px;
+  border-radius: 6px;
+
+}
+
+.drag-area {
+  height: 200px;
+  width: 100%;
+  position: relative;
+  float: left;
+  border: 1px solid;
+  display: inline;
+  overflow: scroll;
+}
+
+.connector-name {
+  position: relative;
+  bottom: -64px;
+  white-space: nowrap;
+}
+
+
+.node-delete.node-action svg {
+  width: 12px;
+  margin-top: 0px;
+
+}
+
+.node-delete.node-action svg path {
+  fill: #BBBBBB;
+}
+
+[id*="popover-"] {
+  color: transparent !important;
+  border-radius: 50% !important;
+  width: 20px !important;
+  height: 20px;
+  text-align: center !important;
+  font-size: 12px !important;
+  border: 1px solid transparent !important;
+  position: relative;
+  left: 10px;
+  top: -15px;
+  background: transparent;
+}
+
+
+svg.feather.feather-more-horizontal {
+  width: 18px;
+  margin-top: -3px;
+}
+
+
+.dndDropzone:hover .node-delete, .dndDropzone:hover #pop{
+  display:block !important;
+}
+.node-delete{
+  display:none;
+}
+
+
+.dndDropzone popover-container.popover.in.popover-right.bs-popover-right.right.show {
+  width: 120px;
+  cursor: default;
+}
+
+
+.dndDropzone:hover [id*="popover-"], .test {
+  color: #999 !important;
+  border-radius: 50% !important;
+  width: 20px !important;
+  height: 20px;
+  text-align: center !important;
+  font-size: 12px !important;
+  border: 1px solid #999 !important;
+  position: relative;
+  left: 10px;
+  top: -15px;
+  background: white;
+}
+
+div#clone, div#delete {
+  padding: 2px 4px;
+  cursor: pointer;
+  margin: 5px auto;
+  display: flex;
+  align-items: center;
+  color: #999999;
+}
+
+div#clone svg, div#delete svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+div#clone label, div#delete label {
+  margin: 0px;
+  font-size: 14px;
+  cursor: inherit;
+}
+
+div#clone:hover, div#delete:hover {
+  color: #3F4D67;
+}
+
+.jtk-endpoint svg circle {
+  fill: #9E9E9E;
+}
+
+.jtk-connector path {
+  stroke: #9E9E9E;
+}
+
+.jtk-endpoint{
+  z-index: -1;
+}

@@ -1,0 +1,13 @@
+.tilte-div {
+    padding: 16px;
+    box-shadow: 0px 2px 10px #000;
+    height: 72px;
+    position: relative;
+    left: 72px;
+    width: calc(100% - 72px);
+}
+
+label.page_title {
+    font-size: 24px;
+    font-weight: 500;
+}
