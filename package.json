@@ -12,8 +12,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
-    "electron-pack": "ng build --prod && electron-packager . --platform=win32 --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite",
-    "electron-setup": "electron-installer-windows --src ./ez-bot-win32-x64 --dest dist/installers/"
+    "electron:pack": "ng build --prod && electron-packager . --platform=win32 --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite",
+    "electron:setup": "electron-installer-windows --src ./ez-bot-win32-x64 --dest dist/installers/"
   },
   "private": true,
   "dependencies": {
@@ -63,6 +63,8 @@
     "electron-installer-windows": "^2.0.0",
     "electron-packager": "^13.1.1",
     "electron-prebuilt": "^1.4.13",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-winstaller": "^3.0.4",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.0",
