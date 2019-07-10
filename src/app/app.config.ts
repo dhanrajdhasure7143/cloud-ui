@@ -4,10 +4,10 @@ export let APP_CONFIG = new InjectionToken('app.config');
 
 export interface EzflowAppConfig {
   apiHost: string;
-  apiURL: String;
-  loopbackHost : string;
+  apiURL: string;
+  loopbackHost: string;
   imagePath: string;
-  isProduction:boolean;
+  isProduction: boolean;
 }
 
 export const AppConfig: EzflowAppConfig = {

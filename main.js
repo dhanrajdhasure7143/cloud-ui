@@ -11,9 +11,12 @@ function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({ width: 800, height: 600 });
     // and load the index.html of the app. 
-    win.loadFile(`./dist/ez-bot/index.html`);
+    win.loadFile(`./dist/aiotal/index.html`);
     // Open the DevTools.
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
+
+    //close Devtools
+    win.webContents.on("devtools-opened", () => { win.webContents.closeDevTools(); });
     // Emitted when the window is closed.
     win.on('closed', () => {
         win = null

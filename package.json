@@ -1,8 +1,8 @@
 {
-  "name": "ez-bot",
-  "version": "0.0.0",
-  "description": "Bot Designer",
-  "author": "Epsoft",
+  "name": "aiotal",
+  "version": "0.0.1",
+  "description": "Aiotal Cloud Platform",
+  "author": "EPSoft Solutions Pvt Ltd",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
@@ -12,8 +12,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
-    "electron:pack": "ng build --prod && electron-packager . --platform=win32 --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite",
-    "electron:setup": "electron-installer-windows --src ./ez-bot-win32-x64 --dest dist/installers/"
+    "electron:pack": "ng build --prod && electron-packager . --platform=win32 --no-prune --ignore=/node_modules --ignore=/projects --ignore=/dist/bot-grid --ignore=/aiotal-win32-x64-installers  --ignore=/e2e --ignore=/src --version-string.ProductName=\"Aiotal Cloud Platform\" --overwrite",
+    "electron:setup": "electron-installer-windows --src ./aiotal-win32-x64 --dest dist/installers/"
   },
   "private": true,
   "dependencies": {
