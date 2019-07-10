@@ -9,14 +9,39 @@ if (handleSquirrelEvent()) {
 
 function createWindow() {
     // Create the browser window.
-    win = new BrowserWindow({ width: 800, height: 600 });
+    win = new BrowserWindow({ width: 800, height: 600, icon: __dirname + '/epsoft.ico' });
     // and load the index.html of the app. 
     win.loadFile(`./dist/aiotal/index.html`);
     // Open the DevTools.
     //win.webContents.openDevTools();
 
     //close Devtools
-    win.webContents.on("devtools-opened", () => { win.webContents.closeDevTools(); });
+    //win.webContents.on("devtools-opened", () => { win.webContents.closeDevTools(); });
+
+    win.webContents.on('crashed', (e) => {
+        app.relaunch();
+        app.quit()
+    });
+
+    win.webContents.on('unresponsive', (e) => {
+        app.relaunch();
+        app.quit()
+    });
+
+
+    win.on('close', function (e) {
+        var choice = require('electron').dialog.showMessageBox(this,
+            {
+                type: 'question',
+                buttons: ['Yes', 'No'],
+                title: 'Confirm',
+                message: 'Are you sure you want to quit?'
+            });
+        if (choice == 1) {
+            e.preventDefault();
+        }
+    });
+
     // Emitted when the window is closed.
     win.on('closed', () => {
         win = null

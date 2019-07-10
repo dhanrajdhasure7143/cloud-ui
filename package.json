@@ -1,5 +1,5 @@
 {
-  "name": "aiotal",
+  "name": "Aiotal",
   "version": "0.0.1",
   "description": "Aiotal Cloud Platform",
   "author": "EPSoft Solutions Pvt Ltd",
@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
-    "electron:pack": "ng build --prod && electron-packager . --platform=win32 --no-prune --ignore=/node_modules --ignore=/projects --ignore=/dist/bot-grid --ignore=/aiotal-win32-x64-installers  --ignore=/e2e --ignore=/src --version-string.ProductName=\"Aiotal Cloud Platform\" --overwrite",
+    "electron:pack": "ng build --prod && electron-packager . --platform=win32 --icon=epsoft.ico --no-prune --ignore=/node_modules --ignore=/projects --ignore=/dist/bot-grid --ignore=/aiotal-win32-x64-installers  --ignore=/e2e --ignore=/src --version-string.ProductName=\"Aiotal Cloud Platform\" --overwrite",
     "electron:setup": "electron-installer-windows --src ./aiotal-win32-x64 --dest dist/installers/"
   },
   "private": true,

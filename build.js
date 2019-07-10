@@ -2,12 +2,13 @@ var electronInstaller = require('electron-winstaller');
 // In this case, we can use relative paths
 var settings = {
     // Specify the folder where the built app is located
-    appDirectory: './aiotal-win32-x64',
+    appDirectory: './Aiotal-win32-x64',
     // Specify the existing folder where
     outputDirectory: './aiotal-win32-x64-installers',
     // The name of the Author of the app (the name of your company)
     authors: 'EPSoft Solutions Pvt Ltd',
-    exe: './aiotal.exe',
+    exe: './Aiotal.exe',
+    iconUrl: 'file://epsoft.ico',
     description: 'Aiotal Cloud Platform'
 };
 resultPromise = electronInstaller.createWindowsInstaller(settings);
