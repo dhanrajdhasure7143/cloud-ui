@@ -11,7 +11,7 @@ const bottom = {
   isSource: true,
   connector: ['Flowchart', {cornerRadius: 1, alwaysRespectStubs: true}],
   anchor: 'Bottom',
-  maxConnections: -1
+  maxConnections: 1
 };
 
 const top = {
@@ -19,7 +19,7 @@ const top = {
   isTarget: true,
   connector: ['Flowchart', {cornerRadius: 1, alwaysRespectStubs: true}],
   anchor: 'Top',
-  maxConnections: -1
+  maxConnections: 1
 };
 
 @Component({
@@ -170,6 +170,7 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
     });
 
     this.jsPlumbInstance.importDefaults({
+      ConnectionsDetachable: true,
       Connector: ['Bezier', { curviness: 90 }],
       overlays: [
         ['Arrow', { width: 12, length: 12, location: 0.5 }]
@@ -187,7 +188,7 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
     this.edges = this.edges.filter((edge): boolean => (edge.source !== removedEdge.sourceId && edge.target !== removedEdge.targetId));
     setTimeout(() => {
       this.botChanges.emit(this.canvas);
-    }, 50);
+    }, 0);
   }
 
   connectionMoved(info) {
@@ -256,10 +257,20 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
   drawCanvasEle(node, topOpt, bottomOpt, nodeType) {
     if (node) {
       if (topOpt) {
-        this.jsPlumbInstance.addEndpoint(node.id, topOpt);
+        this.jsPlumbInstance.addEndpoint(node.id, topOpt, {
+          paintStyle:{ fillStyle:"blue", outlineColor:"black", outlineWidth:1 },
+          hoverPaintStyle:{ fillStyle:"red" },
+          connectorPaintStyle:{ strokeStyle:"blue", lineWidth:10 },
+          connectorHoverPaintStyle:{ strokeStyle:"red", outlineColor:"yellow", outlineWidth:1 }
+      });
       }
       if (bottomOpt) {
-        this.jsPlumbInstance.addEndpoint(node.id, bottomOpt);
+        this.jsPlumbInstance.addEndpoint(node.id, bottomOpt, {
+          paintStyle: { fillStyle:"blue", outlineColor:"black", outlineWidth:1 },
+          hoverPaintStyle: { fillStyle:"red" },
+          connectorPaintStyle: { strokeStyle:"blue", lineWidth:10 },
+          connectorHoverPaintStyle: { strokeStyle:"red", outlineColor:"yellow", outlineWidth:1 }
+      });
       }
       if (nodeType) {
         this.jsPlumbInstance.addClass(node.id, nodeType);
@@ -369,8 +380,10 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
       HoverPaintStyle: { strokeStyle: "#ec9f2e" },
       //cssClass: "path",
       anchor: ['Top', 'Bottom'],
-      overlays: [
-      ]
+      paintStyle:{ strokeStyle:"blue", lineWidth: 10 },
+      hoverPaintStyle:{ strokeStyle:"red" },
+      endpointStyle:{ fillStyle:"blue", outlineColor:"black", outlineWidth: 1 },
+      endpointHoverStyle:{ fillStyle:"red" }
     });
     this.edges.push({ source: `${source}`, target: `${target}` });
     this.botChanges.emit(this.canvas);
