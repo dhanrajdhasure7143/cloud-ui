@@ -141,4 +141,8 @@ export class WorkflowcreateComponent implements OnInit {
       }
     }
   }
+
+  onRowClick(data) {
+    console.log(data);
+  }
 }

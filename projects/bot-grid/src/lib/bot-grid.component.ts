@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, EventEmitter, OnChanges, DoCheck, Output } from '@angular/core';
 import { AlertComponent } from './alert/alert.component';
 
 
@@ -7,11 +7,12 @@ import { AlertComponent } from './alert/alert.component';
   templateUrl: './bot-grid.component.html',
   styleUrls: ['./bot-grid.component.css']
 })
-export class BotGridComponent implements OnInit, OnChanges {
+export class BotGridComponent implements OnInit, OnChanges, DoCheck {
 
   @ViewChild(AlertComponent) alert: AlertComponent;
   @Input() columnDefs: any[] = [];
   @Input() rowData: any[] = [];
+  @Output() rowClick = new EventEmitter<any>();
 
   searchText = '';
   numbers = [];
@@ -26,11 +27,14 @@ export class BotGridComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-
   ngOnInit() {}
 
-
   ngOnChanges() {
+    this.noOfPages = Math.round(this.rowData.length / this.pageSize);
+    this.numbers = Array((this.noOfPages)).fill({}).map((x, i) => i);
+  }
+
+  ngDoCheck() {
     this.noOfPages = Math.round(this.rowData.length / this.pageSize);
     this.numbers = Array((this.noOfPages)).fill({}).map((x, i) => i);
   }
@@ -74,6 +78,10 @@ export class BotGridComponent implements OnInit, OnChanges {
     } else {
       this.sortType = 'asec';
     }
+  }
+
+  getRowData(data) {
+    this.rowClick.emit(data);
   }
 
 }
