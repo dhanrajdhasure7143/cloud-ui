@@ -3,9 +3,12 @@ import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { AuthGuard } from './_guards';
 
 const routes: Routes = [{
+  path: 'activation',
+  loadChildren: './activation/activation.module#ActivationModule'
+}, {
   path: 'home',
   loadChildren: './home/home.module#HomeModule'
-},{
+}, {
   path: 'user',
   loadChildren: './user/user.module#UserModule'
 }, {

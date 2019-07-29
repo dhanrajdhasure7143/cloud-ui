@@ -15,16 +15,17 @@ import { SystemComponent } from './infopanel/system/system.component';
 import { UserComponent } from './infopanel/user/user.component';
 import { NotificationComponent } from './infopanel/notification/notification.component';
 import { TopheaderComponent } from './topheader/topheader.component';
+import { BodyComponent } from './body/body.component';
 
 @NgModule({
-  declarations: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, SystemComponent, UserComponent, NotificationComponent, TopheaderComponent],
+  declarations: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, SystemComponent, UserComponent, NotificationComponent, TopheaderComponent, BodyComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
     BsDropdownModule.forRoot(),
     PortalModule
   ],
-  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent],
+  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent],
   entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent]
 })
 export class SharedModule { }
