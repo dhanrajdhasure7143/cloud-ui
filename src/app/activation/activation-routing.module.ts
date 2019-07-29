@@ -2,6 +2,7 @@ import { PlatformComponent } from './platform/platform.component';
 import { ActivationComponent } from './activation.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PlandetailsComponent } from './plandetails/plandetails.component';
 
 const routes: Routes = [{
   path: '',
@@ -9,6 +10,9 @@ const routes: Routes = [{
   children: [{
     path: '',
     component: PlatformComponent
+  }, {
+    path: 'plandetails',
+    component: PlandetailsComponent
   }]
 }];
 
