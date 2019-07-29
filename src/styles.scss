@@ -263,3 +263,20 @@ li.no-data h5 {
   font-size: 14px;
   font-weight: 400;
 }
+
+
+.a_logo, .e_logo {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  left: 3%;
+}
+
+img.a_cp_logo {
+  height: 75%;
+}
+
+.e_logo {
+  margin-left: 15px;
+}
