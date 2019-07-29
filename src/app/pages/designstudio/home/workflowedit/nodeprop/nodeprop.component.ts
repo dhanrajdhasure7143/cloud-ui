@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver, AfterViewInit, OnDestroy, Input, AfterContentInit, OnChanges, EventEmitter } from '@angular/core';
 import { CommonSourceComponent } from './../../../@dynamicComp/common/common-source.component';
-import { DynamicCompHostDirective } from './../../../../shared/dynamic-comp-host.directive';
+import { DynamicCompHostDirective } from './../../../../../shared/dynamic-comp-host.directive';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'underscore';

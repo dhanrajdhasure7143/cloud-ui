@@ -6,7 +6,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { DesignstudioRoutingModule } from './designstudio-routing.module';
 import { HomeComponent } from './home/home.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from './../../shared/shared.module';
 import { WorkfloweditComponent } from './home/workflowedit/workflowedit.component';
 import { CanvasComponent } from './home/workflowedit/canvas/canvas.component';
 import { ToolsetComponent } from './home/workflowedit/toolset/toolset.component';

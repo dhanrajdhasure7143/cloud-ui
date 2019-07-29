@@ -1,7 +1,7 @@
+import { ContentfulConfig } from './../../contentful/models/contentful-config';
+import { ContentfulConfigService } from './../../contentful/services/contentful-config.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { BsDropdownDirective } from 'ngx-bootstrap';
-import { ContentfulConfigService } from './../../../contentful/services/contentful-config.service';
-import { ContentfulConfig } from './../../../contentful/models/contentful-config';
 import { element } from 'protractor';
 
 @Component({

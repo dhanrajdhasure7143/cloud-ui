@@ -3,7 +3,10 @@ import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { AuthGuard } from './_guards';
 
 const routes: Routes = [{
-  path: '',
+  path: 'home',
+  loadChildren: './home/home.module#HomeModule'
+},{
+  path: 'user',
   loadChildren: './user/user.module#UserModule'
 }, {
   path: 'pages',
@@ -11,7 +14,7 @@ const routes: Routes = [{
   canActivate: [AuthGuard]
 }, {
   path: '',
-  redirectTo: '',
+  redirectTo: 'home',
   pathMatch: 'full'
 }];
 

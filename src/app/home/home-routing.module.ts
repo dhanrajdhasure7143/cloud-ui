@@ -4,7 +4,11 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [{
   path: '',
-  component: HomeComponent
+  component: HomeComponent,
+  children: [{
+    path: '',
+    loadChildren: './../firstlogin/firstlogin.module#FirstloginModule'
+  }]
 }];
 
 @NgModule({
