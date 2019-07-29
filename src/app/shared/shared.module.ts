@@ -14,16 +14,17 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SystemComponent } from './infopanel/system/system.component';
 import { UserComponent } from './infopanel/user/user.component';
 import { NotificationComponent } from './infopanel/notification/notification.component';
+import { TopheaderComponent } from './topheader/topheader.component';
 
 @NgModule({
-  declarations: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, SystemComponent, UserComponent, NotificationComponent],
+  declarations: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, SystemComponent, UserComponent, NotificationComponent, TopheaderComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
     BsDropdownModule.forRoot(),
     PortalModule
   ],
-  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent],
-  entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent]
+  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent],
+  entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent]
 })
 export class SharedModule { }
