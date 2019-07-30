@@ -1,0 +1,49 @@
+
+#plans_table {
+    padding: 64px 0px 64px 0px !important;
+    text-align: center;
+}
+
+.plans_border {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    /* min-height: 400px; */
+    height: auto;
+    padding: 15px
+}
+
+.plan_fea_ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.plan_fea_ul li {
+    color: #333;
+    text-align: left;
+    font-size: 16px !important;
+    margin-bottom: 5px;
+}
+
+p.plan_para {
+    text-align: left;
+    font-size: 12px !important;
+}
+
+.plan_fea_ul svg {
+    width: 18px;
+    height: 18px;
+    vertical-align: text-bottom;
+}
+
+.plan_fea_ul svg.feather.feather-x {
+    color: red;
+}
+
+.plan_fea_ul svg.feather.feather-check {
+    color: green;
+}
+
+button.btn.btn-sub_now {
+    background: #2d6cd6;
+    color: white;
+}

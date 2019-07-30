@@ -7,9 +7,10 @@ import { PlatformComponent } from './platform/platform.component';
 import { SharedModule } from '../shared/shared.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PlandetailsComponent } from './plandetails/plandetails.component';
+import { ChooseplanComponent } from './chooseplan/chooseplan.component';
 
 @NgModule({
-  declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent],
+  declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent, ChooseplanComponent],
   imports: [
     CommonModule,
     ActivationRoutingModule,
