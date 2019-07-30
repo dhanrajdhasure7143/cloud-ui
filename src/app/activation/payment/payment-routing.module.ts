@@ -2,8 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DetailsComponent } from './details/details.component';
 import { ReviewComponent } from './review/review.component';
+import { ChooseplanComponent } from './chooseplan/chooseplan.component';
+
 
 const routes: Routes = [{
+  path: 'chooseplan',
+  component: ChooseplanComponent,
+}, {
   path: 'details',
   component: DetailsComponent,
 }, {

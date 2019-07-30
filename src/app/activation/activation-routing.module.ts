@@ -3,7 +3,6 @@ import { ActivationComponent } from './activation.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlandetailsComponent } from './plandetails/plandetails.component';
-import { ChooseplanComponent } from './chooseplan/chooseplan.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,9 +13,6 @@ const routes: Routes = [{
   }, {
     path: 'plandetails',
     component: PlandetailsComponent
-  }, {
-    path: 'chooseplan',
-    component: ChooseplanComponent
   }, {
     path: 'payment',
     loadChildren: './payment/payment.module#PaymentModule'

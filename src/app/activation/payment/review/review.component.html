@@ -1,3 +1,25 @@
-<p>
-  review works!
-</p>
+<div class="container">
+  <b>Review Order</b>
+  <br>
+  Card Details
+  <hr>
+
+  Billing Address
+  <hr>
+  <p>
+    Admin, <br>
+    0001, Wildwood Avenue, Sunnyvale, <br>
+    California, United States, 12345
+  </p>
+
+  <input type="checkbox"> i agree with the Terms of Service and the Privacy Policy.
+  <div class="row col-12">
+    For annaul subscriptions, your credit card will be charged USD XXXXX.XX puls tax (if applicable ) on the data of purchase. <br>
+     All prices are is US dollars and are not inclusive  of any applicable taxes. Renewal rates will be based on the price of the product at the time of renewal.
+     All Payments are non-refunadable. For further details, please refer to Terms of Serivce.
+  </div>
+  <div class="col-12">
+    <a class="btn btn-submit" [routerLink]="['/activation/payment/details']">Back</a>
+    <a class="btn btn-submit" [routerLink]="['/activation/payment/review']">Purchase Subscription</a>
+  </div>
+</div>
