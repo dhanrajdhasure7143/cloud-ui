@@ -1,54 +1,88 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-8 offset-sm-2 products_div">
+    <div class="col-md-8 offset-md-2 products_div">
       <div class="row prod_s">
         <div class="col-sm-6">
           <div class="product_division col-sm-12">
             <div class="row row_height">
               <div class="left_side col-sm-4">
+                  <h6 class="prod_title">ezBot<sup>&trade;</sup></h6>
                 <img src="assets/a_images/ezbot.png" class="prod_img">
+
               </div>
               <div class="right_side col-sm-8">
-                <h6>ezBot<sup>&trade;</sup></h6>
+
                <div class="row">
-                 <div class="col-sm-2">Free Trail</div>
-                 <div class="col-sm-2">15 Days</div>
+                 <div class="col-sm-6">
+                   <div class="plans_details">
+                  <label class="plans_info">Free Trail</label>
+                  <label class="plans_name">Plan</label>
+                  </div>
+                </div>
+                 <div class="col-sm-6">
+                    <div class="plans_details">
+                  <label class="plans_info">15 Days</label>
+                  <label class="plans_name">Trail Remaining</label>
+                </div>
                </div>
-               <div class="row">
-                <div class="col-sm-2">12/06/2019</div>
-                <div class="col-sm-2 text-right">Next Billing Date</div>
+
+
+                <div class="col-sm-6">
+                    <div class="plans_details">
+                    <label class="plans_info">12/06/2019</label>
+                    <label class="plans_name">Activation Date</label>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="plans_details">
+                    <label class="plans_info">-</label>
+                    <label class="plans_name">Next Billing Date</label>
+                  </div>
               </div>
+
+              <div class="col-sm-12">
+
+                  <progressbar [value]="55"></progressbar>
+                  <div class="row">
+                  <div class="col-sm-6">
+                      <small>Bots</small>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                      <small>5/10</small>
+                  </div>
+                </div>
+
+              </div>
+
                 <div class="col-sm-12 text-center">
                   <a class="btn btn-submit" [routerLink]="['/subscription']">Upgrade</a>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="product_division col-sm-12">
-            <div class="row row_height">
-              <div class="left_side col-sm-4">
-                <img src="assets/a_images/ezbot.png" class="prod_img">
-              </div>
-              <div class="right_side col-sm-8">
-                <h6>ezFlow<sup>&trade;</sup></h6>
-                <div class="row">
-                  <div class="col-sm-2">Free Trail</div>
-                  <div class="col-sm-2">15 Days</div>
-                </div>
-                <div class="row">
-                 <div class="col-sm-2">12/06/2019</div>
-                 <div class="col-sm-2 text-right">Next Billing Date</div>
-               </div>
-                <div class="col-sm-12 text-center">
-                  <a class="btn btn-submit" [routerLink]="['/subscription']">Activate Free Trail</a>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="col-sm-6">
+        <div class="product_division col-sm-12">
+          <div class="row row_height">
+            <div class="left_side col-sm-4">
+                <h6 class="prod_title">ezFlow<sup>&trade;</sup></h6>
+                <img src="assets/a_images/ezbot.png" class="prod_img">
+            </div>
+            <div class="right_side col-sm-8">
+
+                <p class="pro_desc">Real-Time Automatic Integrated Data Management Platform (RAID Platform) that provides an end-to-end, highly intutive framework.</p>
+                <div class="col-sm-12 text-center">
+                  <a class="btn btn-submit" [routerLink]="['/subscription']">Activate Free Trail</a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+
   </div>
 </div>

@@ -1,83 +1,146 @@
 <div class="container">
-  <b> Enter payment details </b>
-  <br>
-  <br>
-  <p> Credit card details </p>
-  <hr>
-  <div>Cardholder name</div>
-  <input>
-  <div>Card number</div>
-  <input>
-  <div class="form-group col-sm-6">
-    <label for="month">Month</label>
-    <select id="month" class="form-control">
-      <option selected>Choose...</option>
-      <option>Jan</option>
-      <option>Feb</option>
-      <option>Mar</option>
-    </select>
-  </div>
+  <div class="row">
 
-  <div class="form-group col-sm-6">
-    <label for="year">Year</label>
-    <div class="col-sm-12">
-      <div class="row">
-        <div class="col-sm-3">
-          <select id="year" class="form-control">
-            <option selected>Choose...</option>
-            <option>2019</option>
-            <option>2018</option>
-            <option>2017</option>
-          </select>
-        </div>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="phone" placeholder="">
-        </div>
-      </div>
+    <div class="col-sm-12 no-padding">
+
+      <h4 class="main_pay_title">Enter payment details
+        <span class="alert_msg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-alert-circle">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12" y2="16"></line>
+          </svg>
+          <label class="alert_label">On the next step you can review your order before it's final.</label>
+        </span>
+      </h4>
     </div>
-  </div>
-
-  <div class="form-group col-sm-6">
-    <label for="cvv">CVV</label>
     <div class="col-sm-12">
       <div class="row">
-        <div class="col-sm-3">
-          <div class="col-sm-9">
-            <input id="cvv" type="text" class="form-control" id="phone" placeholder="">
+        <div class="col-sm-6">
+          <div class="row">
+
+            <h6 class="pay_titles col-sm-12"> Credit card details </h6>
+
+            <form class="col-sm-10">
+              <div class="form-group col-sm-12">
+                <label for="cardHolder">Cardholder name</label>
+                <input type="text" class="form-control" id="cardHolder" placeholder="">
+              </div>
+
+              <div class="form-group col-sm-12">
+                <label for="cardNumber">Card number</label>
+                <input type="text" class="form-control" id="cardNumber" placeholder="">
+              </div>
+
+              <div class="form-group col-sm-12">
+                <div class="form-row">
+                  <div class="form-group col-sm-4">
+                    <label for="month">Month (MM)</label>
+                    <select id="month" class="form-control">
+                      <option selected></option>
+                      <option>Jan</option>
+                      <option>Feb</option>
+                      <option>Mar</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="year">Year (YYYY)</label>
+                    <select id="year" class="form-control">
+                      <option selected></option>
+                      <option>Jan</option>
+                      <option>Feb</option>
+                      <option>Mar</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="cvv">CVV</label>
+                    <input type="text" class="form-control" id="cvv" placeholder="">
+                  </div>
+                </div>
+              </div>
+
+
+            </form>
+          </div>
+
+          <div class="row">
+            <h6 class="pay_titles col-sm-12">Billing address</h6>
+
+            <form class="col-sm-10">
+              <div class="form-group col-sm-12">
+                <label for="country">Country</label>
+                <select id="country" class="form-control">
+                  <option selected></option>
+                  <option>India</option>
+                  <option>Canada</option>
+                  <option>U.S.A.</option>
+                </select>
+              </div>
+
+              <div class="form-group col-sm-12">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" placeholder="">
+              </div>
+
+              <div class="form-group col-sm-12">
+                <div class="form-row">
+                  <div class="form-group col-sm-8">
+                    <label for="state">State</label>
+                    <select id="state" class="form-control">
+                      <option selected></option>
+                      <option></option>
+                      <option></option>
+                      <option></option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-sm-4">
+                    <label for="postal">Zip/Postal code</label>
+                    <input type="text" class="form-control" id="postal" placeholder="">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-sm-12">
+                <label for="street">Street address</label>
+                <input type="text" class="form-control" id="street" placeholder="">
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-sm-4 offset-sm-2">
+          <div class="plan_detail_box">
+            <label class="you_label">You're Subscribing</label>
+            <div class="col-sm-12">
+              <div class="row">
+                <label class="plan_label col-sm-6">Plan</label>
+                <label class="plan_right_label col-sm-6">Plan Name</label>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="row">
+                <label class="plan_label col-sm-6">Annual Payment</label>
+                <label class="plan_right_label col-sm-6">$XXX.XX USD</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
+    <div class="col-sm-12 no-padding">
+      <div class="row">
+        <div class="col-sm-6">
+          <a class="btn btn-back pull-left" [routerLink]="['/activation/payment/chooseplan']">Back</a>
+        </div>
 
-  <p> Billing address </p>
-  <hr>
-  <div class="form-group col-sm-6">
-    <label for="country">Country</label>
-    <select id="country" class="form-control">
-      <option selected>Choose...</option>
-      <option>India</option>
-      <option>Canada</option>
-      <option>U.S.A.</option>
-    </select>
-  </div>
-  <div class="form-group col-sm-6">
-    <label for="city">City</label>
-    <select id="city" class="form-control">
-      <option selected>Choose...</option>
-      <option>India</option>
-      <option>Canada</option>
-      <option>U.S.A.</option>
-    </select>
-  </div>
-  <div class="form-group col-sm-6">
-    <label for="city">Street address</label>
-    <input>
-  </div>
-
-  <div class="col-12">
-      <a class="btn btn-submit" [routerLink]="['/activation/payment/chooseplan']">Back</a>
-      <a class="btn btn-submit" [routerLink]="['/activation/payment/review']">Continue</a>
+        <div class="col-sm-6 text-right">
+          <a class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -7,6 +7,7 @@ import { PlatformComponent } from './platform/platform.component';
 import { SharedModule } from '../shared/shared.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PlandetailsComponent } from './plandetails/plandetails.component';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 
 @NgModule({
   declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent],
@@ -14,7 +15,8 @@ import { PlandetailsComponent } from './plandetails/plandetails.component';
     CommonModule,
     ActivationRoutingModule,
     SharedModule,
-    BsDropdownModule
+    BsDropdownModule,
+    ProgressbarModule.forRoot()
   ],
   exports: [PlatformComponent]
 })

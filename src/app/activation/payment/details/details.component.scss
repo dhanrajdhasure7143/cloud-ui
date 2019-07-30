@@ -1,0 +1,60 @@
+.form-group.col-sm-12 {
+  padding: 0px;
+}
+
+form.col-sm-10 {
+  padding: 0px;
+}
+.pay_titles{
+  padding: 0px 0px 10px 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.plan_detail_box {
+  padding: 20px 20px;
+  min-height: 200px;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+label.you_label {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.plan_label {
+  font-size: 14px;
+  color: #999;
+}
+
+.plan_right_label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+}
+
+.alert_msg svg {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 5px;
+  stroke: #999;
+}
+
+label.alert_label {
+  font-size: 14px;
+  color: #999;
+  vertical-align: middle;
+}
+
+span.alert_msg {
+  vertical-align: text-bottom;
+  margin-left: 15px;
+}
+
+h4.main_pay_title {
+  margin: 15px 0px 25px;
+  color: #666;
+  font-weight: 500;
+}

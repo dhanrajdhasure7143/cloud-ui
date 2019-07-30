@@ -2,8 +2,8 @@
     margin: 20px 0px;
     text-align: center;
   }
-  
-  
+
+
   .product_division {
     height: 250px;
     border-radius: 6px;
@@ -11,16 +11,16 @@
       box-shadow: 0px 0px 6px rgba(0,0,0,0.2);
       cursor: pointer;
   }
-  
+
   .product_division:hover {
     box-shadow: 0px 0px 6px rgba(33, 150, 243, 0.5);
   }
-  
+
   img.prod_img {
     width: 100%;
     margin: auto;
   }
-  
+
   .left_side {
     height: 100%;
     // width: 25%;
@@ -28,16 +28,53 @@
     align-items: center;
     background: aliceblue;
   }
-  
+
   .row.row_height {
     height: 100%;
   }
-  
+
   .right_side {
     padding: 25px;
   }
-  
+
   .products_div {
     margin-top: 25px;
   }
-  
+
+
+  .plans_info {
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    line-height: 14px;
+}
+
+.plans_name {
+    line-height: 12px;
+    font-size: 12px;
+    font-weight: 400
+    ;color: #999;
+}
+
+
+.plans_details {
+  margin: 10px 0px;
+}
+
+
+.progress {
+  height: 10px;
+ }
+
+ h6.prod_title {
+  position: absolute;
+  top: 20px;
+}
+
+.progress-bar {
+  background-color: #FFC107;
+}
+
+p.pro_desc {
+  min-height: 140px;
+}
