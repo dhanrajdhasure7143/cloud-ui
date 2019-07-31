@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ViewChildren, QueryList } from '@angular/core';
+import { BsDropdownDirective } from 'ngx-bootstrap';
+import { ContentfulConfigService } from './../contentful/services/contentful-config.service';
+import { ContentfulConfig } from './../contentful/models/contentful-config';
 
 @Component({
   selector: 'app-activation',
@@ -6,10 +9,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activation.component.scss']
 })
 export class ActivationComponent implements OnInit {
-
-  constructor() { }
+  @ViewChild(BsDropdownDirective) bsdropdown: BsDropdownDirective;
+  @ViewChildren(BsDropdownDirective) bsDropdown: QueryList<BsDropdownDirective>;
+  compIndex = 0;
+  dropdown;
+  constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig) { }
 
   ngOnInit() {
+  }
+
+  toogleDropdown(event, index) {
+    let dropdown: BsDropdownDirective;
+    if (this.dropdown) {
+      this.dropdown.hide();
+    }
+    if (this.bsDropdown && index) {
+      this.bsDropdown.forEach(item => {
+        if (item['_elementRef'].nativeElement.localName === 'bot-infopanel') {
+          this.dropdown = item;
+        } else if (this.dropdown) {
+          this.dropdown = item;
+        }
+      });
+    } else {
+      this.dropdown = this.bsdropdown;
+    }
+
+    if (this.dropdown.isOpen && this.compIndex !== index) {
+      this.dropdown.toggle(false);
+    }
+    this.dropdown.toggle(true);
+    this.dropdown.autoClose = true;
+    this.compIndex = index;
+    this.sharedconfig.events.bsDropdown = this.dropdown;
+    event.preventDefault();
+    event.stopPropagation();
   }
 
 }

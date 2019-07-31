@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     private session: SessionService
   ) {
     this.session.stopWatching();
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
 
