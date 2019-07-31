@@ -34,16 +34,17 @@ export class ActivationComponent implements OnInit {
     } else {
       this.dropdown = this.bsdropdown;
     }
-
-    if (this.dropdown.isOpen && this.compIndex !== index) {
-      this.dropdown.toggle(false);
+    if (this.dropdown) {
+      if (this.dropdown.isOpen && this.compIndex !== index) {
+        this.dropdown.toggle(false);
+      }
+      this.dropdown.toggle(true);
+      this.dropdown.autoClose = true;
+      this.compIndex = index;
+      this.sharedconfig.events.bsDropdown = this.dropdown;
+      event.preventDefault();
+      event.stopPropagation();
     }
-    this.dropdown.toggle(true);
-    this.dropdown.autoClose = true;
-    this.compIndex = index;
-    this.sharedconfig.events.bsDropdown = this.dropdown;
-    event.preventDefault();
-    event.stopPropagation();
   }
 
 }

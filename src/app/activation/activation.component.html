@@ -10,19 +10,19 @@
 
   <div class="col-sm-6 user_division">
     <div class="user_div_con">
-      <span class="bell_notify" (click)="toogleDropdown($event, '1')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+      <span class="bell_notify" (click)="toogleDropdown($event, '2')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
           class="feather feather-bell">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
         </svg></span>
 
-      <div class="btn-group" dropdown (click)="toogleDropdown($event, '')">
-        <label id="button-basic" dropdownToggle class="dropdown-toggle" aria-controls="dropdown-basic"><img
+      <div class="btn-group" dropdown>
+        <label id="button-basic" dropdownToggle class="dropdown-toggle" (click)="toogleDropdown($event, '')" aria-controls="dropdown-basic"><img
             src="assets/a_images/profile.jpg" class="user_img">Admin<span class="caret"></span>
         </label>
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-          <li role="menuitem"><a class="dropdown-item" href="#">Profile</a></li>
+          <li role="menuitem"><a class="dropdown-item" [routerLink]="['/home/userdetails']">Profile</a></li>
           <li role="menuitem"><a class="dropdown-item" href="#">Logout</a></li>
         </ul>
       </div>
