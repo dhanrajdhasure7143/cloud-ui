@@ -9,7 +9,7 @@ const routes: Routes = [{
   component: HomeComponent,
   children: [
     {
-      path: 'workflowedit/:workflowrobot',
+      path: 'workflowedit/:robot',
       component: WorkfloweditComponent
     },
     {

@@ -6,12 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ContentfulConfig } from './../../../../contentful/models/contentful-config';
 import { ContentfulConfigService } from './../../../../contentful/services/contentful-config.service';
 import { WorkflowEditService } from './../../@providers/workflowedit.service';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-workflowedit',
@@ -35,35 +30,13 @@ export class WorkfloweditComponent implements OnInit, AfterViewInit, DoCheck {
    }
 
   ngOnInit() {
-
-    const obj = {Type: 'AllRobotsByPrjId', Project_Id: '877'};
-
-    this.workfloweditSer.getAllRobotsByPrjId(obj).subscribe(res => {
-      console.log('SUCESS .... ' + res);
-    }, err => {
-      console.log('ERROR .... ' +  err);
-    });
-
-    if (this.route.snapshot.paramMap.get('workflowrobot')) {
-      const robot = JSON.parse(atob(this.route.snapshot.paramMap.get('workflowrobot')));
-      robot.canvas = {
-        nodes: [],
-        edges: []
-      };
-
-      this.robotName = robot.Name;
-      this.bot = JSON.parse(JSON.stringify(robot));
-      this.bot.Name = 'Untitled - 1';
-      this.bot.isSelected = true;
-      this.botName = this.bot.Name;
-      this.robotName = robot.Name;
-      this.robot = this.bot;
+    if (this.route.snapshot.paramMap.get('robot')) {
+      const robot = JSON.parse(atob(this.route.snapshot.paramMap.get('robot')));
+      this.robotName = robot.NAME;
     }
   }
 
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() {}
 
   ngDoCheck() {
   }
@@ -77,16 +50,37 @@ export class WorkfloweditComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   clearCanvas() {
-    this.canvas.clearCanvas();
-    this.canvas.resetCanvas();
+    Swal.fire({
+      title: 'Are you sure want to clear all the changes?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, clear it!'
+    }).then((result) => {
+      if (result.value) {
+        this.canvas.clearCanvas();
+        this.canvas.resetCanvas();
+        Swal.fire(
+          'You cleared all the changes!',
+          'success'
+        );
+      }
+    });
+  }
+
+  submitrobot(data) {
+    this.workfloweditSer.submitrobot(data).subscribe(res => {
+      console.log(res);
+    });
   }
 
   robotCreated(event) {
     this.botName = event.Name;
-    this.robot = JSON.parse(JSON.stringify(event));
+    this.robot = event;
   }
 
   updateChanges(event) {
-    this.robotChanges = JSON.parse(JSON.stringify(event));
+      this.robotChanges = event;
   }
 }

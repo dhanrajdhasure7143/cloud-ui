@@ -3,10 +3,9 @@
     "context": [
       "/api/**"
     ],
-    "target": "http://ez-bot.aiotal.in/services",
+    "target": "http://ezbotdev.aiotal.in",
     "secure": false,
     "logLevel": "debug",
-    "changeOrigin": true,
-    "pathRewrite": {"^/api" : ""}
+    "changeOrigin": true
   }
 ]

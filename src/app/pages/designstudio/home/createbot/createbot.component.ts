@@ -20,6 +20,8 @@ export class CreatebotComponent implements OnInit {
   lineOfBusiness: any[] = [];
   selectedItems: any[] = [];
   dropdownSettings: any = {};
+  sample: string;
+  jsonObject: any[];
 
   model = {
     Type: 'Project',
@@ -43,6 +45,7 @@ export class CreatebotComponent implements OnInit {
       { item_id: 6, item_text: 'e-Commerce' },
       { item_id: 7, item_text: 'IT Infrastructure' }
     ];
+    console.log(this.sample);
     this.selectedItems = [{ item_id: 4, item_text: 'Pune' }, { item_id: 6, item_text: 'Navsari' }];
     this.dropdownSettings = {
       singleSelection: true,
@@ -53,6 +56,7 @@ export class CreatebotComponent implements OnInit {
       itemsShowLimit: 1,
       allowSearchFilter: this.ShowFilter
     };
+  
   }
 
   onItemSelect(item: any) {

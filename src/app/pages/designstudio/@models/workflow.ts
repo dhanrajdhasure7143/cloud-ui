@@ -1,6 +1,6 @@
 export class Workflow {
   Type: 'Project';
-  username: '';
+  //username: '';
   projectType: 'API';
   Name: '';
   WorkFlowProjectType: 'Workflow';

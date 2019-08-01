@@ -1,3 +1,4 @@
+import { idLocale } from 'ngx-bootstrap';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -7,17 +8,22 @@ import { WorkflowRobot } from '../../@models/workflowRobot';
 import { Project } from './../../@models/project';
 import { ProjectRobot } from '../../@models/projectRobot';
 
-const loggedData = JSON.parse(JSON.parse(localStorage.getItem('currentUser')));
+
 
 const tempModel = {
-  Type: 'Porject',
-  username: loggedData['User'][0].UserName,
+  Type: 'Project',
+  //username: '',
   projectType: 'API',
   WorkFlowProjectType: '',
   Name: '',
   Description: '',
-  CreateBy: loggedData['User'][0].ID
+  CreateBy: '',
+  LOBId: null
 };
+const AllRobotsByPrjId= {
+  Type:'AllRobotsByPrjId',
+  Project_Id: ''
+}
 
 @Component({
   selector: 'app-workflowcreate',
@@ -37,13 +43,21 @@ export class WorkflowcreateComponent implements OnInit {
   dropdownSettings: any = {};
   itemsShowLimit = 1;
   model;
+  lobid: number;
   columnDefs;
   gridData = [];
+  dropdownList = [];
+  lob = [];
 
   constructor(private router: Router, private createSer: WorkflowcreateService) { }
 
   ngOnInit() {
-
+    this.createSer.loadDropDown().subscribe(res => {
+      if (res) {
+        this.dropdownList = res;
+      }
+    }, err => {
+    });
     this.columnDefs = [
       {
         headerName: 'Name',
@@ -63,39 +77,31 @@ export class WorkflowcreateComponent implements OnInit {
       }
     ];
     this.model = JSON.parse(JSON.stringify(tempModel));
-    this.lineOfBusiness = [
-      { item_id: 1, item_text: 'Health Care' },
-      { item_id: 2, item_text: 'Finance' },
-      { item_id: 3, item_text: 'Insurance' },
-      { item_id: 4, item_text: 'Banking' },
-      { item_id: 5, item_text: 'Public Sector' },
-      { item_id: 6, item_text: 'e-Commerce' },
-      { item_id: 7, item_text: 'IT Infrastructure' }
-    ];
-
     this.dropdownSettings = {
       singleSelection: true,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'ID',
+      textField: 'Name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: this.itemsShowLimit,
-      allowSearchFilter: this.ShowFilter,
+      allowSearchFilter: true,
       closeDropDownOnSelection: true
     };
     this.createSer.getAllRobots().subscribe(res => {
       if (res) {
-        this.gridData = JSON.parse(res);
+        console.log(res);
+        this.gridData = res;
       }
     });
   }
 
   onItemSelect(item: any) {
-    console.log('onItemSelect', item);
+    this.lobid = item.ID;
   }
+
   onSelectAll(items: any) {
-    console.log('onSelectAll', items);
   }
+
   toogleShowFilter() {
     this.ShowFilter = !this.ShowFilter;
     this.dropdownSettings = Object.assign({}, this.dropdownSettings, { allowSearchFilter: this.ShowFilter });
@@ -103,24 +109,19 @@ export class WorkflowcreateComponent implements OnInit {
 
   save(form) {
     if (form.form.valid) {
-      this.router.navigate([`/pages/designstudio//workflowedit`, `${btoa(JSON.stringify(this.model))}`]);
-      // this.createSer.createApi(this.model).subscribe(res => {
-      //   if (res && res.CreateResult && res.CreateResult !== 'wrong') {
-      //     const robot = this.model.WorkFlowProjectType === 'Workflow' ? new WorkflowRobot() : new ProjectRobot();
-      //     robot.CreateBy = loggedData['User'][0].ID;
-      //     robot.Name = this.model.Name;
-      //     robot.Parent = res.CreateResult;
-      //     this.createSer.createRobot(robot).subscribe(res => {
-      //       this.router.navigate([`/pages/designstudio//workflowedit`, `${btoa(JSON.stringify(this.model))}`]);
-      //     }, err => {
-
-      //     });
-      //   }
-      // }, err => {
-      //   console.log('error ,,,,, ' + err);
-      // });
+      this.model.LOBId = this.lobid;
+      this.createSer.createApi(this.model).subscribe(res => {
+        if (res !== false) {
+          this.createSer.projectId = res;
+          const tempModel = JSON.parse(JSON.stringify(this.model));
+          tempModel.projectId = res;
+          this.router.navigate([`/pages/designstudio//workflowedit`, `${btoa(JSON.stringify(tempModel))}`]);
+        }
+      }, err => {
+        console.log('error ,,,,, ' + err);
+      });
     } else {
-      return;
+      console.log('error ,,,,, ');
     }
   }
 
@@ -143,6 +144,14 @@ export class WorkflowcreateComponent implements OnInit {
   }
 
   onRowClick(data) {
-    console.log(data);
+    if (data) {
+      if (data.WorkFlowProjectType === 'Workflow') {
+        this.model = JSON.parse(JSON.stringify(Object.assign({}, data, new Workflow())));
+      } else {
+        this.model = JSON.parse(JSON.stringify(Object.assign({}, data, new Project())));
+      }
+      this.router.navigate([`/pages/designstudio//workflowedit`, `${btoa(JSON.stringify(this.model))}`]);
+    }
   }
+
 }

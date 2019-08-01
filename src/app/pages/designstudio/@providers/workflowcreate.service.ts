@@ -1,25 +1,45 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { idLocale } from 'ngx-bootstrap';
+import { InputResponse } from '../@models/workflowRobot';
 
-const loggedData = JSON.parse(JSON.parse(localStorage.getItem('currentUser')));
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'my-auth-token'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkflowcreateService {
+  public projectId;
 
   constructor(private http: HttpClient) { }
 
   createApi(data: any): Observable<any>  {
-    return this.http.get<any>(`/api/DesktopService.svc/Create?input=${JSON.stringify(data)}`);
+    return this.http.post<any>(`/api/ezBotStudio/Create/Project?input=${JSON.stringify(data)}`, httpOptions);
   }
 
   createRobot(data: any): Observable<any>  {
-    return this.http.get<any>(`/api/DesktopService.svc/Create?input=${JSON.stringify(data)}`);
+    return this.http.post<any>(`/api/ezBotStudio/Create/Project?input=${JSON.stringify(data)}`, httpOptions);
   }
 
-  getAllRobots() {
-    return this.http.get<any>(`/api/CrudService.svc/getStudio?roleId=${loggedData['User'][0].Role_ID}&userId=${loggedData['User'][0].UserName}`);
+  getAllRobots(): Observable<any> {
+    return this.http.get<any>(`/api/ezBotStudio/getStudio?roleId=1&userId=admin`);
+  }
+
+  loadDropDown(): Observable<any> {
+    return this.http.get<any>(`/api/CrudService/GetTableData?tablename=LOB`);
+  }
+
+  getAllRobotsData(): Observable<any> {
+    return this.http.get<any>('/api/CrudService/GetTableData?tablename=ROBOT');
+  }
+
+  getAllRobotsByProjectId(data): Observable<any[]> {
+    return this.http.post<any[]>(`/api/ezBotStudio/Get?input=${JSON.stringify(data)}`,httpOptions);
   }
 }

@@ -83,7 +83,8 @@ export class LoginComponent implements OnInit {
             this.set('password', this.f.password.value, {});
           }
 
-          const udata = JSON.parse(data);
+          //const udata = JSON.parse(data);
+          const udata = data;
 
           if (udata && udata['Message'] === `User Doesn't Exists`) {
             this.error = udata['Message'];
@@ -132,7 +133,7 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    this.router.navigate(['/pages/dashboard']);
+    this.router.navigate(['/activation/plandetails']);
   }
 
 }

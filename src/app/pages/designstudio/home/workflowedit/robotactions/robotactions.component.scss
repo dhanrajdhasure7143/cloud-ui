@@ -5,11 +5,12 @@
 .footer {
   background: white;
   border: 1px solid #eee;
-  width: calc(100% - 283px);
+  width: calc(100% - 566px);
   position: relative;
-  left: 283px;
+  left: 281px;
   height: 32px;
   align-items: center;
+
 }
 
 .footer ul li.footer_buttons {
@@ -44,8 +45,10 @@ label.footer_icon-labels {
 button.btn-footer {
   background: none;
   border: none;
-  min-width: 120px;
+  /* min-width: 92px; */
   font-size: 14px;
+  text-align: right;
+  margin: 0px 15px;
 }
 
 .customClass {
@@ -97,4 +100,19 @@ label.mod_name {
 
 .col-12.pop_footer {
   padding: 10px 0px 5px;
+}
+
+.footer_buttons {
+  width: 100%;
+}
+
+.show_labels {
+  display: inline;
+  font-size: 14px;
+  vertical-align: middle;
+  color: #000;
+}
+
+.show_labels input[type=checkbox] {
+  vertical-align: middle;
 }

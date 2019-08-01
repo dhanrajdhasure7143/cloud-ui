@@ -4,6 +4,7 @@ import { DynamicCompHostDirective } from './../../../../../shared/dynamic-comp-h
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'underscore';
+import { WorkflowEditService } from '../../../@providers/workflowedit.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class NodepropComponent implements OnInit, OnDestroy, AfterContentInit, O
   title = 'Action Properties';
   noProp = false;
 
-  constructor(private http: HttpClient, private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private http: HttpClient, private componentFactoryResolver: ComponentFactoryResolver, private service: WorkflowEditService) {
   }
 
   ngOnInit() {
@@ -33,11 +34,10 @@ export class NodepropComponent implements OnInit, OnDestroy, AfterContentInit, O
 
   getActionProp() {
     this.dynamicComponent = CommonSourceComponent;
-    const actionItems: Observable<any> = this.http.get('/api/DesktopService.svc/Get?input={"Type":"AllActionProperties"}', {});
 
     if (this.node) {
-      actionItems.subscribe(actionitems => {
-        const actions = JSON.parse(actionitems.GetResult);
+      this.service.getAllActionProperties().subscribe(items => {
+        const actions = items;
 
         const actionProp = _._.filter(actions, (action) => {
           return action.Action_Id === this.node['Id'];

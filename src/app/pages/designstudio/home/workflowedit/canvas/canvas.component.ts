@@ -11,7 +11,7 @@ const bottom = {
   isSource: true,
   connector: ['Flowchart', {cornerRadius: 1, alwaysRespectStubs: true}],
   anchor: 'Bottom',
-  maxConnections: 1
+  maxConnections: -1
 };
 
 const top = {
@@ -19,7 +19,7 @@ const top = {
   isTarget: true,
   connector: ['Flowchart', {cornerRadius: 1, alwaysRespectStubs: true}],
   anchor: 'Top',
-  maxConnections: 1
+  maxConnections: -1
 };
 
 @Component({
@@ -38,6 +38,7 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
   public differ: any;
   public keyValDiffers: any;
   public initialized = false;
+  public isLabels = false;
 
   @Input() robot = new EventEmitter();
   @Output() botChanges = new EventEmitter();
@@ -54,12 +55,14 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
   }
 
   ngOnChanges() {
-    this.canvas = JSON.parse(JSON.stringify(this.robot));
-    this.clearCanvas();
-    if (this.robot && ((this.robot['canvas']['nodes'] && this.robot['canvas']['nodes'].length === 0) && (this.robot['canvas']['edges'] && this.robot['canvas']['edges'].length === 0))) {
-      this.loadNewRobotElems();
-    } else {
-      this.loadExistRobotElems();
+    if (this.robot) {
+      this.canvas = this.robot;
+      this.clearCanvas();
+      if (this.robot && this.robot['canvas'] && ((this.robot['canvas']['nodes'] && this.robot['canvas']['nodes'].length === 0) && (this.robot['canvas']['edges'] && this.robot['canvas']['edges'].length === 0))) {
+        this.loadNewRobotElems();
+      } else {
+        this.loadExistRobotElems();
+      }
     }
   }
 
@@ -170,7 +173,6 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
     });
 
     this.jsPlumbInstance.importDefaults({
-      ConnectionsDetachable: true,
       Connector: ['Bezier', { curviness: 90 }],
       overlays: [
         ['Arrow', { width: 12, length: 12, location: 0.5 }]
@@ -188,7 +190,7 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
     this.edges = this.edges.filter((edge): boolean => (edge.source !== removedEdge.sourceId && edge.target !== removedEdge.targetId));
     setTimeout(() => {
       this.botChanges.emit(this.canvas);
-    }, 0);
+    }, 50);
   }
 
   connectionMoved(info) {
@@ -257,20 +259,10 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
   drawCanvasEle(node, topOpt, bottomOpt, nodeType) {
     if (node) {
       if (topOpt) {
-        this.jsPlumbInstance.addEndpoint(node.id, topOpt, {
-          paintStyle:{ fillStyle:"blue", outlineColor:"black", outlineWidth:1 },
-          hoverPaintStyle:{ fillStyle:"red" },
-          connectorPaintStyle:{ strokeStyle:"blue", lineWidth:10 },
-          connectorHoverPaintStyle:{ strokeStyle:"red", outlineColor:"yellow", outlineWidth:1 }
-      });
+        this.jsPlumbInstance.addEndpoint(node.id, topOpt);
       }
       if (bottomOpt) {
-        this.jsPlumbInstance.addEndpoint(node.id, bottomOpt, {
-          paintStyle: { fillStyle:"blue", outlineColor:"black", outlineWidth:1 },
-          hoverPaintStyle: { fillStyle:"red" },
-          connectorPaintStyle: { strokeStyle:"blue", lineWidth:10 },
-          connectorHoverPaintStyle: { strokeStyle:"red", outlineColor:"yellow", outlineWidth:1 }
-      });
+        this.jsPlumbInstance.addEndpoint(node.id, bottomOpt);
       }
       if (nodeType) {
         this.jsPlumbInstance.addClass(node.id, nodeType);
@@ -380,10 +372,8 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
       HoverPaintStyle: { strokeStyle: "#ec9f2e" },
       //cssClass: "path",
       anchor: ['Top', 'Bottom'],
-      paintStyle:{ strokeStyle:"blue", lineWidth: 10 },
-      hoverPaintStyle:{ strokeStyle:"red" },
-      endpointStyle:{ fillStyle:"blue", outlineColor:"black", outlineWidth: 1 },
-      endpointHoverStyle:{ fillStyle:"red" }
+      overlays: [
+      ]
     });
     this.edges.push({ source: `${source}`, target: `${target}` });
     this.botChanges.emit(this.canvas);
@@ -424,7 +414,7 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
     const nodeData = this.addNode(cloneNode, dropCoordinates);
     setTimeout(() => {
       this.draggableEle();
-      this.drawCanvasEle(nodeData, top, bottom, 'target');
+      this.drawCanvasEle(nodeData, top, nodeData.Id === 2 ? '' : bottom, 'target');
       this.selectedNodeElem(nodeData);
     }, 240);
     this.removeFocus(event, node);
@@ -458,5 +448,9 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
     } else {
       this.isFoucs = false;
     }
+  }
+
+  displayLables(event) {
+    this.isLabels = event;
   }
 }

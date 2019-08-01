@@ -1,22 +1,21 @@
-import { Component, OnInit, ViewEncapsulation, Inject, Input, EventEmitter, OnChanges, Output } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, Input, EventEmitter, OnChanges, Output, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as _ from 'underscore';
 import { ContentfulConfig } from '../../../../../contentful/models/contentful-config';
 import { ContentfulConfigService } from '../../../../../contentful/services/contentful-config.service';
+import { WorkflowEditService } from '../../../@providers/workflowedit.service';
+import { subscribeOn } from 'rxjs/operators';
+import { WorkflowcreateService } from '../../../@providers/workflowcreate.service';
+import Swal from 'sweetalert2';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-}
 @Component({
   selector: 'toolset',
   templateUrl: './toolset.component.html',
   styleUrls: ['./toolset.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ToolsetComponent implements OnInit, OnChanges {
+export class ToolsetComponent implements OnInit, OnChanges, OnDestroy {
   public isOpen = false;
   public templateNodes: any = [];
   public connectorId: any = 0;
@@ -39,6 +38,7 @@ export class ToolsetComponent implements OnInit, OnChanges {
   @Input() bot = new EventEmitter<any>();
   @Output() robotCreated = new EventEmitter<any>();
   @Input() robotChanges = new EventEmitter<any>();
+  autoSaveIntervalId;
 
   public model = {
     Type: 'Project',
@@ -48,28 +48,31 @@ export class ToolsetComponent implements OnInit, OnChanges {
     Name: '',
     Description: '',
     CreateBy: '',
-  }
-
-  constructor(private http: HttpClient, @Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig) { }
+  };
+  public delebot = {
+    Type: '',
+    Name: '',
+    Parent: ''
+  };
+  public robotModel = {
+    Type: 'Robot',
+    Name: '',
+    Description: '',
+    LOBId: null,
+    CreateBy: '',
+    Parent: '',
+    UpdateBy: '',
+  };
+  public robotid = null;
+  constructor(private http: HttpClient, @Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, private workflowSer: WorkflowEditService, private workflowcreateService:WorkflowcreateService) { }
 
   ngOnInit() {
-    let obj = {
-      connectorType: 'Source',
-      executionMode: 'batch'
-    };
-
-    const apiURL: Observable<any> = this.http.get('/api/DesktopService.svc/Get?input={%22Type%22:%22AllElements%22}', {});
-
-    const data = JSON.stringify({ 'Type': 'AllActionsByType', 'ProjectType': `('Robot','Workflow')` });
-    const apiURL1: Observable<any> = this.http.get('/api/DesktopService.svc/Get?input=' + data, {});
-
-    const actionItems: Observable<any> = this.http.get('/api/DesktopService.svc/Get?input={"Type":"AllActionProperties"}', {});
-
-    apiURL.subscribe(res => {
-      apiURL1.subscribe(res1 => {
-        this.paleteImages = JSON.parse(res1.GetResult);
-        this.dataVal = JSON.parse(res.GetResult);
-
+    this.autoSaveIntervalId = setInterval(() => { this.botAutoSave(); }, 10000);
+    const data = JSON.stringify({ Type: 'AllActionsByType', ProjectType: `('Robot','Workflow')` });
+    this.workflowSer.getAllElements().subscribe(res => {
+      this.workflowSer.getAllActionsByType(data).subscribe(res1 => {
+        this.paleteImages = res1;
+        this.dataVal = res;
         this.dataVal.forEach(element => {
           const elementArr = [];
           this.paleteImages.forEach(element1 => {
@@ -81,21 +84,7 @@ export class ToolsetComponent implements OnInit, OnChanges {
               elementArr.push(element1);
             }
           });
-
-
           if (element.Id !== 1) {
-            // if (element && element.Category === 'General') {
-            //   const paletteData = JSON.parse(JSON.stringify(element));
-            //   paletteData.palette = elementArr;
-            //   this.general.push(paletteData);
-            //   this.toolsetEle.push(paletteData);
-            // } else {
-            //   const paletteData = JSON.parse(JSON.stringify(element));
-            //   paletteData.palette = elementArr;
-            //   this.advanced.push(paletteData);
-            //   this.toolsetEle.push(paletteData);
-            // }
-
             const paletteData = JSON.parse(JSON.stringify(element));
             paletteData.palette = elementArr;
             this.actionEleCount += this.actionEleCount + elementArr.length > 0 ? elementArr.length : 0;
@@ -112,17 +101,17 @@ export class ToolsetComponent implements OnInit, OnChanges {
         }, 100);
       });
 
-      actionItems.subscribe(actionitems => {
-        const actions = JSON.parse(actionitems.GetResult);
+      this.workflowSer.getAllActionProperties().subscribe(actionitems => {
+        const actions = actionitems;
         const uniqActionIds = _.pluck(_.uniq(actions, (x) => {
           return x.Action_Id;
         }), 'Action_Id');
 
-        uniqActionIds.forEach(id => {
+        uniqActionIds.forEach(ids => {
           const actionProp = {
-            'id': id,
-            'prop': _.filter(actions, (action) => {
-              return action.Action_Id === id;
+            id: ids,
+            prop: _.filter(actions, (action) => {
+              return action.Action_Id === ids;
             })
           };
           this.nodeactions.push(actionProp);
@@ -130,14 +119,28 @@ export class ToolsetComponent implements OnInit, OnChanges {
       });
     });
 
-    const copyBot = JSON.parse(JSON.stringify(this.bot));
-    copyBot.canvas = {
-      nodes: [],
-      edges: []
+
+    const projectById = {
+      Type: 'AllRobotsByPrjId',
+      Project_Id: '622'
     };
-    copyBot.nameChange = false;
-    this.robotsCount ++;
-    this.robots.push(copyBot);
+
+    this.workflowcreateService.getAllRobotsByProjectId(projectById).subscribe(res => {
+      if (res && res.length > 0) {
+        this.robots = res;
+      } else {
+        const copyBot = JSON.parse(JSON.stringify({}));
+        copyBot.canvas = {
+          nodes: [],
+          edges: []
+        };
+        copyBot.nameChange = false;
+        copyBot.Name = 'Untitled - 1';
+        copyBot.isSelected = true;
+        this.robotsCount ++;
+        this.robots.push(copyBot);
+      }
+    });
   }
 
   ngOnChanges() {
@@ -188,7 +191,7 @@ export class ToolsetComponent implements OnInit, OnChanges {
     this.resetBotName();
     _.each(this.robots, (bot) => {
       if (bot.Name === robot.Name) {
-        this.robotCreated.emit(JSON.parse(JSON.stringify(bot)));
+        this.robotCreated.emit(bot);
         this.selectedRobot(bot);
       } else {
         bot.isSelected = false;
@@ -208,12 +211,16 @@ export class ToolsetComponent implements OnInit, OnChanges {
   }
 
   changeRobotName(robot) {
+    console.log(robot);
     this.resetBotName();
     robot.nameChange = true;
     this.changingBotName = robot.Name;
     this.selectedRobot(robot);
     this.isBotNameEidtable(robot);
-    this.robotCreated.emit(JSON.parse(JSON.stringify(robot)));
+    this.robotCreated.emit(robot);
+    // this.workflowSer.createRobot1(robot).subscribe(res => {
+    //   console.log(res);
+    // })
   }
 
   selectedRobot(robot) {
@@ -239,18 +246,27 @@ export class ToolsetComponent implements OnInit, OnChanges {
   saveRobotName(robot) {
     robot.nameChange = false;
     this.resetBotName();
-    this.robotCreated.emit(JSON.parse(JSON.stringify(robot)));
+    this.robotModel.LOBId = robot.LOBId;
+    this.robotModel.Name = robot.Name;
+    this.robotModel.Description = robot.Description;
+    this.robotModel.CreateBy = '';
+    this.robotModel.Parent = robot.projectId;
+    this.workflowSer.createRobot1(this.robotModel).subscribe(res=>{
+      console.log(res);
+      robot.rid = res;
+      this.robotCreated.emit(robot);
+    });
   }
 
   createWorkflow() {
     this.resetBotName();
     this.isBotNameEidtable(null);
-    const loggedData = JSON.parse(JSON.parse(localStorage.getItem('currentUser')));
+    //const loggedData = JSON.parse(JSON.parse(localStorage.getItem('currentUser')));
     const cloneModel = Object.assign({}, this.model);
     cloneModel.Type = 'Project';
     cloneModel.Name = 'Untitled - ' + (this.robotsCount ++);
-    cloneModel.CreateBy = loggedData['User'][0].ID;
-    cloneModel.username = loggedData['User'][0].UserName;
+    //cloneModel.CreateBy = loggedData['User'][0].ID;
+    //cloneModel.username = loggedData['User'][0].UserName;
     this.loadRobot(cloneModel);
     setTimeout(() => {
       const el = document.getElementById(cloneModel.Name);
@@ -258,17 +274,26 @@ export class ToolsetComponent implements OnInit, OnChanges {
     }, 20);
   }
 
-  deleteRobot(robot) {
+  deleteRobot(event, robot) {
     this.resetBotName();
     this.selectedRobot(robot);
     this.switchRobot(robot);
-    // setTimeout(() => {
-    //   const deleteElem = document.getElementById('delete-' + robot.Name).nextSibling;
-    //   const popoverElem = deleteElem.nextSibling;
-    //   popoverElem['style'].position = 'fixed;';
-    //   popoverElem['style'].left = '453px !important;';
-    //   popoverElem['style'].top = '100px !important;';
-    // }, 500);
+
+    this.robots = this.robots.filter((edge): boolean => (edge.rid !== robot.rid || edge.Name !== robot.Name));
+    this.delebot.Parent = robot.projectId.toString();
+    this.delebot.Name = robot.rid.toString();
+    this.delebot.Type = 'Robot';
+
+    if (robot.projectId === null || robot.rid === null){
+      console.log(`Project id and robot id's are manditory`);
+    }
+
+    this.workflowSer.deleteRobot(this.delebot).subscribe(res => {
+      this.robots = this.robots.filter((edge): boolean => (edge.rid !== robot.rid && edge.Name !== robot.Name));
+    }, err => {
+      this.robots = this.robots.filter((edge): boolean => (edge.rid !== robot.rid && edge.Name !== robot.Name));
+      console.log(robot);
+    });
   }
 
   mouseEnter(paletteitem) {
@@ -286,5 +311,25 @@ export class ToolsetComponent implements OnInit, OnChanges {
 
   setPosition(event) {
     this.clientY = event.clientY + 'px';
+  }
+
+  botAutoSave() {
+    // const Toast = Swal.mixin({
+    //   toast: true,
+    //   position: 'top',
+    //   showConfirmButton: false,
+    //   timer: 1000
+    // });
+    // Toast.fire({
+    //   type: 'success',
+    //   title: 'Saving canvas details!'
+    // });
+    // sessionStorage.setItem('robot', JSON.stringify(this.robots));
+  }
+
+  ngOnDestroy() {
+    if (this.autoSaveIntervalId) {
+      clearInterval(this.autoSaveIntervalId);
+    }
   }
 }
