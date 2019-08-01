@@ -288,3 +288,62 @@ a.btn.btn-back {
   color: #666;
   min-width: 90px;
 }
+
+
+.admin_drp {
+  right: 0px !important;
+  position: fixed;
+  top: 60px !important;
+  left: calc(100vw - 336px) !important;
+  height: calc(100vh - 60px);
+  width: 336px;
+  border: 1px solid #dadada;
+  margin: 0px;
+  border-radius: 0px;
+  padding: 40px 25px;
+  overflow: auto;
+}
+
+
+.admin_drp .profile {
+  height: auto !important;
+  padding: 0px !important;
+}
+
+.admin_drp .profile_info_main{
+  margin: 10px 0px !important;
+}
+
+.admin_drp .profile_info_main:last-child{
+  margin-bottom: 0px !important;
+}
+
+ul.account_sub_ul {
+  list-style: none;
+  padding: 0px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.account_sub_ul a {
+  color: #333;
+  text-decoration: none;
+}
+
+label.profile_info_head {
+  color: #999;
+}
+
+
+.admin_drp .profile_info_body {
+  font-weight: 500;
+}
+.admin_drp  .profile_info_head, .admin_drp .profile_info_body {
+  margin: 0px;
+  font-size: 16px;
+}
+
+.admin_drp .account_sub_ul li {
+  margin: 10px 0px;
+}

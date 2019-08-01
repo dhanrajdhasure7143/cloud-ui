@@ -66,3 +66,17 @@ form label {
 .img_login {
   height: 100%;
 }
+
+ul#dropdown-basic {
+  right: 0px !important;
+  position: fixed;
+  top: 60px !important;
+  left: calc(100vw - 336px) !important;
+  height: calc(100vh - 60px);
+  width: 336px;
+  border: 1px solid #dadada;
+  margin: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  overflow: auto;
+}

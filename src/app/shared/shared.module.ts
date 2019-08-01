@@ -25,7 +25,7 @@ import { BodyComponent } from './body/body.component';
     BsDropdownModule.forRoot(),
     PortalModule
   ],
-  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent],
+  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent],
   entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent]
 })
 export class SharedModule { }
