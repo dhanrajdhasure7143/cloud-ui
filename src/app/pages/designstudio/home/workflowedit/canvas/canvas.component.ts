@@ -55,10 +55,10 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
   }
 
   ngOnChanges() {
-    if (this.robot) {
+    if (this.robot && this.robot['canvas']) {
       this.canvas = this.robot;
       this.clearCanvas();
-      if (this.robot && this.robot['canvas'] && ((this.robot['canvas']['nodes'] && this.robot['canvas']['nodes'].length === 0) && (this.robot['canvas']['edges'] && this.robot['canvas']['edges'].length === 0))) {
+      if (this.robot && ((this.robot['canvas']['nodes'] && this.robot['canvas']['nodes'].length === 0) && (this.robot['canvas']['edges'] && this.robot['canvas']['edges'].length === 0))) {
         this.loadNewRobotElems();
       } else {
         this.loadExistRobotElems();

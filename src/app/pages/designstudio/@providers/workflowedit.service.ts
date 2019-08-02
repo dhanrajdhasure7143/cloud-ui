@@ -18,19 +18,19 @@ export class WorkflowEditService {
 
   getAllRobotsByPrjId(data: any): Observable<any> {
 
-    return this.http.post<any>(`/api/ezBotStudio/Get?input=${JSON.stringify(data)}`,{});
+    return this.http.get<any>(`/api/ezBotStudio/Get?input=${JSON.stringify(data)}`,{});
   }
 
   getAllElements(): Observable<any> {
-    return this.http.post<any>(`/api/ezBotStudio/Get?input=${JSON.stringify({'Type':'AllElements'})}`, {});
+    return this.http.get<any>(`/api/ezBotStudio/Get?input=${JSON.stringify({'Type':'AllElements'})}`, {});
   }
 
   getAllActionProperties(): Observable<any> {
-    return this.http.post<any>(`/api/ezBotStudio/Get?input=${JSON.stringify({'Type':'AllActionProperties'})}`, {});
+    return this.http.get<any>(`/api/ezBotStudio/Get?input=${JSON.stringify({'Type':'AllActionProperties'})}`, {});
   }
 
   getAllActionsByType(data): Observable<any> {
-    return this.http.post('/api/ezBotStudio/Get?input=' + data, {});
+    return this.http.get('/api/ezBotStudio/Get?input=' + data, {});
   }
 
   submitrobot(data): Observable<any> {

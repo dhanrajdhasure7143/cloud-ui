@@ -40,6 +40,6 @@ export class WorkflowcreateService {
   }
 
   getAllRobotsByProjectId(data): Observable<any[]> {
-    return this.http.post<any[]>(`/api/ezBotStudio/Get?input=${JSON.stringify(data)}`,httpOptions);
+    return this.http.get<any[]>(`/api/ezBotStudio/Get?input=${JSON.stringify(data)}`);
   }
 }

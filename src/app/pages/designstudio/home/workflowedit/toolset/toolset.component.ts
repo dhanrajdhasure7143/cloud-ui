@@ -126,7 +126,7 @@ export class ToolsetComponent implements OnInit, OnChanges, OnDestroy {
     };
 
     this.workflowcreateService.getAllRobotsByProjectId(projectById).subscribe(res => {
-      if (res && res.length > 0) {
+      if (!res && res.length > 0) {
         this.robots = res;
       } else {
         const copyBot = JSON.parse(JSON.stringify({}));
@@ -139,6 +139,7 @@ export class ToolsetComponent implements OnInit, OnChanges, OnDestroy {
         copyBot.isSelected = true;
         this.robotsCount ++;
         this.robots.push(copyBot);
+        this.robotCreated.emit(copyBot);
       }
     });
   }
