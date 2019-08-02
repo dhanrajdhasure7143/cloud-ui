@@ -1,19 +1,25 @@
-<common-header>
-  <div class="col-6 text-left">
-    <label class="header_label">{{ robotName }}: {{botName}}</label>
-  </div>
-  <div class="col-6 text-right">
-    <button class="btn btn-full btn-cancel" (click)="clearCanvas()">Cancel</button>
-    <button class="btn btn-full btn-submit"(click)="submitrobot($event)">Submit</button>
-  </div>
-<div class="alert_pop">
-  <label class="alert_msg">Saved</label>
-</div>
+<topheader></topheader>
 
-</common-header>
+<common-body>
+  <bot-nav-bar></bot-nav-bar>
+  <common-header>
+    <div class="col-6 text-left">
+      <label class="header_label">{{ robotName }}: {{botName}}</label>
+    </div>
+    <div class="col-6 text-right">
+      <button class="btn btn-full btn-cancel" (click)="clearCanvas()">Cancel</button>
+      <button class="btn btn-full btn-submit" (click)="submitrobot($event)">Submit</button>
+    </div>
+    <div class="alert_pop">
+      <label class="alert_msg">Saved</label>
+    </div>
+  </common-header>
 
-<common-content>
-  <toolset [title]="robotName" [bot]="bot" (robotCreated)="robotCreated($event)" [robotChanges]="robotChanges"></toolset>
-  <app-canvas #canvas (botChanges)="updateChanges($event)" (selectedElem)="selectedElem($event)" [robot]="robot"></app-canvas>
-  <app-nodeprop [node]="node"></app-nodeprop>
-</common-content>
+  <common-content>
+    <toolset [title]="robotName" [bot]="bot" (robotCreated)="robotCreated($event)" [robotChanges]="robotChanges">
+    </toolset>
+    <app-canvas #canvas (botChanges)="updateChanges($event)" (selectedElem)="selectedElem($event)" [robot]="robot">
+    </app-canvas>
+    <app-nodeprop [node]="node"></app-nodeprop>
+  </common-content>
+</common-body>
