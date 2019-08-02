@@ -63,11 +63,20 @@
 
   // end of profile
 
-  .sidenav .acc_main {
-    display: none;
-}
+//   .sidenav .acc_main {
+//     display: none;
+// }
 
 
 // .profile_info .col-sm-12, .profile_info .col-12 {
 //   padding: 0px;
 // }
+
+.profile_info_main div {
+  display: block;
+  margin: 0px;
+}
+
+.row.profile_info {
+  margin: 0px;
+}
