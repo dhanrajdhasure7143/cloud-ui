@@ -37,11 +37,6 @@
     padding: 25px;
   }
 
-  .products_div {
-    margin-top: 25px;
-  }
-
-
   .plans_info {
     font-size: 14px;
     font-weight: 500;
@@ -79,3 +74,18 @@ p.pro_desc {
   min-height: 140px;
 }
 
+@media (max-width:1280px){
+  .products_div {
+
+    width: 90% !important;
+
+  }
+}
+
+@media (min-width:1366px){
+  .products_div {
+
+    width: 70% !important;
+
+  }
+}

@@ -379,3 +379,26 @@ topheader .account_sub_ul li {
 .first_login_header .user_division {
   display: none;
 }
+
+@media (max-width:1280px){
+  .products_div {
+
+    width: 90% !important;
+
+  }
+}
+
+@media (min-width:1366px){
+  .products_div {
+
+    width: 70% !important;
+
+  }
+}
+
+.products_div {
+  margin-top: 25px !important;
+  width: 80%;
+  margin: auto;
+}
+
