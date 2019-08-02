@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Inject, ViewChildren, QueryList } from '@
 import { BsDropdownDirective } from 'ngx-bootstrap';
 import { ContentfulConfigService } from './../contentful/services/contentful-config.service';
 import { ContentfulConfig } from './../contentful/models/contentful-config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activation',
@@ -13,7 +14,7 @@ export class ActivationComponent implements OnInit {
   @ViewChildren(BsDropdownDirective) bsDropdown: QueryList<BsDropdownDirective>;
   compIndex = 0;
   dropdown;
-  constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig) { }
+  constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, private route: Router) { }
 
   ngOnInit() {
   }
@@ -45,6 +46,12 @@ export class ActivationComponent implements OnInit {
       event.preventDefault();
       event.stopPropagation();
     }
+  }
+
+  logout() {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.route.navigate(['/']);
   }
 
 }

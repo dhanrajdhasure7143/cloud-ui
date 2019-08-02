@@ -3,12 +3,12 @@
     height: 100%;
     padding: 40px 25px;
   }
-  
+
   .row.profile_img {
     margin-bottom: 15px;
     align-items: center;
   }
-  
+
   img.img_pro {
     width: 64px;
     height: 64px;
@@ -17,7 +17,7 @@
     padding: 2px;
     object-fit: fill;
   }
-  
+
   label.name_pro {
     display: block;
     text-align: center;
@@ -26,8 +26,8 @@
     margin: 0px;
     line-height: 36px;
   }
-  
-  
+
+
   label.design_pro {
     display: block;
     text-align: center;
@@ -36,29 +36,33 @@
     font-weight: 500;
     color: #7990A8;
   }
-  
+
   .edit_button {
     text-align: center;
     margin-top: 36px;
   }
-  
+
   hr.profile_hr {
     border-color: #EEEEEE;
     margin: 20px 0px;
   }
-  
+
   .profile_info_head, .profile_info_body {
     margin: 0px;
     font-size: 18px;
   }
-  
+
   .profile_info_body.email{
     color:#0F98FF;
   }
-  
+
   .profile_info_main {
     margin: 20px 0px;
-  
+
   }
-  
+
   // end of profile
+
+  .sidenav .acc_main {
+    display: none;
+}

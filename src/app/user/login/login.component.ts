@@ -133,7 +133,7 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    this.router.navigate(['/activation/plandetails']);
+    this.router.navigate(['/home']);
   }
 
 }

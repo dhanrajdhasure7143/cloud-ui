@@ -50,7 +50,7 @@ body{
 }
 
 .btn-submit, .btn-add{
-  color: #ffffff;
+  color: #ffffff !important;
   background: #006dd5 !important;
 }
 
@@ -63,6 +63,21 @@ body{
   padding: 0px 9px;
   font-size: 14px;
   text-align: center;
+}
+
+topheader .user_division bot-infopanel .side_drp {
+  position: fixed;
+  top: 60px !important;
+  left: calc(100vw - 336px) !important;
+  // left:60px !important;
+  height: calc(100vh - 60px);
+  width: 336px;
+  box-shadow: -2px 2px 4px #bcbcbc;
+  border: 1px solid #dadada;
+  margin: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  overflow: auto;
 }
 
 .no-padding{
@@ -305,16 +320,16 @@ a.btn.btn-back {
 }
 
 
-.admin_drp .profile {
-  height: auto !important;
-  padding: 0px !important;
-}
+// topheader .profile {
+//   height: auto !important;
+//   padding: 0px !important;
+// }
 
-.admin_drp .profile_info_main{
+topheader .profile_info_main{
   margin: 10px 0px !important;
 }
 
-.admin_drp .profile_info_main:last-child{
+topheader .profile_info_main:last-child{
   margin-bottom: 0px !important;
 }
 
@@ -336,14 +351,31 @@ label.profile_info_head {
 }
 
 
-.admin_drp .profile_info_body {
+topheader .profile_info_body {
   font-weight: 500;
 }
-.admin_drp  .profile_info_head, .admin_drp .profile_info_body {
+topheader  .profile_info_head, topheader .profile_info_body {
   margin: 0px;
   font-size: 16px;
 }
 
-.admin_drp .account_sub_ul li {
+topheader .account_sub_ul li {
   margin: 10px 0px;
+}
+
+.sidenav .acc_log_main {
+  display: none;
+}
+
+
+.more_btns .btn-submit {
+  margin-right: 15px;
+}
+
+.more_btns .btn-submit:last-child {
+  margin-right: 15px;
+}
+
+.first_login_header .user_division {
+  display: none;
 }
