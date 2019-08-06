@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { SharedModule } from '../../shared/shared.module';
 import { PaymentRoutingModule } from './payment-routing.module';
 import { DetailsComponent } from './details/details.component';
 import { ReviewComponent } from './review/review.component';
@@ -11,6 +11,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
   declarations: [DetailsComponent, ReviewComponent, ChooseplanComponent],
   imports: [
     CommonModule,
+    SharedModule,
     PaymentRoutingModule,
     TabsModule.forRoot()
   ]

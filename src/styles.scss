@@ -173,7 +173,7 @@ background-repeat: repeat !important;
 
 .form-control {
   border: 1px solid #D6DDF2;
-  height: 32px;
+  height: 32px !important;
   font-size: 13px;
 }
 
@@ -360,9 +360,10 @@ topheader  .profile_info_head, topheader .profile_info_body {
 }
 
 topheader .account_sub_ul li {
-  margin: 10px 0px;
+  margin: 5px 0px;
   display: block;
   cursor: pointer;
+  padding: 5px 0px;
 }
 
 .sidenav .acc_log_main {
@@ -375,7 +376,7 @@ topheader .account_sub_ul li {
 }
 
 .more_btns .btn-submit:last-child {
-  margin-right: 15px;
+  margin-right: 0px;
 }
 
 .first_login_header .user_division {
@@ -404,3 +405,38 @@ topheader .account_sub_ul li {
   margin: auto;
 }
 
+app-workflowedit .layout {
+  height: calc(100vh - 80px);
+  top: 80px;
+}
+
+topheader .account_sub_ul li:hover a, topheader .account_sub_ul li:hover div {
+  color: #006dd5;
+}
+
+topheader .account_sub_ul li:hover {
+  background: #F0F8FC;
+  border-right: 4px solid #006dd5;
+}
+
+common-body .lower .btn-side{
+  display: none;
+}
+
+.btn.btn-submit.btn-second {
+  background: #2196F3 !important;
+}
+
+common-body .create_panel{
+  display: none;
+}
+
+
+aiotal-bot-grid tbody tr:hover td:first-child {
+  color: #001c48;
+  font-weight: 600;
+}
+
+a {
+  cursor: pointer;
+}
