@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap');
+
 body, *{
   font-family: 'Roboto', sans-serif;
 
@@ -39,6 +41,11 @@ body, *{
 
 body{
   color:#3F4D67;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+
 }
 
 .header_label {
@@ -470,4 +477,8 @@ a {
 .form_padding{
   padding-top: 15px !important;
   padding-bottom: 15px !important;
+}
+
+.from_logo {
+  padding: 20px 2.5%;
 }
