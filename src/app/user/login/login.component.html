@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <a href="" class="for_pass float-right">Forgot Password&#63;</a>
+              <a [routerLink]="['/user/forgotpassword']" class="for_pass float-right">Forgot Password&#63;</a>
               <input type="password" formControlName="password" #password class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
