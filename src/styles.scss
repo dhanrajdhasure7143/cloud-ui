@@ -440,3 +440,34 @@ aiotal-bot-grid tbody tr:hover td:first-child {
 a {
   cursor: pointer;
 }
+
+
+.select_plan .select_plan .step_circle{
+  background-color: rgb(33,150,243) !important;
+}
+
+.enter_pay .enter_pay .step_circle{
+  background-color: rgb(33,150,243) !important;
+}
+
+.order_review .order_review .step_circle{
+  background-color: rgb(33,150,243) !important;
+}
+
+
+.select_plan .select_plan .step_title {
+  color: #666 !important;
+}
+
+.enter_pay .enter_pay .step_title {
+  color: #666 !important;
+}
+
+.order_review .order_review .step_title {
+  color: #666 !important;
+}
+
+.form_padding{
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
