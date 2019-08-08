@@ -1,8 +1,11 @@
 import { ForgotpasswordService } from './../_services/forgotpassword.service';
 import { Component, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';;
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-@Component({ templateUrl: 'forgotpassword.component.html' })
+@Component({ templateUrl: 'forgotpassword.component.html',
+styleUrls: ['forgotpassword.component.scss'],
+})
+
 export class ForgotpasswordComponent implements OnInit {
   emailForm: FormGroup;
   submitted = false;
@@ -23,8 +26,8 @@ export class ForgotpasswordComponent implements OnInit {
       if (this.emailForm.invalid) {
           return;
       }
-      this.forgotpasswordser.forgotPassword({"eamil": this.f.email.value}).subscribe(res => {
-        console.log("test ...");
+      this.forgotpasswordser.forgotPassword({email: this.f.email.value}).subscribe(res => {
+        console.log('test ...');
         });
 
     //   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.emailForm.value))
