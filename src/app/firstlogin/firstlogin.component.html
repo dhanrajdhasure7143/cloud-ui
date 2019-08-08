@@ -18,59 +18,65 @@
           <h2 class="wel_acc">Welcome! Finish setting up your account</h2>
         </div>
 
-        <form autocomplete="off" #firstloginform="ngForm" (ngSubmit)="!firstloginform.invalid && onSubmit()" class="col-sm-10">
+        <form autocomplete="off" #firstloginform="ngForm" (ngSubmit)="!firstloginform.invalid && onSubmit()"
+          class="col-sm-10">
           <div class="row">
             <div class="form-group col-sm-6">
               <label for="firstName">First Name</label>
-              <input type="text" id="firstName"name="firstName" #firstName="ngModel" class="form-control" [(ngModel)]="model" required>
+              <input type="text" id="firstName" name="firstName" #firstName="ngModel" class="form-control"
+                [(ngModel)]="model" required>
               <span *ngIf="((firstName.invalid && firstloginform.submitted)|| (firstName.errors && firstName.touched))"
-              class='fa fa-info-circle errspan'> First Name is required </span>
+                class='fa fa-info-circle errspan'> First Name is required </span>
             </div>
 
             <div class="form-group col-sm-6">
               <label for="lastName">Last Name</label>
-              <input type="text" name="lastName" id="lastName"#lastName="ngModel" class="form-control" [(ngModel)]="model" required>
+              <input type="text" name="lastName" id="lastName" #lastName="ngModel" class="form-control"
+                [(ngModel)]="model" required>
               <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
-              class='fa fa-info-circle errspan'> Last Name is required </span>
+                class='fa fa-info-circle errspan'> Last Name is required </span>
             </div>
 
             <div class="form-group col-sm-6">
               <label for="jobTitle">Job Title</label>
-              <input type="text" name="jobTitle" id="jobTitle" #jobTitle="ngModel" class="form-control" [(ngModel)]="model" required>
+              <input type="text" name="jobTitle" id="jobTitle" #jobTitle="ngModel" class="form-control"
+                [(ngModel)]="model" required>
               <span *ngIf="((jobTitle.invalid && firstloginform.submitted)|| (jobTitle.errors && jobTitle.touched))"
-              class='fa fa-info-circle errspan'> Job Title is required </span>
+                class='fa fa-info-circle errspan'> Job Title is required </span>
             </div>
             <div class="form-group col-sm-6">
               <label for="email">Email</label>
-              <input type="email" id="email" #email="ngModel" class="form-control" [(ngModel)]="model" required [ngModelOptions]="{standalone: true}">
+              <input type="email" id="email" #email="ngModel" class="form-control" [(ngModel)]="model" required
+                [ngModelOptions]="{standalone: true}">
               <span *ngIf="((email.invalid && firstloginform.submitted)|| (email.errors && email.touched))"
-              class='fa fa-info-circle errspan'> Email is required </span>
+                class='fa fa-info-circle errspan'> Email is required </span>
             </div>
             <div class="form-group col-sm-6">
               <label for="company">Company</label>
               <input type="text" id="company" #company="ngModel" class="form-control" [(ngModel)]="model" required>
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
-              class='fa fa-info-circle errspan'> Company is required </span>
+                class='fa fa-info-circle errspan'> Company is required </span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="department">Department</label>
-                <select id="department" class="form-control">
-                  <option selected></option>
-                  <option>India</option>
-                  <option>Canada</option>
-                  <option>U.S.A.</option>
-                </select>
+              <label for="department">Department</label>
+              <ng-multiselect-dropdown name="department" id="department" #department="ngModel" [placeholder]="'Select'"
+                [(ngModel)]="model" [data]="departments" [ngClass]="{'single_sel': itemsShowLimit == 1}"
+                [settings]="dropdownSettings" required>
+              </ng-multiselect-dropdown>
+              <span
+                *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
+                class='fa fa-info-circle errspan'> Department is required </span>
             </div>
 
 
             <div class="form-group col-sm-6">
               <label for="country">Country</label>
-              <select id="country" class="form-control">
-                <option selected></option>
-                <option>India</option>
-                <option>Canada</option>
-                <option>U.S.A.</option>
-              </select>
+              <ng-multiselect-dropdown name="country" id="country" #country="ngModel" [placeholder]="'Select'"
+                [(ngModel)]="model" [data]="departments" [ngClass]="{'single_sel': itemsShowLimit == 1}"
+                [settings]="dropdownSettings" required>
+              </ng-multiselect-dropdown>
+              <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
+                class='fa fa-info-circle errspan'> Country is required </span>
             </div>
 
             <div class="form-group col-sm-6">
@@ -78,30 +84,36 @@
               <div class="col-sm-12">
                 <div class="row">
                   <div class="col-sm-2 country_code">
-                    <select id="country" class="form-control">
-                      <option selected></option>
-
-                    </select>
+                    <ng-multiselect-dropdown name="mob_country" id="mob_country" #mob_country="ngModel"
+                      [placeholder]="'Select'" [(ngModel)]="model" [data]="departments"
+                      [ngClass]="{'single_sel': itemsShowLimit == 1}" [settings]="dropdownSettings" required>
+                    </ng-multiselect-dropdown>
                   </div>
                   <div class="col-sm-10 phone_num">
-                    <input type="text" class="form-control" id="phone" placeholder="">
+                    <input type="text" class="form-control" name="phone" id="phone" #phone="ngModel"
+                      [(ngModel)]="model">
                   </div>
                 </div>
+                <span
+                  *ngIf="((mob_country.invalid && firstloginform.submitted)|| (mob_country.errors && mob_country.touched)) || ((phone.invalid && firstloginform.submitted)|| (phone.errors && phone.touched))"
+                  class='fa fa-info-circle errspan'> County Code & Mobile is required </span>
               </div>
             </div>
 
             <div class="form-group col-sm-6">
               <label for="userName">User Name</label>
-              <input type="text" id="userName" name="userName" #userName="ngModel" class="form-control" [(ngModel)]="model" required>
+              <input type="text" id="userName" name="userName" #userName="ngModel" class="form-control"
+                [(ngModel)]="model" required>
               <span *ngIf="((userName.invalid && firstloginform.submitted)|| (userName.errors && userName.touched))"
-              class='fa fa-info-circle errspan'> User Name is required </span>
+                class='fa fa-info-circle errspan'> User Name is required </span>
             </div>
 
             <div class="form-group col-sm-6">
               <label for="password">Password</label>
-              <input type="text" id="password" name="password" #password="ngModel" class="form-control" [(ngModel)]="model" required>
+              <input type="text" id="password" name="password" #password="ngModel" class="form-control"
+                [(ngModel)]="model" required>
               <span *ngIf="((password.invalid && firstloginform.submitted)|| (password.errors && password.touched))"
-              class='fa fa-info-circle errspan'> Password is required </span>
+                class='fa fa-info-circle errspan'> Password is required </span>
             </div>
             <div class="form-group col-sm-12 continue_btn">
               <button type="button" class="btn btn-back float-left" (click)="onCancel()">Cancel</button>

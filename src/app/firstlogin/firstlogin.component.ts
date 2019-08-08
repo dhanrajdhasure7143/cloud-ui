@@ -7,11 +7,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./firstlogin.component.scss']
 })
 export class FirstloginComponent implements OnInit {
-  model;
+  model ='';
+  selectedItems: any[] = [];
+  dropdownSettings: any = {};
+  departments = [];
+  itemsShowLimit = 1;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.departments = ['India', 'Canada', 'U.S.A'];
+    this.dropdownSettings = {
+      singleSelection: true,
+      idField: 'ID',
+      textField: 'Name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: this.itemsShowLimit,
+      allowSearchFilter: true,
+      closeDropDownOnSelection: true
+    };
   }
 
   onSubmit() {

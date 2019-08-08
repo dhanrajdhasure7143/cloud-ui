@@ -5,6 +5,7 @@ import { FirstloginRoutingModule } from './firstlogin-routing.module';
 import { FirstloginComponent } from './firstlogin.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [FirstloginComponent],
@@ -12,7 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FirstloginRoutingModule,
     SharedModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule,
+    NgMultiSelectDropDownModule
   ]
 })
 export class FirstloginModule { }
