@@ -32,4 +32,10 @@ export class ForgotpasswordComponent implements OnInit {
 
     //   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.emailForm.value))
   }
+
+  onSignup() {
+    localStorage.clear();
+    sessionStorage.clear();
+    location.href = 'https://aiotal.com/';
+  }
 }
