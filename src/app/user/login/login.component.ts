@@ -124,7 +124,8 @@ export class LoginComponent implements OnInit {
     for (const cookie of cookies) {
       const index = cookie.indexOf('=');
       const name = ~index ? cookie.substr(0, index) : cookie;
-      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+      const expireOn = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = name + '=; expires=' + expireOn.toLocaleString() + ';path=/';
     }
   }
 
