@@ -18,4 +18,10 @@ export class FirstloginComponent implements OnInit {
     this.router.navigate(['/activation']);
   }
 
+  onCancel() {
+    localStorage.clear();
+    sessionStorage.clear();
+    location.href = 'https://aiotal.com/';
+  }
+
 }
