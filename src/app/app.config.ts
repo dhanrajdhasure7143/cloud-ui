@@ -12,8 +12,8 @@ export interface EzflowAppConfig {
 
 export const AppConfig: EzflowAppConfig = {
   apiHost: 'http://ezbotdev.aiotal.in',
-  loopbackHost: 'http://10.11.0.64:3000',
-  apiURL: '/ezflow_rest',
+  loopbackHost: '',
+  apiURL: '/aiotal',
   imagePath: '',
   isProduction: true
 };

@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./firstlogin.component.scss']
 })
 export class FirstloginComponent implements OnInit {
+  model;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  activationM() {
+  onSubmit() {
     this.router.navigate(['/activation']);
   }
 
