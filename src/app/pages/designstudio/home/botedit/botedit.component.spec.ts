@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkfloweditComponent } from './workflowedit.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BoteditComponent } from './botedit.component';
 
 describe('WorkfloweditComponent', () => {
-  let component: WorkfloweditComponent;
-  let fixture: ComponentFixture<WorkfloweditComponent>;
+  let component: BoteditComponent;
+  let fixture: ComponentFixture<BoteditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkfloweditComponent ],
+      declarations: [ BoteditComponent ],
       imports: [RouterTestingModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorkfloweditComponent);
+    fixture = TestBed.createComponent(BoteditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

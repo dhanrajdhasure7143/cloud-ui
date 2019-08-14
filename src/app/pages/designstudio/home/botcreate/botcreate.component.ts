@@ -1,12 +1,8 @@
-import { idLocale } from 'ngx-bootstrap';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { WorkflowcreateService } from './../../@providers/workflowcreate.service';
+import { WorkflowcreateService } from '../../@providers/workflowcreate.service';
 import { Workflow } from '../../@models/workflow';
-import { WorkflowRobot } from '../../@models/workflowRobot';
-import { Project } from './../../@models/project';
-import { ProjectRobot } from '../../@models/projectRobot';
+import { Project } from '../../@models/project';
 
 
 
@@ -26,11 +22,11 @@ const AllRobotsByPrjId= {
 }
 
 @Component({
-  selector: 'app-workflowcreate',
-  templateUrl: './workflowcreate.component.html',
-  styleUrls: ['./workflowcreate.component.scss']
+  selector: 'botcreate',
+  templateUrl: './botcreate.component.html',
+  styleUrls: ['./botcreate.component.scss']
 })
-export class WorkflowcreateComponent implements OnInit {
+export class BotcreateComponent implements OnInit {
   @ViewChild('createBot') form: any;
   public showcreate = false;
   public workflowname = '';
@@ -150,7 +146,7 @@ export class WorkflowcreateComponent implements OnInit {
       } else {
         this.model = JSON.parse(JSON.stringify(Object.assign({}, data, new Project())));
       }
-      this.router.navigate([`/pages/designstudio//workflowedit`, `${btoa(JSON.stringify(this.model))}`]);
+      this.router.navigate([`/pages/designstudio//botedit`, `${btoa(JSON.stringify(this.model))}`]);
     }
   }
 

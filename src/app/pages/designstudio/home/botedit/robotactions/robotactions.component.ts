@@ -25,10 +25,7 @@ export class RobotactionsComponent implements OnInit {
 
   getVersionsofRobot(){
   this.workflowEditService.getVersionsofRobot('2555').subscribe(res =>{
-    console.log('************Logs**************');
     this.logs = res;
-    console.log(this.logs)
-    console.log(res);
   });
   }
 

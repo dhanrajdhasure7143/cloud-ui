@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { AuthGuard } from './_guards';
+import { ValidateComponent } from './validate/validate.component';
 
 const routes: Routes = [{
   path: 'activation',
@@ -15,7 +16,12 @@ const routes: Routes = [{
   path: 'pages',
   loadChildren: './pages/pages.module#PagesModule',
   canActivate: [AuthGuard]
-}, {
+},
+{
+  path: 'validate/:token',
+  component: ValidateComponent
+},
+{
   path: '',
   redirectTo: 'user',
   pathMatch: 'full'

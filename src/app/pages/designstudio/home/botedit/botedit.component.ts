@@ -1,6 +1,5 @@
-import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild, IterableDiffers, DoCheck, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, IterableDiffers, DoCheck, Inject } from '@angular/core';
 import { Subject } from 'rxjs';
-import { HttpHeaders } from '@angular/common/http';
 import { CanvasComponent } from './canvas/canvas.component';
 import { ActivatedRoute } from '@angular/router';
 import { ContentfulConfig } from './../../../../contentful/models/contentful-config';
@@ -9,11 +8,11 @@ import { WorkflowEditService } from './../../@providers/workflowedit.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-workflowedit',
-  templateUrl: './workflowedit.component.html',
-  styleUrls: ['./workflowedit.component.scss']
+  selector: 'botedit',
+  templateUrl: './botedit.component.html',
+  styleUrls: ['./botedit.component.scss']
 })
-export class WorkfloweditComponent implements OnInit, AfterViewInit, DoCheck {
+export class BoteditComponent implements OnInit, AfterViewInit, DoCheck {
   public node;
   public slectedEle: boolean = false;
   public botName;
