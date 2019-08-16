@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppService } from 'src/app/_services';
 
 @Component({
   selector: 'app-user',
@@ -8,16 +9,13 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, private appSer: AppService) { }
 
   ngOnInit() {
   }
 
-  logout() {
-    localStorage.clear();
-    sessionStorage.clear();
+  logout(event) {
+    this.appSer.logout();
     this.route.navigate(['/']);
   }
-
-
 }

@@ -13,7 +13,6 @@ import { ContentfulModule } from './contentful/contentful.module';
 import { ContentfulConfig } from './contentful';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopoverModule } from 'ngx-bootstrap/popover';
-import { Subject } from 'rxjs';
 import { BotGridModule } from 'bot-grid';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ValidateComponent } from './validate/validate.component';
@@ -58,7 +57,7 @@ export const contentfulConfig: ContentfulConfig = {
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: APP_CONFIG, useValue: AppConfig },
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     BackendURLProvider,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

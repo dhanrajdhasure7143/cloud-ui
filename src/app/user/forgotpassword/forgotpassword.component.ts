@@ -1,6 +1,7 @@
 import { ForgotpasswordService } from './../_services/forgotpassword.service';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { APP_CONFIG } from './../../app.config';
 
 @Component({ templateUrl: 'forgotpassword.component.html',
 styleUrls: ['forgotpassword.component.scss'],
@@ -11,7 +12,7 @@ export class ForgotpasswordComponent implements OnInit {
   submitted = false;
   error;
 
-  constructor(private formBuilder: FormBuilder,  private forgotpasswordser: ForgotpasswordService) { }
+  constructor(@Inject(APP_CONFIG) private config, private formBuilder: FormBuilder,  private forgotpasswordser: ForgotpasswordService) { }
 
   ngOnInit() {
       this.emailForm = this.formBuilder.group({
@@ -36,6 +37,6 @@ export class ForgotpasswordComponent implements OnInit {
   onSignup() {
     localStorage.clear();
     sessionStorage.clear();
-    location.href = 'https://aiotal.com/';
+    location.href = this.config.portfolioSite;
   }
 }

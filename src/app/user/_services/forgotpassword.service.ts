@@ -17,7 +17,7 @@ const httpOptions = {
 export class ForgotpasswordService {
     constructor(private http: HttpClient) { }
 
-    forgotPassword (data: any): Observable<any[]> {
+    forgotPassword(data: any): Observable<any[]> {
       return this.http.post<any[]>('/rest/users/forgotPassword',data,httpOptions);
     }
 }

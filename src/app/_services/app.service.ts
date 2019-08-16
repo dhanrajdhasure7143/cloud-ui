@@ -13,20 +13,17 @@ export class AppService {
   public loggedIn = new BehaviorSubject<boolean>(false);
   public triggered = new BehaviorSubject<boolean>(true);
   public homeRef = new BehaviorSubject<String>('');
-  _userActionOccured: Subject<void> = new Subject();
+  public _userActionOccured: Subject<void> = new Subject();
 
   constructor(private http: HttpClient, private router: Router, private content: ContentfulService) { }
+
   login(username: string, password: string) {
-    return this.http.get<any>(`/api/CrudService.svc/LoginAuthenticationEX?UP=` + window.btoa(username + '||' + password )).pipe(take(1),  map(user => {
-      if (user && user['errorCode']) {
-        return throwError({ error: { message: 'Username or password is incorrect' } });
-      } else {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.setProperties();
-      }
-      this.setProperties();
-      return user;
-    }));
+    return this.http.post<any>(`/api/login/beta/accessToken`, { 'userId' : username, 'password' : password })
+        .pipe(map(user => {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.setProperties();
+            return user;
+        }));
   }
 
   logout() {
@@ -34,6 +31,7 @@ export class AppService {
     this.triggered.next(true);
     this.homeRef.next('');
     localStorage.clear();
+    sessionStorage.clear();
   }
 
   loadUserSharedData(): Observable<any> {

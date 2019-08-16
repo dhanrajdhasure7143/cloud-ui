@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
-import { AuthGuard } from './_guards';
+import { AuthGuard, LoginGuard } from './_guards';
 import { ValidateComponent } from './validate/validate.component';
 
 const routes: Routes = [{
   path: 'activation',
-  loadChildren: './activation/activation.module#ActivationModule'
+  loadChildren: './activation/activation.module#ActivationModule',
+  canActivate: [AuthGuard]
 }, {
   path: 'home',
   loadChildren: './home/home.module#HomeModule'
 }, {
   path: 'user',
-  loadChildren: './user/user.module#UserModule'
+  loadChildren: './user/user.module#UserModule',
+  canActivate: [LoginGuard]
 }, {
   path: 'pages',
   loadChildren: './pages/pages.module#PagesModule',

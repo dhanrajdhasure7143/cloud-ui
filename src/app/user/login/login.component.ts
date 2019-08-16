@@ -1,10 +1,11 @@
-import { Component, OnInit, Injector, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/_services';
 import { SessionService } from './../../_services/session/session';
 import { first } from 'rxjs/operators';
 import { CookieStore } from 'src/app/_services/cookie.store';
+import { APP_CONFIG } from './../../app.config';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   error = '';
 
   constructor(
+    @Inject(APP_CONFIG) private config,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -83,19 +85,12 @@ export class LoginComponent implements OnInit {
             this.set('password', this.f.password.value, {});
           }
 
-          //const udata = JSON.parse(data);
-          const udata = data;
-
-          if (udata && udata['Message'] === `User Doesn't Exists`) {
-            this.error = udata['Message'];
-            this.loading = false;
-          } else {
-            this.session.startWatching();
-            this.authenticate();
-          }
+          this.loading = false;
+          this.session.startWatching();
+          this.authenticate();
         },
         error => {
-          this.error = error.error.error_description;
+          this.error = error.errorDetails;
           this.loading = false;
         }
       );
@@ -134,7 +129,11 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/activation']);
+  }
+
+  requestDemo() {
+    location.href = this.config.portfolioSite;
   }
 
 }

@@ -16,15 +16,17 @@ export class ValidateComponent implements OnInit {
 
   ngOnInit() {
     this.spinnerService.show();
+    localStorage.clear();
+    sessionStorage.clear();
     if (this.aroute.snapshot.paramMap.get('token')) {
       const token = this.aroute.snapshot.paramMap.get('token');
-      this.http.get<any>(`/api/registrationConfirm?token=${token}`).subscribe(res => {
+      this.http.get<any>(`/api/user/registrationConfirm?token=${token}`).subscribe(res => {
         this.spinnerService.hide();
         this.route.navigate(['/home']);
       }, err => {
         this.spinnerService.hide();
         Swal.fire({
-          title: 'Error',
+          title: 'Error !!',
           type: 'error',
           text: `${err.error.message}`,
           allowOutsideClick: false
@@ -36,5 +38,4 @@ export class ValidateComponent implements OnInit {
       });
     }
   }
-
 }

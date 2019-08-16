@@ -1,7 +1,14 @@
 export class User {
-    id: number;
-    username: string;
-    password: string;
+    userId: string;
     firstName: string;
     lastName: string;
+    password: string;
+    phoneNumber: string;
+    country: string;
+    designation: string;
+    tenantName: string;
+    domain: string;
+    email: string;
+    company: string;
+    department: string;
 }

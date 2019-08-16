@@ -43,9 +43,7 @@ export class AppComponent {
   }
   ];
 
-  constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig) {
-
-  }
+  constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig) { }
 
   @HostListener('click') onClick() {
     if (this.sharedconfig.events.bsDropdown) {

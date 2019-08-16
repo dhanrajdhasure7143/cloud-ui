@@ -2,20 +2,14 @@ import { InjectionToken } from '@angular/core';
 
 export let APP_CONFIG = new InjectionToken('app.config');
 
-export interface EzflowAppConfig {
+export interface AiotalAppConfig {
   portfolioSite: string;
-  apiHost: string;
-  apiURL: string;
-  loopbackHost: string;
-  imagePath: string;
-  isProduction: boolean;
+  apiendpoint: string;
+  tokenendpoint: string;
 }
 
-export const AppConfig: EzflowAppConfig = {
-  portfolioSite: 'https://aiotal.com',
-  apiHost: 'http://ezbotdev.aiotal.in',
-  loopbackHost: '',
-  apiURL: '/aiotal',
-  imagePath: '',
-  isProduction: true
+export const AppConfig: AiotalAppConfig = {
+  portfolioSite: 'http://localhost:52538',
+  apiendpoint: 'http://10.11.0.82:9091',
+  tokenendpoint: 'http://10.11.0.82:9090',
 };

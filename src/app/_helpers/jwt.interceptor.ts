@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.access_token) {
+        if (currentUser && currentUser.access_token && request.url !== '/api/beta/accessToken') {
             request = request.clone({
                 headers: request.headers,
                 setHeaders: {
