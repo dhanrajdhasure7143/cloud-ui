@@ -85,13 +85,13 @@
                 <div class="row">
                   <div class="col-sm-2 country_code">
                     <ng-multiselect-dropdown name="mob_country" id="mob_country" #mob_country="ngModel"
-                      [placeholder]="'Select'" [(ngModel)]="model.phoneNumer" [data]="departments"
+                      [placeholder]="'Select'" [(ngModel)]="model.phoneNumber" [data]="departments"
                       [ngClass]="{'single_sel': itemsShowLimit == 1}" [settings]="dropdownSettings" required>
                     </ng-multiselect-dropdown>
                   </div>
                   <div class="col-sm-10 phone_num">
                     <input type="text" class="form-control" name="phone" id="phone" #phone="ngModel"
-                      [(ngModel)]="model.phoneNumer">
+                      [(ngModel)]="model.phoneNumber">
                   </div>
                 </div>
                 <span *ngIf="((phone.invalid && firstloginform.submitted) || (phone.errors && phone.touched))"
