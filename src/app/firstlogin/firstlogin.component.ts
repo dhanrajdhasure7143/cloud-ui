@@ -35,41 +35,30 @@ export class FirstloginComponent implements OnInit {
   }
 
   onSubmit() {
-    // const userDetails = JSON.parse(JSON.stringify(this.model));
-    // userDetails.country = this.model.country[0];
-    // userDetails.department = this.model.department[0];
-    // this.service.registerUser(userDetails).subscribe(res => {
-    //   sessionStorage.clear();
-    //   localStorage.clear();
-    //   Swal.fire({
-    //     title: 'Success',
-    //     text: `Registration completed successfully !! please click OK to continue`,
-    //     type: 'success',
-    //     showCancelButton: false,
-    //     allowOutsideClick: false
-    //   }).then((result) => {
-    //     if (result.value) {
-    //       this.router.navigate(['/']);
-    //     }
-    //   });
-    // }, err => {
-    //   Swal.fire({
-    //     title: 'Error !!',
-    //     type: 'error',
-    //     text: `${err.error.message}`,
-    //     allowOutsideClick: false
-    //   });
-    // });
-    Swal.fire({
-      title: 'Success',
-      text: `Registration completed successfully !! please click OK to continue`,
-      type: 'success',
-      showCancelButton: false,
-      allowOutsideClick: false
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['/']);
-      }
+    const userDetails = JSON.parse(JSON.stringify(this.model));
+    userDetails.country = this.model.country[0];
+    userDetails.department = this.model.department[0];
+    this.service.registerUser(userDetails).subscribe(res => {
+      sessionStorage.clear();
+      localStorage.clear();
+      Swal.fire({
+        title: 'Success',
+        text: `Registration completed successfully !! please click OK to continue`,
+        type: 'success',
+        showCancelButton: false,
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['/']);
+        }
+      });
+    }, err => {
+      Swal.fire({
+        title: 'Error !!',
+        type: 'error',
+        text: `${err.error.message}`,
+        allowOutsideClick: false
+      });
     });
   }
 
