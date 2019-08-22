@@ -28,7 +28,7 @@ export class ValidateComponent implements OnInit {
         Swal.fire({
           title: 'Error !!',
           type: 'error',
-          text: `${err.error.message}`,
+          text: `Link expired, Please contact support team !!`,
           allowOutsideClick: false
         }).then((result) => {
           if (result.value) {

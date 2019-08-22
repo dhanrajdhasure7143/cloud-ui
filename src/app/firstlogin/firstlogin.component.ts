@@ -56,7 +56,7 @@ export class FirstloginComponent implements OnInit {
       Swal.fire({
         title: 'Error !!',
         type: 'error',
-        text: `${err.error.message}`,
+        text: `${err.error.message} ! Please check your user name`,
         allowOutsideClick: false
       });
     });

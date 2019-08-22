@@ -6,6 +6,7 @@ import { SessionService } from './../../_services/session/session';
 import { first } from 'rxjs/operators';
 import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
+import { LoginService } from '../_services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private session: SessionService
+    private session: SessionService,
+    private loginService: LoginService
   ) {
     this.session.stopWatching();
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -90,7 +92,7 @@ export class LoginComponent implements OnInit {
           this.authenticate();
         },
         error => {
-          this.error = error.errorDetails;
+          this.error = error.error.errorDetails;
           this.loading = false;
         }
       );
@@ -134,6 +136,14 @@ export class LoginComponent implements OnInit {
 
   requestDemo() {
     location.href = this.config.portfolioSite;
+  }
+
+  googleLogin() {
+    this.loginService.googleLogin().subscribe();
+  }
+
+  azureLogin() {
+    this.loginService.azureLogin().subscribe();
   }
 
 }

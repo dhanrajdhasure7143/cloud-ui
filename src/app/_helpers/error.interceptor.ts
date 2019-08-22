@@ -7,11 +7,13 @@ import { AuthenticationService } from '../_services';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
+    request: HttpRequest<any>;
     constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        this.request = request;
         return next.handle(request).pipe(catchError(err => {
-            if (err.message.indexOf('oauth') < 0 && err.status === 401) {
+            if (this.request.url.indexOf('/api/login/beta/accessToken') < 0 && err.message.indexOf('oauth') < 0 && err.status === 401) {
                 this.authenticationService.logout();
                 this.authenticationService.loginExpired();
             } else if (err.status === 504)  {
