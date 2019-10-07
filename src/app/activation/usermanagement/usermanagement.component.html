@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="col-md-12">
+
+  </div>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="pull-left">
+          <button class="btn btn-primary" (click)="onclickAdd(template)">Modify</button>
+        </div>
+        <div class="pull-right">
+        <div class="form-group form-inline">
+          <label for="size" class="">To Show &nbsp;</label>
+          <select class="form-control" [(ngModel)]="recordsSize" (change)="showRecords(recordsSize)">
+            <option value="5">5 Records</option>
+            <option value="10">10 Records</option>
+            <option value="15">10 Records</option>
+            <option value="20">20 Records</option>
+            <option value="25">25 Records</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+        <ag-grid-angular  [rowData]="rowData" class="ag-theme-blue"
+        [columnDefs]="columnDefs"  [rowHeight]="35" 
+        [rowSelection]="rowSelection" [rowDeselection]="true" [enableSorting]="true" [enableColResize]="true"
+        [isRowSelectable]="isRowSelectable" [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)"
+        (rowSelected)="onRowSelected($event)" (selectionChanged)="onSelectionChanged($event)"
+        [paginationPageSize]="recordsSize" [pagination]="true" [suppressMenuHide]="true"
+        [suppressRowClickSelection]="true" [suppressCellSelection]="true" [suppressDragLeaveHidesColumns]="true">
+ </ag-grid-angular>
+     <!-- <ag-grid-angular style="width: 100%; height: 920px;" class="ag-theme-blue" [rowData]="rowData" [pagination]="true"
+        [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [enableFilter]="true"
+        [enableSorting]="true" (rowSelected)="onRowSelected($event)" (selectionChanged)="onSelectionChanged($event)"
+        [excelStyles]="excelStyles"> 
+      </ag-grid-angular>-->
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Role Update</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="userName">User Name</label>
+      <input name="userName" #userName="ngModel" class="form-control" type="text" [(ngModel)]="modifyModel.userId" disabled />
+    </div>
+    <div class="form-group">
+      <label for="roleName">Role Name</label>
+       <select class="form-control" name="roleName" [(ngModel)]="modifyModel.roleName" placeholder="Select Role Name" required>
+       <option disabled selected>Please Select role </option> 
+        <option *ngFor="let item of rolesList">{{item}}</option>
+      </select>
+    </div>
+    <button type="submit" (click)="onclickUpdate()" >Update</button>
+  </div>
+</ng-template>
+</div>

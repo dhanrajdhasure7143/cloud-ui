@@ -3,6 +3,7 @@ import { ActivationComponent } from './activation.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlandetailsComponent } from './plandetails/plandetails.component';
+import { UsermanagementComponent } from './usermanagement/usermanagement.component';
 
 const routes: Routes = [{
   path: '',
@@ -16,7 +17,11 @@ const routes: Routes = [{
   }, {
     path: 'payment',
     loadChildren: './payment/payment.module#PaymentModule'
-  }]
+  }, {
+    path: 'usermanagement',
+    component: UsermanagementComponent
+  }
+]
 }];
 
 @NgModule({
