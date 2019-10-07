@@ -13,5 +13,5 @@ export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'http://localhost:52538',
   apiendpoint: 'http://localhost:9090',
   tokenendpoint: 'http://localhost:9797',
-  socialAndWorkLogin: 'https://kube.aiotaldomain.com:9090'
+  socialAndWorkLogin: 'http://localhost:9797'
 };
