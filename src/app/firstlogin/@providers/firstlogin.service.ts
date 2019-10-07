@@ -17,5 +17,7 @@ export class FirstloginService {
   registerUser(user: User): Observable<any> {
     return this.http.post<any>(`/api/user/registrationcomplete`, user);
   }
-
+  verifyToken(token: any): Observable<any> {
+    return this.http.get<any>(`/api/user/registrationConfirm?token=${token}`);
+  }
 }
