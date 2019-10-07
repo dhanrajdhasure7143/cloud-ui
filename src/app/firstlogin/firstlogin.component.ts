@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { User } from './../_models/user';
 import { APP_CONFIG } from './../app.config';
 import { FirstloginService } from './@providers/firstlogin.service';
@@ -17,9 +17,15 @@ export class FirstloginComponent implements OnInit {
   departments = [];
   itemsShowLimit = 1;
 
-  constructor(@Inject(APP_CONFIG) private config, private router: Router, private service: FirstloginService) { }
+  constructor(@Inject(APP_CONFIG) private config, private router: Router, private service: FirstloginService,private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      var token=params['token']
+     this.service.verifyToken(token).subscribe(response=>{this.onSuccessOfVerifyToken(response),err=>{
+       this.router.navigate['/user']
+     }})
+    });
     this.model = new User();
     this.departments = ['India', 'Canada', 'U.S.A'];
     this.dropdownSettings = {
@@ -32,6 +38,16 @@ export class FirstloginComponent implements OnInit {
       allowSearchFilter: true,
       closeDropDownOnSelection: true
     };
+  }
+  onSuccessOfVerifyToken(response: any) {
+  if(response){
+    if(response.message==='Token Invalid'){
+      this.router.navigate(['/user']);
+    }else {
+      //TODO:success data handle
+    }
+  }
+   
   }
 
   onSubmit() {
