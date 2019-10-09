@@ -12,7 +12,21 @@ export class JwtInterceptor implements HttpInterceptor {
                 setHeaders: {
                     userName: localStorage.getItem('userName'),
                     Authorization: `Bearer ${currentUser.access_token}`,
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                }
+            });
+        } else {
+            request = request.clone({
+                headers: request.headers,
+                body: request.body,
+                setHeaders: {
+                    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
                 }
             });
         }
