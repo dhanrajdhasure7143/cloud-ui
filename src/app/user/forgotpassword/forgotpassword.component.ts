@@ -3,6 +3,7 @@ import { Component, OnInit, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { APP_CONFIG } from './../../app.config';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({ templateUrl: 'forgotpassword.component.html',
 styleUrls: ['forgotpassword.component.scss'],
@@ -29,8 +30,29 @@ export class ForgotpasswordComponent implements OnInit {
           return;
       }
       this.forgotpasswordser.forgotPassword({email: this.f.email.value}).subscribe(res => {
-       alert('reset password link is sent to your mail  !')
-        this.router.navigate['/user']
+        console.log(res);
+        if(res.message ==='Password reset mail sent successfully'){
+          Swal.fire({
+            type: 'success',
+            title: 'Reset password link is sent to your mail',
+            // showConfirmButton: true,
+            
+          }).then(()=>{
+           this.router.navigate(['/user'])
+          })
+        } else {
+          Swal.fire({
+            type: 'error',
+            title: res.message,
+            
+            
+          });
+        }
+
+       
+      
+      //  alert('reset password link is sent to your mail  !')
+       
         });
 
     //   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.emailForm.value))

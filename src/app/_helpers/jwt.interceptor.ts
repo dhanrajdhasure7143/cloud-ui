@@ -23,6 +23,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 headers: request.headers,
                 body: request.body,
                 setHeaders: {
+                  //  Authorization: `Bearer ${currentUser.access_token}`,
                     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Credentials': 'true',

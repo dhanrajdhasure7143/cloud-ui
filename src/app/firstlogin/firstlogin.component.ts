@@ -59,7 +59,8 @@ export class FirstloginComponent implements OnInit {
   onSubmit() {
     const userDetails = JSON.parse(JSON.stringify(this.model));
     userDetails.country = this.model.country[0];
-    userDetails.department = this.model.department[0];
+    userDetails.userId = this.decodedToken;
+    //userDetails.department = this.model.department[0];
     this.service.registerUser(userDetails).subscribe(res => {
       sessionStorage.clear();
       localStorage.clear();
