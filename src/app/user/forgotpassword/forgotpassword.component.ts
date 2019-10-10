@@ -2,6 +2,7 @@ import { ForgotpasswordService } from './../_services/forgotpassword.service';
 import { Component, OnInit, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { APP_CONFIG } from './../../app.config';
+import { Router } from '@angular/router';
 
 @Component({ templateUrl: 'forgotpassword.component.html',
 styleUrls: ['forgotpassword.component.scss'],
@@ -12,7 +13,7 @@ export class ForgotpasswordComponent implements OnInit {
   submitted = false;
   error;
 
-  constructor(@Inject(APP_CONFIG) private config, private formBuilder: FormBuilder,  private forgotpasswordser: ForgotpasswordService) { }
+  constructor(@Inject(APP_CONFIG) private config, private router: Router, private formBuilder: FormBuilder,  private forgotpasswordser: ForgotpasswordService) { }
 
   ngOnInit() {
       this.emailForm = this.formBuilder.group({
@@ -28,7 +29,8 @@ export class ForgotpasswordComponent implements OnInit {
           return;
       }
       this.forgotpasswordser.forgotPassword({email: this.f.email.value}).subscribe(res => {
-        console.log('test ...');
+       alert('reset password link is sent to your mail  !')
+        this.router.navigate['/user']
         });
 
     //   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.emailForm.value))
