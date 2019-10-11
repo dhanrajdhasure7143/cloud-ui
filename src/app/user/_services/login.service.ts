@@ -12,11 +12,11 @@ export class LoginService {
   }
 
   googleLogin(): Observable<any> {
-    return this.httpclient.get<any>('/api/oauthRedirect?authProvider=google&redirectPath=http://localhost:4200/#/activation');
+    return this.httpclient.get<any>('/api/socialLogin?authProvider=google&redirectPath=http://localhost:4200/#/activation');
   }
 
   azureLogin(): Observable<any> {
-    return this.httpclient.get<any>('/api/oauthRedirect?authProvider=azure&redirectPath=http://localhost:4200/#/activation');
+    return this.httpclient.get<any>('/api/socialLogin?authProvider=azure&redirectPath=http://localhost:4200/#/activation');
   }
 
 }

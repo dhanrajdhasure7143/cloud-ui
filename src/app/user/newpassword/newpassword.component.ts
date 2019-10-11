@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms'
 import { APP_CONFIG } from './../../app.config';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -62,10 +63,22 @@ export class NewpasswordComponent implements OnInit {
 }
   onSuccessOfResetPassword(res: any) {
     if(res){
-      if(res.message !== 'Password reset is successful'){
-        this.router.navigate(['/newpassword']);
+      if(res.message === 'Password reset is successful'){
+        Swal.fire({
+          type: 'success',
+          title: 'Your password reset is successful',
+          // showConfirmButton: true,
+          
+        }).then(()=>{
+         this.router.navigate(['/user'])
+        })
+        
       }else {
-        this.router.navigate(['/user']);
+        Swal.fire({
+          type: 'error',
+          title: res.message,
+         });
+        //this.router.navigate(['/user']);
       }
     }
   }
