@@ -53,41 +53,72 @@
             </div>
             <div class="form-group col-sm-6">
               <label for="company">Company</label>
-              <input type="text" id="company" #company="ngModel" class="form-control" [(ngModel)]="model.company" [ngModelOptions]="{standalone: true}" required>
+              <input type="text" id="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
+                [ngModelOptions]="{standalone: true}" required>
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
                 class='fa fa-info-circle errspan'> Company is required </span>
             </div>
-            <!--<div class="form-group col-sm-6">
-              <label for="department">Department</label>
-              <ng-multiselect-dropdown name="department" id="department" #department="ngModel" [placeholder]="'Select'"
-                [(ngModel)]="model.department" [data]="departments" [ngClass]="{'single_sel': itemsShowLimit == 1}"
-                [settings]="dropdownSettings" required>
-              </ng-multiselect-dropdown>
-              <span
-                *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
-                class='fa fa-info-circle errspan'> Department is required </span>
-            </div>-->
+            <div class=" col-md-6 form-group">
+              <label>Select Department</label>
+              <select class="form-control" (change)="onChangeDepartment($event.target.value)" [(ngModel)]= "selectedvalue">
+                <option *ngFor="let department of departments; let i = index" value="{{i}}">{{department}}</option>
+                <option value="others">Others</option>
+              </select>
+            </div>
+            <div class=" col-md-6 form-group">
+              <label>Select Country</label>
+              <select class="form-control" (change)="onChangeCountry($event.target.value)">
+                <option *ngFor="let country of countryInfo; let i = index" value="{{i}}">{{country.CountryName}}
+                </option>
+              </select>
+            </div>
+            <div  class=" col-md-6 form-group" *ngIf="college" >
+                <label for="name">Enter Department Name:</label>
+                <input type="text" class="form-control" id="name" ngModel name="other_department_name" required>
+              </div>
+            <div class=" col-md-6 form-group">
+              <label>Select State</label>
+              <select class="form-control" (change)="onChangeState($event.target.value)">
+                <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
+                <option *ngFor="let state of stateInfo; let j = index" value="{{j}}">{{state.StateName}}</option>
+              </select>
+            </div>
 
+            <div class=" col-md-6 form-group">
+              <label>Select City</label>
+              <select class="form-control">
+                <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
+                <option *ngFor="let city of cityInfo; let k = index" value="{{k}}">{{city}}</option>
+              </select>
+            </div>
 
             <div class="form-group col-sm-6">
-              <label for="country">Country</label>
-              <ng-multiselect-dropdown name="country" id="country" #country="ngModel" [placeholder]="'Select'"
-                [(ngModel)]="model.country" [data]="departments" [ngClass]="{'single_sel': itemsShowLimit == 1}"
-                [settings]="dropdownSettings" required>
-              </ng-multiselect-dropdown>
-              <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
-                class='fa fa-info-circle errspan'> Country is required </span>
+              <label for="zipCode">Zip Code</label>
+              <input type="text" id="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipCode"
+                [ngModelOptions]="{standalone: true}" required>
+              <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
+                class='fa fa-info-circle errspan'> Zip Code is required </span>
             </div>
 
             <div class="form-group col-sm-6">
               <label for="phone">Phone</label>
+              <div>
+                <input style="width: 100%" type="text" class="form-control" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
+                  (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
+                  (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" />
+              </div>
+            </div>
+
+
+            <!--<div class="form-group col-sm-6">
+              <label for="phone">Phone</label>
               <div class="col-sm-12">
                 <div class="row">
                   <div class="col-sm-2 country_code">
-                   <!-- <ng-multiselect-dropdown name="mob_country" id="mob_country" #mob_country="ngModel"
+                    <ng-multiselect-dropdown name="mob_country" id="mob_country" #mob_country="ngModel"
                       [placeholder]="'Select'" [(ngModel)]="model.country" [data]="departments"
                       [ngClass]="{'single_sel': itemsShowLimit == 1}" [settings]="dropdownSettings" required>
-                    </ng-multiselect-dropdown>-->
+                    </ng-multiselect-dropdown>
                     <input list="countryCode" id="">
                     <datalist id="countryCode">
                       <option data-countryCode="IN" value="91" selected>India (+91)</option>
@@ -104,7 +135,7 @@
                 <span *ngIf="((phone.invalid && firstloginform.submitted) || (phone.errors && phone.touched))"
                   class='fa fa-info-circle errspan'> County Code & Mobile is required </span>
               </div>
-            </div>
+            </div>-->
 
             <!--<div class="form-group col-sm-6">
               <label for="userName">User Name</label>
