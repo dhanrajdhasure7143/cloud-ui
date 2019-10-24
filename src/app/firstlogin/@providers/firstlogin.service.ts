@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ContentfulService } from './../../contentful/services/contentful.service';
 import { User } from './../../_models/user';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +21,12 @@ export class FirstloginService {
   verifyToken(token: any): Observable<any> {
     return this.http.get<any>(`/api/user/registrationConfirm?token=${token}`);
   }
+  getAllDepartments(): Observable<any> {
+    return this.http.get<any>(`/api/user/departments`);
+  }
 
+  allCountries(): Observable<any>{
+    return this.http.get<any>(`/cloud-ui/src/assets/jsons/countries.json`);  
+  }
 
 }
