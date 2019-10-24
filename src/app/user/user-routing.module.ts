@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { NewpasswordComponent } from './newpassword/newpassword.component';
+import { SocialLoginComponent } from './social-login/social-login.component';
 
 const routes: Routes = [{
   path: '',
@@ -19,6 +20,10 @@ const routes: Routes = [{
   {
     path: 'newpassword',
     component: NewpasswordComponent
+  },
+  {
+    path: 'socialLogin',
+    component: SocialLoginComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

@@ -12,10 +12,10 @@ export class JwtInterceptor implements HttpInterceptor {
                 setHeaders: {
                     userName: localStorage.getItem('userName'),
                     Authorization: `Bearer ${currentUser.access_token}`,
-                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Credentials': 'true',
-                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                    // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+                    // 'Access-Control-Allow-Origin': '*',
+                    // 'Access-Control-Allow-Credentials': 'true',
+                    // 'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
                 }
             });
         } else {
@@ -24,10 +24,10 @@ export class JwtInterceptor implements HttpInterceptor {
                 body: request.body,
                 setHeaders: {
                   //  Authorization: `Bearer ${currentUser.access_token}`,
-                    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Credentials': 'true',
-                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                    // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+                    // 'Access-Control-Allow-Origin': '*',
+                    // 'Access-Control-Allow-Credentials': 'true',
+                    // 'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
                 }
             });
         }

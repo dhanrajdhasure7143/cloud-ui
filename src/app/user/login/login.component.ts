@@ -145,5 +145,5 @@ export class LoginComponent implements OnInit {
   azureLogin() {
     this.loginService.azureLogin().subscribe();
   }
-
+  
 }

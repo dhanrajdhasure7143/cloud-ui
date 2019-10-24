@@ -60,14 +60,18 @@
             
               <label class="col-12 text-center">or Login through</label>
               <div class="col-6 text-center">
-                <button type="button" class="btn-buttons" (click)="googleLogin()">
+                 <!-- <button type="button" class="btn-buttons" a href="http://localhost:9797/oauth2/authorize-client/google">
                   <img src="assets/login icons/google.svg" class="buuton-icons">Google
-                </button>
+                </button>  -->
+                <a class="btn-buttons" href="https://kube.aiotaldomain.com:9090/api/socialLogin?authProvider=google&redirectPath=https://10.11.0.82:4200/">
+                  <img src="assets/login icons/google.svg" class="buuton-icons"/>Google</a> 
               </div>
               <div class="col-6 text-center" >
-                <button type="button" class="btn-buttons" (click)="azureLogin()">
+                <!-- <button type="button" class="btn-buttons" (click)="azureLogin()">
                   <img src="assets/login icons/office.svg" class="buuton-icons"><label >Office 365</label>
-                </button>
+                </button> -->
+                <a class="btn-buttons" href="https://10.11.0.82:9090/api/socialLogin?authProvider=azure&redirectPath=https://10.11.0.82:4200/#/user">
+                  <img src="assets/login icons/office.svg" class="buuton-icons"/>Office</a> 
               </div>
             </div>
 

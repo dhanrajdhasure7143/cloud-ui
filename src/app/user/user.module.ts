@@ -8,10 +8,11 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { NewpasswordComponent } from './newpassword/newpassword.component';
 import { CompareValidatorDirective } from './shared/compare-validator.directive';
+import { SocialLoginComponent } from './social-login/social-login.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective],
+  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
