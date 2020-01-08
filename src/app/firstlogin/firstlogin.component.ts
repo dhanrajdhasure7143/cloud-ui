@@ -26,6 +26,7 @@ export class FirstloginComponent implements OnInit {
   cityInfo: any[] = [];
   selectedvalue: string = '';
   college: boolean = true;
+  submitflag:boolean=false;
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, private service: FirstloginService,private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -33,7 +34,10 @@ export class FirstloginComponent implements OnInit {
       this.decodedToken = Base64.decode(token)
       console.log("decoded token = "+this.decodedToken);
      this.service.verifyToken(token).subscribe(response=>{this.onSuccessOfVerifyToken(response),err=>{
-       this.router.navigate['/user']
+      
+       
+      this.router.navigate['/user']
+       
      }})
     });
      }
@@ -69,8 +73,11 @@ export class FirstloginComponent implements OnInit {
     }
   }
   onChangeCountry(countryValue) {
+    this.model.country = this.countryInfo[countryValue].CountryName;
+    
     this.stateInfo=this.countryInfo[countryValue].States;
-    this.cityInfo=this.stateInfo[0].Cities;
+    console.log("country name======", this.countryInfo[countryValue].CountryName)
+    //this.cityInfo=this.stateInfo[0].Cities;
     console.log(this.cityInfo);
   }
 
@@ -80,7 +87,7 @@ export class FirstloginComponent implements OnInit {
   }
   onSuccessOfVerifyToken(response: any) {
     if(response){
-      if(response.message==='Token Invalid'){
+      if(response.message==='Token Invalid' || response.message==='Token Expired'){
         this.router.navigate(['/user']);
       }else {
         //TODO:success data handle
@@ -88,18 +95,27 @@ export class FirstloginComponent implements OnInit {
     }
      
     }
+    ondepartment(event){
+      console.log("event------>",event)
+
+    }
   
   onSubmit() {
+    this.submitflag=true;
     const userDetails = JSON.parse(JSON.stringify(this.model));
-    userDetails.country = this.model.country[0];
+    
+    //localStorage.setItem('phoneNumber',userDetails.phoneNumber);
+    //localStorage.setItem('company',userDetails.company);
+   // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
     //userDetails.department = this.model.department[0];
+    console.log("User register details------- ", userDetails)
     this.service.registerUser(userDetails).subscribe(res => {
       sessionStorage.clear();
       localStorage.clear();
       Swal.fire({
-        title: 'Success',
-        text: `Registration completed successfully !! please click OK to continue`,
+        title: 'Success!',
+        text: `Registration completed successfully.`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: false
@@ -110,7 +126,7 @@ export class FirstloginComponent implements OnInit {
       });
     }, err => {
       Swal.fire({
-        title: 'Error !!',
+        title: 'Error!',
         type: 'error',
         text: `${err.error.message} ! Please check your user name`,
         allowOutsideClick: false
@@ -122,5 +138,18 @@ export class FirstloginComponent implements OnInit {
     localStorage.clear();
     sessionStorage.clear();
     location.href = this.config.portfolioSite;
+  }
+  onKeydown(event){
+    console.log(event.key);
+    
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
+    let temp =numArray.includes(event.key); //gives true or false
+   if(!temp){
+    event.preventDefault();
+   }
+    
+   
+   
+    
   }
 }

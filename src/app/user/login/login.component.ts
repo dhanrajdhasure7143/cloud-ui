@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
+import { SharedDataService } from 'src/app/_services/shared-data.service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private session: SessionService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private sharedData: SharedDataService
   ) {
     this.session.stopWatching();
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -72,9 +74,13 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     this.session.stopWatching();
 
+ 
+
     if (this.loginForm.invalid) {
       return;
     }
+
+ 
 
     this.loading = true;
     this.authenticationService
@@ -86,16 +92,41 @@ export class LoginComponent implements OnInit {
             this.set('username', this.f.username.value, {});
             this.set('password', this.f.password.value, {});
           }
-
           this.loading = false;
-          this.session.startWatching();
+          this.session.startWatching(); 
+
+ 
+
+          // user details based on userId
+          this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
+
+ 
+
           this.authenticate();
         },
         error => {
-          this.error = error.error.errorDetails;
+          this.error = "Email or Password is invalid.";
           this.loading = false;
-        }
-      );
+        },
+        
+      );        
+  }
+
+ 
+
+  checkSuccessCallback(data:any){
+    this.sharedData.setLoggedinUserData(data.firstName);
+    this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
+    console.log("checkSuccessCallback--------login component", data);
+    localStorage.setItem('firstName',data.firstName);
+    localStorage.setItem('lastName',data.lastName);
+    localStorage.setItem('userName',data.userId);
+    localStorage.setItem('tenantName',data.tenantId.name);
+    localStorage.setItem('phoneNumber',data.phoneNumber);
+    localStorage.setItem('company', data.company);
+    localStorage.setItem('designation',data.designation);
+    localStorage.setItem('country',data.country);
+    localStorage.setItem('department', data.department);
   }
 
 

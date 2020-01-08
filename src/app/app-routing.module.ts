@@ -27,7 +27,8 @@ const routes: Routes = [{
   path: '',
   redirectTo: 'user',
   pathMatch: 'full'
-}];
+},
+];
 
 const config: ExtraOptions = {
   useHash: true

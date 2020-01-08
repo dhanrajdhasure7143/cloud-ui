@@ -6,12 +6,18 @@ import { HomeComponent } from './home/home.component';
 import { UserdetailsComponent } from './userdetails/userdetails.component';
 import { SharedModule } from '../shared/shared.module';
 
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditprofileComponent } from './editprofile/editprofile.component';
+
 @NgModule({
-  declarations: [HomeComponent, UserdetailsComponent],
+  declarations: [HomeComponent, UserdetailsComponent, EditprofileComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class HomeModule { }

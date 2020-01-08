@@ -24,7 +24,7 @@
             <div class="form-group col-sm-6">
               <label for="firstName">First Name</label>
               <input type="text" id="firstName" name="firstName" #firstName="ngModel" class="form-control"
-                [(ngModel)]="model.firstName" required>
+                [(ngModel)]="model.firstName" ngModel maxlength="20" required>
               <span *ngIf="((firstName.invalid && firstloginform.submitted)|| (firstName.errors && firstName.touched))"
                 class='fa fa-info-circle errspan'> First Name is required </span>
             </div>
@@ -32,7 +32,7 @@
             <div class="form-group col-sm-6">
               <label for="lastName">Last Name</label>
               <input type="text" name="lastName" id="lastName" #lastName="ngModel" class="form-control"
-                [(ngModel)]="model.lastName" required>
+                [(ngModel)]="model.lastName" ngModel maxlength="20" required>
               <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
                 class='fa fa-info-circle errspan'> Last Name is required </span>
             </div>
@@ -40,72 +40,84 @@
             <div class="form-group col-sm-6">
               <label for="jobTitle">Job Title</label>
               <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" class="form-control"
-                [(ngModel)]="model.designation" required>
+                [(ngModel)]="model.designation" ngModel maxlength="20" required>
               <span *ngIf="((jobTitle.invalid && firstloginform.submitted)|| (jobTitle.errors && jobTitle.touched))"
                 class='fa fa-info-circle errspan'> Job Title is required </span>
             </div>
             <div class="form-group col-sm-6">
               <label for="email">Email</label>
               <input type="email" id="email" #email="ngModel" class="form-control" [(ngModel)]="decodedToken" required
-                [ngModelOptions]="{standalone: true}" disabled>
+                [ngModelOptions]="{standalone: true}" ngModel maxlength="30" disabled>
               <span *ngIf="((email.invalid && firstloginform.submitted)|| (email.errors && email.touched))"
                 class='fa fa-info-circle errspan'> Email is required </span>
             </div>
             <div class="form-group col-sm-6">
               <label for="company">Company</label>
               <input type="text" id="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
-                [ngModelOptions]="{standalone: true}" required>
+                [ngModelOptions]="{standalone: true}" ngModel maxlength="30" required>
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
                 class='fa fa-info-circle errspan'> Company is required </span>
             </div>
             <div class=" col-md-6 form-group">
-              <label>Select Department</label>
-              <select class="form-control" (change)="onChangeDepartment($event.target.value)" [(ngModel)]= "selectedvalue">
-                <option *ngFor="let department of departments; let i = index" value="{{i}}">{{department}}</option>
-                <option value="others">Others</option>
-              </select>
-            </div>
+                <label>Department</label>
+                <select class="form-control" (change)="onChangeDepartment($event.target.value)" #selectedvalue="ngModel" [(ngModel)]="model.department"
+                [ngModelOptions]="{standalone: true}">
+                  <!-- <option *ngFor="let department of departments; let i = index" value="{{i}}">{{department}}</option> -->
+                  <option [value]="undefined" disabled hidden>Select Department</option>
+                  <option value="hr">HR</option>
+                  <option value="development">Development</option>
+                  <option value="finance">Finance</option> 
+                  <option value="infra">Infra</option>
+                  <option value="testing">Testing</option>
+                  <option value="pmo">PMO</option>
+                  <option value="others">Others</option>
+                </select>
+              </div>
+              <div  class=" col-md-6 form-group" *ngIf="college" >
+                <label for="name">Department Name:</label>
+                <input type="text" class="form-control" id="name" ngModel maxlength="20" placeholder="Enter Department Name:"ngModel name="other_department_name" required>
+              </div>
+  
             <div class=" col-md-6 form-group">
-              <label>Select Country</label>
-              <select class="form-control" (change)="onChangeCountry($event.target.value)">
+              <label>Country</label>
+              <select class="form-control" (change)="onChangeCountry($event.target.value)" #country="ngModel" [(ngModel)]="model.country" required>
+               <!-- <option value=" "> select</option>  -->
+               <option hidden disabled [selected]=true>Select Country</option>
                 <option *ngFor="let country of countryInfo; let i = index" value="{{i}}">{{country.CountryName}}
                 </option>
               </select>
             </div>
-            <div  class=" col-md-6 form-group" *ngIf="college" >
-                <label for="name">Enter Department Name:</label>
-                <input type="text" class="form-control" id="name" ngModel name="other_department_name" required>
-              </div>
+
             <div class=" col-md-6 form-group">
-              <label>Select State</label>
+              <label>State</label>
               <select class="form-control" (change)="onChangeState($event.target.value)">
-                <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
+                <option *ngIf="stateInfo == ''" value="-1">Select State</option>
                 <option *ngFor="let state of stateInfo; let j = index" value="{{j}}">{{state.StateName}}</option>
               </select>
             </div>
 
             <div class=" col-md-6 form-group">
-              <label>Select City</label>
+              <label>City</label>
               <select class="form-control">
-                <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
+                <option *ngIf="cityInfo == ''" value="-1">Select CIty</option>
                 <option *ngFor="let city of cityInfo; let k = index" value="{{k}}">{{city}}</option>
               </select>
             </div>
 
             <div class="form-group col-sm-6">
               <label for="zipCode">Zip Code</label>
-              <input type="text" id="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipCode"
-                [ngModelOptions]="{standalone: true}" required>
+              <input type="text" (keydown)="onKeydown($event)"  id="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipCode"
+                [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==10) return false;" required >
               <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
                 class='fa fa-info-circle errspan'> Zip Code is required </span>
             </div>
 
             <div class="form-group col-sm-6">
-              <label for="phone">Phone</label>
+              <label for="phoneNumber">Phone</label>
               <div>
-                <input style="width: 100%" type="text" class="form-control" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
+               <input style="width: 100%" type="text" (keydown)="onKeydown($event)"  id="phoneNumber" class="form-control" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
                   (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
-                  (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" />
+                  (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==15) return false;" required>
               </div>
             </div>
 
@@ -148,13 +160,14 @@
             <div class="form-group col-sm-6">
               <label for="password">Password</label>
               <input type="password" id="password" name="password" #password="ngModel" class="form-control"
-                [(ngModel)]="model.password" required>
+                [(ngModel)]="model.password" [maxLength]="12" required>
               <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))"
                 class='fa fa-info-circle errspan'> Password is required </span>
             </div>
             <div class="form-group col-sm-12 continue_btn">
-              <button type="button" class="btn btn-back float-left" (click)="onCancel()">Cancel</button>
-              <button type="submit" class="btn btn-continue float-right">Continue</button>
+             
+              <button type="submit" class="btn btn-continue float-right"  [disabled]="this.submitflag==true">Register</button>
+              <button type="button" class="btn btn-back float-right" (click)="onCancel()">Cancel</button>
             </div>
           </div>
         </form>

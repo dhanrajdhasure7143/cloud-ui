@@ -1,11 +1,18 @@
 import { AppService } from './app.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import swal from 'sweetalert2';
-import Swal from 'sweetalert2'
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+        })
+};
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+  private apiData = new BehaviorSubject<any>(null);
+   public apiData$ = this.apiData.asObservable();
+   
     constructor(private http: HttpClient, private appService: AppService) { }
 
     login(username: string, password: string) {
@@ -66,5 +73,10 @@ export class AuthenticationService {
 
     get getHomeRef() {
       return this.appService.homeRef;
+    }
+    userDetails(username: string): Observable<any[]> {
+      
+      return this.http.get<any[]>('/api/user/details?userId='+username, httpOptions);
+     
     }
 }

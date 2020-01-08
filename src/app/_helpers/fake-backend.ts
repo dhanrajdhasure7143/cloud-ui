@@ -12,6 +12,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
       let apiendpoint = this.config.apiendpoint;
       let tokenendpoint = this.config.tokenendpoint;
       let socialAndWorkLogin = this.config.socialAndWorkLogin;
+      
 
       if (!localStorage.getItem('userName')) {
         //localStorage.setItem('userName', req.body.username);
@@ -23,20 +24,21 @@ export class BackendURLInterceptor implements HttpInterceptor {
         socialAndWorkLogin = socialAndWorkLogin + '/';
       }
 
-      if ((req.url.indexOf('google') < 0 && req.url.indexOf('azure') < 0) && req.url !== '/api/login/beta/accessToken') {
+      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0) {
         req = req.clone({
          url: apiendpoint + req.url,
           body: req.body,
           headers: req.headers
         });
-      } else if (req.url.indexOf('google') > -1 || req.url.indexOf('azure') > -1 ) {
+      } else if (req.url.indexOf('CrudService') > -1 || req.url.indexOf('ezBotStudio') > -1 ) {
         req = req.clone({
           //url : url + req.url,
           url: socialAndWorkLogin + req.url,
           body: req.body,
           headers: req.headers
         });
-      } else {
+      }
+      else {
         req = req.clone({
           url: tokenendpoint + req.url,
           body: req.body,

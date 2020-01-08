@@ -21,7 +21,7 @@
                 </div>
                  <div class="col-sm-6">
                     <div class="plans_details">
-                  <label class="plans_info">15 Days</label>
+                  <label class="plans_info">30 Days</label>
                   <label class="plans_name">Trail Remaining</label>
                 </div>
                </div>
@@ -29,26 +29,27 @@
 
                 <div class="col-sm-6">
                     <div class="plans_details">
-                    <label class="plans_info">12/06/2019</label>
+                    <label class="plans_info">{{ today | date : ' dd/MM/yyyy' }}</label>
                     <label class="plans_name">Activation Date</label>
                   </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="plans_details">
-                    <label class="plans_info">-</label>
+                    <label class="plans_info">{{ date |date : ' dd/MM/yyyy'  }}</label>
                     <label class="plans_name">Next Billing Date</label>
+                    
                   </div>
               </div>
 
               <div class="col-sm-12">
 
-                  <progressbar [value]="55"></progressbar>
+                  <progressbar [value]="0"></progressbar>
                   <div class="row">
                   <div class="col-sm-6">
                       <small>Bots</small>
                   </div>
                   <div class="col-sm-6 text-right">
-                      <small>5/10</small>
+                      <small>0/10</small>
                   </div>
                 </div>
 

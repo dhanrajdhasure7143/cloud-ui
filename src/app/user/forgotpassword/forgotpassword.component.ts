@@ -33,8 +33,11 @@ export class ForgotpasswordComponent implements OnInit {
         console.log(res);
         if(res.message ==='Password reset mail sent successfully'){
           Swal.fire({
+            title: 'Success!',
+            text: `Reset password link has been sent to your email successfully.`,
             type: 'success',
-            title: 'Reset password link is sent to your mail',
+            
+           
             // showConfirmButton: true,
             
           }).then(()=>{
@@ -43,7 +46,8 @@ export class ForgotpasswordComponent implements OnInit {
         } else {
           Swal.fire({
             type: 'error',
-            title: res.message,
+            title:"Error!",
+            text: "User Not Found."
             
             
           });

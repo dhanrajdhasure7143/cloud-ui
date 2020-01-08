@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <a [routerLink]="['/user/forgotpassword']" class="for_pass float-right">Forgot Password&#63;</a>
+             
               <input type="password" formControlName="password" #password class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
@@ -33,7 +33,8 @@
             </div> -->
             <div class="form-group">
               <input type="checkbox" class="save_cre" formControlName="rememberme" #rememberme class="form-controlcheck" />&nbsp;
-              <small class="text-muted">show password</small>
+              <small class="text-muted">Show Password</small>
+              <a [routerLink]="['/user/forgotpassword']" class="for_pass float-right">Forgot Password&#63;</a>
             </div>
             <div class="form-group">
               <button [disabled]="loading" class="hoverable btn-block raised button btn btn-hero-primary btn-signin">
@@ -59,18 +60,20 @@
             <div class="form-group row grp-buttons">
             
               <label class="col-12 text-center">or Login through</label>
+              <br>
+              
               <div class="col-6 text-center">
                  <!-- <button type="button" class="btn-buttons" a href="http://localhost:9797/oauth2/authorize-client/google">
                   <img src="assets/login icons/google.svg" class="buuton-icons">Google
                 </button>  -->
-                <a class="btn-buttons" href="https://kube.aiotaldomain.com:9090/api/socialLogin?authProvider=google&redirectPath=https://10.11.0.82:4200/">
+                <a class="btn-buttons" href="https://kube.aiotaldomain.com:9090/api/socialLogin?authProvider=google&redirectPath=http://10.11.0.82:4200/">
                   <img src="assets/login icons/google.svg" class="buuton-icons"/>Google</a> 
               </div>
               <div class="col-6 text-center" >
                 <!-- <button type="button" class="btn-buttons" (click)="azureLogin()">
                   <img src="assets/login icons/office.svg" class="buuton-icons"><label >Office 365</label>
                 </button> -->
-                <a class="btn-buttons" href="https://10.11.0.82:9090/api/socialLogin?authProvider=azure&redirectPath=https://10.11.0.82:4200/#/user">
+                <a class="btn-buttons" href="https://10.11.0.82:9090/api/socialLogin?authProvider=azure&redirectPath=http://10.11.0.82:4200/#/user">
                   <img src="assets/login icons/office.svg" class="buuton-icons"/>Office</a> 
               </div>
             </div>

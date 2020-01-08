@@ -8,13 +8,24 @@
         <div class="pull-left">
           <button class="btn btn-primary" (click)="onclickAdd(template)">Modify</button>
         </div>
+          <!-- <div>
+            <button class="btn btn-primary" (click)="onclickAdd(template)">Modify</button>
+          </div> -->
+        
+        <!-- <div class="pull-left">
+            <button class="btn btn-primary" (click)="onclickAdd(template)">Modify</button>
+          </div>
+          <div class="pull-left">
+              <button class="btn btn-primary" (click)="onclickAdd(template)">Modify</button>
+            </div> -->
+
         <div class="pull-right">
         <div class="form-group form-inline">
           <label for="size" class="">To Show &nbsp;</label>
           <select class="form-control" [(ngModel)]="recordsSize" (change)="showRecords(recordsSize)">
             <option value="5">5 Records</option>
             <option value="10">10 Records</option>
-            <option value="15">10 Records</option>
+            <option value="15">15 Records</option>
             <option value="20">20 Records</option>
             <option value="25">25 Records</option>
           </select>
@@ -43,22 +54,26 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">Role Update</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
+      <span aria-hidden="true"></span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="userName">User Name</label>
-      <input name="userName" #userName="ngModel" class="form-control" type="text" [(ngModel)]="modifyModel.userId" disabled />
+      <label for="userName">User Id</label>
+
+      <input name="userName" #userName="ngModel" class="form-control" type="text" [(ngModel)]="selectedRowUserId" disabled />
+      
     </div>
     <div class="form-group">
       <label for="roleName">Role Name</label>
        <select class="form-control" name="roleName" [(ngModel)]="modifyModel.roleName" placeholder="Select Role Name" required>
-       <option disabled selected>Please Select role </option> 
-        <option *ngFor="let item of rolesList">{{item}}</option>
+       <!-- <option  undefined disabled selected>Please Select role </option>  -->
+       <option [value]="undefined" disabled hidden>Select Role</option>
+        <option >Admin</option>
+        <option >User</option>
       </select>
     </div>
-    <button type="submit" (click)="onclickUpdate()" >Update</button>
+    <button type="submit" (click)="onclickUpdate()">Update</button>
   </div>
 </ng-template>
 </div>

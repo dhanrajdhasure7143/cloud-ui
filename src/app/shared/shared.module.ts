@@ -18,6 +18,7 @@ import { TopheaderComponent } from './topheader/topheader.component';
 import { BodyComponent } from './body/body.component';
 import { TrailheaderComponent } from './trailheader/trailheader.component';
 import { StepselectionComponent } from './stepselection/stepselection.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, SystemComponent, UserComponent, NotificationComponent, TopheaderComponent, BodyComponent, TrailheaderComponent, StepselectionComponent],
@@ -25,7 +26,8 @@ import { StepselectionComponent } from './stepselection/stepselection.component'
     CommonModule,
     SharedRoutingModule,
     BsDropdownModule.forRoot(),
-    PortalModule
+    PortalModule,
+    FormsModule
   ],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent],
   entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent]

@@ -26,6 +26,9 @@ export class UsermanagementService implements OnInit {
   fetchallroles(): Observable<any[]> {
     return this.http.get<any[]>('/api/user/roles', httpOptions);
   }
+  usersDetails(tenantId,userId): Observable<any[]> {
+    return this.http.get<any[]>('/api/user//tenants/'+tenantId +'/'+userId+'/users', httpOptions);
+  }
 
   updateRole(data): Observable<any[]> {
     return this.http.post<any[]>('/api/user/updateRole', data, httpOptions);

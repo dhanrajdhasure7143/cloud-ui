@@ -66,7 +66,7 @@ export class NewpasswordComponent implements OnInit {
       if(res.message === 'Password reset is successful'){
         Swal.fire({
           type: 'success',
-          title: 'Your password reset is successful',
+          title: 'Your password reset is successful!',
           // showConfirmButton: true,
           
         }).then(()=>{

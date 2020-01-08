@@ -71,4 +71,13 @@ export class AppService {
   clearToken(): Observable<any> {
     return this.http.get<any>(`/rest/api/logout`);
   }
+  getTokenForSocial(): Observable<any> {
+    return this.http.get<any>(`/rest/api/logout`);
+  }
+  invitefriends(inviterMailId, inviteeMailId){
+    console.log('data', inviterMailId, inviteeMailId);
+    let url = '/api/user/inviteUsers?inviterMailId='+inviterMailId+'&inviteeMailId='+inviteeMailId;
+    return this.http.post<any>(url,'')
+    }
+  
 }

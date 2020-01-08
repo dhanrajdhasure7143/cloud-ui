@@ -5,17 +5,25 @@
 
 </topheader>
 <common-body>
+    <!-- <ng-container > -->
+<!-- Extra added -->
 
-  <div class="container-fluid from_logo">
+
+  <div class="container-fluid from_logo" >
     <div class="row">
       <div class="col-sm-12">
         <h4 class="page_title">My Account</h4>
 
         <div class="acc_holder">
-          <img src="assets/a_images/profile.jpg" class="acc_holder_img">
+
+          <!-- <img src="assets/a_images/profile.jpg" class="acc_holder_img"> -->
+          <div id="example1">
+            <p>{{name.split("")[0]  |uppercase}}{{lname.split("")[0] |uppercase}}</p>
+          </div>
           <div class="acc_holder_nd">
-            <label class="acc_holder_name">Srikanth Pothina</label>
-            <label class="acc_holder_design">UI Developer</label>
+            <label class="acc_holder_name">{{name}}</label>
+            
+            <!-- <label class="acc_holder_design">UI Developer</label> -->
           </div>
         </div>
 
@@ -28,35 +36,35 @@
                 <div class="row">
                   <div class="col-sm-6 ah_details_content">
                     <label class="ah_details_head">First Name</label>
-                    <label class="ah_details_body">Srikanth</label>
+                    <label class="ah_details_body">{{name}}</label>
                   </div>
 
                   <div class="col-sm-6 ah_details_content">
                     <label class="ah_details_head">Last Name</label>
-                    <label class="ah_details_body">Pothina</label>
+                    <label class="ah_details_body">{{lastName}}</label>
                   </div>
 
-                  <div class="col-sm-6 ah_details_content">
+                   <div class="col-sm-6 ah_details_content">
                     <label class="ah_details_head">Company</label>
-                    <label class="ah_details_body">EPSoft Solutions</label>
-                  </div>
+                    <label class="ah_details_body">{{company}}</label>
+                  </div> 
 
                   <div class="col-sm-6 ah_details_content">
                     <label class="ah_details_head">Job Title</label>
-                    <label class="ah_details_body">Developer</label>
+                    <label class="ah_details_body">{{role}}</label>
                   </div>
 
                   <div class="col-sm-6 ah_details_content">
                     <label class="ah_details_head">Country</label>
-                    <label class="ah_details_body">India</label>
-                  </div>
+                    <label class="ah_details_body">{{country}}</label>
+                  </div>              
 
-                  <div class="col-sm-6 ah_details_content">
+                   <div class="col-sm-6 ah_details_content">
                     <label class="ah_details_head">Phone</label>
-                    <label class="ah_details_body">+<span class="phone_code">91</span>9876543210</label>
-                  </div>
+                    <label class="ah_details_body">+<span class="phone_code">91</span>{{phone}}</label>
+                  </div> 
 
-
+                  
                 </div>
               </div>
 
@@ -77,7 +85,7 @@
                   <div class="row">
                     <div class="col-sm-6 ah_details_content">
                       <label class="ah_details_head">User Name</label>
-                      <label class="ah_details_body">srikanthpothina</label>
+                      <label class="ah_details_body">{{email}}</label>
                     </div>
 
                     <div class="col-sm-6 ah_details_content">
@@ -96,7 +104,15 @@
 
           </div>
       </div>
+        <!-- Updeate details -->
+        <!-- <button (click)="UpdateDetails()" id="bt" >Show Input -->
+        <!-- </button> -->
+        
+        <!-- <ng-container *ngIf="show"> -->
 
+            <!-- <input type="text" [(ngModel)]="obj.ame"> -->
+           
+        <!-- </ng-container> -->
     </div>
   </div>
 </common-body>

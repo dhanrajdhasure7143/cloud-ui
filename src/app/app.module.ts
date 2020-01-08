@@ -41,6 +41,7 @@ export const contentfulConfig: ContentfulConfig = {
   declarations: [
     AppComponent,
     ValidateComponent
+   
   ],
   imports: [
     BrowserModule,

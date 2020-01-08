@@ -32,11 +32,11 @@ export class WorkflowcreateService {
   }
 
   loadDropDown(): Observable<any> {
-    return this.http.get<any>(`/api/CrudService/GetTableData?tablename=LOB`);
+    return this.http.get<any>(`/api/CrudService/getTableData?tablename=LOB`);
   }
 
   getAllRobotsData(): Observable<any> {
-    return this.http.get<any>('/api/CrudService/GetTableData?tablename=ROBOT');
+    return this.http.get<any>('/api/CrudService/?tablename=ROBOT');
   }
 
   getAllRobotsByProjectId(data): Observable<any[]> {
