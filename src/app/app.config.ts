@@ -10,8 +10,8 @@ export interface AiotalAppConfig {
 }
 
 export const AppConfig: AiotalAppConfig = {
-  portfolioSite: 'http://localhost:4200/#/home',
+  portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
   apiendpoint: 'http://10.11.0.82:9091',
-  tokenendpoint: 'http://localhost:9797',
-  socialAndWorkLogin: 'http://localhost:9797'
+  tokenendpoint: 'https://10.11.0.82:9090',
+  socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in'
 };

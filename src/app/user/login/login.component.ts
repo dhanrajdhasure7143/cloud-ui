@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/_services';
+import { AuthenticationService, UserService } from 'src/app/_services';
 import { SessionService } from './../../_services/session/session';
 import { first } from 'rxjs/operators';
 import { CookieStore } from 'src/app/_services/cookie.store';
@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private session: SessionService,
     private loginService: LoginService,
-    private sharedData: SharedDataService
+    private sharedData: SharedDataService,
+    public userService: UserService
   ) {
     this.session.stopWatching();
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -127,8 +128,21 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('designation',data.designation);
     localStorage.setItem('country',data.country);
     localStorage.setItem('department', data.department);
+
+    this.userService.getRole(data.company,data.userId).subscribe(data => this.getRoles(data));
   }
 
+  getRoles(data: any): void {
+    data.roles.forEach(function (value){
+      console.log("roleDattaaaa", value.id);
+      
+      if (value.roleId== "Admin") {
+        localStorage.setItem("roleName", value.id)
+      }
+    })
+    
+    
+  }
 
   get(key) {
     key = key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1');

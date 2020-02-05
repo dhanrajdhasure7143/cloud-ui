@@ -33,6 +33,7 @@ export class SocialLoginComponent implements OnInit {
 }
 checkSuccessCallback(data:any){
   this.sharedData.setLoggedinUserData(data.firstName);
+  this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
   console.log("social login data-----", data);
   localStorage.setItem('firstName',data.firstName);
   localStorage.setItem('lastName',data.lastName);

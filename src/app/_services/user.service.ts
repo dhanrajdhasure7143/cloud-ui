@@ -15,4 +15,7 @@ export class UserService {
     fetchalluserNames (): Observable<any[]> {
       return this.http.get<any[]>('/rest/users/fetchalluserNames');
     }
+    getRole(tenantId,userId) {
+      return this.http.get<any[]>('/api/user//tenants/'+tenantId +'/users/'+userId+'/roles');
+   }
 }

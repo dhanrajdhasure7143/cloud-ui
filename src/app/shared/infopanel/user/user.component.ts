@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AppService } from 'src/app/_services';
+import { AppService, UserService } from 'src/app/_services';
 import Swal from 'sweetalert2';
 
 
@@ -19,20 +19,30 @@ export class UserComponent implements OnInit {
   hide: boolean = false;
   show: boolean = false ;
   iemail: any;
-  constructor(private route: Router, private appSer: AppService) { }
+  admin: boolean = false;
+  tenantId: any;
+  constructor(private route: Router, private appSer: AppService, public userService: UserService) { }
 
   ngOnInit() {
+    
+
     this.name= localStorage.getItem("firstName");
     this.email = localStorage.getItem("userName");
     this.phone = localStorage.getItem("phoneNumber");
      this.role = localStorage.getItem("designation");
-    
+     this.tenantId = localStorage.getItem("company")
+     let roleName = localStorage.getItem("roleName");
+     
+             if(roleName === "Admin"){
+               this.admin = true
+             }
     
     if(this.role=="null"){
       this.role="-- --"
       }
     
   }
+ 
 
   invit(){
     let inviterMailId=localStorage.getItem("userName");
