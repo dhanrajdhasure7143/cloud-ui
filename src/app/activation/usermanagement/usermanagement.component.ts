@@ -43,10 +43,12 @@ export class UsermanagementComponent implements OnInit {
     {headerName: 'User ID', field: 'userId', filter: true,
     checkboxSelection: true,width: 300,},
     {headerName: 'First Name', field: 'firstName' , filter: true},
-    {headerName: 'Last Name', field: 'lastName', filter: true },
+    {headerName: 'Last Name', field: 'lastName' , filter: true},
+    {headerName: 'Designation', field: 'designation', filter: true },
     {headerName: 'Organization', field: 'company', filter: true},
     {headerName: 'Department', field: 'department', filter: true},
-    {headerName: 'Role', field: 'Role', filter: true},
+    {headerName: 'Roles', field: 'name', filter: true},
+    
     // this.rowSelection = 'multiple'
     
 ];
@@ -56,6 +58,7 @@ userId:any;
  
 modules = AllCommunityModules;
  ngOnInit() {
+
 //  this.rowData = [
 //   { Email: 'gopi.palla@epsoftinc.com',    f_name: 'Gopi',   l_name: 'Palla',       organisation:'Epsoft',     department:'Devlopement',     Role:'Admin'},
 //   { Email: 'sshivasimhadri@epsoftinc.com', f_name: 'Shiva',  l_name: 'Simhadri',    organisation:'Epsoft',    department:'Devlopement',     Role:'Admin'},

@@ -43,7 +43,8 @@
         <li><a href="" [routerLink]="['/home/userdetails']">My Account</a></li>
         <li><a href="" [routerLink]="['/activation/plandetails']">Subscription</a></li>
   
-    <div>
+        
+    <div  [hidden] = "!admin">
       <li (click)="toggle()" class="nav-item dropdown">
       <div mdbWavesEffect class=" dropdown-toggle" mdbWavesEffect>User Management</div><span class="caret"></span></li>
         <div class="subheader">

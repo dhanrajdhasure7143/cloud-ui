@@ -133,15 +133,14 @@ export class LoginComponent implements OnInit {
   }
 
   getRoles(data: any): void {
-    data.roles.forEach(function (value){
-      console.log("roleDattaaaa", value.id);
-      
-      if (value.roleId== "Admin") {
-        localStorage.setItem("roleName", value.id)
+    let name:any = []
+    console.log(data)
+    data.forEach(element => {
+      name.push(element.name)
+      if (name == "Admin") {
+        localStorage.setItem("roleName", name)
       }
-    })
-    
-    
+    });
   }
 
   get(key) {
