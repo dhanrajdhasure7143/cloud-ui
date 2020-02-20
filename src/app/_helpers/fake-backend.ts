@@ -12,6 +12,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
       let apiendpoint = this.config.apiendpoint;
       let tokenendpoint = this.config.tokenendpoint;
       let socialAndWorkLogin = this.config.socialAndWorkLogin;
+      let authorizationendpoint = this.config.authorizationendpoint;
       
 
       if (!localStorage.getItem('userName')) {
@@ -21,10 +22,12 @@ export class BackendURLInterceptor implements HttpInterceptor {
       if (req.url && req.url.charAt(0) !== '/') {
         apiendpoint = apiendpoint + '/';
         tokenendpoint = tokenendpoint + '/';
+        authorizationendpoint = authorizationendpoint + '/';
         socialAndWorkLogin = socialAndWorkLogin + '/';
       }
 
-      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0) {
+     
+      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('/api/v1/auth') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0) {
         req = req.clone({
          url: apiendpoint + req.url,
           body: req.body,
@@ -34,6 +37,13 @@ export class BackendURLInterceptor implements HttpInterceptor {
         req = req.clone({
           //url : url + req.url,
           url: socialAndWorkLogin + req.url,
+          body: req.body,
+          headers: req.headers
+        });
+      } else if(req.url.indexOf('/api/v1/auth') > -1){
+        req = req.clone({
+          //url : url + req.url,
+          url: authorizationendpoint + req.url,
           body: req.body,
           headers: req.headers
         });

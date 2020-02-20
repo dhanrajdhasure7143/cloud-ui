@@ -1,12 +1,10 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { Router,ActivatedRoute,NavigationEnd} from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, NgForm, FormBuilder } from '@angular/forms';
 import  countries  from 'src/app/../assets/jsons/countries.json'
 import Swal from 'sweetalert2';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
-
 @Component({
   selector: 'app-editprofile',
   templateUrl: './editprofile.component.html',
@@ -14,7 +12,7 @@ import { SharedDataService } from 'src/app/_services/shared-data.service';
 })
 export class EditprofileComponent implements OnInit {
   
-  
+  submitted=false;
   name:any;
   lname:any;
   departments:any;
@@ -29,21 +27,20 @@ export class EditprofileComponent implements OnInit {
   firstName:any;
   designation:any;
   phoneNumber:any;
+  formTest: FormGroup;
   company:any;
   constructor(private router: Router,
-    
+    private formBuilder: FormBuilder,
     private route:ActivatedRoute,
     private service: FirstloginService,
     private sharedData: SharedDataService    )  {
-
      }
-
   ngOnInit() {
     // this.getCountries();
-
     this.countryInfo = countries.Countries;
     
     // console.log('data', this.countryInfo)
+    
     this.form = new FormGroup({
       firstName : new FormControl(localStorage.getItem("firstName"), Validators.required),
       lastName : new FormControl(localStorage.getItem("lastName"), Validators.required),
@@ -52,10 +49,18 @@ export class EditprofileComponent implements OnInit {
       company:new FormControl( localStorage.getItem('company'), Validators.required),
       department:new FormControl( localStorage.getItem('department'), Validators.required),
       country : new FormControl(localStorage.getItem("country"), Validators.required),
-      zipcode:new FormControl(localStorage.getItem("zipcode"), Validators.required),
       phoneNumber:new FormControl(localStorage.getItem("phoneNumber"), Validators.required),
-
     });
+    this.formTest=this.formBuilder.group({
+      firstName : new FormControl(localStorage.getItem("firstName"), Validators.required),
+      lastName : new FormControl(localStorage.getItem("lastName"), Validators.required),
+      designation :new FormControl(localStorage.getItem("designation"), Validators.required),
+      userId : new FormControl(localStorage.getItem("userName"), Validators.required),
+      company:new FormControl( localStorage.getItem('company'), Validators.required),
+      department:new FormControl( localStorage.getItem('department'), Validators.required),
+      country : new FormControl(localStorage.getItem("country"), Validators.required),
+      phoneNumber:new FormControl(localStorage.getItem("phoneNumber"), Validators.required),
+    })
     console.log("editdata",this.form);
     
     // var orginalData=[];
@@ -73,10 +78,7 @@ export class EditprofileComponent implements OnInit {
     //         orginalData.push(value);
     //     }
     //     })
-
   }
-
-
   onSubmit(form) {
     this.userDetails=[];   
     // since field is disabled, we need to use 'getRawValue'
@@ -114,7 +116,7 @@ export class EditprofileComponent implements OnInit {
       // });
     });
     // this.form.reset();
-    
+   
   }
   checkSuccessCallback(data:any){
     this.sharedData.setLoggedinUserData(this.userDetails[0].firstName);
@@ -134,9 +136,9 @@ export class EditprofileComponent implements OnInit {
   getCountries(){
     this.countryInfo = countries.Countries
   }
-
     
-  onChangeCountry(countryValue) {
+  onChangeCountry(selection) {
+    let countryValue = parseInt(selection.split(":")[0])-1;
     this.form.country = this.countryInfo[countryValue].CountryName;
     
     this.stateInfo=this.countryInfo[countryValue].States;
@@ -144,12 +146,10 @@ export class EditprofileComponent implements OnInit {
     //this.cityInfo=this.stateInfo[0].Cities;
     console.log(this.cityInfo);
   }
-
   onChangeState(stateValue) {
     this.cityInfo=this.stateInfo[stateValue].Cities;
     console.log(this.stateInfo[stateValue].Cities);
   }
-
   onKeydown(event){
     console.log(event.key);
     
@@ -159,8 +159,6 @@ export class EditprofileComponent implements OnInit {
     event.preventDefault();
    }
 }
-
-
 onChangeDepartment(selectedvalue) {
   this.addDepartment = false
   this.service.getAllDepartments().subscribe(response=> {
@@ -171,5 +169,4 @@ onChangeDepartment(selectedvalue) {
     this.addDepartment = true
   }
 }
-
 }

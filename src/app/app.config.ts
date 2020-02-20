@@ -7,11 +7,13 @@ export interface AiotalAppConfig {
   apiendpoint: string;
   tokenendpoint: string;
   socialAndWorkLogin: string;
+  authorizationendpoint: String;
 }
 
 export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
-  apiendpoint: 'http://10.11.0.82:9091',
+  apiendpoint: 'http://10.11.0.82:9090',
   tokenendpoint: 'https://10.11.0.82:9090',
+  authorizationendpoint: 'http://10.11.0.82:9095/',
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in'
 };

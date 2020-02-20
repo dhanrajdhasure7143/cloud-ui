@@ -16,97 +16,97 @@
               <h2 class="wel_acc">Update your Account</h2>
             </div>
     
-            <form autocomplete="off" class="col-sm-10" (ngSubmit)="onSubmit(form)" [formGroup] = "form">
+            <form autocomplete="off" class="col-sm-10" (ngSubmit)="onSubmit(form)" [formGroup]="form">
               <div class="row">
                 <div class="form-group col-sm-6">
                   <label for="firstName">First Name</label>
-                  <input type="text" id="firstName"  name="firstName" formControlName="firstName" class="form-control" maxlength="20" required>
-                  
+                  <input type="text" id="firstName"  name="firstName" #firstName formControlName="firstName"  class="form-control"  maxlength="20" required >
                   <span *ngIf="((form.get('firstName').invalid && form.submitted)|| (form.get('firstName').errors && form.get('firstName').touched))"
                 class='fa fa-info-circle errspan'> First Name is required </span>
                 </div>
     
                 <div class="form-group col-sm-6">
                   <label for="lastName">Last Name</label>
-                  <input type="text" name="lastName" id="lastName" formControlName="lastName" class="form-control" maxlength="20" required>
-                  
+                  <input type="text" name="lastName" id="lastName" #lastName formControlName="lastName" class="form-control" maxlength="20" required>
+                  <span *ngIf="((form.get('lastName').invalid && form.submitted)|| (form.get('lastName').errors && form.get('lastName').touched))"
+                class='fa fa-info-circle errspan'> Last Name is required </span>
                 </div>
     
                 <div class="form-group col-sm-6">
                   <label for="jobTitle">Job Title</label>
-                  <input type="text" name="jobTitle.d" id="jobTitle"  formControlName="designation" class="form-control"
+                  <input type="text" name="jobTitle.d" id="jobTitle"  #designation formControlName="designation" class="form-control"
                   maxlength="20" required>
+                  <span *ngIf="((form.get('designation').invalid && form.submitted)|| (form.get('designation').errors && form.get('designation').touched))"
+                class='fa fa-info-circle errspan'> JobTitle is required </span>
                   
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" formControlName="userId" disabled>
+                
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="company">Company</label>
+                <input type="text" id="company" #company formControlName="company" class="form-control" maxlength="30" required>
+                <span *ngIf="((form.get('company').invalid && form.submitted)|| (form.get('company').errors && form.get('company').touched))"
+                class='fa fa-info-circle errspan'> Company Name is required </span>
+               </div>
+
+               <div class=" form-group col-md-6 ">
+                <label for="Department">Department</label>
+                <select id="department" (change)="onChangeDepartment($event.target.value)" class="form-control" formControlName="department">
+                  <option hidden disabled [selected]=false>Select Department</option>
+                  <option value="hr">HR</option>
+                  <option value="development">Development</option>
+                  <option value="finance">Finance</option> 
+                  <option value="infra">Infra</option>
+                  <option value="testing">Testing</option>
+                  <option value="pmo">PMO</option>
+                  <option value="others">Others</option>
+                </select>
+              </div>
+              <div  class=" col-md-6 form-group" *ngIf="addDepartment" >
+                  <label for="name">Department Name</label>
+                  <input type="text" class="form-control" id="name" #department formControlName="department" maxlength="20" placeholder="Enter Department Name" required>
+                  <span *ngIf="((form.get('department').invalid && form.submitted)|| (form.get('department').errors && form.get('department').touched))"
+            class='fa fa-info-circle errspan'> Department is required </span>
                 </div>
-                <div class="form-group col-sm-6">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" class="form-control" formControlName="userId" disabled>
-                  
-                </div>
-                <div class="form-group col-sm-6">
-                  <label for="company">Company</label>
-                  <input type="text" id="company" formControlName="company" class="form-control" maxlength="30" required>
-                 </div>
-
-                 <div class=" form-group col-md-6 ">
-                    <label for="Department">Department</label>
-                    <select id="department" (change)="onChangeDepartment($event.target.value)" class="form-control" formControlName="department">
-                      <option  *ngIf="this.selected=='false' ">Select Department</option>
-                      <option value="hr">HR</option>
-                      <option value="development">Development</option>
-                      <option value="finance">Finance</option> 
-                      <option value="infra">Infra</option>
-                      <option value="testing">Testing</option>
-                      <option value="pmo">PMO</option>
-                      <option value="others">Others</option>
-                    </select>
-                  </div>
-                  <div  class=" col-md-6 form-group" *ngIf="addDepartment" >
-                      <label for="name">Department Name</label>
-                      <input type="text" class="form-control" id="name" maxlength="20" placeholder="Enter Department Name" required>
-                    </div>
 
 
                 <div class="form-group col-sm-6">
-                  <label for="country">Country
-                  </label>
+                  <label for="country">Country</label>
                   
                   <select id="country" class="form-control" (change)="onChangeCountry($event.target.value)" formControlName="country">
                     <!-- <option hidden disabled [selected]=true>Select Country</option> -->
                        <!-- <option *ngFor="let country of countryInfo; let i = index" value="{{i}}">{{country.CountryName}} -->
-                        <option  *ngIf="this.selected=='false' ">Select Country</option>
+                          <option hidden disabled [selected]=false>Select Country</option>
                    <option *ngFor="let c of countryInfo" [ngValue]="c.CountryName">{{c.CountryName}}</option>
                     </select>
                 </div>
-                                   <!-- <div class="form-group col-sm-6">
-                      <label for="zipCode">Zip Code</label>
-                      <input type="text" (keydown)="onKeydown($event)"  formControlName="zipcode" id="zipCode" class="form-control" 
-                        onKeyPress="if(this.value.length==10) return false;" required > -->
-                      <!-- <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
-                        class='fa fa-info-circle errspan'> Zip Code is required </span> -->
-                    <!-- </div> -->
+                <div  class=" col-md-6 form-group" *ngIf="addDepartment" >
+                  <label for="name">Country Name</label>
+                  <input type="text" class="form-control" id="name" #country formControlName="country" maxlength="20" placeholder="Enter country Name" required>
+                  <span *ngIf="((form.get('country').invalid && form.submitted)|| (form.get('country').errors && form.get('country').touched))"
+                class='fa fa-info-circle errspan'> Country is required </span>
+                </div>
+                                   
                 
 
-                    <div class="form-group col-sm-6">
-                        <label for="phoneNumber">Phone</label>
-                        <div>
-                         <input style="width: 100%" type="text" formControlName="phoneNumber" (keydown)="onKeydown($event)"  id="phoneNumber" class="form-control"
-                            (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
-                            (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" onKeyPress="if(this.value.length==15) return false;" required>
-                        </div>
-                      </div>      
-                
-    
-                <!-- <div class="form-group col-sm-6">
-                  <label for="password">Password</label>
-                  <input type="password" id="password" name="password" class="form-control" required>
-                  <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))"
-                    class='fa fa-info-circle errspan'> Password is required </span>
-                </div> -->
-                <div class="form-group col-sm-12 continue_btn">
-                    <button type="submit" class="btn btn-continue float-right">Update</button>
-                    <button type="button" class="btn btn-back float-right"  href="" [routerLink]="['/activation']">Cancel</button>
-                </div>
+                <div class="form-group col-sm-6">
+                  <label for="phoneNumber">Phone</label>
+                  <div>
+                   <input style="width: 100%" type="text" #phoneNumber formControlName="phoneNumber" (keydown)="onKeydown($event)"  id="phoneNumber" class="form-control"
+                      (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
+                      (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" onKeyPress="if(this.value.length==15) return false;" required>
+                      <span *ngIf="((form.get('phoneNumber').invalid && form.submitted)|| (form.get('phoneNumber').errors && form.get('phoneNumber').touched))"
+                         class='fa fa-info-circle errspan'> Phone Number is required </span>
+                  </div>
+                </div>      
+          
+          <div class="form-group col-sm-12 continue_btn">
+              <button type="submit" class="btn btn-continue float-right" [disabled]="!form.valid">Update</button>
+              <button type="button" class="btn btn-back float-right"  href="" [routerLink]="['/activation']">Cancel</button>
+          </div>
               </div>
             </form>
           </div>
