@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlandetailsComponent } from './plandetails/plandetails.component';
 import { UsermanagementComponent } from './usermanagement/usermanagement.component';
+import { AlertsComponent } from './alerts/alerts.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,6 +15,10 @@ const routes: Routes = [{
   }, {
     path: 'plandetails',
     component: PlandetailsComponent
+  },
+  {
+    path: 'alerts',
+    component: AlertsComponent
   }, {
     path: 'payment',
     loadChildren: './payment/payment.module#PaymentModule'
