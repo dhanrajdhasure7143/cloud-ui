@@ -1,90 +1,93 @@
 .a_logo {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    position: relative;
-    left: 3%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 3%;
+}
+
+img.a_cp_logo {
+  height: 75%;
+}
+
+.user_layout {
+  height: 100%;
+  overflow: scroll;
   }
-  
-  img.a_cp_logo {
-    height: 75%;
-  }
-  
-  .user_layout {
-    height: 100%;
-    overflow: scroll;
-    }
-  
-  .row.user_login {
-    height: 100%;
-  }
-  
-  .country_code {
-    padding-left: 0px;
-  }
-  
-  .phone_num {
-    padding: 0px;
-  }
-  
-  
-  .continue_btn {
-    // text-align: right;
-    margin-top: 30px;
-  }
-  
-  .btn-continue {
-    background: #006dd5;
-    color: white;
-  }
-  .btn-back{
-    margin-right: 10px;
-  }
-  
-  .wel_acc {
-    margin: 20px 0px 25px;
-  }
-  
-  form label {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-  
-  .form-control {
-    font-size: 14px;
-    height: 32px !important;
-  }
-  
-  .form-group {
-    margin: 15px 0px;
-  }
-  
-  
-  .log_img {
-    display: flex;
-    align-items: center;
-    height: 80%;
-  }
-  
-  .img_login {
-    height: 100%;
-  }
-  
-  ul#dropdown-basic {
-    right: 0px !important;
-    position: fixed;
-    top: 60px !important;
-    left: calc(100vw - 336px) !important;
-    height: calc(100vh - 60px);
-    width: 336px;
-    border: 1px solid #dadada;
-    margin: 0px;
-    border-radius: 0px;
-    padding: 0px;
-    overflow: auto;
-  }
-  
-  .iti {
-    position: relative;
-    display: block !important;
-  }
+
+.row.user_login {
+  height: 100%;
+}
+
+.country_code {
+  padding-left: 0px;
+}
+
+.phone_num {
+  padding: 0px;
+}
+
+
+.continue_btn {
+  // text-align: right;
+  margin-top: 30px;
+}
+
+.btn-continue {
+  background: #006dd5;
+  color: white;
+}
+.btn-back{
+  margin-right: 10px;
+}
+
+.wel_acc {
+  margin: 20px 0px 25px;
+}
+
+form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  font-size: 14px;
+  height: 32px !important;
+}
+
+.form-group {
+  margin: 15px 0px;
+}
+
+
+.log_img {
+  display: flex;
+  align-items: center;
+  height: 80%;
+}
+
+.img_login {
+  height: 100%;
+}
+
+ul#dropdown-basic {
+  right: 0px !important;
+  position: fixed;
+  top: 60px !important;
+  left: calc(100vw - 336px) !important;
+  height: calc(100vh - 60px);
+  width: 336px;
+  border: 1px solid #dadada;
+  margin: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  overflow: auto;
+}
+
+.iti {
+  position: relative;
+  display: block !important;
+}
+button:disabled{	
+  cursor: no-drop;
+}

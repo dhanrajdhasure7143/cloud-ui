@@ -23,7 +23,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { CreatebotComponent } from './home/createbot/createbot.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { BotGridModule } from 'bot-grid';
+//import { BotGridModule } from 'bot-grid';
 import { BotcreateComponent } from './home/botcreate/botcreate.component';
 import { BoteditComponent } from './home/botedit/botedit.component';
 
@@ -46,7 +46,7 @@ import { BoteditComponent } from './home/botedit/botedit.component';
     NgMultiSelectDropDownModule.forRoot(),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    BotGridModule
+    //BotGridModule
   ],
   exports: [HomeComponent, BoteditComponent, CanvasComponent, ToolsetComponent, NodepropComponent, RobotactionsComponent, BotcreateComponent, CreatebotComponent],
   entryComponents: [TextBoxComponent, DropDownComponent, FileComponent, CheckBoxComponent, TableComponent, RadioComponent, CommonSourceComponent],

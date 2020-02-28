@@ -16,6 +16,6 @@ export class UserService {
       return this.http.get<any[]>('/rest/users/fetchalluserNames');
     }
     getRole(tenantId,userId) {
-      return this.http.get<any[]>('/api/user//tenants/'+tenantId +'/users/'+userId+'/roles');
+      return this.http.get<any[]>('/api/v1/auth/tenants/'+tenantId +'/users/'+userId+'/roles');
    }
 }
