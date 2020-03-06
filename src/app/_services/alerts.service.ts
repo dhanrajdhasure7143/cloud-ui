@@ -11,14 +11,16 @@ const httpOptions = {
 export class AlertsService {
   public id:any = [];
   constructor(private http: HttpClient) { }
+  public user:any = localStorage.getItem('userName')
 
-  alertsConfig(): Observable<any> {
-    this.id = 1
-    return this.http.get<any>(`/rest/api/v1/notification/`+this.id);
+  alertsConfig(data:any): Observable<any> {
+    console.log(data);
+       return this.http.get<any>(`/api/v1/notificationservice/application/`+data,data);
 }
 saveConfig(data:any): Observable<any>{
-  return this.http.post<any>(`/rest/api/v1/createnotification/`+this.id, data, httpOptions);
+  return this.http.post<any>(`/api/v1/notificationservice/scheduleActivity`,data, httpOptions);
+}
+applications(): Observable<any> {
+  return this.http.get<any>(`/api/v1/auth/tenants/epsoft/users/`+this.user+`/applications`);
 }
 }
-
-// http:localhost:9090/api/v1/notification/{application_id}/role/{role_id}
