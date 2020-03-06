@@ -137,10 +137,13 @@ export class LoginComponent implements OnInit {
     console.log(data)
     data.forEach(element => {
       name.push(element.name)
-      if (name == "Admin") {
-        localStorage.setItem("roleName", name)
-      }
+      // if (name == "Admin") {
+      //   localStorage.setItem("roleName", name)
+
+      // }
     });
+    
+    
   }
 
   get(key) {

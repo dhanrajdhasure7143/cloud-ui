@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppService, UserService } from 'src/app/_services';
 import Swal from 'sweetalert2';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { element } from '@angular/core/src/render3';
 
 
 
@@ -17,72 +19,212 @@ export class UserComponent implements OnInit {
   phone: any;
   role: any;
   hide: boolean = false;
-  show: boolean = false ;
+  show: boolean = false;
   iemail: any;
-  admin: boolean = false;
+  admin: boolean = true;
   tenantId: any;
-  constructor(private route: Router, private appSer: AppService, public userService: UserService) { }
+  roleName: any;
+  inviteeUserId: void;
+  result :any = [];
+  dbValue:any = [];
+  public rolesList:any = [];
+  public submitButton : boolean = false
+// public modal_popup_status : boolean = false;
+// @ViewChild('closeModel') closebutton;
+  public display = 'none';
+
+  // application: any[] = [
+  //   {
+  //     "name": "Ezflow"
+  //   },
+  //   {
+  //     "name": "Ezbot"
+  //   },];
+  selectedModel: any = {};
+  modalRef: BsModalRef;
+  sjdf: any[];
+  appSelectedId: any;
+  selectedroleId: any;
+  resultdemo: any[];
+  closeModel: any;
+  roleData: any;
+  constructor(private route: Router, private appSer: AppService, public userService: UserService, public modal: BsModalService) { }
 
   ngOnInit() {
-    
 
-    this.name= localStorage.getItem("firstName");
+    this.tenantId = localStorage.getItem("company")
     this.email = localStorage.getItem("userName");
-    this.phone = localStorage.getItem("phoneNumber");
-     this.role = localStorage.getItem("designation");
-     this.tenantId = localStorage.getItem("company")
-     let roleName = localStorage.getItem("roleName");
-     
-             if(roleName === "Admin"){
-               this.admin = true
-             }
+    console.log("hsdkjfhskdfh", this.tenantId, this.email);
     
-    if(this.role=="null"){
-      this.role="-- --"
-      }
+    this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
+   
+    
+    
+    console.log(this.dbValue);
+    
+    this.name = localStorage.getItem("firstName");
+    
+    this.phone = localStorage.getItem("phoneNumber");
+    this.role = localStorage.getItem("designation");
+
+    //admin based invite visiblity code *********************
+    // this.roleName = localStorage.getItem("roleName");
+
+    // if (this.roleName === "Admin") {
+    //   this.admin = true
+    // }
+
+    if (this.role == "null") {
+      this.role = "-- --"
+    }
+
+
+  }
+
+
+  successGetApps(data){
+    console.log("appname", data);
+     data.forEach(element => {
+      this.dbValue.push(element)
+
+    });
+  
     
   }
- 
-
-  invit(){
-    let inviterMailId=localStorage.getItem("userName");
-    let inviteeMailId = this.iemail;
-    this.appSer.invitefriends(inviterMailId, inviteeMailId).subscribe((data:any)=>{
-    console.log(data);
-    Swal.fire({
-      title: 'Success',
-      text: `Invitation email sent successfully!!`,
-      type: 'success',
-      showCancelButton: false,
-      allowOutsideClick: false
-    }).then((result) => {
-      // if (result.value) {
-        
-      // }
-    });
-  }, err => {
-      Swal.fire({
-        title: 'Error!',
-        type: 'error',
-        text: `User already exist`,
-        allowOutsideClick: false
-      });
-    });
-    
+  change(selectedValue){
+    this.submitButton = true
+  // console.log("rolesList", this.rolesList);
   
-    this.iemail="";
-    // console.log(obj)
-    }
+    console.log(selectedValue);
+    this.dbValue.forEach(element => {
+      if(element.name == selectedValue){
+        this.appSelectedId = element.appId
+        console.log("app selected", this.appSelectedId);
+        this.userService.getSelectedRole(this.email,element.appId).subscribe(data => this.successRoles(data));
+        this.appSelectedId = element.appId
+        console.log(this.appSelectedId);
+      }
+    })
 
-  toggle(){
-    this.show =!this.show
-    }
-    invitetoggle(){
+  }
+  successRoles(a){
+    this.rolesList = []
+    console.log(a);
+    this.roleData = a
+    a.forEach(ele => {
+      this.rolesList.push(ele.name)
+      if(ele.name != "Admin" ){
+        Swal.fire({
+          title: 'Error',
+          text: `You don't have admin role for this product to invite.... Please contact Admin!!`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: false
+        })
+      }
+    })
+  }
+  changeRole(e){
+    // this.selectedroleId = []
+    this.submitButton = false
+    console.log(e);
+    this.roleData.forEach(ele => {
+      if(ele.name == e){
+         this.selectedroleId = ele.id
+      }
+    })
     
-      this.hide =!this.hide
+  }
+  invit(template: TemplateRef<any>) {
+    this.selectedModel.roleName = undefined
+    this.selectedModel.appName = undefined
+    this.submitButton = true;
+    this.modalRef = this.modal.show(template);
+    console.log("email", this.iemail);
+    console.log("inviteID", this.inviteeUserId);
+    // console.log(this.result[0].name);
+    
+    // this.selectedModel.appName = this.result[0].name
+    this.selectedModel.userId = this.iemail;
+    //   this.appSer.invitefriends(inviterMailId, inviteeMailId).subscribe((data:any)=>{
+    //   console.log(data);
+    //   Swal.fire({
+    //     title: 'Success',
+    //     text: `Invitation email sent successfully!!`,
+    //     type: 'success',
+    //     showCancelButton: false,
+    //     allowOutsideClick: false
+    //   }).then((result) => {
+    //     // if (result.value) {
+
+    //     // }
+    //   });
+    // }, err => {
+    //     Swal.fire({
+    //       title: 'Error!',
+    //       type: 'error',
+    //       text: `User already exist`,
+    //       allowOutsideClick: false
+    //     });
+    //   });
+
+
+
+  }
+  onclickInvite() {
+    // this.modal_popup_status = false;
+    let inviterMailId = localStorage.getItem("userName");
+    let inviteeMailId = this.iemail;
+    let reqObj =  {
+      "id" : this.selectedroleId,
+      "appliationId" : {
+      "appId" : this.appSelectedId
+      }
+     
     }
+   this.appSer.invitefriends(inviterMailId,inviteeMailId,reqObj).subscribe((data:any)=>{
+      console.log("sucess data", data);
+      Swal.fire({
+        title: 'Success',
+        text: `Invitation email sent successfully!!`,
+        type: 'success',
+        showCancelButton: false,
+        allowOutsideClick: false
+      }).then((result) => {
+        // if (result.value) {
+
+        // }
+      });
+    }, err => {
+        Swal.fire({
+          title: 'Error!',
+          type: 'error',
+          text: `User already exist`,
+          allowOutsideClick: false
+        });
+       });
+
+  }
+
+  toggle() {
+    this.show = !this.show
+  }
+  invitetoggle() {
+
+    this.hide = !this.hide
+  }
   logout(event) {
     this.appSer.logout();
     this.route.navigate(['/']);
+  }
+  close(){
+    this.submitButton = true
+    this.rolesList =[]
+    this.selectedModel.roleName = undefined
+    this.selectedModel.appName = undefined
+    // this.modal_popup_status = true;
+    // this.modal.hide(template);
+    // this.display = "none"
+
   }
 }

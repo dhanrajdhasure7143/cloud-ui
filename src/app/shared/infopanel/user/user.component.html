@@ -42,6 +42,7 @@
       <ul class="account_sub_ul">
         <li><a href="" [routerLink]="['/home/userdetails']">My Account</a></li>
         <li><a href="" [routerLink]="['/activation/plandetails']">Subscription</a></li>
+        <li><a href="" [routerLink]="['/home/roles-and-permissions']">RolesAndPermissions</a></li>
   
         
     <div  [hidden] = "!admin">
@@ -70,7 +71,7 @@
     <div class="input-group mb-3" *ngIf="hide" >
       <input type="email" class="form-control" placeholder="Enter User Email" [(ngModel)]="iemail">
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary bttn"(click)="invit()">Invite</button>
+        <button type = "button" data-target="#myButton" data-toggle="modal"class="btn btn-outline-secondary bttn"(click)="invit(template)">Invite</button>
       </div>
     </div>
   </div>
@@ -99,4 +100,45 @@
           </ul>
         </div>
     </div>
- </div>
+  </div>
+
+    <ng-template #template>
+      <div  id = "myButton">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Invite User</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="userId">User Id</label>
+    
+          <input name="userId" #userId="ngModel" class="form-control" type="text" [(ngModel)]="selectedModel.userId" disabled />
+          
+        </div>
+        <div class="form-group">
+          <label for="appName">Application</label>
+           <select class="form-control" name="appName" #appName = "ngModel" (change) = "change($event.target.value)" [(ngModel)]="selectedModel.appName" required>
+           <!-- <option  undefined disabled selected>Please Select role </option>  -->
+           <option [value]="undefined" disabled hidden>Select Applications</option>
+            <option *ngFor="let app of dbValue">{{app.name}}</option>
+            <!-- <option >Ezflow</option> -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="roleName">Role Name</label>
+           <select class="form-control" name="roleName" [(ngModel)]="selectedModel.roleName" (change) = "changeRole($event.target.value)" placeholder="Select Role Name" required>
+           <!-- <option  undefined disabled selected>Please Select role </option>  -->
+           <option [value]="undefined" disabled hidden>Select Roles</option>
+           <option *ngFor="let role of rolesList">{{role}}</option>
+          </select>
+        </div>
+        <!-- <button type="submit" (click)="onclickInvite()">Invite</button> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+        <button type="button" [disabled] ="this.submitButton" class="btn btn-primary" (click)="onclickInvite()">Invite</button>
+      </div>
+    </div>
+    </ng-template>

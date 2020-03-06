@@ -13,6 +13,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ModalModule } from 'ngx-bootstrap';
  
 import { FormsModule } from '@angular/forms';
+import { UsermanagementService } from '../_services/usermanagement.service';
 import { AlertsComponent } from './alerts/alerts.component';
 @NgModule({
  declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent, UsermanagementComponent, AlertsComponent],
