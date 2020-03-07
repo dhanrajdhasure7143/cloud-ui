@@ -12,6 +12,7 @@ export class AlertsService {
   public id:any = [];
   constructor(private http: HttpClient) { }
   public user:any = localStorage.getItem('userName')
+  public tenantId:any = localStorage.getItem('company')
 
   alertsConfig(data:any): Observable<any> {
     console.log(data);
@@ -21,6 +22,6 @@ saveConfig(data:any): Observable<any>{
   return this.http.post<any>(`/api/v1/notificationservice/scheduleActivity`,data, httpOptions);
 }
 applications(): Observable<any> {
-  return this.http.get<any>(`/api/v1/auth/tenants/epsoft/users/`+this.user+`/applications`);
+  return this.http.get<any>(`/authorizationservice/api/v1/tenants/`+this.tenantId+`/users/`+this.user+'/applications');
 }
 }

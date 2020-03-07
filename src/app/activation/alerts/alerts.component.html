@@ -1,7 +1,7 @@
 <div >
   <h4 class = "page_title">Alerts & Notifications</h4>
   Select product to configure alerts:
-  <select name="product" class="col-sm-1" (change)="onChange($event.target.value)">
+  <select name="product" class="col-sm-2" (change)="onChange($event.target.value)">
     <option [ngValue]="undefined" selected>select</option>
     <option *ngFor="let product of listOfNames"  [value]="product['appId']">{{product['name']}}</option>
     </select>
