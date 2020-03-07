@@ -25,12 +25,12 @@ export class UserComponent implements OnInit {
   tenantId: any;
   roleName: any;
   inviteeUserId: void;
-  result :any = [];
-  dbValue:any = [];
-  public rolesList:any = [];
-  public submitButton : boolean = false
-// public modal_popup_status : boolean = false;
-// @ViewChild('closeModel') closebutton;
+  result: any = [];
+  dbValue: any = [];
+  public rolesList: any = [];
+  public submitButton: boolean = false
+  // public modal_popup_status : boolean = false;
+  // @ViewChild('closeModel') closebutton;
   public display = 'none';
 
   // application: any[] = [
@@ -55,15 +55,15 @@ export class UserComponent implements OnInit {
     this.tenantId = localStorage.getItem("company")
     this.email = localStorage.getItem("userName");
     console.log("hsdkjfhskdfh", this.tenantId, this.email);
-    
+
     this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
-   
-    
-    
+
+
+
     console.log(this.dbValue);
-    
+
     this.name = localStorage.getItem("firstName");
-    
+
     this.phone = localStorage.getItem("phoneNumber");
     this.role = localStorage.getItem("designation");
 
@@ -82,58 +82,91 @@ export class UserComponent implements OnInit {
   }
 
 
-  successGetApps(data){
+  successGetApps(data) {
     console.log("appname", data);
-     data.forEach(element => {
+    data.forEach(element => {
       this.dbValue.push(element)
 
     });
-  
-    
+
+
   }
-  change(selectedValue){
+  change(selectedValue) {
     this.submitButton = true
-  // console.log("rolesList", this.rolesList);
-  
+    // console.log("rolesList", this.rolesList);
+
     console.log(selectedValue);
     this.dbValue.forEach(element => {
-      if(element.name == selectedValue){
+      if (element.name == selectedValue) {
         this.appSelectedId = element.appId
         console.log("app selected", this.appSelectedId);
-        this.userService.getSelectedRole(this.email,element.appId).subscribe(data => this.successRoles(data));
-        this.appSelectedId = element.appId
-        console.log(this.appSelectedId);
+
+        this.userService.getUserRoleForSelectedProduct(this.email, element.appId).subscribe(data => this.userRole(data));
+
+
       }
     })
 
   }
-  successRoles(a){
+  userRole(data) {
+    if (data.message === 'Admin') {
+      this.userService.getSelectedRole(this.email, this.appSelectedId).subscribe(data => this.successRoles(data));
+
+      // this.appSelectedId = element.appId
+      console.log(this.appSelectedId);
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: `You don't have admin role for this product to invite...!!`,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: false
+      }).then(function() {
+        //window.location.href = "../Subscription";
+       
+    });
+    }
+  }
+
+
+
+  successRoles(a) {
     this.rolesList = []
     console.log(a);
     this.roleData = a
     a.forEach(ele => {
       this.rolesList.push(ele.name)
-      if(ele.name != "Admin" ){
-        Swal.fire({
-          title: 'Error',
-          text: `You don't have admin role for this product to invite.... Please contact Admin!!`,
-          type: 'error',
-          showCancelButton: false,
-          allowOutsideClick: false
-        })
-      }
+
+      // this.rolesList.forEach(elee =>{
+
+
+      //   if(elee !== "Admin" ){
+      //     // Swal.fire({
+      //     //   title: 'Error',
+      //     //   text: `You don't have admin role for this product to invite...!!`,
+      //     //   type: 'error',
+      //     //   showCancelButton: false,
+      //     //   allowOutsideClick: false
+      //     // })
+      //     console.log("dont have permissionnnnnnnnnnn");
+
+      //   }
+
+      // })
+
+
     })
   }
-  changeRole(e){
+  changeRole(e) {
     // this.selectedroleId = []
     this.submitButton = false
     console.log(e);
     this.roleData.forEach(ele => {
-      if(ele.name == e){
-         this.selectedroleId = ele.id
+      if (ele.name == e) {
+        this.selectedroleId = ele.id
       }
     })
-    
+
   }
   invit(template: TemplateRef<any>) {
     this.selectedModel.roleName = undefined
@@ -143,7 +176,7 @@ export class UserComponent implements OnInit {
     console.log("email", this.iemail);
     console.log("inviteID", this.inviteeUserId);
     // console.log(this.result[0].name);
-    
+
     // this.selectedModel.appName = this.result[0].name
     this.selectedModel.userId = this.iemail;
     //   this.appSer.invitefriends(inviterMailId, inviteeMailId).subscribe((data:any)=>{
@@ -175,14 +208,14 @@ export class UserComponent implements OnInit {
     // this.modal_popup_status = false;
     let inviterMailId = localStorage.getItem("userName");
     let inviteeMailId = this.iemail;
-    let reqObj =  {
-      "id" : this.selectedroleId,
-      "appliationId" : {
-      "appId" : this.appSelectedId
+    let reqObj = {
+      "id": this.selectedroleId,
+      "appliationId": {
+        "appId": this.appSelectedId
       }
-     
+
     }
-   this.appSer.invitefriends(inviterMailId,inviteeMailId,reqObj).subscribe((data:any)=>{
+    this.appSer.invitefriends(inviterMailId, inviteeMailId, reqObj).subscribe((data: any) => {
       console.log("sucess data", data);
       Swal.fire({
         title: 'Success',
@@ -196,13 +229,13 @@ export class UserComponent implements OnInit {
         // }
       });
     }, err => {
-        Swal.fire({
-          title: 'Error!',
-          type: 'error',
-          text: `User already exist`,
-          allowOutsideClick: false
-        });
-       });
+      Swal.fire({
+        title: 'Error!',
+        type: 'error',
+        text: `User already exist`,
+        allowOutsideClick: false
+      });
+    });
 
   }
 
@@ -217,9 +250,9 @@ export class UserComponent implements OnInit {
     this.appSer.logout();
     this.route.navigate(['/']);
   }
-  close(){
+  close() {
     this.submitButton = true
-    this.rolesList =[]
+    this.rolesList = []
     this.selectedModel.roleName = undefined
     this.selectedModel.appName = undefined
     // this.modal_popup_status = true;
