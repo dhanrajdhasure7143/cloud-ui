@@ -16,6 +16,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 //import { BotGridModule } from 'bot-grid';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ValidateComponent } from './validate/validate.component';
+import { BsModalService } from 'ngx-bootstrap';
 
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
@@ -60,8 +61,8 @@ export const contentfulConfig: ContentfulConfig = {
     { provide: APP_CONFIG, useValue: AppConfig },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     BackendURLProvider,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
-  ],
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    BsModalService],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

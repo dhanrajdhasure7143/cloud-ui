@@ -1,0 +1,34 @@
+<topheader>
+  <div class="a_logo">
+    <img src="assets/a_images/EPSoft.png" class="a_cp_logo">
+  </div>
+</topheader>
+
+<div class="container-fluid" id="cen">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>Roles And Permissions</h3>
+      <div class="form-group col-md-4">
+        <label for="product">Product</label>
+        <select  class="form-control" id="product" (change)="onChangeproduct(productValue)" #product="ngModel"
+          [(ngModel)]="productValue">
+          <option [ngValue]="undefined" hidden disabled >Select Product</option>
+          <option *ngFor="let c of result" [ngValue]="c.name">{{c.name}}</option>
+        </select></div>
+
+
+      <div class="form-group col-md-4">
+        <label for="role">Role</label>
+        <select id="role" class="form-control" (change)="onChangerole(roleValue)" #role="ngModel"
+          [(ngModel)]="roleValue">
+          <option [ngValue]="undefined" disabled hidden>Select Role</option>
+          <option *ngFor="let c of this.selectedRole" [ngValue]="c">{{c}}</option>{{selectedRole}}
+        </select></div>
+        <div>
+       <h6>Permissions </h6>
+       <ul class="perms" >
+         <li *ngFor="let card of permissions" > {{card}}</li>
+       </ul></div>    
+    </div>
+  </div>
+</div>

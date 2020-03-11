@@ -1,0 +1,142 @@
+import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/_services';
+import { element } from '@angular/core/src/render3';
+
+@Component({
+  selector: 'app-roles-and-permissions',
+  templateUrl: './roles-and-permissions.component.html',
+  styleUrls: ['./roles-and-permissions.component.scss']
+})
+export class RolesAndPermissionsComponent implements OnInit {
+
+  data: any = [];
+  result: any = [];
+  productValue: any = [];
+  roleValue: any = [];
+  roleData: any = [];
+  productName: any;
+  selectedRole: any = [];
+  rolesData: any = [];
+  permissionsValue: any = [];
+  permissions: any = [];
+  tenantId: string;
+  email: string;
+  appSelectedId: any;
+  roles: any;
+  constructor(public userService: UserService, ) { }
+  ngOnInit() {
+
+    //   this.data = [
+    //   {
+    //     'name' : 'Asimov',
+    //     'id': '1'
+    //   },
+    //   {
+    //     'name' : 'Ezflow',
+    //     'id': '2'
+    //   }
+    // ]
+
+
+    this.tenantId = localStorage.getItem("company")
+    this.email = localStorage.getItem("userName");
+
+    this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
+
+  }
+  successGetApps(data) {
+    this.result = [];
+    this.permissions = [];
+    this.selectedRole = [];
+
+    data.forEach(element => {
+      this.result.push(element)
+
+    })
+
+    console.log("roelsand permissins applications: ", this.result);
+  }
+
+
+  onChangeproduct(selectedProduct) {
+
+    this.selectedRole = [];
+    this.permissions = [];
+    this.productName = selectedProduct;
+
+    this.result.forEach(element => {
+      if (element.name == selectedProduct) {
+        this.appSelectedId = element.appId
+        console.log("app selected", this.appSelectedId);
+        this.userService.getSelectedRole(this.email, element.appId).subscribe(data => this.successRoles(data));
+        this.appSelectedId = element.appId
+        console.log(this.appSelectedId);
+      }
+    })
+    //   if(selectedProduct == ){
+    //     this.roleData = [
+    //       {
+    //         'roleName' : 'Admin'
+    //       },
+    //       {
+    //         'roleName' : 'User'
+    //       }
+    //     ]
+    //     console.log(this.roleData[0].roleName);
+    //     // selectedRole = roleData[0].roleName
+    //     this.roleData.forEach(element => {
+    //       this.selectedRole.push(element.roleName)
+    //     });
+    //     console.log(this.selectedRole);
+
+    //   }else{
+    //     this.roleData = [
+    //       {
+    //         'roleName' : 'User'
+    //       },
+    //       {
+    //         'roleName' : 'Admin'
+    //       }
+    //     ]
+    //     this.roleData.forEach(element => {
+    //       this.selectedRole.push(element.roleName)
+    //     });
+    //   }
+  }
+
+  successRoles(roleData) {
+    this.selectedRole = [];
+    this.permissions = [];
+    this.roles = roleData;
+    console.log("rolesDataaaaa", roleData);
+
+    roleData.forEach(element => {
+      this.selectedRole.push(element.name)
+      this.rolesData.push(element)
+    });
+  }
+  onChangerole(event) {
+    this.permissions = [];
+    console.log("onChangerole", this.rolesData)
+    this.roles.forEach(element => {
+      if (event == element.name) {
+
+
+        element.permission.forEach(ele => {
+          this.permissions.push(ele.permissionName)
+        })
+
+        // this.permissionsValue.forEach(elemnt => {
+        //   this.permissions.push(elemnt.permissionName)
+        // })
+        console.log("permissionssss", this.permissions);
+      }
+    })
+
+
+
+
+  }
+
+
+}

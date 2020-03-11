@@ -129,19 +129,22 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('country',data.country);
     localStorage.setItem('department', data.department);
 
-    this.userService.getRole(data.company,data.userId).subscribe(data => this.getRoles(data));
+    //this.userService.getRole(data.company,data.userId).subscribe(data => this.getRoles(data));
   }
 
-  getRoles(data: any): void {
-    let name:any = []
-    console.log(data)
-    data.forEach(element => {
-      name.push(element.name)
-      if (name == "Admin") {
-        localStorage.setItem("roleName", name)
-      }
-    });
-  }
+  // getRoles(data: any): void {
+  //   let name:any = []
+  //   console.log(data)
+  //   data.forEach(element => {
+  //     name.push(element.name)
+  //     // if (name == "Admin") {
+  //     //   localStorage.setItem("roleName", name)
+
+  //     // }
+  //   });
+    
+    
+  // }
 
   get(key) {
     key = key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1');

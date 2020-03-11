@@ -9,9 +9,10 @@ import { SharedModule } from '../shared/shared.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditprofileComponent } from './editprofile/editprofile.component';
+import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 
 @NgModule({
-  declarations: [HomeComponent, UserdetailsComponent, EditprofileComponent],
+  declarations: [HomeComponent, UserdetailsComponent, EditprofileComponent, RolesAndPermissionsComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

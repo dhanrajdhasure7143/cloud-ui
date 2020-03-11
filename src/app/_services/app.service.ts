@@ -74,10 +74,10 @@ export class AppService {
   getTokenForSocial(): Observable<any> {
     return this.http.get<any>(`/rest/api/logout`);
   }
-  invitefriends(inviterMailId, inviteeMailId){
+  invitefriends(inviterMailId, inviteeMailId,data){
     console.log('data', inviterMailId, inviteeMailId);
     let url = '/api/user/inviteUsers?inviterMailId='+inviterMailId+'&inviteeMailId='+inviteeMailId;
-    return this.http.post<any>(url,'')
+    return this.http.post<any>(url,data)
     }
   
 }
