@@ -3,10 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+console.log( `Bearer ${currentUser.accessToken}`);
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${currentUser.token}`
+    Authorization: `Bearer ${currentUser.accessToken}`
   })
 };
 

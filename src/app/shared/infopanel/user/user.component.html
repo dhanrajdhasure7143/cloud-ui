@@ -42,8 +42,12 @@
       <ul class="account_sub_ul">
         <li><a href="" [routerLink]="['/home/userdetails']">My Account</a></li>
         <li><a href="" [routerLink]="['/activation/plandetails']">Subscription</a></li>
+
         <li><a href="" [routerLink]="['/home/roles-and-permissions']">RolesAndPermissions</a></li>
   
+
+        <li><a href="" [routerLink]="['/activation/alerts']">Configure alerts</a></li>
+
         
     <div  [hidden] = "!admin">
       <li (click)="toggle()" class="nav-item dropdown">

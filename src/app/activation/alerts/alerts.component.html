@@ -1,16 +1,21 @@
 <div >
   <h4 class = "page_title">Alerts & Notifications</h4>
-  <select name="product" class="col-sm-1" (change)="onChange($event.target.value)">
-    <option *ngFor="let product of products"  [value]="product">{{product}}</option>
+  Select product to configure alerts:
+  <select name="product" class="col-sm-2" (change)="onChange($event.target.value)">
+    <option [ngValue]="undefined" selected>select</option>
+    <option *ngFor="let product of listOfNames"  [value]="product['appId']">{{product['name']}}</option>
     </select>
+    <!-- <p *ngFor="let product of listOfNames">hii{{product['name']}}</p> -->
+    
 <div style="margin: 10px 10px 10px 40px" *ngFor="let item of checkboxes" >
   <label style="font-size: 16px;font-weight: 300;">
     <input id="checkBox" 
-    [(ngModel)]="item.checked"
-      (click)= saveClick(item)
+    [(ngModel)]="item.userSelected"
+      (click)= saveClick(item,$event)
+      (change) = "changeProduct(item,$event)"
       class="form-check-input" 
       type="checkbox"
-      value="item.id"> {{ item.description }}
+      [ngValue]=item.id> {{ item.activity }}
   </label>
 </div>
 <p style="font-size: 14px;">Note : You will be notified through email incase of the selected activity in the application</p>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertsService } from 'src/app/_services/alerts.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-alerts',
@@ -8,61 +10,66 @@ import { AlertsService } from 'src/app/_services/alerts.service';
 })
 export class AlertsComponent implements OnInit {
 
-  products = ["Ezflow", "Ezbot"]
-  checkboxes = [
-    {
-      id: 1,
-      description: "Bot Creation",
-      checked: true,
-    },
-    {
-      id: 2,
-      description: "Proceess Creation",
-      checked: false,
-    },
-    {
-      id: 3,
-      description: "Process Deletion",
-      checked: true,
-
-    },
-    {
-      id: 4,
-      description: "Bot Assign",
-      checked: false,
-    }
-  ]
+  checkboxes:any = [];
+  checkboxValue:any = [];
   result: void;
   checkedData: any;
   demo: any = [];
+  application: any = [];
+  listOfNames: any = [];
+  listOfId: any = [];
+  Follow_list: any;
 
 
   constructor(private alertservice: AlertsService) { }
 
   ngOnInit() {
-    this.alertservice.alertsConfig().subscribe(res=> this.checkboxes = res)
+     this.alertservice.applications().subscribe(resp => 
+      {
+        this.application = resp,
+      this.application.forEach(element => {
+        this.listOfNames.push(element)
+        this.listOfId.push(element.app_id)
+      });})
   }
 
   saveConfig() {
-    console.log(this.checkedData);
-    
-    let data = {
-      "id" : this.checkedData.id,
-      "activity" : "",
-      "description" : this.checkedData.description,
-      "created_at" : null,
-      "modified_at" : null,
-      "app_id" : {}
-    }
-    this.alertservice.saveConfig(data).subscribe(res => this.successCallback(data))
+    console.log("data : "+this.checkedData);
+    console.log("value : "+this.checkboxValue);
+     let data = this.checkboxValue
+     this.alertservice.saveConfig(data).subscribe(res => this.successCallbackSubmit(res))
   }
-  saveClick(item){
-    console.log(item);
+  successCallbackSubmit(data) {
+    console.log(data);
+    Swal.fire({
+      type: 'success',
+      text: 'Successfully Updated'
+       });
+  }
+  saveClick(item,e){
+ 
+  }
+  changeProduct(i,event){
+
+    if(event.target.checked){
+   this.checkboxValue.push(i.id)
+    }
+    if(!event.target.checked){
+      const index = this.checkboxValue.findIndex(list => list.id == i);//Find the index of stored id
+      this.checkboxValue.splice(index, 1);
+    }
     
-    this.checkedData = item
+  }
+
+  onChange(product){
+    this.alertservice.alertsConfig(product).subscribe(res => this.successCallback(res))
   }
   successCallback(data) {
-    alert(data.message)
+   this.checkboxes = data
+    data.forEach(element => {
+      if(element.userSelected)
+      this.checkboxValue.push(element.id)      
+    });
   }
 
 }
