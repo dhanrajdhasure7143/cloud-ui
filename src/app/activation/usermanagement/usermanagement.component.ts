@@ -6,7 +6,7 @@ import { UsermanagementService } from 'src/app/_services/usermanagement.service'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-
+import {Cellrender} from 'src/app/activation/usermanagement/cellrender';
 @Component({
     selector: 'app-usermanagement',
     templateUrl: './usermanagement.component.html',
@@ -19,38 +19,32 @@ export class UsermanagementComponent implements OnInit {
     modalRef: BsModalRef;
     private gridApi;
     private gridColumnApi;
-    //public rowData: any[] = [];
     public model = new OPAUser();
-    //public columnDefs;
     public rowSelection;
     public isRowSelectable;
     public defaultColDef;
     private dataArray: any[] = [];
     public recordsSize = 15;
-
+    private frameworkComponents;
     public rolesList: any = [];
     selectedRowUserId: void;
     modifyModel: any = {};
-
-    // tslint:disable-next-line:ban-types
     isRoleStatus: String;
     isAvailable: boolean;
     admin: any;
-
-    //constructor() { }
-
     columnDefs = [
         {
-            headerName: 'User ID', field: 'userId', filter: true,
+            headerName: 'Email_ID', field: 'userId', filter: true,
             checkboxSelection: true, width: 300,
         },
         { headerName: 'First Name', field: 'firstName', filter: true },
         { headerName: 'Last Name', field: 'lastName', filter: true },
         { headerName: 'Organization', field: 'company', filter: true },
         { headerName: 'Department', field: 'department', filter: true },
-        { headerName: 'Role', field: 'Role', filter: true },
+       
         // this.rowSelection = 'multiple'
-
+        {headerName: 'Products', field: 'products', filter: true ,cellRenderer: "childMessageRenderer"},
+        {headerName: 'Roles', field: 'name', filter: true}
     ];
 
     rowData: any = [];
@@ -58,6 +52,20 @@ export class UsermanagementComponent implements OnInit {
 
     modules = AllCommunityModules;
     ngOnInit() {
+
+        this.rowData = [
+            { userId: 'gopi.palla@epsoftinc.com',    firstName: 'Gopi',   lastName: 'Palla',       company:'Epsoft',     department:'Devlopement',  products:'' ,   name:''},
+            { userId: 'sshivasimhadri@epsoftinc.com', firstName: 'Shiva',  lastName: 'Simhadri',    company:'Epsoft',    department:'Devlopement',  products:'' ,   name:''},
+           { userId: 'deepak.pilla@epsoftinc.com',    firstName: 'Deepak', lastName: 'Pilla',      company:'Aiotal',    department:'Managment',    products:'' ,   name:'' },
+            { userId: 'ranjith.sigiri@epsoftinc.com', firstName: 'Ranjith',lastName: 'Sigiri',      company:'Epsoft',    department:'Devlopement' , products:'' ,   name:''},
+           { userId: 'jaswanth.madala@epsoftinc.com',firstName: 'Jaswanth',lastName: 'Madala',     company:'Aiotal',    department:'Devlopement',   products:'' ,  name:'' },
+             { userId: 'veena.rebba@epsoftinc.com' ,   firstName: 'Veena',      lastName: 'Rebba',   company:'Aiotal',    department:'Pmo',        products:'' ,     name:''},
+             { userId: 'nagalakshmi.parimi@epsoftinc.com',firstName:'Nagalakshmi', lastName:'parimi',company:'Epsoft',    department:'Qa',         products:'' ,     name:''},
+             { userId: 'satya.rayudu@epsoftinc.com',   firstName: 'Ravi',       lastName: 'Rayudu',  company:'Epsoft',    department:'Devlopement',  products:'' ,   name:'' },
+             { userId: 'geetharam.dadi@epsoftinc.com' ,firstName: 'Geetharam',  lastName: 'Dadi',    company:'Epsoft',    department:'Managment',     products:'' ,  name:''},
+             { userId: 'salma.shaik@epsoftinc.com',    firstName: 'salma',      lastName: 'Shaik',   company:'Aiotal',     department:'Devlopement',  products:'' ,  name:'' },
+             { userId: 'rahima.mahammad@epsoftinc.com',firstName: 'Rahima',     lastName: 'Sulthana',company:'Aiotal',    department:'Ba' ,         products:'' ,    name:''},
+           ];
         //  this.rowData = [
         //   { Email: 'gopi.palla@epsoftinc.com',    f_name: 'Gopi',   l_name: 'Palla',       organisation:'Epsoft',     department:'Devlopement',     Role:'Admin'},
         //   { Email: 'sshivasimhadri@epsoftinc.com', f_name: 'Shiva',  l_name: 'Simhadri',    organisation:'Epsoft',    department:'Devlopement',     Role:'Admin'},
@@ -74,36 +82,37 @@ export class UsermanagementComponent implements OnInit {
 
         //  ];
         //  this.userService.usersDetails().subscribe(opaUser => this.rowData = opaUser || []);
-        let tenantId = localStorage.getItem("company");
-        let userId = localStorage.getItem("userName");
-        this.userService.usersDetails(tenantId, userId).subscribe(data => {
-        this.rowData = data || []
-            console.log("users", this.rowData);
-            var orginalData = [];
-            this.rowData.forEach(function (value) {
-                if (value.firstName === null) {
-                    value.firstName = "-- --"
-                    orginalData.push(value);
-                }
-                if (value.lastName === null) {
-                    value.lastName = "-- --"
-                    orginalData.push(value);
-                }
-                if (value.company === null) {
-                    value.company = "-- --"
-                    orginalData.push(value);
-                }
-                if (value.department === null) {
-                    value.department = "-- --"
-                    orginalData.push(value);
-                }
-            })
-        })
-    };
+    //     let tenantId = localStorage.getItem("company");
+    //     let userId = localStorage.getItem("userName");
+    //     this.userService.usersDetails(tenantId, userId).subscribe(data => {
+    //     this.rowData = data || []
+    //         console.log("users", this.rowData);
+    //         var orginalData = [];
+    //         this.rowData.forEach(function (value) {
+    //             if (value.firstName === null) {
+    //                 value.firstName = "-- --"
+    //                 orginalData.push(value);
+    //             }
+    //             if (value.lastName === null) {
+    //                 value.lastName = "-- --"
+    //                 orginalData.push(value);
+    //             }
+    //             if (value.company === null) {
+    //                 value.company = "-- --"
+    //                 orginalData.push(value);
+    //             }
+    //             if (value.department === null) {
+    //                 value.department = "-- --"
+    //                 orginalData.push(value);
+    //             }
+    //         })
+    //     })
+    // };
 
-
+        }
     constructor(private http: HttpClient, private userService: UsermanagementService, public modal: BsModalService) {
         // this.setUserRoleConfig();
+        this.frameworkComponents = {childMessageRenderer:Cellrender}
     }
 
     showRecords(size) {

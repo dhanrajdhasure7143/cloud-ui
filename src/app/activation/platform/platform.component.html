@@ -6,7 +6,7 @@
     </div>
     <div class="products_div">
       <div class="row prod_s">
-        <div class="col-sm-4" *ngFor="let each_product of productslist; let i=index" (click)="setProductPlan(each_product.plans)" id="ezbot_tab">
+        <div class="col-sm-4" *ngFor="let each_product of productslist" (click)="setProductPlan(each_product.plans)" id="ezbot_tab">
           <div class="product_division col-sm-12">
             <div class="row row_height">
               <div class="left_side col-sm-4">

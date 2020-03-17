@@ -15,8 +15,9 @@ import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { UsermanagementService } from '../_services/usermanagement.service';
 import { AlertsComponent } from './alerts/alerts.component';
+import { Cellrender } from './usermanagement/cellrender';
 @NgModule({
- declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent, UsermanagementComponent, AlertsComponent],
+ declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent, UsermanagementComponent, AlertsComponent,Cellrender],
  imports: [
  CommonModule,
  ActivationRoutingModule,
@@ -25,7 +26,7 @@ import { AlertsComponent } from './alerts/alerts.component';
  ProgressbarModule.forRoot(),
  ModalModule.forRoot(),
  AgGridModule.withComponents([
- UsermanagementComponent
+ UsermanagementComponent,Cellrender
  ]),
  FormsModule,
  ],
