@@ -29,7 +29,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
       }
 
      
-      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0) {
+      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0) {
         req = req.clone({
          url: apiendpoint + req.url,
           body: req.body,
@@ -42,7 +42,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
           body: req.body,
           headers: req.headers
         });
-      } else if(req.url.indexOf('authorizationservice') > -1){
+      } else if(req.url.indexOf('authorizationservice') > -1 || req.url.indexOf('subscriptionservice') > -1){
         req = req.clone({
           //url : url + req.url,
           url: authorizationendpoint + req.url,
