@@ -3,6 +3,26 @@ import {Component, OnInit} from "@angular/core";
 import {ICellRendererAngularComp} from "@ag-grid-community/angular";
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 
+interface roleListModel{
+    "id": string; 
+    "ext_id": string; 
+    "name": string; 
+    "appliationId": { 
+        "appId": string; 
+        "ext_id": string; 
+        "name": string; 
+        "description": any; 
+        "meta": any; 
+        "createdTimestamp": any; 
+        "modifiedTimestamp": any; 
+    }; 
+    "meta": string; 
+    "createdTimestamp": any; 
+    "modifiedTimestamp": any; 
+    "permission": any[];
+}
+
+
 @Component({
     selector: 'child-cell',
     template: `<select class="mySelect" (change)='onProductSelection($event)' >
@@ -19,13 +39,12 @@ export class Cellrender implements OnInit, ICellRendererAngularComp {
     public params: any;
     products:any=[];
     application_id:any;
-    roleslist: { "id": string; "ext_id": string; "name": string; "appliationId": { "appId": string; "ext_id": string; "name": string; "description": any; "meta": any; "createdTimestamp": any; "modifiedTimestamp": any; }; "meta": string; "createdTimestamp": any; "modifiedTimestamp": any; "permission": any[]; }[];
+    roleslist:roleListModel[];
 ngOnInit(){
     let tenantId = localStorage.getItem("company");
     let userId = localStorage.getItem("userName");
     this.userProducts(tenantId,userId);
-    this.products=
-    [
+    this.products = [
         {
             "appId": "1",
             "ext_id": "11",
@@ -35,8 +54,8 @@ ngOnInit(){
             "createdTimestamp": null,
             "modifiedTimestamp": null
         }
-    ]
-    this.roleslist=[
+    ];
+    this.roleslist = [
         {
             "id": "10",
             "ext_id": "11",
@@ -73,8 +92,7 @@ ngOnInit(){
             "modifiedTimestamp": null,
             "permission": []
         }
-    ]
-    
+    ];
   }
   constructor( private userService: UsermanagementService){}
     agInit(params: any): void {
