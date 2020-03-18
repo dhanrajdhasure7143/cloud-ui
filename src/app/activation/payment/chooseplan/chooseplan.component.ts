@@ -9,13 +9,27 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 export class ChooseplanComponent implements OnInit {
   tab: string;
   selected_plans:any = {};
-
+plan:any;
+  plantype: any;
   constructor(private productlistservice:ProductlistService, private router: Router) { }
  
   ngOnInit() {
     this.productlistservice.getSelectedProductPlan().subscribe(res=> this.selected_plans = res);
+    this.plan=this.selected_plans;
+    console.log("plansss",this.plan)
   } 
-
+  openTarget(url,plans){
+    let isValid = false;
+    if(plans.freeTrail==true){
+      this.plantype='freetrail';
+    }
+    else{
+      this.plantype='plan';
+    }
+    
+    window.open('http://localhost:3000'+url+'?plan='+plans.id+'&product='+plans.productName+'&type='+this.plantype, '_self' );
+    
+  }
 fun1(evt, seltab) {
 
   if (seltab == 'selectplan') {

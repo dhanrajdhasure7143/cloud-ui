@@ -54,7 +54,7 @@
                                         <h5><i class="fa fa-times" aria-hidden="true"></i>Live Support</h5>
                                         <!-- <h4 style="font-weight:800">{{selected_plan.amount|currency:selected_plan.currency}} /<span  style="font-size: 10px;font-weight: 300">{{selected_plan.nickName}}</span></h4> -->
                                         <h4 style="font-weight:800">${{selected_plan.amount}} /<span  style="font-size: 10px;font-weight: 300">{{selected_plan.nickName}}</span></h4>
-                                        <button class="btn btn-primary">Select</button>
+                                        <button class="btn btn-primary" (click)="openTarget('/checkout',this.selected_plan)">Select</button>
                    
                                     </div>
                                
