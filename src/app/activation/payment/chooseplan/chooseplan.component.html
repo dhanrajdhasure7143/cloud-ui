@@ -4,7 +4,109 @@
             <button class="tablinks active circle " (click)="fun1(event, 'selectplan')"
                 [ngClass]="{'active': tab==='tab1'}">1</button>
 
-            <hr style="color:gray;margin-top:37px;width:20em;margin-left:0px;margin-bottom:0px;display: inline-block">
+<!-- <section id="plans_table"> -->
+  <div class="container">
+        <div class="tab">
+                <div class="container" style="text-align: center">
+                    <button class="tablinks active circle " (click)="fun1(event, 'selectplan')"
+                        [ngClass]="{'active': tab==='tab1'}">1</button>
+                        <!-- <span>Select Plan</span> -->
+                        <hr style="color:gray;margin-top:37px;width:20em;margin-left:0px;margin-bottom:0px;display: inline-block">
+                        
+                    <button class="tablinks circle" (click)="fun1(event, 'Payment')"
+                        [ngClass]="{'active': tab==='tab2'}">2</button>
+                        <!-- <span>Payment</span>  -->
+                        <hr style="color:gray;margin-top:37px;width:20em;margin-left:0px;margin-bottom:0px;display: inline-block">
+                    <button class="tablinks circle" (click)="fun1(event, 'order')" [ngClass]="{'active': tab==='tab3'}">3
+                        </button>
+                        <!-- <span>Order Review</span> -->
+                </div>
+            </div>
+            <div id="selectplan" class="tabcontent active">
+                    <div class="container">
+                            <div class="row">
+                                <h2 id="plo">Plans available for every organization,</h2>
+                            </div>
+                            <div class="row">
+                                <span id="ctr">
+                                    <h4  style="text-align: center">Pick a plan that's right for you</h4>
+                                    <h6  style="text-align: center">Amount shown is per user and will be  billed on annual basis</h6>
+                                </span>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <!-- <div class="col-sm-6" id="coltab">
+                                            <h4><span id="ft"><b>Free Plan</b></span></h4>
+                                            <h5><i class="far fa-check-circle"></i><span>Process Intelligence<label>Limited</label></span></h5>
+                                            <h5><i class="far fa-check-circle"></i><span>Business Process Studio<label>Limited</label></span>
+                                            </h5>
+                                            <h5><i class="far fa-check-circle"></i><span>Service Orchestration<label>Limited</label></span></h5>
+                                            <h5><i class="far fa-times-circle"></i>Artificial Intelligence</h5>
+                                            <h5><i class="far fa-times-circle"></i>Live Support</h5>
+                                            <h4 style="font-weight:800">$ 0.00/<span style="font-size:10px; font-weight: 300">user per
+                                                    month</span></h4>
+                                            <button class="btn btn-primary">Select</button>
+                                    </div> -->
+
+                                   
+                                    <div class="col-sm-3" id="coltab" *ngFor="let selected_plan of selected_plans">
+                                        <h4><span id="ft"><b>{{selected_plan.nickName}}</b></span></h4>
+                                        <h5><i class="fa fa-check" aria-hidden="true"></i><span>Process Intelligence<label>Limited</label></span></h5>
+                                        <h5><i class="fa fa-check" aria-hidden="true"></i><span>Business Process Studio<label>Limited</label></span></h5>
+                                        <h5><i class="fa fa-check" aria-hidden="true"></i><span>Service Orchestration<label>Limited</label></span></h5>
+                                        <h5><i class="fa fa-times" aria-hidden="true"></i>Artificial Intelligence</h5>
+                                        <h5><i class="fa fa-times" aria-hidden="true"></i>Live Support</h5>
+                                        <!-- <h4 style="font-weight:800">{{selected_plan.amount|currency:selected_plan.currency}} /<span  style="font-size: 10px;font-weight: 300">{{selected_plan.nickName}}</span></h4> -->
+                                        <h4 style="font-weight:800">${{selected_plan.amount}} /<span  style="font-size: 10px;font-weight: 300">{{selected_plan.nickName}}</span></h4>
+                                        <button class="btn btn-primary" (click)="openTarget('/checkout',this.selected_plan)">Select</button>
+                   
+                                    </div>
+                               
+                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="Payment" class="tabcontent">
+                        <h4>Hi,I am Payment tab</h4>
+                
+                
+                    </div>
+                
+                    <div id="order" class="tabcontent">
+                        <h4>Hi,I am Order Review tab</h4>
+                    </div>
+                </div>
+               
+      <!-- <div class="row">
+          <div class="col-sm-12 choose_header">
+              <h2 class="second_header blue">Plans available for every organization,</h2>
+              <h4 class="second_header blue">Pick a plan that's right for you</h4>
+              <h6 class="last_amount">Amount shown is per user and will be billed on annual basis</h6>
+          </div>
+          <div class="col">
+            <div class="row">
+                <div class="col-sm-6" id="coltab">
+                        <h4><span id="ft"><b>Free Plan</b></span></h4>
+                        <h5><i class="far fa-check-circle"></i><span>Process Intelligence<label>Limited</label></span></h5>
+                        <h5><i class="far fa-check-circle"></i><span>Business Process Studio<label>Limited</label></span>
+                        </h5>
+                        <h5><i class="far fa-check-circle"></i><span>Service Orchestration<label>Limited</label></span></h5>
+                        <h5><i class="far fa-times-circle"></i>Artificial Intelligence</h5>
+                        <h5><i class="far fa-times-circle"></i>Live Support</h5>
+                        <h4 style="font-weight:800">$ 0.00/<span style="font-size:10px; font-weight: 300">user per
+                                month</span></h4>
+                        <button class="btn btn-primary">Select</button>
+                </div>
+                <div class="col-sm-6" id="coltab">
+                        <h4><span id="ft"><b>{{selected_plan.id}}</b></span></h4>
+                        <h5><i class="far fa-check-circle"></i><span>Process Intelligence<label>Limited</label></span></h5>
+                        <h5><i class="far fa-check-circle"></i><span>Business Process Studio<label>Limited</label></span>
+                        </h5>
+                        <h5><i class="far fa-check-circle"></i><span>Service Orchestration<label>Limited</label></span></h5>
+                        <h5><i class="far fa-times-circle"></i>Artificial Intelligence</h5>
+                        <h5><i class="far fa-times-circle"></i>Live Support</h5>
 
             <button class="tablinks circle" (click)="fun1(event, 'Payment')"
                 [ngClass]="{'active': tab==='tab2'}">2</button>

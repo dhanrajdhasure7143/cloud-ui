@@ -80,6 +80,11 @@ export class UserComponent implements OnInit {
 
 
   }
+   openTarget(url){
+    let isValid = false;
+    //logic
+    window.open('http://localhost:3000'+url, '_self' );//, '_self'    window.open('http://localhost:3000'+url+'?isValid='+isValid)
+  }
 
 
   successGetApps(data) {
