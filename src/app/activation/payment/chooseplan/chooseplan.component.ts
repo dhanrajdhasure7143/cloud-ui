@@ -27,7 +27,7 @@ plan:any;
       this.plantype='plan';
     }
     
-    window.open('http://localhost:3000'+url+'?plan='+plans.id+'&product='+plans.productName+'&type='+this.plantype, '_self' );
+    window.open('http://localhost:3000'+url+'?plan='+plans.id+'&product='+plans.productId+'&type='+this.plantype, '_self' );
     
   }
 fun1(evt, seltab) {
