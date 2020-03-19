@@ -19,5 +19,9 @@ export class PlatformComponent implements OnInit {
     this.productlistservice.setSelectedProductPlan(plans);
     this.router.navigate(['/activation/payment/chooseplan']);
   }
+
+  productTrackBy(index, item){
+    return index;
+  }
   
 }

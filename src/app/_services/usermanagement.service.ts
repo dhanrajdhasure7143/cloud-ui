@@ -35,5 +35,19 @@ export class UsermanagementService implements OnInit {
   updateRole(data): Observable<any[]> {
     return this.http.post<any[]>('/api/user/updateRole', data, httpOptions);
   }
-}
+  userProducts(tenantId,userId){
+    return this.http.get<any[]>('/api/v1/auth/tenants/'+tenantId +'/users/'+userId+'/applications', httpOptions);
+    //api/v1/auth/tenants/epsoft123/users/rmule@aiotal.com/applications
+  }
+  userRole(selected_row_userid,appId){
+  return this.http.get<any[]>('/api/v1/auth/tenants/users/'+selected_row_userid+'/application/'+appId+'roles', httpOptions);
+  
+
+//http://localhost:9095/api/v1/auth/users/siva@aiotal.com/application/10/roles
+
+
+  }
+
+  }
+
 
