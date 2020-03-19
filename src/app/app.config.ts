@@ -14,9 +14,11 @@ export interface AiotalAppConfig {
 
 export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
-  apiendpoint: 'http://localhost:9090',
-  tokenendpoint: 'http://localhost:9797',
-  authorizationendpoint: 'http://localhost:9095/',
+  apiendpoint: 'http://10.11.1.117:9090',
+  tokenendpoint: 'http://10.11.1.117:9797',
+  authorizationendpoint: 'http://10.11.1.117:9095',
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
-  notificationsendpoint: 'http://localhost:9092'
+  notificationsendpoint: 'http://10.11.1.117:9092'
 };
+
+

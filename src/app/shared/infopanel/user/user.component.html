@@ -41,8 +41,17 @@
     <div class="account_sub">
       <ul class="account_sub_ul">
         <li><a href="" [routerLink]="['/home/userdetails']">My Account</a></li>
-        <li><a href="" [routerLink]="['/activation/plandetails']">Subscription</a></li>
-
+        <li (click)="toggle()" class="nav-item dropdown">
+          <div mdbWavesEffect class=" dropdown-toggle" mdbWavesEffect>Subscription</div><span class="caret"></span></li>
+            <div class="subheader">
+            <span *ngIf="show">
+              <!-- <a class="dropdown-item waves-light" mdbWavesEffect href="/home/" onclick="javascript:event.target.port=3000">Dash Board</a> -->
+              <a class="dropdown-item waves-light" mdbWavesEffect (click)="openTarget('/home')">Dash Board</a>
+              <a class="dropdown-item waves-light" mdbWavesEffect href="#">Plans</a>
+              
+            </span>
+          
+        </div>
         <li><a href="" [routerLink]="['/home/roles-and-permissions']">RolesAndPermissions</a></li>
   
 
