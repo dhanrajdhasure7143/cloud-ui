@@ -29,4 +29,11 @@ export class UserService {
    getUserRoleForSelectedProduct(userId,appId): Observable<any[]>{
     return this.http.get<any[]>('/authorizationservice/api/v1/applications/'+appId+'/users/'+userId+'/roles');
    }
+
+   inviteUsersLimit(product): Observable<any[]>{
+    return this.http.get<any[]>('subscriptionservice/v1/subscriptions/product/'+product+'/noOfAllowedUsers');
+   }
+   countOfUsersForTenantForProduct(tenantId, productId): Observable<any[]>{
+    return this.http.get<any[]>('/authorizationservice/api/v1/tenants/'+tenantId+'/applications/'+productId);
+   }
 }

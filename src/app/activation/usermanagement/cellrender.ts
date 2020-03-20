@@ -44,55 +44,55 @@ ngOnInit(){
     let tenantId = localStorage.getItem("company");
     let userId = localStorage.getItem("userName");
     this.userProducts(tenantId,userId);
-    this.products = [
-        {
-            "appId": "1",
-            "ext_id": "11",
-            "name": "Asimov",
-            "description": null,
-            "meta": null,
-            "createdTimestamp": null,
-            "modifiedTimestamp": null
-        }
-    ];
-    this.roleslist = [
-        {
-            "id": "10",
-            "ext_id": "11",
-            "name": "Admin",
-            "appliationId": {
-                "appId": "1",
-                "ext_id": "11",
-                "name": "Asimov",
-                "description": null,
-                "meta": null,
-                "createdTimestamp": null,
-                "modifiedTimestamp": null
-            },
-            "meta": "fgghghfg",
-            "createdTimestamp": null,
-            "modifiedTimestamp": null,
-            "permission": []
-        },
-        {
-            "id": "11",
-            "ext_id": "11",
-            "name": "FlowAdmin",
-            "appliationId": {
-                "appId": "1",
-                "ext_id": "11",
-                "name": "Asimov",
-                "description": null,
-                "meta": null,
-                "createdTimestamp": null,
-                "modifiedTimestamp": null
-            },
-            "meta": "gddfgfhfgh",
-            "createdTimestamp": null,
-            "modifiedTimestamp": null,
-            "permission": []
-        }
-    ];
+    // this.products = [
+    //     {
+    //         "appId": "1",
+    //         "ext_id": "11",
+    //         "name": "Asimov",
+    //         "description": null,
+    //         "meta": null,
+    //         "createdTimestamp": null,
+    //         "modifiedTimestamp": null
+    //     }
+    // ];
+    // this.roleslist = [
+    //     {
+    //         "id": "10",
+    //         "ext_id": "11",
+    //         "name": "Admin",
+    //         "appliationId": {
+    //             "appId": "1",
+    //             "ext_id": "11",
+    //             "name": "Asimov",
+    //             "description": null,
+    //             "meta": null,
+    //             "createdTimestamp": null,
+    //             "modifiedTimestamp": null
+    //         },
+    //         "meta": "fgghghfg",
+    //         "createdTimestamp": null,
+    //         "modifiedTimestamp": null,
+    //         "permission": []
+    //     },
+    //     {
+    //         "id": "11",
+    //         "ext_id": "11",
+    //         "name": "FlowAdmin",
+    //         "appliationId": {
+    //             "appId": "1",
+    //             "ext_id": "11",
+    //             "name": "Asimov",
+    //             "description": null,
+    //             "meta": null,
+    //             "createdTimestamp": null,
+    //             "modifiedTimestamp": null
+    //         },
+    //         "meta": "gddfgfhfgh",
+    //         "createdTimestamp": null,
+    //         "modifiedTimestamp": null,
+    //         "permission": []
+    //     }
+    // ];
   }
   constructor( private userService: UsermanagementService){}
     agInit(params: any): void {
@@ -104,14 +104,14 @@ ngOnInit(){
         let element = e.target.closest(".ag-row");
         let selected_row_userid:HTMLElement = element.querySelector("div[col-id='userId']");
         let selected_row_role_el:HTMLElement = element.querySelector("div[col-id='name']");
-        // this.userService.userRole(selected_row_userid.innerText, this.application_id).subscribe(
-        //     data=>{
-        //         this.roles(data,this.application_id)
-        //     },
-        //     err=>{
-        //         this.roles(selected_row_role_el,this.application_id)
-        //     }
-        // );
+        this.userService.userRole(selected_row_userid.innerText, this.application_id).subscribe(
+            data=>{
+                this.roles(data,this.application_id)
+            },
+            err=>{
+                this.roles(selected_row_role_el,this.application_id)
+            }
+        );
         this.roles(selected_row_role_el,this.application_id)
      } 
  

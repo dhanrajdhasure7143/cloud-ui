@@ -36,5 +36,8 @@ export class FirstloginService {
   // readuser(){
   //   return this.http.get()
   // }
+  verifyInvitee(inviteId: any): Observable<any> {
+    return this.http.get<any>(`/api/user/invitationConfirm?inviteId=${inviteId}`);
+  }
 
 }

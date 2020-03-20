@@ -20,6 +20,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
       let socialAndWorkLogin = this.config.socialAndWorkLogin;
       let authorizationendpoint = this.config.authorizationendpoint;
       let notificationsendpoint = this.config.notificationsendpoint;
+      let Subscriptionendpoint=this.config.Subscriptionendpoint;
       
 
       if (!localStorage.getItem('userName')) {
@@ -32,6 +33,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
         authorizationendpoint = authorizationendpoint + '/';
         socialAndWorkLogin = socialAndWorkLogin + '/';
         notificationsendpoint = notificationsendpoint + '/';
+        Subscriptionendpoint=Subscriptionendpoint+'/';
       }
 
      
@@ -48,14 +50,23 @@ export class BackendURLInterceptor implements HttpInterceptor {
           body: req.body,
           headers: req.headers
         });
-      } else if(req.url.indexOf('authorizationservice') > -1 || req.url.indexOf('subscriptionservice') > -1){
+      } else if(req.url.indexOf('authorizationservice') > -1 ){
         req = req.clone({
           //url : url + req.url,
           url: authorizationendpoint + req.url,
           body: req.body,
           headers: req.headers
         });
-      }else if(req.url.indexOf('/api/v1/notificationservice') > -1){
+      }else if( req.url.indexOf('subscriptionservice') > -1){
+        req = req.clone({
+          //url : url + req.url,
+          url:Subscriptionendpoint + req.url,
+          body: req.body,
+          headers: req.headers
+        });
+      }
+      //** */
+      else if(req.url.indexOf('notificationservice') > -1){
         req = req.clone({
           //url : url + req.url,
           url: notificationsendpoint + req.url,

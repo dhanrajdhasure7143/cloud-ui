@@ -53,7 +53,7 @@ export class UsermanagementComponent implements OnInit {
     ngOnInit() {
 
         this.rowData =[
-            { userId: 'gopi.palla@epsoftinc.com', firstName: 'Gopi', lastName: 'Palla', company: 'Epsoft', department: 'Devlopement', products: '', name: '' },
+            { userId: 'venkata.simhadri@epsoftinc.com', firstName: 'Gopi', lastName: 'Palla', company: 'Epsoft', department: 'Devlopement', products: '', name: '' },
             { userId: 'sshivasimhadri@epsoftinc.com', firstName: 'Shiva', lastName: 'Simhadri', company: 'Epsoft', department: 'Devlopement', products: '', name: '' },
             { userId: 'deepak.pilla@epsoftinc.com', firstName: 'Deepak', lastName: 'Pilla', company: 'Aiotal', department: 'Managment', products: '', name: '' },
             { userId: 'ranjith.sigiri@epsoftinc.com', firstName: 'Ranjith', lastName: 'Sigiri', company: 'Epsoft', department: 'Devlopement', products: '', name: '' },

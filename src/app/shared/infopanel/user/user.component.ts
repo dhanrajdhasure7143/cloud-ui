@@ -105,8 +105,35 @@ export class UserComponent implements OnInit {
       if (element.name == selectedValue) {
         this.appSelectedId = element.appId
         console.log("app selected", this.appSelectedId);
+        this.userService.inviteUsersLimit(selectedValue).subscribe(data => {
+         // let count = 20;
+          this.userService.countOfUsersForTenantForProduct(this.tenantId, element.appId).subscribe(resp => {
+           
+           console.log("users_count data", resp);
+           
+            let resp1 = {
+              users_count : "19"
+            } 
+            let user_count = +resp1.users_count;
+            if (user_count < +data) {
+              this.userService.getUserRoleForSelectedProduct(this.email, element.appId).subscribe(data => this.userRole(data));
+            }else{
+              Swal.fire({
+                title: 'Error',
+                text: `You already reached to maximum invitation count...!!`,
+                type: 'error',
+                showCancelButton: false,
+                allowOutsideClick: false
+              }).then(function () {
+                //window.location.href = "../Subscription";
+        
+              });
+            }
+          })
 
-        this.userService.getUserRoleForSelectedProduct(this.email, element.appId).subscribe(data => this.userRole(data));
+
+        })
+
 
 
       }
@@ -126,10 +153,10 @@ export class UserComponent implements OnInit {
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: false
-      }).then(function() {
+      }).then(function () {
         //window.location.href = "../Subscription";
-       
-    });
+
+      });
     }
   }
 
