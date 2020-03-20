@@ -41,7 +41,7 @@ export class Cellrender implements OnInit, ICellRendererAngularComp {
     application_id:any;
     roleslist:roleListModel[];
 ngOnInit(){
-    let tenantId = localStorage.getItem("company");
+    let tenantId = localStorage.getItem("tenantName");
     let userId = localStorage.getItem("userName");
     this.userProducts(tenantId,userId);
     // this.products = [

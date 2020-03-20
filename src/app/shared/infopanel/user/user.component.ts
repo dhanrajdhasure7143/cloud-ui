@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
-    this.tenantId = localStorage.getItem("company")
+    this.tenantId = localStorage.getItem("tenantName")
     this.email = localStorage.getItem("userName");
     console.log("hsdkjfhskdfh", this.tenantId, this.email);
 
@@ -107,20 +107,11 @@ export class UserComponent implements OnInit {
         console.log("app selected", this.appSelectedId);
         this.userService.inviteUsersLimit(selectedValue).subscribe(data => {
          // let count = 20;
-          this.userService.countOfUsersForTenantForProduct(this.tenantId, element.appId).subscribe(resp => {
-           
-           console.log("users_count data", resp);
-           
-            let resp1 = {
-              users_count : "19"
-            } 
-            let user_count = +resp1.users_count;
-            if (user_count < +data) {
-              this.userService.getUserRoleForSelectedProduct(this.email, element.appId).subscribe(data => this.userRole(data));
-            }else{
+          this.userService.countOfUsersForTenantForProduct(this.tenantId, element.appId).subscribe(respData => {this.usersCount(respData, data, element.appId),err=>{
+            
               Swal.fire({
-                title: 'Error',
-                text: `You already reached to maximum invitation count...!!`,
+                title: 'NOT_FOUND',
+                text: "Subscription plan not found for tenat for the product asimov",
                 type: 'error',
                 showCancelButton: false,
                 allowOutsideClick: false
@@ -128,10 +119,9 @@ export class UserComponent implements OnInit {
                 //window.location.href = "../Subscription";
         
               });
-            }
-          })
-
-
+          
+          }})
+         
         })
 
 
@@ -139,6 +129,27 @@ export class UserComponent implements OnInit {
       }
     })
 
+  }
+  usersCount(respData, data , appID){
+
+    //let user_count = 20;
+  let user_count = +respData.users_count;
+    if(user_count < +data) {
+      this.userService.getUserRoleForSelectedProduct(this.email, appID).subscribe(data => this.userRole(data));
+    }else{
+      Swal.fire({
+        title: 'Error',
+        text: `You already reached to maximum invitation count...!!`,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: false
+      }).then(function () {
+        //window.location.href = "../Subscription";
+
+      });
+    }
+      
+    
   }
   userRole(data) {
     if (data.message === 'Admin') {

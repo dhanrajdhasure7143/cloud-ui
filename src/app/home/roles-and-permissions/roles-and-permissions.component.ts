@@ -38,7 +38,7 @@ export class RolesAndPermissionsComponent implements OnInit {
     // ]
 
 
-    this.tenantId = localStorage.getItem("company")
+    this.tenantId = localStorage.getItem("tenantName")
     this.email = localStorage.getItem("userName");
 
     this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
