@@ -20,7 +20,7 @@ export class PlatformComponent implements OnInit {
     this.tenantId = localStorage.getItem("tenantName")
     this.email = localStorage.getItem("userName");
     console.log("apps subscribed", this.tenantId, this.email);
-    this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
+    this.userService.getUserApplications().subscribe(data => this.successGetApps(data));
   }
   successGetApps(data) {
     console.log("appname", data);

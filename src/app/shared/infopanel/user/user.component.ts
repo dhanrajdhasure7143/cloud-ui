@@ -56,7 +56,7 @@ export class UserComponent implements OnInit {
     this.email = localStorage.getItem("userName");
     console.log("hsdkjfhskdfh", this.tenantId, this.email);
 
-    this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
+    this.userService.getUserApplications().subscribe(data => this.successGetApps(data));
 
 
 
@@ -107,7 +107,7 @@ export class UserComponent implements OnInit {
         console.log("app selected", this.appSelectedId);
         this.userService.inviteUsersLimit(selectedValue).subscribe(data => {
          // let count = 20;
-          this.userService.countOfUsersForTenantForProduct(this.tenantId, element.appId).subscribe(respData => {this.usersCount(respData, data, element.appId),err=>{
+          this.userService.countOfUsersForTenantForProduct(element.appId).subscribe(respData => {this.usersCount(respData, data, element.appId),err=>{
             
               Swal.fire({
                 title: 'NOT_FOUND',
@@ -135,7 +135,7 @@ export class UserComponent implements OnInit {
     //let user_count = 20;
   let user_count = +respData.users_count;
     if(user_count < +data) {
-      this.userService.getUserRoleForSelectedProduct(this.email, appID).subscribe(data => this.userRole(data));
+      this.userService.getUserRoleForSelectedProduct(appID).subscribe(data => this.userRole(data));
     }else{
       Swal.fire({
         title: 'Error',
@@ -153,7 +153,7 @@ export class UserComponent implements OnInit {
   }
   userRole(data) {
     if (data.message === 'Admin') {
-      this.userService.getSelectedRole(this.email, this.appSelectedId).subscribe(data => this.successRoles(data));
+      this.userService.getSelectedRole(this.appSelectedId).subscribe(data => this.successRoles(data));
 
       // this.appSelectedId = element.appId
       console.log(this.appSelectedId);

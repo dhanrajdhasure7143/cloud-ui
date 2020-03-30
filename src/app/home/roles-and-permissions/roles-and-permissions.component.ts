@@ -41,7 +41,7 @@ export class RolesAndPermissionsComponent implements OnInit {
     this.tenantId = localStorage.getItem("tenantName")
     this.email = localStorage.getItem("userName");
 
-    this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
+    this.userService.getUserApplications().subscribe(data => this.successGetApps(data));
 
   }
   successGetApps(data) {
@@ -68,7 +68,7 @@ export class RolesAndPermissionsComponent implements OnInit {
       if (element.name == selectedProduct) {
         this.appSelectedId = element.appId
         console.log("app selected", this.appSelectedId);
-        this.userService.getSelectedRole(this.email, element.appId).subscribe(data => this.successRoles(data));
+        this.userService.getSelectedRole(element.appId).subscribe(data => this.successRoles(data));
         this.appSelectedId = element.appId
         console.log(this.appSelectedId);
       }
