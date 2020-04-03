@@ -52,11 +52,11 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
-    this.tenantId = localStorage.getItem("company")
+    this.tenantId = localStorage.getItem("tenantName")
     this.email = localStorage.getItem("userName");
     console.log("hsdkjfhskdfh", this.tenantId, this.email);
 
-    this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
+    this.userService.getUserApplications().subscribe(data => this.successGetApps(data));
 
 
 
@@ -105,17 +105,55 @@ export class UserComponent implements OnInit {
       if (element.name == selectedValue) {
         this.appSelectedId = element.appId
         console.log("app selected", this.appSelectedId);
+        this.userService.inviteUsersLimit(selectedValue).subscribe(data => {
+         // let count = 20;
+          this.userService.countOfUsersForTenantForProduct(element.appId).subscribe(respData => {this.usersCount(respData, data, element.appId),err=>{
+            
+              Swal.fire({
+                title: 'NOT_FOUND',
+                text: "Subscription plan not found for tenat for the product asimov",
+                type: 'error',
+                showCancelButton: false,
+                allowOutsideClick: false
+              }).then(function () {
+                //window.location.href = "../Subscription";
+        
+              });
+          
+          }})
+         
+        })
 
-        this.userService.getUserRoleForSelectedProduct(this.email, element.appId).subscribe(data => this.userRole(data));
 
 
       }
     })
 
   }
+  usersCount(respData, data , appID){
+
+    //let user_count = 20;
+  let user_count = +respData.users_count;
+    if(user_count < +data) {
+      this.userService.getUserRoleForSelectedProduct(appID).subscribe(data => this.userRole(data));
+    }else{
+      Swal.fire({
+        title: 'Error',
+        text: `You already reached to maximum invitation count...!!`,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: false
+      }).then(function () {
+        //window.location.href = "../Subscription";
+
+      });
+    }
+      
+    
+  }
   userRole(data) {
     if (data.message === 'Admin') {
-      this.userService.getSelectedRole(this.email, this.appSelectedId).subscribe(data => this.successRoles(data));
+      this.userService.getSelectedRole(this.appSelectedId).subscribe(data => this.successRoles(data));
 
       // this.appSelectedId = element.appId
       console.log(this.appSelectedId);
@@ -126,10 +164,10 @@ export class UserComponent implements OnInit {
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: false
-      }).then(function() {
+      }).then(function () {
         //window.location.href = "../Subscription";
-       
-    });
+
+      });
     }
   }
 

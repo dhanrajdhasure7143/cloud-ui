@@ -17,15 +17,13 @@ export class AppService {
   public _userActionOccured: Subject<void> = new Subject();
 
   constructor(private http: HttpClient, private router: Router, private content: ContentfulService) { }
-  set(name, value, opts = {}) {
-    CookieStore.set(name, value, opts);
-  }
+ 
 
   login(username: string, password: string) {
     return this.http.post<any>(`/api/login/beta/accessToken`, { 'userId' : username, 'password' : password })
         .pipe(map(user => {
             localStorage.setItem('currentUser', JSON.stringify(user));
-            this.set('token', currentUser.accessToken, {});
+            CookieStore.set('token', currentUser.accessToken, {});
             this.setProperties();
             return user;
         }));

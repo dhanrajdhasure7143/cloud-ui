@@ -12,8 +12,8 @@ export class UserService {
         return this.http.get<User[]>(`/users`);
     }
 
-    getUserApplications(tenantId, userId) {
-      return this.http.get<User[]>('/authorizationservice/api/v1/tenants/'+tenantId+'/users/'+userId+'/applications');
+    getUserApplications() {
+      return this.http.get<User[]>('/authorizationservice/api/v1/tenants/users/applications');
   }
 
     fetchalluserNames (): Observable<any[]> {
@@ -23,10 +23,17 @@ export class UserService {
       
   //     return this.http.get<any[]>('/authorizationservice/api/v1/tenants/'+tenantId +'/users/'+userId+'/roles');
   //  }
-   getSelectedRole(userId,appId): Observable<any[]>{
-    return this.http.get<any[]>('/authorizationservice/api/v1/users/'+userId+'/application/'+appId+'/roles');
+   getSelectedRole(appId): Observable<any[]>{
+    return this.http.get<any[]>('/authorizationservice/api/v1/application/'+appId+'/roles');
    }
-   getUserRoleForSelectedProduct(userId,appId): Observable<any[]>{
-    return this.http.get<any[]>('/authorizationservice/api/v1/applications/'+appId+'/users/'+userId+'/roles');
+   getUserRoleForSelectedProduct(appId): Observable<any[]>{
+    return this.http.get<any[]>('/authorizationservice/api/v1/users/roles/applications'+appId);
+   }
+
+   inviteUsersLimit(product): Observable<any[]>{
+    return this.http.get<any[]>('subscriptionservice/v1/subscriptions/product/'+product+'/noOfAllowedUsers');
+   }
+   countOfUsersForTenantForProduct(productId): Observable<any[]>{
+    return this.http.get<any[]>('/authorizationservice/api/v1/tenants/applications/'+productId);
    }
 }

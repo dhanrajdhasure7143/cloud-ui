@@ -30,6 +30,8 @@ export class FirstloginComponent implements OnInit {
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, private service: FirstloginService,private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
+      if(params['token'] != undefined){
+      
       var token=params['token']
       this.decodedToken = Base64.decode(token)
       console.log("decoded token = "+this.decodedToken);
@@ -39,6 +41,15 @@ export class FirstloginComponent implements OnInit {
       this.router.navigate['/user']
        
      }})
+    }else{
+      var inviteId = params['inviteId']
+      var userId = params['userId']
+      this.decodedToken = Base64.decode(userId)
+      this.service.verifyInvitee(inviteId).subscribe(response =>{this.onSuccessOfConfirmToken(response),err=>{
+        this.router.navigate['/user']
+      }})
+      
+    }
     });
      }
 
@@ -95,6 +106,14 @@ export class FirstloginComponent implements OnInit {
     }
      
     }
+    onSuccessOfConfirmToken(response: any){
+     if(response.message === 'Invalid User Invite' || response.message === 'User Invitation  Already Confirmed'){
+      this.router.navigate(['/user']);
+     }
+     
+
+    }
+
     ondepartment(event){
       console.log("event------>",event)
 

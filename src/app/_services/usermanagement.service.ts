@@ -36,11 +36,11 @@ export class UsermanagementService implements OnInit {
     return this.http.post<any[]>('/api/user/updateRole', data, httpOptions);
   }
   userProducts(tenantId,userId){
-    return this.http.get<any[]>('/api/v1/auth/tenants/'+tenantId +'/users/'+userId+'/applications', httpOptions);
+    return this.http.get<any[]>('/authorizationservice/api/v1/tenants/'+tenantId +'/users/'+userId+'/applications', httpOptions);
     //api/v1/auth/tenants/epsoft123/users/rmule@aiotal.com/applications
   }
   userRole(selected_row_userid,appId){
-  return this.http.get<any[]>('/api/v1/auth/tenants/users/'+selected_row_userid+'/application/'+appId+'roles', httpOptions);
+  return this.http.get<any[]>('/authorizationservice/api/v1/applications/'+appId+'/users/'+selected_row_userid+'/roles', httpOptions);
   
 
 //http://localhost:9095/api/v1/auth/users/siva@aiotal.com/application/10/roles

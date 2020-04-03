@@ -9,16 +9,18 @@ export interface AiotalAppConfig {
   socialAndWorkLogin: string;
   authorizationendpoint: String;
   notificationsendpoint: String;
+  Subscriptionendpoint:String;
 
 }
 
 export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
-  apiendpoint: 'http://10.11.1.117:9090',
-  tokenendpoint: 'http://10.11.1.117:9797',
-  authorizationendpoint: 'http://10.11.1.117:9095',
+  apiendpoint: 'http://apdev.epsoftinc.in',
+  tokenendpoint: 'http://idmdev.epsoftinc.in',
+  authorizationendpoint: 'http://authdev.epsoftinc.in',
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
-  notificationsendpoint: 'http://10.11.1.117:9092'
+  notificationsendpoint: 'http://alertsdev.epsoftinc.in',
+  Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in'
 };
 
 
