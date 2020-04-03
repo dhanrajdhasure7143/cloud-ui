@@ -1,54 +1,34 @@
-<div class="cp_header">
-    <div class="row header_row">
-        <div class="col-sm-6 logo_division">
-            <div class="a_logo" [routerLink]="['/activation/plandetails']">
-              <img src="assets/a_images/EPSoft.png" class="a_cp_logo"><label class="c_label">AIOTAL Cloud Platform</label>
-            </div>
-            <!-- <div class="e_logo">
-              <img src="assets/a_images/Epsoft.svg" class="a_cp_logo">
-            </div> -->
-          </div>
 
-          <div class="col-sm-6 user_division">
-            <div class="user_div_con">
-              <span class="bell_notify" (click)="toogleDropdown($event, '2')" ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-bell">
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg></span>
+<div class="container-fluid">
+  <div class="row">
+<nav class=" navbar-light naveOne">
+  <a class="navbar-brand" href="#" class="aiotal">
+    <img class="titleimage" src="assets/images/EpsoftImage.svg" alt="epsoft"> </a>
+  <ul  class="nav navTwo">
+      <li class=" nav-item">
+          <img class="notification-icon" src="assets/images/notificationIcon.svg" alt=" ">
+        </li>
+    <li class=" nav-item">
+        <!-- <img class="notification-icon" src="assets/images/notificationIcon.svg" alt=" "> -->
 
-              <div class="btn-group user__img_btn" dropdown [autoClose]="false">
-                  <!-- <img src="assets/a_images/profile.jpg" class="user_img"> -->
-                  <div id="example1">
-                      <!-- <p>{{nam.split("")[0]}}</p>  -->
-                      <p>{{fletter | async | titlecase}}</p> 
+        <!-- <a href="#" class="icon_middle"> -->
+      <img class="icon_middle" src="assets/images/pro1.png" alt="profile image">
+            <!-- </a> -->
+        <span (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="Drop Down"></span>      
 
-                    </div>
-                <label id="button-basic" dropdownToggle class="dropdown-toggle" (click)="toogleDropdown($event, '0')" aria-controls="dropdown-basic">{{name | async | titlecase}}<span class="user_caret"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-                </label>
-                <!-- <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu admin_drp" role="menu" aria-labelledby="button-basic">
-                  <app-user></app-user>
-                  <hr class="profile_hr">
-                  <div class="account_sub">
-                    <ul class="account_sub_ul">
-                      <li><a href="" [routerLink]="['/home/userdetails']">My Account</a></li>
-                      <li><a href="">Subscription</a></li>
-                      <li><a href="">Billing</a></li>
-                    </ul>
-                  </div>
-                  <hr class="profile_hr">
-                  <div class="account_sub">
-                    <ul class="account_sub_ul">
-                      <li><div (click)="logout()">Logout</div></li>
-                    </ul>
-                  </div>
-                </ul> -->
-              </div>
-              <bot-infopanel dropdown #dropdown="bs-dropdown" [componentIndex]="compIndex"></bot-infopanel>
-              <a class="support_link">Support</a>
-            </div>
-          </div>
-    </div>
-  </div>
 
+              <div id="myDropdown" class="dropdown-content">
+               <p (click)="accountSlideup()"><img  src="assets/images/account.svg"><span>My Account</span></p>
+                  <!-- <p (click)="subscriptionSlide()"><img  src="assets/images/account.svg"><span>Subscription</span></p> -->
+                  <p (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
+                  <p (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
+                  <p (click)="logout()"><img src="assets/images/Sign_Out.svg"><span>Signout AIOTAL</span></p>
+              </div> 
+          </li>
+        </ul>
+</nav>
+</div>
+</div>
+
+
+  <app-profile [isMyaccount]="isMyaccount" [isInvite]="isInvite" [isusers]="isusers"></app-profile>

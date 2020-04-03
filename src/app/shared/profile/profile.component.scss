@@ -1,0 +1,280 @@
+
+#foot {
+    border-top: 1px solid #999999;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: 300px;
+    display: flex;
+    right: 0;
+    left: 0;
+    bottom:-300px;
+    background: white;
+}
+.numberInput::-webkit-outer-spin-button,
+.numberInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.slide-up{
+    bottom: 0px !important;
+    transition: 1s;
+}
+
+.slide-down{
+    bottom: -300px !important;
+    transition: 0.5s;
+}
+
+.types{
+    color:gray;
+    width:17%;
+}
+
+.slider_heading{
+    background-color: #f4f4f4;
+    height: 43px;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.heading_types{
+    border: none !important;
+    background: none !important;
+    padding: 15px 15px;
+    color: gray;
+    font-weight: bold;
+    
+}
+
+
+.cross_closeOne{
+    font-size: 30px;
+    color: gray;
+}
+
+.update_btn{
+    border-radius: 20px;
+    background-color: #0062cf !important;
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.search-One{
+    width:200px;
+    float: right;
+    margin-top: -40px;
+    margin-right:0px; 
+}
+.cros{
+    width:10px;
+    float: right;
+    padding-right: 50px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.searchOne{
+    background: none;
+    border: none;
+    border-radius: 0px !important;
+    border-bottom: 1px solid gray;
+    color: black;
+}
+.usersearch{
+    color: black;
+}
+.download{
+    height: 25px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.cross_delet{
+    // font-size: 30px;
+    color: red;
+    cursor: pointer;
+}
+
+.invite{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    float:left;
+    margin-left: 46%;
+}
+.invteform{
+    margin-left: 33.33%;
+    margin-top: 5px;
+}
+
+.tableborder{
+    border-collapse: separate;
+    border:solid 1px black !important;
+    border-radius: 20px !important;
+    text-align: center;
+    width:80px;
+}
+
+th,td{
+    padding: 5px;
+}
+
+.users table { border-collapse: separate; }
+
+.active, .btnOne:hover {
+    // background-color: blue !important;
+    color: white;
+    height:50px !important;
+  }
+
+  .userbtnOne:hover {
+    background-color: blue !important;
+    color: white;
+    height:50px !important;
+  }
+
+.botmbordr{
+    border-left: 0px  !important;
+    border-top: 0px;
+    border-right: 0px;
+    border-radius: 0px;
+}
+
+.phonenumber{
+    width:130% !important;
+}
+
+.pwd-class{
+    width: 20px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    color: black;
+    cursor: pointer;
+}
+.input-group{
+  z-index: 0;
+}
+.role, .department, .usermanagement, .subscrption_id, .invoice_id, .paymode{
+    overflow: scroll;
+    height: 230px;
+}
+::-webkit-scrollbar{
+    width:0px !important;
+    height: 0px !important;
+
+}
+.cardtype{
+    color:gray;
+}
+.cardbox{
+    border: 1px solid gray;
+    padding: 2px 6px;
+    cursor: pointer;
+    width:150px !important;
+}
+.isdefaultCard{
+    border: 1px solid green !important;
+    color: green !important;
+    width:150px !important;
+
+}
+.deleticon{
+    cursor: pointer;
+    width:200px;
+}
+.deleticon span{
+    padding: 2px 3px;
+}
+#myid{
+    width:170px;
+    height:120px;
+    border:1px solid gray;
+    display: none;
+    background-color: gray;
+    // cursor:none;
+}
+
+.isdelet{
+    display: block !important;
+    position: relative;
+    color: white !important;
+    z-index: 1;
+    // cursor:none;
+}
+// .deletconfm{}
+
+.deletconfm h5{
+    font-size: 13px;
+}
+.deletconfm p{
+    font-size: 10px;
+}
+.deletconfm .confm{
+    border: none;
+    background: white;
+    width:30px;
+    height: 20px;
+    font-size: 10px;
+    margin-left: 25px;
+    border-radius: 10px;
+}
+
+.deletefrm{
+    margin-top: 5px;
+}
+
+.modal{
+    display: flex !important;
+    left: 65%;
+    width: 31%;
+    height: 430px;
+    background-color:white; 
+    top: 20%
+}
+.infocheck span{
+ margin-left: 10px; 
+ font-size: 13px;  
+}
+.subheadin{
+    margin-top: 10px;
+    font-size: 14px;
+}
+.textfield{
+ margin-left: 30px;  
+ margin-top: 20px;
+}
+.textfield p{
+    font-size: 12px;
+}
+.textfield textarea{
+    width:300px;
+    height:100px;
+}
+.submitbtn{
+    margin-left: 40%;
+    margin-top: 10px;
+}
+.deletcard{
+    padding-left: 20px;
+}
+
+#delete-card{
+    width:170px;
+    height:120px;
+    border:1px solid gray;
+    display: none;
+    background-color: gray;
+}
+.isdeletcard{
+    display: block !important;
+    position: relative;
+    color: white !important;
+    z-index: 1;
+}
+label{
+    color: black;
+}

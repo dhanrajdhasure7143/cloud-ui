@@ -1,48 +1,51 @@
 
-.tab {
-  overflow: hidden;
-  display: inline-block;
-  width: 100%
-}
+// .tabbar{
+//   background-color: #f4f4f4;
+//   height:45px;
+//   width:100%;
+// }
+// .tab {
+//   width: 100%;
+//   margin-top: -35px;
+// }
 
-/* Style the buttons inside the tab */
-.tab button {
+// /* Style the buttons inside the tab */
+// .tab button {
  
-  background-color: #6fabe2;
-  border-radius: 50%;
-  outline: none;
-  cursor: pointer;
-  padding: 7px 11px;
-  transition: 0.3s;
-  font-size: 10px;
-  color:rgb(238, 234, 234);
-  border: none;
-}
+//   background-color: #6fabe2;
+//   border-radius: 15px;
+//   outline: none;
+//   cursor: pointer;
+//   padding: 7px 11px;
+//   transition: 0.3s;
+//   font-size: 10px;
+//   color:rgb(238, 234, 234);
+//   border: none;
+//   margin-left: 10px;
+//   width: 100px;
+// }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color:#0472da;
-}
+// /* Change background color of buttons on hover */
+// .tab button:hover {
+//   background-color:#0472da;
+// }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #0472da !important;
+// /* Create an active/current tablink class */
+// .tab button.active {
+//   background-color: #0472da !important;
 
-  color:rgb(238, 234, 234) !important;
+//   color:rgb(238, 234, 234) !important;
 
-}
+// }
 
 /* Style the tab content */
 .tabcontent {
   display: none;
   padding: 6px 12px;
-margin-top:33px;
-  border-top: none;
+  margin-top:10px;
+  // border-top: none;
 }
-.container-fluid{
-   padding:0 !important;
-   margin-bottom:0 !important;
-}
+
 #selectplan{
   padding:0 !important;
 }
@@ -63,22 +66,17 @@ margin-top:33px;
 }
 
 #ctr{
-  color:#006ed5;
   display: block;
- margin: auto;
+  margin-left:10px;
+  color: #006ed5;
+
 }
 .btn-primary{
   background-color: #006ed5;
   border-radius:20px;
   width: 8em;
-  margin-left:10px;
+  margin-left: 40px;
 }
-.btn-danger{
-  border-radius:20px;
-  width: 8em;
-  font-size:9px;
-}
-
 
 .fa-check{
 color: green;
@@ -91,37 +89,25 @@ padding:10px;
 }
 
 #ft{
-  padding-right:10px;
   color:#006ed5;
 }
-#coltab:hover{
+#coltab h4{
+  text-align: center;
+}
 
+#coltab:hover{
   border:1px solid gray;
+  border-radius: 20px;
 }
 #coltab img{
   padding:10px;
 }
-.col-sm-3:hover{
-  border-radius: 10px;
-  border:1px solid rgb(209, 205, 205);
+// .col-sm-3:hover{
+//   border-radius: 10px;
+//   border:1px solid rgb(209, 205, 205);
  
 
-}
-.col-sm-3{
-  padding:10px;
-
-  border:1px solid transparent;
-}
-.col{
-  margin-top:3em;
-  margin-left:3em;
-}
-hr.new5 {
-  border: 5px solid #006ed5;
-margin-bottom:0px;
-
-
-}
+// }
 
 label {
   position: absolute;
@@ -133,22 +119,25 @@ label {
 h5 span {
   position: relative;
 }
-.row {
-  margin-right: -15px !important;
-  margin-left: 14px !important;
-}
-h4{
-  margin-left: 11px;
-}
-#coltab h5 :hover{
-border: none;
-}
+
+
 #coltab h5{
   font-size: 17px;
 }
 #plo{
   display: block;
-  margin: auto;
+  margin: left;
+}
+
+.plansBox{
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.enterprice{
+  color:#006ed5;
+  padding-left: 15px;
+  margin-top: 10px;
 }
 
 

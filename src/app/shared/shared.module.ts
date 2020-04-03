@@ -19,15 +19,40 @@ import { BodyComponent } from './body/body.component';
 import { TrailheaderComponent } from './trailheader/trailheader.component';
 import { StepselectionComponent } from './stepselection/stepselection.component';
 import { FormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
+import {Ng2TelInputModule} from 'ng2-tel-input';
+import { SearchPipe } from './custom_pipe/searchpipe';
+import { ModalModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 
 @NgModule({
-  declarations: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, SystemComponent, UserComponent, NotificationComponent, TopheaderComponent, BodyComponent, TrailheaderComponent, StepselectionComponent],
+  declarations: [SideNavBarComponent,
+      HeaderComponent,
+      ContentComponent,
+      DynamicCompHostDirective,
+      AccordionComponent,
+      AccordionGroupComponent,
+      InfopanelComponent,
+      SystemComponent,
+      UserComponent,
+      NotificationComponent,
+      TopheaderComponent,
+      BodyComponent,
+      TrailheaderComponent,
+      StepselectionComponent,
+      ProfileComponent,
+      SearchPipe,
+      ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     BsDropdownModule.forRoot(),
     PortalModule,
-    FormsModule
+    FormsModule,
+    Ng2TelInputModule,
+    ModalModule.forRoot(),
+    TabsModule.forRoot(),
   ],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent],
   entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent]

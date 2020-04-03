@@ -1,17 +1,22 @@
 .step_main {
-	display:table;
+	// display:table;
 	width:100%;
-	margin:0 auto;
-	background-color:#FFFFFF;
-	// box-shadow: 0 3px 8px -6px rgba(0,0,0,.50);
+	// margin:0 auto;
+	background-color:#f4f4f4;
+	box-shadow: 0 3px 8px -6px rgba(0,0,0,.50);
 }
 .step_main .step_sub {
 	display:table-cell;
 	position:relative;
-	padding:24px;
+	padding:10px;
+}
+
+.step_main .select_plan{
+	cursor: pointer;
+
 }
 .step_main .step_sub:active {
-	border-radius: 15% / 75%;
+	border-radius: 20px;
 }
 .step_main .step_sub:first-child:active {
 	border-top-left-radius: 0;
@@ -27,85 +32,23 @@
 	display:none;
 }
 .step_main .step_sub .step_circle {
-	width:30px;
+	width:100px;
 	height:30px;
+	font-size: 11px;
 	margin:0 auto;
 	background-color: rgba(33,150,243,0.5);
-	border-radius: 50%;
+	border-radius: 20px;
 	text-align: center;
 	line-height:30px;
-	font-size: 16px;
 	font-weight: 600;
 	color:#FFFFFF;
 }
-.step_main.green .step_sub.active .step_circle {
-	background-color:#00AE4D;
-}
-.step_main.orange .step_sub.active .step_circle {
-	background-color:#F96302;
+
+
+.step_circle {
+  background: white !important;
+  color: gray !important;
 }
 
-.step_main .step_sub.done .step_circle *,
-.step_main .step_sub.editable .step_circle * {
-	display:none;
-}
-.step_main .step_sub.editable .step_circle {
-	-moz-transform: scaleX(-1);
-	-o-transform: scaleX(-1);
-	-webkit-transform: scaleX(-1);
-	transform: scaleX(-1);
-}
-// .step_main .step_sub.editable .step_circle:before {
-// 	content: "";
-// }
-.step_main .step_sub .step_title {
-	margin-top:16px;
-	font-size:16px;
-	font-weight:600;
-}
-.step_main .step_sub .step_title,
-.step_main .step_sub .step_optional {
-	text-align: center;
-	color:rgba(0,0,0,.26);
-}
-.step_main .step_sub.active .step_title {
-	font-weight: 600;
-	color:rgba(0,0,0,.87);
-}
-.step_main .step_sub.active.done .step_title,
-.step_main .step_sub.active.editable .step_title {
-	font-weight:600;
-}
-.step_main .step_sub .step_optional {
-	font-size:12px;
-}
-.step_main .step_sub.active .step_optional {
-	color:rgba(0,0,0,.54);
-}
-.step_main .step_sub .step_bar-left,
-.step_main .step_sub .step_bar-right {
-	position:absolute;
-	top:36px;
-	height:1px;
-	border-top:1px solid #DDDDDD;
-}
-.step_main .step_sub .step_bar-right {
-	right:0;
-	left:50%;
-	margin-left:20px;
-}
-.step_main .step_sub .step_bar-left {
-	left:0;
-	right:50%;
-	margin-right:20px;
-}
-
-.disable .step_circle {
-  background: #90CAF9 !important;
-}
-
-.disable .step_title {
-  color: #0006 !important;
-}
 
 

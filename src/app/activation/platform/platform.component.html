@@ -1,30 +1,32 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-sm-12 acc_header">
-      <h2>Welcome Admin! Your account is ready.</h2>
-      <h3>Let's get started by activating a product.</h3>
-    </div>
-    <div class="products_div">
-      <div class="row prod_s">
-        <div class="col-sm-4" *ngFor="let each_product of productslist;trackBy:productTrackBy" (click)="setProductPlan(each_product.plans)" id="ezbot_tab">
-          <div class="product_division col-sm-12">
-            <div class="row row_height">
-              <div class="left_side col-sm-4">
-                <img src="assets/a_images/ezbot.png" class="prod_img">
-              </div>
-              <div class="right_side col-sm-8">
-                <h6>{{each_product.name}}<sup>&trade;</sup></h6>
-                <p class="pro_desc">Automate and orchestrate end-2-end data management tasks without having the need
-                  to write mundane code.</p>
-                <div class="col-sm-12 text-center">
-                  <a class="btn btn-submit" [routerLink]="['/activation/payment/chooseplan']">Activate Free Trail</a>
-                </div>
-              </div>
-            </div>
-          </div>
-       
-        </div>
+      <div class="welcm_heading col-md-12"> 
+        <div class="row"> <h1 >Welcome to Epsoft</h1><span>( Intelligent Automation Platform ) </span></div> 
+        <h4 id="sbtl">Select below service to Active or Upgrade</h4>
       </div>
+      <!-- <div class="col-md-12"> -->
+          <div class="col-md-2 dataCardBox" *ngFor="let eachData of dataArr;let i=index;trackBy:loopTrackBy">
+              <div [id]="eachData.id" class="dataCard" [ngClass]="selectedIndex == i?'active':''" (click)="selecteddata(data, i)">
+                  <img [src]="eachData.img"/>
+                  <h6 id="subheading">{{eachData.title}}</h6>
+                  <div class=" " *ngIf="dataArr[i].expirytime">
+                      <p class="expiryInfo"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">  {{eachData.expirytime}} Days to expire you free tier   <img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
+                </div>
+                
+              </div>
+          </div>
+
+    <!-- </div> -->
+    <div class="col-md-6"></div>
+    <div class="col-md-4"></div>
+      <div class="col-md-2">
+        <button class=" " id="updrade-btn" [hidden]="dataArr[selectedIndex].isvalue" >Upgrade Now</button>
+      </div>
+      <div class="col-md-2">
+          <button class="btn btn-primary" id="launch_btn" [routerLink]="'/activation/'+ dataArr[selectedIndex].link">Continue<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
+        </div>
     </div>
-  </div>
+
 </div>
+
+<div id="particles-js"></div>

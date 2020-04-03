@@ -8,30 +8,47 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 })
 export class ChooseplanComponent implements OnInit {
   tab: string;
-  selected_plans:any = {};
-plan:any;
+  selected_plans:any[];
+  selected_plansOne:any[];
+  plan:any;
   plantype: any;
-  constructor(private productlistservice:ProductlistService, private router: Router) { }
+  constructor(private productlistservice:ProductlistService, private router: Router,
+    ) { }
  
   ngOnInit() {
-    this.productlistservice.getSelectedProductPlan().subscribe(res=> this.selected_plans = res);
+    this.productlistservice.getSelectedProductPlan().subscribe(res=> {
+      this.selected_plans = res
+    console.log("plansss",this.selected_plans)
+
+    }
+      );
     this.plan=this.selected_plans;
-    console.log("plansss",this.plan)
-  } 
+    this.selected_plansOne=[{"planName":"Free Tire","amount":0},
+                          {"planName":"Plan A","amount":200,},
+                          {"planName":"Plan B","amount":600,},
+                          {"planName":"Plan C","amount":"Enterprise Solution",}]
+  }
+  
   openTarget(url,plans){
-    let isValid = false;
-    if(plans.freeTrail==true){
-      this.plantype='freetrail';
+    console.log("type of plan",plans)
+    this.productlistservice.setSelectedProductPlan(plans)
+    // let isValid = false;
+    if(plans.planName=="Free Tire"){
+      // this.plantype='freetrail';
+      alert("Free Tire");
+
     }
     else{
-      this.plantype='plan';
+      // this.plantype='plan';
+    this.router.navigate(['/activation/payment/details']);
     }
     
-    window.open('http://localhost:3000'+url+'?plan='+plans.id+'&product='+plans.productId+'&type='+this.plantype, '_self' );
+    // window.open('http://localhost:3000'+url+'?plan='+plans.id+'&product='+plans.productId+'&type='+this.plantype, '_self' );
     
+
   }
 fun1(evt, seltab) {
-
+  console.log("type of plan",seltab)
   if (seltab == 'selectplan') {
     this.tab = 'tab1';
   }
@@ -41,7 +58,6 @@ fun1(evt, seltab) {
     this.tab = 'tab3';
   }
 
-  // this.state = true;
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {

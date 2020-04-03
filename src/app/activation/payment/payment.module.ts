@@ -6,6 +6,7 @@ import { DetailsComponent } from './details/details.component';
 import { ReviewComponent } from './review/review.component';
 import { ChooseplanComponent } from './chooseplan/chooseplan.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [DetailsComponent, ReviewComponent, ChooseplanComponent],
@@ -13,7 +14,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     CommonModule,
     SharedModule,
     PaymentRoutingModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    FormsModule,
   ]
 })
 export class PaymentModule { }

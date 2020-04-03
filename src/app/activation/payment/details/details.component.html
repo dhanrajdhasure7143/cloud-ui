@@ -1,146 +1,119 @@
 <stepselection class="enter_pay"></stepselection>
 
 <div class="container">
-  <div class="row">
-
-    <div class="col-sm-12 no-padding">
-
-      <h4 class="main_pay_title">Enter payment details
-        <span class="alert_msg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="feather feather-alert-circle">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12" y2="16"></line>
-          </svg>
-          <label class="alert_label">On the next step you can review your order before it's final.</label>
-        </span>
-      </h4>
+    <div class="row">
+      <div>
+        <h2 class="planheading">You Have Selected {{selected_plans.planName}} </h2>
+        <h5 id="paymnt-subheding">Complete below card details step to review your order</h5>
+        <p class="pay_titles">Card Details:</p> 
     </div>
-    <div class="col-sm-12 form_padding">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="row">
-
-            <h6 class="pay_titles col-sm-12"> Credit card details </h6>
-
-            <form class="col-sm-10">
-              <div class="form-group col-sm-12">
-                <label for="cardHolder">Cardholder name</label>
-                <input type="text" class="form-control" id="cardHolder" placeholder="">
+          <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="paymentfromSubmit(form)" class="col-md-12 row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+              <div class="form-group col-sm-10">
+                <label for="cardHolder">Card Holder Name</label>
+                <input type="text" name="cardHolder" #cardHolder="ngModel" [(ngModel)]="cardHoldername" class="form-control payment-input" id="cardHolder" placeholder="Enter Card Holder Name" required
+                [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" />
+                <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
+                class='fa fa-info-circle errspan'>Card holder name is required </span> 
               </div>
 
-              <div class="form-group col-sm-12">
-                <label for="cardNumber">Card number</label>
-                <input type="text" class="form-control" id="cardNumber" placeholder="">
-              </div>
-
-              <div class="form-group col-sm-12">
-                <div class="form-row">
-                  <div class="form-group col-sm-4">
+                  <div class="form-group col-sm-10">
                     <label for="month">Month (MM)</label>
-                    <select id="month" class="form-control">
-                      <option selected></option>
-                      <option>Jan</option>
-                      <option>Feb</option>
-                      <option>Mar</option>
+                    <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardmonth" required>
+                        <option  [value]="undefined" disabled hidden>Select Month</option>
+                      <option value="01">Jan</option>
+                      <option value="02">Feb</option>
+                      <option value="03">Mar</option>
+                      <option value="04">April</option>
+                      <option value="05">May</option>
+                      <option value="06">June</option>
+                      <option value="07">July</option>
+                      <option value="07">August</option>
+                      <option value="07">September</option>
+                      <option value="07">October</option>
+                      <option value="07">November</option>
+                      <option value="07">December</option>
                     </select>
                   </div>
-                  <div class="form-group col-sm-4">
-                    <label for="year">Year (YYYY)</label>
-                    <select id="year" class="form-control">
-                      <option selected></option>
-                      <option>Jan</option>
-                      <option>Feb</option>
-                      <option>Mar</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-sm-4">
-                    <label for="cvv">CVV</label>
-                    <input type="text" class="form-control" id="cvv" placeholder="">
-                  </div>
-                </div>
-              </div>
-
-
-            </form>
-          </div>
-
-          <div class="row">
-            <h6 class="pay_titles col-sm-12">Billing address</h6>
-
-            <form class="col-sm-10">
-              <div class="form-group col-sm-12">
-                <label for="country">Country</label>
-                <select id="country" class="form-control">
-                  <option selected></option>
-                  <option>India</option>
-                  <option>Canada</option>
-                  <option>U.S.A.</option>
-                </select>
-              </div>
-
-              <div class="form-group col-sm-12">
-                <label for="city">City</label>
-                <input type="text" class="form-control" id="city" placeholder="">
-              </div>
-
-              <div class="form-group col-sm-12">
-                <div class="form-row">
-                  <div class="form-group col-sm-8">
-                    <label for="state">State</label>
-                    <select id="state" class="form-control">
-                      <option selected></option>
-                      <option></option>
-                      <option></option>
-                      <option></option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-sm-4">
-                    <label for="postal">Zip/Postal code</label>
-                    <input type="text" class="form-control" id="postal" placeholder="">
-                  </div>
-                </div>
-              </div>
-              <div class="form-group col-sm-12">
-                <label for="street">Street address</label>
-                <input type="text" class="form-control" id="street" placeholder="">
-              </div>
-            </form>
-          </div>
         </div>
 
-        <div class="col-sm-4 offset-sm-2">
-          <div class="plan_detail_box">
-            <label class="you_label">You're Subscribing</label>
-            <div class="col-sm-12">
+        <div class="col-md-4">
               <div class="row">
-                <label class="plan_label col-sm-6">Plan</label>
-                <label class="plan_right_label col-sm-6">Plan Name</label>
-              </div>
-            </div>
 
-            <div class="col-sm-12">
-              <div class="row">
-                <label class="plan_label col-sm-6">Annual Payment</label>
-                <label class="plan_right_label col-sm-6">$XXX.XX USD</label>
+                  <!-- <div class="form-group col-sm-10">
+                      <label for="cardNumber">Card number</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" name="cardNumber" placeholder="">
+                        <div class="input-group-append">
+                          <span class="input-group-text text-muted">
+                            <i class="fa fa-cc-visa"></i>
+                            <i class="fa fa-cc-amex"></i>   
+                            <i class="fa fa-cc-mastercard"></i> 
+                          </span>
+                        </div>
+                      </div>
+                    </div> -->
+
+              <div class="form-group col-sm-8">
+                <label for="cardNumber">Card number</label>
+                <input type="text" class="form-control payment-input" name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardnumbertotal" id="cardNumber" placeholder="Enter Card Number" min="16" required
+                [ngClass]="{ 'is-invalid': ((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) ) }" />
+                <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
+                class='fa fa-info-circle errspan'>Card number is required</span> 
               </div>
+              <div class="form-group col-sm-4">
+                  <label for="cvv">CVV</label>
+                  <input type="text" class="form-control payment-input" name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required
+                  [ngClass]="{ 'is-invalid': ((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) ) }" />
+                <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
+                class='fa fa-info-circle errspan'>Cvv required</span> 
+                </div>
+
+                <div class="form-group col-sm-12">
+                  <label for="year">Year (YYYY)</label>
+                  <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
+                    <option  [value]="undefined" disabled hidden>Select Year</option>
+                    <option *ngFor="let obj of yearList" [ngValue]="obj.value">{{obj.year}}</option>
+                  </select>
+                  <div class="btn-continue">
+                      <button class="btn btn-submit pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Continue</button>
+                    </div>
+                </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-sm-12 no-padding form_padding">
+          <div class="col-md-2 plan_detail_box">
+              <div class=" ">
+                <h4 class="select_label"> <img src="/assets/images/selectcircle.svg">Selected Plan Details</h4>
+                <div class=" ">
+                  <div class=" ">
+                    <h6 class="plan_label">Plan <span> {{selected_plans.planName.slice(4)}}</span></h6>
+                  </div>
+                </div>
+    
+                <div class="plandetails">
+                      <p><img src="/assets/images/selectcircle.svg">Process Intelligence</p>
+                      <p><img src="/assets/images/selectcircle.svg">Business Process Studio</p>
+                      <p><img src="/assets/images/selectcircle.svg">Service Orchestration</p>
+                      <p><img src="/assets/images/selectcircle.svg">Artificial Intelligence</p>
+                      <p><img src="/assets/images/selectcircle.svg">Live Support</p>
+                      <h5 style="font-weight:600">$ {{selected_plans.amount}} /<span  style="font-size: 10px;font-weight: 300">Per Month</span></h5>
+                </div>
+              </div>
+            </div>       
+            </form>
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
+
+    <div class="col-sm-12">
       <div class="row">
-        <div class="col-sm-6">
-          <a class="btn btn-back pull-left" [routerLink]="['/activation/payment/chooseplan']">Back</a>
-        </div>
-
-        <div class="col-sm-6 text-right">
-          <a class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</a>
+          <div class="col-sm-10">
+              <!-- <button class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</button> -->
+            </div>
+        <div class="col-sm-2">
+          <button class="btn btn-back pull-left" [routerLink]="['/activation/payment/chooseplan']"><i class="fa fa-arrow-left"></i>  Back to Change</button>
         </div>
       </div>
     </div>
