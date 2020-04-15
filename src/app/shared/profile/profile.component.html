@@ -187,10 +187,10 @@
                                   </thead>
                                   <tbody class="col-md-12" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
                                     <tr >
-                                      <td >{{sdata.id}}</td>
-                                      <td>{{sdata.product}}</td>
-                                      <td>{{sdata.plan}}</td>
-                                      <td>{{sdata.amount}}</td>
+                                      <td >{{sdata.subscriptionId}}</td>
+                                      <td>{{sdata.name}}</td>
+                                      <td>{{sdata.planId}}</td>
+                                      <td>{{sdata.planEntity.amount}}</td>
                                       <td>{{sdata.status}}</td>
                                       <td  class="deleticon"><span><img src="assets/images/eyeIcon.svg" alt=""> </span><span (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                         <div id="myid" [ngClass]="selectedIndex == i?'isdelet':''" class="deletconfm">
