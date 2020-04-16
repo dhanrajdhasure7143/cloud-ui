@@ -12,6 +12,7 @@ import { User } from './../../_models/user';
   providedIn: 'root'
 })
 export class FirstloginService {
+ 
 
   constructor(private http: HttpClient, private router: Router, private content: ContentfulService) { }
 
@@ -23,6 +24,9 @@ export class FirstloginService {
   }
   getAllDepartments(): Observable<any> {
     return this.http.get<any>(`/api/user/departments`);
+  }
+  listofsubscriptions() : Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/subscriptions');
   }
 
   allCountries(): Observable<any>{

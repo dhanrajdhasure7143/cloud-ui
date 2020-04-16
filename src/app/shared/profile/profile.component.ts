@@ -57,11 +57,8 @@ export class ProfileComponent implements OnInit{
 
   ngOnInit() {  
     this.countryInfo = countries.Countries;
-    this.tableData=[{"id":"256426","product":"Gib-2.0","plan":"2 Months","amount":"200 USD","status":"active"},
-    {"id":"252564","product":"Gib-2.0","plan":"6 Months","amount":"800 USD","status":"active"},
-    {"id":"212566","product":"Ez-flow","plan":"1 Months","amount":"50 USD","status":"active"},
-    {"id":"826426","product":"Ez-Bot","plan":"12 Months","amount":"1000 USD","status":"active"}];
-
+    this.firstloginservice.listofsubscriptions().subscribe(response => {this.tableData = response})
+ 
     this.userManagement=[{"id":"256426","firstName":"Ranjith","lastName":"sigiri","Designation":"HR","Organisation":"EpSoft","Department":"HR","Product":"Gib","Roles":"Admin"},
                     {"id":"15427","firstName":"suresh","lastName":"yenkam","Designation":"HR","Organisation":"Monile APP","Department":"HR","Product":"Ezbot","Roles":"user"},
                     {"id":"356426","firstName":"mallesh","lastName":"ammi","Designation":"Engineer","Organisation":"Array tech","Department":"Developer","Product":"Ezflow","Roles":"User"},
