@@ -28,6 +28,9 @@ export class FirstloginService {
   listofsubscriptions() : Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/subscriptions');
   }
+  listofinvoices() : Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices')
+  }
 
   allCountries(): Observable<any>{
     return this.http.get<any>(`/cloud-ui/src/assets/jsons/countries.json`);  
