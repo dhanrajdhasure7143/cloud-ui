@@ -4,26 +4,24 @@
         <div class="row"> <h1 >Welcome to Epsoft</h1><span>( Intelligent Automation Platform ) </span></div> 
         <h4 id="sbtl">Select below service to Active or Upgrade</h4>
       </div>
-      <!-- <div class="col-md-12"> -->
           <div class="col-md-2 dataCardBox" *ngFor="let eachData of dataArr;let i=index;trackBy:loopTrackBy">
-              <div [id]="eachData.id" class="dataCard" [ngClass]="selectedIndex == i?'active':''" (click)="selecteddata(data, i)">
+              <div [id]="eachData.id" class="dataCard" [ngClass]="eachData.id==selectedId?'active':''" (click)="selecteddata(eachData, i)">
                   <img [src]="eachData.img"/>
                   <h6 id="subheading">{{eachData.title}}</h6>
                   <div class=" " *ngIf="dataArr[i].expirytime">
                       <p class="expiryInfo"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">  {{eachData.expirytime}} Days to expire you free tier   <img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
                 </div>
-                
               </div>
           </div>
 
-    <!-- </div> -->
     <div class="col-md-6"></div>
     <div class="col-md-4"></div>
       <div class="col-md-2">
-        <button class=" " id="updrade-btn" [hidden]="dataArr[selectedIndex].isvalue" >Upgrade Now</button>
+        <button class=" " id="updrade-btn" [routerLink]="'/activation/payment/chooseplan'" [hidden]="selectedIdValue" >Upgrade Now</button>
       </div>
       <div class="col-md-2">
-          <button class="btn btn-primary" id="launch_btn" [routerLink]="'/activation/'+ dataArr[selectedIndex].link">Continue<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
+          <button *ngIf="!selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Continue<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
+          <button *ngIf="selectedIdValue" class="btn btn-primary" [disabled]="isenable"  [routerLink]="'/activation/payment/chooseplan'"  id="launch_btn" >Continue<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
         </div>
     </div>
 

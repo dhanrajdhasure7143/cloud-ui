@@ -1,5 +1,7 @@
+<notifier-container></notifier-container>
 
 <div id="foot">
+
     <div  class="slider_heading">
         <div class="cros">
             <span (click)="slideDown()"><img class="" src="assets/images/crossclose.svg"></span>
@@ -11,30 +13,12 @@
                       
                     <tabset >
                         <tab heading="My Account" id="tab1">
-
-                      <!-- <div class="cros">
-                          <span (click)="slideDown()"><img class="cross_close" src="assets/images/crossclose.svg"></span>
-                      </div> -->
-                            
-                        <!-- <div class="col-md-12" id="myDIV">
-                            <button class="heading_types btnOne active" (click)="profile()">My Account</button>
-                            <button class="heading_types btnOne" (click)="subscrption()">Subscriptions</button>
-                            <button class="heading_types btnOne" (click)="invoice()">Invoice</button>
-                            <button class="heading_types btnOne" (click)="payment()">Payment Mode</button>
-                            <span (click)="slideDown()"><img class="cross_close" src="assets/images/crossclose.svg"></span>
-                            <div *ngIf="!isAccount" class="search-One">
-                            <form class="form-inline d-flex  md-form form-sm">
-                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
-                                    <i class="fa fa-fw fa-search searchicon" aria-hidden="true"></i>
-                                  </form>
-                            </div>
-                        </div> -->
                         <div>
                             <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
                                 <div class="row">
                                     <div class="form-group col-sm-3">
                                         <label for="firstName">First Name</label>
-                                        <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].firstName" placeholder="Enter First Name" maxlength="25" required alphabetOnly 
+                                        <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required alphabetOnly 
                                         [ngClass]="{ 'is-invalid': ((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) ) }" />
                                     <span *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )" 
                                         class='fa fa-info-circle errspan'>
@@ -43,14 +27,14 @@
                               
                                           <div class="form-group col-sm-3">
                                             <label for="lastName">Last Name</label>
-                                            <input type="text" name="lastName" #lastName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly 
+                                            <input type="text" name="lastName" #lastName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly 
                                                 [ngClass]="{ 'is-invalid': ((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) ) }" />
                                                 <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )" 
                                                 class='fa fa-info-circle errspan'> Last Name is required </span>
                                             </div>
                                           <div class="form-group col-sm-3">
                                             <label for="jobTitle">Job Title</label>
-                                            <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly 
+                                            <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly 
                                             [ngClass]="{ 'is-invalid': ((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) ) }" />
                                             <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )" 
                                             class='fa fa-info-circle errspan'>Job Title is required </span>
@@ -58,13 +42,13 @@
 
                                         <div class="form-group col-sm-3">
                                           <label for="email">Email</label>
-                                          <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].userId"
+                                          <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.userId"
                                                       pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
                                         
                                         </div>
                                         <div class="form-group col-sm-3">
                                           <label for="company">Company</label>
-                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].company" placeholder="Enter Company Name" maxlength="25" required alphabetOnly 
+                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company Name" maxlength="25" required alphabetOnly 
                                           [ngClass]="{ 'is-invalid': ((company.invalid && updateUser.submitted) || (company.errors && company.touched) ) }" />
                                           <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
                                           class='fa fa-info-circle errspan'>Job Title is required </span> 
@@ -73,7 +57,7 @@
                           
                                          <div class=" form-group col-md-3 ">
                                           <label for="Department">Department</label>
-                                          <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne[0].department)" #department="ngModel" [(ngModel)]="formOne[0].department" [ngModelOptions]="{standalone: true}">
+                                          <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="formOne.department" [ngModelOptions]="{standalone: true}">
                                             <option hidden disabled>Select Department</option>
                                             <option value="HR">HR</option>
                                             <option value="development">Development</option>
@@ -85,7 +69,7 @@
                                           </select>
 
                                               <div class="form-group col-sm-" *ngIf="addDepartment">
-                                                    <input type="text" name="department" #department="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].otherdepartment" placeholder="Enter Department Name" maxlength="25" required alphabetOnly 
+                                                    <input type="text" name="department" #department="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.otherdepartment" placeholder="Enter Department Name" maxlength="25" required alphabetOnly 
                                                     [ngClass]="{ 'is-invalid': ((department.invalid && updateUser.submitted) || (department.errors && department.touched) ) }" />
                                                     <span *ngIf="((department.invalid && updateUser.submitted) || (department.errors && department.touched) )" 
                                                     class='fa fa-info-circle errspan'>Department Name is required </span> 
@@ -97,7 +81,7 @@
                           
                                           <div class="form-group col-sm-3">
                                                 <label for="country">Country</label>
-                                                <select id="country" class="form-control botmbordr" #country="ngModel" [(ngModel)]="formOne[0].country" [ngModelOptions]="{standalone: true}">
+                                                <select id="country" class="form-control botmbordr" #country="ngModel" [(ngModel)]="formOne.country" [ngModelOptions]="{standalone: true}">
                                                         <option hidden disabled [ngValue]="undefined" [selected]=false>Select Country</option>
                                                  <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
                                                   </select>
@@ -130,7 +114,7 @@
                                                   <div>
                                                     <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
                                                      (ng2TelOutput)="getNumber($event)"
-                                                        #phoneumber="ngModel" [(ngModel)]="formOne[0].phoneNumber" [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==15) return false;" required
+                                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==15) return false;" required
                                                         [ngClass]="{'is-invalid': ((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) ) }" />
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'>Phone Number is required </span>
@@ -139,32 +123,21 @@
 
                                                 <div class="form-group col-sm-3">
                                                   <label for="phoneNumber">Phone</label>
-                                                  <input type="number" name="phoneNumber" #phoneNumber="ngModel" minlength="8" class="form-control botmbordr numberInput" [(ngModel)]="formOne[0].phoneNumber" placeholder="Enter Phone Number" maxlength="25" required 
+                                                  <input type="number" name="phoneNumber" #phoneNumber="ngModel" minlength="8" class="form-control botmbordr numberInput" [(ngModel)]="formOne.phoneNumber" placeholder="Enter Phone Number" maxlength="25" required 
                                                   [ngClass]="{ 'is-invalid': ((phoneNumber.invalid && updateUser.submitted) || (phoneNumber.errors && phoneNumber.touched) ) }" />
                                                   <span *ngIf="((phoneNumber.invalid && updateUser.submitted) || (phoneNumber.errors && phoneNumber.touched) )" 
                                                   class='fa fa-info-circle errspan'>Phone Number is required </span>
                                                 </div>
-
-                                          <!-- <div class="form-group col-sm-3">
-                                                <label for="firstName">User Name</label>
-                                                <input type="text" id="userName"  name="userName" #userName  class="form-control botmbordr"  maxlength="20" required >
-                                              </div> -->
-                                                        
                                                 <div class="col-sm-6">
                                                 </div>
                                     <div class="form col-sm-3">
                                         <label></label>
                                         <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid || showErr">Update/Save</button>
-                                        <!-- <button type="button" class="btn btn-back float-right"  href="" [routerLink]="['/activation']">Cancel</button> -->
                                     </div>
                                 </div>
                             </form>
                         </div>
                       </tab>
-                        
-                        
-                        
-                        
                         
                         <tab heading="Subscriptions">
                             <div class="search-One">
@@ -211,8 +184,6 @@
                         </div>
                       </tab>
 
-                        
-                        
                         <tab heading="Invoice">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
@@ -302,17 +273,9 @@
                 <div class="row">
                     <div class="col-md-12">
                             <h4 class="invite">Invite User</h4>
-                            <!-- <span (click)="slideDown()"><img class="cross_closeinvite" src="assets/images/crossclose.svg"></span> -->
                     </div>
                     <div class="col-md-4 invteform">
                                         <form autocomplete="off" #inviteuser="ngForm" (ngSubmit)="!inviteuser.invalid && onsubmit()">
-                                            <!-- <div class="form-group">
-                                              <label for="exampleFormControlInput1">Email address</label>
-                                              <input type="email" class="form-control"  #email="ngModel"
-                                              [(ngModel)]="emailOne" name="email" id="email" placeholder="name@example.com" required>
-                                              <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"
-                                              class='fa fa-info-circle errspan'>Email is required </span>
-                                            </div> -->
                                             <div class="form-group">
                                                     <label for="email">Email</label>
                                                     <input type="text" name="email" #email="ngModel" class="form-control" [(ngModel)]="emailId"
@@ -329,21 +292,21 @@
                                               <label for="application">Application</label>
                                               <select class="form-control" name="application" #application="ngModel" [(ngModel)]="appName" id="application" required>
                                                 <option  [value]="undefined" disabled hidden>Select Application</option>
-                                                <option value="GiB-2.0">GiB-2.0</option>
-                                                <option value="Ez-Flow">Ez-Flow</option>
-                                                <option value="eZ-bot">eZ-bot</option>
+                                                <option value="EzFlow">EZFlow</option>
+                                                <option value="eZbot">EZBot</option>
+                                                <option value="GiB">GIB 2.0</option>
+
                                               </select>
                                             </div>
                                             <div class="form-group">
                                                     <label for="Role">Role</label>
                                                     <select class="form-control" name="Role" #Role="ngModel" [(ngModel)]="role" id="Role" required>
-                                                        <!-- <option hidden disabled>Select Role</option> -->
                                                         <option  [value]="undefined" disabled hidden>Select Role</option>
                                                         <option value="Admin">Admin</option>
                                                         <option value="User">User</option>
                                                     </select>
                                                   </div>
-                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit">Sign in</button>
+                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit">Submit</button>
                                           </form>
                             </div>
                     </div>
@@ -351,25 +314,9 @@
 
 
 
-             
-                    
-
-                   
-            
-
                 <div class="container users" *ngIf="isusers">
                         <div class="">
                             <tabset >
-                            <!-- <div class="col-md-12" id="myuser"> -->
-                                <!-- <button class="heading_types userbtnOne active" (click)="usersData()">User Management</button>
-                                <button class="heading_types userbtnOne" (click)="departmentData()">Departments</button>
-                                <button class="heading_types userbtnOne" (click)="rolesData()">Role</button>
-                                <span (click)="slideDown()"><img class="cross_close" src="assets/images/crossclose.svg"></span>
-                                <form class="form-inline d-flex  md-form form-sm search-One">
-                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
-                                        <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
-                                      </form>
-                            </div> -->
                             <tab heading="User Management" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
@@ -392,7 +339,7 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser">
+                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser;trackBy:loopTrackBy;">
                                           <td>{{userdata.id}}</td>
                                           <td>{{userdata.firstName}}</td>
                                           <td>{{userdata.lastName}}</td>
@@ -428,7 +375,7 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser">
+                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
                                             <td>{{userdata.id}}</td>
                                             <td>{{userdata.firstName}}</td>
                                             <td>{{userdata.lastName}}</td>
@@ -465,7 +412,7 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser">
+                                              <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
                                                 <td>{{userdata.id}}</td>
                                                 <td>{{userdata.firstName}}</td>
                                                 <td>{{userdata.lastName}}</td>
@@ -479,16 +426,53 @@
                                           </table>
                             </div>
                             </tab>
-
-
-
-
                           </tabset>
-                    
                 </div>
             </div>
-    </div>
 
+            <div *ngIf="isnotification" class="container">
+              <div class="row">
+                <div class="col-md-12">
+                    <h4 class="noticationheading">Notifications</h4>
+                </div>
+                <div class="notificatnmsgs col-md-12">
+                    <table class="table table-borderless table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col" style="width:70%;">Message Details</th>
+                                <th scope="col" style="width:200px;">Date</th>
+                                <th scope="col" style="width:200px;">Time</th>
+                                <th scope="col" style="width:200px;">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let messageList of nitificationList; let i = index; trackBy:loopTrackBy;">
+                                <td>{{messageList.mailBody}}</td>
+                                <td>{{messageList.createdAt | date}}</td>
+                                <td>{{messageList.createdAt | date:"HH:mm:s"}}</td>
+                                <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
+                              
+                                
+                                <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
+                                    <div class="container-fluid deletefrm">
+                                  <h5 class="pull-left">Conformation</h5>
+                                  <button type="button" class="close " aria-label="Close" (click)="canceldeleteNotification(i)">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
+                                  <button class="pull-left confm">Yes</button>
+                                  <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
+                                  </div>
+                                  </div>
+                                </td>                              
+                              </tr>
+                            </tbody>
+                          </table>
+                </div>
+            </div>
+          </div>
+
+    </div>
 
     <ng-template #template >
         <div class="modal">
@@ -523,3 +507,4 @@
             </div>
           </div>
         </ng-template>
+        

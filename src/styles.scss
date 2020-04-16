@@ -4,6 +4,7 @@
 @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
 @import "../node_modules/ag-grid-community/dist/styles/ag-theme-blue.css";
 @import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~angular-notifier/styles";
 
 
 body, *{
@@ -491,4 +492,13 @@ a {
 
 .dropdown-list .filter-textbox input {
   padding: 0 0 0 0px;
+}
+
+notifier-notification{
+  right: 12px;
+  left: calc(100% - 350px) !important;
+  height: 60px !important;
+  margin-bottom: 100px !important;
+  width: 250px !important;
+
 }

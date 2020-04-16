@@ -6,7 +6,8 @@ import  countries  from 'src/app/../assets/jsons/countries.json';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from 'sweetalert2';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
+import { ProfileService } from 'src/app/_services/profile.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
     selector: 'app-profile',
@@ -14,28 +15,22 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
     styleUrls: ['./profile.component.scss']
   })
 export class ProfileComponent implements OnInit{
-    @Input() public isAccount:boolean;
+ 
     @Input() public isInvite:boolean;
     @Input() public isMyaccount:boolean;
     @Input() public isusers:boolean;
-    model: User;
+    @Input() public isnotification:boolean;
+    public model:User;
     public searchvalue:any;
     public searchUser:any;
-    // public isAccount:boolean=true;
-    public isSubscription:boolean=false;
-    public isInvoice:boolean=false;
-    public isPaymentmode:boolean=false;
-    public isUsers:boolean=true;
-    public isdepartment:boolean=false;
-    public isRoles:boolean=false;
-    public emailOne:any;
+    public emailId:any;
     public sentFromOne:any;
     public tableData:any[];
-    public formOne:any[];
+    public formOne:any;
     countryInfo :any []= [];
     public addDepartment:boolean=false;
     public departments:any[];
-    public password: string;
+    public password:any;
     public show:  Boolean = true;
     public passrd:any=12345678945;
     public userManagement:any[];
@@ -49,13 +44,17 @@ export class ProfileComponent implements OnInit{
     public feedbackbox:any;
     public paymentMode:any;
     public invoicedata:any[];
-
+    public nitificationList:any;
+    public dataid:any;
+    public userId:any;
     constructor( private sharedData: SharedDataService,
                 private firstloginservice: FirstloginService,
                 private modalService: BsModalService,
+                private profileservice:ProfileService,
+                private notifier:NotifierService
                 ) { }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.countryInfo = countries.Countries;
     this.tableData=[{"id":"256426","product":"Gib-2.0","plan":"2 Months","amount":"200 USD","status":"active"},
     {"id":"252564","product":"Gib-2.0","plan":"6 Months","amount":"800 USD","status":"active"},
@@ -80,40 +79,64 @@ this.paymentMode=[{"cardType":"Master Card","cardnumber":"xxxx-xxxx-xxxx-1234","
 this.invoicedata=[{"invoiceid":"234567","subscription":"sub-5642d4dd","amount":"200","refund":"50","duedate":"20/04/2020","status":"Paid",},
                   {"invoiceid":"231247","subscription":"sub-56435dh2","amount":"300","refund":"200","duedate":"30/04/2020","status":"Paid",},
                   {"invoiceid":"128759","subscription":"sub-5864edh8","amount":"150","refund":"100","duedate":"15/05/2020","status":"Paid",},
-                  {"invoiceid":"897456","subscription":"sub-2536dn4m","amount":"450","refund":"0","duedate":"20/07/2021","status":"Unpaid",}]
+                  {"invoiceid":"897456","subscription":"sub-2536dn4m","amount":"450","refund":"0","duedate":"20/07/2021","status":"Unpaid",}]                  
+// this.nitificationList=[
+//   {
+//   "id": 133,
+//   "fromAddress": "bhavya.kavuri@epsoftinc.com",
+//   "toAddress": "venkata.simhadri@epsoftinc.com",
+//   "contentType": "text123",
+//   "subject": "mai",
+//   "mailBody": "registration success",
+//   "templateId": null,
+//   "dynamicTemplateData": null,
+//   "sendgridResponse": "",
+//   "createdAt": "2020-04-14T13:43:44.839",
+//   "notificationAuditId": [],
+//   "toDate": null,
+//   "fromDate": null
+//   }
+//  ]
+}
 
-
-this.formOne =[{
-    firstName :localStorage.getItem("firstName"),
-    lastName :localStorage.getItem("lastName"),
-    designation :localStorage.getItem("designation"),
-    userId:localStorage.getItem("userName"),
-    company:localStorage.getItem('company'),
-    department:localStorage.getItem('department'),
-    country :localStorage.getItem("country"),
-    phoneNumber:localStorage.getItem("phoneNumber")}
-];
-// console.log("userData",this.formOne[0].phoneNumber);
+  ngOnChanges(){
+    if(this.isMyaccount == true){
+      this.userDetails();
+    }
+      this.getAllNotifications(); 
   }
   
-  
+getAllNotifications(){
+  const userId={
+    "toAddress" : localStorage.getItem("userName")}  
+    console.log('userId',userId);
+           
+  this.profileservice.getNotifications(userId).subscribe(data=>{this.nitificationList=data
+    console.log("notifications",this.nitificationList);
+    })
+}
+  userDetails(){
+    this.formOne ={
+      firstName :localStorage.getItem("firstName"),
+      lastName :localStorage.getItem("lastName"),
+      designation :localStorage.getItem("designation"),
+      userId:localStorage.getItem("userName"),
+      company:localStorage.getItem('company'),
+      department:localStorage.getItem('department'),
+      country :localStorage.getItem("country"),
+      phoneNumber:localStorage.getItem("phoneNumber")};
+  }
   loopTrackBy(index, term){
     return index;
   }
-  
-
   slideDown(){
       document.getElementById("foot").classList.add("slide-down");
       document.getElementById("foot").classList.remove("slide-up");
   }
 
-
-  onsubmit(){
-      console.log("value",this.emailOne);
-      console.log("value2",this.sentFromOne);  
+  inviteUser(){
+      console.log("value",this.emailId);
   }
-
-
 onChangeDepartment(selectedvalue) {
     // this.firstloginservice.getAllDepartments().subscribe(response=> {
     //     console.log("departments",response);
@@ -126,17 +149,8 @@ onChangeDepartment(selectedvalue) {
     }
   }
 
-  onKeydown(event){    
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   }
-    
-  }
-
   onChangeCountry(countryValue) {
-    this.formOne[0].country = this.countryInfo[countryValue].CountryName;
+    this.formOne.country = this.countryInfo[countryValue].CountryName;
   }
 
   toggle() {
@@ -144,35 +158,28 @@ onChangeDepartment(selectedvalue) {
   }
 
   updateAccount(form){
-    this.firstloginservice.updateUser(this.formOne[0]).subscribe(data => {this.checkSuccessCallback(data)
-      // console.log('dat',res)
-      // sessionStorage.clear();
-      // localStorage.clear();
-      Swal.fire({
-        title: 'Success',
-        text: `Update completed successfully!!`,
-        type: 'success',
-        showCancelButton: false,
-        allowOutsideClick: false
-      })
+    this.firstloginservice.updateUser(this.formOne).subscribe(data => {this.checkSuccessCallback(data)
+      this.notifier.show({
+        type: "success",
+        message: "Updated successfully!",
+        id: "123" 
+      });
     }, err => {
       console.log('error', err);
     });
    
   }
   checkSuccessCallback(data:any){    
-    console.log("checkSuccessCallback--------login component", this.formOne[0]);
-    localStorage.setItem('firstName',this.formOne[0].firstName);
-    localStorage.setItem('lastName',this.formOne[0].lastName);
-    localStorage.setItem('userName',this.formOne[0].userId);
-    localStorage.setItem('phoneNumber',this.formOne[0].phoneNumber);
-    localStorage.setItem('company', this.formOne[0].company);
-    localStorage.setItem('designation',this.formOne[0].designation);
-    localStorage.setItem('country',this.formOne[0].country);
-    localStorage.setItem('department', this.formOne[0].department);
+    console.log("checkSuccessCallback", this.formOne);
+    localStorage.setItem('firstName',this.formOne.firstName);
+    localStorage.setItem('lastName',this.formOne.lastName);
+    localStorage.setItem('userName',this.formOne.userId);
+    localStorage.setItem('phoneNumber',this.formOne.phoneNumber);
+    localStorage.setItem('company', this.formOne.company);
+    localStorage.setItem('designation',this.formOne.designation);
+    localStorage.setItem('country',this.formOne.country);
+    localStorage.setItem('department', this.formOne.department);
   }
-  elements: any = [];
-  headElements = ['id', 'first', 'last', 'handle'];
 
   selecteddata(data,index,template){
   document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
@@ -220,5 +227,19 @@ onChangeDepartment(selectedvalue) {
     }else{
       data.select="Set Default"
     }
+  }
+ 
+  deletnotification(id){
+    this.dataid=id
+  }
+  canceldeleteNotification(index){
+  this.dataid='';
+  }
+  notify(){
+    this.notifier.show({
+      type: "error",
+      message: "Could not import Bpmn diagram!",
+      id: "ae12" 
+    });
   }
 }

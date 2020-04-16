@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import { UserService } from 'src/app/_services';
-// import 'particles.js/particles';
-import * as particlesJS from 'particlesjs';
+import 'particles.js/particles';
+// import * as particlesJS from 'particlesjs';
 
 declare var particlesJS :any
 @Component({
@@ -18,54 +18,25 @@ export class PlatformComponent implements OnInit {
   dbValue: any = [];
   subscribedProd: boolean=false;
   selectedData:any[];
+  public productId:any;
   constructor(private router: Router,private productlistservice:ProductlistService,public userService: UserService) { }
 
-  // ngOnInit() {
-  //   this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
-  //     console.log("products",data)    
-  //   });
-    
-  //   this.tenantId = localStorage.getItem("tenantName");
-  //   this.email = localStorage.getItem("userName");
-  //   console.log("apps subscribed", this.tenantId, this.email);
-  //   this.userService.getUserApplications(this.tenantId, this.email).subscribe(data => this.successGetApps(data));
-  // }
-  // successGetApps(data) {
-  //   console.log("appname", data);
-  //   if(data.appname=="Ezbot")
-  //   {
-  //     this.subscribedProd=true;
-  //     console.log("subscribed?", this.subscribedProd);
-  //   }
-  //   data.forEach(element => {
-  //     this.dbValue.push(element)
-  //   });
-
-  // }
-  // SuccessCallback(data: any[]) {
-  //   this.productslist=data;
-  //   console.log("products are   ---------",this.productslist)
-  // }
-  // setProductPlan(plans){
-  //   this.productlistservice.setSelectedProductPlan(plans);
-  //   this.router.navigate(['/activation/payment/chooseplan']);
-  // }
-
-  // productTrackBy(index, item){
-  //   return index;
-  // }
-  dataArr:any[];
-  selectedIndex: number=0;
+  public dataArr:any[];
+  public selectedIndex:number;
+  public selectedId:any;
+  public isenable:boolean=true;
+  public selectedIdValue:number=1;
 
   ngOnInit() {
-    // this.dt.changeParentModule(undefined);
-    // this.dt.changeChildModule(undefined);
+    this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
+          console.log("products",this.productslist)    
+        });
+    
     this.dataArr = [
-      {"id":"Gib", "img":"assets/images/2.0.svg", "title":"Active Free Tier","link":"payment/chooseplan","isvalue":1,},
-      {"id":"Ezbot", "img":"assets/images/Ezbot.svg", "title":"Upgrade","expirytime":"29","isvalue":0,},
-      {"id":"Ezflow", "img":"assets/images/ezflow.svg", "title":"Upgrade","expirytime":"20","isvalue":0,},
+      {"id":"Gib", "img":"assets/images/2.0.svg", "title":"Active Free Tier","isvalue":1,},
+      {"id":"ezbot", "img":"assets/images/Ezbot.svg", "title":"Upgrade","expirytime":"29","isvalue":0,},
+      {"id":"ezflow", "img":"assets/images/ezflow.svg", "title":"Upgrade","expirytime":"20","isvalue":0,},
     ];
-    // this.dt.changeHints(this.hints.homeHints);
     particlesJS("particles-js", {
       "particles": {
         "number": {
@@ -175,8 +146,24 @@ export class PlatformComponent implements OnInit {
   }
 
   selecteddata(selectedData,index){
-    this.selectedIndex = index;
-    console.log("index",this.dataArr[index])
+    this.isenable=false;
+    this.selectedIndex=index;
+    this.selectedId=selectedData.id;
+    localStorage.setItem('selectedproductId',this.selectedId);
+    this.selectedIdValue=selectedData.isvalue
+    console.log('data',selectedData.id)
+    this.productId=selectedData.id
+  }
+  navigateProduct(selectedproduct){
+    if(this.selectedId == '2.0'){
+      alert("2.0")
+    }else if(this.selectedId == 'ezbot'){
+      alert("2.0")
+    // this.router.navigate(['/pages/designstudio/botcreate'])
+    }else if(this.selectedId == 'ezflow'){
+      alert("EzFlow")
+    }
+
   }
   
 }
