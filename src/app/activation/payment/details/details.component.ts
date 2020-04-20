@@ -27,15 +27,15 @@ export class DetailsComponent implements OnInit {
   constructor( private productlistservice:ProductlistService, private router:Router) { }
 
   ngOnInit() {
-    this.getproductPlans()
-    this.productlistservice.getCarddetails().subscribe(res=>{
-      this.cardDetails=res 
-    })
-    this.cardHoldername=this.cardDetails.cardHoldername;
-    this.cardmonth=this.cardDetails.cardmonth;
-    this.cardnumbertotal=this.cardDetails.cardnumbertotal;
-    this.cardyear=this.cardDetails.cardyear;
-    this.cvvNumber=this.cardDetails.cvvNumber;
+    this.getproductPlans();
+    // this.productlistservice.getCarddetails().subscribe(res=>{
+    //   this.cardDetails=res 
+    // })
+    // this.cardHoldername=this.cardDetails.cardHoldername;
+    // this.cardmonth=this.cardDetails.cardmonth;
+    // this.cardnumbertotal=this.cardDetails.cardnumbertotal;
+    // this.cardyear=this.cardDetails.cardyear;
+    // this.cvvNumber=this.cardDetails.cvvNumber;
   }
 
   getproductPlans(){
@@ -47,14 +47,12 @@ export class DetailsComponent implements OnInit {
         this.selected_plans=obj
         this.selected_plans.term='month';
         this.name=this.selected_plans.nickName.slice(4);
-        console.log("selected_plansone",this.selected_plans);
       }
     });
   });
   }
 
   paymentfromSubmit(){
-  this.router.navigate(['/activation/payment/review']);
   this.cardDetails={
     cardHoldername:this.cardHoldername,
     cardmonth:this.cardmonth,
@@ -62,7 +60,15 @@ export class DetailsComponent implements OnInit {
     cardyear:this.cardyear,
     cvvNumber:this.cvvNumber,
   }
-  console.log("details",this.cardDetails);
+  this.router.navigate(['/activation/payment/review']);
   this.productlistservice.setCarddetails(this.cardDetails);
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 6 && (charCode < 2 || charCode >56)) {
+      return false;
+    }
+    return true;
   }
 }

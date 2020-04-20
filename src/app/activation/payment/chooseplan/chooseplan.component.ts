@@ -26,15 +26,12 @@ export class ChooseplanComponent implements OnInit {
     this.productId=localStorage.getItem("selectedproductId"),
     this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
     this.plansList=this.plansList.reverse();
-    console.log("planesList",this.plansList)
     this.plansList[0].amount = 0;
     this.plansList[0].term='month';
     this.plansList[1].term='month';
       this.plansList[2].term='year';
-
-  });
+    });
   }
-  
   selectedPlan(planData){
     if(planData.nickName =="EZBot Freetrial" || planData.nickName =="EZFlow Freetrial"){
       alert("Free Tier");
@@ -45,11 +42,10 @@ export class ChooseplanComponent implements OnInit {
     localStorage.setItem('selectedplan',planData.nickName);
     this.router.navigate(['/activation/payment/details']);
     }
-    
-    // window.open('http://localhost:3000'+url+'?plan='+plans.id+'&product='+plans.productId+'&type='+this.plantype, '_self' );
-    
   }
-
+  loopTrackBy(index, term){
+    return index;
+  }
   }
 
 

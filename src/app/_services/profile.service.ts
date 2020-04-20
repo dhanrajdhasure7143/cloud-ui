@@ -8,11 +8,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
           })
   };
 
-
-const params = new HttpParams()
-  .set('toAddress', 'bhavya.kavuri@epsoftinc.com')
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,5 +17,12 @@ export class ProfileService {
   getNotifications(userId):Observable<any>{
       return this.http.post<any>('/notificationservice/api/v1/listNotifications',userId,httpOptions);
   }
+  listofsubscriptions() : Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/subscriptions');
+  }
+  listofinvoices() : Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices')
+  }
+
 
 }

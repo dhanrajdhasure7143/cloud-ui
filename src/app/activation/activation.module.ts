@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { UsermanagementService } from '../_services/usermanagement.service';
 import { AlertsComponent } from './alerts/alerts.component';
 import { Cellrender } from './usermanagement/cellrender';
+import { Particles } from '../_models/particlesjs';
 @NgModule({
  declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent, UsermanagementComponent, AlertsComponent,Cellrender],
  imports: [
@@ -34,6 +35,7 @@ import { Cellrender } from './usermanagement/cellrender';
  schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
-  ]
+  ],
+  providers:[Particles]
 })
 export class ActivationModule { }

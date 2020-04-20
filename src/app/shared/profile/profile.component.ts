@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit{
     public emailId:any;
     public sentFromOne:any;
     public tableData:any[];
-    public formOne:any;
+    public formOne:any={};
     countryInfo :any []= [];
     public addDepartment:boolean=false;
     public departments:any[];
@@ -47,6 +47,7 @@ export class ProfileComponent implements OnInit{
     public nitificationList:any;
     public dataid:any;
     public userId:any;
+    subscribeddata:any
     constructor( private sharedData: SharedDataService,
                 private firstloginservice: FirstloginService,
                 private modalService: BsModalService,
@@ -55,11 +56,10 @@ export class ProfileComponent implements OnInit{
                 ) { }
 
   ngOnInit() {
+    this.getAllNotifications();
+    this.getAllSubscrptions();
+    this.getAllInvoices();
     this.countryInfo = countries.Countries;
-    this.tableData=[{"id":"256426","product":"Gib-2.0","plan":"2 Months","amount":"200 USD","status":"active"},
-    {"id":"252564","product":"Gib-2.0","plan":"6 Months","amount":"800 USD","status":"active"},
-    {"id":"212566","product":"Ez-flow","plan":"1 Months","amount":"50 USD","status":"active"},
-    {"id":"826426","product":"Ez-Bot","plan":"12 Months","amount":"1000 USD","status":"active"}];
 
     this.userManagement=[{"id":"256426","firstName":"Ranjith","lastName":"sigiri","Designation":"HR","Organisation":"EpSoft","Department":"HR","Product":"Gib","Roles":"Admin"},
                     {"id":"15427","firstName":"suresh","lastName":"yenkam","Designation":"HR","Organisation":"Monile APP","Department":"HR","Product":"Ezbot","Roles":"user"},
@@ -69,50 +69,27 @@ export class ProfileComponent implements OnInit{
                     {"id":"296426","firstName":"swarrop","lastName":"C","Designation":"SE","Organisation":"Aiotal","Department":"HR","Product":"Aiotal","Roles":"User"},
                     {"id":"296426","firstName":"swarrop","lastName":"C","Designation":"SE","Organisation":"Aiotal","Department":"HR","Product":"Aiotal","Roles":"User"},
                     {"id":"296426","firstName":"swarrop","lastName":"C","Designation":"SE","Organisation":"Aiotal","Department":"HR","Product":"Aiotal","Roles":"User"}];
-// console.log("userData",this.sharedData)  
 
 this.paymentMode=[{"cardType":"Master Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Default","expairydate":"10/22","createddate":"30/03/2020"},
                 {"cardType":"Visa Card","cardnumber":"xxxx-xxxx-xxxx-4568","select":"Set Default","expairydate":"12/23","createddate":"23/02/2019"},
                 {"cardType":"Rupay Card","cardnumber":"xxxx-xxxx-xxxx-7892","select":"Set Default","expairydate":"11/24","createddate":"30/12/2019"},
-                {"cardType":"American Express Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Set Default","expairydate":"10/22","createddate":"08/04/2019"},]
-
-this.invoicedata=[{"invoiceid":"234567","subscription":"sub-5642d4dd","amount":"200","refund":"50","duedate":"20/04/2020","status":"Paid",},
-                  {"invoiceid":"231247","subscription":"sub-56435dh2","amount":"300","refund":"200","duedate":"30/04/2020","status":"Paid",},
-                  {"invoiceid":"128759","subscription":"sub-5864edh8","amount":"150","refund":"100","duedate":"15/05/2020","status":"Paid",},
-                  {"invoiceid":"897456","subscription":"sub-2536dn4m","amount":"450","refund":"0","duedate":"20/07/2021","status":"Unpaid",}]                  
-// this.nitificationList=[
-//   {
-//   "id": 133,
-//   "fromAddress": "bhavya.kavuri@epsoftinc.com",
-//   "toAddress": "venkata.simhadri@epsoftinc.com",
-//   "contentType": "text123",
-//   "subject": "mai",
-//   "mailBody": "registration success",
-//   "templateId": null,
-//   "dynamicTemplateData": null,
-//   "sendgridResponse": "",
-//   "createdAt": "2020-04-14T13:43:44.839",
-//   "notificationAuditId": [],
-//   "toDate": null,
-//   "fromDate": null
-//   }
-//  ]
+                {"cardType":"American Express Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Set Default","expairydate":"10/22","createddate":"08/04/2019"},]   
 }
 
   ngOnChanges(){
     if(this.isMyaccount == true){
       this.userDetails();
     }
-      this.getAllNotifications(); 
+      this.getAllNotifications();
+      this.getAllSubscrptions();
+    this.getAllInvoices();
   }
   
 getAllNotifications(){
   const userId={
-    "toAddress" : localStorage.getItem("userName")}  
-    console.log('userId',userId);
-           
+    "toAddress" : localStorage.getItem("userName")
+  }  
   this.profileservice.getNotifications(userId).subscribe(data=>{this.nitificationList=data
-    console.log("notifications",this.nitificationList);
     })
 }
   userDetails(){
@@ -135,13 +112,11 @@ getAllNotifications(){
   }
 
   inviteUser(){
-      console.log("value",this.emailId);
   }
 onChangeDepartment(selectedvalue) {
-    // this.firstloginservice.getAllDepartments().subscribe(response=> {
-    //     console.log("departments",response);
-    //     this.departments = response;
-    //   });
+    this.firstloginservice.getAllDepartments().subscribe(response=> {
+        this.departments = response;
+      });
     if(selectedvalue == "others"){
       this.addDepartment = true;
     } else {
@@ -165,45 +140,25 @@ onChangeDepartment(selectedvalue) {
         id: "123" 
       });
     }, err => {
-      console.log('error', err);
     });
    
   }
-  checkSuccessCallback(data:any){    
-    console.log("checkSuccessCallback", this.formOne);
-    localStorage.setItem('firstName',this.formOne.firstName);
-    localStorage.setItem('lastName',this.formOne.lastName);
-    localStorage.setItem('userName',this.formOne.userId);
-    localStorage.setItem('phoneNumber',this.formOne.phoneNumber);
-    localStorage.setItem('company', this.formOne.company);
-    localStorage.setItem('designation',this.formOne.designation);
-    localStorage.setItem('country',this.formOne.country);
-    localStorage.setItem('department', this.formOne.department);
+  checkSuccessCallback(data:any){
+    localStorage.setItem('formOne',JSON.stringify(this.formOne));
   }
 
   selecteddata(data,index,template){
-  document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
-
+    document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
     this.modalRef = this.modalService.show(template)
-
-  console.log("index",index);
-  this.selectedIndex=index;
-//   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
-  
+    this.selectedIndex=index;
   }
 
   infoModelSubmit(){
-    // console.log("pricecheckbox",this.pricecheckbox);
-    // console.log("stopcheckbox",this.stopcheckbox);
-    // console.log("plancheckbox",this.plancheckbox);
-    // console.log("feedbackbox",this.feedbackbox);
-    
     this.modalRef.hide();
   }
 
   unsubscribeYes(index){
     this.modalRef.hide();
-    // console.log("myindex",index);
   }
   unsubscribeNo(index){
   document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
@@ -213,7 +168,6 @@ onChangeDepartment(selectedvalue) {
     document.getElementsByClassName("deletconfm")[index].classList.add("isdeletcard")
   }
   confrmDeleteCard(index){
-    // console.log("myindex",index);
   }
   cancelDeleteCard(index){
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdeletcard")
@@ -221,7 +175,6 @@ onChangeDepartment(selectedvalue) {
 
   defaultcardselect(data,index){
     this.defaultcard= index;
-    console.log("myDefaultCard",data.select);
     if(data.select == "Set Default"){
       data.select="Default"
     }else{
@@ -242,4 +195,15 @@ onChangeDepartment(selectedvalue) {
       id: "ae12" 
     });
   }
+  subscriptiondata(data,index,template){
+  this.subscribeddata = data;
+      this.modalRef = this.modalService.show(template)
+    }
+  getAllSubscrptions(){
+    this.profileservice.listofsubscriptions().subscribe(response => {this.tableData = response});
+  }
+  getAllInvoices(){
+    this.profileservice.listofinvoices().subscribe(response => {this.invoicedata = response.data});
+  }
+
 }

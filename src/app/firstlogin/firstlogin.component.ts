@@ -6,10 +6,8 @@ import { FirstloginService } from './@providers/firstlogin.service';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 import  countries  from './../../assets/jsons/countries.json';
-import 'particles.js/particles';
-import * as particlesJS from 'particlesjs';
+import { Particles } from '../_models/particlesjs';
 
-declare var particlesJS :any;
 @Component({
   selector: 'app-firstlogin',
   templateUrl: './firstlogin.component.html',
@@ -31,13 +29,16 @@ export class FirstloginComponent implements OnInit {
   submitflag:boolean=false;
   public show:boolean=true;
  
-  constructor(@Inject(APP_CONFIG) private config, private router: Router, private service: FirstloginService,private route: ActivatedRoute) {
+  constructor(@Inject(APP_CONFIG) private config, private router: Router, 
+              private service: FirstloginService,
+              private route: ActivatedRoute,
+              private particles :Particles,) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
       
       var token=params['token']
       this.decodedToken = Base64.decode(token)
-      console.log("decoded token = "+this.decodedToken);
+      // console.log("decoded token = "+this.decodedToken);
      this.service.verifyToken(token).subscribe(response=>{this.onSuccessOfVerifyToken(response),err=>{
       
        
@@ -57,7 +58,7 @@ export class FirstloginComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.particles()
+    this.particles.getParticles();
     this.getCountries();
     this.onChangeDepartment(this.departments);
     this.model = new User();
@@ -80,7 +81,6 @@ export class FirstloginComponent implements OnInit {
   onChangeDepartment(selectedvalue) {
     this.college = false
     this.service.getAllDepartments().subscribe(response=> {
-      console.log(response);
       this.departments = response;
     })
     if(selectedvalue == "others"){
@@ -91,14 +91,11 @@ export class FirstloginComponent implements OnInit {
     this.model.country = this.countryInfo[countryValue].CountryName;
     
     this.stateInfo=this.countryInfo[countryValue].States;
-    console.log("country name======", this.countryInfo[countryValue].CountryName)
     //this.cityInfo=this.stateInfo[0].Cities;
-    console.log(this.cityInfo);
   }
 
   onChangeState(stateValue) {
     this.cityInfo=this.stateInfo[stateValue].Cities;
-    console.log(this.stateInfo[stateValue].Cities);
   }
   onSuccessOfVerifyToken(response: any) {
     if(response){
@@ -119,7 +116,6 @@ export class FirstloginComponent implements OnInit {
     }
 
     ondepartment(event){
-      console.log("event------>",event)
 
     }
   
@@ -132,7 +128,6 @@ export class FirstloginComponent implements OnInit {
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
     //userDetails.department = this.model.department[0];
-    console.log("User register details------- ", userDetails)
     this.service.registerUser(userDetails).subscribe(res => {
       sessionStorage.clear();
       localStorage.clear();
@@ -163,7 +158,6 @@ export class FirstloginComponent implements OnInit {
     location.href = this.config.portfolioSite;
   }
   onKeydown(event){
-    console.log(event.key);
     
     let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
     let temp =numArray.includes(event.key); //gives true or false
@@ -173,109 +167,6 @@ export class FirstloginComponent implements OnInit {
   }
   toggle() {
     this.show = !this.show;
-  }
-  particles(){
-    particlesJS("particles-js", {
-      "particles": {
-        "number": {
-          "value": 200,
-          "density": {
-            "enable": true,
-            "value_area": 650
-          }
-        },
-        "color": {
-          "value": "#d3dbd4"
-        },
-        "shape": {
-          "type": "circle",
-          "stroke": {
-            "width": 1,
-            "color": "#d3dbd4"
-          },
-          "polygon": {
-            "nb_sides": 5
-          },
-
-        },
-        "opacity": {
-            "value": 1,
-            "random": false,
-            "anim": {
-            "enable": false,
-            "speed": 1,
-            "opacity_min": 0.1,
-            "sync": false
-          }
-        },
-        "size": {
-            "value": 7,
-            "random": true,
-            "anim": {
-            "enable": false,
-            "speed": 40,
-            "size_min": 0.3,
-            "sync": false
-          }
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 150,
-          "color": "#d3dbd4",
-          "opacity": 0.6,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 6,
-          "direction": "none",
-          "random": false,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false,
-          "attract": {
-            "enable": false,
-            "rotateX": 600,
-            "rotateY": 600
-          }
-        }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": {
-            "enable": true,
-            "mode": "grab"
-          },
-        },
-        "modes": {
-          "grab": {
-            "distance": 120,
-            "line_linked": {
-              "opacity": 1
-            }
-          },
-          "bubble": {
-            "distance": 400,
-            "size": 80,
-            "duration": 2,
-            "opacity": 8,
-            "speed": 3
-          },
-          "repulse": {
-            "distance": 200,
-            "duration": 0.4
-          },
-          "push": {
-            "particles_nb": 4
-          },
-          "remove": {
-            "particles_nb": 2
-          }
-        }
-      },
-      "retina_detect": true
-    });
   }
   resetForm() {
     this.model = new User();

@@ -3,9 +3,9 @@
 <div class="container">
     <div class="row">
       <div>
-        <h2 class="planheading">You Have Selected Plan {{name}} </h2>
+        <h2 class="planheading">You Have been upgraded to Selected Plan {{name}} </h2>
         <h5 id="paymnt-subheding">Complete below card details step to review your order</h5>
-        <p class="pay_titles">Card Details:</p> 
+        <p class="pay_titles">Card Details:</p>
     </div>
           <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="paymentfromSubmit(form)" class="col-md-12 row">
         <div class="col-md-1"></div>
@@ -57,19 +57,18 @@
 
               <div class="form-group col-sm-8">
                 <label for="cardNumber">Card number</label>
-                <input type="number" class="form-control payment-input" name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardnumbertotal" id="cardNumber" placeholder="Enter Card Number" required 
+                <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardnumbertotal" id="cardNumber" placeholder="Enter Card Number" required 
                 [ngClass]="{ 'is-invalid': ((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) ) }" />
                 <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
                 class='fa fa-info-circle errspan'>Card number is required</span> 
               </div>
               <div class="form-group col-sm-4">
                   <label for="cvv">CVV</label>
-                  <input type="number" class="form-control payment-input" name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required
+                  <input type="text" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required
                   [ngClass]="{ 'is-invalid': ((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) ) }" />
                 <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
-                class='fa fa-info-circle errspan'>Cvv required</span> 
-                </div>
-
+                class='fa fa-info-circle errspan'>Cvv required</span>                
+              </div>
                 <div class="form-group col-sm-12">
                   <label for="year">Year (YYYY)</label>
                   <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>

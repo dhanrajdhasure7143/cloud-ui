@@ -6,7 +6,6 @@ import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SessionService } from './session/';
 import { CookieStore } from './cookie.store';
-// const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 @Injectable({
   providedIn: 'root'
 })
