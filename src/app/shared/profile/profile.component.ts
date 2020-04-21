@@ -153,6 +153,17 @@ onChangeDepartment(selectedvalue) {
     this.selectedIndex=index;
   }
 
+  subscriptiondata(data,index,template){
+    document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+  this.subscribeddata = data;
+      this.modalRef = this.modalService.show(template)
+  
+    console.log("index",index);
+    this.selectedIndex=index;
+  //   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
+    
+    }
+
   infoModelSubmit(){
     this.modalRef.hide();
   }

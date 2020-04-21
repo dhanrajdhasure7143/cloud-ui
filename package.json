@@ -1,5 +1,5 @@
 {
-  "name": "Aiotal",
+  "name": "aiotal",
   "version": "0.0.1",
   "description": "Aiotal Cloud Platform",
   "author": "EPSoft Solutions Pvt Ltd",
@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
-    "electron:pack": "ng build --prod && electron-packager . --platform=win32 --icon=epsoft.ico --no-prune --ignore=/node_modules --ignore=/projects --ignore=/dist/bot-grid --ignore=/aiotal-win32-x64-installers  --ignore=/e2e --ignore=/src --version-string.ProductName=\"Aiotal Cloud Platform\" --overwrite",
+    "electron:pack": "ng build --prod && electron-packager . --platform=win32 --icon=epsoft.ico --no-prune --ignore=/node_modules --ignore=/projects --ignore=/aiotal-win32-x64-installers  --ignore=/e2e --ignore=/src --version-string.ProductName=\"Aiotal Cloud Platform\" --overwrite",
     "electron:setup": "electron-installer-windows --src ./aiotal-win32-x64 --dest dist/installers/"
   },
   "private": true,
@@ -39,7 +39,6 @@
     "angular-notifier": "^6.0.1",
     "angular-user-idle": "^2.1.2",
     "bootstrap": "^4.3.1",
-    "bot-grid": "file:dist/bot-grid",
     "chart.js": "^2.8.0",
     "chartjs-plugin-datalabels": "^0.6.0",
     "core-js": "^2.5.4",
