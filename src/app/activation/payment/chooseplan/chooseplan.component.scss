@@ -1,143 +1,71 @@
 
-// .tabbar{
-//   background-color: #f4f4f4;
-//   height:45px;
-//   width:100%;
-// }
-// .tab {
-//   width: 100%;
-//   margin-top: -35px;
-// }
-
-// /* Style the buttons inside the tab */
-// .tab button {
- 
-//   background-color: #6fabe2;
-//   border-radius: 15px;
-//   outline: none;
-//   cursor: pointer;
-//   padding: 7px 11px;
-//   transition: 0.3s;
-//   font-size: 10px;
-//   color:rgb(238, 234, 234);
-//   border: none;
-//   margin-left: 10px;
-//   width: 100px;
-// }
-
-// /* Change background color of buttons on hover */
-// .tab button:hover {
-//   background-color:#0472da;
-// }
-
-// /* Create an active/current tablink class */
-// .tab button.active {
-//   background-color: #0472da !important;
-
-//   color:rgb(238, 234, 234) !important;
-
-// }
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  margin-top:10px;
-  // border-top: none;
-}
-
-#selectplan{
-  padding:0 !important;
-}
-#bd{
-  display: block;
-}
-.tab button.active{
-  background-color: inherit;
-  
-}
-
-.tabcontent.active  {
-  display: block;
-}
-.tab.active{
-  background-color: inherit;
-
-}
-
 #ctr{
   display: block;
   margin-left:10px;
   color: #006ed5;
 
 }
-.btn-primary{
+.selectplanbtn{
   background-color: #006ed5;
   border-radius:20px;
   width: 8em;
-  margin-left: 40px;
+  margin-left: 80px;
+  
 }
-
-.fa-check{
-color: green;
+.processes .fa-check-circle{
 padding:10px;
 }
-
-.fa-times{
+.processes .fa-times-circle{
   padding:10px;
   color:rgb(255, 0, 0);
 }
 
-#ft{
+#planName{
   color:#006ed5;
 }
-#coltab h4{
-  text-align: center;
+.plansBox h4{
+ padding-left: 10px;
 }
 
-#coltab:hover{
+.plansBox:hover{
   border:1px solid gray;
   border-radius: 20px;
 }
-#coltab img{
-  padding:10px;
-}
-// .col-sm-3:hover{
-//   border-radius: 10px;
-//   border:1px solid rgb(209, 205, 205);
- 
-
-// }
-
-label {
+.processes label {
   position: absolute;
   right: 0px;
   font-size: 9px;
   color: rgb(173, 167, 167);
 }
-  
-h5 span {
+.processes span {
   position: relative;
 }
-
-
-#coltab h5{
+.plansBox h5{
   font-size: 17px;
 }
-#plo{
+#planHeading{
   display: block;
-  margin: left;
+  margin-top: 10px;
 }
-
 .plansBox{
   margin-top: 10px;
-  padding: 15px;
+  padding: 5px;
+  padding-left: 10px !important;
 }
-
 .enterprice{
   color:#006ed5;
-  padding-left: 15px;
-  margin-top: 10px;
+  margin-top: 12px;
+  margin-left: 60px;
+  font-size: 19px !important;
+  font-weight: bold;
+}
+.current-plan{
+  background-color: red;
+  color: white;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+  padding: 5px;
+  float: right;
 }
 
 

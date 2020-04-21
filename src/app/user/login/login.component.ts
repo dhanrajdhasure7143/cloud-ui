@@ -8,6 +8,7 @@ import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
+import { Particles } from '../../_models/particlesjs';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  public show:boolean=true;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -33,7 +35,9 @@ export class LoginComponent implements OnInit {
     private session: SessionService,
     private loginService: LoginService,
     private sharedData: SharedDataService,
-    public userService: UserService
+    public userService: UserService,
+    private particles :Particles
+    
   ) {
     this.session.stopWatching();
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -50,6 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+  this.particles.getParticles();
     this.loginForm = this.formBuilder.group({
       username: [this.get('username') ? this.get('username') : '', Validators.required],
       password: [this.get('password') ? this.get('password') : '', Validators.required],
@@ -110,15 +115,14 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
         
-      );        
+      );
+       
   }
 
  
-
   checkSuccessCallback(data:any){
-    this.sharedData.setLoggedinUserData(data.firstName);
+    this.sharedData.setLoggedinUserData(data);
     this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
-    console.log("checkSuccessCallback--------login component", data);
     localStorage.setItem('firstName',data.firstName);
     localStorage.setItem('lastName',data.lastName);
     localStorage.setItem('userName',data.userId);
@@ -192,5 +196,9 @@ export class LoginComponent implements OnInit {
   azureLogin() {
     this.loginService.azureLogin().subscribe();
   }
-  
+  toggle() {
+    this.show = !this.show;
+  }
+
+      
 }

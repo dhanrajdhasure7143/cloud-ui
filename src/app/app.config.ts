@@ -10,7 +10,6 @@ export interface AiotalAppConfig {
   authorizationendpoint: String;
   notificationsendpoint: String;
   Subscriptionendpoint:String;
-
 }
 
 export const AppConfig: AiotalAppConfig = {

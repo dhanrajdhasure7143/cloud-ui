@@ -3,64 +3,52 @@
 <div class="container">
     <div class="row">
       <div class="review-heading">
-      <h2 id="" class="plan_label ">You Have Selected Plan    <span class="plan">{{selected_plans.planName.slice(4)}}</span></h2>
+      <h2 id="" class="plan_label ">You Have Selected Plan    <span class="plan">{{name}}</span></h2>
       <h5 id="paymnt-subheding">Review your Order to proceed payment</h5>
       <p class="pay_titles">Card Details:<button class="btn" [routerLink]="['/activation/payment/details']"><img src="assets/images/editCard.svg" alt=""></button>
       </p>
   </div>
-      <form  autocomplete="off" class="col-md-12 row carddetail">
+      <!-- <form  autocomplete="off" class="col-md-12 row carddetail"> -->
+        <div class="col-md-12 carddetail row">
 
         <div class="col-md-2"></div>
         
-        <div class="col-md-2">
-              <div class="form-group col-md-12">
+        <div class="col-md-3">
+              <div class="col-md-12">
                 <label for="cardHolder">Cardholder name</label>
-                <h6>{{cardDetails[0].cardHoldername}}</h6>
-                <!-- <input type="text" class="form-control payment-input" name="cardHolder" id="cardHolder" [(ngModel)]="cardDetails[0].cardHoldername" readonly> -->
+                <h6>{{cardDetails.cardHoldername}}</h6>
               </div>
 
-                  <div class="form-group col-md-12">
+                  <div class="month col-md-12">
                     <label for="month">Month (MM)</label>
-                    <h6>{{cardDetails[0].cardmonth}}</h6>
-                    <!-- <select id="month" class="form-control payment-input" [(ngModel)]="cardDetails[0].cardmonth" aria-readonly="true">
-
-                    </select> -->
+                    <h6>{{cardDetails.cardmonth}}</h6>
                   </div>
-
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-4">
               <div class="row">
-              <div class="form-group col-sm-8">
-                <label for="cardNumber">Card number</label>
-                <!-- <input type="text" class="form-control payment-input" id="cardNumber" name="cardNumber" [(ngModel)]="cardDetails[0].cardnumbertotal" readonly> -->
-                <h6>{{cardDetails[0].cardnumbertotal}}</h6>
+              <div class="col-sm-8">
+                <label for="cardNumber">Card number </label>
+                <h6>XXXX-XXXX-XXXX-{{cardNumberdigts}}</h6>
               </div>
-              <div class="form-group col-sm-4">
+              <div class="col-sm-4">
                   <label for="cvv">CVV</label>
-                  <h6>{{cardDetails[0].cvvNumber}}</h6>
-                  <!-- <input type="text" class="form-control payment-input" name="cvv" [(ngModel)]="cardDetails[0].cvvNumber" id="cvv" placeholder="123" disabled> -->
+                  <h6>***</h6>
                 </div>
-
-                <div class="form-group col-sm-12">
+                <div class="col-sm-12">
                   <label for="year">Year (YYYY)</label>
-                  <h6>{{cardDetails[0].cardyear}}</h6>
-                  <!-- <select id="year" class="form-control payment-input" [(ngModel)]="cardDetails[0].cardyear" disabled>
-                    <option selected>2020</option>
-                  </select> -->
-
+                  <h6>{{cardDetails.cardyear}}</h6>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-2"></div>
-
-        <div class="col-md-2 plan_detail_box">
+        <!-- <div class="col-md-2"></div> -->
+        <div class="col-md-3 plan_detail_box">
           <div class=" ">
             <h4 class="select_label">Subscrption Details</h4>
             <div class=" ">
               <div class=" ">
-                <h6 class="plan_label">Plan   <span class="plan">  {{selected_plans.planName.slice(4)}}</span> <span class="backbtn" [routerLink]="['/activation/payment/chooseplan']">Change plan</span> </h6>
+                <h6 class="plan_label">Plan   <span class="plan">  {{name}}</span> <span class="backbtn" [routerLink]="['/activation/payment/chooseplan']">Change plan</span> </h6>
               </div>
               <div class="period">
                 <p>Billing Period : Annual</p>
@@ -75,14 +63,16 @@
           </div>
         </div>
         <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
         <div class="col-md-10" class="agreecheckbox">
             <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()"><span>   I agree with the terms of service and the <a href="">privacy policy</a></span>
           </div>
-           <div class=" col-md-4" >
-              <button class="btn btn-submit pull-right" [disabled]="isdisable">Buy Now</button>
+        <div class="col-md-3"></div>
+
+           <div class=" col-md-2" >
+              <button class="btn buybtn" (click)="buyProductPlan()" [disabled]="isdiable">Buy Now</button>
             </div>
-      </form>
+          </div>
+      <!-- </form> -->
 
   </div>
 </div>

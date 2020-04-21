@@ -1,91 +1,52 @@
-<div class="login-body">
+ <div class="container-fluid">
+        <div class="row">
+            <div id="particles-js"></div>
+            <div class="col-sm-4">
+                <img class="login-bg" src="assets/images/loginimage.png">
+            </div>
+          <div class="col-md-4"></div>
+            <div class="col-md-3">
+                <div class="brand">
+                    <img src="assets/images/logo_img.png">
+                </div>
+                <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login_form">
+                    
+                    <div class="form-group col-sm-12 inner-addon left-addon">
+                        <img src="assets/images/username_icon.png" class="userIcon">
+                        <input type="text" formControlName="username" placeholder="Enter User Name" class="form-control userinput"
+                          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                          <div *ngIf="f.username.errors.required">Username is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-12 inner-addon left-addon right-addon">
+                          <img src="assets/images/password_icon.png" class="pswIcon">
+                          <span (click)="toggle()" class="input-group-add pwd-class pull-right"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
 
-  <div class="container-fluid">
-    <div class="row" style="margin: auto">
-      <div class="col-6 d-flex">
-        <div class="col-md-6 offset-sm-1 col-sm-8 offset-sm-1 login-box">
-          <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login_form">
-            <div class="form-header text-center">
-                <h5>Welcome !</h5>
-                <label  class="have_acc">Don't have an account&#63;</label><a (click)="requestDemo()" class="demo_req">Sign up</a>
+                          <input [type]="(show==true) ? 'password' : 'text'" formControlName="password" #password class="form-control pswinput" placeholder="Enter Password"
+                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required/>
+                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                          </div>
+                        </div>
 
+                        <div class="form-group col-sm-12">
+                            <a [routerLink]="['/user/forgotpassword']" class="for_pass">Forgot Password&#63;</a>
+                          </div>
+                    
+                    <div class="col-sm-12">
+                    <button class="btn btn-primary login-btn" type="submit" id="btn">Sign in</button>
+                </div>
+                <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
+                    <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
+                  </div>
+                </form>
+                <div class="form-header text-center col-sm-12 signup">
+                    <label  class="have_acc col-sm-12">Don't have an account&#63;</label>
+                    <button (click)="requestDemo()" class="signupbtn btn btn-primary">Register</button>
+    
+                </div>
             </div>
-            <div class="form-group">
-              <label for="username">Email</label>
-              <input type="text" formControlName="username" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                <div *ngIf="f.username.errors.required">Username is required</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-             
-              <input type="password" formControlName="password" #password class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.password.errors.required">Password is required</div>
-              </div>
-            </div>
-            <!-- <div class="form-group">
-              <input type="checkbox" name="checkbox" #checkbox />&nbsp;
-              <small class="text-muted">Show Password</small>
-            </div> -->
-            <div class="form-group">
-              <input type="checkbox" class="save_cre" formControlName="rememberme" #rememberme class="form-controlcheck" />&nbsp;
-              <small class="text-muted">Show Password</small>
-              <a [routerLink]="['/user/forgotpassword']" class="for_pass float-right">Forgot Password&#63;</a>
-            </div>
-            <div class="form-group">
-              <button [disabled]="loading" class="hoverable btn-block raised button btn btn-hero-primary btn-signin">
-                <div class="anim"></div> Sign in
-              </button>
-              <img *ngIf="loading"
-                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            </div>
-
-            <!-- <div class="form-group row">
-              <div class="col-6 text-left">
-                <a [routerLink]="['/home/user/register']" class="reg-link"> Create Account
-                </a>
-              </div>
-              <div class="col-6 text-right">
-                <a [routerLink]="['/home/user/forgotpassword']" class="forgot-link">Forgot Password</a>
-              </div>
-            </div> -->
-            <div style="overflow-wrap: break-word;">
-              <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
-            </div>
-
-            <div class="form-group row grp-buttons">
-            
-              <label class="col-12 text-center">or Login through</label>
-              <br>
-              
-              <div class="col-6 text-center">
-                 <!-- <button type="button" class="btn-buttons" a href="http://localhost:9797/oauth2/authorize-client/google">
-                  <img src="assets/login icons/google.svg" class="buuton-icons">Google
-                </button>  -->
-                <a class="btn-buttons" href="https://kube.aiotaldomain.com:9090/api/socialLogin?authProvider=google&redirectPath=http://10.11.0.82:4200/">
-                  <img src="assets/login icons/google.svg" class="buuton-icons"/>Google</a> 
-              </div>
-              <div class="col-6 text-center" >
-                <!-- <button type="button" class="btn-buttons" (click)="azureLogin()">
-                  <img src="assets/login icons/office.svg" class="buuton-icons"><label >Office 365</label>
-                </button> -->
-                <a class="btn-buttons" href="https://10.11.0.82:9090/api/socialLogin?authProvider=azure&redirectPath=http://localhost:4200/#/user">
-                  <img src="assets/login icons/office.svg" class="buuton-icons"/>Office</a> 
-              </div>
-            </div>
-
-          </form>
         </div>
-      </div>
-      <div class="col-6">
-        <div class="login_image">
-          <img src="assets/ezbot-real-page.png">
-        </div>
-      </div>
+      
     </div>
-  </div>
-</div>

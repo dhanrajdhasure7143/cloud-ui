@@ -24,6 +24,7 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
 import { SearchPipe } from './custom_pipe/searchpipe';
 import { ModalModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NotifierModule, NotifierService } from "angular-notifier";
 
 
 @NgModule({
@@ -53,7 +54,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     Ng2TelInputModule,
     ModalModule.forRoot(),
     TabsModule.forRoot(),
+    NotifierModule
   ],
+  providers: [NotifierService],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent],
   entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent]
 })

@@ -202,7 +202,7 @@ th,td{
     display: block !important;
     position: relative;
     color: white !important;
-    z-index: 1;
+    z-index: 1000;
     // cursor:none;
 }
 // .deletconfm{}
@@ -277,4 +277,12 @@ th,td{
 }
 label{
     color: black;
+}
+.noticationheading{
+    font-weight: bold;
+    margin-top: 8px ;
+    float:left;
+}
+.notificatnmsgs{
+    margin-top: 20px;
 }

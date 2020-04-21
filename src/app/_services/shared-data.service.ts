@@ -6,11 +6,9 @@ import { BehaviorSubject, throwError, Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedDataService {
- loggedinUserData = new BehaviorSubject<any>(null);
+ public loggedinUserData = new BehaviorSubject<any>(null);
  loggedinUserFirstLetter = new BehaviorSubject<any>(null);
 
-  constructor() {
-  }
   public getLoggedinUserData() {
     return this.loggedinUserData.asObservable();
   }

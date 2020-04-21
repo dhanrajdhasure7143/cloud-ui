@@ -5,8 +5,8 @@ import { APP_CONFIG } from './../app.config';
 import { FirstloginService } from './@providers/firstlogin.service';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
-import  countries  from './../../assets/jsons/countries.json'
-
+import  countries  from './../../assets/jsons/countries.json';
+import { Particles } from '../_models/particlesjs';
 
 @Component({
   selector: 'app-firstlogin',
@@ -27,14 +27,18 @@ export class FirstloginComponent implements OnInit {
   selectedvalue: string = '';
   college: boolean = true;
   submitflag:boolean=false;
+  public show:boolean=true;
  
-  constructor(@Inject(APP_CONFIG) private config, private router: Router, private service: FirstloginService,private route: ActivatedRoute) {
+  constructor(@Inject(APP_CONFIG) private config, private router: Router, 
+              private service: FirstloginService,
+              private route: ActivatedRoute,
+              private particles :Particles,) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
       
       var token=params['token']
       this.decodedToken = Base64.decode(token)
-      console.log("decoded token = "+this.decodedToken);
+      // console.log("decoded token = "+this.decodedToken);
      this.service.verifyToken(token).subscribe(response=>{this.onSuccessOfVerifyToken(response),err=>{
       
        
@@ -54,6 +58,7 @@ export class FirstloginComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.particles.getParticles();
     this.getCountries();
     this.onChangeDepartment(this.departments);
     this.model = new User();
@@ -76,7 +81,6 @@ export class FirstloginComponent implements OnInit {
   onChangeDepartment(selectedvalue) {
     this.college = false
     this.service.getAllDepartments().subscribe(response=> {
-      console.log(response);
       this.departments = response;
     })
     if(selectedvalue == "others"){
@@ -87,14 +91,11 @@ export class FirstloginComponent implements OnInit {
     this.model.country = this.countryInfo[countryValue].CountryName;
     
     this.stateInfo=this.countryInfo[countryValue].States;
-    console.log("country name======", this.countryInfo[countryValue].CountryName)
     //this.cityInfo=this.stateInfo[0].Cities;
-    console.log(this.cityInfo);
   }
 
   onChangeState(stateValue) {
     this.cityInfo=this.stateInfo[stateValue].Cities;
-    console.log(this.stateInfo[stateValue].Cities);
   }
   onSuccessOfVerifyToken(response: any) {
     if(response){
@@ -115,7 +116,6 @@ export class FirstloginComponent implements OnInit {
     }
 
     ondepartment(event){
-      console.log("event------>",event)
 
     }
   
@@ -128,7 +128,6 @@ export class FirstloginComponent implements OnInit {
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
     //userDetails.department = this.model.department[0];
-    console.log("User register details------- ", userDetails)
     this.service.registerUser(userDetails).subscribe(res => {
       sessionStorage.clear();
       localStorage.clear();
@@ -159,16 +158,17 @@ export class FirstloginComponent implements OnInit {
     location.href = this.config.portfolioSite;
   }
   onKeydown(event){
-    console.log(event.key);
     
     let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
     let temp =numArray.includes(event.key); //gives true or false
    if(!temp){
     event.preventDefault();
-   }
-    
-   
-   
-    
+   } 
+  }
+  toggle() {
+    this.show = !this.show;
+  }
+  resetForm() {
+    this.model = new User();
   }
 }
