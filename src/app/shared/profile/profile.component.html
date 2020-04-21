@@ -192,7 +192,7 @@
                                       <td>{{sdata.planId}}</td>
                                       <td>{{sdata.planEntity.amount}}</td>
                                       <td>{{sdata.status}}</td>
-                                      <td  class="deleticon"><span><img src="assets/images/eyeIcon.svg" alt=""> </span><span (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                      <td  class="deleticon"><span (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                         <div id="myid" [ngClass]="selectedIndex == i?'isdelet':''" class="deletconfm">
                                           <div class="container-fluid deletefrm">
                                         <h5 class="pull-left">Conformation</h5>
@@ -235,8 +235,8 @@
                                   </thead>
                                   <tbody >
                                     <tr *ngFor="let invdata of invoicedata | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
-                                      <td>{{invdata.invoiceid}}</td>
-                                      <td>{{invdata.subscription}}</td>
+                                      <td>{{invdata.invoiceNumber}}</td>
+                                      <td>{{invdata.subscriptionId}}</td>
                                       <td>{{invdata.amount}}.00 USD</td>
                                       <td>$ {{invdata.refund}}</td>
                                         <td>{{invdata.duedate}}</td>
@@ -523,3 +523,47 @@
             </div>
           </div>
         </ng-template>
+
+        <ng-template #detailstemplate >
+          <div class="modal">
+            <div class="container">
+              <div class="modal-body row">
+                  <div class="col-md-12">
+                      <h4 class="modal-title pull-left">Subscription Details</h4>
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div >
+                  <div class="col-md-12 infocheck">
+                    <label for="subscriptionid">Subscription ID : </label>
+                    <input type="text" name="subscriptionid" #subscriptionid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.subscriptionId"/>     
+                              </div>
+                  <div class="col-md-12 infocheck">
+                    <label for="product">Product : </label>
+                    <input type="text" name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.name"/>     
+ 
+                    </div>
+                    <div class="col-md-12 infocheck">
+                      <label for="planid">Plan ID : </label>
+                      <input type="text" name="planid" #planid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.planId"/>     
+   
+                      </div>
+                      <div class="col-md-12 infocheck">
+                        <label for="billingaccount">Billing Account : </label>
+                        <input type="text" name="billingaccount" #billingaccount="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.billingAccount"/>     
+     
+                        </div>
+   
+                        <div class="col-md-12 infocheck">
+                          <label for="status">Status : </label>
+                          <input type="text" name="status" #status="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.status"/>     
+       
+                          </div>
+   
+                  <div class="col-md-12 submitbtn">
+                    <button class="btn btn-primary" (click)="infoModelSubmit()">Change</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>

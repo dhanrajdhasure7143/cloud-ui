@@ -49,6 +49,7 @@ export class ProfileComponent implements OnInit{
     public feedbackbox:any;
     public paymentMode:any;
     public invoicedata:any[];
+  subscribeddata: any;
 
     constructor( private sharedData: SharedDataService,
                 private firstloginservice: FirstloginService,
@@ -57,7 +58,8 @@ export class ProfileComponent implements OnInit{
 
   ngOnInit() {  
     this.countryInfo = countries.Countries;
-    this.firstloginservice.listofsubscriptions().subscribe(response => {this.tableData = response})
+    this.firstloginservice.listofsubscriptions().subscribe(response => {this.tableData = response});
+    this.firstloginservice.listofinvoices().subscribe(response => {this.invoicedata = response.data});
  
     this.userManagement=[{"id":"256426","firstName":"Ranjith","lastName":"sigiri","Designation":"HR","Organisation":"EpSoft","Department":"HR","Product":"Gib","Roles":"Admin"},
                     {"id":"15427","firstName":"suresh","lastName":"yenkam","Designation":"HR","Organisation":"Monile APP","Department":"HR","Product":"Ezbot","Roles":"user"},
@@ -74,10 +76,10 @@ this.paymentMode=[{"cardType":"Master Card","cardnumber":"xxxx-xxxx-xxxx-1234","
                 {"cardType":"Rupay Card","cardnumber":"xxxx-xxxx-xxxx-7892","select":"Set Default","expairydate":"11/24","createddate":"30/12/2019"},
                 {"cardType":"American Express Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Set Default","expairydate":"10/22","createddate":"08/04/2019"},]
 
-this.invoicedata=[{"invoiceid":"234567","subscription":"sub-5642d4dd","amount":"200","refund":"50","duedate":"20/04/2020","status":"Paid",},
-                  {"invoiceid":"231247","subscription":"sub-56435dh2","amount":"300","refund":"200","duedate":"30/04/2020","status":"Paid",},
-                  {"invoiceid":"128759","subscription":"sub-5864edh8","amount":"150","refund":"100","duedate":"15/05/2020","status":"Paid",},
-                  {"invoiceid":"897456","subscription":"sub-2536dn4m","amount":"450","refund":"0","duedate":"20/07/2021","status":"Unpaid",}]
+// this.invoicedata=[{"invoiceid":"234567","subscription":"sub-5642d4dd","amount":"200","refund":"50","duedate":"20/04/2020","status":"Paid",},
+//                   {"invoiceid":"231247","subscription":"sub-56435dh2","amount":"300","refund":"200","duedate":"30/04/2020","status":"Paid",},
+//                   {"invoiceid":"128759","subscription":"sub-5864edh8","amount":"150","refund":"100","duedate":"15/05/2020","status":"Paid",},
+//                   {"invoiceid":"897456","subscription":"sub-2536dn4m","amount":"450","refund":"0","duedate":"20/07/2021","status":"Unpaid",}]
 
 
 this.formOne =[{
@@ -181,6 +183,17 @@ onChangeDepartment(selectedvalue) {
 //   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
   
   }
+
+  subscriptiondata(data,index,template){
+    document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+  this.subscribeddata = data;
+      this.modalRef = this.modalService.show(template)
+  
+    console.log("index",index);
+    this.selectedIndex=index;
+  //   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
+    
+    }
 
   infoModelSubmit(){
     // console.log("pricecheckbox",this.pricecheckbox);
