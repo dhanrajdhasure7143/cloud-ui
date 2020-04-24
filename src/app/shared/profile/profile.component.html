@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="form-group col-sm-3">
                                           <label for="company">Company</label>
-                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company Name" maxlength="25" required alphabetOnly 
+                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly 
                                           [ngClass]="{ 'is-invalid': ((company.invalid && updateUser.submitted) || (company.errors && company.touched) ) }" />
                                           <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
                                           class='fa fa-info-circle errspan'>Job Title is required </span> 
@@ -57,15 +57,17 @@
                           
                                          <div class=" form-group col-md-3 ">
                                           <label for="Department">Department</label>
-                                          <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="formOne.department" [ngModelOptions]="{standalone: true}">
-                                            <option hidden disabled>Select Department</option>
+                                          <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="this.userDepartment"[ngModelOptions]="{standalone: true}">
+                                            <option  [selected]=true >Select</option>
+                                            <option *ngFor="let department of listOfDepartments"  [value]="department">{{department}}</option>
+                                            <!-- <option hidden disabled>Select Department</option>
                                             <option value="HR">HR</option>
                                             <option value="development">Development</option>
                                             <option value="finance">Finance</option> 
                                             <option value="infra">Infra</option>
                                             <option value="testing">Testing</option>
                                             <option value="pmo">PMO</option>
-                                            <option value="others">Others</option>
+                                            <option value="others">Others</option> -->
                                           </select>
 
                                               <div class="form-group col-sm-" *ngIf="addDepartment">
@@ -95,7 +97,7 @@
                                                       name="passwd" 
                                                       #passwd="ngModel" 
                                                       class="form-control botmbordr" 
-                                                      [(ngModel)]="passrd"
+                                                      [(ngModel)]="formOne.password"
                                                       placeholder="Enter Password"                  
                                                       minlength="10"
                                                       autocomplete="new-password"
@@ -109,7 +111,7 @@
                                                 </span>
                                               </div>
                                                              
-                                          <!-- <div class="form-group col-sm-3">
+                                          <div class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
                                                   <div>
                                                     <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
@@ -119,9 +121,9 @@
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'>Phone Number is required </span>
                                                 </div>
-                                                </div> -->
+                                                </div> 
 
-                                                <div class="form-group col-sm-3">
+                                                <!-- <div class="form-group col-sm-3">
                                                   <label for="phoneNumber">Phone</label>
                                                   <input type="number" name="phoneNumber" #phoneNumber="ngModel" minlength="8" class="form-control botmbordr numberInput" [(ngModel)]="formOne.phoneNumber" placeholder="Enter Phone Number" maxlength="25" required 
                                                   [ngClass]="{ 'is-invalid': ((phoneNumber.invalid && updateUser.submitted) || (phoneNumber.errors && phoneNumber.touched) ) }" />
@@ -129,10 +131,10 @@
                                                   class='fa fa-info-circle errspan'>Phone Number is required </span>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                </div>
+                                                </div> -->
                                     <div class="form col-sm-3">
                                         <label></label>
-                                        <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid || showErr">Update/Save</button>
+                                        <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid || showErr">Save</button>
                                     </div>
                                 </div>
                             </form>

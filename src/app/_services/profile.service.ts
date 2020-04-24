@@ -23,6 +23,11 @@ export class ProfileService {
   listofinvoices() : Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/invoices')
   }
-
+  getUserDetails(username):Observable<any>{
+    return this.http.get<any>('/api/user/details?userId='+username, httpOptions)
+  }
+  getDepartments():Observable<any>{
+    return this.http.get<any>('/api/user/departments')
+  }
 
 }
