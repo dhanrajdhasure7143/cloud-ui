@@ -34,7 +34,7 @@ export class PlatformComponent implements OnInit {
         });
     
     this.dataArr = [
-      {"id":"Gib", "img":"assets/images/2.0.svg", "title":"Active Free Tier","isvalue":1,},
+      {"id":"2.0", "img":"assets/images/2.0.svg", "title":"Active Free Tier","isvalue":1,},
       {"id":"ezbot", "img":"assets/images/Ezbot.svg", "title":"Upgrade","expirytime":"29","isvalue":0,},
       {"id":"ezflow", "img":"assets/images/ezflow.svg", "title":"Upgrade","expirytime":"20","isvalue":0,},
     ];

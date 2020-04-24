@@ -1,0 +1,50 @@
+<div class="container-fluid">
+        <div class="row">
+            <div id="particles-js"></div>
+            <div class="col-sm-4">
+                <img class="login-bg" src="assets/images/loginimage.png">
+            </div>
+          <div class="col-md-3"></div>
+            <div class="col-md-4">
+                    <div class="brand">
+                            <img src="assets/images/logo_img.png">
+                        </div>
+                        <!-- <h3>Start free tier</h3> -->
+                <form *ngIf='!isresend' autocomplete="off" #creataccount="ngForm" (ngSubmit)="!creataccount.invalid && creat_account()">
+                      <div class="form-group inner-addon left-addon">
+                            <img src="assets/images/registration/mail.svg" class="icon">
+                            <input type="text" name="email" #email="ngModel" class="form-control emailInput" [(ngModel)]="emailId"
+                              pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Enter Email Address"
+                              [ngClass]="{ 'is-invalid': ((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) }" />
+                            <span *ngIf="((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) "
+                              class='fa fa-info-circle errspan'>
+                              <span *ngIf="email.errors.required">Email is required</span>
+                              <span *ngIf="email.errors.pattern">Enter valid email address</span>
+                            </span>
+                          </div>
+                          <div class="col-md-12" class="agreecheckbox">
+                                <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()"><span>   I agree with <a [routerLink]="['/terms']" target="_blank" class='terms_condtion'>Terms & Conditions</a> <a [routerLink]="['/privacy']" target="_blank">Privacy Policy</a></span>
+                              </div>
+                          <div class="form-group col-sm-12">
+                              <button class="hoverable button btn btn-primary creataccnt-btn" [disabled]='isdisable'>Creat Account</button>
+                          </div>
+                          <div class="form-group col-sm-12">
+                                <a [routerLink]="['/']" class="haveaccount">Already have an account ?</a>
+                              </div>
+                <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
+                    <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
+                    </div>
+                </form>
+                <div *ngIf='isresend' class='confirmationmail'>
+                    <h4>Thanks for choosing EIAP</h4>
+                    <p>We have sent activation email to <b>{{userId}}</b></p>
+                    <p>Please check your inbox and follow the link to complete your registration.</p>
+                    <p>If you have any questions, please <a href="https://www.epsoftinc.com/contact-us/" target="_blank">Contact Us</a>.</p>
+                    <p>Do not see email in your inbox?</p>
+                    <button class="hoverable button btn btn-primary resend-btn" [disabled]='isresenddisable' (click)='resendVerificationMail()'>Resend</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    

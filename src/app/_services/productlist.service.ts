@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject} from 'rxjs';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+        })
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -16,11 +21,7 @@ export class ProductlistService {
   getProductPlanes(productId:any): Observable<any[]> {
     return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/plans');
   }
-
-  setCarddetails(cardDetails:any){
-  this.card_details.next(cardDetails);
-  }
-  getCarddetails():Observable<any>{
-    return this.card_details.asObservable();
+  subscribePlan(token,planData){
+    return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData,httpOptions)
   }
 }

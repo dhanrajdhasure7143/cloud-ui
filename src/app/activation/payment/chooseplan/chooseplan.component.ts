@@ -15,30 +15,37 @@ export class ChooseplanComponent implements OnInit {
   public plansList:any;
   public list:any[];
   public productId:any;
+  public error='';
+  public test:any;
   constructor(private productlistservice:ProductlistService, private router: Router,
     ) { }
  
   ngOnInit() {
   this.getAllPlanes();
   }
-
   getAllPlanes(){
     this.productId=localStorage.getItem("selectedproductId"),
     this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
-    this.plansList=this.plansList.reverse();
+      // this.plansList=null;
+      
+      if(this.plansList == undefined || this.plansList == null){
+        this.error='Sorry for inconvenience we will get back to you shortly'
+      }
+      this.plansList=this.plansList.reverse();
+console.log('plans',this.plansList);
+
     this.plansList[0].amount = 0;
     this.plansList[0].term='month';
     this.plansList[1].term='month';
       this.plansList[2].term='year';
+    },error=>{
+      this.error='Sorry for inconvenience we will get back to you shortly'
     });
   }
   selectedPlan(planData){
-    if(planData.nickName =="EZBot Freetrial" || planData.nickName =="EZFlow Freetrial"){
+    if(planData.nickName =="Free tier"){
       alert("Free Tier");
-    }else if(planData.nickName == 'Plan C'){
-     
-    }
-    else{
+    }else{
     localStorage.setItem('selectedplan',planData.nickName);
     this.router.navigate(['/activation/payment/details']);
     }

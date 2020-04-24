@@ -1,0 +1,90 @@
+
+.login-bg{
+    width: 700px;
+  }
+  .emailInput{
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+    height: 40px !important;
+    border-radius: 0px !important;
+    width: 70%;
+  }
+  
+  .inner-addon { 
+    position: relative; 
+  }
+  .inner-addon .icon{
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+  width: 40px;
+  }
+  .left-addon input  { padding-left:  40px; }
+  
+  .brand{
+    margin-top: 150px;
+  }
+  .brand{
+    margin-bottom: 20px;
+  }
+  .brand img{
+    width: 180px;
+  }
+  
+  .errordiv{
+    margin-top: 10px;
+  }
+  .haveaccount{
+    color: #0061cf !important;
+    margin-top: 20px;
+    font-size: 15px;
+  }
+  .creataccnt-btn{
+    margin-left: 50%;
+    width: 120px !important;
+    border-radius: 20px;
+    font-size: 14px;
+    height: 35px;
+    margin-top: 20px;
+  }
+  .resend-btn{
+    width: 120px !important;
+    border-radius: 20px;
+    font-size: 14px;
+    height: 35px;
+  }
+ 
+  #particles-js {
+    position: absolute;
+    z-index:0;
+    width: 50%;
+    height: 620px;
+    background-color: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .agreecheckbox input{
+    height: 10px;
+  }
+  .agreecheckbox span{
+    font-size: 11px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+  }
+  .terms_condtion{
+    padding: 0px 8px;
+  }
+  .agreecheckbox a{
+    text-decoration-line: underline;
+  }
+  .confirmationmail p{
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  .errordiv{
+    width: 80%;
+  }
+  
+  
+  

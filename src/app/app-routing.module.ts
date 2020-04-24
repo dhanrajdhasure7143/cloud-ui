@@ -7,6 +7,10 @@ const routes: Routes = [{
   path: 'activation',
   loadChildren: './activation/activation.module#ActivationModule',
   canActivate: [AuthGuard]
+},
+{
+  path: 'shared',
+  loadChildren: './shared/shared.module#SharedModule',
 }, {
   path: 'home',
   loadChildren: './home/home.module#HomeModule'

@@ -3,41 +3,35 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-                <h2 id="planHeading">Based on Plan Features get Enabled</h2>
+                <h3 id="planHeading">Based on Plan Features get Enabled</h3>
                 <h4 id="ctr">Choose the right one for your valuable Business</h4>
         </div>
+        <div class="col-md-12 errordiv" *ngIf='error'>
+                <h2>{{error}}</h2>
+            </div>
+        <span *ngIf='!error' class="col-md-12 row">
         <div class="col-md-3 plansBox" *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
                 <h4><span id="planName"><b>{{planlist.nickName}}</b></span> <span *ngIf="!planlist.active" class="current-plan">Current Plan</span></h4>
-                <h5 class="processes"><i class="fa fa-check-circle" aria-hidden="true"></i><span>Process Intelligence
-                        <label *ngIf="planlist.nickName =='EZBot Freetrial'|| planlist.nickName =='Plan A'">Limited</label></span>
-                    </h5>
-                <h5 class="processes"><i class="fa fa-check-circle" aria-hidden="true"></i><span>Business Process Studio
-                    <label *ngIf="planlist.nickName =='EZBot Freetrial'|| planlist.nickName =='Plan A'">Limited</label></span></h5>
-                <h5 class="processes"><i class="fa fa-check-circle" aria-hidden="true"></i><span>Service Orchestration
-                    <label *ngIf="planlist.nickName =='EZBot Freetrial'|| planlist.nickName =='Plan A' || planlist.nickName =='Plan B'">Limited</label></span>
-                    </h5>
-                <h5 class="processes"><i *ngIf="planlist.freeTrail" class="fa fa-times-circle" aria-hidden="true"></i>
-                    <i *ngIf="!planlist.freeTrail" class="fa fa-check-circle" aria-hidden="true"></i>
-                    Artificial Intelligence
-                    </h5>
-                <h5 [hidden]="planlist.nickName =='Plan A'" class="processes"><i *ngIf="planlist.freeTrail"  class="fa fa-times-circle" aria-hidden="true"></i>
-                    <i *ngIf="!planlist.freeTrail"  class="fa fa-check-circle" aria-hidden="true"></i>
-                    Live Support
-                 </h5>
-
-                     <h5 *ngIf="planlist.nickName =='Plan A'" class="processes"><i  class="fa fa-times-circle" aria-hidden="true"></i>
-                        Live Support
-                     </h5>
+                <h6 class="processes" *ngFor='let value of planlist.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
+                        <label *ngIf="value.limited">Limited</label></span>
+                    </h6>
 
 
-                <h4 *ngIf="planlist.nickName !='Plan C'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h4>
+                <h5 *ngIf="planlist.nickName !='Plan C'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
                 <button *ngIf="planlist.nickName !='Plan C'" [disabled]='!planlist.active' class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
 
                 <h5 *ngIf="planlist.nickName =='Plan C'" class="enterprice">Enterprise Solution</h5>
-                <a href="http://10.11.0.82:9098/pages/Contact.html" target="_blank"><button *ngIf="planlist.nickName =='Plan C'" class="btn btn-primary selectplanbtn">Contact Us</button></a>
+                <a href="https://www.epsoftinc.com/contact-us/" target="_blank"><button *ngIf="planlist.nickName =='Plan C'" class="btn btn-primary selectplanbtn">Contact Us</button></a>
+            </div>
+        </span>
+
+            <div class="col-md-12 row conditions">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                    <span class='pull-right'> <a class='terms' [routerLink]="['/terms']" target="_blank">Terms & Conditions</a><a class="policy" [routerLink]="['/privacy']" target="_blank">Privacy Policy</a> </span>
+                 </div>
             </div>
     </div>
 </div>
-
                
        
