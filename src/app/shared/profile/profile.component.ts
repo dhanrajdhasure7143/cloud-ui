@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { NotifierService } from 'angular-notifier';
+import { Base64 } from 'js-base64';
 
 @Component({
     selector: 'app-profile',
@@ -32,7 +33,6 @@ export class ProfileComponent implements OnInit{
     public departments:any[];
     public password:any;
     public show:  Boolean = true;
-    public passrd:any=12345678945;
     public userManagement:any[];
     public selectedIndex:number;
     public deletCardIndex:number;
@@ -47,7 +47,12 @@ export class ProfileComponent implements OnInit{
     public nitificationList:any;
     public dataid:any;
     public userId:any;
-    subscribeddata:any
+    subscribeddata:any;
+    public userdata:any;
+  public useremail:any;
+  department: any;
+  userDepartment:any;
+  listOfDepartments:  any = [];
     constructor( private sharedData: SharedDataService,
                 private firstloginservice: FirstloginService,
                 private modalService: BsModalService,
@@ -56,9 +61,19 @@ export class ProfileComponent implements OnInit{
                 ) { }
 
   ngOnInit() {
+    
+      
+    
+    this.profileservice.getDepartments().subscribe(resp => 
+      {
+        this.department = resp,
+        this.department.forEach(element => {
+        this.listOfDepartments.push(element)
+              });})
     this.getAllNotifications();
-    this.getAllSubscrptions();
-    this.getAllInvoices();
+   this.getAllSubscrptions();
+  this.getAllInvoices();
+  
     this.countryInfo = countries.Countries;
 
     this.userManagement=[{"id":"256426","firstName":"Ranjith","lastName":"sigiri","Designation":"HR","Organisation":"EpSoft","Department":"HR","Product":"Gib","Roles":"Admin"},
@@ -77,9 +92,9 @@ this.paymentMode=[{"cardType":"Master Card","cardnumber":"xxxx-xxxx-xxxx-1234","
 }
 
   ngOnChanges(){
-    if(this.isMyaccount == true){
-      this.userDetails();
-    }
+    if(this.isMyaccount== true){
+    this.userDetails();
+  }
       this.getAllNotifications();
       this.getAllSubscrptions();
     this.getAllInvoices();
@@ -93,15 +108,21 @@ getAllNotifications(){
     })
 }
   userDetails(){
-    this.formOne ={
-      firstName :localStorage.getItem("firstName"),
-      lastName :localStorage.getItem("lastName"),
-      designation :localStorage.getItem("designation"),
-      userId:localStorage.getItem("userName"),
-      company:localStorage.getItem('company'),
-      department:localStorage.getItem('department'),
-      country :localStorage.getItem("country"),
-      phoneNumber:localStorage.getItem("phoneNumber")};
+    this.useremail=localStorage.getItem("userName");
+    this.profileservice.getUserDetails(this.useremail).subscribe(data=>{this.formOne=data
+       this.userDepartment=data.department;
+  
+ 
+    })
+    // this.formOne ={
+    //   firstName :localStorage.getItem("firstName"),
+    //   lastName :localStorage.getItem("lastName"),
+    //   designation :localStorage.getItem("designation"),
+    //   userId:localStorage.getItem("userName"),
+    //   company:localStorage.getItem('company'),
+    //   department:localStorage.getItem('department'),
+    //   country :localStorage.getItem("country"),
+    //   phoneNumber:localStorage.getItem("phoneNumber")};
   }
   loopTrackBy(index, term){
     return index;
@@ -133,8 +154,8 @@ onChangeDepartment(selectedvalue) {
   }
 
   updateAccount(form){
-    this.firstloginservice.updateUser(this.formOne).subscribe(data => {this.checkSuccessCallback(data)
-      this.notifier.show({
+    this.firstloginservice.updateUser(this.formOne).subscribe(data => {
+            this.notifier.show({
         type: "success",
         message: "Updated successfully!",
         id: "123" 
@@ -143,9 +164,9 @@ onChangeDepartment(selectedvalue) {
     });
    
   }
-  checkSuccessCallback(data:any){
-    localStorage.setItem('formOne',JSON.stringify(this.formOne));
-  }
+  // checkSuccessCallback(data:any){
+  //   localStorage.setItem('formOne',JSON.stringify(this.formOne));
+  // }
 
   selecteddata(data,index,template){
     document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
@@ -153,16 +174,16 @@ onChangeDepartment(selectedvalue) {
     this.selectedIndex=index;
   }
 
-  subscriptiondata(data,index,template){
-    document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
-  this.subscribeddata = data;
-      this.modalRef = this.modalService.show(template)
+  // subscriptiondata(data,index,template){
+  //   document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+  // this.subscribeddata = data;
+  //     this.modalRef = this.modalService.show(template)
   
-    console.log("index",index);
-    this.selectedIndex=index;
-  //   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
+  //   console.log("index",index);
+  //   this.selectedIndex=index;
+  // //   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
     
-    }
+  //   }
 
   infoModelSubmit(){
     this.modalRef.hide();
