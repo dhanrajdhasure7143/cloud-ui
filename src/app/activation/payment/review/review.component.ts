@@ -26,6 +26,8 @@ public iscoupon:boolean=false;
 public couponcode:any;
 public error='';
 public success='';
+public cvvnumber:any;
+public subscriptionDetails:any;
 config = {
   animated: false
 };
@@ -48,7 +50,7 @@ config = {
         this.selected_plans=obj
         if(this.selected_plans.term =="1year"){
           this.selected_plans.term= 'Annual'
-        // }else{
+        }else{
           this.selected_plans.term= 'One Month'
         }
         this.name=this.selected_plans.nickName.slice(4);
@@ -58,22 +60,32 @@ config = {
   }
   EnteredCarddetails(){       
     this.route.params.subscribe(data=>{this.cardData=data
+
       this.cardDetails=JSON.parse(Base64.decode(this.cardData.id));
-          this.cardnumber=this.cardDetails.cardnumbertotal;
-          this.cardNumberdigts=this.cardnumber.toString().split('').slice(12).join('');
-    });
+      console.log("this.cardDetails",this.cardDetails);
+
+          this.cardnumber=this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X')+this.cardDetails.cardnumbertotal.slice(-4);
+          // this.cardNumberdigts=this.cardnumber.toString().split('').slice(12).join('');
+          this.cardNumberdigts=this.cardnumber.match(new RegExp('.{1,4}', 'g')).join('-')
+            console.log("this.cardDetails",this.cardData);
+          this.cvvnumber=this.cardDetails.cvvNumber.replace(new RegExp("[0-9]", "g"), "X")
+        });
   }
   onchangechekbox(){
     this.isdiable=!this.isagree;
   }
   buyProductPlan(template){
-    const paymentToken='tok_1GSfvtGxwuSV2qOkpFn1ifB6'
-    const plandetails={ ip: "1.2.3.4",  items: [  {  planId:"2.0_t12m"}  ]  }
-    // console.log("this.cardDetails",this.cardData);
-    this.productlistservice.subscribePlan(paymentToken,plandetails).subscribe(res=>{
-      console.log("response",res);
-    })
+    // console.log('planslist', this.selected_plans);
+    // console.log("this.cardDetails",this.cardDetails);
+    
+    const paymentToken='tok_1Gcmy0GxwuSV2qOkgRnY0AcQ'
+    const plandetails={ "ip": "1.2.3.4", 
+              "items": [ { "planId":"IAP_t1m"} 
+            ] 
+          };
+    this.productlistservice.subscribePlan(paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
     this.modalRef = this.modalService.show(template,this.config);
+    })
   }
   editCardDetails(){
   this.router.navigate(['/activation/payment/details',this.cardData]);
@@ -82,9 +94,9 @@ config = {
     this.iscoupon=true;
   }
   applyCoupon(){
-    console.log('code',this.couponcode);
+    // console.log('code',this.couponcode);
     // this.selected_plans.amount=100;
-    this.success='Coupon applied';
+    // this.success='Coupon applied';
     // this.error='Enter Valid Coupon';
   }
   privacyPolicy(template){
@@ -92,6 +104,7 @@ config = {
   }
   close_modal(){
     this.modalRef.hide();
+    this.router.navigate(['/activation'])
   }
 
 }

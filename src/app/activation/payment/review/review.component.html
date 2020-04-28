@@ -29,11 +29,11 @@
               <div class="row">
               <div class="col-sm-8">
                 <label for="cardNumber">Card number </label>
-                <h6>XXXX-XXXX-XXXX-{{cardNumberdigts}}</h6>
+                <h6>{{cardNumberdigts}}</h6>
               </div>
               <div class="col-sm-4">
                   <label for="cvv">CVV</label>
-                  <h6>***</h6>
+                  <h6>{{cvvnumber}}</h6>
                 </div>
                 <div class="col-sm-12">
                   <label for="year">Year (YYYY)</label>
@@ -89,7 +89,7 @@
 </div>
 
 <ng-template #template >
-    <div class="modal">
+    <div class="modal modalOne">
       <div class="container">
         <div class="modal-body row">
             <div class="col-md-12">
@@ -98,14 +98,17 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="col-md-12 subheadin">
-              <p>Subscribed Succefully to 2.0</p>
-              <p>Order Id:123455</p>
-              <p>Subscription Id: 1234566</p>
-              <p>Plan A</p>
+            <hr>
+            <div></div>
+            <div class="col-md-12 confirmationmsg">
+              <p>Subscribed Succefully <span>{{productId}} {{selected_plans.nickName}} </span></p>
+              <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
+              <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
+              <p>Amount paid <span>: $ {{selected_plans.amount}}.00</span></p>
+              <p>Period <span>: {{selected_plans.term}}</span></p>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 confirmationmsg">
               <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
             </div>
           </div>

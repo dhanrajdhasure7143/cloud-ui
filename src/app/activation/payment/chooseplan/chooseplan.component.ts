@@ -32,12 +32,26 @@ export class ChooseplanComponent implements OnInit {
         this.error='Sorry for inconvenience we will get back to you shortly'
       }
       this.plansList=this.plansList.reverse();
-console.log('plans',this.plansList);
-
+        for(var i=0; i<this.plansList.length; i++){
+        var features=[];
+        for (let [key, value] of Object.entries(this.plansList[i].features)) {
+          var obj={'name':key,'active':value}
+          features.push(obj)  
+        }
+        this.plansList[i].features=features;
+      }
+      for(var a=0; a<this.plansList[0].features.length-2; a++){
+          this.plansList[0].features[a].limited=true
+      }
+      for(var a=0; a<this.plansList[1].features.length-2; a++){
+        this.plansList[1].features[a].limited=true
+      }
+        this.plansList[2].features[2].limited=true;
+        this.plansList[2].features[3].limited=true;
     this.plansList[0].amount = 0;
     this.plansList[0].term='month';
     this.plansList[1].term='month';
-      this.plansList[2].term='year';
+    this.plansList[2].term='year';
     },error=>{
       this.error='Sorry for inconvenience we will get back to you shortly'
     });

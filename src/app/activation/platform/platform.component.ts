@@ -23,21 +23,24 @@ export class PlatformComponent implements OnInit {
               public userService: UserService,
               private particles :Particles
     ) { }
-  public dataArr:any[];
+  public products:any[]=[];
   public selectedIndex:number;
   public selectedId:any;
   public isenable:boolean=true;
-  public selectedIdValue:number=1;
+  public selectedIdValue:boolean=true;
   ngOnInit() {
     this.particles.getParticles();
     this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
+      this.productslist[1].img="assets/images/2.0.svg";
+      this.productslist[1].freetier=true;
+      // this.productslist[1].expirytime=10;
+      this.products=[this.productslist[1]];
+      if( this.productslist[1].freetier == true){
+        this.productslist[1].title = 'Active Free Tier';
+      }else{
+        this.productslist[1].title = 'Upgrade';
+      }
         });
-    
-    this.dataArr = [
-      {"id":"2.0", "img":"assets/images/2.0.svg", "title":"Active Free Tier","isvalue":1,},
-      {"id":"ezbot", "img":"assets/images/Ezbot.svg", "title":"Upgrade","expirytime":"29","isvalue":0,},
-      {"id":"ezflow", "img":"assets/images/ezflow.svg", "title":"Upgrade","expirytime":"20","isvalue":0,},
-    ];
   }
 
   loopTrackBy(index, term){
@@ -49,7 +52,7 @@ export class PlatformComponent implements OnInit {
     this.selectedIndex=index;
     this.selectedId=selectedData.id;
     localStorage.setItem('selectedproductId',this.selectedId);
-    this.selectedIdValue=selectedData.isvalue
+    this.selectedIdValue=selectedData.freetier;
     this.productId=selectedData.id
   }
   navigateProduct(selectedproduct){

@@ -16,7 +16,6 @@
                         <label *ngIf="value.limited">Limited</label></span>
                     </h6>
 
-
                 <h5 *ngIf="planlist.nickName !='Plan C'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
                 <button *ngIf="planlist.nickName !='Plan C'" [disabled]='!planlist.active' class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
 
