@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit{
     countryInfo :any []= [];
     public addDepartment:boolean=false;
     public departments:any[];
-    public password:any;
+    public password:"any";
     public show:  Boolean = true;
     public userManagement:any[];
     public selectedIndex:number;
@@ -49,10 +49,12 @@ export class ProfileComponent implements OnInit{
     public userId:any;
     subscribeddata:any;
     public userdata:any;
+    public closeFlag:Boolean = false;
   public useremail:any;
   department: any;
   userDepartment:any;
   listOfDepartments:  any = [];
+  delData: any;
     constructor( private sharedData: SharedDataService,
                 private firstloginservice: FirstloginService,
                 private modalService: BsModalService,
@@ -61,18 +63,17 @@ export class ProfileComponent implements OnInit{
                 ) { }
 
   ngOnInit() {
-    
-      
-    
-    this.profileservice.getDepartments().subscribe(resp => 
+        this.profileservice.getDepartments().subscribe(resp => 
       {
         this.department = resp,
         this.department.forEach(element => {
         this.listOfDepartments.push(element)
               });})
+              
     this.getAllNotifications();
    this.getAllSubscrptions();
   this.getAllInvoices();
+  this.getAllPaymentmodes();
   
     this.countryInfo = countries.Countries;
 
@@ -85,19 +86,26 @@ export class ProfileComponent implements OnInit{
                     {"id":"296426","firstName":"swarrop","lastName":"C","Designation":"SE","Organisation":"Aiotal","Department":"HR","Product":"Aiotal","Roles":"User"},
                     {"id":"296426","firstName":"swarrop","lastName":"C","Designation":"SE","Organisation":"Aiotal","Department":"HR","Product":"Aiotal","Roles":"User"}];
 
-this.paymentMode=[{"cardType":"Master Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Default","expairydate":"10/22","createddate":"30/03/2020"},
-                {"cardType":"Visa Card","cardnumber":"xxxx-xxxx-xxxx-4568","select":"Set Default","expairydate":"12/23","createddate":"23/02/2019"},
-                {"cardType":"Rupay Card","cardnumber":"xxxx-xxxx-xxxx-7892","select":"Set Default","expairydate":"11/24","createddate":"30/12/2019"},
-                {"cardType":"American Express Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Set Default","expairydate":"10/22","createddate":"08/04/2019"},]   
+// this.paymentMode=[{"cardType":"Master Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Default","expairydate":"10/22","createddate":"30/03/2020"},
+//                 {"cardType":"Visa Card","cardnumber":"xxxx-xxxx-xxxx-4568","select":"Set Default","expairydate":"12/23","createddate":"23/02/2019"},
+//                 {"cardType":"Rupay Card","cardnumber":"xxxx-xxxx-xxxx-7892","select":"Set Default","expairydate":"11/24","createddate":"30/12/2019"},
+//                 {"cardType":"American Express Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Set Default","expairydate":"10/22","createddate":"08/04/2019"},]   
 }
+  getAllPaymentmodes() {
+ 
+    this.profileservice.listofPaymentModes().subscribe(response => {this.paymentMode = response});
+ 
+  }
 
   ngOnChanges(){
     if(this.isMyaccount== true){
     this.userDetails();
+   
+    
   }
       this.getAllNotifications();
       this.getAllSubscrptions();
-    this.getAllInvoices();
+      this.getAllInvoices();
   }
   
 getAllNotifications(){
@@ -196,13 +204,21 @@ onChangeDepartment(selectedvalue) {
   document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
   }
   deletCard(data,index){
+    this.closeFlag=true;
     this.deletCardIndex=index;
     document.getElementsByClassName("deletconfm")[index].classList.add("isdeletcard")
   }
   confrmDeleteCard(index){
+
+    this.profileservice.deletePaymentMode(index.id).subscribe(data=>{this.delData=data})
+    this.getAllPaymentmodes();
+ 
   }
   cancelDeleteCard(index){
-    document.getElementsByClassName("deletconfm")[index].classList.remove("isdeletcard")
+    this.closeFlag=false;
+    console.log("close index is",index)
+    this.dataid='';
+   // document.getElementsByClassName("deletconfm")[index].classList.remove("isdeletcard")
   }
 
   defaultcardselect(data,index){
@@ -237,5 +253,6 @@ onChangeDepartment(selectedvalue) {
   getAllInvoices(){
     this.profileservice.listofinvoices().subscribe(response => {this.invoicedata = response.data});
   }
+  
 
 }

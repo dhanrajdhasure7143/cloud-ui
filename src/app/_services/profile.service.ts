@@ -29,5 +29,11 @@ export class ProfileService {
   getDepartments():Observable<any>{
     return this.http.get<any>('/api/user/departments')
   }
+  listofPaymentModes():Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
+  }
 
+ deletePaymentMode(paymentMethodId):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods/'+paymentMethodId,httpOptions);
+}
 }
