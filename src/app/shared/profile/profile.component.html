@@ -16,6 +16,33 @@
                         <div>
                             <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
                                 <div class="row">
+                                  <div class="form-group col-sm-3">
+                                    <label for="email">User Name</label>
+                                    <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.userId"
+                                                pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
+                                  
+                                  </div>
+                                  <div class="form-group col-sm-3">
+                                    <label for="passwd">Password</label>
+                                    <span class=" input-group" style="margin-left:0px">
+                                    <input  
+                                          [type]="(show==true) ? 'password' : 'text'" 
+                                          name="passwd" 
+                                          #passwd="ngModel" 
+                                          class="form-control botmbordr" 
+                                          [(ngModel)]="formOne.password"
+                                          placeholder="Enter Password"                  
+                                          minlength="10"
+                                          autocomplete="new-password"
+                                          required
+                                          [ngClass]="{ 'is-invalid': ((passwd.invalid && updateUser.submitted) || (passwd.errors && passwd.touched) ) }" />
+                                          <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span> 
+                                        </span>
+                                          <span *ngIf="((passwd.errors && updateUser.submitted) || (passwd.errors && passwd.touched) || (passwd.errors && passwd.minlength)) " class='fa fa-info-circle errspan'>
+                                          <span *ngIf="passwd.errors.required">Password is required</span>
+                                          <span *ngIf="passwd.errors.minlength">Minimum length should be 10 characters</span>
+                                    </span>
+                                  </div>
                                     <div class="form-group col-sm-3">
                                         <label for="firstName">First Name</label>
                                         <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required alphabetOnly 
@@ -40,12 +67,7 @@
                                             class='fa fa-info-circle errspan'>Job Title is required </span>
                                         </div>
 
-                                        <div class="form-group col-sm-3">
-                                          <label for="email">Email</label>
-                                          <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.userId"
-                                                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
-                                        
-                                        </div>
+                                       
                                         <div class="form-group col-sm-3">
                                           <label for="company">Company</label>
                                           <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly 
@@ -89,27 +111,7 @@
                                                   </select>
                                               </div>
 
-                                              <div class="form-group col-sm-3">
-                                                <label for="passwd">Password</label>
-                                                <span class=" input-group" style="margin-left:0px">
-                                                <input  
-                                                      [type]="(show==true) ? 'password' : 'text'" 
-                                                      name="passwd" 
-                                                      #passwd="ngModel" 
-                                                      class="form-control botmbordr" 
-                                                      [(ngModel)]="formOne.password"
-                                                      placeholder="Enter Password"                  
-                                                      minlength="10"
-                                                      autocomplete="new-password"
-                                                      required
-                                                      [ngClass]="{ 'is-invalid': ((passwd.invalid && updateUser.submitted) || (passwd.errors && passwd.touched) ) }" />
-                                                      <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span> 
-                                                    </span>
-                                                      <span *ngIf="((passwd.errors && updateUser.submitted) || (passwd.errors && passwd.touched) || (passwd.errors && passwd.minlength)) " class='fa fa-info-circle errspan'>
-                                                      <span *ngIf="passwd.errors.required">Password is required</span>
-                                                      <span *ngIf="passwd.errors.minlength">Minimum length should be 10 characters</span>
-                                                </span>
-                                              </div>
+                                             
                                                              
                                           <div class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
@@ -234,29 +236,28 @@
                                     <tr>
                                       <th scope="col" class="cardtype">Card Type</th>
                                       <th scope="col" class="cardtypes">Card</th>
-                                      <th scope="col" class="cardtype">Postal Code</th>
-                                      <th scope="col" class="cardtype">Expairy Date</th>
+                                      <th scope="col" class="cardtype">Expiration Date</th>
                                       <th scope="col" class="cardtype">Created Date</th>
                                       <th scope="col" class="cardtype">Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let cardData of paymentMode | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
-                                      <td>{{cardData.cardType}}</td>
-                                      <td class="cardtable">{{cardData.cardnumber}} <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.select}}</span></td>
-                                      <td>-</td>
-                                      <td>{{cardData.expairydate}}</td>
-                                      <td>{{cardData.createddate}}</td>
+                                      <td>{{cardData.cardBrand}}</td>
+                                      <td class="cardtable">{{cardData.cardLast4}} <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td>
+                                  
+                                      <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
+                                      <td>{{cardData.created | date}}</td>
                                       <td class="deletcard"><span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
                                         
-                                        <div id="delete-card" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
+                                        <div id="delete-card"  *ngIf="closeFlag" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
                                             <div class="container-fluid deletefrm">
                                           <h5 class="pull-left">Conformation</h5>
-                                          <button type="button" class="close " aria-label="Close" (click)="cancelDeleteCard(i)">
-                                              <span aria-hidden="true">&times;</span>
+                                                                 <button type="button" class="close " aria-label="Close" (click)="cancelDeleteCard(i)">
+                                             <span aria-hidden="true">&times;</span>
                                             </button>
-                                          <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
-                                          <button class="pull-left confm" (click)="confrmDeleteCard(i)">Yes</button>
+                                          <p class="pull-left">Are you sure you want to remove the card?</p>
+                                          <button class="pull-left confm" (click)="confrmDeleteCard(cardData)">Yes</button>
                                           <button class="confm pull-left" (click)="cancelDeleteCard(i)">No</button>
                                           </div>
                                           </div>
