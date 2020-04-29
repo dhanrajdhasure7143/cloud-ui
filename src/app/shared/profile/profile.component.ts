@@ -128,6 +128,7 @@ getAllNotifications(){
     return index;
   }
   slideDown(){
+    this.dataid='';
       document.getElementById("foot").classList.add("slide-down");
       document.getElementById("foot").classList.remove("slide-up");
   }

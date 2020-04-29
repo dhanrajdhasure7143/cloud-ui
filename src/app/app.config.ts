@@ -10,6 +10,7 @@ export interface AiotalAppConfig {
   authorizationendpoint: String;
   notificationsendpoint: String;
   Subscriptionendpoint:String;
+  registrationendpoint:string;
 }
 
 export const AppConfig: AiotalAppConfig = {
@@ -19,7 +20,8 @@ export const AppConfig: AiotalAppConfig = {
   authorizationendpoint: 'http://authdev.epsoftinc.in',
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
   notificationsendpoint: 'http://alertsdev.epsoftinc.in',
-  Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in'
+  Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
+  registrationendpoint:'http://10.11.0.82:9091/api',
 };
 
 

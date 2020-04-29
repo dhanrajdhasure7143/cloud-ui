@@ -281,7 +281,7 @@
                                             <div class="form-group">
                                                     <label for="email">Email</label>
                                                     <input type="text" name="email" #email="ngModel" class="form-control" [(ngModel)]="emailId"
-                                                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com"
+                                                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Email address ex: abc@xyz.com"
                                                       [ngClass]="{ 'is-invalid': ((email.invalid && inviteuser.submitted) || (email.errors && email.touched) ) }" />
                                                     <span *ngIf="((email.invalid && inviteuser.submitted) || (email.errors && email.touched) ) "
                                                       class='fa fa-info-circle errspan'>

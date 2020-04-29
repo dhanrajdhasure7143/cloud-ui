@@ -6,8 +6,6 @@ import { Observable, BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class ProductlistService {
-  public card_details =new BehaviorSubject<any>({});
-  public productId=new BehaviorSubject<any>({})
 
   constructor(public http:HttpClient) { }
   getAllProducts(): Observable<any[]> {
@@ -16,11 +14,7 @@ export class ProductlistService {
   getProductPlanes(productId:any): Observable<any[]> {
     return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/plans');
   }
-
-  setCarddetails(cardDetails:any){
-  this.card_details.next(cardDetails);
-  }
-  getCarddetails():Observable<any>{
-    return this.card_details.asObservable();
+  subscribePlan(token,planData){
+    return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData)
   }
 }

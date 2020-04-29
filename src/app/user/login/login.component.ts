@@ -62,13 +62,13 @@ export class LoginComponent implements OnInit {
     });
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    this.checkbox.nativeElement.onchange = () => {
-      if (this.checkbox.nativeElement.checked === true) {
-        this.password.nativeElement.type = 'text';
-      } else {
-        this.password.nativeElement.type = 'password';
-      }
-    };
+    // this.checkbox.nativeElement.onchange = () => {
+    //   if (this.checkbox.nativeElement.checked === true) {
+    //     this.password.nativeElement.type = 'text';
+    //   } else {
+    //     this.password.nativeElement.type = 'password';
+    //   }
+    // };
   }
 
   get f() {
@@ -186,7 +186,8 @@ export class LoginComponent implements OnInit {
   }
 
   requestDemo() {
-    location.href = this.config.portfolioSite;
+    // location.href = this.config.portfolioSite;
+this.router.navigate(['/creataccount'])
   }
 
   googleLogin() {

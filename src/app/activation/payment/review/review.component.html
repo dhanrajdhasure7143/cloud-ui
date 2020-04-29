@@ -5,7 +5,7 @@
       <div class="review-heading">
       <h2 id="" class="plan_label ">You Have Selected Plan    <span class="plan">{{name}}</span></h2>
       <h5 id="paymnt-subheding">Review your Order to proceed payment</h5>
-      <p class="pay_titles">Card Details:<button class="btn" [routerLink]="['/activation/payment/details']"><img src="assets/images/editCard.svg" alt=""></button>
+      <p class="pay_titles">Card Details:<button class="btn" (click)="editCardDetails()"><img src="assets/images/editCard.svg" alt=""></button>
       </p>
   </div>
       <!-- <form  autocomplete="off" class="col-md-12 row carddetail"> -->
@@ -29,19 +29,30 @@
               <div class="row">
               <div class="col-sm-8">
                 <label for="cardNumber">Card number </label>
-                <h6>XXXX-XXXX-XXXX-{{cardNumberdigts}}</h6>
+                <h6>{{cardNumberdigts}}</h6>
               </div>
               <div class="col-sm-4">
                   <label for="cvv">CVV</label>
-                  <h6>***</h6>
+                  <h6>{{cvvnumber}}</h6>
                 </div>
                 <div class="col-sm-12">
                   <label for="year">Year (YYYY)</label>
                   <h6>{{cardDetails.cardyear}}</h6>
                 </div>
+                <div class='col-sm-12 apply-coupon'>
+                    <p *ngIf='!iscoupon' (click)='haveCoupon()'>Have a coupon ?</p>
+                 <span *ngIf='iscoupon' class="row"><input type="text" name='coupon' #coupon='ngModel' [(ngModel)]='couponcode' placeholder="Enter Coupon Code" class='col-sm-6 form-control coupon-input' required>
+                      <button class='btn hoverable applybtn' (click)='applyCoupon()' [disabled] = "coupon.invalid">Apply</button></span>
+                      <div style="overflow-wrap: break-word;" class="errordiv col-md-6">
+                          <span *ngIf="success" class="alert-success text-center coupon_alertsuccess">{{success}}</span>
+                          </div>
+                      <div style="overflow-wrap: break-word;" class="errordiv col-md-6 couponerror">
+                          <span *ngIf="error" class="alert-danger text-center coupon_alert">{{error}}</span>
+                          </div>
+                </div>
             </div>
         </div>
-
+                  
         <!-- <div class="col-md-2"></div> -->
         <div class="col-md-3 plan_detail_box">
           <div class=" ">
@@ -51,7 +62,7 @@
                 <h6 class="plan_label">Plan   <span class="plan">  {{name}}</span> <span class="backbtn" [routerLink]="['/activation/payment/chooseplan']">Change plan</span> </h6>
               </div>
               <div class="period">
-                <p>Billing Period : Annual</p>
+                <p>Billing Period : {{selected_plans.term}}</p>
               </div>
             </div>
 
@@ -64,16 +75,143 @@
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-10" class="agreecheckbox">
-            <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()"><span>   I agree with the terms of service and the <a href="">privacy policy</a></span>
+            <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()"><span>   I agree with the terms of service and the    <a class="policy" (click)='privacyPolicy(privacyPolicytemplate)'>   Privacy Policy</a></span>
           </div>
         <div class="col-md-3"></div>
 
            <div class=" col-md-2" >
-              <button class="btn buybtn" (click)="buyProductPlan()" [disabled]="isdiable">Buy Now</button>
+              <button class="btn buybtn" (click)="buyProductPlan(template)" [disabled]="isdiable">Buy Now</button>
             </div>
           </div>
       <!-- </form> -->
 
   </div>
 </div>
+
+<ng-template #template >
+    <div class="modal modalOne">
+      <div class="container">
+        <div class="modal-body row">
+            <div class="col-md-12">
+                <h4 class="modal-title pull-left"></h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <hr>
+            <div></div>
+            <div class="col-md-12 confirmationmsg">
+              <p>Subscribed Succefully <span>{{productId}} {{selected_plans.nickName}} </span></p>
+              <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
+              <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
+              <p>Amount paid <span>: $ {{selected_plans.amount}}.00</span></p>
+              <p>Period <span>: {{selected_plans.term}}</span></p>
+            </div>
+
+            <div class="col-md-12 confirmationmsg">
+              <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+
+    <ng-template #privacyPolicytemplate >
+        <div class="modal">
+          <div class="container">
+            <div class="modal-body row">
+                <div class="col-md-12 privacy-title row">
+                    <h5 class="col-sm-10 modal-title pull-left">Privacy Policy for EPSoft Inc</h5>
+                    <button type="button" class="close model-close col-sm-2 pull-right" aria-label="Close" (click)="modalRef.hide()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div >
+                  <div class="col-md-12 model-content">
+                      <p>At www.epsoftinc.com, accessible from http://www.epsoftinc.com/, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by www.epsoftinc.com and how we use it.</p>
+                      <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.</p>
+                      <p>This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in www.epsoftinc.com. This policy is not applicable to any information collected offline or via channels other than this website.</p>
+                      <h5>Consent</h5>
+                      <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
+                      
+                      <h5>Information we collect</h5>
+                      <p>The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.</p>
+                      <p>If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.</p>
+                      <p>When you register for an Account, we may ask for your contact information, including items such as name, company name, address, email address, and telephone number.</p>
+                      
+                      <h5>How we use your information</h5>
+                      <p>We use the information we collect in various ways, including to:</p>
+                      
+                      <ul>
+                      <li>Provide, operate, and maintain our webste</li>
+                      <li>Improve, personalize, and expand our webste</li>
+                      <li>Understand and analyze how you use our webste</li>
+                      <li>Develop new products, services, features, and functionality</li>
+                      <li>Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the webste, and for marketing and promotional purposes</li>
+                      <li>Send you emails</li>
+                      <li>Find and prevent fraud</li>
+                      </ul>
+                      
+                      <h5>Log Files</h5>
+                      <p>www.epsoftinc.com follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information. Our Privacy Policy was created with the help of the <a href="https://www.privacypolicygenerator.info">Privacy Policy Generator</a> and the <a href="https://www.disclaimergenerator.org/">Disclaimer Generator</a>.</p>
+                      
+                      <h5>Cookies and Web Beacons</h5>
+                      <p>Like any other website, www.epsoftinc.com uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+                      <p>For more general information on cookies, please read <a href="https://www.cookieconsent.com/what-are-cookies/">"What Are Cookies"</a>.</p>
+                      
+                      <h5>Our Advertising Partners</h5>
+                      <p>Some of advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has their own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</p>
+                      
+                      <ul>
+                          <li>
+                              <p>Google</p>
+                              <p><a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></p>
+                          </li>
+                      </ul>
+                      
+                      <h5>Advertising Partners Privacy Policies</h5>
+                      <p>You may consult this list to find the Privacy Policy for each of the advertising partners of www.epsoftinc.com</p>
+                      <!-- <P>You may consult this list to find the Privacy Policy for each of the advertising partners of www.epsoftinc.com.</p> -->
+                      
+                      <p>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on www.epsoftinc.com, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p>
+                      
+                      <p>Note that www.epsoftinc.com has no access to or control over these cookies that are used by third-party advertisers.</p>
+                      
+                      <h5>Third Party Privacy Policies</h5>
+                      
+                      <p>www.epsoftinc.com's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. You may find a complete list of these Privacy Policies and their links here: Privacy Policy Links.</p>
+                      
+                      <p>You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites.</p>
+                      
+                      <h5>CCPA Privacy Rights (Do Not Sell My Personal Information)</h5>
+                      
+                      <p>Under the CCPA, among other rights, California consumers have the right to:</p>
+                      <p>Request that a business that collects a consumer's personal data disclose the categories and specific pieces of personal data that a business has collected about consumers.</p>
+                      <p>Request that a business delete any personal data about the consumer that a business has collected.</p>
+                      <p>Request that a business that sells a consumer's personal data, not sell the consumer's personal data.</p>
+                      <p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p>
+                      
+                      <h5>GDPR Data Protection Rights</h5>
+                      
+                      <p>We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:</p>
+                      <p>The right to access – You have the right to request copies of your personal data. We may charge you a small fee for this service.</p>
+                      <p>The right to rectification – You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete the information you believe is incomplete.</p>
+                      <p>The right to erasure – You have the right to request that we erase your personal data, under certain conditions.</p>
+                      <p>The right to restrict processing – You have the right to request that we restrict the processing of your personal data, under certain conditions.</p>
+                      <p>The right to object to processing – You have the right to object to our processing of your personal data, under certain conditions.</p>
+                      <p>The right to data portability – You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.</p>
+                      <p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p>
+                      
+                      <h5>Children's Information</h5>
+                      
+                      <p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p>
+                      
+                      <p>www.epsoftinc.com does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p>
+                    </div>
+               
+              </div>
+            </div>
+          </div>
+        </ng-template>
 

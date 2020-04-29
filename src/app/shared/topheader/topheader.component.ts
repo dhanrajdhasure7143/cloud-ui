@@ -28,10 +28,9 @@ export class TopheaderComponent implements OnInit {
                                                private appser: AppService, private sharedService :  SharedDataService) { }
 public myname:any[]
   ngOnInit() {
-    this.sharedService.getLoggedinUserData().subscribe(data=>{this.mydata=data
-      console.log("mydata1",this.mydata);
+    // this.sharedService.getLoggedinUserData().subscribe(data=>{this.mydata=data
     
-    });
+    // });
   }
 
   logout() {

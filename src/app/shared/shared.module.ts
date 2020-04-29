@@ -25,6 +25,9 @@ import { SearchPipe } from './custom_pipe/searchpipe';
 import { ModalModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NotifierModule, NotifierService } from "angular-notifier";
+import { FooterComponent } from './footer/footer.component';
+import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
+import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
 
 
 @NgModule({
@@ -44,6 +47,9 @@ import { NotifierModule, NotifierService } from "angular-notifier";
       StepselectionComponent,
       ProfileComponent,
       SearchPipe,
+      FooterComponent,
+      TermsconditionsComponent,
+      PrivacypolicyComponent,
       ],
   imports: [
     CommonModule,
@@ -57,7 +63,7 @@ import { NotifierModule, NotifierService } from "angular-notifier";
     NotifierModule
   ],
   providers: [NotifierService],
-  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent],
-  entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent]
+  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent],
+  entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent,FooterComponent]
 })
 export class SharedModule { }

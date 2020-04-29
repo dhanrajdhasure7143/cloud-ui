@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductlistService } from 'src/app/_services/productlist.service';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { Base64 } from 'js-base64';
+import {yearslist } from './../../../../assets/jsons/yearlist.json'
 
 
 @Component({
@@ -21,21 +22,25 @@ export class DetailsComponent implements OnInit {
   public productId:any;
   public plansList:any[];
   public name:any;
-  public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2024,"year":2025}]
+  public cardEncode:any;
+  public cardDecode:any;
+  public card:any;
+  public cardEdit:any;
+  public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
 
 
-  constructor( private productlistservice:ProductlistService, private router:Router) { }
+  constructor( private productlistservice:ProductlistService, 
+              private router:Router,
+              private route:ActivatedRoute,) { }
 
   ngOnInit() {
     this.getproductPlans();
-    // this.productlistservice.getCarddetails().subscribe(res=>{
-    //   this.cardDetails=res 
-    // })
-    // this.cardHoldername=this.cardDetails.cardHoldername;
-    // this.cardmonth=this.cardDetails.cardmonth;
-    // this.cardnumbertotal=this.cardDetails.cardnumbertotal;
-    // this.cardyear=this.cardDetails.cardyear;
-    // this.cvvNumber=this.cardDetails.cvvNumber;
+    this.editCardDetails();
+    this.getYears();
+  }
+
+  getYears(){
+    this.yearList=yearslist
   }
 
   getproductPlans(){
@@ -45,8 +50,12 @@ export class DetailsComponent implements OnInit {
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
-        this.selected_plans.term='month';
         this.name=this.selected_plans.nickName.slice(4);
+        if(this.selected_plans.term =="12month"){
+          this.selected_plans.term= 'Annual'
+        }else{
+          this.selected_plans.term= 'Month'
+        }
       }
     });
   });
@@ -60,15 +69,26 @@ export class DetailsComponent implements OnInit {
     cardyear:this.cardyear,
     cvvNumber:this.cvvNumber,
   }
-  this.router.navigate(['/activation/payment/review']);
-  this.productlistservice.setCarddetails(this.cardDetails);
+  this.cardEncode=Base64.encode(JSON.stringify(this.cardDetails));
+  this.card={id:this.cardEncode}
+  this.router.navigate(['/activation/payment/review',this.card]);
   }
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 6 && (charCode < 2 || charCode >56)) {
+    if (charCode > 6 && (charCode < 2 || charCode >57)) {
       return false;
     }
     return true;
+  }
+  editCardDetails(){
+    this.route.params.subscribe(data=>{this.cardEdit=data
+    this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));
+      this.cardHoldername=this.cardDetails.cardHoldername;
+      this.cardmonth=this.cardDetails.cardmonth;
+      this.cardnumbertotal=this.cardDetails.cardnumbertotal;
+      this.cardyear=this.cardDetails.cardyear;
+      this.cvvNumber=this.cardDetails.cvvNumber;
+    });
   }
 }

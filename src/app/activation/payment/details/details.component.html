@@ -18,7 +18,7 @@
                 class='fa fa-info-circle errspan'>Card holder name is required </span> 
               </div>
 
-                  <div class="form-group col-sm-10">
+                  <div class="form-group col-sm-6">
                     <label for="month">Month (MM)</label>
                     <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardmonth" required>
                         <option  [value]="undefined" disabled hidden>Select Month</option>
@@ -36,6 +36,7 @@
                       <option value="07">December</option>
                     </select>
                   </div>
+                  <div class="col-sm-4"></div>
         </div>
 
         <div class="col-md-4">
@@ -64,20 +65,20 @@
               </div>
               <div class="form-group col-sm-4">
                   <label for="cvv">CVV</label>
-                  <input type="text" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required
+                  <input type="password" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required
                   [ngClass]="{ 'is-invalid': ((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) ) }" />
                 <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
                 class='fa fa-info-circle errspan'>Cvv required</span>                
               </div>
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-6">
                   <label for="year">Year (YYYY)</label>
                   <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
                     <option  [value]="undefined" disabled hidden>Select Year</option>
                     <option *ngFor="let obj of yearList" [ngValue]="obj.value">{{obj.year}}</option>
                   </select>
-                  <div class="btn-continue">
-                      <button class="btn btn-submit pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Continue</button>
-                    </div>
+                </div>
+                <div class="col-sm-12 btn-continue">
+                  <button class="btn btn-submit pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Continue</button>
                 </div>
             </div>
           </div>
