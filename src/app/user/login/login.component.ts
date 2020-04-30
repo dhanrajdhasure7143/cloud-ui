@@ -123,15 +123,15 @@ export class LoginComponent implements OnInit {
   checkSuccessCallback(data:any){
     this.sharedData.setLoggedinUserData(data);
     this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
-    localStorage.setItem('firstName',data.firstName);
-    localStorage.setItem('lastName',data.lastName);
+    // localStorage.setItem('firstName',data.firstName);
+    // localStorage.setItem('lastName',data.lastName);
     localStorage.setItem('userName',data.userId);
-    localStorage.setItem('tenantName',data.tenantId.id);
-    localStorage.setItem('phoneNumber',data.phoneNumber);
-    localStorage.setItem('company', data.company);
-    localStorage.setItem('designation',data.designation);
-    localStorage.setItem('country',data.country);
-    localStorage.setItem('department', data.department);
+    // localStorage.setItem('tenantName',data.tenantId.id);
+    // localStorage.setItem('phoneNumber',data.phoneNumber);
+    // localStorage.setItem('company', data.company);
+    // localStorage.setItem('designation',data.designation);
+    // localStorage.setItem('country',data.country);
+    // localStorage.setItem('department', data.department);
 
     //this.userService.getRole(data.company,data.userId).subscribe(data => this.getRoles(data));
   }

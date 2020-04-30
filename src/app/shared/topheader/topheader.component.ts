@@ -9,6 +9,7 @@ import { subscribeOn } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SELECT_VALUE_ACCESSOR } from '@angular/forms/src/directives/select_control_value_accessor';
 import { containsElement } from '@angular/animations/browser/src/render/shared';
+import { ProfileService } from 'src/app/_services/profile.service';
 
 @Component({
   selector: 'topheader',
@@ -22,12 +23,18 @@ export class TopheaderComponent implements OnInit {
    public isusers:boolean=false;
    public mydata:any[];
    public isnotification:boolean=false;
+  userRole: any;
 
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router, 
+                                               private profileService:ProfileService,
                                                private appser: AppService, private sharedService :  SharedDataService) { }
 public myname:any[]
   ngOnInit() {
+    this.profileService.getUserRole(2).subscribe(role=>{
+      this.userRole=role.message;
+     
+    })   
     // this.sharedService.getLoggedinUserData().subscribe(data=>{this.mydata=data
     
     // });
@@ -40,7 +47,8 @@ public myname:any[]
     this.appser.logout();
   }
 
-  myFunction() {                    
+  myFunction() {   
+               
     document.getElementById("myDropdown").classList.toggle("show");
     // document.getElementById("notificationBar").classList.remove('notificationBarshow');
   }
