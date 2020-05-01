@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit{
     countryInfo :any []= []; 
     public addDepartment:boolean=false;
     public departments:any[];
-    public password:"any";
+    public password:any;
     public show:  Boolean = true;
     public userManagement:any[];
     public selectedIndex:number;
@@ -59,6 +59,8 @@ export class ProfileComponent implements OnInit{
   delData: any;
   blob: Blob;
   invoiceid: any;
+  apps: any;
+  userRole: any;
     constructor( private sharedData: SharedDataService,
                 private firstloginservice: FirstloginService,
                 private modalService: BsModalService,
@@ -294,9 +296,7 @@ export class ProfileComponent implements OnInit{
   getAllSubscrptions(){
     this.profileservice.listofsubscriptions().subscribe(response => {this.tableData = response});
   }
-  getAllSubscrptions() {
-    this.profileservice.listofsubscriptions().subscribe(response => { this.tableData = response });
-  }
+ 
   getAllInvoices() {
     this.profileservice.listofinvoices().subscribe(response => { this.invoicedata = response.data });
   }
