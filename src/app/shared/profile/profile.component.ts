@@ -9,69 +9,71 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { NotifierService } from 'angular-notifier';
 import { Base64 } from 'js-base64';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
-})
-export class ProfileComponent implements OnInit {
-
-  @Input() public isInvite: boolean;
-  @Input() public isMyaccount: boolean;
-  @Input() public isusers: boolean;
-  @Input() public isnotification: boolean;
-  public model: User;
-  public searchvalue: any;
-  public searchUser: any;
-  public emailId: any;
-  public sentFromOne: any;
-  public tableData: any[];
-  public formOne: any = {};
-  countryInfo: any[] = [];
-  public addDepartment: boolean = false;
-  public departments: any[];
-  public password: "any";
-  public show: Boolean = true;
-  public userManagement: any[];
-  public selectedIndex: number;
-  public deletCardIndex: number;
-  public defaultcard: number = 0;
-  modalRef: BsModalRef;
-  public stopcheckbox: any;
-  public pricecheckbox: any;
-  public plancheckbox: any;
-  public feedbackbox: any;
-  public paymentMode: any;
-  public invoicedata: any[];
-  public nitificationList: any;
-  public dataid: any;
-  public userId: any;
-  subscribeddata: any;
-  public userdata: any;
-  public closeFlag: Boolean = false;
-  public useremail: any;
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss']
+  })
+export class ProfileComponent implements OnInit{
+ 
+    @Input() public isInvite:boolean;
+    @Input() public isMyaccount:boolean;
+    @Input() public isusers:boolean;
+    @Input() public isnotification:boolean;
+    public model:User;
+    public searchvalue:any;
+    public searchUser:any;
+    public emailId:any;
+    public sentFromOne:any;
+    public tableData:any[];
+    public formOne:any={};
+    countryInfo :any []= []; 
+    public addDepartment:boolean=false;
+    public departments:any[];
+    public password:"any";
+    public show:  Boolean = true;
+    public userManagement:any[];
+    public selectedIndex:number;
+    public deletCardIndex:number;
+    public defaultcard:number = 0;
+    modalRef: BsModalRef;
+    public stopcheckbox:any;
+    public pricecheckbox:any;
+    public plancheckbox:any;
+    public feedbackbox:any;
+    public paymentMode:any;
+    public invoicedata:any[];
+    public nitificationList:any;
+    public dataid:any;
+    public userId:any;
+    subscribeddata:any;
+    public userdata:any;
+    public closeFlag:Boolean = false;
+  public useremail:any;
   department: any;
   userDepartment: any;
   listOfDepartments: any = [];
   listOfUserApplications: any = [];
   delData: any;
-  apps: any;
-  userRole: any;
-  constructor(private sharedData: SharedDataService,
-    private firstloginservice: FirstloginService,
-    private modalService: BsModalService,
-    private profileservice: ProfileService,
-    private notifier: NotifierService
-  ) { }
+  blob: Blob;
+  invoiceid: any;
+    constructor( private sharedData: SharedDataService,
+                private firstloginservice: FirstloginService,
+                private modalService: BsModalService,
+                private profileservice:ProfileService,
+                private notifier:NotifierService,
+                private router: Router
+                ) { }
 
   ngOnInit() {
-    this.profileservice.getDepartments().subscribe(resp => {
-      this.department = resp,
+    this.profileservice.getDepartments().subscribe(resp => 
+      {
+        this.department = resp,
         this.department.forEach(element => {
-          this.listOfDepartments.push(element)
-        });
-    })
+        this.listOfDepartments.push(element)
+              });})
 
     this.getAllNotifications();
     this.getAllSubscrptions();
@@ -188,30 +190,34 @@ export class ProfileComponent implements OnInit {
 
   selecteddata(data, index, template) {
     document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+    this.subscribeddata = data;
     this.modalRef = this.modalService.show(template)
     this.selectedIndex = index;
   }
 
-  // subscriptiondata(data,index,template){
-  //   document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
-  // this.subscribeddata = data;
-  //     this.modalRef = this.modalService.show(template)
-
-  //   console.log("index",index);
-  //   this.selectedIndex=index;
-  // //   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
-
-  //   }
-
-  infoModelSubmit() {
+  infoModelSubmit(){
     this.modalRef.hide();
+    this.router.navigate(['/activation/payment/chooseplan']);
+  
   }
 
   unsubscribeYes(index) {
     this.modalRef.hide();
-  }
-  unsubscribeNo(index) {
+    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {
+      this.getAllSubscrptions();
+      this.notifier.show({
+        type: "success",
+        message: "Subscription cancelled successfully!",
+        id: "123" 
+      });
+    }, err => {
+    });
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+   
+  }
+  unsubscribeNo(index){
+  document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+ 
   }
   deletCard(data, index) {
     this.closeFlag = true;
@@ -222,7 +228,8 @@ export class ProfileComponent implements OnInit {
 
     this.profileservice.deletePaymentMode(index.id).subscribe(data => { this.delData = data })
     this.getAllPaymentmodes();
-
+ 
+  
   }
   cancelDeleteCard(index) {
     this.closeFlag = false;
@@ -251,6 +258,39 @@ export class ProfileComponent implements OnInit {
   this.subscribeddata = data;
       this.modalRef = this.modalService.show(template)
     }
+
+  invoicedownload(invoicedata){
+    this.invoiceid=invoicedata.invoiceId;
+    this.profileservice.invoicedownload(this.invoiceid).subscribe(data=>{
+    const urlCreator=window.URL;
+    const blob=new Blob([data], {
+    type:'application/pdf',
+     });
+    const url = urlCreator.createObjectURL(blob);
+    const a:any = document.createElement('a');
+    document.body.appendChild(a);
+    a.style='display: none';
+    a.href=url;
+    a.download=invoicedata.invoiceNumber+'.pdf';
+    a.click();
+    window.URL.revokeObjectURL(url);
+    this.notifier.show({
+    type:"success",
+    message: "Downloading....",
+    id:"123"
+     });
+     },err=>{
+    this.notifier.show({
+    type:"error",
+    message:"Download failed!",
+    id:"123"
+     });
+     }
+     )
+     }
+    
+    
+
   getAllSubscrptions(){
     this.profileservice.listofsubscriptions().subscribe(response => {this.tableData = response});
   }
