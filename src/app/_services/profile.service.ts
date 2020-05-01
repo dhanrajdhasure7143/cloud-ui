@@ -36,4 +36,11 @@ export class ProfileService {
  deletePaymentMode(paymentMethodId):Observable<any>{
   return this.http.post<any>('/subscriptionservice/v1/paymentmethods/'+paymentMethodId,httpOptions);
 }
+
+getUserApplications():Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/user/applications')
+}
+getUserRole(appID):Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/user/role/applications/'+appID,httpOptions)
+}
 }
