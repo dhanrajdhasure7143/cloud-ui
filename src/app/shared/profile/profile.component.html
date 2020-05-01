@@ -82,14 +82,7 @@
                                           <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="this.userDepartment"[ngModelOptions]="{standalone: true}">
                                             <option  [selected]=true >Select</option>
                                             <option *ngFor="let department of listOfDepartments"  [value]="department">{{department}}</option>
-                                            <!-- <option hidden disabled>Select Department</option>
-                                            <option value="HR">HR</option>
-                                            <option value="development">Development</option>
-                                            <option value="finance">Finance</option> 
-                                            <option value="infra">Infra</option>
-                                            <option value="testing">Testing</option>
-                                            <option value="pmo">PMO</option>
-                                            <option value="others">Others</option> -->
+                                          
                                           </select>
 
                                               <div class="form-group col-sm-" *ngIf="addDepartment">
@@ -143,7 +136,7 @@
                         </div>
                       </tab>
                         
-                        <tab heading="Subscriptions">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Subscriptions">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -191,7 +184,7 @@
                         </div>
                       </tab>
 
-                        <tab heading="Invoice">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Invoice">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -226,7 +219,7 @@
                         </div>
                       </tab>
                         
-                        <tab heading="Payment Mode">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Payment Mode">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -277,7 +270,7 @@
 
         <div class="container" *ngIf="isInvite">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div  class="col-md-12">
                             <h4 class="invite">Invite User</h4>
                     </div>
                     <div class="col-md-4 invteform">
@@ -296,12 +289,9 @@
 
                                             <div class="form-group">
                                               <label for="application">Application</label>
-                                              <select class="form-control" name="application" #application="ngModel" [(ngModel)]="appName" id="application" required>
+                                              <select class="form-control" name="application"  id="application" required>
                                                 <option  [value]="undefined" disabled hidden>Select Application</option>
-                                                <option value="EzFlow">EZFlow</option>
-                                                <option value="eZbot">EZBot</option>
-                                                <option value="GiB">GIB 2.0</option>
-
+                                                <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
                                               </select>
                                             </div>
                                             <div class="form-group">
@@ -323,7 +313,7 @@
                 <div class="container users" *ngIf="isusers">
                         <div class="">
                             <tabset >
-                            <tab heading="User Management" id="tab1">
+                            <tab  heading="User Management" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -445,7 +435,7 @@
                     <table class="table table-borderless table-hover">
                             <thead>
                               <tr>
-                                <th scope="col" style="width:60%;">Message Details</th>
+                                <th scope="col" style="width:60%;">Notifications</th>
                                 <th scope="col" style="width:300px;">Date</th>
                                 <th scope="col" style="width:200px;">Time</th>
                                 <th scope="col" style="width:200px !important;">Action</th>
