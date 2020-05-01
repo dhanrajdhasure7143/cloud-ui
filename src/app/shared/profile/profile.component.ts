@@ -246,16 +246,13 @@ export class ProfileComponent implements OnInit {
   canceldeleteNotification(index) {
     this.dataid = '';
   }
-  notify() {
-    this.notifier.show({
-      type: "error",
-      message: "Could not import Bpmn diagram!",
-      id: "ae12"
-    });
-  }
-  subscriptiondata(data, index, template) {
-    this.subscribeddata = data;
-    this.modalRef = this.modalService.show(template)
+
+  subscriptiondata(data,index,template){
+  this.subscribeddata = data;
+      this.modalRef = this.modalService.show(template)
+    }
+  getAllSubscrptions(){
+    this.profileservice.listofsubscriptions().subscribe(response => {this.tableData = response});
   }
   getAllSubscrptions() {
     this.profileservice.listofsubscriptions().subscribe(response => { this.tableData = response });
