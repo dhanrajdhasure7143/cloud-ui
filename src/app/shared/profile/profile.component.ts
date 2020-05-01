@@ -237,13 +237,7 @@ onChangeDepartment(selectedvalue) {
   canceldeleteNotification(index){
   this.dataid='';
   }
-  notify(){
-    this.notifier.show({
-      type: "error",
-      message: "Could not import Bpmn diagram!",
-      id: "ae12" 
-    });
-  }
+
   subscriptiondata(data,index,template){
   this.subscribeddata = data;
       this.modalRef = this.modalService.show(template)

@@ -19,15 +19,16 @@ export class FirstloginComponent implements OnInit {
   decodedToken: any = {};
   selectedItems: any[] = [];
   dropdownSettings: any = {};
-  departments = [];
+  departments:any;
   itemsShowLimit = 1;
   stateInfo: any[] = [];
   countryInfo: any[] = [];
   cityInfo: any[] = [];
   selectedvalue: string = '';
-  college: boolean = true;
+  college: boolean = false;
   submitflag:boolean=false;
   public show:boolean=true;
+  public otherDepartment:any;
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -60,9 +61,9 @@ export class FirstloginComponent implements OnInit {
   ngOnInit() {
     this.particles.getParticles();
     this.getCountries();
-    this.onChangeDepartment(this.departments);
+    this.getAllDepartments();
+
     this.model = new User();
-    //this.departments = ['India', 'Canada', 'U.S.A'];
     this.dropdownSettings = {
       singleSelection: true,
       idField: 'ID',
@@ -77,21 +78,25 @@ export class FirstloginComponent implements OnInit {
   getCountries(){
     this.countryInfo = countries.Countries
   }
+  getAllDepartments(){
+    this.service.getAllDepartments().subscribe(response=> {
+      this.departments = response;      
+    })
+  }
 
   onChangeDepartment(selectedvalue) {
-    this.college = false
-    this.service.getAllDepartments().subscribe(response=> {
-      this.departments = response;
-    })
     if(selectedvalue == "others"){
       this.college = true
+    }else{
+      this.college = false;
     }
   }
   onChangeCountry(countryValue) {
-    this.model.country = this.countryInfo[countryValue].CountryName;
+    // this.model.country = this.countryInfo[countryValue].CountryName;
     
     this.stateInfo=this.countryInfo[countryValue].States;
-    //this.cityInfo=this.stateInfo[0].Cities;
+    // this.cityInfo=this.stateInfo[0].Cities;
+    this.cityInfo=[];
   }
 
   onChangeState(stateValue) {
@@ -111,18 +116,14 @@ export class FirstloginComponent implements OnInit {
      if(response.message === 'Invalid User Invite' || response.message === 'User Invitation  Already Confirmed'){
       this.router.navigate(['/user']);
      }
-     
 
     }
-
-    ondepartment(event){
-
-    }
-  
   onSubmit() {
     this.submitflag=true;
+    if(this.model.department=="others"){
+      this.model.department=this.otherDepartment;
+          }
     const userDetails = JSON.parse(JSON.stringify(this.model));
-    
     //localStorage.setItem('phoneNumber',userDetails.phoneNumber);
     //localStorage.setItem('company',userDetails.company);
    // userDetails.country = this.model.country[;
@@ -170,5 +171,8 @@ export class FirstloginComponent implements OnInit {
   }
   resetForm() {
     this.model = new User();
+  }
+    loopTrackBy(index, term){
+    return index;
   }
 }
