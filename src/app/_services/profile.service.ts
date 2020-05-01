@@ -17,12 +17,20 @@ export class ProfileService {
   getNotifications(userId):Observable<any>{
       return this.http.post<any>('/notificationservice/api/v1/listNotifications',userId,httpOptions);
   }
+  cancelSubscription( data) : Observable<any>{
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel='+true,null);
+  }
+ 
   listofsubscriptions() : Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/subscriptions');
   }
   listofinvoices() : Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/invoices')
   }
+  invoicedownload(invoiceId): Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/invoices/'+invoiceId+'/pdf',{responseType: 'blob' as 'json'})
+    }
+
   getUserDetails(username):Observable<any>{
     return this.http.get<any>('/api/user/details?userId='+username, httpOptions)
   }

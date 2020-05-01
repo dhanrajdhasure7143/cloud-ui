@@ -169,10 +169,10 @@
                                       <td>{{sdata.planId}}</td>
                                       <td>{{sdata.planEntity.amount}}</td>
                                       <td>{{sdata.status}}</td>
-                                      <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                      <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span *ngIf = "sdata.status === 'Active'" (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                         <div id="myid" [ngClass]="selectedIndex == i?'isdelet':''" class="deletconfm">
                                           <div class="container-fluid deletefrm">
-                                        <h5 class="pull-left">Conformation</h5>
+                                        <h5 class="pull-left">Confirmation</h5>
                                         <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
                                             <span aria-hidden="true">&times;</span>
                                           </button>
@@ -181,6 +181,9 @@
                                         <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
                                         </div>
                                         </div>
+                                      </td>
+                                      <td class = "deleticon">
+                                        <button class="btn btn-primary" *ngIf = "sdata.status != 'Active'" (click)="reactivatesubscription(sdata)">Reactivate</button>
                                       </td>
                                     </tr>
                                   </tbody>
@@ -213,10 +216,10 @@
                                       <td>{{invdata.invoiceNumber}}</td>
                                       <td>{{invdata.subscriptionId}}</td>
                                       <td>{{invdata.amount}}.00 USD</td>
-                                      <td>$ {{invdata.refund}}</td>
-                                        <td>{{invdata.duedate}}</td>
+                                      <td>{{invdata.refund || "NA"}}</td>
+                                        <td>{{invdata.duedate || "NA"}}</td>
                                         <td>{{invdata.status}}</td>
-                                      <td><img class="download" src="assets/images/download_icon.svg"></td>
+                                      <td><span  (click) = "invoicedownload(invdata)"><img class="download" src="assets/images/download_icon.svg"></span></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -482,19 +485,19 @@
           <div class="container">
             <div class="modal-body row">
                 <div class="col-md-12">
-                    <h4 class="modal-title pull-left">Where are sorry to see you go</h4>
+                    <h4 class="modal-title pull-left">We are sorry to see you go</h4>
                     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                       <span aria-hidden="true">&times;</span>
                     </button>
                 </div >
                 <div class="col-md-12 subheadin">
-                  <p>If you have a moment please let us know why you unsubscribe:</p>
+                  <p>If you have a moment, please let us know why you want to unsubscribe:</p>
                 </div>
                 <div class="col-md-12 infocheck">
                   <input type="checkbox" [(ngModel)]="stopcheckbox" ><span>I stopped using this account</span>
                 </div>
                 <div class="col-md-12 infocheck">
-                    <input type="checkbox" [(ngModel)]="pricecheckbox"> <span>Price of the plane is high</span>
+                    <input type="checkbox" [(ngModel)]="pricecheckbox"> <span>Price of the plan is high</span>
                   </div>
                   <div class="col-md-12 infocheck">
                       <input type="checkbox" [(ngModel)]="plancheckbox"> <span>Subscribed another plan</span>
@@ -548,7 +551,7 @@
                           </div>
    
                   <div class="col-md-12 submitbtn">
-                    <button class="btn btn-primary" (click)="infoModelSubmit()">Change</button>
+                    <button class="btn btn-primary" (click)="infoModelSubmit()">Change Plan</button>
                   </div>
                 </div>
               </div>

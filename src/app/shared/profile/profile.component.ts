@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { NotifierService } from 'angular-notifier';
 import { Base64 } from 'js-base64';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit{
     public sentFromOne:any;
     public tableData:any[];
     public formOne:any={};
-    countryInfo :any []= [];
+    countryInfo :any []= []; 
     public addDepartment:boolean=false;
     public departments:any[];
     public password:"any";
@@ -55,26 +56,29 @@ export class ProfileComponent implements OnInit{
   userDepartment:any;
   listOfDepartments:  any = [];
   delData: any;
+  blob: Blob;
+  invoiceid: any;
     constructor( private sharedData: SharedDataService,
                 private firstloginservice: FirstloginService,
                 private modalService: BsModalService,
                 private profileservice:ProfileService,
-                private notifier:NotifierService
+                private notifier:NotifierService,
+                private router: Router
                 ) { }
 
   ngOnInit() {
-        this.profileservice.getDepartments().subscribe(resp => 
+    this.profileservice.getDepartments().subscribe(resp => 
       {
         this.department = resp,
         this.department.forEach(element => {
         this.listOfDepartments.push(element)
               });})
-              
+
     this.getAllNotifications();
-   this.getAllSubscrptions();
-  this.getAllInvoices();
-  this.getAllPaymentmodes();
-  
+    this.getAllSubscrptions();
+    this.getAllInvoices();
+    this.getAllPaymentmodes();
+
     this.countryInfo = countries.Countries;
 
     this.userManagement=[{"id":"256426","firstName":"Ranjith","lastName":"sigiri","Designation":"HR","Organisation":"EpSoft","Department":"HR","Product":"Gib","Roles":"Admin"},
@@ -91,21 +95,22 @@ export class ProfileComponent implements OnInit{
 //                 {"cardType":"Rupay Card","cardnumber":"xxxx-xxxx-xxxx-7892","select":"Set Default","expairydate":"11/24","createddate":"30/12/2019"},
 //                 {"cardType":"American Express Card","cardnumber":"xxxx-xxxx-xxxx-1234","select":"Set Default","expairydate":"10/22","createddate":"08/04/2019"},]   
 }
-  getAllPaymentmodes() {
- 
-    this.profileservice.listofPaymentModes().subscribe(response => {this.paymentMode = response});
- 
-  }
 
-  ngOnChanges(){
-    if(this.isMyaccount== true){
-    this.userDetails();
-   
-    
-  }
+getAllPaymentmodes() {
+ 
+  this.profileservice.listofPaymentModes().subscribe(response => {this.paymentMode = response});
+
+}
+
+ngOnChanges(){
+  if(this.isMyaccount== true){
+  this.userDetails();
+ 
+  
+}
       this.getAllNotifications();
       this.getAllSubscrptions();
-      this.getAllInvoices();
+    this.getAllInvoices();
   }
   
 getAllNotifications(){
@@ -164,7 +169,7 @@ onChangeDepartment(selectedvalue) {
 
   updateAccount(form){
     this.firstloginservice.updateUser(this.formOne).subscribe(data => {
-            this.notifier.show({
+      this.notifier.show({
         type: "success",
         message: "Updated successfully!",
         id: "123" 
@@ -179,30 +184,34 @@ onChangeDepartment(selectedvalue) {
 
   selecteddata(data,index,template){
     document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+    this.subscribeddata = data;
     this.modalRef = this.modalService.show(template)
     this.selectedIndex=index;
   }
 
-  // subscriptiondata(data,index,template){
-  //   document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
-  // this.subscribeddata = data;
-  //     this.modalRef = this.modalService.show(template)
-  
-  //   console.log("index",index);
-  //   this.selectedIndex=index;
-  // //   document.getElementsByClassName("onemyred")[index].classList.add("testdelet");
-    
-  //   }
-
   infoModelSubmit(){
     this.modalRef.hide();
+    this.router.navigate(['/activation/payment/chooseplan']);
+  
   }
 
   unsubscribeYes(index){
     this.modalRef.hide();
+    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {this.checkSuccessCallback(data)
+      this.getAllSubscrptions();
+      this.notifier.show({
+        type: "success",
+        message: "Subscription cancelled successfully!",
+        id: "123" 
+      });
+    }, err => {
+    });
+    document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+   
   }
   unsubscribeNo(index){
   document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+ 
   }
   deletCard(data,index){
     this.closeFlag=true;
@@ -214,6 +223,7 @@ onChangeDepartment(selectedvalue) {
     this.profileservice.deletePaymentMode(index.id).subscribe(data=>{this.delData=data})
     this.getAllPaymentmodes();
  
+  
   }
   cancelDeleteCard(index){
     this.closeFlag=false;
@@ -248,12 +258,44 @@ onChangeDepartment(selectedvalue) {
   this.subscribeddata = data;
       this.modalRef = this.modalService.show(template)
     }
+
+  invoicedownload(invoicedata){
+    this.invoiceid=invoicedata.invoiceId;
+    this.profileservice.invoicedownload(this.invoiceid).subscribe(data=>{
+    const urlCreator=window.URL;
+    const blob=new Blob([data], {
+    type:'application/pdf',
+     });
+    const url = urlCreator.createObjectURL(blob);
+    const a:any = document.createElement('a');
+    document.body.appendChild(a);
+    a.style='display: none';
+    a.href=url;
+    a.download=invoicedata.invoiceNumber+'.pdf';
+    a.click();
+    window.URL.revokeObjectURL(url);
+    this.notifier.show({
+    type:"success",
+    message: "Downloading....",
+    id:"123"
+     });
+     },err=>{
+    this.notifier.show({
+    type:"error",
+    message:"Download failed!",
+    id:"123"
+     });
+     }
+     )
+     }
+    
+    
+
   getAllSubscrptions(){
     this.profileservice.listofsubscriptions().subscribe(response => {this.tableData = response});
   }
   getAllInvoices(){
     this.profileservice.listofinvoices().subscribe(response => {this.invoicedata = response.data});
   }
-  
 
 }
