@@ -197,7 +197,7 @@ onChangeDepartment(selectedvalue) {
 
   unsubscribeYes(index){
     this.modalRef.hide();
-    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {this.checkSuccessCallback(data)
+    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {
       this.getAllSubscrptions();
       this.notifier.show({
         type: "success",
