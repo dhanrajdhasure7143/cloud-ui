@@ -38,10 +38,10 @@ export class LoginService {
   }
 
   sentVerificationMail(emailId): Observable<any>{
-    return this.httpclient.post<any>('/user/registration?userId='+emailId,httpOptionsOne);
+    return this.httpclient.post<any>('/api/user/registration?userId='+emailId,httpOptionsOne);
   }
   resendVerificationMail(emailId): Observable<any>{
-    return this.httpclient.post<any>('/user/resendVerificationMail?userId='+emailId,httpOptionsOne);
+    return this.httpclient.post<any>('/api/user/resendVerificationMail?userId='+emailId,httpOptionsOne);
   }
 
 }

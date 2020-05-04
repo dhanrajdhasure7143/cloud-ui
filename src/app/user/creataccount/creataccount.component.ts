@@ -27,6 +27,8 @@ export class CreataccountComponent implements OnInit {
   }
   creat_account(){
    this.userId=this.emailId
+  //  this.isresend=true;
+
     this.loginservice.sentVerificationMail(this.userId).subscribe(res=>{
        this.isresend=true;
     },error=>{
