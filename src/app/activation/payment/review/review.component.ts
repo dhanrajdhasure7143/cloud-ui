@@ -48,7 +48,7 @@ config = {
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
-        if(this.selected_plans.term =="1year"){
+        if(this.selected_plans.term =="12month"){
           this.selected_plans.term= 'Annual'
         }else{
           this.selected_plans.term= 'One Month'
@@ -78,11 +78,12 @@ config = {
     // console.log('planslist', this.selected_plans);
     // console.log("this.cardDetails",this.cardDetails);
     
-    const paymentToken='tok_1Gcmy0GxwuSV2qOkgRnY0AcQ'
+    const paymentToken='tok_1GezwJGxwuSV2qOkUhBazB4K'
     const plandetails={ "ip": "1.2.3.4", 
               "items": [ { "planId":"IAP_t1m"} 
             ] 
           };
+
     this.productlistservice.subscribePlan(paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
     this.modalRef = this.modalService.show(template,this.config);
     })

@@ -93,15 +93,16 @@
       <div class="container">
         <div class="modal-body row">
             <div class="col-md-12">
-                <h4 class="modal-title pull-left"></h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <h5 class="modal-title">Subscribed Succefully</h5>
+                <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                   <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
             </div>
             <hr>
             <div></div>
             <div class="col-md-12 confirmationmsg">
-              <p>Subscribed Succefully <span>{{productId}} {{selected_plans.nickName}} </span></p>
+              <p>Product <span>: {{productId}}</span></p>
+              <p>Plan <span>: {{selected_plans.nickName}} </span></p>
               <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
               <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
               <p>Amount paid <span>: $ {{selected_plans.amount}}.00</span></p>
