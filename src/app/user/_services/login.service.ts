@@ -11,6 +11,11 @@ const httpOptions = {
     
   })
 };
+const httpOptionsOne = {
+  headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +35,13 @@ export class LoginService {
 
   azureLogin(): Observable<any> {
     return this.httpclient.get<any>('/api/socialLogin?authProvider=azure&redirectPath=http://localhost:4200/#/activation');
+  }
+
+  sentVerificationMail(emailId): Observable<any>{
+    return this.httpclient.post<any>('/api/user/registration?userId='+emailId,httpOptionsOne);
+  }
+  resendVerificationMail(emailId): Observable<any>{
+    return this.httpclient.post<any>('/api/user/resendVerificationMail?userId='+emailId,httpOptionsOne);
   }
 
 }

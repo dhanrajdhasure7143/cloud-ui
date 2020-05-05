@@ -21,7 +21,6 @@ export class BackendURLInterceptor implements HttpInterceptor {
       let authorizationendpoint = this.config.authorizationendpoint;
       let notificationsendpoint = this.config.notificationsendpoint;
       let Subscriptionendpoint=this.config.Subscriptionendpoint;
-      
 
       if (!localStorage.getItem('userName')) {
         //localStorage.setItem('userName', req.body.username);
@@ -37,7 +36,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
       }
 
      
-      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0) {
+      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0) {
         req = req.clone({
          url: apiendpoint + req.url,
           body: req.body,

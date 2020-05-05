@@ -1,177 +1,148 @@
-<topheader class="first_login_header">
+<!-- <topheader class="first_login_header">
 
 
-</topheader>
-
-<!-- <div class=""></div> -->
-<common-body>
+</topheader> -->
 
   <div class="container-fluid user_layout">
-    <div class="row user_login">
-      <div class="col-sm-4">
-        <div class="log_img">
-          <img src="assets/a_images/Login_banner.svg" class="img_login">
-        </div>
+    <div class="row">
+        <div id="particles-js"></div>
+      <div class="col-sm-5">
+            <img class="login-bg" src="assets/images/loginimage.png">
       </div>
-      <div class="col-sm-8">
-        <div class="col-sm-10">
-          <h2 class="wel_acc">Welcome! Finish setting up your account</h2>
-        </div>
+      <div class="col-sm-6">
+          <div class="brand">
+              <img src="assets/images/logo_img.png">
+              <p class="wel_acc">Welcome! Finish setting up your account</p>
+          </div>
 
-        <form autocomplete="off" #firstloginform="ngForm" (ngSubmit)="!firstloginform.invalid && onSubmit()"
-          class="col-sm-10">
+        <form autocomplete="off" #firstloginform="ngForm" (ngSubmit)="onSubmit()" class="signup-form col-sm-12">
           <div class="row">
-            <div class="form-group col-sm-6">
-              <label for="firstName">First Name</label>
-              <input type="text" id="firstName" name="firstName" #firstName="ngModel" class="form-control"
-                [(ngModel)]="model.firstName" ngModel maxlength="20" required>
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/user.svg" class="icon">
+              <input type="text" name="firstName" #firstName="ngModel" class="form-control"
+                [(ngModel)]="model.firstName" maxlength="20" placeholder="First Name" required [ngModelOptions]="{standalone: true}">
               <span *ngIf="((firstName.invalid && firstloginform.submitted)|| (firstName.errors && firstName.touched))"
                 class='fa fa-info-circle errspan'> First Name is required </span>
             </div>
 
-            <div class="form-group col-sm-6">
-              <label for="lastName">Last Name</label>
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/user.svg" class="icon">
               <input type="text" name="lastName" id="lastName" #lastName="ngModel" class="form-control"
-                [(ngModel)]="model.lastName" ngModel maxlength="20" required>
+                [(ngModel)]="model.lastName" maxlength="20" placeholder="Last Name" required>
               <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
                 class='fa fa-info-circle errspan'> Last Name is required </span>
             </div>
-
-            <div class="form-group col-sm-6">
-              <label for="jobTitle">Job Title</label>
-              <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" class="form-control"
-                [(ngModel)]="model.designation" ngModel maxlength="20" required>
-              <span *ngIf="((jobTitle.invalid && firstloginform.submitted)|| (jobTitle.errors && jobTitle.touched))"
-                class='fa fa-info-circle errspan'> Job Title is required </span>
-            </div>
-            <div class="form-group col-sm-6">
-              <label for="email">Email</label>
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/mail.svg" class="icon">
               <input type="email" id="email" #email="ngModel" class="form-control" [(ngModel)]="decodedToken" required
-                [ngModelOptions]="{standalone: true}" ngModel maxlength="30" disabled>
+                [ngModelOptions]="{standalone: true}" ngModel maxlength="30" placeholder="Email" disabled>
               <span *ngIf="((email.invalid && firstloginform.submitted)|| (email.errors && email.touched))"
                 class='fa fa-info-circle errspan'> Email is required </span>
             </div>
-            <div class="form-group col-sm-6">
-              <label for="company">Company</label>
-              <input type="text" id="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
-                [ngModelOptions]="{standalone: true}" ngModel maxlength="30" required>
+          <div class="form-group col-sm-6 inner-addon left-addon">
+            <img src="assets/images/registration/Lock.svg" class="icon">
+            <span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+            <input [type]="(show==true) ? 'password' : 'text'" id="password" name="password" #password="ngModel" class="form-control"
+              [(ngModel)]="model.password" [maxLength]="12" placeholder="Password" required>
+            <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))"
+              class='fa fa-info-circle errspan'> Password is required </span>
+          </div>
+
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/bag.svg" class="icon">
+              <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" class="form-control"
+                [(ngModel)]="model.designation" maxlength="20" placeholder="Job Title" required>
+              <span *ngIf="((jobTitle.invalid && firstloginform.submitted)|| (jobTitle.errors && jobTitle.touched))"
+                class='fa fa-info-circle errspan'> Job Title is required </span>
+            </div>
+            
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/company.svg" class="icon">
+              <input type="text" name="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
+                maxlength="30" placeholder="Company" required>
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
                 class='fa fa-info-circle errspan'> Company is required </span>
             </div>
-            <div class=" col-md-6 form-group">
-                <label>Department</label>
-                <select class="form-control" (change)="onChangeDepartment($event.target.value)" #selectedvalue="ngModel" [(ngModel)]="model.department"
-                [ngModelOptions]="{standalone: true}">
-                  <!-- <option *ngFor="let department of departments; let i = index" value="{{i}}">{{department}}</option> -->
-                  <option [value]="undefined" disabled hidden>Select Department</option>
-                  <option value="hr">HR</option>
-                  <option value="development">Development</option>
-                  <option value="finance">Finance</option> 
-                  <option value="infra">Infra</option>
-                  <option value="testing">Testing</option>
-                  <option value="pmo">PMO</option>
+            <div class=" col-md-6 form-group inner-addon left-addon">
+                <img src="assets/images/registration/department.svg" class="icon">
+                <select class="form-control" (change)="onChangeDepartment($event.target.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
+                required>
+                  <option [value]="undefined" disabled hidden>Department</option>
+                  <option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;'>{{departments[i]}}</option>
                   <option value="others">Others</option>
                 </select>
+                <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
+                class='fa fa-info-circle errspan'> Department is required </span>
               </div>
-              <div  class=" col-md-6 form-group" *ngIf="college" >
-                <label for="name">Department Name:</label>
-                <input type="text" class="form-control" id="name" ngModel maxlength="20" placeholder="Enter Department Name:"ngModel name="other_department_name" required>
+              <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
+                  <img src="assets/images/registration/department.svg" class="icon">
+                <input type="text" class="form-control" name="other_department" #other_department="ngModel" [(ngModel)]='otherDepartment' maxlength="20" placeholder="Department" required>
+                <span *ngIf="((other_department.invalid && firstloginform.submitted)|| (other_department.errors && other_department.touched))"
+                class='fa fa-info-circle errspan'> Department is required </span>
               </div>
-  
-            <div class=" col-md-6 form-group">
-              <label>Country</label>
-              <select class="form-control" (change)="onChangeCountry($event.target.value)" #country="ngModel" [(ngModel)]="model.country" required>
-               <!-- <option value=" "> select</option>  -->
-               <option hidden disabled [selected]=true>Select Country</option>
-                <option *ngFor="let country of countryInfo; let i = index" value="{{i}}">{{country.CountryName}}
+            <div class=" col-md-6 form-group inner-addon left-addon">
+              <img src="assets/images/registration/Global.svg" class="icon">
+              <select class="form-control" (change)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
+               <option  [value]="undefined" disabled hidden>Country</option>
+               <!-- <option hidden disabled [selected]=true>Country</option> -->
+                <option *ngFor="let country of countryInfo; let i= index"  value="{{i}}">{{country.CountryName}}
                 </option>
               </select>
+              <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
+                class='fa fa-info-circle errspan'> Country is required </span>
             </div>
 
-            <div class=" col-md-6 form-group">
-              <label>State</label>
-              <select class="form-control" (change)="onChangeState($event.target.value)">
-                <option *ngIf="stateInfo == ''" value="-1">Select State</option>
+            <div class=" col-md-6 form-group inner-addon left-addon">
+              <img src="assets/images/registration/State.svg" class="icon">
+              <select class="form-control" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
+                <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+                <option  [value]="undefined" disabled hidden>State</option>
                 <option *ngFor="let state of stateInfo; let j = index" value="{{j}}">{{state.StateName}}</option>
               </select>
+              <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
+                class='fa fa-info-circle errspan'> State is required </span>
             </div>
 
-            <div class=" col-md-6 form-group">
-              <label>City</label>
-              <select class="form-control">
-                <option *ngIf="cityInfo == ''" value="-1">Select CIty</option>
+            <div class=" col-md-6 form-group inner-addon left-addon">
+              <img src="assets/images/registration/town.svg" class="icon">
+              <select class="form-control" name='city' #city='ngModel' [(ngModel)]='model.city' required>
+                <option *ngIf="cityInfo == ''" value="-1">City</option>
+                <option  [value]="undefined" disabled hidden>City</option>
                 <option *ngFor="let city of cityInfo; let k = index" value="{{k}}">{{city}}</option>
               </select>
+              <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
+                class='fa fa-info-circle errspan'> City is required </span>
             </div>
 
-            <div class="form-group col-sm-6">
-              <label for="zipCode">Zip Code</label>
-              <input type="text" (keydown)="onKeydown($event)"  id="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipCode"
-                [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==10) return false;" required >
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/Zip Code.svg" class="icon">
+              <input type="number" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipCode"
+                 onKeyPress="if(this.value.length==10) return false;" placeholder="Zip Code" required>
               <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
                 class='fa fa-info-circle errspan'> Zip Code is required </span>
             </div>
-
-            <div class="form-group col-sm-6">
-              <label for="phoneNumber">Phone</label>
-              <div>
-               <input style="width: 100%" type="text" (keydown)="onKeydown($event)"  id="phoneNumber" class="form-control" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
-                  (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
-                  (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==15) return false;" required>
-              </div>
-            </div>
-
-
-            <!--<div class="form-group col-sm-6">
-              <label for="phone">Phone</label>
-              <div class="col-sm-12">
-                <div class="row">
-                  <div class="col-sm-2 country_code">
-                    <ng-multiselect-dropdown name="mob_country" id="mob_country" #mob_country="ngModel"
-                      [placeholder]="'Select'" [(ngModel)]="model.country" [data]="departments"
-                      [ngClass]="{'single_sel': itemsShowLimit == 1}" [settings]="dropdownSettings" required>
-                    </ng-multiselect-dropdown>
-                    <input list="countryCode" id="">
-                    <datalist id="countryCode">
-                      <option data-countryCode="IN" value="91" selected>India (+91)</option>
-                      <option data-countryCode="GB" value="44" >UK (+44)</option>
-                      <option data-countryCode="US" value="1">USA (+1)</option>
-                      <option data-countryCode="AU" value="61">Australia (+61)</option>
-                    </datalist>
-                  </div>
-                  <div class="col-sm-10 phone_num">
-                    <input type="text" class="form-control" name="phone" id="phone" #phone="ngModel"
-                      [(ngModel)]="model.phoneNumber">
-                  </div>
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
+              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==15) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
+                   (ng2TelOutput)="getNumber($event)">
+                   <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"  -->
+                  <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
+                  class='fa fa-info-circle errspan'> PhoneNumber is required </span>
                 </div>
-                <span *ngIf="((phone.invalid && firstloginform.submitted) || (phone.errors && phone.touched))"
-                  class='fa fa-info-circle errspan'> County Code & Mobile is required </span>
-              </div>
-            </div>-->
-
-            <!--<div class="form-group col-sm-6">
-              <label for="userName">User Name</label>
-              <input type="text" id="userName" name="userName" #userName="ngModel" class="form-control"
-                [(ngModel)]="model.userId" required>
-              <span *ngIf="((userName.invalid && firstloginform.submitted) || (userName.errors && userName.touched))"
-                class='fa fa-info-circle errspan'> User Name is required </span>
-            </div>-->
-
-            <div class="form-group col-sm-6">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" #password="ngModel" class="form-control"
-                [(ngModel)]="model.password" [maxLength]="12" required>
-              <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))"
-                class='fa fa-info-circle errspan'> Password is required </span>
+            <div class="form-group buttns col-sm-12">
+              <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an Account&#63;</a>
+            <!-- </div>
+            <div class="form-group col-sm-6 continue_btn pull-right"> -->
+             <div class='row float-right'>
+              <button type="button" class="btn-back clearbtn" (click)="resetForm()">Clear all</button>
+              <button type="submit" class="btn btn-primary registrbtn"  [disabled]="firstloginform.invalid || showErr">Register</button>
             </div>
-            <div class="form-group col-sm-12 continue_btn">
-             
-              <button type="submit" class="btn btn-continue float-right"  [disabled]="this.submitflag==true">Register</button>
-              <button type="button" class="btn btn-back float-right" (click)="onCancel()">Cancel</button>
             </div>
+            
           </div>
         </form>
+        
       </div>
     </div>
   </div>
-</common-body>
+<!-- </common-body> -->

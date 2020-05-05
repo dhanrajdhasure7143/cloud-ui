@@ -1,90 +1,106 @@
-.a_logo {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  position: relative;
-  left: 3%;
+.login-bg{
+  width: 600px;
 }
-
-img.a_cp_logo {
-  height: 75%;
+.brand img{
+  width: 200px;
 }
-
-.user_layout {
-  height: 100%;
-  overflow: scroll;
-  }
-
-.row.user_login {
-  height: 100%;
+.brand{
+  margin-top: 100px;
+  margin-bottom: 10px;
 }
-
-.country_code {
-  padding-left: 0px;
+.brand img{
+  width: 180px;
 }
-
-.phone_num {
-  padding: 0px;
+.wel_acc{
+  margin-top: 10px;
+  font-size: 19px;
+  font-weight: 500;
 }
-
-
-.continue_btn {
-  // text-align: right;
-  margin-top: 30px;
+.signup-form input, .signup-form select{
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  height: 40px !important;
+  border-radius: 0px !important;
 }
+.inner-addon { 
+  position: relative; 
+}
+.inner-addon .icon {
+position: absolute;
+padding: 10px;
+pointer-events: none;
+width: 40px;
+}
+.left-addon input  { padding-left:  50px; }
+.left-addon select  { padding-left:  50px; }
+.right-addon input { padding-right: 20px; }
 
-.btn-continue {
-  background: #006dd5;
+.inner-addon .eyeicon{
+  position: absolute;
+  padding: 10px;
+  z-index: 1000;
+  margin-left: 80% !important;
+  width: 40px;
+  color: #0061cf !important;
+}
+.phoneicon{
+  width: 33px !important;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+.phonenumber{
+  margin-right: 100px !important;
+}
+.registrbtn{
+  border-radius: 20px;
+  height: 30px;
+  width: 100px;
+  border: 0px;
+  padding:0px;
+}
+.clearbtn{
+  border: 0px;
+  background: none;
+  margin-right: 10px;
+  border-radius: 20px;
+  height: 30px;
+  width: 100px;
+}
+.clearbtn:hover{
+  background-color: #0061cf;
   color: white;
 }
-.btn-back{
-  margin-right: 10px;
+.haveaccountOne{
+  font-size: 15px;
+  color: #0061cf !important;
+  margin-top: 5px;
 }
-
-.wel_acc {
-  margin: 20px 0px 25px;
+.buttns{
+  margin-top: 5px;
 }
-
-form label {
-  font-size: 14px;
-  margin-bottom: 5px;
+#particles-js {
+  position: absolute;
+  z-index: 0;
+  width: 40%;
+  height: 620px;
+  background-color: none;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
-.form-control {
-  font-size: 14px;
-  height: 32px !important;
+.inner-addon .phoneicon{
+  position: absolute;
+  padding: 10px;
+  z-index: 1000;
+  width: 40px;
+  color: #0061cf !important;
 }
-
-.form-group {
-  margin: 15px 0px;
+.phoneicon{
+  width: 33px !important;
 }
-
-
-.log_img {
-  display: flex;
-  align-items: center;
-  height: 80%;
+.iti__flag-container{
+  padding-left: 35px !important;
 }
-
-.img_login {
-  height: 100%;
-}
-
-ul#dropdown-basic {
-  right: 0px !important;
-  position: fixed;
-  top: 60px !important;
-  left: calc(100vw - 336px) !important;
-  height: calc(100vh - 60px);
-  width: 336px;
-  border: 1px solid #dadada;
-  margin: 0px;
-  border-radius: 0px;
-  padding: 0px;
-  overflow: auto;
-}
-
-.iti {
-  position: relative;
-  display: block !important;
-}
+.left-addon .phonenumber  { padding-left: 80px !important; }

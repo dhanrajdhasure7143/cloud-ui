@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductlistService } from 'src/app/_services/productlist.service';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { Base64 } from 'js-base64';
+import {yearslist } from './../../../../assets/jsons/yearlist.json'
 
 
 @Component({
@@ -10,47 +11,84 @@ import { Router } from '@angular/router';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  public selected_plans:any[];
-  public selectedPlan:any[];
+  public selected_plans:any={};
   public cardHoldername:any;
   public cardmonth:any;
   public cardnumbertotal:any;
   public cardyear:any;
   public cvvNumber:any;
-  public cardDetails:any[]=[];
-  public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2024,"year":2025}]
+  public cardDetails:any;
+  public plantype:any;
+  public productId:any;
+  public plansList:any[];
+  public name:any;
+  public cardEncode:any;
+  public cardDecode:any;
+  public card:any;
+  public cardEdit:any;
+  public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
 
 
-  constructor( private productlistservice:ProductlistService, private router:Router) { }
+  constructor( private productlistservice:ProductlistService, 
+              private router:Router,
+              private route:ActivatedRoute,) { }
 
   ngOnInit() {
-    this.productlistservice.getSelectedProductPlan().subscribe(res=> {
-      this.selected_plans = res
-    console.log("selected",this.selected_plans);
+    this.getproductPlans();
+    this.editCardDetails();
+    this.getYears();
+  }
+
+  getYears(){
+    this.yearList=yearslist
+  }
+
+  getproductPlans(){
+    this.productId=localStorage.getItem("selectedproductId"),
+    this.plantype=localStorage.getItem("selectedplan")
+    this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
+    this.plansList.forEach(obj => {
+      if(obj.nickName == this.plantype){
+        this.selected_plans=obj
+        this.name=this.selected_plans.nickName.slice(4);
+        if(this.selected_plans.term =="12month"){
+          this.selected_plans.term= 'Annual'
+        }else{
+          this.selected_plans.term= 'Month'
+        }
+      }
     });
-    this.productlistservice.getCarddetails().subscribe(res=>{
-      this.cardDetails=res 
-    console.log("card",this.cardDetails);
-    })
-    
-    this.cardHoldername=this.cardDetails[0].cardHoldername;
-    this.cardmonth=this.cardDetails[0].cardmonth;
-    this.cardnumbertotal=this.cardDetails[0].cardnumbertotal;
-    this.cardyear=this.cardDetails[0].cardyear;
-    this.cvvNumber=this.cardDetails[0].cvvNumber;
+  });
   }
 
   paymentfromSubmit(){
-  this.router.navigate(['/activation/payment/review']);
-  this.cardDetails[0]={
+  this.cardDetails={
     cardHoldername:this.cardHoldername,
     cardmonth:this.cardmonth,
     cardnumbertotal:this.cardnumbertotal,
     cardyear:this.cardyear,
     cvvNumber:this.cvvNumber,
   }
-  console.log("details",this.cardDetails);
-  this.productlistservice.setCarddetails(this.cardDetails);
+  this.cardEncode=Base64.encode(JSON.stringify(this.cardDetails));
+  this.card={id:this.cardEncode}
+  this.router.navigate(['/activation/payment/review',this.card]);
+  }
 
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 6 && (charCode < 2 || charCode >57)) {
+      return false;
+    }
+    return true;
+  }
+  editCardDetails(){
+    this.route.params.subscribe(data=>{this.cardEdit=data
+    this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));
+      this.cardHoldername=this.cardDetails.cardHoldername;
+      this.cardmonth=this.cardDetails.cardmonth;
+      this.cardnumbertotal=this.cardDetails.cardnumbertotal;
+      this.cardyear=this.cardDetails.cardyear;
+      this.cvvNumber=this.cardDetails.cvvNumber;
+    });
   }
 }

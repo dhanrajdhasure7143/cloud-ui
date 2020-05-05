@@ -3,11 +3,11 @@
   color: #006ed5;
 }
 .planheading{
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .pay_titles{
-  margin-left: 35%;
+  margin-left: 21%;
   margin-top: 15px;
 }
 
@@ -61,4 +61,15 @@ margin-top: 20px;
 .btn-back{
   border: 0px;
   background: none;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+.backBtn{
+  margin-left: 45%;
+}
+.select_label .fa-check-circle{
+  color: green;
+  padding:5px;
 }

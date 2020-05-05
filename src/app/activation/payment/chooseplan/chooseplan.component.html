@@ -1,40 +1,36 @@
 <stepselection class="select_plan"></stepselection>
 
-  <div class="container">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+                <h3 id="planHeading">Based on Plan Features get Enabled</h3>
+                <h4 id="ctr">Choose the right one for your valuable Business</h4>
+        </div>
+        <div class="col-md-12 errordiv" *ngIf='error'>
+                <h2>{{error}}</h2>
+            </div>
+        <span *ngIf='!error' class="col-md-12 row">
+        <div class="col-md-3 plansBox" *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
+                <h4><span id="planName"><b>{{planlist.nickName}}</b></span> <span *ngIf="!planlist.active" class="current-plan">Current Plan</span></h4>
+                <h6 class="processes" *ngFor='let value of planlist.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
+                        <label *ngIf="value.limited">Limited</label></span>
+                    </h6>
 
-            <div id="selectplan" class=" ">
-                    <div class="container">
-                            <div class="row">
-                                    <h2 id="plo">Based on Plan Features get Enabled</h2>
-                            </div>
-                            <div class="row">
-                                <span id="ctr">
-                                        <h4>Choose the right one for your valuable Business</h4>
-                                    </span>
-                            </div>
-                                <div class="row">
-                                    <div class="col-sm-3" id="coltab" class="plansBox" *ngFor="let selected_plan of selected_plansOne; let i=index">
-                                        <h4><span id="ft"><b>{{selected_plan.planName}}</b></span></h4>
-                                        <h5><i class="fa fa-check" aria-hidden="true"></i><span>Process Intelligence<label>Limited</label></span></h5>
-                                        <h5><i class="fa fa-check" aria-hidden="true"></i><span>Business Process Studio<label>Limited</label></span></h5>
-                                        <h5><i class="fa fa-check" aria-hidden="true"></i><span>Service Orchestration<label>Limited</label></span></h5>
-                                        <h5 *ngIf="selected_plan.amount[i] == Enterprise Solution"><i class="fa fa-times" aria-hidden="true"></i>Artificial Intelligence</h5>
-                                        <h5 *ngIf="selected_plan.amount[i] == Enterprise Solution"><i class="fa fa-times" aria-hidden="true"></i>Live Support</h5>
+                <h5 *ngIf="planlist.nickName !='Plan C'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
+                <button *ngIf="planlist.nickName !='Plan C'" [disabled]='!planlist.active' class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
 
-                                        <h5 *ngIf="selected_plan.amount[i] != Enterprise Solution"><i class="fa fa-check" aria-hidden="true"></i>Artificial Intelligence</h5>
-                                        <h5 *ngIf="selected_plan.amount[i] != Enterprise Solution"><i class="fa fa-check" aria-hidden="true"></i>Live Support</h5>
+                <h5 *ngIf="planlist.nickName =='Plan C'" class="enterprice">Enterprise Solution</h5>
+                <a href="https://www.epsoftinc.com/contact-us/" target="_blank"><button *ngIf="planlist.nickName =='Plan C'" class="btn btn-primary selectplanbtn">Contact Us</button></a>
+            </div>
+        </span>
 
-                                        <h4 *ngIf="selected_plan.amount[i] == Enterprise Solution" style="font-weight:800">$ {{selected_plan.amount}} /<span  style="font-size: 10px;font-weight: 300">User Per Month</span></h4>
-                                        <button *ngIf="selected_plan.amount[i] == Enterprise Solution" class="btn btn-primary" (click)="openTarget('/checkout',selected_plan)">Select</button>
-                                        <h5 *ngIf="selected_plan.amount[i] != Enterprise Solution" class="enterprice">{{selected_plan.amount}}</h5>
-                                        <button *ngIf="selected_plan.amount[i] != Enterprise Solution" class="btn btn-primary" (click)="openTarget('/checkout',selected_plan)">Contact Us</button>
-                                    </div>                    
-                                </div>
-                        </div>
-                    </div>
-
-                   
-                </div>
-
+            <div class="col-md-12 row conditions">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                    <span class='pull-right'> <a class='terms' [routerLink]="['/terms']" target="_blank">Terms & Conditions</a><a class="policy" [routerLink]="['/privacy']" target="_blank">Privacy Policy</a> </span>
+                 </div>
+            </div>
+    </div>
+</div>
                
        

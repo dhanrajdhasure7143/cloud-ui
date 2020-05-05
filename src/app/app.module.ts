@@ -41,7 +41,7 @@ export const contentfulConfig: ContentfulConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    ValidateComponent
+    ValidateComponent,
    
   ],
   imports: [

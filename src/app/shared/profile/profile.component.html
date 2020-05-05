@@ -1,5 +1,7 @@
+<notifier-container></notifier-container>
 
 <div id="foot">
+
     <div  class="slider_heading">
         <div class="cros">
             <span (click)="slideDown()"><img class="" src="assets/images/crossclose.svg"></span>
@@ -11,30 +13,39 @@
                       
                     <tabset >
                         <tab heading="My Account" id="tab1">
-
-                      <!-- <div class="cros">
-                          <span (click)="slideDown()"><img class="cross_close" src="assets/images/crossclose.svg"></span>
-                      </div> -->
-                            
-                        <!-- <div class="col-md-12" id="myDIV">
-                            <button class="heading_types btnOne active" (click)="profile()">My Account</button>
-                            <button class="heading_types btnOne" (click)="subscrption()">Subscriptions</button>
-                            <button class="heading_types btnOne" (click)="invoice()">Invoice</button>
-                            <button class="heading_types btnOne" (click)="payment()">Payment Mode</button>
-                            <span (click)="slideDown()"><img class="cross_close" src="assets/images/crossclose.svg"></span>
-                            <div *ngIf="!isAccount" class="search-One">
-                            <form class="form-inline d-flex  md-form form-sm">
-                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
-                                    <i class="fa fa-fw fa-search searchicon" aria-hidden="true"></i>
-                                  </form>
-                            </div>
-                        </div> -->
                         <div>
                             <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
                                 <div class="row">
+                                  <div class="form-group col-sm-3">
+                                    <label for="email">User Name</label>
+                                    <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.userId"
+                                                pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
+                                  
+                                  </div>
+                                  <div class="form-group col-sm-3">
+                                    <label for="passwd">Password</label>
+                                    <span class=" input-group" style="margin-left:0px">
+                                    <input  
+                                          [type]="(show==true) ? 'password' : 'text'" 
+                                          name="passwd" 
+                                          #passwd="ngModel" 
+                                          class="form-control botmbordr" 
+                                          [(ngModel)]="formOne.password"
+                                          placeholder="Enter Password"                  
+                                          minlength="10"
+                                          autocomplete="new-password"
+                                          required
+                                          [ngClass]="{ 'is-invalid': ((passwd.invalid && updateUser.submitted) || (passwd.errors && passwd.touched) ) }" />
+                                          <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span> 
+                                        </span>
+                                          <span *ngIf="((passwd.errors && updateUser.submitted) || (passwd.errors && passwd.touched) || (passwd.errors && passwd.minlength)) " class='fa fa-info-circle errspan'>
+                                          <span *ngIf="passwd.errors.required">Password is required</span>
+                                          <span *ngIf="passwd.errors.minlength">Minimum length should be 10 characters</span>
+                                    </span>
+                                  </div>
                                     <div class="form-group col-sm-3">
                                         <label for="firstName">First Name</label>
-                                        <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].firstName" placeholder="Enter First Name" maxlength="25" required alphabetOnly 
+                                        <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required alphabetOnly 
                                         [ngClass]="{ 'is-invalid': ((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) ) }" />
                                     <span *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )" 
                                         class='fa fa-info-circle errspan'>
@@ -43,28 +54,23 @@
                               
                                           <div class="form-group col-sm-3">
                                             <label for="lastName">Last Name</label>
-                                            <input type="text" name="lastName" #lastName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly 
+                                            <input type="text" name="lastName" #lastName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly 
                                                 [ngClass]="{ 'is-invalid': ((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) ) }" />
                                                 <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )" 
                                                 class='fa fa-info-circle errspan'> Last Name is required </span>
                                             </div>
                                           <div class="form-group col-sm-3">
                                             <label for="jobTitle">Job Title</label>
-                                            <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly 
+                                            <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly 
                                             [ngClass]="{ 'is-invalid': ((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) ) }" />
                                             <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )" 
                                             class='fa fa-info-circle errspan'>Job Title is required </span>
                                         </div>
 
-                                        <div class="form-group col-sm-3">
-                                          <label for="email">Email</label>
-                                          <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].userId"
-                                                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
-                                        
-                                        </div>
+                                       
                                         <div class="form-group col-sm-3">
                                           <label for="company">Company</label>
-                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].company" placeholder="Enter Company Name" maxlength="25" required alphabetOnly 
+                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly 
                                           [ngClass]="{ 'is-invalid': ((company.invalid && updateUser.submitted) || (company.errors && company.touched) ) }" />
                                           <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
                                           class='fa fa-info-circle errspan'>Job Title is required </span> 
@@ -73,19 +79,14 @@
                           
                                          <div class=" form-group col-md-3 ">
                                           <label for="Department">Department</label>
-                                          <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne[0].department)" #department="ngModel" [(ngModel)]="formOne[0].department" [ngModelOptions]="{standalone: true}">
-                                            <option hidden disabled>Select Department</option>
-                                            <option value="HR">HR</option>
-                                            <option value="development">Development</option>
-                                            <option value="finance">Finance</option> 
-                                            <option value="infra">Infra</option>
-                                            <option value="testing">Testing</option>
-                                            <option value="pmo">PMO</option>
-                                            <option value="others">Others</option>
+                                          <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="this.userDepartment"[ngModelOptions]="{standalone: true}">
+                                            <option  [selected]=true >Select</option>
+                                            <option *ngFor="let department of listOfDepartments"  [value]="department">{{department}}</option>
+                                          
                                           </select>
 
                                               <div class="form-group col-sm-" *ngIf="addDepartment">
-                                                    <input type="text" name="department" #department="ngModel" class="form-control botmbordr" [(ngModel)]="formOne[0].otherdepartment" placeholder="Enter Department Name" maxlength="25" required alphabetOnly 
+                                                    <input type="text" name="department" #department="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.otherdepartment" placeholder="Enter Department Name" maxlength="25" required alphabetOnly 
                                                     [ngClass]="{ 'is-invalid': ((department.invalid && updateUser.submitted) || (department.errors && department.touched) ) }" />
                                                     <span *ngIf="((department.invalid && updateUser.submitted) || (department.errors && department.touched) )" 
                                                     class='fa fa-info-circle errspan'>Department Name is required </span> 
@@ -97,76 +98,45 @@
                           
                                           <div class="form-group col-sm-3">
                                                 <label for="country">Country</label>
-                                                <select id="country" class="form-control botmbordr" #country="ngModel" [(ngModel)]="formOne[0].country" [ngModelOptions]="{standalone: true}">
+                                                <select id="country" class="form-control botmbordr" #country="ngModel" [(ngModel)]="formOne.country" [ngModelOptions]="{standalone: true}">
                                                         <option hidden disabled [ngValue]="undefined" [selected]=false>Select Country</option>
                                                  <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
                                                   </select>
                                               </div>
 
-                                              <div class="form-group col-sm-3">
-                                                <label for="passwd">Password</label>
-                                                <span class=" input-group" style="margin-left:0px">
-                                                <input  
-                                                      [type]="(show==true) ? 'password' : 'text'" 
-                                                      name="passwd" 
-                                                      #passwd="ngModel" 
-                                                      class="form-control botmbordr" 
-                                                      [(ngModel)]="passrd"
-                                                      placeholder="Enter Password"                  
-                                                      minlength="10"
-                                                      autocomplete="new-password"
-                                                      required
-                                                      [ngClass]="{ 'is-invalid': ((passwd.invalid && updateUser.submitted) || (passwd.errors && passwd.touched) ) }" />
-                                                      <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span> 
-                                                    </span>
-                                                      <span *ngIf="((passwd.errors && updateUser.submitted) || (passwd.errors && passwd.touched) || (passwd.errors && passwd.minlength)) " class='fa fa-info-circle errspan'>
-                                                      <span *ngIf="passwd.errors.required">Password is required</span>
-                                                      <span *ngIf="passwd.errors.minlength">Minimum length should be 10 characters</span>
-                                                </span>
-                                              </div>
+                                             
                                                              
-                                          <!-- <div class="form-group col-sm-3">
+                                          <div class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
                                                   <div>
                                                     <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
                                                      (ng2TelOutput)="getNumber($event)"
-                                                        #phoneumber="ngModel" [(ngModel)]="formOne[0].phoneNumber" [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==15) return false;" required
+                                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==15) return false;" required
                                                         [ngClass]="{'is-invalid': ((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) ) }" />
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'>Phone Number is required </span>
                                                 </div>
-                                                </div> -->
+                                                </div> 
 
-                                                <div class="form-group col-sm-3">
+                                                <!-- <div class="form-group col-sm-3">
                                                   <label for="phoneNumber">Phone</label>
-                                                  <input type="number" name="phoneNumber" #phoneNumber="ngModel" minlength="8" class="form-control botmbordr numberInput" [(ngModel)]="formOne[0].phoneNumber" placeholder="Enter Phone Number" maxlength="25" required 
+                                                  <input type="number" name="phoneNumber" #phoneNumber="ngModel" minlength="8" class="form-control botmbordr numberInput" [(ngModel)]="formOne.phoneNumber" placeholder="Enter Phone Number" maxlength="25" required 
                                                   [ngClass]="{ 'is-invalid': ((phoneNumber.invalid && updateUser.submitted) || (phoneNumber.errors && phoneNumber.touched) ) }" />
                                                   <span *ngIf="((phoneNumber.invalid && updateUser.submitted) || (phoneNumber.errors && phoneNumber.touched) )" 
                                                   class='fa fa-info-circle errspan'>Phone Number is required </span>
                                                 </div>
-
-                                          <!-- <div class="form-group col-sm-3">
-                                                <label for="firstName">User Name</label>
-                                                <input type="text" id="userName"  name="userName" #userName  class="form-control botmbordr"  maxlength="20" required >
-                                              </div> -->
-                                                        
                                                 <div class="col-sm-6">
-                                                </div>
+                                                </div> -->
                                     <div class="form col-sm-3">
                                         <label></label>
-                                        <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid || showErr">Update/Save</button>
-                                        <!-- <button type="button" class="btn btn-back float-right"  href="" [routerLink]="['/activation']">Cancel</button> -->
+                                        <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid || showErr">Save</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                       </tab>
                         
-                        
-                        
-                        
-                        
-                        <tab heading="Subscriptions">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Subscriptions">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -187,15 +157,15 @@
                                   </thead>
                                   <tbody class="col-md-12" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
                                     <tr >
-                                      <td >{{sdata.id}}</td>
-                                      <td>{{sdata.product}}</td>
-                                      <td>{{sdata.plan}}</td>
-                                      <td>{{sdata.amount}}</td>
+                                      <td >{{sdata.subscriptionId}}</td>
+                                      <td>{{sdata.name}}</td>
+                                      <td>{{sdata.planId}}</td>
+                                      <td>{{sdata.planEntity.amount}}</td>
                                       <td>{{sdata.status}}</td>
-                                      <td  class="deleticon"><span><img src="assets/images/eyeIcon.svg" alt=""> </span><span (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                      <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span *ngIf = "sdata.status === 'Active'" (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                         <div id="myid" [ngClass]="selectedIndex == i?'isdelet':''" class="deletconfm">
                                           <div class="container-fluid deletefrm">
-                                        <h5 class="pull-left">Conformation</h5>
+                                        <h5 class="pull-left">Confirmation</h5>
                                         <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
                                             <span aria-hidden="true">&times;</span>
                                           </button>
@@ -205,15 +175,16 @@
                                         </div>
                                         </div>
                                       </td>
+                                      <td class = "deleticon">
+                                        <button class="btn btn-primary" *ngIf = "sdata.status != 'Active'" (click)="reactivatesubscription(sdata)">Reactivate</button>
+                                      </td>
                                     </tr>
                                   </tbody>
                                 </table>
                         </div>
                       </tab>
 
-                        
-                        
-                        <tab heading="Invoice">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Invoice">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -235,20 +206,20 @@
                                   </thead>
                                   <tbody >
                                     <tr *ngFor="let invdata of invoicedata | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
-                                      <td>{{invdata.invoiceid}}</td>
-                                      <td>{{invdata.subscription}}</td>
+                                      <td>{{invdata.invoiceNumber}}</td>
+                                      <td>{{invdata.subscriptionId}}</td>
                                       <td>{{invdata.amount}}.00 USD</td>
-                                      <td>$ {{invdata.refund}}</td>
-                                        <td>{{invdata.duedate}}</td>
+                                      <td>{{invdata.refund || "NA"}}</td>
+                                        <td>{{invdata.duedate || "NA"}}</td>
                                         <td>{{invdata.status}}</td>
-                                      <td><img class="download" src="assets/images/download_icon.svg"></td>
+                                      <td><span  (click) = "invoicedownload(invdata)"><img class="download" src="assets/images/download_icon.svg"></span></td>
                                     </tr>
                                   </tbody>
                                 </table>
                         </div>
                       </tab>
                         
-                        <tab heading="Payment Mode">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Payment Mode">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -261,29 +232,28 @@
                                     <tr>
                                       <th scope="col" class="cardtype">Card Type</th>
                                       <th scope="col" class="cardtypes">Card</th>
-                                      <th scope="col" class="cardtype">Postal Code</th>
-                                      <th scope="col" class="cardtype">Expairy Date</th>
+                                      <th scope="col" class="cardtype">Expiration Date</th>
                                       <th scope="col" class="cardtype">Created Date</th>
                                       <th scope="col" class="cardtype">Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let cardData of paymentMode | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
-                                      <td>{{cardData.cardType}}</td>
-                                      <td class="cardtable">{{cardData.cardnumber}} <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.select}}</span></td>
-                                      <td>-</td>
-                                      <td>{{cardData.expairydate}}</td>
-                                      <td>{{cardData.createddate}}</td>
+                                      <td>{{cardData.cardBrand}}</td>
+                                      <td class="cardtable">{{cardData.cardLast4}} <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td>
+                                  
+                                      <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
+                                      <td>{{cardData.created | date}}</td>
                                       <td class="deletcard"><span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
                                         
-                                        <div id="delete-card" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
+                                        <div id="delete-card"  *ngIf="closeFlag" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
                                             <div class="container-fluid deletefrm">
                                           <h5 class="pull-left">Conformation</h5>
-                                          <button type="button" class="close " aria-label="Close" (click)="cancelDeleteCard(i)">
-                                              <span aria-hidden="true">&times;</span>
+                                                                 <button type="button" class="close " aria-label="Close" (click)="cancelDeleteCard(i)">
+                                             <span aria-hidden="true">&times;</span>
                                             </button>
-                                          <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
-                                          <button class="pull-left confm" (click)="confrmDeleteCard(i)">Yes</button>
+                                          <p class="pull-left">Are you sure you want to remove the card?</p>
+                                          <button class="pull-left confm" (click)="confrmDeleteCard(cardData)">Yes</button>
                                           <button class="confm pull-left" (click)="cancelDeleteCard(i)">No</button>
                                           </div>
                                           </div>
@@ -300,23 +270,15 @@
 
         <div class="container" *ngIf="isInvite">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div  class="col-md-12">
                             <h4 class="invite">Invite User</h4>
-                            <!-- <span (click)="slideDown()"><img class="cross_closeinvite" src="assets/images/crossclose.svg"></span> -->
                     </div>
                     <div class="col-md-4 invteform">
                                         <form autocomplete="off" #inviteuser="ngForm" (ngSubmit)="!inviteuser.invalid && onsubmit()">
-                                            <!-- <div class="form-group">
-                                              <label for="exampleFormControlInput1">Email address</label>
-                                              <input type="email" class="form-control"  #email="ngModel"
-                                              [(ngModel)]="emailOne" name="email" id="email" placeholder="name@example.com" required>
-                                              <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"
-                                              class='fa fa-info-circle errspan'>Email is required </span>
-                                            </div> -->
                                             <div class="form-group">
                                                     <label for="email">Email</label>
                                                     <input type="text" name="email" #email="ngModel" class="form-control" [(ngModel)]="emailId"
-                                                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com"
+                                                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Email address ex: abc@xyz.com"
                                                       [ngClass]="{ 'is-invalid': ((email.invalid && inviteuser.submitted) || (email.errors && email.touched) ) }" />
                                                     <span *ngIf="((email.invalid && inviteuser.submitted) || (email.errors && email.touched) ) "
                                                       class='fa fa-info-circle errspan'>
@@ -327,23 +289,20 @@
 
                                             <div class="form-group">
                                               <label for="application">Application</label>
-                                              <select class="form-control" name="application" #application="ngModel" [(ngModel)]="appName" id="application" required>
+                                              <select class="form-control" name="application"  id="application" required>
                                                 <option  [value]="undefined" disabled hidden>Select Application</option>
-                                                <option value="GiB-2.0">GiB-2.0</option>
-                                                <option value="Ez-Flow">Ez-Flow</option>
-                                                <option value="eZ-bot">eZ-bot</option>
+                                                <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
                                               </select>
                                             </div>
                                             <div class="form-group">
                                                     <label for="Role">Role</label>
                                                     <select class="form-control" name="Role" #Role="ngModel" [(ngModel)]="role" id="Role" required>
-                                                        <!-- <option hidden disabled>Select Role</option> -->
                                                         <option  [value]="undefined" disabled hidden>Select Role</option>
                                                         <option value="Admin">Admin</option>
                                                         <option value="User">User</option>
                                                     </select>
                                                   </div>
-                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit">Sign in</button>
+                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit">Submit</button>
                                           </form>
                             </div>
                     </div>
@@ -351,26 +310,10 @@
 
 
 
-             
-                    
-
-                   
-            
-
                 <div class="container users" *ngIf="isusers">
                         <div class="">
                             <tabset >
-                            <!-- <div class="col-md-12" id="myuser"> -->
-                                <!-- <button class="heading_types userbtnOne active" (click)="usersData()">User Management</button>
-                                <button class="heading_types userbtnOne" (click)="departmentData()">Departments</button>
-                                <button class="heading_types userbtnOne" (click)="rolesData()">Role</button>
-                                <span (click)="slideDown()"><img class="cross_close" src="assets/images/crossclose.svg"></span>
-                                <form class="form-inline d-flex  md-form form-sm search-One">
-                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
-                                        <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
-                                      </form>
-                            </div> -->
-                            <tab heading="User Management" id="tab1">
+                            <tab  heading="User Management" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -392,7 +335,7 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser">
+                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser;trackBy:loopTrackBy;">
                                           <td>{{userdata.id}}</td>
                                           <td>{{userdata.firstName}}</td>
                                           <td>{{userdata.lastName}}</td>
@@ -428,7 +371,7 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser">
+                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
                                             <td>{{userdata.id}}</td>
                                             <td>{{userdata.firstName}}</td>
                                             <td>{{userdata.lastName}}</td>
@@ -465,7 +408,7 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser">
+                                              <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
                                                 <td>{{userdata.id}}</td>
                                                 <td>{{userdata.firstName}}</td>
                                                 <td>{{userdata.lastName}}</td>
@@ -479,35 +422,72 @@
                                           </table>
                             </div>
                             </tab>
-
-
-
-
                           </tabset>
-                    
                 </div>
             </div>
-    </div>
 
+            <div *ngIf="isnotification" class="container">
+              <div class="row">
+                <div class="col-md-12">
+                    <h4 class="noticationheading">Notifications</h4>
+                </div>
+                <div class="notificatnmsgs col-md-12">
+                    <table class="table table-borderless table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col" style="width:60%;">Notifications</th>
+                                <th scope="col" style="width:300px;">Date</th>
+                                <th scope="col" style="width:200px;">Time</th>
+                                <th scope="col" style="width:200px !important;">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let messageList of nitificationList; let i = index; trackBy:loopTrackBy;">
+                                <td>{{messageList.mailBody}}</td>
+                                <td>{{messageList.createdAt | date}}</td>
+                                <td>{{messageList.createdAt | date:"HH:mm:s"}}</td>
+                                <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
+                              
+                                
+                                <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
+                                    <div class="container-fluid deletefrm">
+                                  <h5 class="pull-left">Conformation</h5>
+                                  <button type="button" class="close " aria-label="Close" (click)="canceldeleteNotification(i)">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  <p class="pull-left">Are you sure you want to delete notification ?</p>
+                                  <button class="pull-left confm">Yes</button>
+                                  <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
+                                  </div>
+                                  </div>
+                                </td>                              
+                              </tr>
+                            </tbody>
+                          </table>
+                </div>
+            </div>
+          </div>
+
+    </div>
 
     <ng-template #template >
         <div class="modal">
           <div class="container">
             <div class="modal-body row">
                 <div class="col-md-12">
-                    <h4 class="modal-title pull-left">Where are sorry to see you go</h4>
+                    <h4 class="modal-title pull-left">We are sorry to see you go</h4>
                     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                       <span aria-hidden="true">&times;</span>
                     </button>
                 </div >
                 <div class="col-md-12 subheadin">
-                  <p>If you have a moment please let us know why you unsubscribe:</p>
+                  <p>If you have a moment, please let us know why you want to unsubscribe:</p>
                 </div>
                 <div class="col-md-12 infocheck">
                   <input type="checkbox" [(ngModel)]="stopcheckbox" ><span>I stopped using this account</span>
                 </div>
                 <div class="col-md-12 infocheck">
-                    <input type="checkbox" [(ngModel)]="pricecheckbox"> <span>Price of the plane is high</span>
+                    <input type="checkbox" [(ngModel)]="pricecheckbox"> <span>Price of the plan is high</span>
                   </div>
                   <div class="col-md-12 infocheck">
                       <input type="checkbox" [(ngModel)]="plancheckbox"> <span>Subscribed another plan</span>
@@ -523,3 +503,49 @@
             </div>
           </div>
         </ng-template>
+
+        <ng-template #detailstemplate >
+          <div class="modal">
+            <div class="container">
+              <div class="modal-body row">
+                  <div class="col-md-12">
+                      <h4 class="modal-title pull-left">Subscription Details</h4>
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div >
+                  <div class="col-md-12 infocheck">
+                    <label for="subscriptionid">Subscription ID : </label>
+                    <input type="text" name="subscriptionid" #subscriptionid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.subscriptionId"/>     
+                              </div>
+                  <div class="col-md-12 infocheck">
+                    <label for="product">Product : </label>
+                    <input type="text" name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.name"/>     
+ 
+                    </div>
+                    <div class="col-md-12 infocheck">
+                      <label for="planid">Plan ID : </label>
+                      <input type="text" name="planid" #planid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.planId"/>     
+   
+                      </div>
+                      <div class="col-md-12 infocheck">
+                        <label for="billingaccount">Billing Account : </label>
+                        <input type="text" name="billingaccount" #billingaccount="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.billingAccount"/>     
+     
+                        </div>
+   
+                        <div class="col-md-12 infocheck">
+                          <label for="status">Status : </label>
+                          <input type="text" name="status" #status="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.status"/>     
+       
+                          </div>
+   
+                  <div class="col-md-12 submitbtn">
+                    <button class="btn btn-primary" (click)="infoModelSubmit()">Change Plan</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+        

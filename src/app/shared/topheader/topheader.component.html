@@ -1,28 +1,22 @@
 
 <div class="container-fluid">
   <div class="row">
-<nav class=" navbar-light naveOne">
-  <a class="navbar-brand" href="#" class="aiotal">
-    <img class="titleimage" src="assets/images/EpsoftImage.svg" alt="epsoft"> </a>
-  <ul  class="nav navTwo">
-      <li class=" nav-item">
-          <img class="notification-icon" src="assets/images/notificationIcon.svg" alt=" ">
+<nav class=" navbar-light naveOne col-md-12">
+  <a class="navbar-brand col-md-4" href="#" class="aiotal">
+    <img class="titleimage" src="assets/images/logo_img.png" alt="epsoft"> </a>
+  <ul  class="nav navTwo col-md-8">
+    <li class="col-md-10"></li>
+      <li class=" nav-item col-md-1 notificationBell">
+          <img class="notification-icon" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt=" ">
         </li>
-    <li class=" nav-item">
-        <!-- <img class="notification-icon" src="assets/images/notificationIcon.svg" alt=" "> -->
-
-        <!-- <a href="#" class="icon_middle"> -->
-      <img class="icon_middle" src="assets/images/pro1.png" alt="profile image">
-            <!-- </a> -->
+    <li class=" nav-item col-md-1">
+      <img class="icon_middle pull-right" src="assets/images/pro1.png" alt="profile image">
         <span (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="Drop Down"></span>      
-
-
               <div id="myDropdown" class="dropdown-content">
                <p (click)="accountSlideup()"><img  src="assets/images/account.svg"><span>My Account</span></p>
-                  <!-- <p (click)="subscriptionSlide()"><img  src="assets/images/account.svg"><span>Subscription</span></p> -->
-                  <p (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
-                  <p (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
-                  <p (click)="logout()"><img src="assets/images/Sign_Out.svg"><span>Signout AIOTAL</span></p>
+                  <p *ngIf="this.userRole=='Admin'" (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
+                  <p *ngIf="this.userRole=='Admin'" (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
+                  <p (click)="logout()"><img src="assets/images/Sign_Out.svg"><span>Signout</span></p>
               </div> 
           </li>
         </ul>
@@ -31,4 +25,5 @@
 </div>
 
 
-  <app-profile [isMyaccount]="isMyaccount" [isInvite]="isInvite" [isusers]="isusers"></app-profile>
+
+  <app-profile [isMyaccount]="isMyaccount" [isInvite]="isInvite" [isusers]="isusers" [isnotification]="isnotification"></app-profile>

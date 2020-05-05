@@ -12,66 +12,61 @@ export class ChooseplanComponent implements OnInit {
   selected_plansOne:any[];
   plan:any;
   plantype: any;
+  public plansList:any;
+  public list:any[];
+  public productId:any;
+  public error='';
+  public test:any;
   constructor(private productlistservice:ProductlistService, private router: Router,
     ) { }
  
   ngOnInit() {
-    this.productlistservice.getSelectedProductPlan().subscribe(res=> {
-      this.selected_plans = res
-    console.log("plansss",this.selected_plans)
-
-    }
-      );
-    this.plan=this.selected_plans;
-    this.selected_plansOne=[{"planName":"Free Tire","amount":0},
-                          {"planName":"Plan A","amount":200,},
-                          {"planName":"Plan B","amount":600,},
-                          {"planName":"Plan C","amount":"Enterprise Solution",}]
+  this.getAllPlanes();
   }
-  
-  openTarget(url,plans){
-    console.log("type of plan",plans)
-    this.productlistservice.setSelectedProductPlan(plans)
-    // let isValid = false;
-    if(plans.planName=="Free Tire"){
-      // this.plantype='freetrail';
-      alert("Free Tire");
-
-    }
-    else{
-      // this.plantype='plan';
+  getAllPlanes(){
+    this.productId=localStorage.getItem("selectedproductId"),
+    this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
+      // this.plansList=null;
+      
+      if(this.plansList == undefined || this.plansList == null){
+        this.error='Sorry for inconvenience we will get back to you shortly'
+      }
+      this.plansList=this.plansList.reverse();
+        for(var i=0; i<this.plansList.length; i++){
+        var features=[];
+        for (let [key, value] of Object.entries(this.plansList[i].features)) {
+          var obj={'name':key,'active':value}
+          features.push(obj)  
+        }
+        this.plansList[i].features=features;
+      }
+      for(var a=0; a<this.plansList[0].features.length-2; a++){
+          this.plansList[0].features[a].limited=true
+      }
+      for(var a=0; a<this.plansList[1].features.length-2; a++){
+        this.plansList[1].features[a].limited=true
+      }
+        this.plansList[2].features[2].limited=true;
+        this.plansList[2].features[3].limited=true;
+    this.plansList[0].amount = 0;
+    this.plansList[0].term='month';
+    this.plansList[1].term='month';
+    this.plansList[2].term='year';
+    },error=>{
+      this.error='Sorry for inconvenience we will get back to you shortly'
+    });
+  }
+  selectedPlan(planData){
+    if(planData.nickName =="Free tier"){
+      alert("Free Tier");
+    }else{
+    localStorage.setItem('selectedplan',planData.nickName);
     this.router.navigate(['/activation/payment/details']);
     }
-    
-    // window.open('http://localhost:3000'+url+'?plan='+plans.id+'&product='+plans.productId+'&type='+this.plantype, '_self' );
-    
-
   }
-fun1(evt, seltab) {
-  console.log("type of plan",seltab)
-  if (seltab == 'selectplan') {
-    this.tab = 'tab1';
+  loopTrackBy(index, term){
+    return index;
   }
-  else if (seltab == 'Payment') {
-    this.tab = 'tab2';
-  } else {
-    this.tab = 'tab3';
-  }
-
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(seltab).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-
-
   }
 
 

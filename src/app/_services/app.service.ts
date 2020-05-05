@@ -6,7 +6,6 @@ import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SessionService } from './session/';
 import { CookieStore } from './cookie.store';
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +22,7 @@ export class AppService {
     return this.http.post<any>(`/api/login/beta/accessToken`, { 'userId' : username, 'password' : password })
         .pipe(map(user => {
             localStorage.setItem('currentUser', JSON.stringify(user));
-            CookieStore.set('token', currentUser.accessToken, {});
+            CookieStore.set('token', user.accessToken, {});
             this.setProperties();
             return user;
         }));
