@@ -105,7 +105,7 @@
 
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/town.svg" class="icon">
-              <select class="form-control" name='city' #city='ngModel' [(ngModel)]='model.city' required>
+              <select class="form-control"  (change)="onChangeCity($event.target.value)" name='city' #city='ngModel' [(ngModel)]='model.city' required>
                 <option *ngIf="cityInfo == ''" value="-1">City</option>
                 <option  [value]="undefined" disabled hidden>City</option>
                 <option *ngFor="let city of cityInfo; let k = index" value="{{k}}">{{city}}</option>
