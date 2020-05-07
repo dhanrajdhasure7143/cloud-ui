@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 import  countries  from './../../assets/jsons/countries.json';
 import { Particles } from '../_models/particlesjs';
+import { Logger } from 'ag-grid-community';
 
 @Component({
   selector: 'app-firstlogin',
@@ -92,15 +93,21 @@ export class FirstloginComponent implements OnInit {
     }
   }
   onChangeCountry(countryValue) {
-    // this.model.country = this.countryInfo[countryValue].CountryName;
-    
+    this.model.country = this.countryInfo[countryValue].CountryName;
     this.stateInfo=this.countryInfo[countryValue].States;
-    // this.cityInfo=this.stateInfo[0].Cities;
-    this.cityInfo=[];
+  
+   
   }
 
   onChangeState(stateValue) {
+    this.model.state =this.stateInfo[stateValue].StateName
+    console.log("state : " + this.model.state);
     this.cityInfo=this.stateInfo[stateValue].Cities;
+  }
+  
+  onChangeCity(cityValue)
+  {
+    this.model.city = this.cityInfo[cityValue]
   }
   onSuccessOfVerifyToken(response: any) {
     if(response){
