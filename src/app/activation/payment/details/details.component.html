@@ -15,7 +15,7 @@
                 <input type="text" name="cardHolder" #cardHolder="ngModel" [(ngModel)]="cardHoldername" class="form-control payment-input" id="cardHolder" placeholder="Enter Card Holder Name" required
                 [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" />
                 <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
-                class='fa fa-info-circle errspan'>Card holder name is required </span> 
+                class='fa fa-info-circle errspan'>Card Holder Name is required </span> 
               </div>
 
                   <div class="form-group col-sm-6">
@@ -57,18 +57,18 @@
                     </div> -->
 
               <div class="form-group col-sm-8">
-                <label for="cardNumber">Card number</label>
+                <label for="cardNumber">Card Number</label>
                 <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardnumbertotal" id="cardNumber" placeholder="Enter Card Number" required 
                 [ngClass]="{ 'is-invalid': ((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) ) }" />
                 <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
-                class='fa fa-info-circle errspan'>Card number is required</span> 
+                class='fa fa-info-circle errspan'>Card Number is required</span> 
               </div>
               <div class="form-group col-sm-4">
                   <label for="cvv">CVV</label>
                   <input type="password" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required
                   [ngClass]="{ 'is-invalid': ((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) ) }" />
                 <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
-                class='fa fa-info-circle errspan'>Cvv required</span>                
+                class='fa fa-info-circle errspan'>CVV required</span>                
               </div>
                 <div class="form-group col-sm-6">
                   <label for="year">Year (YYYY)</label>
