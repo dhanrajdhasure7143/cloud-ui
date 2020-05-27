@@ -18,7 +18,7 @@
                               [ngClass]="{ 'is-invalid': ((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) }" />
                             <span *ngIf="((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) "
                               class='fa fa-info-circle errspan'>
-                              <span *ngIf="email.errors.required">Email is required</span>
+                              <span *ngIf="email.errors.required"> Email is required</span>
                               <span *ngIf="email.errors.pattern">Enter valid email address</span>
                             </span>
                           </div>
