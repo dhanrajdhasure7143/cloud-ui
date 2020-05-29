@@ -20,7 +20,7 @@
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/user.svg" class="icon">
               <input type="text" name="firstName" #firstName="ngModel" class="form-control"
-                [(ngModel)]="model.firstName" maxlength="20" placeholder="First Name" required [ngModelOptions]="{standalone: true}">
+                [(ngModel)]="model.firstName" maxlength="20" placeholder="First Name" required (keypress)="lettersOnly($event)" [ngModelOptions]="{standalone: true}">
               <span *ngIf="((firstName.invalid && firstloginform.submitted)|| (firstName.errors && firstName.touched))"
                 class='fa fa-info-circle errspan'> First Name is required </span>
             </div>
@@ -28,7 +28,7 @@
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/user.svg" class="icon">
               <input type="text" name="lastName" id="lastName" #lastName="ngModel" class="form-control"
-                [(ngModel)]="model.lastName" maxlength="20" placeholder="Last Name" required>
+                [(ngModel)]="model.lastName" maxlength="20" placeholder="Last Name" required (keypress)="lettersOnly($event)">
               <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
                 class='fa fa-info-circle errspan'> Last Name is required </span>
             </div>

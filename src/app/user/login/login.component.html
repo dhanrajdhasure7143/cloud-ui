@@ -16,12 +16,12 @@
                         <input type="text" formControlName="username" placeholder="Enter User Name" class="form-control userinput"
                           [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                          <div *ngIf="f.username.errors.required">Username is required</div>
+                          <div *ngIf="f.username.errors.required">User name is required</div>
                         </div>
                       </div>
                       <div class="form-group col-md-12 inner-addon left-addon right-addon">
                           <img src="assets/images/password_icon.png" class="pswIcon">
-                          <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                          <span  (click)="toggle()" class="input-group-add pwd-class"> <i style="margin-left : 15px" class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
 
                           <input [type]="(show==true) ? 'password' : 'text'" formControlName="password" #password class="form-control pswinput" placeholder="Enter Password"
                             [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required/>
@@ -42,7 +42,7 @@
                   </div>
                 </form>
                 <div class="col-sm-12">
-                    <label  class="have_acc col-sm-12">Don't have an account&#63;</label>
+                    <label class = "have_acc" >Don't have an Account&#63;</label>
                     <button (click)="requestDemo()" class="btn btn-primary login-btn">Register</button>
     
                 </div>

@@ -248,7 +248,7 @@
                                         
                                         <div id="delete-card"  *ngIf="closeFlag" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
                                             <div class="container-fluid deletefrm">
-                                          <h5 class="pull-left">Conformation</h5>
+                                          <h5 class="pull-left">Confirmation</h5>
                                                                  <button type="button" class="close " aria-label="Close" (click)="cancelDeleteCard(i)">
                                              <span aria-hidden="true">&times;</span>
                                             </button>
@@ -451,7 +451,7 @@
                                 
                                 <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
                                     <div class="container-fluid deletefrm">
-                                  <h5 class="pull-left">Conformation</h5>
+                                  <h5 class="pull-left">Confirmation</h5>
                                   <button type="button" class="close " aria-label="Close" (click)="canceldeleteNotification(i)">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -516,27 +516,27 @@
                   </div >
                   <div class="col-md-12 infocheck">
                     <label for="subscriptionid">Subscription ID : </label>
-                    <input type="text" name="subscriptionid" #subscriptionid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.subscriptionId"/>     
+                    <input type="text" [disabled]=true name="subscriptionid" #subscriptionid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.subscriptionId"/>     
                               </div>
                   <div class="col-md-12 infocheck">
                     <label for="product">Product : </label>
-                    <input type="text" name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.name"/>     
+                    <input type="text" [disabled]=true name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.name"/>     
  
                     </div>
                     <div class="col-md-12 infocheck">
                       <label for="planid">Plan ID : </label>
-                      <input type="text" name="planid" #planid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.planId"/>     
+                      <input type="text" [disabled]=true name="planid" #planid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.planId"/>     
    
                       </div>
                       <div class="col-md-12 infocheck">
                         <label for="billingaccount">Billing Account : </label>
-                        <input type="text" name="billingaccount" #billingaccount="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.billingAccount"/>     
+                        <input type="text" [disabled]=true name="billingaccount" #billingaccount="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.billingAccount"/>     
      
                         </div>
    
                         <div class="col-md-12 infocheck">
                           <label for="status">Status : </label>
-                          <input type="text" name="status" #status="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.status"/>     
+                          <input type="text" [disabled]=true name="status" #status="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.status"/>     
        
                           </div>
    

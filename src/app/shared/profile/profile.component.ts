@@ -301,5 +301,13 @@ export class ProfileComponent implements OnInit{
     this.profileservice.listofinvoices().subscribe(response => { this.invoicedata = response.data });
   }
 
+  onKeydown(event){
+    
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
+    let temp =numArray.includes(event.key); //gives true or false
+   if(!temp){
+    event.preventDefault();
+   } 
+  }
 
 }

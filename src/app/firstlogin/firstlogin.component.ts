@@ -182,4 +182,13 @@ export class FirstloginComponent implements OnInit {
     loopTrackBy(index, term){
     return index;
   }
+  lettersOnly(event): boolean {
+ 
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+    }
+    }
 }
