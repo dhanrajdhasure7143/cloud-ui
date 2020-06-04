@@ -121,8 +121,10 @@ export class LoginComponent implements OnInit {
 
  
   checkSuccessCallback(data:any){
+    console.log('data',data);
+    
     this.sharedData.setLoggedinUserData(data);
-    this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
+    // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
     // localStorage.setItem('firstName',data.firstName);
     // localStorage.setItem('lastName',data.lastName);
     localStorage.setItem('userName',data.userId);

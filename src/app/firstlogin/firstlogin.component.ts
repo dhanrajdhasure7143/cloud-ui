@@ -93,22 +93,35 @@ export class FirstloginComponent implements OnInit {
     }
   }
   onChangeCountry(countryValue) {
-    this.model.country = this.countryInfo[countryValue].CountryName;
-    this.stateInfo=this.countryInfo[countryValue].States;
+    // this.model.country = this.countryInfo[countryValue].CountryName;
+    // this.stateInfo=this.countryInfo["India"].States;
+    // console.log('CountryName',countryValue);
+    
+    for(var i=0; i< this.countryInfo.length; i++){
+      if(this.countryInfo[i].CountryName == countryValue ){
+        this.stateInfo=this.countryInfo[i].States; 
+      }
+    }
   
    
   }
 
   onChangeState(stateValue) {
-    this.model.state =this.stateInfo[stateValue].StateName
-    console.log("state : " + this.model.state);
-    this.cityInfo=this.stateInfo[stateValue].Cities;
+    // this.model.state =this.stateInfo[stateValue].StateName
+    // console.log("state : " + this.model.state);
+    // this.cityInfo=this.stateInfo[stateValue].Cities;
+    for(var i=0; i< this.stateInfo.length; i++){
+      if(this.stateInfo[i].StateName == stateValue ){
+        this.cityInfo=this.stateInfo[i].Cities; 
+      }
+    }
   }
   
-  onChangeCity(cityValue)
-  {
-    this.model.city = this.cityInfo[cityValue]
-  }
+  // onChangeCity(cityValue){
+  //   console.log('cityValue',cityValue);
+    
+  //   // this.model.city = this.cityInfo[cityValue]
+  // }
   onSuccessOfVerifyToken(response: any) {
     if(response){
       if(response.message==='Token Invalid' || response.message==='Token Expired'){
@@ -167,7 +180,7 @@ export class FirstloginComponent implements OnInit {
   }
   onKeydown(event){
     
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
     let temp =numArray.includes(event.key); //gives true or false
    if(!temp){
     event.preventDefault();

@@ -131,7 +131,7 @@ export class ProfileComponent implements OnInit{
     this.useremail = localStorage.getItem("userName");
     this.profileservice.getUserDetails(this.useremail).subscribe(data => {
     this.formOne = data
-      this.userDepartment = data.department;
+      // this.userDepartment = data.department;
 
 
     })
@@ -176,14 +176,14 @@ export class ProfileComponent implements OnInit{
   }
 
   updateAccount(form) {
-    this.firstloginservice.updateUser(this.formOne).subscribe(data => {
+    // this.firstloginservice.updateUser(this.formOne).subscribe(data => {
       this.notifier.show({
         type: "success",
         message: "Updated successfully!",
         id: "123"
       });
-    }, err => {
-    });
+    // }, err => {
+    // });
 
   }
   // checkSuccessCallback(data:any){

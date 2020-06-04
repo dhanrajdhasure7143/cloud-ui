@@ -20,7 +20,7 @@
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/user.svg" class="icon">
               <input type="text" name="firstName" #firstName="ngModel" class="form-control"
-                [(ngModel)]="model.firstName" maxlength="20" placeholder="First Name" required (keypress)="lettersOnly($event)" [ngModelOptions]="{standalone: true}">
+                [(ngModel)]="model.firstName" maxlength="20" placeholder="First Name" required (keypress)="lettersOnly($event)">
               <span *ngIf="((firstName.invalid && firstloginform.submitted)|| (firstName.errors && firstName.touched))"
                 class='fa fa-info-circle errspan'> First Name is required </span>
             </div>
@@ -34,8 +34,7 @@
             </div>
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/mail.svg" class="icon">
-              <input type="email" id="email" #email="ngModel" class="form-control" [(ngModel)]="decodedToken" required
-                [ngModelOptions]="{standalone: true}" ngModel maxlength="30" placeholder="Email" disabled>
+              <input type="email" id="email" name='email' #email="ngModel" class="form-control" [(ngModel)]="decodedToken" maxlength="30" placeholder="Email" required disabled>
               <span *ngIf="((email.invalid && firstloginform.submitted)|| (email.errors && email.touched))"
                 class='fa fa-info-circle errspan'> Email is required </span>
             </div>
@@ -43,9 +42,11 @@
             <img src="assets/images/registration/Lock.svg" class="icon">
             <span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
             <input [type]="(show==true) ? 'password' : 'text'" id="password" name="password" #password="ngModel" class="form-control"
-              [(ngModel)]="model.password" [maxLength]="12" placeholder="Password" required>
-            <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))"
-              class='fa fa-info-circle errspan'> Password is required </span>
+              [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" required>
+            <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
+              <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
+              <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
+            </span>
           </div>
 
             <div class="form-group col-sm-6 inner-addon left-addon">
@@ -85,7 +86,7 @@
               <select class="form-control" (change)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
                <option  [value]="undefined" disabled hidden>Country</option>
                <!-- <option hidden disabled [selected]=true>Country</option> -->
-                <option *ngFor="let country of countryInfo; let i= index"  value="{{i}}">{{country.CountryName}}
+                <option *ngFor="let country of countryInfo; let i= index"  [value]="country.CountryName">{{country.CountryName}}
                 </option>
               </select>
               <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
@@ -97,7 +98,7 @@
               <select class="form-control" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
                 <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
                 <option  [value]="undefined" disabled hidden>State</option>
-                <option *ngFor="let state of stateInfo; let j = index" value="{{j}}">{{state.StateName}}</option>
+                <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
               </select>
               <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
                 class='fa fa-info-circle errspan'> State is required </span>
@@ -108,7 +109,7 @@
               <select class="form-control"  (change)="onChangeCity($event.target.value)" name='city' #city='ngModel' [(ngModel)]='model.city' required>
                 <option *ngIf="cityInfo == ''" value="-1">City</option>
                 <option  [value]="undefined" disabled hidden>City</option>
-                <option *ngFor="let city of cityInfo; let k = index" value="{{k}}">{{city}}</option>
+                <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
               </select>
               <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
                 class='fa fa-info-circle errspan'> City is required </span>
@@ -123,14 +124,13 @@
             </div>
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
-              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==15) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
-                   (ng2TelOutput)="getNumber($event)">
-                   <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"  -->
+              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==15) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}">
+                   <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
                   <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
                   class='fa fa-info-circle errspan'> Phone Number is required </span>
                 </div>
             <div class="form-group buttns col-sm-12">
-              <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an Account&#63;</a>
+              <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an account&#63;</a>
             <!-- </div>
             <div class="form-group col-sm-6 continue_btn pull-right"> -->
              <div class='row float-right'>

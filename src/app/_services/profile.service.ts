@@ -31,8 +31,8 @@ export class ProfileService {
     return this.http.get<any>('/subscriptionservice/v1/invoices/'+invoiceId+'/pdf',{responseType: 'blob' as 'json'})
     }
 
-  getUserDetails(username):Observable<any>{
-    return this.http.get<any>('/api/user/details?userId='+username, httpOptions)
+  getUserDetails(username){
+    return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
   }
   getDepartments():Observable<any>{
     return this.http.get<any>('/api/user/departments')

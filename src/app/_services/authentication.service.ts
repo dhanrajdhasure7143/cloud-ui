@@ -74,9 +74,7 @@ export class AuthenticationService {
     get getHomeRef() {
       return this.appService.homeRef;
     }
-    userDetails(username: string): Observable<any[]> {
-      
-      return this.http.get<any[]>('/api/user/details?userId='+username, httpOptions);
-     
+    userDetails(username: string) {
+      return this.http.get('/api/user/details?userId='+username,{responseType:'json'});
     }
 }

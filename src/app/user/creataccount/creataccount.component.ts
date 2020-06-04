@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Particles } from '../../_models/particlesjs'
+import { Particles } from '../../_models/particlesjs';
 import { LoginService } from '../_services/login.service';
 
 @Component({
