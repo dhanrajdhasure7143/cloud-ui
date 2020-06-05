@@ -189,7 +189,7 @@ export class LoginComponent implements OnInit {
 
   requestDemo() {
     // location.href = this.config.portfolioSite;
-this.router.navigate(['/creataccount'])
+this.router.navigate(['/createaccount'])
   }
 
   googleLogin() {

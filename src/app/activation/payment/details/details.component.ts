@@ -26,8 +26,8 @@ export class DetailsComponent implements OnInit {
   public cardDecode:any;
   public card:any;
   public cardEdit:any;
-  public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
-
+  // public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
+  public yearList:number[] = new Array(11);
 
   constructor( private productlistservice:ProductlistService, 
               private router:Router,
@@ -40,13 +40,30 @@ export class DetailsComponent implements OnInit {
   }
 
   getYears(){
-    this.yearList=yearslist
+    // this.yearList=yearslist
   }
 
   getproductPlans(){
     this.productId=localStorage.getItem("selectedproductId"),
     this.plantype=localStorage.getItem("selectedplan")
     this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
+      if(this.plansList.length > 1){
+        this.plansList=this.plansList.reverse();
+      }
+      for(var i=0; i<this.plansList.length; i++){
+        var features=[];
+        for (let [key, value] of Object.entries(this.plansList[i].features)) {
+          var obj={'name':key,'active':value}
+          features.push(obj)  
+        }
+        this.plansList[i].features=features;
+      }
+      for(var a=0; a<this.plansList[2].features.length-2; a++){
+        this.plansList[1].features[a].limited=true
+      }
+        this.plansList[2].features[2].limited=true;
+        this.plansList[2].features[3].limited=true;
+
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
@@ -59,6 +76,7 @@ export class DetailsComponent implements OnInit {
       }
     });
   });
+  
   }
 
   paymentfromSubmit(){
@@ -81,14 +99,19 @@ export class DetailsComponent implements OnInit {
     }
     return true;
   }
+  isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+   }
   editCardDetails(){
     this.route.params.subscribe(data=>{this.cardEdit=data
+      if(this.isEmpty(data) != true){
     this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));
       this.cardHoldername=this.cardDetails.cardHoldername;
       this.cardmonth=this.cardDetails.cardmonth;
       this.cardnumbertotal=this.cardDetails.cardnumbertotal;
       this.cardyear=this.cardDetails.cardyear;
       this.cvvNumber=this.cardDetails.cvvNumber;
+      }
     });
   }
 }

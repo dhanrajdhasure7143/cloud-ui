@@ -9,17 +9,18 @@
 .pay_titles{
   margin-left: 21%;
   margin-top: 15px;
-}
-
-.plandetails p{
-  font-size: 10px;
   font-weight: bold;
 }
-.plandetails img{
- height:15px;
- width:15px;
- padding-right: 5px;
+
+.processes{
+  font-size: 10px !important;
+  font-weight: bold;
 }
+// .plandetails img{
+//  height:15px;
+//  width:15px;
+//  padding-right: 5px;
+// }
 
 .select_label {
   font-size: 14px;
@@ -73,3 +74,25 @@ input[type="number"]::-webkit-outer-spin-button {
   color: green;
   padding:5px;
 }
+.processes .fa-check-circle{
+  padding:5px;
+  font-size: 13px
+  }
+  .processes .fa-times-circle{
+    padding:5px;
+    color:rgb(255, 0, 0);
+    font-size: 13px
+  }
+  .processes label {
+    position: absolute;
+    right: 0px;
+    top: -10px;
+    font-size: 8px;
+    color: rgb(116, 110, 110);
+  }
+  .processes span {
+    position: relative;
+  }
+  .processes{
+    margin-bottom: 7px;
+  }

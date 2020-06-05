@@ -27,11 +27,11 @@ const routes: Routes = [{
     component: SocialLoginComponent
   },
   {
-    path: 'creataccount',
+    path: 'createaccount',
     component: CreataccountComponent
   },
   // otherwise redirect to home
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'user' }
 ];
 
 @NgModule({

@@ -5,7 +5,7 @@
       <div class="review-heading">
       <h2 id="" class="plan_label ">You have selected Plan    <span class="plan">{{name}}</span></h2>
       <h5 id="paymnt-subheding">Review your Order to proceed payment</h5>
-      <p class="pay_titles">Card Details:<button class="btn" (click)="editCardDetails()"><img src="assets/images/editCard.svg" alt=""></button>
+      <p class="pay_titles">Card Details:<button class="btn" (click)="editCardDetails()" title="Edit card"><img src="assets/images/editCard.svg" alt=""></button>
       </p>
   </div>
       <!-- <form  autocomplete="off" class="col-md-12 row carddetail"> -->
@@ -15,7 +15,7 @@
         
         <div class="col-md-3">
               <div class="col-md-12">
-                <label for="cardHolder">Cardholder name</label>
+                <label for="cardHolder">Cardholder Name</label>
                 <h6>{{cardDetails.cardHoldername}}</h6>
               </div>
 
@@ -28,7 +28,7 @@
         <div class="col-md-4">
               <div class="row">
               <div class="col-sm-8">
-                <label for="cardNumber">Card number </label>
+                <label for="cardNumber">Card Number </label>
                 <h6>{{cardNumberdigts}}</h6>
               </div>
               <div class="col-sm-4">

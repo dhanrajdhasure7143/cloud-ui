@@ -12,46 +12,46 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
-  })
-export class ProfileComponent implements OnInit{
- 
-    @Input() public isInvite:boolean;
-    @Input() public isMyaccount:boolean;
-    @Input() public isusers:boolean;
-    @Input() public isnotification:boolean;
-    public model:User;
-    public searchvalue:any;
-    public searchUser:any;
-    public emailId:any;
-    public sentFromOne:any;
-    public tableData:any[];
-    public formOne:any={};
-    countryInfo :any []= []; 
-    public addDepartment:boolean=false;
-    public departments:any[];
-    public password:any;
-    public show:  Boolean = true;
-    public userManagement:any[];
-    public selectedIndex:number;
-    public deletCardIndex:number;
-    public defaultcard:number = 0;
-    modalRef: BsModalRef;
-    public stopcheckbox:any;
-    public pricecheckbox:any;
-    public plancheckbox:any;
-    public feedbackbox:any;
-    public paymentMode:any;
-    public invoicedata:any[];
-    public nitificationList:any;
-    public dataid:any;
-    public userId:any;
-    subscribeddata:any;
-    public userdata:any;
-    public closeFlag:Boolean = false;
-  public useremail:any;
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
+})
+export class ProfileComponent implements OnInit {
+
+  @Input() public isInvite: boolean;
+  @Input() public isMyaccount: boolean;
+  @Input() public isusers: boolean;
+  @Input() public isnotification: boolean;
+  public model: User;
+  public searchvalue: any;
+  public searchUser: any;
+  public emailId: any;
+  public sentFromOne: any;
+  public tableData: any[];
+  public formOne: any = {};
+  countryInfo: any[] = [];
+  public addDepartment: boolean = false;
+  public departments: any[];
+  public password: any;
+  public show: Boolean = true;
+  public userManagement: any[];
+  public selectedIndex: number;
+  public deletCardIndex: number;
+  public defaultcard: number = 0;
+  modalRef: BsModalRef;
+  public stopcheckbox: any;
+  public pricecheckbox: any;
+  public plancheckbox: any;
+  public feedbackbox: any;
+  public paymentMode: any;
+  public invoicedata: any[];
+  public nitificationList: any;
+  public dataid: any;
+  public userId: any;
+  subscribeddata: any;
+  public userdata: any;
+  public closeFlag: Boolean = false;
+  public useremail: any;
   department: any;
   userDepartment: any;
   listOfDepartments: any = [];
@@ -61,35 +61,35 @@ export class ProfileComponent implements OnInit{
   invoiceid: any;
   apps: any;
   userRole: any;
-    constructor( private sharedData: SharedDataService,
-                private firstloginservice: FirstloginService,
-                private modalService: BsModalService,
-                private profileservice:ProfileService,
-                private notifier:NotifierService,
-                private router: Router
-                ) { }
+  public otherdepartment: any;
+  stateInfo: any[] = [];
+  cityInfo: any[] = [];
+  constructor(private sharedData: SharedDataService,
+    private firstloginservice: FirstloginService,
+    private modalService: BsModalService,
+    private profileservice: ProfileService,
+    private notifier: NotifierService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.profileservice.getDepartments().subscribe(resp => 
-      {
-        this.department = resp,
+    this.profileservice.getDepartments().subscribe(resp => {
+      this.department = resp,
         this.department.forEach(element => {
-        this.listOfDepartments.push(element)
-              });})
+          this.listOfDepartments.push(element)
+        });
+    })
 
     this.getAllNotifications();
-    this.getAllSubscrptions();
-    this.getAllInvoices();
-    this.getAllPaymentmodes();
     this.profileservice.getUserApplications().subscribe(resp => {
       this.apps = resp,
         this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
         });
     })
-    this.profileservice.getUserRole(2).subscribe(role=>{
-      this.userRole=role.message;
-     
+    this.profileservice.getUserRole(2).subscribe(role => {
+      this.userRole = role.message;
+
     })
     this.countryInfo = countries.Countries;
 
@@ -115,8 +115,6 @@ export class ProfileComponent implements OnInit{
 
     }
     this.getAllNotifications();
-    this.getAllSubscrptions();
-    this.getAllInvoices();
   }
 
   getAllNotifications() {
@@ -124,26 +122,16 @@ export class ProfileComponent implements OnInit{
       "toAddress": localStorage.getItem("userName")
     }
     this.profileservice.getNotifications(userId).subscribe(data => {
-    this.nitificationList = data
+      this.nitificationList = data
     })
   }
   userDetails() {
     this.useremail = localStorage.getItem("userName");
-    this.profileservice.getUserDetails(this.useremail).subscribe(data => {
-    this.formOne = data
-      // this.userDepartment = data.department;
-
+    this.profileservice.getUserDetails(this.useremail).subscribe(data => {this.formOne = data     
+      this. getAllStates();
+      this.gatAllCities();
 
     })
-    // this.formOne ={
-    //   firstName :localStorage.getItem("firstName"),
-    //   lastName :localStorage.getItem("lastName"),
-    //   designation :localStorage.getItem("designation"),
-    //   userId:localStorage.getItem("userName"),
-    //   company:localStorage.getItem('company'),
-    //   department:localStorage.getItem('department'),
-    //   country :localStorage.getItem("country"),
-    //   phoneNumber:localStorage.getItem("phoneNumber")};
   }
   loopTrackBy(index, term) {
     return index;
@@ -157,33 +145,42 @@ export class ProfileComponent implements OnInit{
   inviteUser() {
   }
   onChangeDepartment(selectedvalue) {
-    this.firstloginservice.getAllDepartments().subscribe(response => {
-      this.departments = response;
-    });
-    if (selectedvalue == "others") {
+    // this.firstloginservice.getAllDepartments().subscribe(response => {
+    //   this.departments = response;
+    // });
+    if (selectedvalue == "Others") {
       this.addDepartment = true;
     } else {
       this.addDepartment = false;
     }
   }
 
-  onChangeCountry(countryValue) {
-    this.formOne.country = this.countryInfo[countryValue].CountryName;
-  }
+  // onChangeCountry(countryValue) {
+  //   this.formOne.country = this.countryInfo[countryValue].CountryName;
+  // }
 
   toggle() {
     this.show = !this.show;
   }
 
   updateAccount(form) {
-    // this.firstloginservice.updateUser(this.formOne).subscribe(data => {
+    if (this.formOne.department == "Others") {
+
+      this.formOne.department = this.otherdepartment;
+    }
+    this.firstloginservice.updateUser(this.formOne).subscribe(data => {
+    this.notifier.show({
+      type: "success",
+      message: "Updated successfully!",
+      id: "123"
+    });
+    }, err => {
       this.notifier.show({
-        type: "success",
-        message: "Updated successfully!",
-        id: "123"
+        type: "error",
+        message: "Please try again!",
+        id: "124"
       });
-    // }, err => {
-    // });
+    });
 
   }
   // checkSuccessCallback(data:any){
@@ -197,10 +194,9 @@ export class ProfileComponent implements OnInit{
     this.selectedIndex = index;
   }
 
-  infoModelSubmit(){
+  infoModelSubmit() {
     this.modalRef.hide();
     this.router.navigate(['/activation/payment/chooseplan']);
-  
   }
 
   unsubscribeYes(index) {
@@ -210,16 +206,16 @@ export class ProfileComponent implements OnInit{
       this.notifier.show({
         type: "success",
         message: "Subscription cancelled successfully!",
-        id: "123" 
+        id: "123"
       });
     }, err => {
     });
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
-   
+
   }
-  unsubscribeNo(index){
-  document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
- 
+  unsubscribeNo(index) {
+    document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+
   }
   deletCard(data, index) {
     this.closeFlag = true;
@@ -230,8 +226,8 @@ export class ProfileComponent implements OnInit{
 
     this.profileservice.deletePaymentMode(index.id).subscribe(data => { this.delData = data })
     this.getAllPaymentmodes();
- 
-  
+
+
   }
   cancelDeleteCard(index) {
     this.closeFlag = false;
@@ -256,58 +252,104 @@ export class ProfileComponent implements OnInit{
     this.dataid = '';
   }
 
-  subscriptiondata(data,index,template){
-  this.subscribeddata = data;
-      this.modalRef = this.modalService.show(template)
-    }
-
-  invoicedownload(invoicedata){
-    this.invoiceid=invoicedata.invoiceId;
-    this.profileservice.invoicedownload(this.invoiceid).subscribe(data=>{
-    const urlCreator=window.URL;
-    const blob=new Blob([data], {
-    type:'application/pdf',
-     });
-    const url = urlCreator.createObjectURL(blob);
-    const a:any = document.createElement('a');
-    document.body.appendChild(a);
-    a.style='display: none';
-    a.href=url;
-    a.download=invoicedata.invoiceNumber+'.pdf';
-    a.click();
-    window.URL.revokeObjectURL(url);
-    this.notifier.show({
-    type:"success",
-    message: "Downloading....",
-    id:"123"
-     });
-     },err=>{
-    this.notifier.show({
-    type:"error",
-    message:"Download failed!",
-    id:"123"
-     });
-     }
-     )
-     }
-    
-    
-
-  getAllSubscrptions(){
-    this.profileservice.listofsubscriptions().subscribe(response => {this.tableData = response});
+  subscriptiondata(data, index, template) {
+    this.subscribeddata = data;
+    this.modalRef = this.modalService.show(template)
   }
- 
+
+  invoicedownload(invoicedata) {
+    this.invoiceid = invoicedata.invoiceId;
+    this.profileservice.invoicedownload(this.invoiceid).subscribe(data => {
+      const urlCreator = window.URL;
+      const blob = new Blob([data], {
+        type: 'application/pdf',
+      });
+      const url = urlCreator.createObjectURL(blob);
+      const a: any = document.createElement('a');
+      document.body.appendChild(a);
+      a.style = 'display: none';
+      a.href = url;
+      a.download = invoicedata.invoiceNumber + '.pdf';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      // this.notifier.show({
+      //   type: "success",
+      //   message: "Downloading....",
+      //   id: "123"
+      // });
+    }, err => {
+      this.notifier.show({
+        type: "error",
+        message: "Download failed!",
+        id: "123"
+      });
+    }
+    )
+  }
+
+  getAllSubscrptions() {
+    this.profileservice.listofsubscriptions().subscribe(response => { this.tableData = response });
+  }
+
   getAllInvoices() {
     this.profileservice.listofinvoices().subscribe(response => { this.invoicedata = response.data });
   }
 
-  onKeydown(event){
-    
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   } 
+  onKeydown(event) {
+    let numArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace","Tab"]
+    let temp = numArray.includes(event.key); //gives true or false
+    if (!temp) {
+      event.preventDefault();
+    }
   }
 
+  getAllStates() {
+    // this.formOne.country = this.countryInfo[countryValue].CountryName;
+    for (var i = 0; i < this.countryInfo.length; i++) {
+      if (this.countryInfo[i].CountryName == this.formOne.country) {
+        this.stateInfo = this.countryInfo[i].States;
+      }
+    }
+  }
+  gatAllCities() {
+    for (var i = 0; i < this.stateInfo.length; i++) {
+      if (this.stateInfo[i].StateName == this.formOne.state) {
+        this.cityInfo = this.stateInfo[i].Cities;
+      }
+    }
+  }
+
+  onChangeCountry(countryValue) {
+    // this.formOne.country = this.countryInfo[countryValue].CountryName;
+    for (var i = 0; i < this.countryInfo.length; i++) {
+      if (this.countryInfo[i].CountryName == countryValue) {
+        this.stateInfo = this.countryInfo[i].States;
+      }
+    }
+  }
+  onChangeState(stateValue) {
+    for (var i = 0; i < this.stateInfo.length; i++) {
+      if (this.stateInfo[i].StateName == stateValue) {
+        this.cityInfo = this.stateInfo[i].Cities;
+      }
+    }
+  }
+
+  lettersOnly(event): boolean {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+  }
+    onselectInvoiceTab(event){
+      this.getAllInvoices(); 
+    }
+    onselectSubscrptionTab(){
+      this.getAllSubscrptions();
+    }
+    onselectPaymentModeTab(){
+     this.getAllPaymentmodes();
+    }
 }
