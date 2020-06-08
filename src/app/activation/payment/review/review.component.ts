@@ -31,6 +31,7 @@ public subscriptionDetails:any;
 config = {
   animated: false
 };
+public paymentToken:any;
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
@@ -62,7 +63,7 @@ config = {
     this.route.params.subscribe(data=>{this.cardData=data
 
       this.cardDetails=JSON.parse(Base64.decode(this.cardData.id));
-      console.log("this.cardDetails",this.cardDetails);
+      console.log("this.cardDetails.token",this.cardDetails);
 
           this.cardnumber=this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X')+this.cardDetails.cardnumbertotal.slice(-4);
           // this.cardNumberdigts=this.cardnumber.toString().split('').slice(12).join('');
@@ -75,18 +76,52 @@ config = {
     this.isdiable=!this.isagree;
   }
   buyProductPlan(template){
-    // console.log('planslist', this.selected_plans);
-    // console.log("this.cardDetails",this.cardDetails);
+     console.log('planslist', this.selected_plans);
+     console.log("this.cardDetails",this.cardDetails);
     
-    const paymentToken='tok_1GezwJGxwuSV2qOkUhBazB4K'
-    const plandetails={ "ip": "1.2.3.4", 
-              "items": [ { "planId":"IAP_t1m"} 
-            ] 
-          };
+    this.cardDetails={
+      "number":this.cardDetails.cardnumbertotal,
+      "exp_month":this.cardDetails.cardmonth,
+      "exp_year":this.cardDetails.cardyear,
+      "cvc":this.cardDetails.cvvNumber
+    }
+    const plandetails={
+                  "ip": "10.2.3.4",
+                  "items": [
+                    {
+                      "meta":{"orderable":true,
+                "visible":true,
+                "plan_id":this.selected_plans.id},
+                      "planId": this.selected_plans.id
+                    }
+                  ],
+                  "meta": {"orderable":true,
+                "visible":true,
+                "product_id":"virtual_ppe"}
+                }
+    this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
+      this.paymentToken=res
+      console.log('token',this.paymentToken);
+   
+      this.productlistservice.subscribePlan(this.paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
+          this.modalRef = this.modalService.show(template,this.config);
+          console.log('sub',this.subscriptionDetails);
+          
 
-    this.productlistservice.subscribePlan(paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
-    this.modalRef = this.modalService.show(template,this.config);
+      
+          })
+   
     })
+
+    // const paymentToken='tok_1GezwJGxwuSV2qOkUhBazB4K'
+    // const plandetails={ "ip": "1.2.3.4", 
+    //           "items": [ { "planId":"IAP_t1m"} 
+    //         ] 
+    //       };
+
+    // this.productlistservice.subscribePlan(paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
+    // this.modalRef = this.modalService.show(template,this.config);
+    // })
   }
   editCardDetails(){
   this.router.navigate(['/activation/payment/details',this.cardData]);
