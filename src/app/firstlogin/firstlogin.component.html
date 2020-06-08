@@ -106,7 +106,7 @@
 
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/town.svg" class="icon">
-              <select class="form-control"  (change)="onChangeCity($event.target.value)" name='city' #city='ngModel' [(ngModel)]='model.city' required>
+              <select class="form-control" name='city' #city='ngModel' [(ngModel)]='model.city' required>
                 <option *ngIf="cityInfo == ''" value="-1">City</option>
                 <option  [value]="undefined" disabled hidden>City</option>
                 <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
@@ -117,7 +117,7 @@
 
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/Zip Code.svg" class="icon">
-              <input type="number" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipCode"
+              <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipcode"
                  onKeyPress="if(this.value.length==10) return false;" placeholder="Zip Code" required>
               <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
                 class='fa fa-info-circle errspan'> Zip Code is required </span>

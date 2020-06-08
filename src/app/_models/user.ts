@@ -13,5 +13,5 @@ export class User {
     department: string;
     state:string;
     city:string;
-    
+    zipcode:string;
 }
