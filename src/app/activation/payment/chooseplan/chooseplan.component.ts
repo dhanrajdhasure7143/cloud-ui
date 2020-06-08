@@ -31,7 +31,9 @@ export class ChooseplanComponent implements OnInit {
       if(this.plansList == undefined || this.plansList == null){
         this.error='Sorry for inconvenience we will get back to you shortly'
       }
+      if(this.plansList.length > 1){
       this.plansList=this.plansList.reverse();
+    }
         for(var i=0; i<this.plansList.length; i++){
         var features=[];
         for (let [key, value] of Object.entries(this.plansList[i].features)) {

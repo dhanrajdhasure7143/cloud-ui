@@ -96,7 +96,7 @@
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/State.svg" class="icon">
               <select class="form-control" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
-                <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+                <option *ngIf="stateInfo == ''" value="-1">State</option>
                 <option  [value]="undefined" disabled hidden>State</option>
                 <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
               </select>
@@ -124,7 +124,7 @@
             </div>
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
-              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==15) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}">
+              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}">
                    <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
                   <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
                   class='fa fa-info-circle errspan'> Phone Number is required </span>

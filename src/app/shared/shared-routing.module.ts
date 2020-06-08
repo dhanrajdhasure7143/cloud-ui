@@ -4,9 +4,10 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
 
 const routes: Routes = [{
-  path: '',
-  component: PrivacypolicyComponent},
-  {path: 'privacy',
+  // path: '',
+  // component: PrivacypolicyComponent},
+  // {
+    path: 'privacy',
   component: PrivacypolicyComponent},
 {path:'terms',
 component:TermsconditionsComponent}];

@@ -11,29 +11,29 @@
         <div class="col-md-1"></div>
         <div class="col-md-4">
               <div class="form-group col-sm-10">
-                <label for="cardHolder">Card Holder Name</label>
-                <input type="text" name="cardHolder" #cardHolder="ngModel" [(ngModel)]="cardHoldername" class="form-control payment-input" id="cardHolder" placeholder="Enter Card Holder Name" required
-                [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" />
+                <label for="cardHolder">Cardholder Name</label>
+                <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control payment-input" id="cardHolder" placeholder="Enter Card Holder Name" required/>
+                <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                 <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
-                class='fa fa-info-circle errspan'> Card Holder Name is required </span> 
+                class='fa fa-info-circle errspan'> Cardholder Name is required </span> 
               </div>
 
                   <div class="form-group col-sm-6">
                     <label for="month">Month (MM)</label>
                     <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardmonth" required>
                         <option  [value]="undefined" disabled hidden>Select Month</option>
-                      <option value="01">January</option>
-                      <option value="02">February</option>
-                      <option value="03">March</option>
-                      <option value="04">April</option>
-                      <option value="05">May</option>
-                      <option value="06">June</option>
-                      <option value="07">July</option>
-                      <option value="07">August</option>
-                      <option value="07">September</option>
-                      <option value="07">October</option>
-                      <option value="07">November</option>
-                      <option value="07">December</option>
+                      <option value="01">01</option>
+                      <option value="02">02</option>
+                      <option value="03">03</option>
+                      <option value="04">04</option>
+                      <option value="05">05</option>
+                      <option value="06">06</option>
+                      <option value="07">07</option>
+                      <option value="08">08</option>
+                      <option value="09">09</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
                     </select>
                   </div>
                   <div class="col-sm-4"></div>
@@ -58,15 +58,13 @@
 
               <div class="form-group col-sm-8">
                 <label for="cardNumber">Card Number</label>
-                <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardnumbertotal" id="cardNumber" placeholder="Enter Card Number" required 
-                [ngClass]="{ 'is-invalid': ((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) ) }" />
+                <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardnumbertotal" id="cardNumber" placeholder="Enter Card Number" required/>
                 <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
                 class='fa fa-info-circle errspan'> Card Number is required</span> 
               </div>
               <div class="form-group col-sm-4">
                   <label for="cvv">CVV</label>
-                  <input type="password" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required
-                  [ngClass]="{ 'is-invalid': ((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) ) }" />
+                  <input type="password" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
                 <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
                 class='fa fa-info-circle errspan'> CVV required</span>                
               </div>
@@ -74,7 +72,8 @@
                   <label for="year">Year (YYYY)</label>
                   <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
                     <option  [value]="undefined" disabled hidden>Select Year</option>
-                    <option *ngFor="let obj of yearList" [ngValue]="obj.value">{{obj.year}}</option>
+                    <option *ngFor="let obj of yearList; let i=index" [value]="2019+(i+1)">{{2019+(i+1)}}</option>
+                    <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
                   </select>
                 </div>
                 <div class="col-sm-12 btn-continue">
@@ -91,14 +90,19 @@
                     <h6 class="plan_label">Plan <span> {{name}}</span></h6>
                   </div>
                 </div>
+
+                
     
                 <div class="plandetails">
-                      <p><img src="/assets/images/selectcircle.svg">Process Intelligence</p>
+                    <p class="processes" *ngFor='let value of selected_plans.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
+                        <label *ngIf="value.limited">Limited</label></span>
+                    </p>
+                      <!-- <p><img src="/assets/images/selectcircle.svg">Process Intelligence</p>
                       <p><img src="/assets/images/selectcircle.svg">Business Process Studio</p>
                       <p><img src="/assets/images/selectcircle.svg">Service Orchestration</p>
                       <p><img src="/assets/images/selectcircle.svg">Artificial Intelligence</p>
-                      <p><img src="/assets/images/selectcircle.svg">Live Support</p>
-                      <h5 style="font-weight:600">$ {{selected_plans.amount}} <span  style="font-size: 10px;font-weight: 300">/ user per {{selected_plans.term}}</span></h5>
+                      <p><img src="/assets/images/selectcircle.svg">Live Support</p> -->
+                      <h6 style="font-weight:600">$ {{selected_plans.amount}} <span  style="font-size: 11px;font-weight: 500">/ user per {{selected_plans.term}}</span></h6>
                 </div>
               </div>
             </div>       

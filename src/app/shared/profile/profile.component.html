@@ -17,7 +17,7 @@
                             <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
                                 <div class="row">
                                   <div class="form-group col-sm-3">
-                                    <label for="email">User Name</label>
+                                    <label for="email">Email</label>
                                     <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.userId"
                                                 pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
                                   
@@ -31,22 +31,20 @@
                                           #passwd="ngModel" 
                                           class="form-control botmbordr" 
                                           [(ngModel)]="formOne.password"
-                                          placeholder="Enter Password"                  
+                                          placeholder="Password"                
                                           minlength="10"
                                           autocomplete="new-password"
-                                          required
-                                          [ngClass]="{ 'is-invalid': ((passwd.invalid && updateUser.submitted) || (passwd.errors && passwd.touched) ) }" />
+                                          required />
                                           <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span> 
                                         </span>
                                           <span *ngIf="((passwd.errors && updateUser.submitted) || (passwd.errors && passwd.touched) || (passwd.errors && passwd.minlength)) " class='fa fa-info-circle errspan'>
                                           <span *ngIf="passwd.errors.required">Password is required</span>
-                                          <span *ngIf="passwd.errors.minlength">Minimum length should be 10 characters</span>
+                                          <!-- <span *ngIf="passwd.errors.pattern">Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span> -->
                                     </span>
                                   </div>
                                     <div class="form-group col-sm-3">
                                         <label for="firstName">First Name</label>
-                                        <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required alphabetOnly 
-                                        [ngClass]="{ 'is-invalid': ((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) ) }" />
+                                        <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required/>
                                     <span *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )" 
                                         class='fa fa-info-circle errspan'>
                                     First Name is required </span>
@@ -54,55 +52,85 @@
                               
                                           <div class="form-group col-sm-3">
                                             <label for="lastName">Last Name</label>
-                                            <input type="text" name="lastName" #lastName="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly 
-                                                [ngClass]="{ 'is-invalid': ((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) ) }" />
+                                            <input type="text" name="lastName" #lastName="ngModel" class="form-control botmbordr" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly />
                                                 <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )" 
                                                 class='fa fa-info-circle errspan'> Last Name is required </span>
                                             </div>
                                           <div class="form-group col-sm-3">
                                             <label for="jobTitle">Job Title</label>
-                                            <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly 
-                                            [ngClass]="{ 'is-invalid': ((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) ) }" />
+                                            <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control botmbordr" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly/>
                                             <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )" 
                                             class='fa fa-info-circle errspan'>Job Title is required </span>
                                         </div>
-
                                        
                                         <div class="form-group col-sm-3">
                                           <label for="company">Company</label>
-                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly 
-                                          [ngClass]="{ 'is-invalid': ((company.invalid && updateUser.submitted) || (company.errors && company.touched) ) }" />
+                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly />
                                           <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
-                                          class='fa fa-info-circle errspan'>Job Title is required </span> 
+                                          class='fa fa-info-circle errspan'> Company is required </span> 
                                         
                                         </div>
                           
                                          <div class=" form-group col-md-3 ">
                                           <label for="Department">Department</label>
-                                          <select id="department" class="form-control botmbordr" (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="this.userDepartment"[ngModelOptions]="{standalone: true}">
-                                            <option  [selected]=true >Select</option>
+                                          <select id="department" class="form-control botmbordr" name='department' (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="formOne.department" required>
+                                            <!-- <option  [selected]=true >Select</option> -->
+                                            <option  [value]="undefined" disabled hidden>Department</option>
                                             <option *ngFor="let department of listOfDepartments"  [value]="department">{{department}}</option>
-                                          
+                                            <option value='Others'>Others</option>
                                           </select>
-
-                                              <div class="form-group col-sm-" *ngIf="addDepartment">
-                                                    <input type="text" name="department" #department="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.otherdepartment" placeholder="Enter Department Name" maxlength="25" required alphabetOnly 
-                                                    [ngClass]="{ 'is-invalid': ((department.invalid && updateUser.submitted) || (department.errors && department.touched) ) }" />
-                                                    <span *ngIf="((department.invalid && updateUser.submitted) || (department.errors && department.touched) )" 
-                                                    class='fa fa-info-circle errspan'>Department Name is required </span> 
-                                                  
-                                                  </div>
+                                          <span *ngIf="((department.invalid && updateUser.submitted)|| (department.errors && department.touched))"
+                                                    class='fa fa-info-circle errspan'> Department is required </span>
                                         </div>
                                         
-                          
-                          
+                                        <div class="form-group col-sm-3" *ngIf="addDepartment">
+                                            <label for="Department">Other Department</label>
+                                            <input type="text" name="otherDepartment" #otherDepartment="ngModel" maxlength="25" (keypress)="lettersOnly($event)" class="form-control botmbordr" [(ngModel)]="otherdepartment" placeholder="Department Name" maxlength="25" required alphabetOnly />
+                                            <span *ngIf="((otherDepartment.invalid && updateUser.submitted) || (otherDepartment.errors && otherDepartment.touched) )" 
+                                            class='fa fa-info-circle errspan'> Department Name is required </span> 
+                                          </div>
                                           <div class="form-group col-sm-3">
                                                 <label for="country">Country</label>
-                                                <select id="country" class="form-control botmbordr" #country="ngModel" [(ngModel)]="formOne.country" [ngModelOptions]="{standalone: true}">
-                                                        <option hidden disabled [ngValue]="undefined" [selected]=false>Select Country</option>
+                                                <select id="country" name='country' class="form-control botmbordr" (change)='onChangeCountry(formOne.country)' #country="ngModel" [(ngModel)]="formOne.country" required>
+                                                        <option hidden disabled [ngValue]="undefined" [selected]=true>Country</option>
                                                  <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
                                                   </select>
+                                                  <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
+                                                    class='fa fa-info-circle errspan'> Country is required </span>
                                               </div>
+                                              <div class=" col-md-3 form-group inner-addon left-addon">
+                                                  <label for="state">State</label>
+                                                  <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
+                                                  <select class="form-control botmbordr" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
+                                                    <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+                                                    <option  [value]="undefined" disabled hidden>State</option>
+                                                    <option  [value]="null" disabled hidden>State</option>
+                                                    <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
+                                                  </select>
+                                                  <span *ngIf="((state.invalid && updateUser.submitted)|| (state.errors && state.touched))"
+                                                    class='fa fa-info-circle errspan'> State is required </span>
+                                                </div>
+                                    
+                                                <div class=" col-md-3 form-group inner-addon left-addon">
+                                                    <label for="city">City</label>
+                                                  <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
+                                                  <select class="form-control botmbordr"  (change)="onChangeCity($event.target.value)" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
+                                                    <option *ngIf="cityInfo == ''" value="-1">City</option>
+                                                    <option  [value]="undefined" disabled hidden>City</option>
+                                                    <option  [value]="null" disabled hidden>City</option>
+                                                    <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
+                                                  </select>
+                                                  <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
+                                                    class='fa fa-info-circle errspan'> City is required </span>
+                                                </div>
+                                                <div class="form-group col-sm-3 inner-addon left-addon">
+                                                    <label for="zipCode">Zip Code</label>
+                                                    <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
+                                                    <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.zipCode"
+                                                       onKeyPress="if(this.value.length==6) return false;" placeholder="Zip Code" required>
+                                                    <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
+                                                      class='fa fa-info-circle errspan'> Zip Code is required </span>
+                                                  </div>
 
                                              
                                                              
@@ -110,11 +138,9 @@
                                             <label for="phoneumber">Phone</label>
                                                   <div>
                                                     <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
-                                                     (ng2TelOutput)="getNumber($event)"
-                                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" [ngModelOptions]="{standalone: true}" onKeyPress="if(this.value.length==15) return false;" required
-                                                        [ngClass]="{'is-invalid': ((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) ) }" />
+                                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
-                                            class='fa fa-info-circle errspan'>Phone Number is required </span>
+                                            class='fa fa-info-circle errspan'> Phone Number is required </span>
                                                 </div>
                                                 </div> 
 
@@ -127,16 +153,15 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                 </div> -->
-                                    <div class="form col-sm-3">
-                                        <label></label>
-                                        <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid || showErr">Save</button>
+                                    <div class="form-group updat_btndiv">
+                                        <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid">Save</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                       </tab>
                         
-                        <tab *ngIf="this.userRole=='Admin'" heading="Subscriptions">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -184,7 +209,7 @@
                         </div>
                       </tab>
 
-                        <tab *ngIf="this.userRole=='Admin'" heading="Invoice">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Invoice" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -219,7 +244,7 @@
                         </div>
                       </tab>
                         
-                        <tab *ngIf="this.userRole=='Admin'" heading="Payment Mode">
+                        <tab *ngIf="this.userRole=='Admin'" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -240,8 +265,9 @@
                                   <tbody>
                                     <tr *ngFor="let cardData of paymentMode | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
                                       <td>{{cardData.cardBrand}}</td>
-                                      <td class="cardtable">{{cardData.cardLast4}} <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td>
-                                  
+                                      <td class="cardtable">{{cardData.cardLast4}} 
+                                        <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td>
+                                        <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span> -->
                                       <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
                                       <td>{{cardData.created | date}}</td>
                                       <td class="deletcard"><span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
@@ -547,5 +573,3 @@
               </div>
             </div>
           </ng-template>
-
-        

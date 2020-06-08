@@ -11,18 +11,21 @@ const routes: Routes = [{
 {
   path: 'shared',
   loadChildren: './shared/shared.module#SharedModule',
-}, {
+}, 
+{
   path: 'home',
   loadChildren: './home/home.module#HomeModule'
-}, {
+}, 
+{
   path: 'user',
   loadChildren: './user/user.module#UserModule',
   canActivate: [LoginGuard]
-}, {
-  path: 'pages',
-  loadChildren: './pages/pages.module#PagesModule',
-  canActivate: [AuthGuard]
-},
+}, 
+// {
+//   path: 'pages',
+//   loadChildren: './pages/pages.module#PagesModule',
+//   canActivate: [AuthGuard]
+// },
 {
   path: 'validate/:token',
   component: ValidateComponent
