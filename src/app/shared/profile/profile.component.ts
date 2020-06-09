@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
   public formOne: any = {};
   countryInfo: any[] = [];
   public addDepartment: boolean = false;
-  public departments: any[];
+  public departments: any;
   public password: any;
   public show: Boolean = true;
   public userManagement: any[];
@@ -54,7 +54,6 @@ export class ProfileComponent implements OnInit {
   public useremail: any;
   department: any;
   userDepartment: any;
-  listOfDepartments: any = [];
   listOfUserApplications: any = [];
   delData: any;
   blob: Blob;
@@ -73,14 +72,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.profileservice.getDepartments().subscribe(resp => {
-      this.department = resp,
-        this.department.forEach(element => {
-          this.listOfDepartments.push(element)
-        });
-    })
-
-    this.getAllNotifications();
+      this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
       this.apps = resp,
         this.apps.forEach(elementApps => {
@@ -128,6 +120,7 @@ export class ProfileComponent implements OnInit {
   userDetails() {
     this.useremail = localStorage.getItem("userName");
     this.profileservice.getUserDetails(this.useremail).subscribe(data => {this.formOne = data     
+      this.getAllDepartments()
       this. getAllStates();
       this.gatAllCities();
 
@@ -174,6 +167,10 @@ export class ProfileComponent implements OnInit {
       message: "Updated successfully!",
       id: "123"
     });
+    this.addDepartment=false;
+    this.getAllDepartments();
+    this.userDetails();
+    
     }, err => {
       this.notifier.show({
         type: "error",
@@ -351,5 +348,10 @@ export class ProfileComponent implements OnInit {
     }
     onselectPaymentModeTab(){
      this.getAllPaymentmodes();
+    }
+    getAllDepartments(){
+      this.profileservice.getDepartments().subscribe(resp => {
+        this.departments = resp
+      })
     }
 }

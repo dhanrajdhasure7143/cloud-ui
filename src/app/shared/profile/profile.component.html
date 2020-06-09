@@ -76,7 +76,7 @@
                                           <select id="department" class="form-control botmbordr" name='department' (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="formOne.department" required>
                                             <!-- <option  [selected]=true >Select</option> -->
                                             <option  [value]="undefined" disabled hidden>Department</option>
-                                            <option *ngFor="let department of listOfDepartments"  [value]="department">{{department}}</option>
+                                            <option *ngFor="let departmen of departments;let i=index;trackBy:loopTrackBy;">{{departments[i]|titlecase}}</option>
                                             <option value='Others'>Others</option>
                                           </select>
                                           <span *ngIf="((department.invalid && updateUser.submitted)|| (department.errors && department.touched))"
@@ -114,7 +114,7 @@
                                                 <div class=" col-md-3 form-group inner-addon left-addon">
                                                     <label for="city">City</label>
                                                   <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
-                                                  <select class="form-control botmbordr"  (change)="onChangeCity($event.target.value)" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
+                                                  <select class="form-control botmbordr" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
                                                     <option *ngIf="cityInfo == ''" value="-1">City</option>
                                                     <option  [value]="undefined" disabled hidden>City</option>
                                                     <option  [value]="null" disabled hidden>City</option>
@@ -126,7 +126,7 @@
                                                 <div class="form-group col-sm-3 inner-addon left-addon">
                                                     <label for="zipCode">Zip Code</label>
                                                     <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
-                                                    <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.zipCode"
+                                                    <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.zipcode"
                                                        onKeyPress="if(this.value.length==6) return false;" placeholder="Zip Code" required>
                                                     <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
                                                       class='fa fa-info-circle errspan'> Zip Code is required </span>
