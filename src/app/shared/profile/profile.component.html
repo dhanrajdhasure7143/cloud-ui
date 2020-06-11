@@ -76,7 +76,7 @@
                                           <select id="department" class="form-control botmbordr" name='department' (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="formOne.department" required>
                                             <!-- <option  [selected]=true >Select</option> -->
                                             <option  [value]="undefined" disabled hidden>Department</option>
-                                            <option *ngFor="let departmen of departments;let i=index;trackBy:loopTrackBy;">{{departments[i]|titlecase}}</option>
+                                            <option *ngFor="let departmen of departments;let i=index;trackBy:loopTrackBy;" [value]='departments[i]'>{{departments[i]|titlecase}}</option>
                                             <option value='Others'>Others</option>
                                           </select>
                                           <span *ngIf="((department.invalid && updateUser.submitted)|| (department.errors && department.touched))"
@@ -252,6 +252,7 @@
                                       </form>
                                 </div>
                         <div class="container paymode">
+                          <button class='btn btn-primary pull-right addCard' (click)='addPaymentCards(addCard)'>Add New Card</button>
                                 <table class="table table-borderless table-hover">
                                   <thead>
                                     <tr>
@@ -266,11 +267,17 @@
                                     <tr *ngFor="let cardData of paymentMode | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
                                       <td>{{cardData.cardBrand}}</td>
                                       <td class="cardtable">{{cardData.cardLast4}} 
-                                        <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td>
-                                        <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span> -->
+                                        <!-- <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td> -->
+                                        <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span> 
                                       <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
                                       <td>{{cardData.created | date}}</td>
-                                      <td class="deletcard"><span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
+                                      <td class="deletcard">
+                                        <button aria-hidden="true" *ngIf='!cardData.defaultSource' class="btn btn-danger remov_btn"  (click)="deletCard(cardData,i)">Remove
+                                          <!-- <img src="assets/images/unsubscribe.svg" alt=""> -->
+                                        </button> 
+                                        <button *ngIf='!cardData.defaultSource' class='btn btn-primary setDefault_btn' (click)='setAsDefaultCard(cardData)'>Set Default</button>
+                    
+                                        <!-- <span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
                                         
                                         <div id="delete-card"  *ngIf="closeFlag" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
                                             <div class="container-fluid deletefrm">
@@ -282,7 +289,7 @@
                                           <button class="pull-left confm" (click)="confrmDeleteCard(cardData)">Yes</button>
                                           <button class="confm pull-left" (click)="cancelDeleteCard(i)">No</button>
                                           </div>
-                                          </div>
+                                          </div> -->
 
                                       </td>
                                     </tr>
@@ -573,3 +580,89 @@
               </div>
             </div>
           </ng-template>
+          <ng-template #addCard >
+            <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="addNewCard()" class="card_form">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title" >Add New Card</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+            
+                    <div class="modal-body">
+                        <div class="">
+                        <div class="col-12 row">        
+                          <div class="form-group col-sm-8">
+                                <label for="cardHolder">Cardholder Name</label>
+                                <input type="text" name="cardHolder" #cardHolder="ngModel" [(ngModel)]="cardModel.cardHoldername" class="form-control payment-input" id="cardHolder" placeholder="Cardholder Name" required/>
+                                <span *ngIf="((cardHolder.invalid && addpaymentmode.submitted) || (cardHolder.errors && cardHolder.touched) )" 
+                                class='fa fa-info-circle errspan'> Cardholder Name is required </span>
+                    </div>
+                    
+                    <div class="form-group col-sm-8">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
+                            [(ngModel)]="cardModel.cardNumber" id="cardNumber" placeholder="Card Number" required/>
+                            <span *ngIf="((cardNumber.invalid && addpaymentmode.submitted) || (cardNumber.errors && cardNumber.touched) )" 
+                            class='fa fa-info-circle errspan'> Card Number is required</span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                            <label for="cvv">CVV</label>
+                            <input type="password" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" 
+                            [(ngModel)]="cardModel.cvvNumber" id="cvv" placeholder="CVV" required/>
+                          <span *ngIf="((cvv.invalid && addpaymentmode.submitted) || (cvv.errors && cvv.touched) )" 
+                          class='fa fa-info-circle errspan'> CVV required</span>
+                    </div>
+                    <div class="form-group col-sm-6 state_input">
+                            <label for="month">Month (MM)</label>
+                            <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardModel.cardmonth" required>
+                                <option  [value]="undefined" disabled hidden>Select Month</option>
+                              <option value="01">01</option>
+                              <option value="02">02</option>
+                              <option value="03">03</option>
+                              <option value="04">04</option>
+                              <option value="05">05</option>
+                              <option value="06">06</option>
+                              <option value="07">07</option>
+                              <option value="08">08</option>
+                              <option value="09">09</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                            </select>
+                            <span *ngIf="((month.invalid && addpaymentmode.submitted) || (month.errors && month.touched) )" 
+                              class='fa fa-info-circle errspan'> Month required</span>
+                    </div>
+                    <div class="form-group col-sm-6 state_input">
+                            <label for="year">Year (YYYY)</label>
+                            <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardModel.cardyear" required >
+                              <option  [value]="undefined" disabled hidden>Select Year</option>
+                              <option *ngFor="let obj of yearList" [ngValue]="obj.value">{{obj.year}}</option>
+                            </select>
+                            <span *ngIf="((year.invalid && addpaymentmode.submitted) || (year.errors && year.touched) )" 
+                                class='fa fa-info-circle errspan'> Year required</span>
+                    </div>
+                    <div class='form-group check_box'>
+                      <input type="checkbox" class=""  #setdefault='ngModel' [(ngModel)]='isdefault' name="isdefault" > <span> Set As Default</span>
+                  </div>
+                  </div>
+                </div>
+                </div>
+            
+                <div class="modal-footer">
+                    <div class="">
+                      <div class="col-12">
+                  <div class="form-group form-buttons pull-right buttonsblock">        
+                      <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddCard()"><div class="anim"></div> Cancel</button>
+                      <button class="btn btn-primary btn-save" [disabled] = "addpaymentmode.invalid" type="submit"><div class="anim"></div> Save</button>
+                  </div>
+                  
+                  <div class="clearfix">
+                  
+                  </div>
+                  
+                  </div>
+                  </div>
+                  </div>
+                </form>
+            </ng-template>

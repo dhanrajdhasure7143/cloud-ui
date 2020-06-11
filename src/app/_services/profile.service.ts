@@ -51,4 +51,11 @@ getUserApplications():Observable<any>{
 getUserRole(appID):Observable<any>{
   return this.http.get<any>('/authorizationservice/api/v1/user/role/applications/'+appID,httpOptions)
 }
+addNewCard(token,isdefault) :Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods?paymentToken='+token+'&markAsDeafult='+isdefault,httpOptions)
+}
+setasDefaultCard(paymentModeId){
+  return this.http.post('/subscriptionservice/v1/paymentmethods/set-default/'+paymentModeId,{responseType:'json'});
+}
+
 }

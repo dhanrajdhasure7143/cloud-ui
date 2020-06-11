@@ -10,6 +10,8 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import { NotifierService } from 'angular-notifier';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
+import { ProductlistService } from 'src/app/_services/productlist.service';
+import {yearslist } from './../../../assets/jsons/yearlist.json';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +25,15 @@ export class ProfileComponent implements OnInit {
   @Input() public isusers: boolean;
   @Input() public isnotification: boolean;
   public model: User;
+  public yearList:any;
+  config = {
+    animated: false,
+    ignoreBackdropClick: true
+  };
+  public cardModel:any={};
+  public cardDetails:any;
+  public paymentToken:any;
+  public isdefault:boolean=false;
   public searchvalue: any;
   public searchUser: any;
   public emailId: any;
@@ -68,10 +79,12 @@ export class ProfileComponent implements OnInit {
     private modalService: BsModalService,
     private profileservice: ProfileService,
     private notifier: NotifierService,
-    private router: Router
+    private router: Router,
+    private productlistservice:ProductlistService
   ) { }
 
   ngOnInit() {
+    this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
       this.apps = resp,
@@ -214,18 +227,58 @@ export class ProfileComponent implements OnInit {
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
   }
+
   deletCard(data, index) {
-    this.closeFlag = true;
-    this.deletCardIndex = index;
-    document.getElementsByClassName("deletconfm")[index].classList.add("isdeletcard")
+    console.log('log',data.id);
+    
+    // this.closeFlag = true;
+    // this.deletCardIndex = index;
+    // document.getElementsByClassName("deletconfm")[index].classList.add("isdeletcard")
+    Swal.fire({
+      title: 'Confirmation',
+      // text: `Updated failed, Please try again.`,
+      html: '<h4> Do you want to delete the selected card?</h4> ',
+      type: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: true,
+    }).then((result) => {
+      if (result.value) {
+        this.profileservice.deletePaymentMode(data.id).subscribe(data => { this.delData = data
+          this.getAllPaymentmodes();
+          Swal.fire({
+            title: 'Success!',
+            text: `Card deleted successfully.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          }) 
+        },err=>{
+          Swal.fire({
+            title: 'Error!',
+            text: `Please try again.`,
+            type: 'error',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+
+        })
+        this.getAllPaymentmodes();
+      }
+    })
   }
-  confrmDeleteCard(index) {
 
-    this.profileservice.deletePaymentMode(index.id).subscribe(data => { this.delData = data })
-    this.getAllPaymentmodes();
+  // deletCard(data, index) {
+  //   this.closeFlag = true;
+  //   this.deletCardIndex = index;
+  //   document.getElementsByClassName("deletconfm")[index].classList.add("isdeletcard")
+  // }
+  // confrmDeleteCard(index) {
+
+  //   this.profileservice.deletePaymentMode(index.id).subscribe(data => { this.delData = data })
+  //   this.getAllPaymentmodes();
 
 
-  }
+  // }
   cancelDeleteCard(index) {
     this.closeFlag = false;
     console.log("close index is", index)
@@ -354,4 +407,74 @@ export class ProfileComponent implements OnInit {
         this.departments = resp
       })
     }
+
+    addPaymentCards(template){
+      this.modalRef = this.modalService.show(template,this.config)
+    }
+    cancelAddCard(){
+      this.modalRef.hide();
+      this.cardModel={}
+    }
+    addNewCard(){
+      this.cardDetails={
+          "number":this.cardModel.cardNumber,
+          "exp_month":this.cardModel.cardmonth,
+          "exp_year":this.cardModel.cardyear,
+          "cvc":this.cardModel.cvvNumber
+        }
+        console.log('formdata',this.cardDetails);
+      this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
+          this.paymentToken=res
+          console.log('token',this.paymentToken);
+      this.profileservice.addNewCard(this.paymentToken,this.isdefault).subscribe(res=>{
+          // console.log('res',res);
+          this.getAllPaymentmodes();
+          this.modalRef.hide();
+      this.cardModel={}
+      })
+      })
+  
+      // this.profileservice.addNewCard(token).subscribe(res=>{})
+      // api call
+      
+    }
+
+    setAsDefaultCard(selectedCardData){
+      const cardId=selectedCardData.id
+      Swal.fire({
+        title: 'Confirmation',
+        // text: `Updated failed, Please try again.`,
+        html: '<h4> Do you want to set this card as default?</h4> ',
+        type: 'warning',
+        showCancelButton: true,
+        allowOutsideClick: true,
+      }).then((result) => {
+        if (result.value) {
+          this.profileservice.setasDefaultCard(cardId).subscribe(res=>{
+            console.log('res',res);
+            Swal.fire({
+              title: 'Success!',
+              text: "Default card is set successfully.",
+              // Default card is set successfully!!
+              type: 'success',
+              showCancelButton: false,
+              allowOutsideClick: true
+            })
+            this.getAllPaymentmodes(); 
+          },err=>{
+            Swal.fire({
+              title: 'Error!',
+              text: 'Please try again.',
+              type: 'error',
+              showCancelButton: false,
+              allowOutsideClick: true
+            })
+          })
+          // this.getAllPaymentmodes();
+        }
+      })
+      
+    }
+  
+  
 }
