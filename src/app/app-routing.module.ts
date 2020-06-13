@@ -21,6 +21,10 @@ const routes: Routes = [{
   loadChildren: './user/user.module#UserModule',
   canActivate: [LoginGuard]
 }, 
+{
+  path:'superadmin',
+  loadChildren:'./superadmin/superadmin.module#SuperadminModule',
+},
 // {
 //   path: 'pages',
 //   loadChildren: './pages/pages.module#PagesModule',

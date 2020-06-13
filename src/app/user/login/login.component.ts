@@ -9,6 +9,7 @@ import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { Particles } from '../../_models/particlesjs';
+import { ProfileService } from 'src/app/_services/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  public userRole:any;
   public show:boolean=true;
 
   constructor(
@@ -36,7 +38,8 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private sharedData: SharedDataService,
     public userService: UserService,
-    private particles :Particles
+    private particles :Particles,
+    private profileService:ProfileService
     
   ) {
     this.session.stopWatching();
@@ -183,8 +186,23 @@ export class LoginComponent implements OnInit {
     CookieStore.set(name, value, opts);
   }
 
+  // authenticate() {
+  //   this.router.navigate(['/activation']);
+  // }
   authenticate() {
-    this.router.navigate(['/activation']);
+    this.profileService.getUserRole(2).subscribe(res=>{
+      this.userRole=res.message;
+      console.log("user role is",this.userRole)
+     if(this.userRole === 'Admin'){
+      this.router.navigate(['/activation']);
+     }else{
+      this.router.navigate(['/superadmin']);
+     }
+    },error => {
+      this.error = "Please complete your registration process";
+      this.loading = false;
+    })
+    // this.router.navigate(['/activation']);
   }
 
   requestDemo() {

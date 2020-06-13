@@ -46,5 +46,8 @@ export class FirstloginService {
   verifyInvitee(inviteId: any): Observable<any> {
     return this.http.get<any>(`/api/user/invitationConfirm?inviteId=${inviteId}`);
   }
+  getSuperAdminData():Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/subscriptions/allTenants')
+  }
 
 }
