@@ -86,7 +86,7 @@ public paymentToken:any;
       "cvc":this.cardDetails.cvvNumber
     }
     const plandetails={
-                  "ip": "10.2.3.4",
+                  "ip": "1.2.3.4",
                   "items": [
                     {
                       "meta":{"orderable":true,
@@ -97,7 +97,7 @@ public paymentToken:any;
                   ],
                   "meta": {"orderable":true,
                 "visible":true,
-                "product_id":"virtual_ppe"}
+                "product_id":"2.0"}
                 }
     this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
       this.paymentToken=res
