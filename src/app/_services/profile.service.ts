@@ -37,6 +37,10 @@ export class ProfileService {
   getDepartments():Observable<any>{
     return this.http.get<any>('/api/user/departments')
   }
+  getAllRoles(appId):Observable<any>{
+    return this.http.get<any>('/authorizationservice/api/v1/application/'+appId+'/roles')
+
+  }
   listofPaymentModes():Observable<any>{
     return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
   }
@@ -58,4 +62,7 @@ setasDefaultCard(paymentModeId){
   return this.http.post('/subscriptionservice/v1/paymentmethods/set-default/'+paymentModeId,{responseType:'json'});
 }
 
+inviteUser(inviterID,inviteeID,body) :Observable<any>{
+  return this.http.post<any[]>('/api/user/inviteUsers?inviterMailId='+inviterID+'&inviteeMailId='+inviteeID,body,httpOptions)
+}
 }
