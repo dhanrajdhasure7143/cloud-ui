@@ -66,6 +66,7 @@ export class ProfileComponent implements OnInit {
   department: any;
   userDepartment: any;
   listOfUserApplications: any = [];
+  listOfroles: any=[];
   delData: any;
   blob: Blob;
   invoiceid: any;
@@ -74,6 +75,7 @@ export class ProfileComponent implements OnInit {
   public otherdepartment: any;
   stateInfo: any[] = [];
   cityInfo: any[] = [];
+  allRoles: any;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
     private modalService: BsModalService,
@@ -92,11 +94,19 @@ export class ProfileComponent implements OnInit {
           this.listOfUserApplications.push(elementApps.name)
         });
     })
+    this.profileservice.getAllRoles(2).subscribe(resp => {
+      this.allRoles = resp,
+        this.allRoles.forEach(elementRoles => {
+          console.log("element toles",elementRoles)
+          this.listOfroles.push(elementRoles)
+        });
+    })
     this.profileservice.getUserRole(2).subscribe(role => {
       this.userRole = role.message;
 
     })
     this.countryInfo = countries.Countries;
+    this.useremail=localStorage.getItem('userName');
 
     this.userManagement = [{ "id": "256426", "firstName": "Ranjith", "lastName": "sigiri", "Designation": "HR", "Organisation": "EpSoft", "Department": "HR", "Product": "Gib", "Roles": "Admin" },
     { "id": "15427", "firstName": "suresh", "lastName": "yenkam", "Designation": "HR", "Organisation": "Monile APP", "Department": "HR", "Product": "Ezbot", "Roles": "user" },
@@ -148,8 +158,7 @@ export class ProfileComponent implements OnInit {
     document.getElementById("foot").classList.remove("slide-up");
   }
 
-  inviteUser() {
-  }
+ 
   onChangeDepartment(selectedvalue) {
     // this.firstloginservice.getAllDepartments().subscribe(response => {
     //   this.departments = response;
@@ -229,7 +238,7 @@ export class ProfileComponent implements OnInit {
   }
 
   deletCard(data, index) {
-    console.log('log',data.id);
+  
     
     // this.closeFlag = true;
     // this.deletCardIndex = index;
@@ -281,8 +290,7 @@ export class ProfileComponent implements OnInit {
   // }
   cancelDeleteCard(index) {
     this.closeFlag = false;
-    console.log("close index is", index)
-    this.dataid = '';
+       this.dataid = '';
     // document.getElementsByClassName("deletconfm")[index].classList.remove("isdeletcard")
   }
 
@@ -422,10 +430,10 @@ export class ProfileComponent implements OnInit {
           "exp_year":this.cardModel.cardyear,
           "cvc":this.cardModel.cvvNumber
         }
-        console.log('formdata',this.cardDetails);
+
       this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
           this.paymentToken=res
-          console.log('token',this.paymentToken);
+        
       this.profileservice.addNewCard(this.paymentToken,this.isdefault).subscribe(res=>{
           // console.log('res',res);
           this.getAllPaymentmodes();
@@ -451,7 +459,7 @@ export class ProfileComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.profileservice.setasDefaultCard(cardId).subscribe(res=>{
-            console.log('res',res);
+         
             Swal.fire({
               title: 'Success!',
               text: "Default card is set successfully.",
@@ -474,6 +482,17 @@ export class ProfileComponent implements OnInit {
         }
       })
       
+    }
+    inviteUser(userId,inviteeId,body){
+      //body={"id": "8", "appliationId": {"id": "2"}} ;
+      body = {
+        "id": "8",
+        "appliationId": {
+        "appId": "2"
+        }}
+this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{console.log("invite +++",res)})
+
+
     }
   
   

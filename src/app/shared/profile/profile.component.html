@@ -307,7 +307,7 @@
                             <h4 class="invite">Invite User</h4>
                     </div>
                     <div class="col-md-4 invteform">
-                                        <form autocomplete="off" #inviteuser="ngForm" (ngSubmit)="!inviteuser.invalid && onsubmit()">
+                                        <form autocomplete="off" #inviteuser="ngForm">
                                             <div class="form-group">
                                                     <label for="email">Email</label>
                                                     <input type="text" name="email" #email="ngModel" class="form-control" [(ngModel)]="emailId"
@@ -328,14 +328,13 @@
                                               </select>
                                             </div>
                                             <div class="form-group">
-                                                    <label for="Role">Role</label>
-                                                    <select class="form-control" name="Role" #Role="ngModel" [(ngModel)]="role" id="Role" required>
+                                                    <label for="role">Role</label>
+                                                    <select class="form-control" name="role"  id="role" required>
                                                         <option  [value]="undefined" disabled hidden>Select Role</option>
-                                                        <option value="Admin">Admin</option>
-                                                        <option value="User">User</option>
+                                                        <option *ngFor="let role of listOfroles"  [value]="role">{{role}}</option>
                                                     </select>
                                                   </div>
-                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit">Submit</button>
+                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit" (click)='inviteUser(this.useremail,emailId)' >Submit</button>
                                           </form>
                             </div>
                     </div>
