@@ -322,16 +322,16 @@
 
                                             <div class="form-group">
                                               <label for="application">Application</label>
-                                              <select class="form-control" name="application"  id="application" required>
+                                              <select class="form-control" name="application"  id="application"(change)="onChangeApp($event.target.value)" required>
                                                 <option  [value]="undefined" disabled hidden>Select Application</option>
                                                 <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
                                               </select>
                                             </div>
                                             <div class="form-group">
                                                     <label for="role">Role</label>
-                                                    <select class="form-control" name="role"  id="role" required>
+                                                    <select class="form-control" name="role"  id="role"(change)="onChangeRole($event.target.value)" required>
                                                         <option  [value]="undefined" disabled hidden>Select Role</option>
-                                                        <option *ngFor="let role of listOfroles"  [value]="role">{{role}}</option>
+                                                        <option *ngFor="let role of listOfroles "  [value]="role"  >{{role}}</option>
                                                     </select>
                                                   </div>
                                                   <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit" (click)='inviteUser(this.useremail,emailId)' >Submit</button>
