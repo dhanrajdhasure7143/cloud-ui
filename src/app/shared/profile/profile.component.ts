@@ -63,6 +63,8 @@ export class ProfileComponent implements OnInit {
   public userdata: any;
   public closeFlag: Boolean = false;
   public useremail: any;
+  public myroleId:any;
+  public myappId:any;
   department: any;
   userDepartment: any;
   listOfUserApplications: any = [];
@@ -90,15 +92,18 @@ export class ProfileComponent implements OnInit {
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
       this.apps = resp,
+      console.log("my apps are",this.apps)
         this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
         });
     })
     this.profileservice.getAllRoles(2).subscribe(resp => {
       this.allRoles = resp,
+      console.log("resp is",resp)
+
         this.allRoles.forEach(elementRoles => {
-          console.log("element toles",elementRoles)
-          this.listOfroles.push(elementRoles)
+          
+                 this.listOfroles.push(elementRoles.name)
         });
     })
     this.profileservice.getUserRole(2).subscribe(role => {
@@ -483,13 +488,30 @@ export class ProfileComponent implements OnInit {
       })
       
     }
-    inviteUser(userId,inviteeId,body){
-      //body={"id": "8", "appliationId": {"id": "2"}} ;
-      body = {
-        "id": "8",
+    onChangeRole(selectedvalue) {
+         this.allRoles.forEach(elementrole => {
+        if(elementrole.name==selectedvalue)
+        {
+         this.myroleId=elementrole.id;
+        }
+      });
+    }
+    onChangeApp(selectedvalue) {
+     this.apps.forEach(elementrole => {
+     if(elementrole.name==selectedvalue)
+     {
+      this.myappId=elementrole.id;
+     }
+   });
+ }
+    inviteUser(userId,inviteeId){
+     
+    let  body = {
+        "id": this.myroleId,
         "appliationId": {
-        "appId": "2"
+        "appId": this.myappId
         }}
+        console.log("role is selected",body)
 this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{console.log("invite +++",res)})
 
 
