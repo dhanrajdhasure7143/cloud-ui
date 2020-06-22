@@ -41,6 +41,7 @@ export class ProfileService {
     return this.http.get<any>('/authorizationservice/api/v1/application/'+appId+'/roles')
 
   }
+
   listofPaymentModes():Observable<any>{
     return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
   }
