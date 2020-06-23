@@ -22,7 +22,7 @@
                                                 pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
                                   
                                   </div>
-                                  <div class="form-group col-sm-3">
+                                  <!-- <div class="form-group col-sm-3">
                                     <label for="passwd">Password</label>
                                     <span class=" input-group" style="margin-left:0px">
                                     <input  
@@ -38,10 +38,10 @@
                                           <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span> 
                                         </span>
                                           <span *ngIf="((passwd.errors && updateUser.submitted) || (passwd.errors && passwd.touched) || (passwd.errors && passwd.minlength)) " class='fa fa-info-circle errspan'>
-                                          <span *ngIf="passwd.errors.required">Password is required</span>
+                                          <span *ngIf="passwd.errors.required">Password is required</span>-->
                                           <!-- <span *ngIf="passwd.errors.pattern">Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span> -->
-                                    </span>
-                                  </div>
+                                     <!--</span>
+                                  </div> -->
                                     <div class="form-group col-sm-3">
                                         <label for="firstName">First Name</label>
                                         <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required/>
