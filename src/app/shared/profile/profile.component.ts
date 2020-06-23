@@ -12,6 +12,7 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import {yearslist } from './../../../assets/jsons/yearlist.json';
+import moment from 'moment';
 
 @Component({
   selector: 'app-profile',
@@ -218,10 +219,7 @@ export class ProfileComponent implements OnInit {
     this.selectedIndex = index;
   }
 
-  infoModelSubmit() {
-    this.modalRef.hide();
-    this.router.navigate(['/activation/payment/chooseplan']);
-  }
+  
 
   unsubscribeYes(index) {
     this.modalRef.hide();
@@ -319,6 +317,15 @@ export class ProfileComponent implements OnInit {
     this.subscribeddata = data;
     this.modalRef = this.modalService.show(template)
   }
+  infoModelSubmit() {
+    this.modalRef.hide();
+    this.router.navigate(['/activation/payment/chooseplan']);
+  }
+
+  getinvoiceDate(createDate){
+    return moment(createDate).add(1, 'months').format('MM/DD/YYYY')
+   }
+
 
   invoicedownload(invoicedata) {
     this.invoiceid = invoicedata.invoiceId;

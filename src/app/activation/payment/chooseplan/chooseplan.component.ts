@@ -24,7 +24,8 @@ export class ChooseplanComponent implements OnInit {
   this.getAllPlanes();
   }
   getAllPlanes(){
-    this.productId=localStorage.getItem("selectedproductId"),
+    this.productId=localStorage.getItem("selectedproductId");
+    if(this.productId === null){this.productId = '2.0'}
     this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
       // this.plansList=null;
       
