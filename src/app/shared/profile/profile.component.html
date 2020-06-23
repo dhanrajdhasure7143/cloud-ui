@@ -200,9 +200,9 @@
                                         </div>
                                         </div>
                                       </td>
-                                      <td class = "deleticon">
+                                      <!-- <td class = "deleticon">
                                         <button class="btn btn-primary" *ngIf = "sdata.status != 'Active'" (click)="reactivatesubscription(sdata)">Reactivate</button>
-                                      </td>
+                                      </td> -->
                                     </tr>
                                   </tbody>
                                 </table>
@@ -221,9 +221,9 @@
                                   <thead>
                                     <tr>
                                       <th scope="col" class="types">Invoice Number</th>
-                                      <th scope="col" class="types">Subscription</th>
+                                      <th scope="col" class="types">Subscription ID</th>
                                       <th scope="col" class="types">Amount</th>
-                                      <th scope="col" class="types">Refund</th>
+                                      <!-- <th scope="col" class="types">Refund</th> -->
                                       <th scope="col" class="types">Due Date</th>
                                       <th scope="col" class="types">Status</th>
                                       <th scope="col" class="types">Action</th>
@@ -234,9 +234,9 @@
                                       <td>{{invdata.invoiceNumber}}</td>
                                       <td>{{invdata.subscriptionId}}</td>
                                       <td>{{invdata.amount}}.00 USD</td>
-                                      <td>{{invdata.refund || "NA"}}</td>
-                                        <td>{{invdata.duedate || "NA"}}</td>
-                                        <td>{{invdata.status}}</td>
+                                      <!-- <td>{{invdata.refund || "NA"}}</td> -->
+                                        <td>{{getinvoiceDate(invdata.createdate) |date:'MM/dd/yyyy'}}</td>
+                                        <td>{{invdata.status|titlecase}}</td>
                                       <td><span  (click) = "invoicedownload(invdata)"><img class="download" src="assets/images/download_icon.svg"></span></td>
                                     </tr>
                                   </tbody>
