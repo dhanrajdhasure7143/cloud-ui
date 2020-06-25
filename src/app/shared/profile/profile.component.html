@@ -209,7 +209,7 @@
                         </div>
                       </tab>
 
-                        <tab *ngIf="this.userRole=='Admin'" heading="Invoice" (selectTab)=onselectInvoiceTab()>
+                        <tab *ngIf="this.userRole=='Admin'" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -371,11 +371,11 @@
                                           <td>{{userdata.id}}</td>
                                           <td>{{userdata.firstName}}</td>
                                           <td>{{userdata.lastName}}</td>
-                                          <td>{{userdata.Designation}}</td>
-                                          <td>{{userdata.Organisation}}</td>
-                                          <td>{{userdata.Department}}</td>
-                                          <td class="tableborder">{{userdata.Product}}</td>
-                                          <td class="tableborder">{{userdata.Roles}}</td>
+                                          <td>{{userdata.designation}}</td>
+                                            <td>{{userdata.company}}</td>
+                                            <td>{{userdata.department}}</td>
+                                            <td >{{userdata.applicationIdname}}</td>
+                                            <td >{{userdata.roleIdname}}</td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -407,11 +407,11 @@
                                             <td>{{userdata.id}}</td>
                                             <td>{{userdata.firstName}}</td>
                                             <td>{{userdata.lastName}}</td>
-                                            <td>{{userdata.Designation}}</td>
-                                            <td>{{userdata.Organisation}}</td>
-                                            <td>{{userdata.Department}}</td>
-                                            <td class="tableborder">{{userdata.Product}}</td>
-                                            <td class="tableborder">{{userdata.Roles}}</td>
+                                            <td>{{userdata.designation}}</td>
+                                            <td>{{userdata.company}}</td>
+                                            <td>{{userdata.department}}</td>
+                                            <td >{{userdata.applicationIdname}}</td>
+                                            <td >{{userdata.roleIdname}}</td>
                                             </tr>
                                     </tbody>
                                   </table>
@@ -444,11 +444,11 @@
                                                 <td>{{userdata.id}}</td>
                                                 <td>{{userdata.firstName}}</td>
                                                 <td>{{userdata.lastName}}</td>
-                                                <td>{{userdata.Designation}}</td>
-                                                <td>{{userdata.Organisation}}</td>
-                                                <td>{{userdata.Department}}</td>
-                                                <td class="tableborder">{{userdata.Product}}</td>
-                                                <td class="tableborder">{{userdata.Roles}}</td>
+                                                <td>{{userdata.designation}}</td>
+                                                  <td>{{userdata.company}}</td>
+                                                  <td>{{userdata.department}}</td>
+                                                  <td >{{userdata.applicationIdname}}</td>
+                                                  <td >{{userdata.roleIdname}}</td>
                                                </tr>
                                             </tbody>
                                           </table>
