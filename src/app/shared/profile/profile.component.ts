@@ -128,22 +128,7 @@ this.profileservice.getTenantbasedusersDetails(localStorage.getItem('tenantName'
           
                  this.listOfroles.push(elementRoles.name)
         });
-        this.allRoles.forEach(elementPerm => {
-          elementPerm.forEach(element => {
-            this.listOfpermissions = element.permission;
-
-            
-          }); 
-          console.log("listofperms ", this.listOfpermissions)
-        // this.listOfpermissions.push(elementPerm.permission)
- });
-         console.log("list ",this.listOfpermissions)
-        // this.listOfpermissions.forEach(perm => {
-        //   this.permissionList.push(perm.permissionName)
-        //  console.log("permissions ",this.permissionList)
-    
-        // })
-       
+          
     })
     this.profileservice.getUserRole(2).subscribe(role => {
       this.userRole = role.message;
