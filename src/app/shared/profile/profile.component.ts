@@ -14,6 +14,7 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 import {yearslist } from './../../../assets/jsons/yearlist.json';
 import moment from 'moment';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -46,7 +47,8 @@ export class ProfileComponent implements OnInit {
   public departments: any;
   public password: any;
   public show: Boolean = true;
-  public userManagement: any[];
+  public userManagement: any=[];
+  public userManagementresponse:any=[];
   public selectedIndex: number;
   public deletCardIndex: number;
   public defaultcard: number = 0;
@@ -69,6 +71,8 @@ export class ProfileComponent implements OnInit {
   department: any;
   userDepartment: any;
   listOfUserApplications: any = [];
+  userManagementRole :any=[];
+  userManagementApps :any=[];
   listOfroles: any=[];
   delData: any;
   blob: Blob;
@@ -86,6 +90,7 @@ export class ProfileComponent implements OnInit {
     private notifier: NotifierService,
     private router: Router,
     private productlistservice:ProductlistService
+ 
   ) { }
 
   ngOnInit() {
@@ -98,6 +103,17 @@ export class ProfileComponent implements OnInit {
           this.listOfUserApplications.push(elementApps.name)
         });
     })
+      
+this.profileservice.getTenantbasedusersDetails(localStorage.getItem('tenantName')).subscribe(resp=>{
+    this.userManagementresponse = resp
+    console.log("user management     ",this.userManagementresponse )
+      this.userManagementresponse.forEach(elementuser => {
+      console.log("user management  userId   ",elementuser.applicationId )
+      elementuser.userId['applicationIdname']=elementuser.applicationId.name;
+      elementuser.userId['roleIdname']=elementuser.roleID.name;
+      this.userManagement.push(elementuser.userId);
+    });
+});
     this.profileservice.getAllRoles(2).subscribe(resp => {
       this.allRoles = resp,
       console.log("resp is",resp)
@@ -113,15 +129,10 @@ export class ProfileComponent implements OnInit {
     })
     this.countryInfo = countries.Countries;
     this.useremail=localStorage.getItem('userName');
+  
 
-    this.userManagement = [{ "id": "256426", "firstName": "Ranjith", "lastName": "sigiri", "Designation": "HR", "Organisation": "EpSoft", "Department": "HR", "Product": "Gib", "Roles": "Admin" },
-    { "id": "15427", "firstName": "suresh", "lastName": "yenkam", "Designation": "HR", "Organisation": "Monile APP", "Department": "HR", "Product": "Ezbot", "Roles": "user" },
-    { "id": "356426", "firstName": "mallesh", "lastName": "ammi", "Designation": "Engineer", "Organisation": "Array tech", "Department": "Developer", "Product": "Ezflow", "Roles": "User" },
-    { "id": "158424", "firstName": "venkatesh", "lastName": "ameeredy", "Designation": "UX", "Organisation": "EpSoft", "Department": "UX design", "Product": "Gib", "Roles": "Admin" },
-    { "id": "296426", "firstName": "swarrop", "lastName": "C", "Designation": "SE", "Organisation": "Aiotal", "Department": "HR", "Product": "Aiotal", "Roles": "User" },
-    { "id": "296426", "firstName": "swarrop", "lastName": "C", "Designation": "SE", "Organisation": "Aiotal", "Department": "HR", "Product": "Aiotal", "Roles": "User" },
-    { "id": "296426", "firstName": "swarrop", "lastName": "C", "Designation": "SE", "Organisation": "Aiotal", "Department": "HR", "Product": "Aiotal", "Roles": "User" },
-    { "id": "296426", "firstName": "swarrop", "lastName": "C", "Designation": "SE", "Organisation": "Aiotal", "Department": "HR", "Product": "Aiotal", "Roles": "User" }];
+
+    
 
   }
   getAllPaymentmodes() {

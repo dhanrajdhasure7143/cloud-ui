@@ -30,7 +30,9 @@ export class ProfileService {
   invoicedownload(invoiceId): Observable<any>{
     return this.http.get<any>('/subscriptionservice/v1/invoices/'+invoiceId+'/pdf',{responseType: 'blob' as 'json'})
     }
-
+    getTenantbasedusersDetails(tenantId): Observable<any[]> {
+      return this.http.get<any[]>('/api/user/tenants/'+tenantId +'/users', httpOptions);
+    }
   getUserDetails(username){
     return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
   }
