@@ -12,6 +12,8 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import {yearslist } from './../../../assets/jsons/yearlist.json';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatExpansionModule } from '@angular/material/expansion';
 import moment from 'moment';
 
 
@@ -46,9 +48,11 @@ export class ProfileComponent implements OnInit {
   public addDepartment: boolean = false;
   public departments: any;
   public password: any;
-  public show: Boolean = true;
   public userManagement: any=[];
   public userManagementresponse:any=[];
+  public show: boolean = true;
+  public isOpened: any ;
+  public showList:boolean =  true;
   public selectedIndex: number;
   public deletCardIndex: number;
   public defaultcard: number = 0;
@@ -83,6 +87,8 @@ export class ProfileComponent implements OnInit {
   stateInfo: any[] = [];
   cityInfo: any[] = [];
   allRoles: any;
+  listOfpermissions: any = [];
+  permissionList: any = [];
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
     private modalService: BsModalService,
@@ -122,6 +128,22 @@ this.profileservice.getTenantbasedusersDetails(localStorage.getItem('tenantName'
           
                  this.listOfroles.push(elementRoles.name)
         });
+        this.allRoles.forEach(elementPerm => {
+          elementPerm.forEach(element => {
+            this.listOfpermissions = element.permission;
+
+            
+          }); 
+          console.log("listofperms ", this.listOfpermissions)
+        // this.listOfpermissions.push(elementPerm.permission)
+ });
+         console.log("list ",this.listOfpermissions)
+        // this.listOfpermissions.forEach(perm => {
+        //   this.permissionList.push(perm.permissionName)
+        //  console.log("permissions ",this.permissionList)
+    
+        // })
+       
     })
     this.profileservice.getUserRole(2).subscribe(role => {
       this.userRole = role.message;
@@ -535,5 +557,11 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{console.lo
 
     }
   
-  
+    myFunction(index) {   
+      this.isOpened = index;
+      this.showList = !this.showList;
+      console.log("index", index)
+     // document.getElementById("myDropdown1").classList.toggle("show");
+      // document.getElementById("notificationBar").classList.remove('notificationBarshow');
+    }
 }
