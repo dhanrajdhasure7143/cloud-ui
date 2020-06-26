@@ -356,10 +356,10 @@
                                     <table class="table table-borderless table-hover">
                                       <thead>
                                         <tr>
-                                          <th scope="col" class="types">User Id</th>
-                                          <th scope="col" class="types">First Name</th>
-                                          <th scope="col" class="types">Last Name</th>
-                                          <th scope="col" class="types">Designation</th>
+                                          <th scope="col" class="types">Product</th>
+                                          <th scope="col" class="types">Role</th>
+                                          <th scope="col" class="types">Description</th>
+                                          <th scope="col" class="types">Permissions</th>
                                           <th scope="col" class="types">Organisation</th>
                                           <th scope="col" class="types">Department</th>
                                           <th scope="col" class="types">Product</th>
@@ -367,7 +367,7 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser;trackBy:loopTrackBy;">
+                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
                                           <td>{{userdata.id}}</td>
                                           <td>{{userdata.firstName}}</td>
                                           <td>{{userdata.lastName}}</td>
@@ -429,26 +429,27 @@
                                     <table class="table table-borderless table-hover">
                                             <thead>
                                               <tr>
-                                                <th scope="col" class="types">User Id</th>
-                                                <th scope="col" class="types">First Name</th>
-                                                <th scope="col" class="types">Last Name</th>
-                                                <th scope="col" class="types">Designation</th>
-                                                <th scope="col" class="types">Organisation</th>
-                                                <th scope="col" class="types">Department</th>
                                                 <th scope="col" class="types">Product</th>
-                                                <th scope="col" class="types">Roles</th>
+                                                <th scope="col" class="types">Role</th>
+                                                <th scope="col" class="types">Description</th>
+                                                <th scope="col" class="types">Permissions</th>
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
-                                                <td>{{userdata.id}}</td>
-                                                <td>{{userdata.firstName}}</td>
-                                                <td>{{userdata.lastName}}</td>
-                                                <td>{{userdata.designation}}</td>
-                                                  <td>{{userdata.company}}</td>
-                                                  <td>{{userdata.department}}</td>
-                                                  <td >{{userdata.applicationIdname}}</td>
-                                                  <td >{{userdata.roleIdname}}</td>
+                                              <tr *ngFor="let role of allRoles | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                                                <td>{{role.appliationId.name}}</td>
+                                                <td>{{role.name}}</td>
+                                                <td>{{role.description}}</td>
+                                                <td ><span (click)="myFunction(j)" class="dropbtn"> <img src="assets/images/arrow_down.svg" ></span>
+                                                     <div *ngIf = "isOpened == j && showList">   
+                                                        <div   *ngFor="let role of allRoles ">
+                                                           <div   *ngFor="let perm of role.permission ">
+                                                              {{perm.permissionName}}
+                                                           </div>
+                                                        </div>
+                                                     </div>
+                                                </td>
+                                               
                                                </tr>
                                             </tbody>
                                           </table>
