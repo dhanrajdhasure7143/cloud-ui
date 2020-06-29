@@ -17,7 +17,7 @@
     <div class="col-md-6"></div>
     <div class="col-md-4"></div>
       <div class="col-md-2">
-        <button class=" " id="updrade-btn" [routerLink]="'/activation/payment/chooseplan'" *ngIf="!selectedIdValue" >Upgrade Now</button>
+        <button class=" " id="updrade-btn" [routerLink]="'/activation/payment/chooseplan'" *ngIf="selectedIdValue" >Upgrade Now</button>
       </div>
       <div class="col-md-2">
           <button *ngIf="!selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Continue<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>

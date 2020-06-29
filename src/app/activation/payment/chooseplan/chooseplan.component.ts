@@ -17,6 +17,7 @@ export class ChooseplanComponent implements OnInit {
   public productId:any;
   public error='';
   public test:any;
+  tenantId: string;
   constructor(private productlistservice:ProductlistService, private router: Router,
     ) { }
  
@@ -25,11 +26,11 @@ export class ChooseplanComponent implements OnInit {
   }
   getAllPlanes(){
     this.productId=localStorage.getItem("selectedproductId");
+    this.tenantId=localStorage.getItem('tenantName');
     if(this.productId === null){this.productId = '2.0'}
-    this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
+        this.productlistservice.getProductPlanes(this.productId,this.tenantId).subscribe(data=> {this.plansList =data
       // this.plansList=null;
-      
-      if(this.plansList == undefined || this.plansList == null){
+           if(this.plansList == undefined || this.plansList == null){
         this.error='Sorry for inconvenience we will get back to you shortly'
       }
       if(this.plansList.length > 1){

@@ -30,9 +30,10 @@ export class PlatformComponent implements OnInit {
   public selectedIdValue:boolean=true;
   ngOnInit() {
     this.particles.getParticles();
-    this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
+    this.tenantId=localStorage.getItem('tenantName')
+    this.productlistservice.getAllProducts(this.tenantId).subscribe(data => {this.productslist = data
       this.productslist[1].img="assets/images/2.0.svg";
-      this.productslist[1].freetier=true;
+      this.productslist[1].freetier=false;
       // this.productslist[1].expirytime=10;
       this.products=[this.productslist[1]];
       if( this.productslist[1].freetier == true){
@@ -52,7 +53,7 @@ export class PlatformComponent implements OnInit {
     this.selectedIndex=index;
     this.selectedId=selectedData.id;
     localStorage.setItem('selectedproductId',this.selectedId);
-    this.selectedIdValue=selectedData.freetier;
+    this.selectedIdValue=selectedData.subscribed;
     this.productId=selectedData.id
   }
   navigateProduct(selectedproduct){
