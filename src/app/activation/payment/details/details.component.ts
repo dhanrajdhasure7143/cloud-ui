@@ -28,6 +28,7 @@ export class DetailsComponent implements OnInit {
   public cardEdit:any;
   // public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
   public yearList:number[] = new Array(11);
+  tenantID: string;
 
   constructor( private productlistservice:ProductlistService, 
               private router:Router,
@@ -46,7 +47,9 @@ export class DetailsComponent implements OnInit {
   getproductPlans(){
     this.productId=localStorage.getItem("selectedproductId"),
     this.plantype=localStorage.getItem("selectedplan")
-    this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
+    this.tenantID=localStorage.getItem("tenantName");
+    this.productlistservice.getProductPlanes(this.productId,this.tenantID).subscribe(data=> {this.plansList =data
+      console.log("testtttt",this.plansList)
       if(this.plansList.length > 1){
         this.plansList=this.plansList.reverse();
       }

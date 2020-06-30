@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import {yearslist } from './../../../assets/jsons/yearlist.json';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatExpansionModule } from '@angular/material/expansion';
 import moment from 'moment';
 
 
@@ -89,6 +88,7 @@ export class ProfileComponent implements OnInit {
   allRoles: any;
   listOfpermissions: any = [];
   permissionList: any = [];
+  tenantId: string;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
     private modalService: BsModalService,
@@ -109,8 +109,8 @@ export class ProfileComponent implements OnInit {
           this.listOfUserApplications.push(elementApps.name)
         });
     })
-      
-this.profileservice.getTenantbasedusersDetails(localStorage.getItem('tenantName')).subscribe(resp=>{
+      this.tenantId=localStorage.getItem('tenantName');
+this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
     this.userManagementresponse = resp
     console.log("user management     ",this.userManagementresponse )
       this.userManagementresponse.forEach(elementuser => {
@@ -536,11 +536,21 @@ this.profileservice.getTenantbasedusersDetails(localStorage.getItem('tenantName'
         "appliationId": {
         "appId": this.myappId
         }}
-        console.log("role is selected",body)
-this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{console.log("invite +++",res)})
+       
+this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
+  Swal.fire({
+    title: 'Success!',
+    text: "Invite mail sent successfully.",
+    // Default card is set successfully!!
+    type: 'success',
+    showCancelButton: false,
+    allowOutsideClick: true
+  })
+})
 
-
+ 
     }
+
   
     myFunction(index) {   
       this.isOpened = index;
@@ -549,4 +559,7 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{console.lo
      // document.getElementById("myDropdown1").classList.toggle("show");
       // document.getElementById("notificationBar").classList.remove('notificationBarshow');
     }
+
 }
+
+  

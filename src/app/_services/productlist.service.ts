@@ -14,11 +14,11 @@ const httpOptions = {
 export class ProductlistService {
 
   constructor(public http:HttpClient) { }
-  getAllProducts(): Observable<any[]> {
-    return this.http.get<any[]>('/subscriptionservice/v1/products');
+  getAllProducts(tenantID): Observable<any[]> {
+    return this.http.get<any[]>('/subscriptionservice/v1/products?tenantID='+tenantID);
   }
-  getProductPlanes(productId:any): Observable<any[]> {
-    return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/plans');
+  getProductPlanes(productId,tenantID): Observable<any[]> {
+    return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/'+tenantID+'/plans');
   }
   subscribePlan(token,planData){
     return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData)

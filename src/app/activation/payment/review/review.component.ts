@@ -32,6 +32,7 @@ config = {
   animated: false
 };
 public paymentToken:any;
+  tenantID: string;
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
@@ -45,7 +46,8 @@ public paymentToken:any;
   getproductPlans(){
     this.productId=localStorage.getItem("selectedproductId"),
     this.plantype=localStorage.getItem("selectedplan")
-    this.productlistservice.getProductPlanes(this.productId).subscribe(data=> {this.plansList =data
+    this.tenantID=localStorage.getItem("tenantName");
+    this.productlistservice.getProductPlanes(this.productId,this.tenantID).subscribe(data=> {this.plansList =data
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
