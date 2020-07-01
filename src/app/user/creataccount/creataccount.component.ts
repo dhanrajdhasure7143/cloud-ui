@@ -16,6 +16,7 @@ export class CreataccountComponent implements OnInit {
   public error='';
   public isresenddisable:boolean;
   public count:number=0;
+  public ispublicMail:boolean=false;
     constructor(private particles :Particles,
                 private loginservice:LoginService) { }
 
@@ -28,7 +29,12 @@ export class CreataccountComponent implements OnInit {
   creat_account(){
    this.userId=this.emailId
   //  this.isresend=true;
+   if(this.userId.endsWith('@gmail.com') || this.userId.endsWith('@yahoo.com') || 
+   this.userId.endsWith('@hotmail.com') || this.userId.endsWith('@rediffmail.com')){
+     this.ispublicMail=true;
+     return
 
+   }
     this.loginservice.sentVerificationMail(this.userId).subscribe(res=>{
        this.isresend=true;
     },error=>{

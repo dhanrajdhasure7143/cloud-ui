@@ -71,6 +71,7 @@ export class ProfileComponent implements OnInit {
   public useremail: any;
   public myroleId:any;
   public myappId:any;
+  public ispublicMail:boolean=false;
   department: any;
   userDepartment: any;
   listOfUserApplications: any = [];
@@ -530,6 +531,12 @@ this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
    });
  }
     inviteUser(userId,inviteeId){
+      if(inviteeId.endsWith('@gmail.com') ||inviteeId.endsWith('@yahoo.com') || 
+      inviteeId.endsWith('@hotmail.com') || inviteeId.endsWith('@rediffmail.com')){
+     this.ispublicMail=true;
+     return
+
+   }
      
     let  body = {
         "id": this.myroleId,
@@ -552,13 +559,14 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
     }
 
   
-    myFunction(index) {   
-      this.isOpened = index;
-      this.showList = !this.showList;
-      console.log("index", index)
-     // document.getElementById("myDropdown1").classList.toggle("show");
-      // document.getElementById("notificationBar").classList.remove('notificationBarshow');
-    }
+    myFunction(role) { 
+      this.isOpened = role.id;
+      // console.log(role);
+      }
+      
+      hideroleslist(index){
+      this.isOpened=''
+      }
 
 }
 

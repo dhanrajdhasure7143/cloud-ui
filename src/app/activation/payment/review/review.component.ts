@@ -81,7 +81,7 @@ public paymentToken:any;
      console.log('planslist', this.selected_plans);
      console.log("this.cardDetails",this.cardDetails);
     
-    this.cardDetails={
+    const cardValue={
       "number":this.cardDetails.cardnumbertotal,
       "exp_month":this.cardDetails.cardmonth,
       "exp_year":this.cardDetails.cardyear,
@@ -101,7 +101,7 @@ public paymentToken:any;
                 "visible":true,
                 "product_id":"2.0"}
                 }
-    this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
+    this.productlistservice.getPaymentToken(cardValue).subscribe(res=>{
       this.paymentToken=res
       console.log('token',this.paymentToken);
    
