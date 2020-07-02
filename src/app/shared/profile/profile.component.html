@@ -235,7 +235,7 @@
                                       <td>{{invdata.subscriptionId}}</td>
                                       <td>{{invdata.amount}}.00 USD</td>
                                       <!-- <td>{{invdata.refund || "NA"}}</td> -->
-                                        <td>{{getinvoiceDate(invdata.createdate) |date:'MM/dd/yyyy'}}</td>
+                                        <td>{{getinvoiceDate(invdata.createDate) |date:'MM/dd/yyyy'}}</td>
                                         <td>{{invdata.status|titlecase}}</td>
                                       <td><span  (click) = "invoicedownload(invdata)"><img class="download" src="assets/images/download_icon.svg"></span></td>
                                     </tr>
@@ -315,9 +315,10 @@
                                                       [ngClass]="{ 'is-invalid': ((email.invalid && inviteuser.submitted) || (email.errors && email.touched) ) }" />
                                                     <span *ngIf="((email.invalid && inviteuser.submitted) || (email.errors && email.touched) ) "
                                                       class='fa fa-info-circle errspan'>
-                                                      <span *ngIf="email.errors.required">Email is required</span>
-                                                      <span *ngIf="email.errors.pattern">Enter valid email address</span>
+                                                      <span *ngIf="email.errors.required"> Email is required</span>
+                                                      <span *ngIf="email.errors.pattern"> Enter valid email address</span>
                                                     </span>
+                                                    <span *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only corporate Email is allowed</span>
                                                   </div>
 
                                             <div class="form-group">
@@ -356,10 +357,10 @@
                                     <table class="table table-borderless table-hover">
                                       <thead>
                                         <tr>
-                                          <th scope="col" class="types">Product</th>
-                                          <th scope="col" class="types">Role</th>
-                                          <th scope="col" class="types">Description</th>
-                                          <th scope="col" class="types">Permissions</th>
+                                          <th scope="col" class="types">User ID</th>
+                                          <th scope="col" class="types">First Name</th>
+                                          <th scope="col" class="types">Last Name</th>
+                                          <th scope="col" class="types">Designation</th>
                                           <th scope="col" class="types">Organisation</th>
                                           <th scope="col" class="types">Department</th>
                                           <th scope="col" class="types">Product</th>
@@ -368,7 +369,7 @@
                                       </thead>
                                       <tbody>
                                         <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
-                                          <td>{{userdata.id}}</td>
+                                          <td>{{userdata.userId}}</td>
                                           <td>{{userdata.firstName}}</td>
                                           <td>{{userdata.lastName}}</td>
                                           <td>{{userdata.designation}}</td>
@@ -440,14 +441,15 @@
                                                 <td>{{role.appliationId.name}}</td>
                                                 <td>{{role.name}}</td>
                                                 <td>{{role.description}}</td>
-                                                <td ><span (click)="myFunction(j)" class="dropbtn"> <img src="assets/images/arrow_down.svg" ></span>
-                                                     <div *ngIf = "isOpened == j && showList">   
-                                                        <div   *ngFor="let role of allRoles ">
-                                                           <div   *ngFor="let perm of role.permission ">
-                                                              {{perm.permissionName}}
-                                                           </div>
-                                                        </div>
-                                                     </div>
+                                                <td >
+                                                  <div > 
+                                                    <div *ngFor="let perm of role.permission;let k=index">
+                                                    <div><span *ngIf="isOpened!=role.id&&k<2">{{perm.permissionName|titlecase}}</span></div>
+                                                    <span *ngIf="isOpened==role.id">{{perm.permissionName|titlecase}}</span>
+                                                    </div>
+                                                    <span class="loadRole" *ngIf="isOpened !=role.id&&role.permission.length>=3" (click)="myFunction(role)" >Load more</span>
+                                                    <span class="hideRole" *ngIf="isOpened == role.id" (click)="hideroleslist(j)">Hide</span>
+                                                    </div>
                                                 </td>
                                                
                                                </tr>
