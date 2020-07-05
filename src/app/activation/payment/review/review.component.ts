@@ -3,6 +3,7 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { subtract } from 'ngx-bootstrap/chronos';
 
 @Component({
   selector: 'app-review',
@@ -33,6 +34,8 @@ config = {
 };
 public paymentToken:any;
   tenantID: string;
+  promo: any;
+  finalAmount: any;
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
@@ -89,6 +92,7 @@ public paymentToken:any;
     }
     const plandetails={
                   "ip": "1.2.3.4",
+                  "promo":this.promo,
                   "items": [
                     {
                       "meta":{"orderable":true,
@@ -106,12 +110,9 @@ public paymentToken:any;
       console.log('token',this.paymentToken);
    
       this.productlistservice.subscribePlan(this.paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
-          this.modalRef = this.modalService.show(template,this.config);
-          console.log('sub',this.subscriptionDetails);
-          
-
-      
-          })
+       this.finalAmount=this.subscriptionDetails.amountPaid;
+           this.modalRef = this.modalService.show(template,this.config);
+             })
    
     })
 
@@ -131,11 +132,16 @@ public paymentToken:any;
   haveCoupon(){
     this.iscoupon=true;
   }
-  applyCoupon(){
-    // console.log('code',this.couponcode);
-    // this.selected_plans.amount=100;
-    // this.success='Coupon applied';
-    // this.error='Enter Valid Coupon';
+  applyCoupon(couponcode){
+    if(couponcode!=''){
+      this.promo=couponcode;
+    }
+    else{
+      this.promo=null;
+    }
+   
+    console.log("coupn code is",couponcode)
+
   }
   privacyPolicy(template){
     this.modalRef = this.modalService.show(template,this.config);
