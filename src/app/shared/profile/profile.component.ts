@@ -568,6 +568,15 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
       this.isOpened=''
       }
 
+      numberOnly(event): boolean {
+        const charCode = (event.which) ? event.which : event.keyCode;
+        if (charCode > 6 && (charCode < 2 || charCode >57)) {
+          return false;
+        }
+        return true;
+      }
+    
+
 }
 
   
