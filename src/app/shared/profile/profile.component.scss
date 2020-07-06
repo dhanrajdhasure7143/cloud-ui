@@ -309,3 +309,37 @@ label{
     font-size: 11px;
     cursor: pointer;
     }
+
+    .addCard{
+        // background-color: #26c9EE;
+        color: #f4f4f4;
+        // border: #26c9EE;
+        border-radius: 20px;
+        margin-top: 20px;
+        // position: absolute;
+        // right: 20px;
+    }
+
+    .btn-save, .cancel_btn{
+        width: 100px;
+      }
+      .buttonsblock button{
+       margin-right: 20px;
+      }
+    
+      .setDefault_btn{
+        margin-left: 5px;
+      }
+
+     
+      .remov_btn ,.setDefault_btn{
+        font-size: 10px;
+        height: 25px;
+        width: 60px;
+        padding: 0px;
+        border-radius: 20px;
+      }
+    
+    
+    
+    

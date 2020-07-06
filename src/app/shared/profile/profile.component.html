@@ -257,7 +257,7 @@
                                   <thead>
                                     <tr>
                                       <th scope="col" class="cardtype">Card Type</th>
-                                      <th scope="col" class="cardtypes">Card</th>
+                                      <th scope="col" class="cardtype">Card Number</th>
                                       <th scope="col" class="cardtype">Expiration Date</th>
                                       <th scope="col" class="cardtype">Created Date</th>
                                       <th scope="col" class="cardtype">Action</th>
@@ -265,13 +265,13 @@
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let cardData of paymentMode | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
-                                      <td>{{cardData.cardBrand}}</td>
-                                      <td class="cardtable">{{cardData.cardLast4}} 
+                                      <td>{{cardData.cardBrand|titlecase}}</td>
+                                      <td class="cardtable">XXXX-XXXX-XXXX-{{cardData.cardLast4}} 
                                         <!-- <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td> -->
                                         <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span> 
                                       <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
                                       <td>{{cardData.created | date}}</td>
-                                      <td class="deletcard">
+                                      <td >
                                         <button aria-hidden="true" *ngIf='!cardData.defaultSource' class="btn btn-danger remov_btn"  (click)="deletCard(cardData,i)">Remove
                                           <!-- <img src="assets/images/unsubscribe.svg" alt=""> -->
                                         </button> 
