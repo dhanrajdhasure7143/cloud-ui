@@ -74,14 +74,37 @@
                     <option  [value]="undefined" disabled hidden>Select Year</option>
                     <option *ngFor="let obj of yearList; let i=index" [value]="2019+(i+1)">{{2019+(i+1)}}</option>
                     <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
+                    </select>
+                </div>
+                <div *ngIf='isStandard' class="form-group col-sm-5 state_input card_form">
+                  <label for="customerCount">No of Users</label>
+                  <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
+                      <option  [value]="undefined" disabled hidden>Select Users</option>
+                    <option value="10" >10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="60">60</option>
+                    <option value="70">70</option>
+                    <option value="80">80</option>
+                    <option value="90">90</option>
+                    <option value="100">100</option>
                   </select>
                 </div>
+                <div *ngIf='!isStandard' class="form-group col-sm-5 state_input card_form">
+                    <label for="customerCount">No of Users</label>
+                    <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
+                        <option  [value]="undefined" disabled hidden>Select Users</option>
+                        <option *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option>
+                    </select>
+                  </div>
                 <div class="col-sm-12 btn-continue">
                   <button class="btn btn-submit pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Continue</button>
                 </div>
             </div>
           </div>
-            <div class="col-md-1"></div>
+            <!-- <div class="col-md-1"></div> -->
           <div class="col-md-2 plan_detail_box">
               <div class=" ">
                 <h4 class="select_label"><i class="fa fa-check-circle" aria-hidden="true"></i>Selected Plan Details</h4>

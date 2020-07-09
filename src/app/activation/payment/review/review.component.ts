@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { subtract } from 'ngx-bootstrap/chronos';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-review',
@@ -98,7 +99,8 @@ public paymentToken:any;
                       "meta":{"orderable":true,
                 "visible":true,
                 "plan_id":this.selected_plans.id},
-                      "planId": this.selected_plans.id
+                      "planId": this.selected_plans.id,
+                      "quantity":this.cardDetails.customerCount
                     }
                   ],
                   "meta": {"orderable":true,
@@ -135,6 +137,13 @@ public paymentToken:any;
   applyCoupon(couponcode){
     if(couponcode!=''){
       this.promo=couponcode;
+      Swal.fire({
+        title: 'Successful',
+        text: `Coupon applied successfully...`,
+        type: 'info',
+        showCancelButton: false,
+        allowOutsideClick: false
+      })
     }
     else{
       this.promo=null;

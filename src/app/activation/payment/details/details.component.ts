@@ -24,11 +24,14 @@ export class DetailsComponent implements OnInit {
   public name:any;
   public cardEncode:any;
   public cardDecode:any;
+  public customerCount:string;
   public card:any;
   public cardEdit:any;
   // public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
   public yearList:number[] = new Array(11);
+  public userscount:number[] = new Array(19);
   tenantID: string;
+  isStandard: boolean;
 
   constructor( private productlistservice:ProductlistService, 
               private router:Router,
@@ -49,11 +52,11 @@ export class DetailsComponent implements OnInit {
     this.plantype=localStorage.getItem("selectedplan")
     this.tenantID=localStorage.getItem("tenantName");
     this.productlistservice.getProductPlanes(this.productId,this.tenantID).subscribe(data=> {this.plansList =data
-      console.log("testtttt",this.plansList)
+      
       if(this.plansList.length > 1){
         this.plansList=this.plansList.reverse();
       }
-      for(var i=0; i<this.plansList.length; i++){
+          for(var i=0; i<this.plansList.length; i++){
         var features=[];
         for (let [key, value] of Object.entries(this.plansList[i].features)) {
           var obj={'name':key,'active':value}
@@ -70,6 +73,9 @@ export class DetailsComponent implements OnInit {
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
+        if(this.selected_plans.nickName == "Standard" ){
+          this.isStandard=true;
+        }
         this.name=this.selected_plans.nickName.slice(4);
         if(this.selected_plans.term =="12month"){
           this.selected_plans.term= 'Annual'
@@ -89,6 +95,7 @@ export class DetailsComponent implements OnInit {
     cardnumbertotal:this.cardnumbertotal,
     cardyear:this.cardyear,
     cvvNumber:this.cvvNumber,
+    customerCount: parseInt(this.customerCount)
   }
   this.cardEncode=Base64.encode(JSON.stringify(this.cardDetails));
   this.card={id:this.cardEncode}
@@ -114,6 +121,7 @@ export class DetailsComponent implements OnInit {
       this.cardnumbertotal=this.cardDetails.cardnumbertotal;
       this.cardyear=this.cardDetails.cardyear;
       this.cvvNumber=this.cardDetails.cvvNumber;
+      this.customerCount=this.cardDetails.customerCount;
       }
     });
   }
