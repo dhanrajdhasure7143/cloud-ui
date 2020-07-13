@@ -4,8 +4,8 @@
       <p id="hyperlink-styles">Dashboard</p>
   </div>
   
-  <div class='col-md-3'>
-    <input class="form-control searchOne pull-right" type="text" name='search' #search="ngModel" [(ngModel)]="searchValue" placeholder="Search">
+  <div class='search-One'>
+    <input class="form-control searchOne pull-right" type="text" name='search' [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off">
   <!-- <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="userFilter" aria-label="Search" [ngModelOptions]="{standalone: true}"/> -->
   </div>
 </div>
@@ -24,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let plan of plans">
+      <tr *ngFor="let plan of plans | FilterPipe: searchdashboard">
          <td>{{plan.tenantAdminName}}</td>
         <td>{{plan.subscribedPlan}}</td>
         <td>{{plan.lastInvoiceAmount|currency}}</td>

@@ -68,4 +68,21 @@ setasDefaultCard(paymentModeId){
 inviteUser(inviterID,inviteeID,body) :Observable<any>{
   return this.http.post<any[]>('/api/user/inviteUsers?inviterMailId='+inviterID+'&inviteeMailId='+inviteeID,body,httpOptions)
 }
+
+getAllRolesForSuperAdmin():Observable<any>{
+ return this.http.get<any>('/authorizationservice/api/v1/user/ListOfRoles')
+}
+deleteRole(roleId):Observable<any>{
+   return this.http.delete<any>('/authorizationservice/api/v1/user/DeleteSelectedRole?roleId='+roleId)
+    
+}
+getAllPermissions(): Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/user/fetchAllPermissions')
+}
+modifyRole(modifyrolebody) :Observable<any>{
+  return this.http.post<any[]>('/authorizationservice/api/v1/user/updateRoleDetails',modifyrolebody,httpOptions)
+}
+createRole(roleBody): Observable<any>{
+  return this.http.post<any>('/authorizationservice/api/v1/user/createRole',roleBody,httpOptions)
+}
 }

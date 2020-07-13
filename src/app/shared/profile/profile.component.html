@@ -318,7 +318,7 @@
                                                       <span *ngIf="email.errors.required"> Email is required</span>
                                                       <span *ngIf="email.errors.pattern"> Enter valid email address</span>
                                                     </span>
-                                                    <span *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only corporate Email is allowed</span>
+                                                    <span *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only Business Email is Allowed</span>
                                                   </div>
 
                                             <div class="form-group">
@@ -344,9 +344,9 @@
 
 
                 <div class="container users" *ngIf="isusers">
-                        <div class="">
+                        <div  class="">
                             <tabset >
-                            <tab  heading="User Management" id="tab1">
+                            <tab  *ngIf="this.userRole == 'Admin'" heading="User Management" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -382,7 +382,7 @@
                                     </table>
                             </div>
                       </tab>
-                      <tab heading="Departments">
+                      <tab *ngIf="this.userRole == 'Admin'" heading="Departments">
                           <div class="search-One">
                               <form class="form-inline d-flex  md-form form-sm">
                                   <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -427,6 +427,8 @@
                                   </form>
                                 </div>
                             <div class="container role">
+                              
+                                <button class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add New Role</button>
                                     <table class="table table-borderless table-hover">
                                             <thead>
                                               <tr>
@@ -434,6 +436,7 @@
                                                 <th scope="col" class="types">Role</th>
                                                 <th scope="col" class="types">Description</th>
                                                 <th scope="col" class="types">Permissions</th>
+                                                <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -451,6 +454,22 @@
                                                     <span class="hideRole" *ngIf="isOpened == role.id" (click)="hideroleslist(j)">Hide</span>
                                                     </div>
                                                 </td>
+                                                <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
+                                                    <span  (click)="selectedroledata(role,j,rolestemplate)">
+                                                    <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                                    <span  (click)="roledel(role.id,j)"> 
+                                                    <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                                    <div id="myid" [ngClass]="selectedIndex == j?'isdelet':''" class="deletconfm">
+                                                        <div class="container-fluid deletefrm">
+                                                            <h5 class="pull-left">Confirmation</h5>
+                                                            <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <p class="pull-left">Are you sure you want to delete the role ?</p>
+                                                             <button class="pull-left confm" (click)="roleDelYes(role.id,j)">Yes</button>
+                                                             <button class="confm pull-left" (click)="unsubscribeNo(j)">No</button>
+                                                        </div>
+                                                    </div>
                                                
                                                </tr>
                                             </tbody>
@@ -668,3 +687,137 @@
                   </div>
                 </form>
             </ng-template>
+
+            <ng-template #rolestemplate >
+              <div class="modal">
+                <div class="container">
+                  <div class="modal-body row">
+                      <div class="col-md-12">
+                          <h4 class="modal-title pull-left">Modify Role</h4>
+                          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div >
+                      <div class="col-md-12 infocheck">
+
+                       <label for="role">Role : </label>
+                        <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.name"/>     
+                                  </div>
+                      <div class="col-md-12 infocheck">
+                        <label for="roledescription">Description : </label>
+                        <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.description"/>     
+     
+                        </div>
+                        <div class="col-md-12 infocheck">
+                          <label for="application">Application : </label>
+                          <ng-select [multiple]="false" 
+                          [items] =  "applications"
+                          [(ngModel)]="selectedApp"
+                          bindValue = "name"
+                          bindLabel = "name">
+                         
+                            <!-- <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option> -->
+                          </ng-select>
+
+                         
+                          <!-- <select class="form-control botmbordr" [(ngModel)]="roledata.appliationId" (change)="selected()">
+                            <option *ngFor="let item of applications" [ngValue]="item">{{item.name}}</option>
+                        </select>      -->
+       
+                          </div>
+                          <div class="col-md-12 ">
+                            <label>Permissions : </label>
+                            <div class="infocheck">
+
+                              <ng-select [multiple]="true" [(ngModel)]="permidlist">
+                                <ng-option *ngFor="let permi of permissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
+                              </ng-select>
+                           
+                 
+                </div>
+                           
+                            </div>
+                                         
+                                 
+                      <div class="col-md-12 submitbtn">
+                        <button class="btn btn-primary" (click)="modifyrole(roledata)">Modify Role</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+              <ng-template #createRole >
+                <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="createNewRole()" class="card_form">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title" >Add New Role</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="cancelAddRole()">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                
+                        <div class="modal-body">
+                            <div class="">
+                            <div class="col-12 row">        
+                              <div class="col-md-12 infocheck">
+
+                                <label for="role">Role : </label>
+                                 <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roleName"/>     
+                                           </div>
+                               <div class="col-md-12 infocheck">
+                                 <label for="roledescription">Description : </label>
+                                 <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roleDescription"/>     
+              
+                                 </div>
+                                 <div class="col-md-12 infocheck">
+                                   <label for="application">Application : </label>
+                                   <ng-select name = "applicationn" [multiple]="false" 
+                                   [items] =  "applications"
+                                   [(ngModel)]="selectedApplication"
+                                   placeholder = "Select Application "
+                                   bindValue = "id"
+                                   bindLabel = "name">
+                                  
+                                     <!-- <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option> -->
+                                   </ng-select>
+         
+                                  
+                                   <!-- <select class="form-control botmbordr" [(ngModel)]="roledata.appliationId" (change)="selected()">
+                                     <option *ngFor="let item of applications" [ngValue]="item">{{item.name}}</option>
+                                 </select>      -->
+                
+                                   </div>
+                                   <div class="col-md-12 ">
+                                     <label>Permissions : </label>
+                                     <div class="infocheck">
+         
+                                       <ng-select name = "permiss"[multiple]="true" [(ngModel)]="selectedpermidlist" placeholder = "Select Permissions">
+                                         <ng-option *ngFor="let permi of permissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
+                                       </ng-select>
+                                    
+                          
+                         </div>
+                                    
+                                     </div>
+                                                  
+                      </div>
+                    </div>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <div class="">
+                          <div class="col-12">
+                      <div class="form-group form-buttons pull-right buttonsblock">        
+                          <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddRole()"><div class="anim"></div> Cancel</button>
+                          <button class="btn btn-primary btn-save"  type="submit"><div class="anim"></div> Save</button>
+                      </div>
+                      
+                      <div class="clearfix">
+                      
+                      </div>
+                      
+                      </div>
+                      </div>
+                      </div>
+                    </form>
+                </ng-template>

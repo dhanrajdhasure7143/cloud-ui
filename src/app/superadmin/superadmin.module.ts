@@ -6,10 +6,11 @@ import { SharedModule } from '../shared/shared.module';
 
 import { FormsModule } from '@angular/forms';
 import { SuperadminComponent } from './superadmin.component';
+import { SearchPipe } from './custom_pipe/searchPipe';
 
 
 @NgModule({
-  declarations: [DashboardComponent,SuperadminComponent],
+  declarations: [DashboardComponent,SuperadminComponent,SearchPipe],
   imports: [
     CommonModule,
     SharedModule,

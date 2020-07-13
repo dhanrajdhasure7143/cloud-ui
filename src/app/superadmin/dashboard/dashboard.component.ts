@@ -8,6 +8,7 @@ import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.serv
 })
 export class DashboardComponent implements OnInit {
 
+  searchdashboard:any;
   constructor(private firstloginservice:FirstloginService) { }
   plans:any=[];
   ngOnInit() {

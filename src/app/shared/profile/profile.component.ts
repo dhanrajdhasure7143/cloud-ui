@@ -14,6 +14,8 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 import {yearslist } from './../../../assets/jsons/yearlist.json';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import moment from 'moment';
+import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -90,6 +92,17 @@ export class ProfileComponent implements OnInit {
   listOfpermissions: any = [];
   permissionList: any = [];
   tenantId: string;
+  applications: any; 
+  public permissionsList: any;
+  public roleName: any;
+  public roleDescription:any;
+  public roledata:any;
+  selectedpermissions :any = [];
+  permidlist : any = [];
+  selectedApp:any;
+  selectedApplication:any;
+  selectedpermidlist: any = [];
+  //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
     private modalService: BsModalService,
@@ -101,6 +114,12 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.applications = [
+      {id: 2, name: "2.0"},
+      {id: 1, name: "ezflow"}
+  ];
+    this.getAllPermissions();
     this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
@@ -121,16 +140,18 @@ this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
       this.userManagement.push(elementuser.userId);
     });
 });
-    this.profileservice.getAllRoles(2).subscribe(resp => {
-      this.allRoles = resp,
-      console.log("resp is",resp)
+console.log("local",localStorage.getItem('userRole'))
+this.getRoles();
+    // this.profileservice.getAllRoles(2).subscribe(resp => {
+    //   this.allRoles = resp,
+    //   console.log("resp is",resp)
 
-        this.allRoles.forEach(elementRoles => {
+    //     this.allRoles.forEach(elementRoles => {
           
-                 this.listOfroles.push(elementRoles.name)
-        });
+    //              this.listOfroles.push(elementRoles.name)
+    //     });
           
-    })
+    // })
     this.profileservice.getUserRole(2).subscribe(role => {
       this.userRole = role.message;
 
@@ -336,6 +357,19 @@ this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
     this.subscribeddata = data;
     this.modalRef = this.modalService.show(template)
   }
+
+  selectedroledata(selRoleData, index, template){
+    this.permidlist = [];
+    this.roledata = selRoleData;
+    this.selectedpermissions = selRoleData.permission;
+    this.selectedpermissions.forEach(elementperm => {
+       
+      this.permidlist.push(elementperm.id)
+      });
+      console.log("selroledata", selRoleData)
+    this.selectedApp = selRoleData.appliationId.name;
+    this.modalRef = this.modalService.show(template)
+  }
   infoModelSubmit() {
     this.modalRef.hide();
     this.router.navigate(['/activation/payment/chooseplan']);
@@ -450,6 +484,14 @@ this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
     addPaymentCards(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
+    addrole(template){
+      this.modalRef = this.modalService.show(template,this.config)
+    }
+    cancelAddRole(){
+      this.modalRef.hide();
+    //  this.cardModel={}
+    }
+   
     cancelAddCard(){
       this.modalRef.hide();
       this.cardModel={}
@@ -575,8 +617,125 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
         }
         return true;
       }
+
+      roleDelYes(role,index){
+          this.profileservice.deleteRole(role).subscribe(response => {
+          this.getRoles();
+          Swal.fire({
+            title: 'Success!',
+            text: `Role deleted successfully.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          }) 
+          }, err => {
+          });
+          document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
     
 
 }
 
+  getRoles(){
+  if(localStorage.getItem('userRole') === 'SuperAdmin'){
+   this.profileservice.getAllRolesForSuperAdmin().subscribe(resp => {
+   this.allRoles = resp,
+   console.log("All roles",resp)
+   this.allRoles.forEach(elementRoles => {
+       
+   this.listOfroles.push(elementRoles.name)
+   });
+                
+   })
+   }else {
+     this.profileservice.getAllRoles(2).subscribe(resp => {
+            this.allRoles = resp,
+            console.log("resp is",resp)
+      
+            this.allRoles.forEach(elementRoles => {
+                  
+            this.listOfroles.push(elementRoles.name)
+            });
+                
+          })
+      
+       }
+      }
+        roledel(data,index){
+              document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+             }
+
+      // onItemSelect(item: any) {
+      //         console.log(item);
+      // }
+      // onSelectAll(items: any) {
+      //      console.log(items);
+      // }
+      
+      getAllPermissions() {
+        
+        this.profileservice.getAllPermissions().subscribe(data => {
+          this.permissionsList = data
+        })
+      }
+
+      modifyrole(rolesdata){
+       for(var i=0;i<this.applications.length;i++){
+         if(this.applications[i].name == this.selectedApp ){
+           this.selectedApp = this.applications[i].id
+         }
+       }
+        let rolesbody = {"id":rolesdata.id,  
+        "name": rolesdata.name,
+          "description":rolesdata.description,
+          "displayName":rolesdata.name,
+          "appliationId":{
+             "id":this.selectedApp
+          
+       },
+          "permissionId":  this.permidlist
+       
+       }
+       console.log("rolesbody", rolesbody)
+       this.profileservice.modifyRole(rolesbody).subscribe(modifyresp => {
+        this.modalRef.hide();
+        this.getRoles();
+        Swal.fire({
+          title: 'Success!',
+          text: `Role updated successfully.`,
+          type: 'success',
+          showCancelButton: false,
+          allowOutsideClick: true
+        }) 
+      })
+      
+    }
+
+    createNewRole(){
+      
+      let addRoleBody = {  
+      "name":this.roleName,
+      "description":this.roleDescription,
+      "displayName":this.roleName,
+      "appliationId":{
+         "id": this.selectedApplication
+      
+   },
+      "permissionId": this.selectedpermidlist
+   }
+   console.log("create role", addRoleBody)
+   this.profileservice.createRole(addRoleBody).subscribe(modifyresp => {
+    this.modalRef.hide();
+    this.getRoles();
+    Swal.fire({
+      title: 'Success!',
+      text: `Role created successfully.`,
+      type: 'success',
+      showCancelButton: false,
+      allowOutsideClick: true
+    }) 
+  })
   
+    }
+   }
+  
+ 
