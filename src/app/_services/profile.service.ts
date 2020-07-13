@@ -68,4 +68,7 @@ setasDefaultCard(paymentModeId){
 inviteUser(inviterID,inviteeID,body) :Observable<any>{
   return this.http.post<any[]>('/api/user/inviteUsers?inviterMailId='+inviterID+'&inviteeMailId='+inviteeID,body,httpOptions)
 }
+createCoupon(input):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/subscriptions/createCoupon',input,httpOptions);
+}
 }

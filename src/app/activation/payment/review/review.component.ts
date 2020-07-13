@@ -60,7 +60,7 @@ public paymentToken:any;
         }else{
           this.selected_plans.term= 'One Month'
         }
-        this.name=this.selected_plans.nickName.slice(4);
+        this.name=this.selected_plans.nickName;
       }
     });
   });
