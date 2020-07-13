@@ -62,14 +62,19 @@ export class PlatformComponent implements OnInit {
     this.productId=selectedData.id
   }
   navigateProduct(selectedproduct){
-    Swal.fire({
-      title: 'Info!',
-      text: `Coming soon...`,
-      type: 'info',
-      showCancelButton: false,
-      allowOutsideClick: false
-    })
-    // if(this.selectedId == '2.0'){
+    //added this for navigate to 2.0 ui
+    var token=JSON.parse(localStorage.getItem('currentUser'));
+    var encryptToken=btoa(token.accessToken)
+    var encryptrefreshToken=btoa(token.refreshToken);
+    window.location.href="http://eiapdev.epsoftinc.in/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken
+    // Swal.fire({
+    //   title: 'Info!',
+    //   text: `Coming soon...`,
+    //   type: 'info',
+    //   showCancelButton: false,
+    //   allowOutsideClick: false
+    // })
+    // // if(this.selectedId == '2.0'){
     //   alert("2.0")
     // }else if(this.selectedId == 'ezbot'){
     //   alert("2.0")
