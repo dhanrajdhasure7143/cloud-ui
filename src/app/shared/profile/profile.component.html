@@ -428,7 +428,7 @@
                                 </div>
                             <div class="container role">
                               
-                                <button class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add New Role</button>
+                                <button *ngIf="this.userRole == 'SuperAdmin'" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add New Role</button>
                                     <table class="table table-borderless table-hover">
                                             <thead>
                                               <tr>
