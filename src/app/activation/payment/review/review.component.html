@@ -69,7 +69,7 @@
 
             <div class="plandetails">
               <hr>
-                  <h5 class="plandetails"> Total Payable : $  {{this.finalAmount}}.00 </h5>
+                 <h5 class="plandetails"> Total Payable : $ {{selected_plans.amount}} </h5>
             <hr>
                 </div>
           </div>
@@ -106,7 +106,7 @@
               <p>Plan <span>: {{selected_plans.nickName}} </span></p>
               <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
               <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
-              <p>Amount paid <span>: $ {{this.finalAmount}}.00</span></p>
+              <p>Amount paid <span>: $ {{this.finalAmount}}</span></p>
               <p>Period <span>: {{selected_plans.term}}</span></p>
             </div>
 

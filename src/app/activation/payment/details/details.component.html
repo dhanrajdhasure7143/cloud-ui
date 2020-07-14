@@ -18,7 +18,7 @@
                 class='fa fa-info-circle errspan'> Cardholder Name is required </span> 
               </div>
 
-                  <div class="form-group col-sm-6">
+                  <div class="form-group col-sm-8">
                     <label for="month">Month (MM)</label>
                     <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardmonth" required>
                         <option  [value]="undefined" disabled hidden>Select Month</option>
@@ -36,6 +36,12 @@
                       <option value="12">12</option>
                     </select>
                   </div>
+                  <div class="form-group col-sm-8">
+                    <label for="cvv">CVV</label>
+                    <input type="password" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
+                  <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
+                  class='fa fa-info-circle errspan'> CVV is required</span>                
+                </div>
                   <div class="col-sm-4"></div>
         </div>
 
@@ -62,21 +68,16 @@
                 <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
                 class='fa fa-info-circle errspan'> Card Number is required</span> 
               </div>
-              <div class="form-group col-sm-6">
-                  <label for="cvv">CVV</label>
-                  <input type="password" class="form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
-                <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
-                class='fa fa-info-circle errspan'> CVV is required</span>                
+              <div class="form-group col-sm-8">
+                <label for="year">Year (YYYY)</label>
+                <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
+                  <option  [value]="undefined" disabled hidden>Select Year</option>
+                  <option *ngFor="let obj of yearList; let i=index" [value]="2019+(i+1)">{{2019+(i+1)}}</option>
+                  <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
+                  </select>
               </div>
-                <div class="form-group col-sm-6">
-                  <label for="year">Year (YYYY)</label>
-                  <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
-                    <option  [value]="undefined" disabled hidden>Select Year</option>
-                    <option *ngFor="let obj of yearList; let i=index" [value]="2019+(i+1)">{{2019+(i+1)}}</option>
-                    <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
-                    </select>
-                </div>
-                <div *ngIf='isStandard' class="form-group col-sm-5 state_input card_form">
+                          
+                <div *ngIf='isStandard' class="form-group col-sm-8 state_input card_form">
                   <label for="customerCount">No of Users</label>
                   <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
                       <option  [value]="undefined" disabled hidden>Select Users</option>
@@ -96,7 +97,7 @@
                     <label for="customerCount">No of Users</label>
                     <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
                         <option  [value]="undefined" disabled hidden>Select Users</option>
-                        <option *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option>
+                        <option *ngFor='let count of userscount; let c = index' [value]="100*(c+1)" >{{100*(c+1)}}</option>
                     </select>
                   </div>
                 <div class="col-sm-12 btn-continue">
