@@ -193,6 +193,7 @@ export class LoginComponent implements OnInit {
     this.profileService.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
       console.log("user role is",this.userRole)
+      localStorage.setItem('userRole',this.userRole);
      if(this.userRole === 'SuperAdmin'){
       this.router.navigate(['/superadmin']);
       

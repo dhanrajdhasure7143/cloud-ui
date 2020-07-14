@@ -28,6 +28,8 @@ import { NotifierModule, NotifierService } from "angular-notifier";
 import { FooterComponent } from './footer/footer.component';
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
 import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 
 @NgModule({
@@ -50,6 +52,7 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
       FooterComponent,
       TermsconditionsComponent,
       PrivacypolicyComponent,
+      
       ],
   imports: [
     CommonModule,
@@ -60,7 +63,8 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
     Ng2TelInputModule,
     ModalModule.forRoot(),
     TabsModule.forRoot(),
-    NotifierModule
+    NotifierModule,
+    NgSelectModule
   ],
   providers: [NotifierService],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent],

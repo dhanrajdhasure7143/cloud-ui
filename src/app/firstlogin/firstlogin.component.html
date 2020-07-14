@@ -59,7 +59,7 @@
             
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/company.svg" class="icon">
-              <input type="text" name="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
+              <input type="text" [disabled]="isCompanydisabled" name="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
                 maxlength="30" placeholder="Company" required>
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
                 class='fa fa-info-circle errspan'> Company is required </span>
