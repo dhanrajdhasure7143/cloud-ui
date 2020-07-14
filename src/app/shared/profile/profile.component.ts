@@ -105,29 +105,23 @@ export class ProfileComponent implements OnInit {
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
       this.apps = resp,
-      console.log("my apps are",this.apps)
-        this.apps.forEach(elementApps => {
+             this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
         });
     })
       this.tenantId=localStorage.getItem('tenantName');
 this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
     this.userManagementresponse = resp
-    console.log("user management     ",this.userManagementresponse )
-      this.userManagementresponse.forEach(elementuser => {
-      console.log("user management  userId   ",elementuser.applicationId )
-      elementuser.userId['applicationIdname']=elementuser.applicationId.name;
+       this.userManagementresponse.forEach(elementuser => {
+         elementuser.userId['applicationIdname']=elementuser.applicationId.name;
       elementuser.userId['roleIdname']=elementuser.roleID.name;
       this.userManagement.push(elementuser.userId);
     });
 });
     this.profileservice.getAllRoles(2).subscribe(resp => {
       this.allRoles = resp,
-      console.log("resp is",resp)
-
-        this.allRoles.forEach(elementRoles => {
-          
-                 this.listOfroles.push(elementRoles.name)
+             this.allRoles.forEach(elementRoles => {
+             this.listOfroles.push(elementRoles.name)
         });
           
     })

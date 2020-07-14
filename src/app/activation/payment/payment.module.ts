@@ -9,9 +9,10 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 import { BsModalService } from 'ngx-bootstrap';
+import { CouponComponent } from './coupon/coupon.component';
 
 @NgModule({
-  declarations: [DetailsComponent, ReviewComponent, ChooseplanComponent],
+  declarations: [DetailsComponent, ReviewComponent, ChooseplanComponent, CouponComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -32,6 +32,7 @@ export class DetailsComponent implements OnInit {
   public userscount:number[] = new Array(19);
   tenantID: string;
   isStandard: boolean;
+  isFreetierDisabled: boolean=false;
 
   constructor( private productlistservice:ProductlistService, 
               private router:Router,
@@ -57,6 +58,9 @@ export class DetailsComponent implements OnInit {
         this.plansList=this.plansList.reverse();
       }
           for(var i=0; i<this.plansList.length; i++){
+            if(this.plansList[i].subscribed==true){
+              this.isFreetierDisabled=true;
+            }
         var features=[];
         for (let [key, value] of Object.entries(this.plansList[i].features)) {
           var obj={'name':key,'active':value}
@@ -76,7 +80,7 @@ export class DetailsComponent implements OnInit {
         if(this.selected_plans.nickName == "Standard" ){
           this.isStandard=true;
         }
-        this.name=this.selected_plans.nickName.slice(4);
+        this.name=this.selected_plans.nickName;
         if(this.selected_plans.term =="12month"){
           this.selected_plans.term= 'Annual'
         }else{
