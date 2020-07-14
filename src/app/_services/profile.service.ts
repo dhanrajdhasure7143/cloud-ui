@@ -85,4 +85,8 @@ modifyRole(modifyrolebody) :Observable<any>{
 createRole(roleBody): Observable<any>{
   return this.http.post<any>('/authorizationservice/api/v1/user/createRole',roleBody,httpOptions)
 }
+createCoupon(input):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/subscriptions/createCoupon',input,httpOptions);
+}
+
 }
