@@ -24,6 +24,7 @@ export class TopheaderComponent implements OnInit {
    public mydata:any[];
    public isnotification:boolean=false;
   userRole: any;
+  isCoupon: boolean=false;
 
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router, 
@@ -59,6 +60,7 @@ public myname:any[]
     this.isInvite=false;
     this.isMyaccount=true;
     this.isusers=false;
+    this.isCoupon=false;
     this.isnotification=false;
   }
 
@@ -69,6 +71,7 @@ public myname:any[]
     this.isMyaccount=false;
     this.isusers=false;
     this.isnotification=false;
+    this.isCoupon=false;
   }
 
   inviteSlideDown(){
@@ -83,6 +86,16 @@ public myname:any[]
     this.isInvite=false;
     this.isMyaccount=false;
     this.isnotification=false;
+    this.isCoupon=false;
+  }
+  couponSlideup(){
+    document.getElementById("foot").classList.remove("slide-down");
+    document.getElementById("foot").classList.add("slide-up");
+    this.isCoupon=true;
+    this.isusers=false;  
+    this.isInvite=false;
+    this.isMyaccount=false;
+    this.isnotification=false;
   }
   seeNotifications(){
     document.getElementById("foot").classList.remove("slide-down");
@@ -90,6 +103,7 @@ public myname:any[]
     this.isnotification=true;
     this.isInvite=false;
     this.isMyaccount=false;
+    this.isCoupon=false;
     this.isusers=false;
   }
 }

@@ -47,7 +47,10 @@ export class ProfileService {
   listofPaymentModes():Observable<any>{
     return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
   }
-
+ 
+  listofCuopons():Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/orders/listOfCoupons')
+  }
  deletePaymentMode(paymentMethodId):Observable<any>{
   return this.http.post<any>('/subscriptionservice/v1/paymentmethods/'+paymentMethodId,httpOptions);
 }
@@ -75,6 +78,10 @@ getAllRolesForSuperAdmin():Observable<any>{
 deleteRole(roleId):Observable<any>{
    return this.http.delete<any>('/authorizationservice/api/v1/user/DeleteSelectedRole?roleId='+roleId)
     
+}
+
+ deleteCoupon(couponId):Observable<any>{
+  return this.http.delete<any>('/subscriptionservice/v1/orders/deleteCoupon?couponId='+couponId)
 }
 getAllPermissions(): Observable<any>{
   return this.http.get<any>('/authorizationservice/api/v1/user/fetchAllPermissions')
