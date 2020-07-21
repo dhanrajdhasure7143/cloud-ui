@@ -16,7 +16,7 @@
                <p (click)="accountSlideup()"><img  src="assets/images/account.svg"><span>My Account</span></p>
                   <p *ngIf="this.userRole=='Admin' || this.userRole == 'SuperAdmin'" (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
                   <p *ngIf="this.userRole=='Admin'" (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
-                  <p *ngIf="this.userRole=='SuperAdmin'"  [routerLink]="['/activation/payment/coupon']"><img  src="assets/images/inviteuser.svg"><span>Create Coupon</span></p>
+                  <p *ngIf="this.userRole=='SuperAdmin'"  (click)="couponSlideup()"><img  src="assets/images/inviteuser.svg"><span>Create Coupon</span></p>
                   <p (click)="logout()"><img src="assets/images/Sign_Out.svg"><span>Signout</span></p>
               </div> 
           </li>
@@ -27,4 +27,4 @@
 
 
 
-  <app-profile [isMyaccount]="isMyaccount" [isInvite]="isInvite" [isusers]="isusers" [isnotification]="isnotification"></app-profile>
+  <app-profile [isMyaccount]="isMyaccount" [isInvite]="isInvite" [isusers]="isusers" [isnotification]="isnotification" [isCoupon]="isCoupon"></app-profile>

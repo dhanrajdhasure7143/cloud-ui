@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   @Input() public isInvite: boolean;
   @Input() public isMyaccount: boolean;
   @Input() public isusers: boolean;
+  @Input() public isCoupon: boolean;
   @Input() public isnotification: boolean;
   public model: User;
   public yearList:any;
@@ -46,6 +47,9 @@ export class ProfileComponent implements OnInit {
   public tableData: any[];
   public formOne: any = {};
   countryInfo: any[] = [];
+  isReedemBy:boolean=false;
+  isReedemTimes:boolean=false;
+  isAmount:boolean=false;
   public addDepartment: boolean = false;
   public departments: any;
   public password: any;
@@ -99,9 +103,19 @@ export class ProfileComponent implements OnInit {
   public roledata:any;
   selectedpermissions :any = [];
   permidlist : any = [];
+  amountOff:any;
+  isPercentage:boolean=false;
   selectedApp:any;
   selectedApplication:any;
   selectedpermidlist: any = [];
+  couponDetails: any;
+  couponNamename: any;
+  couponIdId: any;
+  durationTime: any;
+  percentageOffTot: any;
+  data: any;
+  allCoupons: any;
+  
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
@@ -139,6 +153,7 @@ this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
 });
 console.log("local",localStorage.getItem('userRole'))
 this.getRoles();
+this.getListofCoupons();
     // this.profileservice.getAllRoles(2).subscribe(resp => {
     //   this.allRoles = resp,
     //   console.log("resp is",resp)
@@ -160,6 +175,25 @@ this.getRoles();
 
     
 
+  }
+  getListofCoupons() {
+    this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
+      this.allCoupons.forEach(element => {
+        if(element.amountOff!=null)
+        {
+          element.percentOff=' - '
+         
+        }
+        else{
+        element.amountOff=' - '
+        }
+        if(element.maxRedemptions==null){
+          element.maxRedemptions='No Limit'
+        }
+        
+      });
+    console.log("doupns are",this.allCoupons)})
+ 
   }
   getAllPaymentmodes() {
 
@@ -484,9 +518,15 @@ this.getRoles();
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
+    createCoupon(createCoupon){
+      this.modalRef = this.modalService.show(createCoupon,this.config)
+    }
     cancelAddRole(){
       this.modalRef.hide();
     //  this.cardModel={}
+    }
+    cancelCreateCopon(){
+      this.modalRef.hide();
     }
    
     cancelAddCard(){
@@ -631,7 +671,24 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
     
 
 }
+couponDelYes(coupon,index){
+  this.profileservice.deleteCoupon(coupon).subscribe(resp=>{
+    this.getListofCoupons();
+    console.log("deleted coupon")
+    Swal.fire({
+      title: 'Success!',
+      text: `Coupon deleted successfully.`,
+      type: 'success',
+      showCancelButton: false,
+      allowOutsideClick: true
+    }) 
+    
 
+  },err => {
+  });
+  document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+
+}
   getRoles(){
   if(localStorage.getItem('userRole') === 'SuperAdmin'){
    this.profileservice.getAllRolesForSuperAdmin().subscribe(resp => {
@@ -659,6 +716,10 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
       }
         roledel(data,index){
               document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+             }
+             couponDel(data,index){
+              document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+
              }
 
       // onItemSelect(item: any) {
@@ -733,6 +794,58 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
   })
   
     }
+    onChangeRadio(value){
+      if(value=='percentageOff'){
+        this.isPercentage=true;
+        this.isAmount=false;
+      }
+      else{
+        this.isAmount=true;
+        this.isPercentage=false;
+      }
+      console.log("value is",value)
+  
+    }
+    onSelected(value){
+      if(value=='redeemBy' ){
+  this.isReedemBy=true;
+      }
+      else{
+        this.isReedemTimes=true;
+      }
+    }
+    createNewCoupon(){
+      this.couponDetails={
+        couponNamename:this.couponNamename,
+        couponIdId:this.couponIdId,
+        durationTime:this.durationTime,
+        percentageOffTot:this.percentageOffTot,
+        amountOff:this.amountOff
+          }
+      let input={
+      
+        "currency": "usd",
+        "duration": this.durationTime,
+        "durationInMonth": 0,
+        "name": this.couponNamename,
+        "percent_off": this.percentageOffTot,
+        "redeem_by": 1596276480,
+        "redmee_times": 3
+      }
+      this.profileservice.createCoupon(input).subscribe(resp=>{this.data=resp
+        Swal.fire({
+          title: 'Successful',
+          text: `Coupon creation successful...`,
+          type: 'success',
+          showCancelButton: false,
+          allowOutsideClick: false
+        }) 
+           
+            });
+            
+        console.log('resp is',this.data)
+    }
    }
+   
   
  
