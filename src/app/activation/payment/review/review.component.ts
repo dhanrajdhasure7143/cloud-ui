@@ -5,6 +5,8 @@ import { Base64 } from 'js-base64';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { subtract } from 'ngx-bootstrap/chronos';
 import Swal from 'sweetalert2';
+import { ProfileService } from 'src/app/_services/profile.service';
+import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-review',
@@ -37,13 +39,19 @@ public paymentToken:any;
   tenantID: string;
   promo: any;
   finalAmount: any;
+  validateCoupondata: any;
+  totalPay: any;
+  taxPercentage: any;
+  isapplied: boolean=false;
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
-                private modalService: BsModalService,) { }
+                private modalService: BsModalService,
+                private profileService: ProfileService) { }
 
   ngOnInit() {
     this.EnteredCarddetails();
+
     this.getproductPlans();
   }
 
@@ -55,6 +63,10 @@ public paymentToken:any;
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
+        this.profileService.validateCoupon(null,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
+          this.validateCoupondata=resp;
+        this.totalPay=this.validateCoupondata.TotalPaybleAmount,
+      this.taxPercentage=this.validateCoupondata.TaxPercentage})
         if(this.selected_plans.term =="12month"){
           this.selected_plans.term= 'Annual'
         }else{
@@ -135,19 +147,35 @@ public paymentToken:any;
     this.iscoupon=true;
   }
   applyCoupon(couponcode){
-    if(couponcode!=''){
-      this.promo=couponcode;
-      Swal.fire({
-        title: 'Successful',
-        text: `Coupon applied successfully...`,
-        type: 'info',
-        showCancelButton: false,
-        allowOutsideClick: false
-      })
-    }
-    else{
-      this.promo=null;
-    }
+    this.profileService.validateCoupon(couponcode,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
+      this.validateCoupondata=resp;
+      this.isapplied=true;
+      this.totalPay=this.validateCoupondata.TotalPaybleAmount;
+      if(this.validateCoupondata.message=='Coupon is valid'){
+        this.promo=couponcode;
+        Swal.fire({
+          title: 'Successful',
+          text: `Coupon applied successfully...`,
+          type: 'success',
+          showCancelButton: false,
+          allowOutsideClick: false
+        })
+       
+     }
+      else{
+        this.promo=null;
+        Swal.fire({
+          title: 'Invalid',
+          text: `Invalid Coupon Code...`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: false
+        })
+
+      }
+
+    })
+   
    
     console.log("coupn code is",couponcode)
 

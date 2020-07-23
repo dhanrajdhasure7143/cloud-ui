@@ -43,7 +43,7 @@
                 <div class='col-sm-12 apply-coupon'>
                     <p *ngIf='!iscoupon' (click)='haveCoupon()'>Have a coupon ?</p>
                  <span *ngIf='iscoupon' class="row"><input type="text" name='coupon' #coupon='ngModel' [(ngModel)]='couponcode' placeholder="Enter Coupon Code" class='col-sm-6 form-control coupon-input' required>
-                      <button class='btn hoverable applybtn' (click)='applyCoupon(couponcode)' [disabled] = "coupon.invalid">Apply</button></span>
+                      <button class='btn hoverable applybtn' (click)='applyCoupon(couponcode)' [disabled] = "coupon.invalid || isapplied">Apply</button></span>
                       <div style="overflow-wrap: break-word;" class="errordiv col-md-6">
                           <span *ngIf="success" class="alert-success text-center coupon_alertsuccess">{{success}}</span>
                           </div>
@@ -64,12 +64,13 @@
               </div>
               <div class="period">
                 <p>Billing Period : {{selected_plans.term}}</p>
+                <p>Sales Tax(%): {{taxPercentage}}</p>
               </div>
             </div>
 
             <div class="plandetails">
               <hr>
-                 <h5 class="plandetails"> Total Payable : $ {{selected_plans.amount}} </h5>
+                 <h5 class="plandetails"> Total Payable : $ {{totalPay}} </h5>
             <hr>
                 </div>
           </div>
@@ -106,7 +107,7 @@
               <p>Plan <span>: {{selected_plans.nickName}} </span></p>
               <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
               <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
-              <p>Amount paid <span>: $ {{this.finalAmount}}</span></p>
+              <p>Amount paid <span>: $ {{totalPay}}</span></p>
               <p>Period <span>: {{selected_plans.term}}</span></p>
             </div>
 
