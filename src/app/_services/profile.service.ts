@@ -79,6 +79,9 @@ deleteRole(roleId):Observable<any>{
    return this.http.delete<any>('/authorizationservice/api/v1/user/DeleteSelectedRole?roleId='+roleId)
     
 }
+modifyCoupon(couponName,couponId):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/orders/updateCoupon?name='+couponName+'&couponid='+couponId,httpOptions)
+}
 
  deleteCoupon(couponId):Observable<any>{
   return this.http.delete<any>('/subscriptionservice/v1/orders/deleteCoupon?couponId='+couponId)

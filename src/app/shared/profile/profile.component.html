@@ -517,7 +517,7 @@
                           <td >{{coupon.timesRedeemed}}</td>
                           <td>{{coupon.maxRedemptions}}</td>
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
-                              <span  (click)="selectedCoupondata(coupon,j,rolestemplate)">
+                              <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
                               <span  (click)="couponDel(coupon.id,j)"> 
                               <img src="assets/images/unsubscribe.svg" alt=""></span>
@@ -988,3 +988,33 @@
                               </div>
                         </form>
                   </ng-template>
+                  <ng-template #modifyCoupon >
+                    <div class="modal">
+                      <div class="container">
+                        <div class="modal-body row">
+                            <div class="col-md-12">
+                                <h4 class="modal-title pull-left">Modify Coupon</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div >
+                            <div class="col-md-12 infocheck">
+      
+                             <label for="coupon">Coupon Name: </label>
+                              <input type="text"  name="coupon" #coupon="ngModel" class="form-control botmbordr" [(ngModel)]="coupondata.name"/>     
+                                        </div>
+                            <div class="col-md-12 infocheck">
+                              <label for="couponName">Coupon Id : </label>
+                              <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="coupondata.id"/>     
+           
+                              </div>
+                           
+                                               
+                                       
+                            <div class="col-md-12 submitbtn">
+                              <button class="btn btn-primary" (click)="modifycoupon(coupondata)">Modify Coupon</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
