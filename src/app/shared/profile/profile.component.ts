@@ -115,6 +115,8 @@ export class ProfileComponent implements OnInit {
   percentageOffTot: any;
   data: any;
   allCoupons: any;
+  mod: any;
+  coupondata: any;
   
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -400,6 +402,11 @@ this.getListofCoupons();
       console.log("selroledata", selRoleData)
     this.selectedApp = selRoleData.appliationId.name;
     this.modalRef = this.modalService.show(template)
+  }
+  selectedCoupondata(selCouponData, index, template){
+    this.coupondata=selCouponData;
+    this.modalRef = this.modalService.show(template)
+
   }
   infoModelSubmit() {
     this.modalRef.hide();
@@ -767,7 +774,21 @@ couponDelYes(coupon,index){
       })
       
     }
+    modifycoupon(couponData){
+      
+this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>{
+  this.modalRef.hide();
+  this.getListofCoupons();
+  Swal.fire({
+    title: 'Success!',
+    text: `Coupon updated successfully.`,
+    type: 'success',
+    showCancelButton: false,
+    allowOutsideClick: true
+  }) 
+})
 
+    }
     createNewRole(){
       
       let addRoleBody = {  
