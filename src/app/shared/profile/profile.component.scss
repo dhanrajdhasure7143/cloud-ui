@@ -112,7 +112,37 @@
     margin-left: 33.33%;
     margin-top: 5px;
 }
-
+.createAlert
+{
+     // background-color: #26c9EE;
+     color: #f4f4f4;
+     // border: #26c9EE;
+     border-radius: 20px;
+     margin-bottom: 20px;
+     // position: absolute;
+     // right: 20px;
+}
+.alert
+{
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    float:left;
+    margin-left: 40%; 
+}
+.alertform
+{
+    margin-left: 20.33%;
+    margin-bottom: 70px;
+}
+.alerttype{
+    color:gray;
+    width:17%;
+}
+.norecords
+{
+    margin-left: 40%;
+}
 .tableborder{
     border-collapse: separate;
     border:solid 1px black !important;
@@ -160,7 +190,7 @@ th,td{
 .input-group{
   z-index: 0;
 }
-.role, .department, .usermanagement, .subscrption_id, .invoice_id, .paymode{
+.role, .department, .usermanagement, .subscrption_id, .invoice_id, .paymode,.configalerts{
     overflow: scroll;
     height: 230px;
 }

@@ -19,6 +19,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 export class TopheaderComponent implements OnInit {
 
    public isInvite=false;
+   public isAlerts=false;
    public isMyaccount:boolean=false;
    public isusers:boolean=false;
    public mydata:any[];
@@ -58,6 +59,7 @@ public myname:any[]
     document.getElementById("foot").classList.remove("slide-down");
     document.getElementById("foot").classList.add("slide-up");
     this.isInvite=false;
+    this.isAlerts=false;
     this.isMyaccount=true;
     this.isusers=false;
     this.isCoupon=false;
@@ -68,11 +70,23 @@ public myname:any[]
     document.getElementById("foot").classList.remove("slide-down");
     document.getElementById("foot").classList.add("slide-up");
     this.isInvite=true;
+    this.isAlerts=false;
     this.isMyaccount=false;
     this.isusers=false;
     this.isnotification=false;
     this.isCoupon=false;
   }
+
+  alertsSlideup()
+    {
+    document.getElementById("foot").classList.remove("slide-down");
+    document.getElementById("foot").classList.add("slide-up");
+    this.isAlerts=true;
+    this.isInvite=false;
+    this.isMyaccount=false;
+    this.isusers=false;
+    this.isnotification=false;
+   }
 
   inviteSlideDown(){
     document.getElementById("foot").classList.add("slide-down");
@@ -83,6 +97,7 @@ public myname:any[]
     document.getElementById("foot").classList.remove("slide-down");
     document.getElementById("foot").classList.add("slide-up");
     this.isusers=true;  
+    this.isAlerts=false;
     this.isInvite=false;
     this.isMyaccount=false;
     this.isnotification=false;
@@ -92,6 +107,7 @@ public myname:any[]
     document.getElementById("foot").classList.remove("slide-down");
     document.getElementById("foot").classList.add("slide-up");
     this.isCoupon=true;
+    this.isAlerts=false;
     this.isusers=false;  
     this.isInvite=false;
     this.isMyaccount=false;
@@ -101,6 +117,7 @@ public myname:any[]
     document.getElementById("foot").classList.remove("slide-down");
     document.getElementById("foot").classList.add("slide-up");
     this.isnotification=true;
+    this.isAlerts=false;
     this.isInvite=false;
     this.isMyaccount=false;
     this.isCoupon=false;

@@ -15,6 +15,7 @@ import {yearslist } from './../../../assets/jsons/yearlist.json';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import moment from 'moment';
 import { Observable } from 'rxjs';
+import { log } from 'console';
 
 
 
@@ -26,6 +27,7 @@ import { Observable } from 'rxjs';
 export class ProfileComponent implements OnInit {
 
   @Input() public isInvite: boolean;
+  @Input() public isAlerts: boolean;
   @Input() public isMyaccount: boolean;
   @Input() public isusers: boolean;
   @Input() public isCoupon: boolean;
@@ -37,6 +39,7 @@ export class ProfileComponent implements OnInit {
     ignoreBackdropClick: true
   };
   public cardModel:any={};
+  public alertModel:any={};
   public cardDetails:any;
   public paymentToken:any;
   public isdefault:boolean=false;
@@ -72,6 +75,7 @@ export class ProfileComponent implements OnInit {
   public dataid: any;
   public userId: any;
   subscribeddata: any;
+  configalertdata:any;
   public userdata: any;
   public closeFlag: Boolean = false;
   public useremail: any;
@@ -118,6 +122,30 @@ export class ProfileComponent implements OnInit {
   mod: any;
   coupondata: any;
   
+  /**alerts */
+  isEmailcheckBoxValue:boolean=false;
+  ischeckBoxValue:boolean=false;
+  activitieslist:any = [];
+  selectValue:any = [];
+  isChecked:any = [];
+  result: void;
+  checkedData: any;
+  demo: any = [];
+  application: any = [];
+  listOfNames: any = [];
+  listOfId: any = [];
+  Follow_list: any;
+  alertsapplication: any;
+  alertsactivities:any[]=[];
+  selectedtype:any;
+  emailselected:any;
+  smsselected:any;
+  pushNotificationsTo:any;
+  pushsmsNotificationsTo:any;
+  alertsbody:  any;
+  channel: any[]=[];
+
+
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
@@ -174,7 +202,16 @@ this.getListofCoupons();
     this.useremail=localStorage.getItem('userName');
   
 
-
+/**alerts */
+this.profileservice.applications().subscribe(resp => 
+  {
+    this.application = resp,
+    console.log("list of names",resp);
+  this.application.forEach(element => {
+    this.listOfNames.push(element)
+    this.listOfId.push(element.app_id)
+  });})
+  
     
 
   }
@@ -391,6 +428,13 @@ this.getListofCoupons();
     this.modalRef = this.modalService.show(template)
   }
 
+  alertsdata(data,index,template)
+  {
+    this.configalertdata = data;
+    this.modalRef = this.modalService.show(template)
+  }
+
+
   selectedroledata(selRoleData, index, template){
     this.permidlist = [];
     this.roledata = selRoleData;
@@ -522,6 +566,12 @@ this.getListofCoupons();
     addPaymentCards(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
+
+    addAlert(template)
+    {
+      this.modalRef = this.modalService.show(template,this.config)
+    }
+
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
@@ -563,7 +613,11 @@ this.getListofCoupons();
       // api call
       
     }
-
+/**alert */
+cancelAlert(){
+  this.modalRef.hide();
+  this.alertModel={}
+}
     setAsDefaultCard(selectedCardData){
       const cardId=selectedCardData.id
       Swal.fire({
@@ -866,7 +920,102 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
             
         console.log('resp is',this.data)
     }
+    /** alerts */
+    onClick(e){
+      e.preventDefault();
+     this.isChecked = false;
+    }
+    pushEmailNotification(value){
+      this.pushNotificationsTo=value;
+    }
+    pushSMSNotification(value)
+    {
+      this.pushsmsNotificationsTo=value;
+    }
+      
+    
+    saveConfig() {
+      //  console.log("data : "+this.checkedData);
+        console.log("value : ",this.pushNotificationsTo);
+        if(this.pushNotificationsTo=="email" && this.pushsmsNotificationsTo=="sms"){
+          this.channel[0]=this.pushNotificationsTo;
+          this.channel[1]=this.pushsmsNotificationsTo;
+         // this.smsselected=null;
+          this.alertsbody ={
+            "app_id": this.alertsapplication,
+            "type":this.selectedtype ,
+             "activity_names":this.alertsactivities,
+            "channel_list": this.channel,
+             "mail_to":  this.emailselected,
+             "text_to":  this.smsselected
+             
+        }
+        console.log(this.alertsbody)
+        // this.profileservice.saveConfig(alertsbody).subscribe(res =>{
+        //   console.log(res)
+        //   Swal.fire({
+        //   type: 'success',
+        //   text: 'Successfully Saved'
+        //    });} )
+        }
+        else if(this.pushsmsNotificationsTo=="sms"){
+          this.channel[0]=this.pushsmsNotificationsTo;
+          this.emailselected=null;
+          this.alertsbody ={
+            "app_id": this.alertsapplication,
+            "type":this.selectedtype ,
+             "activity_names":this.alertsactivities,
+            "channel_list":this.channel,
+            "mail_to":  this.emailselected,
+             "text_to":  this.smsselected
+        }
+      }
+        else{
+          this.channel[0]=this.pushNotificationsTo;
+          this.smsselected=null;
+          this.alertsbody ={
+            "app_id": this.alertsapplication,
+            "type":this.selectedtype ,
+             "activity_names":this.alertsactivities,
+            "channel_list":this.channel,
+            "mail_to":  this.emailselected,
+             "text_to":  this.smsselected
+             
+        }
+        }
+        
+        this.profileservice.saveConfig(this.alertsbody).subscribe(res => this.successCallbackSubmit(res => {
+          console.log(res)
+          Swal.fire({
+          type: 'success',
+          text: 'Successfully Saved'
+           });} ))
+
+      }
+      successCallbackSubmit(data) {
+      //  console.log(data);
+        Swal.fire({
+          type: 'success',
+          text: 'Successfully Saved'
+           });
+      }
+      saveClick(item,e){
+     
+      }
+      onChange(product){
+        console.log(this.alertsapplication)
+       this.profileservice.alertsConfig(product).subscribe(res => this.successCallback(res))
+      }
+      successCallback(data) {
+       // console.log("data",JSON.parse(data))
+       this.activitieslist = data
+        data.forEach(element => {
+          if(element.userSelected)
+          this.selectValue.push(element.notification_id)      
+        });
+      }
+      changeActivity()
+      {
+        console.log(this.alertsactivities);
+      }
    }
-   
-  
- 

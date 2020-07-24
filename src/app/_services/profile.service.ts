@@ -101,5 +101,15 @@ createRole(roleBody): Observable<any>{
 createCoupon(input):Observable<any>{
   return this.http.post<any>('/subscriptionservice/v1/subscriptions/createCoupon',input,httpOptions);
 }
+applications(): Observable<any> {
+  return this.http.get<any>('/authorizationservice/api/v1/user/applications');
+}
+alertsConfig(data:any)  {
+  
+     return this.http.get('/notificationservice/api/v1/application/'+data,{responseType:"json"});
+}
+saveConfig(data:any): Observable<any>{
+  return this.http.post<any>('/notificationservice/api/v1/savealerts',data, httpOptions);
+}
 
 }
