@@ -57,14 +57,17 @@
         <!-- <div class="col-md-2"></div> -->
         <div class="col-md-3 plan_detail_box">
           <div class=" ">
-            <h4 class="select_label">Subscription Details</h4>
+            <h5 class="select_label">Subscription Details</h5>
             <div class=" ">
               <div class=" ">
                 <h6 class="plan_label">Plan   <span class="plan">  {{name}}</span> <span class="backbtn" [routerLink]="['/activation/payment/chooseplan']">Change plan</span> </h6>
               </div>
               <div class="period">
                 <p>Billing Period : {{selected_plans.term}}</p>
-                <p>Sales Tax(%): {{taxPercentage}}</p>
+                <p>Plan Amount :{{selected_plans.amount}}</p>
+                <p>No.of Users: {{noOfusers}}</p>
+                <p *ngIf='isapplied'>Coupon applied : {{couponAmount}}</p>
+                <p>Tax({{taxPercentage}}%): {{taxamount}}</p>
               </div>
             </div>
 
