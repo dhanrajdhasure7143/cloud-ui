@@ -43,6 +43,9 @@ public paymentToken:any;
   totalPay: any;
   taxPercentage: any;
   isapplied: boolean=false;
+  noOfusers: any;
+  taxamount: any;
+  couponAmount: any;
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
@@ -66,7 +69,9 @@ public paymentToken:any;
         this.profileService.validateCoupon(null,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
           this.validateCoupondata=resp;
         this.totalPay=this.validateCoupondata.TotalPaybleAmount,
-      this.taxPercentage=this.validateCoupondata.TaxPercentage})
+        this.noOfusers=this.cardDetails.customerCount
+      this.taxPercentage=this.validateCoupondata.TaxPercentage
+    this.taxamount=this.validateCoupondata.TaxAmount})
         if(this.selected_plans.term =="12month"){
           this.selected_plans.term= 'Annual'
         }else{
@@ -150,8 +155,17 @@ public paymentToken:any;
     this.profileService.validateCoupon(couponcode,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
       this.validateCoupondata=resp;
       this.isapplied=true;
-      this.totalPay=this.validateCoupondata.TotalPaybleAmount;
+        this.totalPay=this.validateCoupondata.TotalPaybleAmount;
+        this.taxamount=this.validateCoupondata.TaxAmount
       if(this.validateCoupondata.message=='Coupon is valid'){
+        if( this.validateCoupondata.amountOff!=null){
+          this.couponAmount=this.validateCoupondata.amountOff;
+        }
+        else{
+          this.couponAmount=this.validateCoupondata.percentageOff;
+        }
+        
+        
         this.promo=couponcode;
         Swal.fire({
           title: 'Successful',
@@ -163,6 +177,8 @@ public paymentToken:any;
        
      }
       else{
+        this.isapplied=false;
+
         this.promo=null;
         Swal.fire({
           title: 'Invalid',
