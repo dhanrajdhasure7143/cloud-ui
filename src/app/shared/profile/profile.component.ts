@@ -81,7 +81,9 @@ export class ProfileComponent implements OnInit {
   public useremail: any;
   public myroleId:any;
   public myappId:any;
+  public myappName:any;
   public ispublicMail:boolean=false;
+  selectedroles: any = [];
   department: any;
   userDepartment: any;
   listOfUserApplications: any = [];
@@ -92,7 +94,7 @@ export class ProfileComponent implements OnInit {
   blob: Blob;
   invoiceid: any;
   apps: any;
-  userRole: any;
+  userRole: any = [];
   public otherdepartment: any;
   stateInfo: any[] = [];
   cityInfo: any[] = [];
@@ -161,7 +163,7 @@ export class ProfileComponent implements OnInit {
 
     this.applications = [
       {id: 2, name: "2.0"},
-      {id: 1, name: "ezflow"}
+      {id: 3, name: "ezflow"}
   ];
     this.getAllPermissions();
     this.yearList=yearslist;
@@ -667,22 +669,46 @@ cancelAlert(){
      if(elementrole.name==selectedvalue)
      {
       this.myappId=elementrole.id;
+      this.myappName = elementrole.name;
      }
    });
  }
     inviteUser(userId,inviteeId){
+      this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
+        if(invres === "Exceeded max users count"){
+        Swal.fire({
+          title: 'Message!',
+          text: "Users max limit exceeded",
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+        return
+      }
+      })
       if(inviteeId.endsWith('@gmail.com') ||inviteeId.endsWith('@yahoo.com') || 
       inviteeId.endsWith('@hotmail.com') || inviteeId.endsWith('@rediffmail.com')){
      this.ispublicMail=true;
      return
 
    }
+      let body = [];
+      this.selectedroles.forEach(roleid => {
+        let obj = {
+          "id" : roleid,
+          "appliationId" : {
+            "appId" : this.myappId
+          }
+        }
+        body.push(obj);
      
-    let  body = {
-        "id": this.myroleId,
-        "appliationId": {
-        "appId": this.myappId
-        }}
+    });
+    console.log("invite input ",body)
+    // let  body = {
+    //     "id": this.myroleId,
+    //     "appliationId": {
+    //     "appId": this.myappId
+    //     }}
        
 this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
   Swal.fire({
@@ -751,7 +777,7 @@ couponDelYes(coupon,index){
 
 }
   getRoles(){
-  if(localStorage.getItem('userRole') === 'SuperAdmin'){
+  if(localStorage.getItem('userRole').includes('SuperAdmin')){
    this.profileservice.getAllRolesForSuperAdmin().subscribe(resp => {
    this.allRoles = resp,
    console.log("All roles",resp)

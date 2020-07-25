@@ -44,6 +44,7 @@ export class CouponComponent implements OnInit {
       "durationInMonth": 0,
       "name": this.couponNamename,
       "percent_off": this.percentageOffTot,
+      "amount_off" : this.amountOff,
       "redeem_by": 1596276480,
       "redmee_times": 3
     }

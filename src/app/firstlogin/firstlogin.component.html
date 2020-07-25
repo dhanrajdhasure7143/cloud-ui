@@ -64,7 +64,7 @@
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
                 class='fa fa-info-circle errspan'> Company is required </span>
             </div>
-            <div class=" col-md-6 form-group inner-addon left-addon">
+            <!-- <div class=" col-md-6 form-group inner-addon left-addon">
                 <img src="assets/images/registration/department.svg" class="icon">
                 <select class="form-control" (change)="onChangeDepartment($event.target.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
                 required>
@@ -74,13 +74,13 @@
                 </select>
                 <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
                 class='fa fa-info-circle errspan'> Department is required </span>
-              </div>
-              <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
+              </div> -->
+              <!-- <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
                   <img src="assets/images/registration/department.svg" class="icon">
                 <input type="text" class="form-control" name="other_department" #other_department="ngModel" [(ngModel)]='otherDepartment' maxlength="20" placeholder="Department" required>
                 <span *ngIf="((other_department.invalid && firstloginform.submitted)|| (other_department.errors && other_department.touched))"
                 class='fa fa-info-circle errspan'> Department is required </span>
-              </div>
+              </div> -->
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/Global.svg" class="icon">
               <select class="form-control" (change)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>

@@ -72,6 +72,10 @@ inviteUser(inviterID,inviteeID,body) :Observable<any>{
   return this.http.post<any[]>('/api/user/inviteUsers?inviterMailId='+inviterID+'&inviteeMailId='+inviteeID,body,httpOptions)
 }
 
+restrictUserInvite(product) : Observable<any>{
+  return this.http.get<any>('/subscriptionservice/v1/subscriptions/product/'+product+'/validateUsersCount')
+}
+
 getAllRolesForSuperAdmin():Observable<any>{
  return this.http.get<any>('/authorizationservice/api/v1/user/ListOfRoles')
 }

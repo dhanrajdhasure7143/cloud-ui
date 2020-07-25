@@ -97,7 +97,7 @@
                     <label for="customerCount">No of Users</label>
                     <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
                         <option  [value]="undefined" disabled hidden>Select Users</option>
-                        <option *ngFor='let count of userscount; let c = index' [value]="100*(c+1)" >{{100*(c+1)}}</option>
+                        <option *ngFor='let count of userscount; let c = index' [value]="25*(c+4)" >{{25*(c+4)}}</option>
                     </select>
                   </div>
                 <div class="col-sm-12 btn-continue">
