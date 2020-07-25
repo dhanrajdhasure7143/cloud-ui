@@ -35,10 +35,23 @@ export class PlatformComponent implements OnInit {
     this.tenantId=localStorage.getItem('tenantName')
     this.productlistservice.getAllProducts(this.tenantId).subscribe(data => {this.productslist = data
       console.log("productList", this.productslist)
-      this.productslist[1].img="assets/images/2.0.svg";
+      this.productslist.forEach(prod => {
+        if(prod.id === "2.0"){
+          prod.img = "assets/images/2.0.svg"
+        }
+        if(prod.id === "ezflow"){
+          prod.img = "assets/images/ezflow.svg"
+        }
+        if(prod.id === "ezbot"){
+          prod.img = "assets/images/Ezbot.svg"
+        }
+        
+        
+      });
+      //this.productslist[1].img="assets/images/2.0.svg";
       // this.productslist[1].freetier=false;
       // this.productslist[1].expirytime=10;
-      this.products=[this.productslist[1]];
+      this.products=this.productslist;
       console.log("products ",this.products)
       // if( this.productslist[1].freetier == true){
       //   this.productslist[1].title = 'Active Free Tier';

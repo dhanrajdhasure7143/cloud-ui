@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
-  public userRole:any;
+  public userRole:any = [];
   public show:boolean=true;
 
   constructor(
@@ -194,7 +194,7 @@ export class LoginComponent implements OnInit {
       this.userRole=res.message;
       console.log("user role is",this.userRole)
       localStorage.setItem('userRole',this.userRole);
-     if(this.userRole === 'SuperAdmin'){
+     if(this.userRole.includes('SuperAdmin')){
       this.router.navigate(['/superadmin']);
       
      }else{

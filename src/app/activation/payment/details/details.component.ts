@@ -29,7 +29,7 @@ export class DetailsComponent implements OnInit {
   public cardEdit:any;
   // public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
   public yearList:number[] = new Array(11);
-  public userscount:number[] = new Array(19);
+  public userscount:number[] = new Array(17);
   tenantID: string;
   isStandard: boolean;
   isFreetierDisabled: boolean=false;

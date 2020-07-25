@@ -24,7 +24,7 @@ export class TopheaderComponent implements OnInit {
    public isusers:boolean=false;
    public mydata:any[];
    public isnotification:boolean=false;
-  userRole: any;
+  userRole: any = [];
   isCoupon: boolean=false;
 
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 

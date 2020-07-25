@@ -71,24 +71,24 @@
                                         
                                         </div>
                           
-                                         <div class=" form-group col-md-3 ">
+                                         <!-- <div class=" form-group col-md-3 ">
                                           <label for="Department">Department</label>
                                           <select id="department" class="form-control botmbordr" name='department' (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="formOne.department" required>
-                                            <!-- <option  [selected]=true >Select</option> -->
+                                            <option  [selected]=true >Select</option>
                                             <option  [value]="undefined" disabled hidden>Department</option>
                                             <option *ngFor="let departmen of departments;let i=index;trackBy:loopTrackBy;" [value]='departments[i]'>{{departments[i]|titlecase}}</option>
                                             <option value='Others'>Others</option>
                                           </select>
                                           <span *ngIf="((department.invalid && updateUser.submitted)|| (department.errors && department.touched))"
                                                     class='fa fa-info-circle errspan'> Department is required </span>
-                                        </div>
+                                        </div> -->
                                         
-                                        <div class="form-group col-sm-3" *ngIf="addDepartment">
+                                        <!-- <div class="form-group col-sm-3" *ngIf="addDepartment">
                                             <label for="Department">Other Department</label>
                                             <input type="text" name="otherDepartment" #otherDepartment="ngModel" maxlength="25" (keypress)="lettersOnly($event)" class="form-control botmbordr" [(ngModel)]="otherdepartment" placeholder="Department Name" maxlength="25" required alphabetOnly />
                                             <span *ngIf="((otherDepartment.invalid && updateUser.submitted) || (otherDepartment.errors && otherDepartment.touched) )" 
                                             class='fa fa-info-circle errspan'> Department Name is required </span> 
-                                          </div>
+                                          </div> -->
                                           <div class="form-group col-sm-3">
                                                 <label for="country">Country</label>
                                                 <select id="country" name='country' class="form-control botmbordr" (change)='onChangeCountry(formOne.country)' #country="ngModel" [(ngModel)]="formOne.country" required>
@@ -161,7 +161,7 @@
                         </div>
                       </tab>
                         
-                        <tab *ngIf="this.userRole=='Admin'" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                        <tab *ngIf="this.userRole.includes('Admin')" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -209,7 +209,7 @@
                         </div>
                       </tab>
 
-                        <tab *ngIf="this.userRole=='Admin'" heading="Payment History" (selectTab)=onselectInvoiceTab()>
+                        <tab *ngIf="this.userRole.includes('Admin')" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -244,7 +244,7 @@
                         </div>
                       </tab>
                         
-                        <tab *ngIf="this.userRole=='Admin'" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
+                        <tab *ngIf="this.userRole.includes('Admin')" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -330,10 +330,18 @@
                                             </div>
                                             <div class="form-group">
                                                     <label for="role">Role</label>
-                                                    <select class="form-control" name="role"  id="role"(change)="onChangeRole($event.target.value)" required>
+                                                    <ng-select name = "multiroles" [multiple]="true" 
+                                                     placeholder="Select Roles"
+                                                     [items] =  "allRoles"
+                                                     [(ngModel)]="selectedroles"
+                                                     bindValue = "id"
+                                                     bindLabel = "name">
+                         
+                                                     </ng-select>
+                                                    <!-- <select class="form-control" name="role"  id="role"(change)="onChangeRole($event.target.value)" required>
                                                         <option  [value]="undefined" disabled hidden>Select Role</option>
                                                         <option *ngFor="let role of listOfroles "  [value]="role"  >{{role}}</option>
-                                                    </select>
+                                                    </select> -->
                                                   </div>
                                                   <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit" (click)='inviteUser(this.useremail,emailId)' >Submit</button>
                                           </form>
@@ -413,7 +421,7 @@
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
                             <tabset >
-                            <tab  *ngIf="this.userRole == 'Admin'" heading="User Management" id="tab1">
+                            <tab  *ngIf="this.userRole.includes('Admin')" heading="Users" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -429,7 +437,7 @@
                                           <th scope="col" class="types">Last Name</th>
                                           <th scope="col" class="types">Designation</th>
                                           <th scope="col" class="types">Organisation</th>
-                                          <th scope="col" class="types">Department</th>
+                                          <!-- <th scope="col" class="types">Department</th> -->
                                           <th scope="col" class="types">Product</th>
                                           <th scope="col" class="types">Roles</th>
                                         </tr>
@@ -441,7 +449,7 @@
                                           <td>{{userdata.lastName}}</td>
                                           <td>{{userdata.designation}}</td>
                                             <td>{{userdata.company}}</td>
-                                            <td>{{userdata.department}}</td>
+                                            <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
                                             <td >{{userdata.roleIdname}}</td>
                                         </tr>
@@ -449,7 +457,7 @@
                                     </table>
                             </div>
                       </tab>
-                      <tab *ngIf="this.userRole == 'Admin'" heading="Departments">
+                      <!-- <tab *ngIf="this.userRole.includes('Admin')" heading="Departments">
                           <div class="search-One">
                               <form class="form-inline d-flex  md-form form-sm">
                                   <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -484,7 +492,7 @@
                                     </tbody>
                                   </table>
                             </div>
-                          </tab>
+                          </tab> -->
 
                          <tab heading="Roles">
                             <div class="search-One">
@@ -495,7 +503,7 @@
                                 </div>
                             <div class="container role">
                               
-                                <button *ngIf="this.userRole == 'SuperAdmin'" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add New Role</button>
+                                <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add New Role</button>
                                     <table class="table table-borderless table-hover">
                                             <thead>
                                               <tr>
@@ -503,7 +511,7 @@
                                                 <th scope="col" class="types">Role</th>
                                                 <th scope="col" class="types">Description</th>
                                                 <th scope="col" class="types">Permissions</th>
-                                                <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
+                                                <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -521,7 +529,7 @@
                                                     <span class="hideRole" *ngIf="isOpened == role.id" (click)="hideroleslist(j)">Hide</span>
                                                     </div>
                                                 </td>
-                                                <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
+                                                <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
                                                     <span  (click)="selectedroledata(role,j,rolestemplate)">
                                                     <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                     <span  (click)="roledel(role.id,j)"> 
