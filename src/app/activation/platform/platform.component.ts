@@ -20,6 +20,7 @@ export class PlatformComponent implements OnInit {
   subscribedProd: boolean=false;
   selectedData:any[];
   public productId:any;
+  visibletest: any=[];
   constructor(private router: Router,
               private productlistservice:ProductlistService,
               public userService: UserService,
@@ -52,7 +53,12 @@ export class PlatformComponent implements OnInit {
       // this.productslist[1].freetier=false;
       // this.productslist[1].expirytime=10;
       this.products=this.productslist;
-      console.log("products ",this.products)
+      this.products.forEach(element => {
+            if(element.meta.visible=='true'){
+                   this.visibletest.push(element)
+                }
+                  });
+     
       // if( this.productslist[1].freetier == true){
       //   this.productslist[1].title = 'Active Free Tier';
       // }else{
