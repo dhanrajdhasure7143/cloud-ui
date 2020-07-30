@@ -354,67 +354,55 @@
                       <div  class="col-md-12">
                               <h4 class="alert">Configure Alerts</h4>
                       </div>
-                      <div class="container alertform">
-                        <button class='btn btn-primary pull-right createAlert' (click)='addAlert(configAlerts)'>Create Alert</button>
+                      <div class="container configalerts">
+                        <button class='btn btn-primary pull-right createAlert'  (click)='addAlert(configAlerts)'>Create Alert</button>
                         <table class="table table-borderless table-hover">
                           <thead>
                             <tr>
                               <th scope="col" class="alerttype">Application</th>
                               <th scope="col" class="alerttype">Type</th>
                               <th scope="col" class="alerttype">Activity</th>
-                              <th scope="col" class="alerttype">Alert</th>
                              <th scope="col" class="alerttype">Channel</th>
-                            <!-- <th scope="col" class="types">Action</th>-->
+                             <th scope="col" class="alerttype">Mail</th>
+                             <th scope="col" class="alerttype">Mobile</th>
+                             <th scope="col" class="alerttype">Action</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td class="norecords">No records found</td>
-                              <td></td>
-                              <td></td>
-                              <!--
-                              <td  class="deleticon"><span > <img src="assets/images/unsubscribe.svg" alt=""></span>
-                                <div id="myid" [ngClass]="selectedIndex == i?'isdelet':''" class="deletconfm">
+                          <tbody >
+                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: { itemsPerPage: 5, currentPage: p }; let l=index">
+                              <td>{{data.app_name}}</td>
+                              <td>{{data.type}}</td>
+                              <td>{{data.activity_name}}</td>
+                              <td>{{data.channel}}</td>
+                              <td>{{data.mail_to?data.mail_to:'-'}}</td>
+                              <td>{{data.text_to?data.text_to:'-'}}</td>
+                              <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span  (click)="alertsdeletedata(data,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                              <div id="myid" [ngClass]="selectedIndex == l?'isdelet':''" class="deletconfm">
                                   <div class="container-fluid deletefrm">
                                 <h5 class="pull-left">Confirmation</h5>
                                 <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
-                                <button class="pull-left confm" (click)="unsubscribeYes(i)">Yes</button>
-                                <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
-                                </div>
-                                </div>
-                              </td>-->
-                            </tr>
-                          </tbody>
-                          <!--<tbody>
-                            <tr  >
-                              <td>No records found</td>
-                              <td class="cardtable">05/02/2020 
-                                 <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td> 
-                                
-                              
-                              <td>00:00</td>
-                              <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span *ngIf = "sdata.status === 'Active'" (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
-                                <div id="myid" [ngClass]="selectedIndex == i?'isdelet':''" class="deletconfm">
-                                  <div class="container-fluid deletefrm">
-                                <h5 class="pull-left">Confirmation</h5>
-                                <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
-                                <button class="pull-left confm" (click)="unsubscribeYes(i)">Yes</button>
-                                <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
+                                <button class="pull-left confm" (click)="unsubscribeYes(l)">Yes</button>
+                                <button class="confm pull-left" (click)="unsubscribeNo(l)">No</button>
                                 </div>
                                 </div>
                               </td>
                             </tr>
-                          </tbody> --> 
+                            <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                              
+                                <div class="norecords"><h4>No records found</h4></div>
+                             
+                              </tr>
+
+                          </tbody>
                         </table>
-                              </div>
+                        <div class="alertspagination">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                    
+                </div>
                       </div>
                   </div>
 
@@ -830,6 +818,56 @@
             </ng-template>
 
             <!--alerts-->
+            <ng-template #alertdetailstemplate >
+              <div class="modal">
+                <div class="container">
+                  <div class="modal-body row">
+                      <div class="col-md-12">
+                          <h4 class="modal-title pull-left">Alert Details</h4>
+                          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div >
+                      <div class="col-md-12 infocheck">
+                        <label for="subscriptionid">Application : </label>
+                        <input type="text"  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>     
+                                  </div>
+                      <div class="col-md-12 infocheck">
+                        <label for="product">Type : </label>
+                        <input type="text" [disabled]=true name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>     
+     
+                        </div>
+                        <div class="col-md-12 infocheck">
+                          <label for="planid">Activity : </label>
+                          <input type="text" [disabled]=true name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>     
+       
+                          </div>
+                            
+                            <div class="col-md-12 infocheck">
+                              <label for="status">Channel : </label>
+                              <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>     
+           
+                              </div>
+
+                              <div class="col-md-12 infocheck">
+                                <label for="billingaccount">Mail : </label>
+                                <input type="text" [disabled]=true name="mail_to" #mail_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.mail_to"/>     
+             
+                                </div>
+                                <div class="col-md-12 infocheck">
+                                  <label for="billingaccount">Mobile : </label>
+                                  <input type="text" [disabled]=true name="text_to" #text_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.text_to"/>     
+               
+                                  </div>
+       
+                      <div class="col-md-12 submitbtn">
+                        <button class="btn btn-primary" (click)="infoModelSubmit()">Update</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              
             <ng-template #configAlerts >
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Configure Alerts</h4>
@@ -837,13 +875,13 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form autocomplete="off" #configurealert="ngForm">
+              <form autocomplete="off" id="configurealert" name="configurealert" #configurealert="ngForm">
               <div class="modal-body">
                 
                 
             <div class="form-group">
               <label for="application">Application</label>
-              <select name="product" class="form-control" (change)="onChange($event.target.value)" [(ngModel)]="alertsapplication">
+              <select name="product" class="form-control" (change)="onChange($event.target.value)" [(ngModel)]="alertsapplication" required>
                 <option [value]="undefined" disabled hidden>Select Application</option>
                 <option [value]="null" disabled hidden>Select Application</option>
                 <option *ngFor="let product of application"  [value]="product.id">{{product.displayName}}</option>
@@ -851,44 +889,54 @@
             </div>
             <div class="infocheck">
               <label for="activity">Activity</label>
-              <ng-select [multiple]="true" name="activity" placeholder = "Select Activities" [items] ="activitieslist" (change)="changeActivity()"
+              <ng-select [multiple]="true" name="activity" placeholder="Select Activities" [items] ="activitieslist" (change)="changeActivity()"
               bindValue = "activity"
               bindLabel = "activity"
-              [(ngModel)]="alertsactivities">
-                
+              [(ngModel)]="alertsactivities" required>
+              
               <!-- <ng-option *ngFor="let item of activitieslist" [value]="item.id">{{ item.activity }}</ng-option> -->
               </ng-select>
             </div>
           <br>
             <div class="form-group">
                     <label for="configalerts">Type</label>
-                    <select class="form-control" name="configuretype" [(ngModel)]="selectedtype">
+                    <select class="form-control" name="configuretype" [(ngModel)]="selectedtype" required>
                         <option  [value]="undefined" disabled hidden>Select Type</option>
                         <option  [value]="null" disabled hidden>Select Type</option>
-                        <option value="success">Success</option>
-                        <option value="failure">Failure</option>
+                        <option value="Success">Success</option>
+                        <option value="Failure">Failure</option>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="configalerts">Channel</label><br>
-                    Push Notifications <input type="checkbox" (click)="onClick($event)" checked >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   Email <input type="checkbox"  name="check" value="email" (click)=pushEmailNotification($event.target.value) [(ngModel)]="isEmailcheckBoxValue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   SMS <input type="checkbox"  name="check" value="sms" (click)=pushSMSNotification($event.target.value) [(ngModel)]="ischeckBoxValue">
+                    Push Notifications <input type="checkbox" name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>
                   </div>
 
                   <div class="form-group">
                     <div *ngIf=isEmailcheckBoxValue>
                     <label for="configalerts">Mail To</label>
-                    <input type="text" name="email" class="form-control" [(ngModel)]="emailselected"
-                    placeholder="Email address ex: abc@xyz.com" />
+                    <input type="text" name="email" class="form-control" [(ngModel)]="emailselected" #email="ngModel"
+                    pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Email address ex: abc@xyz.com" required/>
+                    <span *ngIf="((email.invalid && configAlerts.submitted) || (email.errors && email.touched) ) "
+                                                      class='fa fa-info-circle errspan'>
+                                                      <span *ngIf="email.errors.required"> Email is required</span>
+                                                      <span *ngIf="email.errors.pattern"> Enter valid email address</span>
+                                                    </span>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <div *ngIf=ischeckBoxValue>
+                  <div *ngIf=isSMScheckBoxValue>
                   <label for="configalerts">Text To</label>
-                  <input type="text" name="mobile" class="form-control" [(ngModel)]="smsselected"
-                  placeholder="Enter Mobile Number" />
+                  <input type="text" name="mobile" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel"
+                  pattern="^[0][1-9]\d{9}$|^[1-9]\d{9}$"  mobile placeholder="Enter Mobile Number"  required/>
+                  <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
+                                                      class='fa fa-info-circle errspan'>
+                                                      <span *ngIf="mobile.errors.required"> Mobile number is required</span>
+                                                      <span *ngIf="mobile.errors.pattern"> Enter valid mobile number</span>
+                                                    </span>
                 </div>
               </div>
 
@@ -899,7 +947,7 @@
                 <div class="col-12">
             <div class="form-group form-buttons pull-right buttonsblock">        
                 <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
-                <button class="btn btn-primary btn-save"  type="submit" (click) = saveConfig()><div class="anim" ></div> Save</button>
+                <button [disabled]="configurealert.invalid || showErr" class="btn btn-primary btn-save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
             </div>
             
             <div class="clearfix">
@@ -909,6 +957,7 @@
             </div>
           </form>
            </ng-template>
+
 
 
             <ng-template #rolestemplate >

@@ -125,8 +125,9 @@ export class ProfileComponent implements OnInit {
   coupondata: any;
   
   /**alerts */
-  isEmailcheckBoxValue:boolean=false;
-  ischeckBoxValue:boolean=false;
+  isEmailcheckBoxValue:any;
+  isPushNotificationcheckBoxValue:any;
+  isSMScheckBoxValue:any;
   activitieslist:any = [];
   selectValue:any = [];
   isChecked:any = [];
@@ -138,14 +139,18 @@ export class ProfileComponent implements OnInit {
   listOfId: any = [];
   Follow_list: any;
   alertsapplication: any;
-  alertsactivities:any[]=[];
+  alertsactivities:any=[];
   selectedtype:any;
   emailselected:any;
   smsselected:any;
-  pushNotificationsTo:any;
+  pushNotifications:any;
+  pushEmailNotificationsTo:any;
   pushsmsNotificationsTo:any;
-  alertsbody:  any;
+  alertsbody:any;
   channel: any[]=[];
+  p=0;
+ public alertslistactivitiesdata:any=[];
+  applicationames: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -248,6 +253,12 @@ this.profileservice.applications().subscribe(resp =>
 
     }
     this.getAllNotifications();
+
+    if(this.isAlerts == true)
+    {
+      this.tenantId=localStorage.getItem('tenantName');
+      this.getAllAlertsActivities(this.tenantId);
+    }
   }
 
   getAllNotifications() {
@@ -573,6 +584,15 @@ this.profileservice.applications().subscribe(resp =>
     {
       this.modalRef = this.modalService.show(template,this.config)
     }
+    alertsdeletedata(data,index)
+  {
+    document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+  }
+  updateselecttedalertdata(data,index,template)
+  {
+    this.alertslistactivitiesdata=data;
+    this.modalRef = this.modalService.show(template)
+  }
 
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
@@ -947,90 +967,101 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
         console.log('resp is',this.data)
     }
     /** alerts */
-    onClick(e){
-      e.preventDefault();
-     this.isChecked = false;
-    }
-    pushEmailNotification(value){
-      this.pushNotificationsTo=value;
-    }
-    pushSMSNotification(value)
-    {
-      this.pushsmsNotificationsTo=value;
-    }
-      
-    
     saveConfig() {
-      //  console.log("data : "+this.checkedData);
-        console.log("value : ",this.pushNotificationsTo);
-        if(this.pushNotificationsTo=="email" && this.pushsmsNotificationsTo=="sms"){
-          this.channel[0]=this.pushNotificationsTo;
-          this.channel[1]=this.pushsmsNotificationsTo;
-         // this.smsselected=null;
-          this.alertsbody ={
-            "app_id": this.alertsapplication,
-            "type":this.selectedtype ,
-             "activity_names":this.alertsactivities,
-            "channel_list": this.channel,
-             "mail_to":  this.emailselected,
-             "text_to":  this.smsselected
-             
-        }
-        console.log(this.alertsbody)
-        // this.profileservice.saveConfig(alertsbody).subscribe(res =>{
-        //   console.log(res)
-        //   Swal.fire({
-        //   type: 'success',
-        //   text: 'Successfully Saved'
-        //    });} )
-        }
-        else if(this.pushsmsNotificationsTo=="sms"){
-          this.channel[0]=this.pushsmsNotificationsTo;
-          this.emailselected=null;
-          this.alertsbody ={
-            "app_id": this.alertsapplication,
-            "type":this.selectedtype ,
-             "activity_names":this.alertsactivities,
-            "channel_list":this.channel,
-            "mail_to":  this.emailselected,
-             "text_to":  this.smsselected
-        }
-      }
-        else{
-          this.channel[0]=this.pushNotificationsTo;
-          this.smsselected=null;
-          this.alertsbody ={
-            "app_id": this.alertsapplication,
-            "type":this.selectedtype ,
-             "activity_names":this.alertsactivities,
-            "channel_list":this.channel,
-            "mail_to":  this.emailselected,
-             "text_to":  this.smsselected
-             
-        }
-        }
+      this.tenantId=localStorage.getItem('tenantName');
+      this.useremail=localStorage.getItem('userName');
+        console.log("tenant : "+this.tenantId);
+
+      let alertconfiguration=''
+      if(this.isPushNotificationcheckBoxValue==true)
+      {
+        alertconfiguration+='Notification'
+        alertconfiguration+=', '
         
-        this.profileservice.saveConfig(this.alertsbody).subscribe(res => this.successCallbackSubmit(res => {
-          console.log(res)
-          Swal.fire({
-          type: 'success',
-          text: 'Successfully Saved'
-           });} ))
+      }
+      if(this.isEmailcheckBoxValue==true)
+      {
+        alertconfiguration+='Email'
+        alertconfiguration+=', '
+      }
+      if(this.isSMScheckBoxValue==true)
+      {
+        alertconfiguration+='SMS'
+        alertconfiguration+=', '
+      }
+      if(this.isEmailcheckBoxValue==false)
+      {
+        this.emailselected=null
+      } 
+      if(this.isSMScheckBoxValue==false)
+      {
+        this.smsselected=null
+      }
+     var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
+     console.log(notificationby)
+      this.alertsbody ={
+        "app_name": this.applicationames,
+        "type":this.selectedtype ,
+         "activity_names":this.alertsactivities,
+       "channel":notificationby,
+         "mail_to":  this.emailselected,
+         "text_to":  this.smsselected,
+         "created_by":  this.useremail ,
+         "tenant_id":  this.tenantId
+
+    }
+    
+        console.log(this.alertsbody)
+      
+
+console.log("alertbody",this.alertsbody)
+           this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
+            this.notifier.show({
+              type: "success",
+              message: "Saved successfully!"
+            });
+            this.alertsapplication="";
+      this.alertsactivities=[];
+      this.selectedtype="";
+      this.isEmailcheckBoxValue=false;
+      this.isSMScheckBoxValue=false;
+      this.isPushNotificationcheckBoxValue=false;
+      this.smsselected="";
+      this.emailselected="";
+          this.modalRef.hide();
+         //  this.configurealertform.reset();
+            }, err => {
+              this.notifier.show({
+                type: "error",
+                message: "Please try again!"
+              });
+            });
 
       }
-      successCallbackSubmit(data) {
-      //  console.log(data);
-        Swal.fire({
-          type: 'success',
-          text: 'Successfully Saved'
-           });
-      }
+
+      getAllAlertsActivities(tenantID) {
+  this.tenantId=localStorage.getItem('tenantName');
+   this.profileservice.listofactivities(this.tenantId).subscribe(alertresponse => 
+    {
+      this.alertslistactivitiesdata = alertresponse
+      this.alertslistactivitiesdata
+      console.log("All Activities",this.alertslistactivitiesdata)
+    });
+  }
+
       saveClick(item,e){
      
       }
       onChange(product){
-        console.log(this.alertsapplication)
+     // console.log("application",this.application)
        this.profileservice.alertsConfig(product).subscribe(res => this.successCallback(res))
+        this.application.forEach(element => {
+          if(element.id==product){
+            //console.log("element",element)
+            this.applicationames=element.displayName
+          }
+          
+        });
       }
       successCallback(data) {
        // console.log("data",JSON.parse(data))
@@ -1044,4 +1075,5 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
       {
         console.log(this.alertsactivities);
       }
+
    }

@@ -19,7 +19,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 export class TopheaderComponent implements OnInit {
 
    public isInvite=false;
-   public isAlerts=false;
+   public isAlerts:boolean=false;
    public isMyaccount:boolean=false;
    public isusers:boolean=false;
    public mydata:any[];
