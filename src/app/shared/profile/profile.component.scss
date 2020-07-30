@@ -118,17 +118,27 @@
      color: #f4f4f4;
      // border: #26c9EE;
      border-radius: 20px;
-     margin-bottom: 20px;
+     margin-top: 3px;
+     margin-right: 5px;
      // position: absolute;
      // right: 20px;
+}
+.configalerts
+{
+    overflow: scroll;
+    height: 230px;
+}
+.alertspagination {
+    margin-left: 70%;
 }
 .alert
 {
     text-align: center;
     font-weight: bold;
-    margin-bottom: 20px;
-    float:left;
-    margin-left: 40%; 
+    bottom: 5px;
+    margin-bottom: -3px;
+    float: left;
+    margin-left: 420px; 
 }
 .alertform
 {
@@ -137,11 +147,16 @@
 }
 .alerttype{
     color:gray;
-    width:17%;
+    width:15%;
 }
 .norecords
 {
-    margin-left: 40%;
+    position: absolute;
+    top: px;
+    bottom: 90px;
+    /* right: 20px; */
+    padding-left: 440px;
+    // padding-right: 20px;
 }
 .tableborder{
     border-collapse: separate;
@@ -190,7 +205,7 @@ th,td{
 .input-group{
   z-index: 0;
 }
-.role, .department, .usermanagement, .subscrption_id, .invoice_id, .paymode,.configalerts{
+.role, .department, .usermanagement, .subscrption_id, .invoice_id, .paymode{
     overflow: scroll;
     height: 230px;
 }

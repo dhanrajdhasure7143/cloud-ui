@@ -115,5 +115,7 @@ alertsConfig(data:any)  {
 saveConfig(data:any): Observable<any>{
   return this.http.post<any>('/notificationservice/api/v1/savealerts',data, httpOptions);
 }
-
+listofactivities(tenantId):Observable<any>{
+   return this.http.get<any>('/notificationservice/api/v1/listalerts?tenantId='+tenantId ,httpOptions);  
+ }
 }

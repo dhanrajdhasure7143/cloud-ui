@@ -29,7 +29,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
 import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -64,7 +64,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     NotifierModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxPaginationModule
   ],
   providers: [NotifierService],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent],
