@@ -383,7 +383,7 @@
                                 <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
-                                <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
+                                <p class="pull-left">Are you sure you want to cancel the Alert ?</p>
                                 <button class="pull-left confm" (click)="unsubscribeYes(l)">Yes</button>
                                 <button class="confm pull-left" (click)="unsubscribeNo(l)">No</button>
                                 </div>
@@ -626,7 +626,7 @@
                             </thead>
                             <tbody>
                               <tr *ngFor="let messageList of nitificationList; let i = index; trackBy:loopTrackBy;">
-                                <td>{{messageList.mailBody}}</td>
+                                <td>{{messageList.contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
                                 <td>{{messageList.createdAt | date:"HH:mm:s"}}</td>
                                 <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
@@ -819,53 +819,64 @@
 
             <!--alerts-->
             <ng-template #alertdetailstemplate >
-              <div class="modal">
-                <div class="container">
-                  <div class="modal-body row">
-                      <div class="col-md-12">
-                          <h4 class="modal-title pull-left">Alert Details</h4>
-                          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div >
-                      <div class="col-md-12 infocheck">
-                        <label for="subscriptionid">Application : </label>
-                        <input type="text"  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>     
-                                  </div>
-                      <div class="col-md-12 infocheck">
-                        <label for="product">Type : </label>
-                        <input type="text" [disabled]=true name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>     
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" >Alert Details</h4>
+                  <!-- <h4 class="modal-title pull-left"></h4> -->
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+             
+              </div>
+              <form autocomplete="off">
+              <div class="modal-body">
+                
+              <div class="col-md-12 ">
+                <label for="subscriptionid">Application : </label>
+                <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>     
+                          </div>
+              <div class="col-md-12 ">
+                <label for="product">Type : </label>
+                <input type="text" [disabled]=true name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>     
+
+                </div>
+                <div class="col-md-12 ">
+                  <label for="planid">Activity : </label>
+                  <input type="text" [disabled]=true name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>     
+
+                  </div>
+                    
+                    <div class="col-md-12 ">
+                      <label for="status">Channel : </label>
+                      <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>     
+   
+                      </div>
+
+                      <div class="col-md-12 ">
+                        <label for="billingaccount">Mail : </label>
+                        <input type="text" [disabled]=true name="mail_to" #mail_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.mail_to"/>     
      
                         </div>
-                        <div class="col-md-12 infocheck">
-                          <label for="planid">Activity : </label>
-                          <input type="text" [disabled]=true name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>     
+                        <div class="col-md-12 ">
+                          <label for="billingaccount">Mobile : </label>
+                          <input type="text" [disabled]=true name="text_to" #text_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.text_to"/>     
        
                           </div>
-                            
-                            <div class="col-md-12 infocheck">
-                              <label for="status">Channel : </label>
-                              <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>     
-           
-                              </div>
 
-                              <div class="col-md-12 infocheck">
-                                <label for="billingaccount">Mail : </label>
-                                <input type="text" [disabled]=true name="mail_to" #mail_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.mail_to"/>     
-             
-                                </div>
-                                <div class="col-md-12 infocheck">
-                                  <label for="billingaccount">Mobile : </label>
-                                  <input type="text" [disabled]=true name="text_to" #text_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.text_to"/>     
-               
-                                  </div>
-       
-                      <div class="col-md-12 submitbtn">
-                        <button class="btn btn-primary" (click)="infoModelSubmit()">Update</button>
-                      </div>
-                    </div>
+              <div class="col-md-12 submitbtn">
+                <button class="btn btn-primary" (click)="infoModelSubmit()">Update</button>
+              </div>
+  
                   </div>
-                </div>
+                
+            <div class="modal-footer">
+              <div class="">
+                <div class="col-12">
+            <div class="clearfix">
+            </div>
+            </div>
+            </div>
+            </div>
+          </form>
               </ng-template>
               
             <ng-template #configAlerts >
