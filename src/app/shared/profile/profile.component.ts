@@ -149,6 +149,7 @@ export class ProfileComponent implements OnInit {
   alertsbody:any;
   channel: any[]=[];
   p=0;
+  alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
   applicationames: any;
 
@@ -257,7 +258,8 @@ this.profileservice.applications().subscribe(resp =>
     if(this.isAlerts == true)
     {
       this.tenantId=localStorage.getItem('tenantName');
-      this.getAllAlertsActivities(this.tenantId);
+      this.alertuserroles=localStorage.getItem('userRole');
+      this.getAllAlertsActivities(this.tenantId,this.alertuserroles);
     }
   }
 
@@ -1039,9 +1041,10 @@ console.log("alertbody",this.alertsbody)
 
       }
 
-      getAllAlertsActivities(tenantID) {
+      getAllAlertsActivities(tenantID,userrole) {
   this.tenantId=localStorage.getItem('tenantName');
-   this.profileservice.listofactivities(this.tenantId).subscribe(alertresponse => 
+  this.alertuserroles=localStorage.getItem('userRole');
+   this.profileservice.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => 
     {
       this.alertslistactivitiesdata = alertresponse
       this.alertslistactivitiesdata
