@@ -629,21 +629,6 @@
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
                                 <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
-                                <!-- <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
-                              
-                                
-                                <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
-                                    <div class="container-fluid deletefrm">
-                                  <h5 class="pull-left">Confirmation</h5>
-                                  <button type="button" class="close " aria-label="Close" (click)="canceldeleteNotification(i)">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  <p class="pull-left">Are you sure you want to delete notification ?</p>
-                                  <button class="pull-left confm">Yes</button>
-                                  <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
-                                  </div>
-                                  </div>
-                                </td>                               -->
                               </tr>
                             </tbody>
                           </table>
@@ -824,8 +809,6 @@
             <ng-template #alertdetailstemplate >
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Alert Details</h4>
-                  <!-- <h4 class="modal-title pull-left"></h4> -->
-                  <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()"> -->
                     <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()">
                     <span aria-hidden="true">&times;</span>
                   </button>

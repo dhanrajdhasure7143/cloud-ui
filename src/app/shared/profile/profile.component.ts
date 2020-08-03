@@ -267,14 +267,6 @@ this.profileservice.applications().subscribe(resp =>
     }
     this.profileservice.getNotifications(userId).subscribe(data => {
       this.notificationList = data
-      console.log("my data is",this.notificationList)
-       // this.nitificationList.forEach(element => {  
-       //    this.sublistnotifications=element.notificationAuditId;
-       // });
-       // this.nitificationList.forEach(element1 => {
-       //  // console.log("element 1",element1.notificationAuditId[0])
-       //  this.notificationmessage.push(element1.notificationAuditId[0])
-       // })
     })
   }
   userDetails() {
