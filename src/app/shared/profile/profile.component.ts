@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
   public feedbackbox: any;
   public paymentMode: any;
   public invoicedata: any[];
-  public nitificationList: any;
+  public notificationList: any;
   public dataid: any;
   public userId: any;
   subscribeddata: any;
@@ -257,9 +257,7 @@ this.profileservice.applications().subscribe(resp =>
 
     if(this.isAlerts == true)
     {
-      this.tenantId=localStorage.getItem('tenantName');
-      this.alertuserroles=localStorage.getItem('userRole');
-      this.getAllAlertsActivities(this.tenantId,this.alertuserroles);
+      this.getAllAlertsActivities();
     }
   }
 
@@ -268,7 +266,15 @@ this.profileservice.applications().subscribe(resp =>
       "toAddress": localStorage.getItem("userName")
     }
     this.profileservice.getNotifications(userId).subscribe(data => {
-      this.nitificationList = data
+      this.notificationList = data
+      console.log("my data is",this.notificationList)
+       // this.nitificationList.forEach(element => {  
+       //    this.sublistnotifications=element.notificationAuditId;
+       // });
+       // this.nitificationList.forEach(element1 => {
+       //  // console.log("element 1",element1.notificationAuditId[0])
+       //  this.notificationmessage.push(element1.notificationAuditId[0])
+       // })
     })
   }
   userDetails() {
@@ -584,6 +590,7 @@ this.profileservice.applications().subscribe(resp =>
 
     addAlert(template)
     {
+      this.isPushNotificationcheckBoxValue=true
       this.modalRef = this.modalService.show(template,this.config)
     }
     alertsdeletedata(data,index)
@@ -594,6 +601,11 @@ this.profileservice.applications().subscribe(resp =>
   {
     this.alertslistactivitiesdata=data;
     this.modalRef = this.modalService.show(template)
+  }
+  updateAlertCancel()
+  {
+    this.modalRef.hide();
+    this.getAllAlertsActivities();
   }
 
     addrole(template){
@@ -1031,6 +1043,7 @@ console.log("alertbody",this.alertsbody)
       this.smsselected="";
       this.emailselected="";
           this.modalRef.hide();
+          this.getAllAlertsActivities();
          //  this.configurealertform.reset();
             }, err => {
               this.notifier.show({
@@ -1041,7 +1054,7 @@ console.log("alertbody",this.alertsbody)
 
       }
 
-      getAllAlertsActivities(tenantID,userrole) {
+      getAllAlertsActivities() {
   this.tenantId=localStorage.getItem('tenantName');
   this.alertuserroles=localStorage.getItem('userRole');
    this.profileservice.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => 
