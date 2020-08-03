@@ -621,32 +621,20 @@
                                 <th scope="col" style="width:60%;">Notifications</th>
                                 <th scope="col" style="width:300px;">Date</th>
                                 <th scope="col" style="width:200px;">Time</th>
-                                <th scope="col" style="width:200px !important;">Action</th>
+                                <!-- <th scope="col" style="width:200px !important;">Action</th> -->
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let messageList of nitificationList; let i = index; trackBy:loopTrackBy;">
-                                <td>{{messageList.contentType}}</td>
+                              <tr *ngFor="let messageList of notificationList | paginate: { itemsPerPage: 5, currentPage: p }; let i = index; trackBy:loopTrackBy;">
+                                <td>{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
-                                <td>{{messageList.createdAt | date:"HH:mm:s"}}</td>
-                                <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
-                              
-                                
-                                <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
-                                    <div class="container-fluid deletefrm">
-                                  <h5 class="pull-left">Confirmation</h5>
-                                  <button type="button" class="close " aria-label="Close" (click)="canceldeleteNotification(i)">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  <p class="pull-left">Are you sure you want to delete notification ?</p>
-                                  <button class="pull-left confm">Yes</button>
-                                  <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
-                                  </div>
-                                  </div>
-                                </td>                              
+                                <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
                               </tr>
                             </tbody>
                           </table>
+                          <div class="alertspagination">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
                 </div>
             </div>
           </div>
@@ -821,8 +809,7 @@
             <ng-template #alertdetailstemplate >
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Alert Details</h4>
-                  <!-- <h4 class="modal-title pull-left"></h4> -->
-                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()">
                     <span aria-hidden="true">&times;</span>
                   </button>
              
@@ -920,7 +907,7 @@
                   </div>
                   <div class="form-group">
                     <label for="configalerts">Channel</label><br>
-                    Push Notifications <input type="checkbox" name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>
                   </div>
