@@ -26,5 +26,8 @@ export class ProductlistService {
   getPaymentToken(cardData){
     return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken',cardData,{responseType:'text'})
   }
-
+  getNewAccessToken(): Observable<any[]>
+  {
+    return this.http.get<any[]>('/api/login/beta/newAccessToken',httpOptions);
+  }
 }

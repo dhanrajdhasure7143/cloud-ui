@@ -625,7 +625,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let messageList of notificationList | paginate: { itemsPerPage: 5, currentPage: p }; let i = index; trackBy:loopTrackBy;">
+                              <tr *ngFor="let messageList of notificationList | paginate: { itemsPerPage: 5, currentPage: c }; let i = index; trackBy:loopTrackBy;">
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
                                 <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
@@ -633,7 +633,7 @@
                             </tbody>
                           </table>
                           <div class="alertspagination">
-                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            <pagination-controls (pageChange)="c = $event"></pagination-controls>
                             </div>
                 </div>
             </div>

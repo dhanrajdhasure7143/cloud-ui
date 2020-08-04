@@ -46,6 +46,8 @@ public paymentToken:any;
   noOfusers: any;
   taxamount: any;
   couponAmount: any;
+  newAccessToken: any[];
+  userRole: any;
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
@@ -201,6 +203,16 @@ public paymentToken:any;
   }
   close_modal(){
     this.modalRef.hide();
+    this.productlistservice.getNewAccessToken().subscribe(resp=>{
+      this.newAccessToken=resp
+      console.log("token",resp)
+      localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
+    })
+    this.profileService.getUserRole(2).subscribe(res=>{
+      this.userRole=res.message;
+      console.log("user role is",this.userRole)
+      localStorage.setItem('userRole',this.userRole);
+    })
     this.router.navigate(['/activation'])
   }
 
