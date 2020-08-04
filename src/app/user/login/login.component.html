@@ -13,7 +13,7 @@
                     
                     <div class="form-group col-sm-12 inner-addon left-addon">
                         <img src="assets/images/username_icon.png" class="userIcon">
-                        <input type="text" formControlName="username" placeholder="Enter User Name" class="form-control userinput"
+                        <input type="text" formControlName="username" placeholder="Enter registered email" class="form-control userinput"
                           [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                           <div *ngIf="f.username.errors.required">User name is required</div>

@@ -157,8 +157,8 @@ export class FirstloginComponent implements OnInit {
       sessionStorage.clear();
       localStorage.clear();
       Swal.fire({
-        title: 'Success!',
-        text: `Registration completed successfully.`,
+        title: 'Success',
+        text: `Registration completed successfully!`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: false
