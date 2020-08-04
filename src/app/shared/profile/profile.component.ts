@@ -149,6 +149,7 @@ export class ProfileComponent implements OnInit {
   alertsbody:any;
   channel: any[]=[];
   p=0;
+  c=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
   applicationames: any;
