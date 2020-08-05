@@ -128,8 +128,8 @@ export class LoginComponent implements OnInit {
     
     this.sharedData.setLoggedinUserData(data);
     // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
-    // localStorage.setItem('firstName',data.firstName);
-    // localStorage.setItem('lastName',data.lastName);
+     localStorage.setItem('firstName',data.firstName);
+     localStorage.setItem('lastName',data.lastName);
     localStorage.setItem('userName',data.userId);
    localStorage.setItem('tenantName',data.tenantID);
     // localStorage.setItem('phoneNumber',data.phoneNumber);
