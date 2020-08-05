@@ -21,10 +21,27 @@
     cursor: pointer;
  }
 
+ .res-circle {
+  width: 120%;
+  border-radius: 100%;
+  text-align: center;
+  height: 42%;
+  font-size: 25px;
+  background: #0091ea;
+  line-height: 50px;
+  margin-left: -30px;
+}
+/* Credits - https://spin.atomicobject.com/2015/07/14/css-responsive-square/ */
+.res-circle:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
 .dropbtn {
   cursor: pointer;
   display: block;
-  margin-left: 7px; 
+  margin-left: -4px;
+  // margin-left: 7px; 
 }
 .dropdown-content {
   display: none;

@@ -153,6 +153,7 @@ export class ProfileComponent implements OnInit {
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
   applicationames: any;
+  notificationbody: { tenantId: string; };
 
 
   //dropdownSettings:IDropdownSettings;
@@ -263,10 +264,14 @@ this.profileservice.applications().subscribe(resp =>
   }
 
   getAllNotifications() {
-    const userId = {
-      "toAddress": localStorage.getItem("userName")
-    }
-    this.profileservice.getNotifications(userId).subscribe(data => {
+    // const userId = {
+    //   "toAddress": localStorage.getItem("userName")
+    // }
+    this.tenantId=localStorage.getItem('tenantName');
+   this.notificationbody ={
+      "tenantId":this.tenantId
+   }
+    this.profileservice.getNotifications(this.notificationbody).subscribe(data => {
       this.notificationList = data
     })
   }
@@ -957,7 +962,7 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
         "durationInMonth": 0,
         "name": this.couponNamename,
         "percent_off": this.percentageOffTot,
-        "redeem_by": 1596276480,
+        "redeem_by": 1602050743,
         "redmee_times": 3
       }
       this.profileservice.createCoupon(input).subscribe(resp=>{this.data=resp

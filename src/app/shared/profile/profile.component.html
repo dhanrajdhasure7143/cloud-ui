@@ -398,7 +398,7 @@
 
                           </tbody>
                         </table>
-                        <div class="alertspagination">
+                        <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                         </div>
                     
@@ -618,7 +618,7 @@
                     <table class="table table-borderless table-hover">
                             <thead>
                               <tr>
-                                <th scope="col" style="width:60%;">Notifications</th>
+                                <th scope="col" style="width:60%;">Notification Message</th>
                                 <th scope="col" style="width:300px;">Date</th>
                                 <th scope="col" style="width:200px;">Time</th>
                                 <!-- <th scope="col" style="width:200px !important;">Action</th> -->
@@ -632,7 +632,7 @@
                               </tr>
                             </tbody>
                           </table>
-                          <div class="alertspagination">
+                          <div class="notificationpagination">
                             <pagination-controls (pageChange)="c = $event"></pagination-controls>
                             </div>
                 </div>

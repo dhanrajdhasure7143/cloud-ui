@@ -24,8 +24,11 @@ export class TopheaderComponent implements OnInit {
    public isusers:boolean=false;
    public mydata:any[];
    public isnotification:boolean=false;
+   lastname: string;
+   firstname: string;
   userRole: any = [];
   isCoupon: boolean=false;
+  firstletter: string;
 
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router, 
@@ -40,6 +43,9 @@ public myname:any[]
     // this.sharedService.getLoggedinUserData().subscribe(data=>{this.mydata=data
     
     // });
+    setTimeout(() => {
+      this.profileName();
+      }, 10);
   }
 
   logout() {
@@ -122,5 +128,14 @@ public myname:any[]
     this.isMyaccount=false;
     this.isCoupon=false;
     this.isusers=false;
+  }
+
+  profileName(){
+    this.firstname=localStorage.getItem('firstName');
+      this.lastname=localStorage.getItem('lastName');
+      var firstnameFirstLetter=this.firstname.charAt(0)
+      var lastnameFirstLetter=this.lastname.charAt(0)
+      this.firstletter=firstnameFirstLetter+lastnameFirstLetter
+      
   }
 }
