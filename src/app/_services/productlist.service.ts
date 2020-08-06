@@ -30,4 +30,10 @@ export class ProductlistService {
   {
     return this.http.get<any[]>('/api/login/beta/newAccessToken',httpOptions);
   }
+  activateFreeTire(freePlanData){
+    return this.http.post('/subscriptionservice/v1/freetrials',freePlanData)
+
+  }
+
+
 }
