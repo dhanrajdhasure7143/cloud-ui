@@ -4,12 +4,12 @@
         <div class="row"><h1 >Welcome to Epsoft</h1><span>  ( Intelligent Automation Platform )</span></div>
         <div class="row"><h4 id="sbtl">Select below service to Active or Upgrade</h4></div>
       </div>
-          <div class="col-md-2 dataCardBox" *ngFor="let eachData of products;let i=index;trackBy:loopTrackBy">
+          <div class="col-md-2 dataCardBox" *ngFor="let eachData of visibletest;let i=index;trackBy:loopTrackBy">
               <div [id]="eachData.id" class="dataCard" [ngClass]="eachData.id==selectedId?'active':''" (click)="selecteddata(eachData, i)">
                   <img [src]="eachData.img"/>
                   <h6 id="subheading">{{eachData.title}}</h6>
 
-                  <div class=" " *ngIf="!subscribed">
+                  <div class=" " *ngIf="!eachData.subscribed">
                     <p>Activate Free Tier
                     </p>  
                     <p class="expiryInfo"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">  {{Expiry_date}} Days to expire you free tier   <img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
