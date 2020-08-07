@@ -297,6 +297,22 @@
                                 </table>
                         </div>
                       </tab>
+
+                      <tab heading = "Change Password">
+                       <div class = "col-md-4 invteform">
+                        <label for="password">Current Password : </label>
+                        <input type="password" name="password" #password="ngModel" class="form-control botmbordr" [(ngModel)]="currentPassword"/>
+                        <label for="newpassword">New Password : </label>
+                        <input type="text" name="newpassword" #newpassword="ngModel" class="form-control botmbordr" [(ngModel)]="newPassword"/>     
+                        <label for="confpassword">Confirm Password : </label>
+                        <input type="text" name="confpassword" #confpassword="ngModel" class="form-control botmbordr" [(ngModel)]="confirmPassword"/>
+                      </div>
+
+                      <div class="col-md-12 submitbtn">
+                        <button class="form-group updat_btndiv" (click)="passwordChange()">Submit</button>
+                      </div>
+
+                      </tab>
                       </tabset>
         </div>
 
@@ -539,6 +555,60 @@
                                           </table>
                             </div>
                             </tab>
+
+
+
+                            <tab *ngIf="this.userRole.includes('SuperAdmin')" heading="Permissions">
+                              <div class="search-One">
+                                  <form class="form-inline d-flex  md-form form-sm">
+                                      <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                      <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                    </form>
+                                  </div>
+                              <div class="container role">
+                                
+                                  <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add New Permission</button>
+                                      <table class="table table-borderless table-hover">
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col" class="types">Permission</th>
+                                                  <th scope="col" class="types">Description</th>
+                                                  <th scope="col" class="types">Creted At</th>
+                                                  <th scope="col" class="types">Modified At</th>
+                                                  <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="let permission of permissionsList | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
+                                                  <td>{{permission.permissionName}}</td>
+                                                  <td>{{permission.description}}</td>
+                                                  <td>{{permission.created_at}}</td>
+                                                  <td>{{permission.modified_at}}</td>
+                                                  <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
+                                                      <span  (click)="selectedpermdata(permission,p,permtemplate)">
+                                                      <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                                      <span  (click)="permdel(permission.id,p)"> 
+                                                      <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                                      <div id="myid" [ngClass]="selectedIndex == p?'isdelet':''" class="deletconfm">
+                                                          <div class="container-fluid deletefrm">
+                                                              <h5 class="pull-left">Confirmation</h5>
+                                                              <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(p)">
+                                                              <span aria-hidden="true">&times;</span>
+                                                              </button>
+                                                              <p class="pull-left">Are you sure you want to delete the permission ?</p>
+                                                               <button class="pull-left confm" (click)="permDelYes(permission.id,p)">Yes</button>
+                                                               <button class="confm pull-left" (click)="unsubscribeNo(p)">No</button>
+                                                          </div>
+                                                      </div>
+                                                 
+                                                 </tr>
+                                              </tbody>
+                                            </table>
+                              </div>
+                              </tab>
+
+
+
                                                   </tabset>
                 </div>
             </div>
@@ -1091,6 +1161,112 @@
                       </div>
                     </form>
                 </ng-template>
+
+
+                <ng-template #createPermission >
+                  <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="createNewPermission()" class="card_form">
+                          <div class="modal-header">
+                              <h4 class="modal-title" id="modal-basic-title" >Add New Permission</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="cancelAddPermission()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                  
+                          <div class="modal-body">
+                              <div class="">
+                              <div class="col-12 row">        
+                                <div class="col-md-12 infocheck">
+  
+                                  <label for="permission">Permission : </label>
+                                   <input type="text"  name="permission" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permName"/>     
+                                             </div>
+                                 <div class="col-md-12 infocheck">
+                                   <label for="permdescription">Description : </label>
+                                   <input type="text"  name="permdescription" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permissionDescription"/>     
+                
+                                   </div>
+                                   <div class="col-md-12 infocheck">
+                                     <label for="application">Application : </label>
+                                     <ng-select name = "applicationn" [multiple]="false" 
+                                     [items] =  "applications"
+                                     [(ngModel)]="selectedApplication"
+                                     placeholder = "Select Application "
+                                     bindValue = "id"
+                                     bindLabel = "name">
+                                    
+                                     </ng-select>
+                  
+                                     </div>
+                                                
+                        </div>
+                      </div>
+                      </div>
+                  
+                      <div class="modal-footer">
+                          <div class="">
+                            <div class="col-12">
+                        <div class="form-group form-buttons pull-right buttonsblock">        
+                            <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button>
+                            <button class="btn btn-primary btn-save"  type="submit"><div class="anim"></div> Save</button>
+                        </div>
+                        
+                        <div class="clearfix">
+                        
+                        </div>
+                        
+                        </div>
+                        </div>
+                        </div>
+                      </form>
+                  </ng-template>
+
+
+
+                  <ng-template #permtemplate >
+                    <div class="modal">
+                      <div class="container">
+                        <div class="modal-body row">
+                            <div class="col-md-12">
+                                <h4 class="modal-title pull-left">Modify Permission</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div >
+                            <div class="col-md-12 infocheck">
+      
+                             <label for="permission">Permission : </label>
+                              <input type="text"  name="permission" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.permissionName"/>     
+                                        </div>
+                            <div class="col-md-12 infocheck">
+                              <label for="permdescription">Description : </label>
+                              <input type="text"  name="permdescription" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.description"/>     
+           
+                              </div>
+                              <div class="col-md-12 infocheck">
+                                <label for="application">Application : </label>
+                                <ng-select [multiple]="false" 
+                                [items] =  "applications"
+                                [(ngModel)]="selectedApp"
+                                bindValue = "name"
+                                bindLabel = "name">
+                                </ng-select>
+      
+                               
+                                <!-- <select class="form-control botmbordr" [(ngModel)]="roledata.appliationId" (change)="selected()">
+                                  <option *ngFor="let item of applications" [ngValue]="item">{{item.name}}</option>
+                              </select>      -->
+             
+                                </div>
+                                      
+                                       
+                            <div class="col-md-12 submitbtn">
+                              <button class="btn btn-primary" (click)="modifyperm(permdata)">Modify Permission</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+
 
                 <ng-template #createcoupon >
                   <div class="modal-header">

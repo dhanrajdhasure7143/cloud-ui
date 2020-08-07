@@ -96,6 +96,15 @@ return this.http.get<any>('/subscriptionservice/v1/orders/validateCoupon/'+promo
 getAllPermissions(): Observable<any>{
   return this.http.get<any>('/authorizationservice/api/v1/user/fetchAllPermissions')
 }
+createPermission(permbody): Observable<any>{
+  return this.http.post<any>('/authorizationservice/api/v1/user/createPermissions', permbody,httpOptions)
+}
+modifyPermission(permbody): Observable<any>{
+  return this.http.post<any>('/authorizationservice/api/v1/user/permission/update', permbody,httpOptions)
+}
+deletePermission(permid):Observable<any>{
+  return this.http.delete<any>('/authorizationservice/api/v1/user/permission/delete/'+permid)
+}
 modifyRole(modifyrolebody) :Observable<any>{
   return this.http.post<any[]>('/authorizationservice/api/v1/user/updateRoleDetails',modifyrolebody,httpOptions)
 }
@@ -118,4 +127,8 @@ saveConfig(data:any): Observable<any>{
 listofactivities(tenantId,userrole):Observable<any>{
    return this.http.get<any>('/notificationservice/api/v1/listalerts?roles='+userrole+'&tenantId='+tenantId ,httpOptions);  
  }
+
+changePassword(pswdbody:any): Observable<any>{
+  return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
+}
 }

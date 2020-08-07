@@ -155,6 +155,12 @@ export class ProfileComponent implements OnInit {
   applicationames: any;
   notificationbody: { tenantId: string; };
 
+  permName: any;
+  permissionDescription: any;
+  permdata:any;
+  currentPassword:any;
+  newPassword:any;
+  confirmPassword:any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -466,6 +472,13 @@ this.profileservice.applications().subscribe(resp =>
     this.selectedApp = selRoleData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
+
+  selectedpermdata(selPermData, index, template){
+    this.permdata = selPermData;
+    console.log("selroledata", selPermData)
+    this.selectedApp = selPermData.appliationId.name;
+    this.modalRef = this.modalService.show(template)
+  }
   selectedCoupondata(selCouponData, index, template){
     this.coupondata=selCouponData;
     this.modalRef = this.modalService.show(template)
@@ -609,12 +622,19 @@ this.profileservice.applications().subscribe(resp =>
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
+    addpermission(template){
+      this.modalRef = this.modalService.show(template,this.config)
+    }
+
     createCoupon(createCoupon){
       this.modalRef = this.modalService.show(createCoupon,this.config)
     }
     cancelAddRole(){
       this.modalRef.hide();
     //  this.cardModel={}
+    }
+    cancelAddPermission(){
+      this.modalRef.hide();
     }
     cancelCreateCopon(){
       this.modalRef.hide();
@@ -706,24 +726,36 @@ cancelAlert(){
    });
  }
     inviteUser(userId,inviteeId){
-      this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-        if(invres === "Exceeded max users count"){
-        Swal.fire({
-          title: 'Message!',
-          text: "Users max limit exceeded",
-          type: 'error',
-          showCancelButton: false,
-          allowOutsideClick: true
-        })
-        return
-      }
-      })
+      
       if(inviteeId.endsWith('@gmail.com') ||inviteeId.endsWith('@yahoo.com') || 
       inviteeId.endsWith('@hotmail.com') || inviteeId.endsWith('@rediffmail.com')){
      this.ispublicMail=true;
      return
 
    }
+   this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
+    if(invres === "Exceeded max users count"){
+    Swal.fire({
+      title: 'Message!',
+      text: "Users max limit exceeded",
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+  
+  }else if(invres === "User Invite is valid"){
+    this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
+      Swal.fire({
+        title: 'Success!',
+        text: "Invite mail sent successfully.",
+        // Default card is set successfully!!
+        type: 'success',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+    })
+  }
+  })
       let body = [];
       this.selectedroles.forEach(roleid => {
         let obj = {
@@ -742,16 +774,7 @@ cancelAlert(){
     //     "appId": this.myappId
     //     }}
        
-this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
-  Swal.fire({
-    title: 'Success!',
-    text: "Invite mail sent successfully.",
-    // Default card is set successfully!!
-    type: 'success',
-    showCancelButton: false,
-    allowOutsideClick: true
-  })
-})
+
 
  
     }
@@ -790,6 +813,23 @@ this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
     
 
 }
+
+permDelYes(permission,index){
+  this.profileservice.deletePermission(permission).subscribe(response => {
+  this.getAllPermissions();
+  Swal.fire({
+    title: 'Success!',
+    text: `Permission deleted successfully.`,
+    type: 'success',
+    showCancelButton: false,
+    allowOutsideClick: true
+  }) 
+  }, err => {
+  });
+  document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+
+
+}
 couponDelYes(coupon,index){
   this.profileservice.deleteCoupon(coupon).subscribe(resp=>{
     this.getListofCoupons();
@@ -808,6 +848,8 @@ couponDelYes(coupon,index){
   document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
 }
+
+
   getRoles(){
   if(localStorage.getItem('userRole').includes('SuperAdmin')){
    this.profileservice.getAllRolesForSuperAdmin().subscribe(resp => {
@@ -836,6 +878,10 @@ couponDelYes(coupon,index){
         roledel(data,index){
               document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
              }
+
+             permdel(data,index){
+              document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+             }
              couponDel(data,index){
               document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
 
@@ -852,6 +898,7 @@ couponDelYes(coupon,index){
         
         this.profileservice.getAllPermissions().subscribe(data => {
           this.permissionsList = data
+          
         })
       }
 
@@ -886,6 +933,35 @@ couponDelYes(coupon,index){
       })
       
     }
+
+    modifyperm(permdata){
+      for(var i=0;i<this.applications.length;i++){
+        if(this.applications[i].name == this.selectedApp ){
+          this.selectedApp = this.applications[i].id
+        }
+      }
+       let permbody = {
+        "id" :permdata.id,
+        "permissionName": permdata.permissionName,
+        "description": permdata.description,
+        "appliationId":{
+        "id":this.selectedApp}
+      }
+      console.log("permbody", permbody)
+      this.profileservice.modifyPermission(permbody).subscribe(permmodifyresp => {
+       this.modalRef.hide();
+       this.getAllPermissions();
+       Swal.fire({
+         title: 'Success!',
+         text: `Permission updated successfully.`,
+         type: 'success',
+         showCancelButton: false,
+         allowOutsideClick: true
+       }) 
+     })
+     
+   }
+
     modifycoupon(couponData){
       
 this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>{
@@ -926,6 +1002,32 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
     }) 
   })
   
+    }
+
+    createNewPermission(){
+
+      let addpermission = {
+        "permissionName": this.permName,
+        "description": this.permissionDescription,
+        "appliationId":{
+        "id":this.selectedApplication
+         }
+        }
+      console.log("Create permission ",addpermission);
+      this.profileservice.createPermission(addpermission).subscribe(createpermresp => {
+        this.modalRef.hide();
+        this.getAllPermissions();
+        Swal.fire({
+          title: 'Success!',
+          text: `Permission created successfully.`,
+          type: 'success',
+          showCancelButton: false,
+          allowOutsideClick: true
+        }) 
+      })
+      this.permName = "";
+      this.permissionDescription = "";
+      this.selectedApplication = "";
     }
     onChangeRadio(value){
       if(value=='percentageOff'){
@@ -1088,6 +1190,23 @@ console.log("alertbody",this.alertsbody)
       changeActivity()
       {
         console.log(this.alertsactivities);
+      }
+      passwordChange(){
+        let pswdbody = {
+          "confirmPassword": this.confirmPassword,
+          "currentPassword": this.currentPassword,
+          "newPassword":this.newPassword,
+          "userId": localStorage.getItem('userName')
+        }
+      this.profileservice.changePassword(pswdbody).subscribe(res => {
+        this.notifier.show({
+          type: "success",
+          message: "Password Updated successfully!",
+          id: "123"
+        });
+      })
+      
+      
       }
 
    }
