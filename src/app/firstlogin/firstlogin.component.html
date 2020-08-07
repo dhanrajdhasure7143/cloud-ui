@@ -93,7 +93,19 @@
                 class='fa fa-info-circle errspan'> Country is required </span>
             </div>
 
-            <div class=" col-md-6 form-group inner-addon left-addon">
+
+            <div class="form-group col-sm-6 inner-addon left-addon">
+              <img src="assets/images/registration/Zip Code.svg" class="icon">
+              <input type="text" (keydown)="onKeydown($event)"  (input)="getStateCity(model.zipcode)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipcode"
+                 onKeyPress="if(this.value.length==5) return false;" minlength="5" placeholder="Zip Code" required>
+                 <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"> 
+                  <span class='fa fa-info-circle errspan' *ngIf="zipCode.errors.required"> Zip Code is required</span>
+                  <span class='fa fa-info-circle errspan' *ngIf="zipCode.errors.minlength"> Please enter 5 digits</span>
+                </span>
+                <span class='fa fa-info-circle errspan' *ngIf="isZipcode"> Please Enter valide Zip Code</span>
+            </div>
+            
+            <!-- <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/State.svg" class="icon">
               <select class="form-control" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
                 <option *ngIf="stateInfo == ''" value="-1">State</option>
@@ -113,18 +125,33 @@
               </select>
               <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
                 class='fa fa-info-circle errspan'> City is required </span>
+            </div> -->
+            <div class=" col-md-5 form-group inner-addon left-addon">
+              <img src="assets/images/registration/town.svg" class="icon">
+              <input type="text" class="form-control" name='city' #city='ngModel' autocomplete="none|false|no" [(ngModel)]='model.city'  maxlength="30" placeholder="City Name" required>
+              <!-- <select class="form-control" name='city' #city='ngModel' [(ngModel)]='model.city' required>
+                <option *ngIf="cityInfo == ''" value="-1">City</option>
+                <option  [value]="undefined" disabled hidden>City</option>
+                <option *ngFor="let city of cityInfo; let k = index" value="{{city}}">{{city}}</option>
+              </select> -->
+              <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
+                class='fa fa-info-circle errspan'> City is required </span>
             </div>
-
-            <div class="form-group col-sm-6 inner-addon left-addon">
-              <img src="assets/images/registration/Zip Code.svg" class="icon">
-              <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipcode"
-                 onKeyPress="if(this.value.length==10) return false;" placeholder="Zip Code" required>
-              <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
-                class='fa fa-info-circle errspan'> Zip Code is required </span>
-            </div>
+            <div class='col-sm-1'></div>
+        <div class=" col-md-5 form-group inner-addon left-addon state_input">
+          <img src="assets/images/registration/State.svg" class="icon">
+          <!-- <select class="form-control" name='state' #state='ngModel' autocomplete="none|false|no" [(ngModel)]='model.state' required>
+            <option *ngIf="stateInfo == ''" value="-1">State</option>
+            <option  [value]="undefined" disabled hidden>State</option>
+            <option *ngFor="let state of stateInfo; let j = index" value="{{j}}">{{state.StateName}}</option>
+          </select> -->
+          <input type="text"  class="form-control" placeholder="State" name='state'  #state='ngModel' autocomplete="none|false|no" [(ngModel)]='model.state' required>
+          <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
+            class='fa fa-info-circle errspan'> State is required </span>
+        </div>
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
-              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}">
+              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'us'}">
                    <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
                   <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
                   class='fa fa-info-circle errspan'> Phone Number is required </span>
