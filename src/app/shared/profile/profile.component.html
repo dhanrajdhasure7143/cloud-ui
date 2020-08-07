@@ -379,8 +379,8 @@
                               <th scope="col" class="alerttype">Type</th>
                               <th scope="col" class="alerttype">Activity</th>
                              <th scope="col" class="alerttype">Channel</th>
-                             <th scope="col" class="alerttype">Mail</th>
-                             <th scope="col" class="alerttype">Mobile</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Mail</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Mobile</th>
                              <th scope="col" class="alerttype">Action</th>
                             </tr>
                           </thead>
@@ -390,20 +390,21 @@
                               <td>{{data.type}}</td>
                               <td>{{data.activity_name}}</td>
                               <td>{{data.channel}}</td>
-                              <td>{{data.mail_to?data.mail_to:'-'}}</td>
-                              <td>{{data.text_to?data.text_to:'-'}}</td>
-                              <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span  (click)="alertsdeletedata(data,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
-                              <div id="myid" [ngClass]="selectedIndex == l?'isdelet':''" class="deletconfm">
+                              <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
+                              <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
+                              <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                <span  (click)="alertsdeletedata(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                <div id="myid" [ngClass]="selectedIndex == l?'isdelet':''" class="deletconfm">
                                   <div class="container-fluid deletefrm">
-                                <h5 class="pull-left">Confirmation</h5>
-                                <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                <p class="pull-left">Are you sure you want to cancel the Alert ?</p>
-                                <button class="pull-left confm" (click)="unsubscribeYes(l)">Yes</button>
-                                <button class="confm pull-left" (click)="unsubscribeNo(l)">No</button>
-                                </div>
-                                </div>
+                                      <h5 class="pull-left">Confirmation</h5>
+                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(l)">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                      <p class="pull-left">Are you sure you want to delete the alert ?</p>
+                                       <button class="pull-left confm" (click)="alertDelYes(data.id,l)">Yes</button>
+                                       <button class="confm pull-left" (click)="unsubscribeNo(l)">No</button>
+                                  </div>
+                              </div>
                               </td>
                             </tr>
                             <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
@@ -879,55 +880,92 @@
             <ng-template #alertdetailstemplate >
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Alert Details</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()">
+                    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()"> 
                     <span aria-hidden="true">&times;</span>
-                  </button>
+                  </button>-->
              
               </div>
-              <form autocomplete="off">
+              <form autocomplete="off" #updatealert="ngForm">
               <div class="modal-body">
                 
               <div class="col-md-12 ">
                 <label for="subscriptionid">Application : </label>
-                <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>     
-                          </div>
+                <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+                <select name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="updateApplication" required>
+                  <option  [value]="undefined" disabled hidden>Select Type</option>
+                  <option  [value]="null" disabled hidden>Select Type</option>
+                  <option [value]="alertslistactivitiesdata.app_name">{{alertslistactivitiesdata.app_name}}</option>
+              </select>
+              </div>
               <div class="col-md-12 ">
                 <label for="product">Type : </label>
-                <input type="text" [disabled]=true name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>     
-
+                <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
+                <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="updateType" required>
+                  <option  [value]="undefined" disabled hidden>Select Type</option>
+                  <option  [value]="null" disabled hidden>Select Type</option>
+                  <option value="Success">Success</option>
+                  <option value="Failure">Failure</option>
+              </select>
                 </div>
                 <div class="col-md-12 ">
                   <label for="planid">Activity : </label>
-                  <input type="text" [disabled]=true name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>     
-
+                  <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
+                   <select name="activity_name1" #activity_name1="ngModel" class="form-control botmbordr" [(ngModel)]="updateActivities" required>
+                    <option  [value]="undefined" disabled hidden>Select Activities</option>
+                    <!-- <option  [value]="null" disabled hidden>Select Activities</option> -->
+                     <option *ngFor="let each of activitieslist" [value]="each.activity">{{each.activity}}</option>
+                </select> 
                   </div>
-                    
-                    <div class="col-md-12 ">
-                      <label for="status">Channel : </label>
-                      <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>     
-   
-                      </div>
+                    <br>
+                  <div class="col-md-12 ">
+                    <label for="status">Channel : </label><br>
+                    <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
+                    Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>
+                    </div>
+                   <br>
+                    <div class="col-md-12">
+                      <div *ngIf=isEmailcheckBoxValue>
+                      <label for="configalerts">Mail To</label>
+                      <input type="text" name="mail_to1" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
+                      pattern="^\S*[@]\S*[.]\S*$" required mail_to1  placeholder="Email address ex: abc@xyz.com" required/>
+                      <span *ngIf="((mail_to1.invalid && configAlerts.submitted) || (mail_to1.errors && mail_to1.touched) ) "
+                                                        class='fa fa-info-circle errspan'>
+                                                        <span *ngIf="mail_to1.errors.required"> Email is required</span>
+                                                        <span *ngIf="mail_to1.errors.pattern"> Enter valid email address</span>
+                                                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-12">
+                    <div *ngIf=isSMScheckBoxValue>
+                    <label for="configalerts">Text To</label>
+                    <input type="text" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
+                    pattern="^[0][1-9]\d{9}$|^[1-9]\d{9}$"  text_to1 placeholder="Enter Mobile Number"  required/>
+                    <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
+                                                        class='fa fa-info-circle errspan'>
+                                                        <span *ngIf="text_to1.errors.required"> Mobile number is required</span>
+                                                        <span *ngIf="text_to1.errors.pattern"> Enter valid mobile number</span>
+                                                      </span>
 
-                      <div class="col-md-12 ">
-                        <label for="billingaccount">Mail : </label>
-                        <input type="text" [disabled]=true name="mail_to" #mail_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.mail_to"/>     
-     
-                        </div>
-                        <div class="col-md-12 ">
-                          <label for="billingaccount">Mobile : </label>
-                          <input type="text" [disabled]=true name="text_to" #text_to="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.text_to"/>     
-       
-                          </div>
-
-              <div class="col-md-12 submitbtn">
-                <button class="btn btn-primary" (click)="infoModelSubmit()">Update</button>
-              </div>
+                                                      
+                  </div>
+                  </div>
+                   <br><br>
+            
   
                   </div>
                 
             <div class="modal-footer">
               <div class="">
                 <div class="col-12">
+                  <div class="col-md-12">
+                    <div class="form-group form-buttons pull-right buttonsblock">
+                    <button class="btn btn-secondary cancel_btn" type="reset" (click)="updateAlertCancel()"><div class="anim"></div> Cancel</button>
+                    <button [disabled]="updatealert.invalid || showErr" class="btn btn-primary" (click)="modifyalert(alertslistactivitiesdata)">Update</button>
+                  </div>
+                </div>
             <div class="clearfix">
             </div>
             </div>

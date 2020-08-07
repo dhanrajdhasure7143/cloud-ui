@@ -78,7 +78,7 @@ public myname:any[]
     // });
     setTimeout(() => {
       this.profileName();
-      }, 10);
+      }, 500);
   }
 
   accountSlideupTest(){
