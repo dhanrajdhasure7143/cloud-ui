@@ -14,8 +14,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class ProfileService {
 
   constructor(public http:HttpClient) { }
-  getNotifications(userId):Observable<any>{
-      return this.http.post<any>('/notificationservice/api/v1/listNotifications',userId,httpOptions);
+  getNotifications(role,userId,notificationbody):Observable<any>{
+      return this.http.post<any>('/notificationservice/api/v1/listNotifications?roles='+role+'&userId='+userId,notificationbody,httpOptions);
   }
   cancelSubscription( data) : Observable<any>{
     return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel='+true,null);

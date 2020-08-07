@@ -167,6 +167,7 @@ export class ProfileComponent implements OnInit {
   currentPassword:any;
   newPassword:any;
   confirmPassword:any;
+  role: string;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -276,14 +277,13 @@ this.profileservice.applications().subscribe(resp =>
   }
 
   getAllNotifications() {
-    // const userId = {
-    //   "toAddress": localStorage.getItem("userName")
-    // }
+    let userId =  localStorage.getItem("userName")
     this.tenantId=localStorage.getItem('tenantName');
+    this.role=localStorage.getItem('userRole')
    this.notificationbody ={
       "tenantId":this.tenantId
    }
-    this.profileservice.getNotifications(this.notificationbody).subscribe(data => {
+    this.profileservice.getNotifications(this.role,userId,this.notificationbody).subscribe(data => {
       this.notificationList = data
     })
   }
