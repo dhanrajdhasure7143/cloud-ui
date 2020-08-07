@@ -9,10 +9,11 @@
                   <img [src]="eachData.img"/>
                   <h6 id="subheading">{{eachData.title}}</h6>
 
-                  <div class=" " *ngIf="!eachData.subscribed">
+                  <div class=" " *ngIf="!eachData.freetrailAvailed">
                     <p>Activate Free Tier
-                    </p>  
-                    <p class="expiryInfo"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">  {{Expiry_date}} Days to expire you free tier   <img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
+                    </p> </div> 
+                    <div>
+                    <p class="expiryInfo" *ngIf="eachData.freeTrialEndDate!=null"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends on  {{eachData.freeTrialEndDate | date : ' dd/MM/yyyy'}}<img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
                 </div>
               </div>
           </div>
