@@ -148,12 +148,18 @@ export class ProfileComponent implements OnInit {
   pushsmsNotificationsTo:any;
   alertsbody:any;
   channel: any[]=[];
+  alertmodifybody:any;
   p=0;
   c=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
   applicationames: any;
   notificationbody: { tenantId: string; };
+  updatetext_to: any;
+  updateApplication: any;
+  updateType: any;
+  updateActivities: any;
+  updateMail: any;
 
   permName: any;
   permissionDescription: any;
@@ -602,25 +608,141 @@ this.profileservice.applications().subscribe(resp =>
       this.modalRef = this.modalService.show(template,this.config)
     }
 
-    addAlert(template)
-    {
+    addAlert(template){
       this.isPushNotificationcheckBoxValue=true
+      this.isEmailcheckBoxValue=false
+      this.isSMScheckBoxValue=false
       this.modalRef = this.modalService.show(template,this.config)
     }
-    alertsdeletedata(data,index)
-  {
+    alertsdeletedata(data,index){
     document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
   }
-  updateselecttedalertdata(data,index,template)
-  {
+  updateselecttedalertdata(data,index,template){ 
+    
+    // console.log(data)   
+    // if(data.app_name=="2.0"){
+      this.onChange(2)
+    // }
     this.alertslistactivitiesdata=data;
+     
+     this.updateApplication=data.app_name
+     this.updateType=data.type
+     this.updateActivities=data.activity_name
+     this.updateMail=data.mail_to
+     this.updatetext_to=data.text_to
+
+    console.log("alertslistactivitiesdata",this.updatetext_to)
+    let channelsplit=data.channel.split(',')
+    console.log("channel",channelsplit)
+    channelsplit.forEach(channelname => {
+      console.log("channel name",channelname)
+      if(channelname&&channelname=='Notification')
+      {
+        this.isPushNotificationcheckBoxValue=true;
+      }
+      if(channelname&&channelname==' Email')
+      {
+        this.isEmailcheckBoxValue=true;
+      }
+      if(channelname&&channelname==' SMS')
+      {
+        this.isSMScheckBoxValue=true;
+      }
+    });
+    
     this.modalRef = this.modalService.show(template)
   }
   updateAlertCancel()
   {
+    // this.isSMScheckBoxValue=false;
+    // this.isPushNotificationcheckBoxValue=false;
+    // this.isSMScheckBoxValue=false;
     this.modalRef.hide();
     this.getAllAlertsActivities();
   }
+  modifyalert(alertslistactivitiesdata){
+    // console.log("alertslistactivitiesdata",alertslistactivitiesdata)
+    
+    let alertconfiguration=''
+    console.log("sms",this.isSMScheckBoxValue)
+      if(this.isPushNotificationcheckBoxValue==true)
+      {
+        alertconfiguration+='Notification'
+        alertconfiguration+=', '
+        
+      }
+      if(this.isEmailcheckBoxValue==true)
+      {
+        alertconfiguration+='Email'
+        alertconfiguration+=', '
+      }
+      if(this.isSMScheckBoxValue==true)
+      {
+        alertconfiguration+='SMS'
+        alertconfiguration+=', '
+      }
+      if(this.isEmailcheckBoxValue==false)
+      {
+        this.updateMail=null
+      } 
+      if(this.isSMScheckBoxValue==false)
+      {
+        this.updatetext_to=null
+      }
+      console.log("Alert activities",this.alertsactivities)
+      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
+    this.useremail=localStorage.getItem('userName');
+        this.alertmodifybody = {
+          "activity_name": this.updateActivities,
+          "app_name": this.updateApplication,
+          "channel": notificationby,
+          "id": alertslistactivitiesdata.id,
+          "mail_to": this.updateMail,
+          "text_to": this.updatetext_to,
+          "type": this.updateType
+      }
+      console.log("alertmodifybody",this.alertmodifybody)
+        this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
+          this.notifier.show({
+            type: "success",
+            message: "Alert Updated successfully!"
+          });
+        this.modalRef.hide();
+        this.getAllAlertsActivities();
+       //  this.configurealertform.reset();
+          }, err => {
+            this.notifier.show({
+              type: "error",
+              message: "Please try again!"
+            });
+          });
+    }
+    alertDelYes(data,index){
+        this.profileservice.deleteAlert(data).subscribe(resp=>{
+          // console.log(resp)
+          this.getAllAlertsActivities();
+          // let type='success';
+          // let message='Alert deleted successfully!'
+          // this.notifier.notify(type,message,data);
+          this.notifier.show({
+            type: "success",
+            message: "Alert deleted successfully!"
+          });
+          
+        //   Swal.fire({
+        //     title: 'Success!',
+        //     text: `Alert deleted successfully.`,
+        //     type: 'success',
+        //     showCancelButton: false,
+        //     allowOutsideClick: true
+        //   }) 
+        // },err => {
+          },err=>{
+            this.getAllAlertsActivities();
+          });
+         this.getAllAlertsActivities();
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+    }
 
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
@@ -1153,12 +1275,11 @@ console.log("alertbody",this.alertsbody)
       }
 
       getAllAlertsActivities() {
+        this.alertslistactivitiesdata=[]
   this.tenantId=localStorage.getItem('tenantName');
   this.alertuserroles=localStorage.getItem('userRole');
-   this.profileservice.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => 
-    {
+   this.profileservice.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => {
       this.alertslistactivitiesdata = alertresponse
-      this.alertslistactivitiesdata
       console.log("All Activities",this.alertslistactivitiesdata)
     });
   }
@@ -1173,6 +1294,7 @@ console.log("alertbody",this.alertsbody)
           if(element.id==product){
             //console.log("element",element)
             this.applicationames=element.displayName
+            //console.log("Activities fjdbfdsfbd",this.alertsactivities);
           }
           
         });
@@ -1180,6 +1302,7 @@ console.log("alertbody",this.alertsbody)
       successCallback(data) {
        // console.log("data",JSON.parse(data))
        this.activitieslist = data
+       console.log("activitieslist",this.activitieslist)
         data.forEach(element => {
           if(element.userSelected)
           this.selectValue.push(element.notification_id)      
@@ -1187,8 +1310,11 @@ console.log("alertbody",this.alertsbody)
       }
       changeActivity()
       {
-        console.log(this.alertsactivities);
+        //this.modifyactivities=this.activitieslist
+        console.log("Activities fjdbfdsfbd",this.activitieslist);
       }
+
+   
       passwordChange(){
         let pswdbody = {
           "confirmPassword": this.confirmPassword,
