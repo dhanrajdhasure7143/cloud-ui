@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
   public show: boolean = true;
   public isOpened: any ;
   public showList:boolean =  true;
-  public selectedIndex: number;
+  public selectedIndex: any;
   public deletCardIndex: number;
   public defaultcard: number = 0;
   modalRef: BsModalRef;
@@ -367,13 +367,16 @@ this.profileservice.applications().subscribe(resp =>
       });
     }, err => {
     });
+    
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
   }
   unsubscribeNo(index) {
+    this.selectedIndex = " ";
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
   }
+  
 
   deletCard(data, index) {
   
@@ -816,16 +819,15 @@ cancelAlert(){
 
 permDelYes(permission,index){
   this.profileservice.deletePermission(permission).subscribe(response => {
-  this.getAllPermissions();
-  Swal.fire({
-    title: 'Success!',
-    text: `Permission deleted successfully.`,
-    type: 'success',
-    showCancelButton: false,
-    allowOutsideClick: true
-  }) 
+    this.getAllPermissions();
+    this.notifier.show({
+      type: "success",
+      message: "Deleted successfully!"
+    });
+ 
   }, err => {
   });
+  this.selectedIndex = " ";
   document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
 
@@ -880,6 +882,7 @@ couponDelYes(coupon,index){
              }
 
              permdel(data,index){
+              this.selectedIndex = index;
               document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
              }
              couponDel(data,index){
@@ -897,7 +900,8 @@ couponDelYes(coupon,index){
       getAllPermissions() {
         
         this.profileservice.getAllPermissions().subscribe(data => {
-          this.permissionsList = data
+          this.permissionsList = data.reverse();
+
           
         })
       }
@@ -951,13 +955,10 @@ couponDelYes(coupon,index){
       this.profileservice.modifyPermission(permbody).subscribe(permmodifyresp => {
        this.modalRef.hide();
        this.getAllPermissions();
-       Swal.fire({
-         title: 'Success!',
-         text: `Permission updated successfully.`,
-         type: 'success',
-         showCancelButton: false,
-         allowOutsideClick: true
-       }) 
+       this.notifier.show({
+        type: "success",
+        message: "Updated successfully!"
+      });
      })
      
    }
@@ -1017,13 +1018,10 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
       this.profileservice.createPermission(addpermission).subscribe(createpermresp => {
         this.modalRef.hide();
         this.getAllPermissions();
-        Swal.fire({
-          title: 'Success!',
-          text: `Permission created successfully.`,
-          type: 'success',
-          showCancelButton: false,
-          allowOutsideClick: true
-        }) 
+        this.notifier.show({
+          type: "success",
+          message: "Saved successfully!"
+        });
       })
       this.permName = "";
       this.permissionDescription = "";
