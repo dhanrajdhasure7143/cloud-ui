@@ -8,7 +8,6 @@ import { Base64 } from 'js-base64';
 import  countries  from './../../assets/jsons/countries.json';
 import { Particles } from '../_models/particlesjs';
 import { Logger } from 'ag-grid-community';
-import * as zipcodes from 'zipcodes'
 
 @Component({
   selector: 'app-firstlogin',
@@ -21,7 +20,6 @@ export class FirstloginComponent implements OnInit {
   decodedToken: any = {};
   selectedItems: any[] = [];
   dropdownSettings: any = {};
-  public isZipcode:boolean=false;
   departments:any;
   itemsShowLimit = 1;
   stateInfo: any[] = [];
@@ -68,7 +66,6 @@ export class FirstloginComponent implements OnInit {
     this.getAllDepartments();
 
     this.model = new User();
-    this.model.country='United States';
     this.dropdownSettings = {
       singleSelection: true,
       idField: 'ID',
@@ -97,8 +94,6 @@ export class FirstloginComponent implements OnInit {
     }
   }
   onChangeCountry(countryValue) {
-    console.log("countryyy",countryValue)
-    //this.model.country='United State'
     // this.model.country = this.countryInfo[countryValue].CountryName;
     // this.stateInfo=this.countryInfo["India"].States;
     // console.log('CountryName',countryValue);
@@ -213,23 +208,4 @@ export class FirstloginComponent implements OnInit {
     return false;
     }
     }
-    getStateCity(zipC){
-      if(zipC.length == 5){
-      var hills = zipcodes.lookup(zipC);
-      console.log(hills);
-      if(hills != undefined){
-        this.model.state = hills.state;
-        this.model.city = hills.city;
-        this.isZipcode=false;
-      }else{
-        this.isZipcode=true;
-      }
-  
-      }else{
-        this.model.state = '';
-        this.model.city = '';
-        this.isZipcode=false;
-      }
-      }
-    
 }

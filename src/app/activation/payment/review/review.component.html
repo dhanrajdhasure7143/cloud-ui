@@ -4,13 +4,13 @@
     <div class="row">
       <div class='col-md-1'></div>
       <div class="col-md-11 review-heading">
-      <h2 id="" class="plan_label ">Features will be enabled based on the selected plan    <span class="plan">{{name}}</span></h2>
+      <h2 id="" class="plan_label ">Features will be enabled based on the selected plan</h2>
       <h5 id="paymnt-subheding">Review your order to proceed payment</h5>
-      <p class="pay_titles">Card Details:<button class="btn" (click)="editCardDetails()" title="Edit card"><img src="assets/images/editCard.svg" alt=""></button>
+      <p class="pay_titles" style="margin-left:7%;width:100%">Card Details<button class="btn" (click)="editCardDetails()" title="Edit card"><img src="assets/images/editCard.svg" alt=""></button>
       </p>
       </div>
       <!-- <form  autocomplete="off" class="col-md-12 row carddetail"> -->
-        <div class="col-md-12 carddetail row">
+        <div class="col-md-10 carddetail row">
 
         <div class="col-md-2"></div>
         
@@ -84,9 +84,10 @@
           </div>
         <div class="col-md-3"></div>
 
-           <div class=" col-md-2" >
-              <button class="btn buybtn" (click)="buyProductPlan(template)" [disabled]="isdiable">Buy Now</button>
+           <div class="col-md-1" >
+              <button class="btn buybtn" style="margin-left:40px"(click)="buyProductPlan(template)" [disabled]="isdiable">Buy Now</button>
             </div>
+            <div class="col-md-3" style="display: block;height: 50px" ></div>
           </div>
       <!-- </form> -->
 
@@ -105,13 +106,22 @@
             </div>
             <hr>
             <div></div>
-            <div class="col-md-12 confirmationmsg">
-              <p>Product <span>: {{productId}}</span></p>
+            <div class="col-md-12 confirmationmsg" style="text-align:left;">
+              <table class="sub-confirmation">
+                <tr> <td>Product</td> <td>:{{productId}}</td> </tr>
+                 <tr> <td>Plan</td> <td>:{{selected_plans.nickName}}</td></tr>
+                 <tr> <td>Order Id</td> <td>:{{subscriptionDetails.id}}</td></tr>
+                 <tr> <td>Subscription Id</td> <td>:{{subscriptionDetails.subscriptionId[0]}}</td></tr>
+                 <tr> <td>Amount Paid</td> <td>:{{totalPay}}</td></tr>
+                 <tr> <td>Period</td> <td>:{{selected_plans.term}}</td>
+                  </tr>
+              </table>
+              <!-- <p>Product <span>: {{productId}}</span></p>
               <p>Plan <span>: {{selected_plans.nickName}} </span></p>
               <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
               <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
               <p>Amount paid <span>: $ {{totalPay}}</span></p>
-              <p>Period <span>: {{selected_plans.term}}</span></p>
+              <p>Period <span>: {{selected_plans.term}}</span></p> -->
             </div>
 
             <div class="col-md-12 confirmationmsg">

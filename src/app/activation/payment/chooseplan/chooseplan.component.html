@@ -3,8 +3,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-                <h3 id="planHeading">Based on Plan Features get Enabled</h3>
-                <h4 id="ctr">Choose the right one for your valuable Business</h4>
+                <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
+                <h4 id="ctr">Choose the right one for your valuable business</h4>
         </div>
         <div class="col-md-12 errordiv" *ngIf='error'>
                 <h2>{{error}}</h2>
@@ -30,6 +30,7 @@
                     <span class='pull-right'> <a class='terms' [routerLink]="['/terms']" target="_blank">Terms & Conditions</a><a class="policy" [routerLink]="['/privacy']" target="_blank">Privacy Policy</a> </span>
                  </div>
             </div>
+            <div class="col-md-3" style="display: block;height: 50px" ></div>
     </div>
 </div>
                
