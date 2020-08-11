@@ -18,7 +18,7 @@ export class ProductlistService {
     return this.http.get<any[]>('/subscriptionservice/v1/products?tenantID='+tenantID);
   }
   getProductPlanes(productId,tenantID): Observable<any[]> {
-    return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/'+tenantID+'/plans');
+    return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/plans');
   }
   subscribePlan(token,planData){
     return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData)

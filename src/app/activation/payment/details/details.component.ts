@@ -82,9 +82,9 @@ export class DetailsComponent implements OnInit {
         }
         this.name=this.selected_plans.nickName;
         if(this.selected_plans.term =="12month"){
-          this.selected_plans.term= 'Annual'
+          this.selected_plans.term= 'year'
         }else{
-          this.selected_plans.term= 'Month'
+          this.selected_plans.term= 'month'
         }
       }
     });

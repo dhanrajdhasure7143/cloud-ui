@@ -56,9 +56,18 @@ export class ChooseplanComponent implements OnInit {
     this.plansList[0].term='month';
     this.plansList[1].term='month';
     this.plansList[2].term='year';
+    if(localStorage.getItem('userRole').includes('user') && !localStorage.getItem('selectedplan').includes('Professional') && !localStorage.getItem('selectedplan').includes('Standard')){
+      this.plansList[0].subscribed=true;
+    } else if(localStorage.getItem('userRole').includes('Admin') && localStorage.getItem('selectedplan')!=null && localStorage.getItem('selectedplan').includes('Professional')){
+      this.plansList[2].subscribed=true;
+    } else if(localStorage.getItem('userRole').includes('Admin') && localStorage.getItem('selectedplan').includes('Standard')){
+      this.plansList[1].subscribed=true;
+    }
+    
     },error=>{
       this.error='Sorry for inconvenience we will get back to you shortly'
     });
+
   }
   selectedPlan(planData){
     if(planData.nickName =="Free tier"){

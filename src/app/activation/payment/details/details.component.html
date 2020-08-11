@@ -3,12 +3,12 @@
 <div class="container">
     <div class="row">
       <div>
-        <h2 class="planheading">You have been upgraded to selected plan {{name}} </h2>
-        <h5 id="paymnt-subheding">Complete below card details step to review your order</h5>
-        <p class="pay_titles">Card Details:</p>
+        <h2 class="planheading" style="margin-left:5%;width:100%">You have been opted for {{name}} plan</h2>
+        <h5 id="paymnt-subheding" style="margin-left:5%;width:100%">Complete the below card details step to review your order</h5>
+        <p class="pay_titles" style="margin-left:5%;width:100%">Card Details</p>
     </div>
           <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="paymentfromSubmit(form)" class="col-md-12 row">
-        <div class="col-md-1"></div>
+        
         <div class="col-md-4">
               <div class="form-group col-sm-10">
                 <label for="cardHolder">Cardholder Name</label>
@@ -100,7 +100,7 @@
                         <option *ngFor='let count of userscount; let c = index' [value]="25*(c+4)" >{{25*(c+4)}}</option>
                     </select>
                   </div>
-                <div class="col-sm-12 btn-continue">
+                <div class="col-sm-8 btn-continue">
                   <button class="btn btn-submit pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Continue</button>
                 </div>
             </div>
@@ -137,7 +137,7 @@
 
     <div class="col-sm-12">
       <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-6">
               <!-- <button class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</button> -->
             </div>
         <div class="col-sm-4">

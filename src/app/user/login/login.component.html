@@ -16,7 +16,7 @@
                         <input type="text" formControlName="username" placeholder="Enter Email" class="form-control userinput"
                           [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                          <div *ngIf="f.username.errors.required">User name is required</div>
+                          <div *ngIf="f.username.errors.required">Email is required</div>
                         </div>
                       </div>
                       <div class="form-group col-md-12 inner-addon left-addon right-addon">
