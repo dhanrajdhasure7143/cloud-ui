@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-chooseplan',
   templateUrl: './chooseplan.component.html',
@@ -70,13 +71,72 @@ export class ChooseplanComponent implements OnInit {
 
   }
   selectedPlan(planData){
-    if(planData.nickName =="Free tier"){
+    if(planData.nickName =="Free Tier"){
+      let freeplanData={
+        "ip": "1.2.3.4",
+        "meta": {"orderable":true,"visible":true,"plan_id":"freetrial_t1m"},
+        "planId": "2.0freetrial_t1m"
+      }
+
+      this.productlistservice.activateFreeTire(freeplanData).subscribe(data=>{
+        Swal.fire({
+          title: 'Success!',
+          text: `Free Trail Started.`,
+          type: 'success',
+          showCancelButton: false,
+          allowOutsideClick: true
+        }) 
+        this.router.navigate(['/activation/platform']);
+      },err=>{
+        Swal.fire({
+          title: 'Error!',
+          text: `Please try again.`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+        // this.freetrailDetails=data;
+        // this.expiryDate=this.freetrailDetails.Expiry_date;
+        //   console.log("free tire is",this.freetrailDetails.Expiry_date)
+          })
+    
       alert("Free Tier");
     }else{
     localStorage.setItem('selectedplan',planData.nickName);
     this.router.navigate(['/activation/payment/details']);
     }
   }
+  contactUsSwal(){
+   
+    const userdata={
+      "userId":localStorage.getItem('userName'),
+      "firstName":localStorage.getItem('firstName'),
+      "lastName":localStorage.getItem('lastName'),
+      "phoneNumber":localStorage.getItem('phoneNumber'),
+      "organisation":localStorage.getItem('company'),
+         "tenantId":localStorage.getItem('tenantName'),
+         "country":localStorage.getItem('country')
+    }
+    this.productlistservice.contactUs(userdata).subscribe(res=>{
+      Swal.fire({
+        title: 'Thank you!',
+        text: `Soon our person from Sales will contact you.`,
+        type: 'info',
+        showCancelButton: false,
+        allowOutsideClick: true,
+      })
+     },err=>{
+      Swal.fire({
+        title: 'Oops!',
+        text: `Internal server error, Please try again.`,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true,
+      })
+
+    });
+  }
+
   loopTrackBy(index, term){
     return index;
   }
