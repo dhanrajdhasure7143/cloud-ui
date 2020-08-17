@@ -163,6 +163,16 @@
     padding-left: 440px;
     // padding-right: 20px;
 }
+.ntfnorecords
+{
+    position: absolute;
+    top: 95px;
+    padding-left: 440px;
+}
+.submitbtn-cancelsub
+{
+    margin-right: 170px;
+}
 .tableborder{
     border-collapse: separate;
     border:solid 1px black !important;
@@ -389,7 +399,11 @@ label{
         padding: 0px;
         border-radius: 20px;
       }
-    
+.subsc
+{
+    background: none !important;
+    border: none !important;
+}
     
     
     
