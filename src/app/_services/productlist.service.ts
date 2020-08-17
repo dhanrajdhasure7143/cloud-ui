@@ -34,6 +34,7 @@ export class ProductlistService {
     return this.http.post('/subscriptionservice/v1/freetrials',freePlanData)
 
   }
-
-
+  contactUs(userdata) : Observable<any>{
+    return this.http.post<any>('/api/user/contact-us',userdata)
+    }
 }

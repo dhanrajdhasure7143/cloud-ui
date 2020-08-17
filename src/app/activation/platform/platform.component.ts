@@ -84,19 +84,7 @@ export class PlatformComponent implements OnInit {
     // localStorage.setItem('selectedproductId',this.selectedId);
     this.selectedIdValue=selectedData.subscribed;
     this.productId=selectedData.id
-    let freeplanData={
-      "ip": "1.2.3.4",
-      "meta": {"orderable":true,"visible":true,"plan_id":"freetrial_t1m"},
-      "planId": "2.0freetrial_t1m"
-    }
-    if(!selectedData.freetrailAvailed){
-      console.log("in if")
-    this.productlistservice.activateFreeTire(freeplanData).subscribe(data=>{
-      this.freetrailDetails=data;
-      this.expiryDate=this.freetrailDetails.Expiry_date;
-        console.log("free tire is",this.freetrailDetails.Expiry_date)
-        })
-    }
+  
   }
   navigateProduct(selectedproduct){
     //added this for navigate to 2.0 ui
