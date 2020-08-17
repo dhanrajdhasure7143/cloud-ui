@@ -161,53 +161,53 @@
                         </div>
                       </tab>
                         
-                        <tab *ngIf="this.userRole.includes('Admin')" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
-                            <div class="search-One">
-                                <form class="form-inline d-flex  md-form form-sm">
-                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
-                                        <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
-                                      </form>
-                                </div>
-                        <div class="subscrption_id">
-                                <table class="table table-borderless col-md-12 table-hover">
-                                  <thead>
-                                    <tr>
-                                      <th scope="col" class="types">Subscription Id</th>
-                                      <th scope="col" class="types">Product</th>
-                                      <th scope="col" class="types">Plan</th>
-                                      <th scope="col" class="types">Amount</th>
-                                      <th scope="col" class="types">Status</th>
-                                      <th scope="col" class="types">Action</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody class="col-md-12" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
-                                    <tr >
-                                      <td >{{sdata.subscriptionId}}</td>
-                                      <td>{{sdata.name}}</td>
-                                      <td>{{sdata.planId}}</td>
-                                      <td>{{sdata.planEntity.amount}}</td>
-                                      <td>{{sdata.status}}</td>
-                                      <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><span *ngIf = "sdata.status === 'Active'" (click)="selecteddata(sdata,i,template)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
-                                        <div id="myid" [ngClass]="selectedIndex == i?'isdelet':''" class="deletconfm">
-                                          <div class="container-fluid deletefrm">
-                                        <h5 class="pull-left">Confirmation</h5>
-                                        <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
-                                        <button class="pull-left confm" (click)="unsubscribeYes(i)">Yes</button>
-                                        <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
-                                        </div>
-                                        </div>
-                                      </td>
-                                      <!-- <td class = "deleticon">
-                                        <button class="btn btn-primary" *ngIf = "sdata.status != 'Active'" (click)="reactivatesubscription(sdata)">Reactivate</button>
-                                      </td> -->
-                                    </tr>
-                                  </tbody>
-                                </table>
-                        </div>
-                      </tab>
+                      <tab *ngIf="this.userRole.includes('Admin')" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                        <div class="search-One">
+                            <form class="form-inline d-flex  md-form form-sm">
+                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                    <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                  </form>
+                            </div>
+                    <div class="subscrption_id">
+                            <table class="table table-borderless col-md-12 table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="types" style="text-align:center">Subscription Id</th>
+                                  <th scope="col" class="types">Product</th>
+                                  <th scope="col" class="types">Plan</th>
+                                  <th scope="col" class="types">Amount</th>
+                                  <th scope="col" class="types">Status</th>
+                                  <th scope="col" class="types">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody class="col-md-12" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                                <tr >
+                                  <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
+                                  <td>{{sdata.name}}</td>
+                                  <td>{{sdata.planEntity.nickName}}</td>
+                                  <td >{{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
+                                  <td>{{sdata.status}}</td>
+                                  <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc" *ngIf = "sdata.status === 'Active' || sdata.planEntity.nickName ==='Free Tier' " [disabled]="sdata.planEntity.nickName==='Free Tier'"  (click)="selecteddata(sdata,i,template)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                    <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                    <h5 class="pull-left">Confirmation</h5>
+                                    <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
+                                    <button class="pull-left confm" (click)="unsubscribeYes(i)">Yes</button>
+                                    <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
+                                    </div>
+                                    </div>
+                                  </td>
+                                  <!-- <td class = "deleticon">
+                                    <button class="btn btn-primary" *ngIf = "sdata.status != 'Active'" (click)="reactivatesubscription(sdata)">Reactivate</button>
+                                  </td> -->
+                                </tr>
+                              </tbody>
+                            </table>
+                    </div>
+                  </tab>
 
                         <tab *ngIf="this.userRole.includes('Admin')" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
@@ -365,6 +365,7 @@
                     </div>
                 </div>
 
+               
                 <div class="container" *ngIf="isAlerts">
                   <div class="row">
                       <div  class="col-md-12">
@@ -394,15 +395,15 @@
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
                               <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                 <span  (click)="alertsdeletedata(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
-                                <div id="myid" [ngClass]="selectedIndex == l?'isdelet':''" class="deletconfm">
+                                <div id="myid" [ngClass]="selectedalertdet === l?'isdelet':''" class="deletconfm">
                                   <div class="container-fluid deletefrm">
                                       <h5 class="pull-left">Confirmation</h5>
-                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(l)">
+                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribealertNo(l)">
                                       <span aria-hidden="true">&times;</span>
                                       </button>
                                       <p class="pull-left">Are you sure you want to delete the alert ?</p>
                                        <button class="pull-left confm" (click)="alertDelYes(data.id,l)">Yes</button>
-                                       <button class="confm pull-left" (click)="unsubscribeNo(l)">No</button>
+                                       <button class="confm pull-left" (click)="unsubscribealertNo(l)">No</button>
                                   </div>
                               </div>
                               </td>
@@ -422,6 +423,8 @@
                 </div>
                       </div>
                   </div>
+
+
 
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
@@ -695,15 +698,18 @@
                                 <!-- <th scope="col" style="width:200px !important;">Action</th> -->
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody *ngIf="notificationList.errorMessage==undefined ">
                               <tr *ngFor="let messageList of notificationList | paginate: { itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
                                 <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
                               </tr>
                             </tbody>
+                            <tbody  *ngIf="notificationList.errorMessage=='No records found' " >
+                              <div class="ntfnorecords"><h4>No records found</h4></div>
+                            </tbody>
                           </table>
-                          <div class="notificationpagination">
+                          <div *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
                             <pagination-controls (pageChange)="c = $event"></pagination-controls>
                             </div>
                 </div>
@@ -713,81 +719,92 @@
     </div>
 
     <ng-template #template >
-        <div class="modal">
-          <div class="container">
-            <div class="modal-body row">
-                <div class="col-md-12">
-                    <h4 class="modal-title pull-left">We are sorry to see you go</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div >
-                <div class="col-md-12 subheadin">
-                  <p>If you have a moment, please let us know why you want to unsubscribe:</p>
-                </div>
-                <div class="col-md-12 infocheck">
-                  <input type="checkbox" [(ngModel)]="stopcheckbox" ><span>I stopped using this account</span>
-                </div>
-                <div class="col-md-12 infocheck">
-                    <input type="checkbox" [(ngModel)]="pricecheckbox"> <span>Price of the plan is high</span>
-                  </div>
-                  <div class="col-md-12 infocheck">
-                      <input type="checkbox" [(ngModel)]="plancheckbox"> <span>Subscribed another plan</span>
-                    </div>
-                <div class="col-md-12" class="textfield">
-                  <p>If other reason (please explain below).</p>
-                  <textarea name="feedback" [(ngModel)]="feedbackbox"></textarea>
-                </div>
-                <div class="col-md-12 submitbtn">
-                  <button class="btn btn-primary" (click)="infoModelSubmit()">Submit</button>
-                </div>
-              </div>
-            </div>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" >We are sorry to see you go</h4>
+        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        
+        <div class="col-md-12 subheadin">
+          <p>If you have a moment, please let us know why you want to unsubscribe:</p>
+        </div>
+        <div class="col-md-12 infocheck">
+          <input type="checkbox" [(ngModel)]="stopcheckbox" ><span>I stopped using this account</span>
+        </div>
+        <div class="col-md-12 infocheck">
+            <input type="checkbox" [(ngModel)]="pricecheckbox"> <span>Price of the plan is high</span>
           </div>
+          <div class="col-md-12 infocheck">
+              <input type="checkbox" [(ngModel)]="plancheckbox"> <span>Subscribed another plan</span>
+            </div>
+        <div class="col-md-12" class="textfield">
+          <p>If other reason (please explain below).</p>
+          <textarea name="feedback" [(ngModel)]="feedbackbox"></textarea>
+        </div>
+          </div>
+        
+    <div class="modal-footer">
+      <div class="">
+        <div class="col-12">
+          <div class="form-group form-buttons pull-right buttonsblock">
+            <button class="btn btn-secondary cancel_btn" type="reset" (click)="CancelSubform()"><div class="anim"></div> Cancel</button>
+            <button class="btn btn-primary" (click)="subscriptionCancelModalSubmit()">Submit</button>
+          </div>
+    <div class="clearfix">
+    </div>
+    </div>
+    </div>
+    </div>
         </ng-template>
-
         <ng-template #detailstemplate >
-          <div class="modal">
-            <div class="container">
-              <div class="modal-body row">
-                  <div class="col-md-12">
-                      <h4 class="modal-title pull-left">Subscription Details</h4>
-                      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div >
-                  <div class="col-md-12 infocheck">
-                    <label for="subscriptionid">Subscription ID : </label>
-                    <input type="text" [disabled]=true name="subscriptionid" #subscriptionid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.subscriptionId"/>     
-                              </div>
-                  <div class="col-md-12 infocheck">
-                    <label for="product">Product : </label>
-                    <input type="text" [disabled]=true name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.name"/>     
- 
-                    </div>
-                    <div class="col-md-12 infocheck">
-                      <label for="planid">Plan ID : </label>
-                      <input type="text" [disabled]=true name="planid" #planid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.planId"/>     
-   
-                      </div>
-                      <div class="col-md-12 infocheck">
-                        <label for="billingaccount">Billing Account : </label>
-                        <input type="text" [disabled]=true name="billingaccount" #billingaccount="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.billingAccount"/>     
-     
-                        </div>
-   
-                        <div class="col-md-12 infocheck">
-                          <label for="status">Status : </label>
-                          <input type="text" [disabled]=true name="status" #status="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.status"/>     
-       
-                          </div>
-   
-                  <div class="col-md-12 submitbtn">
-                    <button class="btn btn-primary" (click)="infoModelSubmit()">Change Plan</button>
-                  </div>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title" >Subscription Details</h4>
+            <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>
+          <form autocomplete="off" #updatesubscription="ngForm">
+          <div class="modal-body">
+            
+          <div class="col-md-12 ">
+            <label for="subscriptionid">Subscription ID </label>
+            <input type="text" [disabled]=true name="subscriptionid" #subscriptionid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.subscriptionId"/>    
+          </div>
+          <div class="col-md-12 ">
+            <label for="product">Product </label>
+                    <input type="text" [disabled]=true name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.name"/> 
+            </div>
+            <div class="col-md-12 ">
+              <label for="planid">Plan ID </label>
+                      <input type="text" [disabled]=true name="planid" #planid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.planId"/>
+              </div>
+              <div class="col-md-12 ">
+                <label for="billingaccount">Billing Account </label>
+                <input type="text" [disabled]=true name="billingaccount" #billingaccount="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.billingAccount"/>
                 </div>
+               <div class="col-md-12 ">
+                <label for="status">Status </label>
+                <input type="text" [disabled]=true name="status" #status="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.status"/>     
+                 </div>
+              </div>
+            
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+              <div class="col-md-12">
+                <div class="form-group form-buttons pull-right buttonsblock">
+                  <button class="btn btn-secondary cancel_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
+                  <button class="btn btn-primary" (click)="infoModelSubmit()">Change Plan</button>
               </div>
             </div>
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
           </ng-template>
           <ng-template #addCard >
             <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="addNewCard()" class="card_form">
@@ -942,7 +959,7 @@
                     <div *ngIf=isSMScheckBoxValue>
                     <label for="configalerts">Text To</label>
                     <input type="text" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
-                      text_to1 placeholder="Enter Mobile Number" />
+                      text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" />
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
                                                         <span *ngIf="text_to1.errors.required"> Mobile number is required</span>

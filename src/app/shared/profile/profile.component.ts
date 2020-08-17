@@ -160,6 +160,7 @@ export class ProfileComponent implements OnInit {
   updateType: any;
   updateActivities: any;
   updateMail: any;
+  selectedalertdet:any;
 
   permName: any;
   permissionDescription: any;
@@ -368,8 +369,7 @@ this.profileservice.applications().subscribe(resp =>
       this.getAllSubscrptions();
       this.notifier.show({
         type: "success",
-        message: "Subscription cancelled successfully!",
-        id: "123"
+        message: "Subscription cancelled successfully!"
       });
     }, err => {
     });
@@ -379,8 +379,14 @@ this.profileservice.applications().subscribe(resp =>
   }
   unsubscribeNo(index) {
     this.selectedIndex = " ";
+    
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
+  }
+
+  unsubscribealertNo()
+  {
+    this.selectedalertdet= " ";
   }
   
 
@@ -495,6 +501,7 @@ this.profileservice.applications().subscribe(resp =>
   }
   infoModelSubmit() {
     this.modalRef.hide();
+    this.slideDown();
     this.router.navigate(['/activation/payment/chooseplan']);
   }
 
@@ -594,6 +601,7 @@ this.profileservice.applications().subscribe(resp =>
     }
     onselectSubscrptionTab(){
       this.getAllSubscrptions();
+      this.selectedIndex= " ";
     }
     onselectPaymentModeTab(){
      this.getAllPaymentmodes();
@@ -615,7 +623,8 @@ this.profileservice.applications().subscribe(resp =>
       this.modalRef = this.modalService.show(template,this.config)
     }
     alertsdeletedata(data,index){
-    document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+      this.selectedalertdet=index
+      console.log("index",index)
   }
   updateselecttedalertdata(data,index,template){ 
     
@@ -644,7 +653,15 @@ this.profileservice.applications().subscribe(resp =>
       {
         this.isEmailcheckBoxValue=true;
       }
+      if(channelname&&channelname=='Email')
+      {
+        this.isEmailcheckBoxValue=true;
+      }
       if(channelname&&channelname==' SMS')
+      {
+        this.isSMScheckBoxValue=true;
+      }
+      if(channelname&&channelname=='SMS')
       {
         this.isSMScheckBoxValue=true;
       }
@@ -661,7 +678,6 @@ this.profileservice.applications().subscribe(resp =>
     this.getAllAlertsActivities();
   }
   modifyalert(alertslistactivitiesdata){
-    // console.log("alertslistactivitiesdata",alertslistactivitiesdata)
     
     let alertconfiguration=''
     console.log("sms",this.isSMScheckBoxValue)
@@ -728,7 +744,7 @@ this.profileservice.applications().subscribe(resp =>
             type: "success",
             message: "Alert deleted successfully!"
           });
-          
+          this.selectedalertdet= " ";
         //   Swal.fire({
         //     title: 'Success!',
         //     text: `Alert deleted successfully.`,
@@ -741,8 +757,22 @@ this.profileservice.applications().subscribe(resp =>
             this.getAllAlertsActivities();
           });
          this.getAllAlertsActivities();
-        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
     }
+    subscriptionCancelModalSubmit()
+  {
+    this.unsubscribeYes(this.selectedIndex);
+  }
+  changePlanCancel()
+  {
+    this.modalRef.hide();
+    this.getAllSubscrptions();
+  }
+  CancelSubform()
+  {
+    this.modalRef.hide();
+    this.getAllSubscrptions();
+    
+  }
 
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
