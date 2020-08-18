@@ -1058,6 +1058,15 @@ couponDelYes(coupon,index){
         })
       }
 
+      permissionsByapp(id){
+        this.profileservice.getPermissionsByAppID(id).subscribe(data => {
+          this.permissionsList = data.reverse();
+         
+
+          
+        })
+      }
+
       modifyrole(rolesdata){
        for(var i=0;i<this.applications.length;i++){
          if(this.applications[i].name == this.selectedApp ){
