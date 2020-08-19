@@ -638,10 +638,11 @@
                           <th scope="col" class="types">Coupon Name</th>
                           <th scope="col" class="types">Amount Off</th>
                           <th scope="col" class="types">Percentage Off</th>
-                          <th scope="col" class="types">Times Redeemed</th>
-                          <!-- <th scope="col" class="types">Max Redemptions
+                          <th scope="col" class="types">Available Redeemptions</th>
+                          <th scope="col" class="types">Expires By</th>
+                          <th scope="col" class="types">No. of Redemptions
 
-                          </th> -->
+                          </th>
                           <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
                         </tr>
                       </thead>
@@ -651,8 +652,9 @@
                           <td>{{coupon.name}}</td>
                           <td >{{coupon.amountOff}}</td>
                           <td >{{coupon.percentOff}}</td>
-                          <td >{{coupon.timesRedeemed}}</td>
-                          <!-- <td>{{coupon.maxRedemptions}}</td> -->
+                          <td >{{availableRedeemptions}}</td>
+                          <td >{{coupon.redeemBy | date }}</td>
+                          <td>{{coupon.maxRedemptions}}</td>
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -665,7 +667,7 @@
                                       <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
                                       <span aria-hidden="true">&times;</span>
                                       </button>
-                                      <p class="pull-left">Are you sure you want to delete the role ?</p>
+                                      <p class="pull-left">Are you sure you want to delete this coupon ?</p>
                                        <button class="pull-left confm" (click)="couponDelYes(coupon.id,j)">Yes</button>
                                        <button class="confm pull-left" (click)="unsubscribeNo(j)">No</button>
                                   </div>
@@ -1267,10 +1269,8 @@
                             <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
                         </div>
                         
-                        <div class="clearfix">
-                        
-                        </div>
-                        
+                        <!-- <div class="clearfix">
+                        </div> -->
                         </div>
                         </div>
                         </div>
@@ -1325,35 +1325,35 @@
 
 
                 <ng-template #createcoupon >
+                  <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon()" >
                   <div class="modal-header">
                     <h4 class="modal-title" id="modal-basic-title" >Create Coupon</h4>
                     <button type="button" class="close" aria-label="Close" (click)="cancelCreateCopon()">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon()" class="col-md-12 row">
-                   
-                    <div class="col-md-8">
-                          <div class="form-group col-sm-10">
+                  <div class="modal-body">
+                    <div class="">
+                      <div class="col-12 row">        
+                        <div class="col-md-12 infocheck">
+                         
                             <label for="couponName">Coupon Name</label>
                             <input type="text" name="couponName" #couponName="ngModel" maxlength="30" [(ngModel)]="couponNamename" class="form-control payment-input" id="couponName" placeholder="Enter Coupon Name" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((couponName.invalid && couponform.submitted) || (couponName.errors && couponName.touched) )" 
                             class='fa fa-info-circle errspan'> Coupon Name is required </span> 
-                          </div>
-                          <div class="form-group col-sm-8">
+                         
+                         
                             <label for="couponId">Coupon ID</label>
                             <input type="text" class="cc-number form-control payment-input"  minlength="5" maxlength="10" required name="couponId" #couponId="ngModel" [(ngModel)]="couponIdId" placeholder="Enter Coupon ID" required/>
                             <span *ngIf="((couponId.invalid && couponform.submitted) || (couponId.errors && couponId.touched) )" 
                             class='fa fa-info-circle errspan'> Coupon ID is required</span> 
-                                            </div>
-                         
-                              <div class="form-group col-sm-10">
+                            
                                 <label class="radio-inline">Coupon Type</label><br>
                 <input type="radio" class="payment-input" required name="couponType"  (change)='onChangeRadio($event.target.value)' value='percentageOff' />&nbsp;<span>Percentage Off</span><br>
-                <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' />&nbsp;Amount Off  
+                <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' />&nbsp;<span>Amount Off</span> <br>
                              
-                <div *ngIf="isPercentage" class="form-group col-sm-10">
+                <div *ngIf="isPercentage" >
                   
                   <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
@@ -1361,14 +1361,14 @@
                   class='fa fa-info-circle errspan'> Coupon Name is required </span>  -->
                 </div>
             
-                <div *ngIf="isAmount" class="form-group col-sm-10">
+                <div *ngIf="isAmount" >
                 
                   <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Name is required </span> 
                 </div>
-              </div>
+              
               <!-- <div class="col-md-12">
                 <label >Redeemption Limits</label><br>
             <input type="checkbox" class="payment-input" required name="couponRedeem"  (change)='onSelected($event.target.value)' value='redeemBy' />&nbsp;<span>Limit the date range when customers can redeem this coupon</span><br>
@@ -1390,35 +1390,33 @@
             class='fa fa-info-circle errspan'> Coupon Name is required </span>  
             </div> -->
                             
-                    </div>
-                    
             
-                    <div class="col-md-8">
-                          
-                          
-                                            
-                              <div class="form-group col-sm-6">
+            <!-- <div class="col-12 row">
+              <div class="col-md-12 infocheck"> -->
                                 <label for="duration">Coupon Valid</label>
-                                <select id="duration" name="duration" class="form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" required>
+                                <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" required>
                                     <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
                                   <option value="forever">Forever</option>
                                   <option value="once">Once</option>
                                         
                                 </select>
+              <!-- </div>
+                                   </div> -->
+                                 </div>
                               </div>
-                       
-                              </div>  
+                           </div>
+                  </div>
                               <div class="modal-footer">
                                 <div class="">
                                   <div class="col-12">
-                              <div class="form-group form-buttons pull-right buttonsblock">        
-                                  <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelCreateCopon()"><div class="anim"></div> Cancel</button>
-                                  <button class="btn btn-primary btn-save"  type="submit"><div class="anim"></div> Create</button>
+                              <div class="form-group form-buttons pull-right  buttonsblock">        
+                                  <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelCreateCopon()"><div class="anim"></div> Cancel</button> -->
+                                  <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Create</button>
                               </div>
                               
-                              <div class="clearfix">
+                              <!-- <div class="clearfix">
                               
-                              </div>
+                              </div> -->
                               
                               </div>
                               </div>
@@ -1426,15 +1424,16 @@
                         </form>
                   </ng-template>
                   <ng-template #modifyCoupon >
-                    <div class="modal">
-                      <div class="container">
-                        <div class="modal-body row">
-                            <div class="col-md-12">
-                                <h4 class="modal-title pull-left">Modify Coupon</h4>
+                   
+                     
+                      
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modify Coupon</h4>
                                 <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                             </div >
+                            <div class="modal-body">
                             <div class="col-md-12 infocheck">
       
                              <label for="coupon">Coupon Name </label>
@@ -1449,9 +1448,9 @@
                                                
                                        
                             <div class="col-md-12 submitbtn">
-                              <button class="btn btn-primary" (click)="modifycoupon(coupondata)">Modify Coupon</button>
+                              <button class="btn btn-primary updatepermbtn" (click)="modifycoupon(coupondata)">Update</button>
                             </div>
-                          </div>
-                        </div>
-                      </div>
+                         </div>
+                      
+                     
                     </ng-template>

@@ -40,8 +40,8 @@ export class ForgotpasswordComponent implements OnInit {
       this.forgotpasswordser.forgotPassword({email: this.f.email.value}).subscribe(res => {
         if(res.message ==='Password reset mail sent successfully'){
           Swal.fire({
-            title: 'Success!',
-            text: `Reset password link has been sent to your email successfully.`,
+            title: 'Success',
+            text: `Reset password link has been sent to your email successfully!`,
             type: 'success',
             
            

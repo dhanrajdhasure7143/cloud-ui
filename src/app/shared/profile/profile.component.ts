@@ -169,6 +169,7 @@ export class ProfileComponent implements OnInit {
   newPassword:any;
   confirmPassword:any;
   role: string;
+  availableRedeemptions: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -242,6 +243,7 @@ this.profileservice.applications().subscribe(resp =>
   getListofCoupons() {
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
       this.allCoupons.forEach(element => {
+        this.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
         if(element.amountOff!=null)
         {
           element.percentOff=' - '

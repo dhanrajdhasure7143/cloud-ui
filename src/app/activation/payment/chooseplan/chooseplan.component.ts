@@ -80,7 +80,7 @@ export class ChooseplanComponent implements OnInit {
 
       this.productlistservice.activateFreeTire(freeplanData).subscribe(data=>{
         Swal.fire({
-          title: 'Success!',
+          title: 'Success',
           text: `Free Trail Started.`,
           type: 'success',
           showCancelButton: false,
