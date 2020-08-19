@@ -96,6 +96,9 @@ return this.http.get<any>('/subscriptionservice/v1/orders/validateCoupon/'+promo
 getAllPermissions(): Observable<any>{
   return this.http.get<any>('/authorizationservice/api/v1/user/fetchAllPermissions')
 }
+getPermissionsByAppID(appID:any):Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/user/application/'+appID+'/permissions')
+}
 createPermission(permbody): Observable<any>{
   return this.http.post<any>('/authorizationservice/api/v1/user/createPermissions', permbody,httpOptions)
 }
@@ -136,4 +139,5 @@ deleteAlert(alertId):Observable<any>{
 changePassword(pswdbody:any): Observable<any>{
   return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
 }
+
 }

@@ -502,7 +502,7 @@
                             </div>
                           </tab> -->
 
-                         <tab heading="Roles">
+                         <tab *ngIf="true" heading="Roles">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                     <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -1084,27 +1084,27 @@
 
 
             <ng-template #rolestemplate >
-              <div class="modal">
-                <div class="container">
-                  <div class="modal-body row">
-                      <div class="col-md-12">
-                          <h4 class="modal-title pull-left">Modify Role</h4>
-                          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div >
-                      <div class="col-md-12 infocheck">
 
-                       <label for="role">Role : </label>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" >Modify Role</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+    
+            <div class="modal-body">
+                      <div class="col-md-12 infocheck ">
+
+                       <label for="role">Role</label>
                         <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.name"/>     
                                   </div>
                       <div class="col-md-12 infocheck">
-                        <label for="roledescription">Description : </label>
+                        <label for="roledescription">Description</label>
                         <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.description"/>     
      
                         </div>
                         <div class="col-md-12 infocheck">
-                          <label for="application">Application : </label>
+                          <label for="application">Product</label>
                           <ng-select [multiple]="false" 
                           [items] =  "applications"
                           [(ngModel)]="selectedApp"
@@ -1120,9 +1120,11 @@
                         </select>      -->
        
                           </div>
+
+
                           <div class="col-md-12 ">
-                            <label>Permissions : </label>
-                            <div class="infocheck">
+                            <label>Permissions</label>
+                            <div class="infocheck scrollpermissions">
 
                               <ng-select [multiple]="true" [(ngModel)]="permidlist">
                                 <ng-option *ngFor="let permi of permissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
@@ -1134,12 +1136,10 @@
                             </div>
                                          
                                  
-                      <div class="col-md-12 submitbtn">
-                        <button class="btn btn-primary" (click)="modifyrole(roledata)">Modify Role</button>
+                      <div class="col-md-12 submitbtn float-right">
+                        <button class="btn btn-primary clearbtn" (click)="modifyrole(roledata)">Modify Role</button>
                       </div>
-                    </div>
-                  </div>
-                </div>
+                   </div>
               </ng-template>
 
               <ng-template #createRole >
@@ -1156,22 +1156,23 @@
                             <div class="col-12 row">        
                               <div class="col-md-12 infocheck">
 
-                                <label for="role">Role : </label>
+                                <label for="role">Role</label>
                                  <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roleName"/>     
                                            </div>
                                <div class="col-md-12 infocheck">
-                                 <label for="roledescription">Description : </label>
+                                 <label for="roledescription">Description </label>
                                  <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roleDescription"/>     
               
                                  </div>
                                  <div class="col-md-12 infocheck">
-                                   <label for="application">Application : </label>
+                                   <label for="application">Product</label>
                                    <ng-select name = "applicationn" [multiple]="false" 
                                    [items] =  "applications"
                                    [(ngModel)]="selectedApplication"
                                    placeholder = "Select Application "
                                    bindValue = "id"
-                                   bindLabel = "name">
+                                   bindLabel = "name"
+                                   (change) = "permissionsByapp(selectedApplication)">
                                   
                                      <!-- <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option> -->
                                    </ng-select>
@@ -1183,7 +1184,7 @@
                 
                                    </div>
                                    <div class="col-md-12 ">
-                                     <label>Permissions : </label>
+                                     <label>Permissions</label>
                                      <div class="infocheck">
          
                                        <ng-select name = "permiss"[multiple]="true" [(ngModel)]="selectedpermidlist" placeholder = "Select Permissions">
@@ -1203,8 +1204,8 @@
                         <div class="">
                           <div class="col-12">
                       <div class="form-group form-buttons pull-right buttonsblock">        
-                          <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddRole()"><div class="anim"></div> Cancel</button>
-                          <button class="btn btn-primary btn-save"  type="submit"><div class="anim"></div> Save</button>
+                          <!-- <button class="btn btn-primary cancelrole_btn" type="reset" (click)="cancelAddRole()"><div class="anim"></div> Cancel</button> -->
+                          <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
                       </div>
                       
                       <div class="clearfix">
@@ -1262,8 +1263,8 @@
                           <div class="">
                             <div class="col-12">
                         <div class="form-group form-buttons pull-right buttonsblock">        
-                            <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button>
-                            <button class="btn btn-primary btn-save"  type="submit"><div class="anim"></div> Save</button>
+                            <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button> -->
+                            <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
                         </div>
                         
                         <div class="clearfix">
@@ -1279,17 +1280,16 @@
 
 
                   <ng-template #permtemplate >
-                    <div class="modal">
-                      <div class="container">
-                        <div class="modal-body row">
-                            <div class="col-md-12">
-                                <h4 class="modal-title pull-left">Update</h4>
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div >
 
-                            <div class="col-md-12 infocheck pull-right">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title" >Modify Permission</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+          
+                  <div class="modal-body">
+                       <div class="col-md-12 infocheck pull-right">
                               <label for="application">Application </label>
                               <ng-select [multiple]="false" 
                               [items] =  "applications"
@@ -1318,11 +1318,9 @@
                                       
                                        
                             <div class="col-md-12 submitbtn">
-                              <button class="btn btn-primary" (click)="modifyperm(permdata)">Update</button>
+                              <button class="btn btn-primary updatepermbtn" (click)="modifyperm(permdata)">Update</button>
                             </div>
                           </div>
-                        </div>
-                      </div>
                     </ng-template>
 
 
