@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
+import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-chooseplan',
@@ -19,7 +20,10 @@ export class ChooseplanComponent implements OnInit {
   public error='';
   public test:any;
   tenantId: string;
+  newAccessToken: any[];
+  userRole: any;
   constructor(private productlistservice:ProductlistService, private router: Router,
+    private profileService: ProfileService
     ) { }
  
   ngOnInit() {
@@ -86,7 +90,17 @@ export class ChooseplanComponent implements OnInit {
           showCancelButton: false,
           allowOutsideClick: true
         }) 
-        this.router.navigate(['/activation/platform']);
+        this.productlistservice.getNewAccessToken().subscribe(resp=>{
+          this.newAccessToken=resp
+          console.log("token",resp)
+          localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
+        })
+        this.profileService.getUserRole(2).subscribe(res=>{
+          this.userRole=res.message;
+          console.log("user role is",this.userRole)
+          localStorage.setItem('userRole',this.userRole);
+        })
+        this.router.navigate(['/activation/platform'])
       },err=>{
         Swal.fire({
           title: 'Error!',
@@ -100,7 +114,7 @@ export class ChooseplanComponent implements OnInit {
         //   console.log("free tire is",this.freetrailDetails.Expiry_date)
           })
     
-      alert("Free Tier");
+      //alert("Free Tier");
     }else{
     localStorage.setItem('selectedplan',planData.nickName);
     this.router.navigate(['/activation/payment/details']);
