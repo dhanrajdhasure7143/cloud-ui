@@ -937,7 +937,7 @@ console.log(x);
     return
    }
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-    if(invres === "Exceeded max users count"){
+    if(invres.message === "Exceeded max users count"){
     Swal.fire({
       title: 'Message!',
       text: "Users max limit exceeded",
@@ -946,7 +946,7 @@ console.log(x);
       allowOutsideClick: true
     })
   
-  }else if(invres === "User Invite is valid"){
+  }else if(invres.message === "User Invite is valid"){
     this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
       Swal.fire({
         title: 'Success!',
