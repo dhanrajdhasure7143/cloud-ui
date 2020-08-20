@@ -487,9 +487,6 @@ this.profileservice.applications().subscribe(resp =>
 
   subscriptiondata(data, index, template) {
     this.subscribeddata = data;
-    if(this.subscribeddata.subscriptionId==null||this.subscribeddata.subscriptionId==undefined){
-      this.subscribeddata.subscriptionId="--"
-    }
     this.modalRef = this.modalService.show(template)
   }
 
@@ -580,15 +577,8 @@ this.profileservice.applications().subscribe(resp =>
   }
 
   getAllSubscrptions() {
-    this.profileservice.listofsubscriptions().subscribe(response => { 
-      this.tableData = response 
-      this.tableData.forEach(element => {
-        if(element.name==='IAP-2.0'){
-          element.name=element.name.substring(4);
-      }  
-    });
-  });
-}
+    this.profileservice.listofsubscriptions().subscribe(response => { this.tableData = response });
+  }
 
   getAllInvoices() {
     this.profileservice.listofinvoices().subscribe(response => { this.invoicedata = response.data });
@@ -947,7 +937,7 @@ console.log(x);
     return
    }
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-    if(invres === "Exceeded max users count"){
+    if(invres.message === "Exceeded max users count"){
     Swal.fire({
       title: 'Message!',
       text: "Users max limit exceeded",
@@ -956,7 +946,7 @@ console.log(x);
       allowOutsideClick: true
     })
   
-  }else if(invres === "User Invite is valid"){
+  }else if(invres.message === "User Invite is valid"){
     this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
       Swal.fire({
         title: 'Success!',
