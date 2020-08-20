@@ -20,12 +20,13 @@
 
     <div class="col-md-12"></div>
     <div class="col-md-4"></div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" id="launch_btn" (click)="upgradePlan()" *ngIf="selectedIdValue" >Upgrade Now</button>
+      <div class="col-md-2" >
+        <button class="btn btn-primary" id="launch_btn" (click)="upgradePlan()" *ngIf="selectedIdValue"  >Upgrade Now</button>
         <button *ngIf="!selectedIdValue" class="btn btn-primary" [disabled]="isenable"  (click)="upgradePlan()" id="launch_btn" >Subscribe</button>
       </div>
-      <div class="col-md-2">
-          <button *ngIf="selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
+      <div class="col-md-2" style="padding: 0px;
+      margin-left: -24px;">
+                  <button *ngIf="selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
          
         </div>
     </div>
