@@ -233,7 +233,7 @@
                                     <tr *ngFor="let invdata of invoicedata | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
                                       <td>{{invdata.invoiceNumber}}</td>
                                       <td>{{invdata.subscriptionId}}</td>
-                                      <td>{{invdata.amount}}.00 USD</td>
+                                      <td>$ {{invdata.amount}}.00 </td>
                                       <!-- <td>{{invdata.refund || "NA"}}</td> -->
                                         <td>{{getinvoiceDate(invdata.createDate) |date:'MM/dd/yyyy'}}</td>
                                         <td>{{invdata.status|titlecase}}</td>
@@ -272,11 +272,12 @@
                                       <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
                                       <td>{{cardData.created | date}}</td>
                                       <td >
-                                        <button aria-hidden="true" *ngIf='!cardData.defaultSource' class="btn btn-danger remov_btn"  (click)="deletCard(cardData,i)">Remove
+                                        <!-- <button aria-hidden="true" *ngIf='!cardData.defaultSource' class="btn btn-danger remov_btn"  (click)="deletCard(cardData,i)">Remove -->
                                           <!-- <img src="assets/images/unsubscribe.svg" alt=""> -->
-                                        </button> 
-                                        <button *ngIf='!cardData.defaultSource' class='btn btn-primary setDefault_btn' (click)='setAsDefaultCard(cardData)'>Set Default</button>
-                    
+                                        <!-- </button>  -->
+                                        <!-- <button *ngIf='!cardData.defaultSource' class='btn btn-primary setDefault_btn' (click)='setAsDefaultCard(cardData)'>Set Default</button> -->
+                                        <button  class="subsc" [disabled]="cardData.defaultSource === true" (click)='setAsDefaultCard(cardData)'><img src="assets/images/eyeIcon.svg" alt=""> </button>
+                                        <button class="subsc" [disabled]="cardData.defaultSource === true" (click)="deletCard(cardData,i)"> <img src="assets/images/unsubscribe.svg" alt=""></button>
                                         <!-- <span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
                                         
                                         <div id="delete-card"  *ngIf="closeFlag" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
@@ -868,7 +869,7 @@
                             <span *ngIf="((year.invalid && addpaymentmode.submitted) || (year.errors && year.touched) )" 
                                 class='fa fa-info-circle errspan'> Year required</span>
                     </div>
-                    <div class='form-group check_box'>
+                    <div class='form-group set_default'>
                       <input type="checkbox" class=""  #setdefault='ngModel' [(ngModel)]='isdefault' name="isdefault" > <span> Set As Default</span>
                   </div>
                   </div>
@@ -879,8 +880,8 @@
                     <div class="">
                       <div class="col-12">
                   <div class="form-group form-buttons pull-right buttonsblock">        
-                      <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddCard()"><div class="anim"></div> Cancel</button>
-                      <button class="btn btn-primary btn-save" [disabled] = "addpaymentmode.invalid" type="submit"><div class="anim"></div> Save</button>
+                      <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddCard()"><div class="anim"></div> Cancel</button> -->
+                      <button class="btn btn-primary updatepermbtn" [disabled] = "addpaymentmode.invalid" type="submit"><div class="anim"></div> Save</button>
                   </div>
                   
                   <div class="clearfix">
