@@ -91,7 +91,7 @@ export class PlatformComponent implements OnInit {
     var token=JSON.parse(localStorage.getItem('currentUser'));
     var encryptToken=btoa(token.accessToken)
     var encryptrefreshToken=btoa(token.refreshToken);
-    window.location.href="http://eiapdev.epsoftinc.in/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken
+    window.location.href="http://localhost:4201/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,
