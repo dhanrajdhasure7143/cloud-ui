@@ -788,8 +788,8 @@
       <div class="">
         <div class="col-12">
           <div class="form-group form-buttons pull-right buttonsblock">
-            <button class="btn btn-secondary cancel_feedbackbtn" type="reset" (click)="CancelSubform()"><div class="anim"></div> Cancel</button>
-            <button class="btn btn-primary submit_feedbackbtn" (click)="subscriptionCancelModalSubmit()">Submit</button>
+            <button class="btn btn-secondary cancel_btn" type="reset" (click)="CancelSubform()"><div class="anim"></div> Cancel</button>
+            <button class="btn btn-primary" (click)="subscriptionCancelModalSubmit()">Submit</button>
           </div>
     <div class="clearfix">
     </div>
@@ -834,8 +834,8 @@
             <div class="col-12">
               <div class="col-md-12">
                 <div class="form-group form-buttons pull-right buttonsblock">
-                  <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
-                  <button class="btn btn-primary change_plan" (click)="infoModelSubmit()">Change Plan</button>
+                  <button class="btn btn-secondary cancel_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
+                  <button class="btn btn-primary" (click)="infoModelSubmit()">Change Plan</button>
               </div>
             </div>
         <div class="clearfix">
@@ -1018,8 +1018,8 @@
                 <div class="col-12">
                   <div class="col-md-12">
                     <div class="form-group form-buttons pull-right buttonsblock">
-                    <button class="btn btn-secondary cancel_modify_btn" type="reset" (click)="updateAlertCancel()"><div class="anim"></div> Cancel</button>
-                    <button  class="btn btn-primary update_alert" (click)="modifyalert(alertslistactivitiesdata)">Update</button>
+                    <button class="btn btn-secondary cancel_btn" type="reset" (click)="updateAlertCancel()"><div class="anim"></div> Cancel</button>
+                    <button  class="btn btn-primary" (click)="modifyalert(alertslistactivitiesdata)">Update</button>
                   </div>
                 </div>
             <div class="clearfix">
@@ -1165,7 +1165,7 @@
                             <label>Permissions</label>
                             <div class="infocheck scrollpermissions">
 
-                              <ng-select [multiple]="true" [(ngModel)]="permidlist">
+                              <ng-select [multiple]="true" [(ngModel)]="permidlist" placeholder = "Select Permissions">
                                 <ng-option *ngFor="let permi of permissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
                               </ng-select>
                            
@@ -1176,7 +1176,7 @@
                                          
                                  
                       <div class="col-md-12 submitbtn float-right">
-                        <button class="btn btn-primary clearbtn" (click)="modifyrole(roledata)">Modify Role</button>
+                        <button class="btn btn-primary clearbtn" (click)="modifyrole(roledata)">Update</button>
                       </div>
                    </div>
               </ng-template>
@@ -1263,7 +1263,7 @@
                                    <ng-select name = "applicationn" [multiple]="false" 
                                    [items] =  "applications"
                                    [(ngModel)]="selectedApplication"
-                                   placeholder = "Select Application "
+                                   placeholder = "Select Product "
                                    bindValue = "id"
                                    bindLabel = "name"
                                    (change) = "permissionsByapp(selectedApplication)">
@@ -1327,11 +1327,11 @@
                               <div class="col-12 row">        
                                 <div class="col-md-12 infocheck">
                                  
-                                    <label for="application">Application </label>
+                                    <label for="application">Product </label>
                                     <ng-select name = "applicationn" [multiple]="false" 
                                     [items] =  "applications"
                                     [(ngModel)]="selectedApplication"
-                                    placeholder = "Select Application "
+                                    placeholder = "Select Product "
                                     bindValue = "id"
                                     bindLabel = "name">
                                    
