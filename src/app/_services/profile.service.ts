@@ -139,5 +139,8 @@ deleteAlert(alertId):Observable<any>{
 changePassword(pswdbody:any): Observable<any>{
   return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
 }
+modifyUserRole(data:any): Observable<any>{
+  return this.http.put<any>('/authorizationservice/api/v1/user/role/applications/', data,httpOptions)
+}
 
 }

@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
   public isdefault:boolean=false;
   public searchvalue: any;
   public searchUser: any;
-  public emailId: any;
+  public emailId: any[];
   public sentFromOne: any;
   public tableData: any[];
   public formOne: any = {};
@@ -111,6 +111,7 @@ export class ProfileComponent implements OnInit {
   permidlist : any = [];
   amountOff:any;
   isPercentage:boolean=false;
+  isSameDomain:boolean=false;
   selectedApp:any;
   selectedApplication:any;
   selectedpermidlist: any = [];
@@ -123,6 +124,7 @@ export class ProfileComponent implements OnInit {
   allCoupons: any;
   mod: any;
   coupondata: any;
+  testArry: any = [];
   
   /**alerts */
   isEmailcheckBoxValue:any;
@@ -149,10 +151,12 @@ export class ProfileComponent implements OnInit {
   alertsbody:any;
   channel: any[]=[];
   alertmodifybody:any;
+  domain:any;
   p=0;
   c=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
+ public updateUserRolesList:any=[];
   applicationames: any;
   notificationbody: { tenantId: string; };
   updatetext_to: any;
@@ -161,7 +165,7 @@ export class ProfileComponent implements OnInit {
   updateActivities: any;
   updateMail: any;
   selectedalertdet:any;
-
+  selectedRolesArry: any = [];
   permName: any;
   permissionDescription: any;
   permdata:any;
@@ -170,6 +174,9 @@ export class ProfileComponent implements OnInit {
   confirmPassword:any;
   role: string;
   availableRedeemptions: any;
+  roleArray: any = [];
+  rolesArryList: any[];
+  roleListdata: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -199,12 +206,25 @@ export class ProfileComponent implements OnInit {
     })
       this.tenantId=localStorage.getItem('tenantName');
 this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
+  console.log("responseeeeee", resp);
     this.userManagementresponse = resp
        this.userManagementresponse.forEach(elementuser => {
+         this.roleArray = [];
          elementuser.userId['applicationIdname']=elementuser.applicationId.name;
-      elementuser.userId['roleIdname']=elementuser.roleID.name;
+         this.rolesArryList = elementuser.rolesEntityList;
+        
+         this.rolesArryList.forEach(element => {
+           this.roleArray.push(element.name);
+           
+         });;
+         console.log("testtttttt", this.roleArray)
+         
+      elementuser.userId['roleIdname']=this.roleArray;
       this.userManagement.push(elementuser.userId);
+     
+      
     });
+    console.log("userManagementttttttttt", this.userManagement);
 });
 console.log("local",localStorage.getItem('userRole'))
 this.getRoles();
@@ -489,6 +509,20 @@ this.profileservice.applications().subscribe(resp =>
     this.selectedApp = selRoleData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
+  
+  updateSelectedUserRole(selRoleData, index, template){
+    // this.testArry = ['Admin', 'user', 'RPA Admin'];
+    this.permidlist = [];
+
+    this.roleListdata = selRoleData;
+    console.log("dataaaaa", selRoleData);
+    console.log("rols arry", this.allRoles);
+    
+    this.selectedApp  = selRoleData.applicationIdname;
+       
+    this.modalRef = this.modalService.show(template)
+  }
+
 
   selectedpermdata(selPermData, index, template){
     this.permdata = selPermData;
@@ -678,6 +712,9 @@ this.profileservice.applications().subscribe(resp =>
     // this.isSMScheckBoxValue=false;
     this.modalRef.hide();
     this.getAllAlertsActivities();
+  }
+  updateUserRoleCancel(){
+    this.modalRef.hide();
   }
   modifyalert(alertslistactivitiesdata){
     
@@ -883,12 +920,21 @@ cancelAlert(){
    });
  }
     inviteUser(userId,inviteeId){
+      console.log("slected roles", this.selectedroles);
+      
+      let stringToSplit = localStorage.getItem("userName");
+let x = stringToSplit.split("@");
+      this.domain = x[1];
+console.log(x);
       
       if(inviteeId.endsWith('@gmail.com') ||inviteeId.endsWith('@yahoo.com') || 
       inviteeId.endsWith('@hotmail.com') || inviteeId.endsWith('@rediffmail.com')){
      this.ispublicMail=true;
      return
 
+   }else if(!(inviteeId.endsWith(this.domain))){
+    this.isSameDomain = true;
+    return
    }
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
     if(invres === "Exceeded max users count"){
@@ -1069,6 +1115,75 @@ couponDelYes(coupon,index){
         })
       }
 
+      modifyUserRole(resp){
+        this.selectedRolesArry = [];
+        let arr = [];
+        console.log("selectedApp", this.selectedApp);
+        
+        
+        arr = this.roleListdata.roleIdname;
+        console.log("arrr", arr);
+        
+        for(var i = 0; i< arr.length; i++){
+          for(var j = 0; j<this.allRoles.length; j++){
+            if(arr[i] == this.allRoles[j].name){
+              this.selectedRolesArry.push(this.allRoles[j].id)
+            }
+          }
+          
+        }
+        let body = {
+          "userId":resp.userId,
+       "appId":this.allRoles[0].appliationId.id,
+       "appName":resp.applicationIdname,
+       "rolesList":this.selectedRolesArry
+       }
+       console.log("bodyy", body);
+       
+       this.profileservice.modifyUserRole(body).subscribe(resp => {
+
+        this.modalRef.hide();
+        Swal.fire({ 
+          title: 'Success',
+          text: `Role has been updated successfully !!`,
+          type: 'success',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+        this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
+            this.userManagementresponse = resp
+               this.userManagementresponse.forEach(elementuser => {
+                 this.roleArray = [];
+                 elementuser.userId['applicationIdname']=elementuser.applicationId.name;
+                 this.rolesArryList = elementuser.rolesEntityList;
+                
+                 this.rolesArryList.forEach(element => {
+                   this.roleArray.push(element.name);
+                   
+                 });;
+                 
+              elementuser.userId['roleIdname']=this.roleArray;
+              this.userManagement.push(elementuser.userId);
+             
+              
+            });
+            
+        });
+        
+        
+       },err=>{
+        Swal.fire({
+          title: 'Error',
+          text: `Unable to update the role !!`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+
+      })
+        
+        
+      }
       modifyrole(rolesdata){
        for(var i=0;i<this.applications.length;i++){
          if(this.applications[i].name == this.selectedApp ){
@@ -1354,6 +1469,11 @@ console.log("alertbody",this.alertsbody)
         //this.modifyactivities=this.activitieslist
         console.log("Activities fjdbfdsfbd",this.activitieslist);
       }
+      onblur(){
+        this.ispublicMail = false;
+        this.isSameDomain = false;
+      }
+
 
    
       passwordChange(){
