@@ -1341,13 +1341,13 @@
                             <input type="text" name="couponName" #couponName="ngModel" maxlength="30" [(ngModel)]="couponNamename" class="form-control payment-input" id="couponName" placeholder="Enter Coupon Name" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((couponName.invalid && couponform.submitted) || (couponName.errors && couponName.touched) )" 
-                            class='fa fa-info-circle errspan'> Coupon Name is required </span> 
+                            class='fa fa-info-circle errspan'> Coupon Name is required </span> <br>
                          
                          
                             <label for="couponId">Coupon ID</label>
                             <input type="text" class="cc-number form-control payment-input"  minlength="5" maxlength="10" required name="couponId" #couponId="ngModel" [(ngModel)]="couponIdId" placeholder="Enter Coupon ID" required/>
                             <span *ngIf="((couponId.invalid && couponform.submitted) || (couponId.errors && couponId.touched) )" 
-                            class='fa fa-info-circle errspan'> Coupon ID is required</span> 
+                            class='fa fa-info-circle errspan'> Coupon ID is required</span> <br>
                             
                                 <label class="radio-inline">Coupon Type</label><br>
                 <input type="radio" class="payment-input" required name="couponType"  (change)='onChangeRadio($event.target.value)' value='percentageOff' />&nbsp;<span>Percentage Off</span><br>

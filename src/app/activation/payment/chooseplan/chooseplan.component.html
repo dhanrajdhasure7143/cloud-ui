@@ -18,7 +18,7 @@
 
                 <h5 *ngIf="planlist.nickName !='Enterprise'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
                 <button *ngIf="planlist.nickName !='Enterprise' && planlist.nickName!='Free Tier'" [disabled]="planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
-                <button *ngIf="planlist.nickName =='Free Tier'" [disabled]="planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Activate Free Tier</button>
+                <button *ngIf="planlist.nickName =='Free Tier'" [disabled]="planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Activate</button>
 
                 <h5 *ngIf="planlist.nickName =='Enterprise'" class="enterprice">Enterprise Solution</h5>
                 <button *ngIf="planlist.nickName =='Enterprise'" class="btn btn-primary selectplanbtn" (click)="contactUsSwal()">Contact Us</button>
