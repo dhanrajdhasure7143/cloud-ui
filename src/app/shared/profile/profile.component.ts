@@ -487,6 +487,9 @@ this.profileservice.applications().subscribe(resp =>
 
   subscriptiondata(data, index, template) {
     this.subscribeddata = data;
+    if(this.subscribeddata.subscriptionId==null||this.subscribeddata.subscriptionId==undefined){
+      this.subscribeddata.subscriptionId="--"
+    }
     this.modalRef = this.modalService.show(template)
   }
 
@@ -577,8 +580,15 @@ this.profileservice.applications().subscribe(resp =>
   }
 
   getAllSubscrptions() {
-    this.profileservice.listofsubscriptions().subscribe(response => { this.tableData = response });
-  }
+    this.profileservice.listofsubscriptions().subscribe(response => { 
+      this.tableData = response 
+      this.tableData.forEach(element => {
+        if(element.name==='IAP-2.0'){
+          element.name=element.name.substring(4);
+      }  
+    });
+  });
+}
 
   getAllInvoices() {
     this.profileservice.listofinvoices().subscribe(response => { this.invoicedata = response.data });
