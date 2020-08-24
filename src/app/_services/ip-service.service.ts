@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient  } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { BehaviorSubject, throwError, Subject, Observable } from 'rxjs';
 
 @Injectable({
@@ -10,6 +10,8 @@ export class IpServiceService {
   constructor(private http:HttpClient) { }  
   getIPAddress(): Promise<Object>
   {  
-    return this.http.get("http://api.ipify.org/?format=json").toPromise();  
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('origin', 'local');
+    return this.http.get("https://cors-anywhere.herokuapp.com/http://api.ipify.org/?format=json",  {headers}).toPromise();  
   } 
 }

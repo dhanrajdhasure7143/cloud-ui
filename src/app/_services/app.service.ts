@@ -48,6 +48,7 @@ export class AppService {
     if(this.ipAddress == undefined)
      this.ipAddress = '192.168.0.1';
     headers = { 'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type' : 'W' }
+    localStorage.setItem('ipAddress', this.ipAddress);
    }
   
   if(isSecurityManagerEnabled){url = `/Idm/accessToken`;}

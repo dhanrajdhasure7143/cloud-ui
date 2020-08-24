@@ -11,12 +11,16 @@ export class JwtInterceptor implements HttpInterceptor {
         if (currentUser && currentUser.accessToken && request.url !== '/api/beta/accessToken') {
             console.log(localStorage.getItem('userName'));
             // console.log(Crypto.charenc.UTF8.bytesToString(Crypto.util.base64ToBytes(currentUser.token)););
-            
+            let ipAddress = '192.168.0.1';
+            if(localStorage.getItem('ipAddress'))
+             ipAddress = localStorage.getItem('ipAddress');
+
             request = request.clone({
                 headers: request.headers,
                 setHeaders: {
                     // userName: localStorage.getItem('userName'),
                     Authorization: `Bearer ${currentUser.accessToken}`,
+                    'ip-address': ipAddress,
                     // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
                     // 'Access-Control-Allow-Origin': '*',
                     // 'Access-Control-Allow-Credentials': 'true',
