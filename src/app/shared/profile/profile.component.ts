@@ -930,22 +930,31 @@ cancelAlert(){
    });
  }
     inviteUser(userId,inviteeId){
-      console.log("slected roles", this.selectedroles);
       
       let stringToSplit = localStorage.getItem("userName");
 let x = stringToSplit.split("@");
       this.domain = x[1];
 console.log(x);
-      
-      if(inviteeId.endsWith('@gmail.com') ||inviteeId.endsWith('@yahoo.com') || 
-      inviteeId.endsWith('@hotmail.com') || inviteeId.endsWith('@rediffmail.com')){
-     this.ispublicMail=true;
-     return
+      var inviteeList = [];
+      inviteeList = inviteeId.split(",");
+console.log("fksdjflkasd", inviteeList);
 
-   }else if(!(inviteeId.endsWith(this.domain))){
-    this.isSameDomain = true;
-    return
-   }
+      for(var i = 0; i<inviteeList.length; i++){
+
+        if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
+        inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
+       this.ispublicMail=true;
+       return
+  
+     }else if(!(inviteeList[i].endsWith(this.domain))){
+       
+      this.isSameDomain = true;
+      return
+     }
+        
+      }    
+      
+    
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
     if(invres.message === "Exceeded max users count"){
     Swal.fire({

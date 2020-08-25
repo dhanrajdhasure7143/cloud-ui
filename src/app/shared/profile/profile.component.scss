@@ -100,6 +100,10 @@
     color: red;
     cursor: pointer;
 }
+.textA{
+    overflow: hidden !important;
+    min-height: 80px !important;
+}
 
 .invite{
     text-align: center;
