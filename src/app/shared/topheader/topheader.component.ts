@@ -1,6 +1,6 @@
 import { ContentfulConfig } from './../../contentful/models/contentful-config';
 import { ContentfulConfigService } from './../../contentful/services/contentful-config.service';
-import { Component, OnInit, ViewChild, ViewChildren, QueryList, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, Inject, AfterViewInit, HostListener } from '@angular/core';
 import { BsDropdownDirective } from 'ngx-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/_services';
@@ -30,7 +30,7 @@ export class TopheaderComponent implements OnInit {
   isCoupon: boolean=false;
   firstletter: string;
   decodedInput: any = {};
-
+  @ViewChild("toogleBtn") toogleBtn;
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
                                                private router: ActivatedRoute, 
@@ -49,6 +49,21 @@ export class TopheaderComponent implements OnInit {
                                                });
                                               }
 public myname:any[]
+@HostListener('document:click', ['$event.target']) // spinner overlay hide on out side click
+ public onClick(targetElement) {
+   console.log("targetElement",targetElement);
+   
+ const clickedInside = this.toogleBtn.nativeElement.contains(targetElement);
+ console.log("clickedInside", clickedInside);
+ 
+ if (!clickedInside) {
+  document.getElementById("myDropdown").classList.remove("show");
+ 
+ console.log("outside"); 
+ }else{
+  console.log("Inside");
+ }
+ }
   ngOnInit() {
     this.profileService.getUserRole(2).subscribe(role=>{
       this.userRole=role.message;
