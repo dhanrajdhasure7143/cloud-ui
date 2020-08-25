@@ -325,20 +325,11 @@
                     </div>
                     <div class="col-md-12 invteform">
                                         <form autocomplete="off" #inviteuser="ngForm" class="col-md-12 row">
-                                            <div class="form-group col-sm-4">
+                                            <div class="form-group col-sm-12">
                                                     <label for="email">Email</label>
-                                                    <!-- <input type="text" name="email" #email="ngModel" class="form-control" [(ngModel)]="emailId"
-                                                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Enter Email"
-                                                       required/>
-                                                    <span *ngIf="((email.invalid && inviteuser.submitted) || (email.errors && email.touched) ) "
-                                                      class='fa fa-info-circle errspan'>
-                                                      <span *ngIf="email.errors.required"> Email is required</span>
-                                                      <span *ngIf="email.errors.pattern && !(email.errors.required)"> Enter valid email address</span>
-                                                      <span *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only Business Email is Allowed</span>
-                                                    <span *ngIf="isSameDomain" class='fa fa-info-circle errspan'>&nbsp;Sorry...! You Are Allowed to Invite {{domain}} Users Only</span>
-                                                    </span> -->
-                                                    <input type="text" name='email' id="email" pattern="^\S*[@]\S*[.]\S*$" #email="ngModel" class="form-control"  [(ngModel)]="emailId" required
-                    autocomplete="none|false|no" (keyup)='onblur()' maxlength="40" placeholder="Enter Email" required>
+                                                    
+                                                    <textarea rows="20" cols="50" name='email' id="email" pattern="^\S*[@]\S*[.]\S*$" #email="ngModel" class="form-control textA"  [(ngModel)]="emailId"
+                    autocomplete="none|false|no" (keyup)='onblur()' placeholder="Enter Emails Separated By Comma(,)" required></textarea>
                   <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"> 
                     <span class='fa fa-info-circle errspan' *ngIf="email.errors.required"> Email is required</span>
                     <span class='fa fa-info-circle errspan' *ngIf="email.errors.pattern"> Enter valid email address</span>
@@ -349,14 +340,14 @@
                                                     
                                                   </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-sm-3">
                                               <label for="application">Application</label>
                                               <select class="form-control" name="application"  id="application"(change)="onChangeApp($event.target.value)" required>
                                                 <option  [value]="undefined" disabled hidden>Select Application</option>
                                                 <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
                                               </select>
                                             </div>
-                                            <div class="col-sm-3 form-group">
+                                            <div class="col-sm-7 form-group">
                                                     <label for="role">Roles</label>
                                                     <ng-select name = "multiroles" [multiple]="true" 
                                                      placeholder="Select Roles"
@@ -373,7 +364,7 @@
                                                   </div>
                                                   <!-- <div class="col-sm-4"></div> -->
                                                   <div class="col-sm-2">
-                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect" type="submit" (click)='inviteUser(this.useremail,emailId)' >Submit</button>
+                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" type="submit" (click)='inviteUser(this.useremail,emailId)' >Submit</button>
 
                                                   </div>
                                           </form>
@@ -476,7 +467,7 @@
                                             <td>{{userdata.company}}</td>
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
-                                            <td >{{userdata.roleIdname}}</td>
+                                            <td class="types">{{userdata.roleIdname}}</td>
                                             <td class="deleticon">
                                               <span  (click)="updateSelectedUserRole(userdata, j, updateRoleTemplate)">
                                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -1224,8 +1215,8 @@
                       <div class="col-12">
                         <div class="col-md-12">
                           <div class="form-group form-buttons pull-right buttonsblock">
-                          <button class="btn btn-secondary cancel_btn" tyep = "reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
-                          <button  class="btn btn-primary" (click)="modifyUserRole(roleListdata)">Update</button>
+                          <!-- <button class="btn btn-secondary cancel_btn" tyep = "reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button> -->
+                          <button  class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" (click)="modifyUserRole(roleListdata)">Update</button>
                         </div>
                       </div>
                   <div class="clearfix">
