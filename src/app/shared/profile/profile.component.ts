@@ -177,6 +177,7 @@ export class ProfileComponent implements OnInit {
   roleArray: any = [];
   rolesArryList: any[];
   roleListdata: any;
+  testRolesList: any = [];
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -205,27 +206,8 @@ export class ProfileComponent implements OnInit {
         });
     })
       this.tenantId=localStorage.getItem('tenantName');
-this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-  console.log("responseeeeee", resp);
-    this.userManagementresponse = resp
-       this.userManagementresponse.forEach(elementuser => {
-         this.roleArray = [];
-         elementuser.userId['applicationIdname']=elementuser.applicationId.name;
-         this.rolesArryList = elementuser.rolesEntityList;
-        
-         this.rolesArryList.forEach(element => {
-           this.roleArray.push(element.name);
-           
-         });;
-         console.log("testtttttt", this.roleArray)
-         
-      elementuser.userId['roleIdname']=this.roleArray;
-      this.userManagement.push(elementuser.userId);
-     
       
-    });
-    console.log("userManagementttttttttt", this.userManagement);
-});
+this.getAllUsersList();
 console.log("local",localStorage.getItem('userRole'))
 this.getRoles();
 this.getListofCoupons();
@@ -259,6 +241,29 @@ this.profileservice.applications().subscribe(resp =>
   
     
 
+  }
+  getAllUsersList(){
+    this.userManagement = [];
+    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
+      console.log("responseeeeee", resp);
+        this.userManagementresponse = resp
+           this.userManagementresponse.forEach(elementuser => {
+             this.roleArray = [];
+             elementuser.userId['applicationIdname']=elementuser.applicationId.name;
+             this.rolesArryList = elementuser.rolesEntityList;
+            
+             this.rolesArryList.forEach(element => {
+               this.roleArray.push(element.name);
+               
+             });;
+             
+          elementuser.userId['roleIdname']=this.roleArray;
+          this.userManagement.push(elementuser.userId);
+         
+          
+        });
+        console.log("userManagementttttttttt", this.userManagement);
+    });
   }
   getListofCoupons() {
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
@@ -516,8 +521,9 @@ this.profileservice.applications().subscribe(resp =>
   updateSelectedUserRole(selRoleData, index, template){
     // this.testArry = ['Admin', 'user', 'RPA Admin'];
     this.permidlist = [];
-
     this.roleListdata = selRoleData;
+    this.testRolesList = this.roleListdata.roleIdname;
+
     console.log("dataaaaa", selRoleData);
     console.log("rols arry", this.allRoles);
     
@@ -1140,7 +1146,7 @@ couponDelYes(coupon,index){
         console.log("selectedApp", this.selectedApp);
         
         
-        arr = this.roleListdata.roleIdname;
+        arr = this.testRolesList;
         console.log("arrr", arr);
         
         for(var i = 0; i< arr.length; i++){
@@ -1157,11 +1163,11 @@ couponDelYes(coupon,index){
        "appName":resp.applicationIdname,
        "rolesList":this.selectedRolesArry
        }
-       console.log("bodyy", body);
        
        this.profileservice.modifyUserRole(body).subscribe(resp => {
 
         this.modalRef.hide();
+        this.getAllUsersList();
         Swal.fire({ 
           title: 'Success',
           text: `Role has been updated successfully !!`,
@@ -1169,28 +1175,10 @@ couponDelYes(coupon,index){
           showCancelButton: false,
           allowOutsideClick: true
         })
-        this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-            this.userManagementresponse = resp
-               this.userManagementresponse.forEach(elementuser => {
-                 this.roleArray = [];
-                 elementuser.userId['applicationIdname']=elementuser.applicationId.name;
-                 this.rolesArryList = elementuser.rolesEntityList;
-                
-                 this.rolesArryList.forEach(element => {
-                   this.roleArray.push(element.name);
-                   
-                 });;
-                 
-              elementuser.userId['roleIdname']=this.roleArray;
-              this.userManagement.push(elementuser.userId);
-             
-              
-            });
-            
-        });
-        
+      
         
        },err=>{
+
         Swal.fire({
           title: 'Error',
           text: `Unable to update the role !!`,
