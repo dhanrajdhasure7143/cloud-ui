@@ -14,8 +14,8 @@ const httpOptions = {
 export class ProductlistService {
 
   constructor(public http:HttpClient) { }
-  getAllProducts(tenantID): Observable<any[]> {
-    return this.http.get<any[]>('/subscriptionservice/v1/products?tenantID='+tenantID);
+  getAllProducts(): Observable<any[]> {
+    return this.http.get<any[]>('/subscriptionservice/v1/products');
   }
   getProductPlanes(productId,tenantID): Observable<any[]> {
     return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/plans');
@@ -37,4 +37,8 @@ export class ProductlistService {
   contactUs(userdata) : Observable<any>{
     return this.http.post<any>('/api/user/contact-us',userdata)
     }
+    
+    getFreeTierInfo(productId) : Observable<any>{
+      return this.http.get<any>('/subscriptionservice/v1/freetrials/'+productId+'/freetierExpiry')
+      }
 }

@@ -24,6 +24,8 @@ export class PlatformComponent implements OnInit {
   expiryDate: any;
   freetrailDetails: any;
   isFree: boolean=true;
+  remainingDays: any;
+  showexpiryinfo: boolean=false;
   constructor(private router: Router,
               private productlistservice:ProductlistService,
               public userService: UserService,
@@ -32,23 +34,48 @@ export class PlatformComponent implements OnInit {
   public products:any[]=[];
   public selectedIndex:number;
   public selectedId:any;
+  freetrailAvailed: any;
   public isenable:boolean=true;
   public selectedIdValue:boolean=false;
   ngOnInit() {
     this.particles.getParticles();
     this.tenantId=localStorage.getItem('tenantName')
     
-    this.productlistservice.getAllProducts(this.tenantId).subscribe(data => {this.productslist = data
+    this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
       console.log("productList", this.productslist)
+      this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
+        this.freetrailAvailed=data;
+        if(this.freetrailAvailed.Expirerin!=null){
+          this.remainingDays=this.freetrailAvailed.Expirerin;
+        }
+        else{
+          this.remainingDays=null;
+        }
+      })  
       this.productslist.forEach(prod => {
        // if(!prod.freetrailAvailed){}
         if(prod.id === "2.0"){
           prod.img = "assets/images/2.0.svg"
+          if(prod.subscribed==true&&this.remainingDays==null){
+            this.showexpiryinfo=false;
+            console.log("free trial completed")
+
+          }
+          else if(prod.subscribed==true&&this.remainingDays>=1){
+            console.log("remaining days",this.remainingDays)
+            this.showexpiryinfo=true;
+          }
+          else if(prod.subscribed==false){
+            this.showexpiryinfo=false;
+            console.log("u need to subscribe")
+          }
         }
         if(prod.id === "ezflow"){
+          this.showexpiryinfo=false;
           prod.img = "assets/images/ezflow.svg"
         }
         if(prod.id === "ezbot"){
+          this.showexpiryinfo=false;
           prod.img = "assets/images/Ezbot.svg"
         }
         
