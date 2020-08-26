@@ -22,13 +22,28 @@ export class ChooseplanComponent implements OnInit {
   tenantId: string;
   newAccessToken: any[];
   userRole: any;
+  freetrailAvailed: any;
+  remainingDays: any;
   constructor(private productlistservice:ProductlistService, private router: Router,
     private profileService: ProfileService
     ) { }
  
   ngOnInit() {
   this.getAllPlanes();
+this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
+  this.freetrailAvailed=data;
+  
+  this.freetrailAvailed=data;
+  if(this.freetrailAvailed.Expirerin!=null){
+    this.remainingDays=this.freetrailAvailed.Expirerin;
   }
+  else{
+    this.remainingDays=null;
+  }
+  
+  console.log("free infor is in plan selection",data)
+})  
+}
   getAllPlanes(){
     this.productId=localStorage.getItem("selectedproductId");
     this.tenantId=localStorage.getItem('tenantName');
