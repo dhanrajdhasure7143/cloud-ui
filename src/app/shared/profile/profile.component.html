@@ -975,8 +975,8 @@
                     <div class="col-md-12">
                       <div *ngIf=isEmailcheckBoxValue>
                       <label for="configalerts">Mail To</label>
-                      <input type="text" name="mail_to1" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
-                      required mail_to1  placeholder="Email address ex: abc@xyz.com" />
+                      <input type="text" name="mail_to1" maxlength="50" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
+                      required mail_to1  placeholder="Enter Email" />
                       <!-- <span *ngIf="((mail_to1.invalid && configAlerts.submitted) || (mail_to1.errors && mail_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
                                                         <span *ngIf="mail_to1.errors.required"> Email is required</span>
@@ -988,7 +988,7 @@
                   <div class="col-md-12">
                     <div *ngIf=isSMScheckBoxValue>
                     <label for="configalerts">Text To</label>
-                    <input type="text" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
+                    <input type="number" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
                       text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" />
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
@@ -1070,8 +1070,8 @@
                   <div class="form-group">
                     <div *ngIf=isEmailcheckBoxValue>
                     <label for="configalerts">Mail To</label>
-                    <input type="text" name="email" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
-                    pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Email address ex: abc@xyz.com" required/>
+                    <input type="text" name="email" maxlength="50" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
+                    pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Enter Email" required/>
                     <span *ngIf="((email.invalid && configAlerts.submitted) || (email.errors && email.touched) ) "
                                                       class='fa fa-info-circle errspan'>
                                                       <span *ngIf="email.errors.required"> Email is required</span>
@@ -1083,7 +1083,7 @@
                 <div class="form-group">
                   <div *ngIf=isSMScheckBoxValue>
                   <label for="configalerts">Text To</label>
-                  <input type="text" name="mobile" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
+                  <input type="number" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
                     mobile placeholder="Enter Mobile Number ex:+91-9999999999"  />
                   <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
                                                       class='fa fa-info-circle errspan'>

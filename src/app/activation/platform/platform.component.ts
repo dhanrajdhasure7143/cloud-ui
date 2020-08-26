@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import { UserService } from 'src/app/_services';
 import { Particles } from 'src/app/_models/particlesjs';
 
 import Swal from 'sweetalert2';
+import { APP_CONFIG } from 'src/app/app.config';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class PlatformComponent implements OnInit {
   constructor(private router: Router,
               private productlistservice:ProductlistService,
               public userService: UserService,
-              private particles :Particles
+              private particles :Particles,
+              @Inject(APP_CONFIG) private config,
     ) { }
   public products:any[]=[];
   public selectedIndex:number;
@@ -118,7 +120,7 @@ export class PlatformComponent implements OnInit {
     var token=JSON.parse(localStorage.getItem('currentUser'));
     var encryptToken=btoa(token.accessToken)
     var encryptrefreshToken=btoa(token.refreshToken);
-    window.location.href="http://localhost:4201/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken
+    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,

@@ -11,6 +11,7 @@ export interface AiotalAppConfig {
   authorizationendpoint: String;
   notificationsendpoint: String;
   Subscriptionendpoint:String;
+  productendpoint: String;
   isSecurityManagerEnabled : boolean;
 }
 
@@ -23,6 +24,7 @@ export const AppConfig: AiotalAppConfig = {
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
   notificationsendpoint: 'http://alertsdev.epsoftinc.in',
   Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
+  productendpoint: 'http://eiapdev.epsoftinc.in',
   isSecurityManagerEnabled : true
 };
 
