@@ -154,6 +154,9 @@ export class ProfileComponent implements OnInit {
   domain:any;
   p=0;
   c=0;
+  cpp=0;
+  rp=0;
+  pp=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];

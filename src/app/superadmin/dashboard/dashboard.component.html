@@ -24,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let plan of plans | FilterPipe: searchdashboard">
+      <tr *ngFor="let plan of plans | paginate: { itemsPerPage: 4, currentPage: p } | FilterPipe: searchdashboard">
          <td>{{plan.tenantAdminName}}</td>
         <td>{{plan.subscribedPlan}}</td>
         <td>{{plan.lastInvoiceAmount|currency}}</td>
@@ -35,4 +35,7 @@
       </tr>
     </tbody>
   </table>
+  <div *ngIf="plans!=='undefined'" class="dashboardpagination">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
 </div>
