@@ -137,6 +137,10 @@
  {
      margin-left: 60%;
 }
+.permissionpagination
+{
+    margin-left: 52%;
+}
 .notificationpagination
 {
     margin-left: 60%; 
@@ -307,6 +311,20 @@ th,td{
     height: 30px;
     line-height: 5px;
     width: 100px;
+  }
+  .cancel_alert_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .btn_alert_save
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
   }
 .cardtype{
     color:gray;

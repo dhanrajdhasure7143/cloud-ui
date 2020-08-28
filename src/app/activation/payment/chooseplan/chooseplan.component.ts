@@ -44,7 +44,8 @@ this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
   }
 })
 
-  }
+  
+}
   getAllPlanes(){
     this.productId=localStorage.getItem("selectedproductId");
     this.tenantId=localStorage.getItem('tenantName');

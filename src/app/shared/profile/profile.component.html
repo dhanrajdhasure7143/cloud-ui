@@ -137,7 +137,7 @@
                                           <div class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
                                                   <div>
-                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'us'}"
                                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'> Phone Number is required </span>
@@ -550,7 +550,7 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr *ngFor="let role of allRoles | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                                              <tr *ngFor="let role of allRoles | paginate: {id:'roles_page', itemsPerPage: 2, currentPage: rp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
                                                 <td>{{role.appliationId.name}}</td>
                                                 <td>{{role.name}}</td>
                                                 <td>{{role.description}}</td>
@@ -585,6 +585,9 @@
                                                </tr>
                                             </tbody>
                                           </table>
+                                          <div class="alertspagination">
+                                            <pagination-controls id="roles_page" (pageChange)="rp = $event"></pagination-controls>
+                                            </div>
                             </div>
                             </tab>
 
@@ -611,7 +614,7 @@
                                                 </tr>
                                               </thead>
                                               <tbody>
-                                                <tr *ngFor="let permission of permissionsList | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
+                                                <tr *ngFor="let permission of permissionsList | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp } | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
                                                   <td>{{permission.permissionName}}</td>
                                                   <td>{{permission.description}}</td>
                                                   <td>{{permission.created_at | date:'medium'}}</td>
@@ -636,6 +639,9 @@
                                                  </tr>
                                               </tbody>
                                             </table>
+                                            <div class="permissionpagination">
+                                              <pagination-controls id="permission_page" maxSize="8" (pageChange)="pp = $event"></pagination-controls>
+                                              </div>
                               </div>
                               </tab>
 
@@ -666,7 +672,7 @@
                           <th scope="col" class="types">Coupon Name</th>
                           <th scope="col" class="types">Amount Off</th>
                           <th scope="col" class="types">Percentage Off</th>
-                          <th scope="col" class="types">Available Redeemptions</th>
+                          <th scope="col" class="types">Available Redemptions</th>
                           <th scope="col" class="types">Expires By</th>
                           <th scope="col" class="types">No. of Redemptions
 
@@ -675,7 +681,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let coupon of allCoupons | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
                           <td>{{coupon.id}}</td>
                           <td>{{coupon.name}}</td>
                           <td >{{coupon.amountOff}}</td>
@@ -704,6 +710,9 @@
                          </tr>
                       </tbody>
                     </table>
+                    <div class="alertspagination">
+                      <pagination-controls id="coupon_page" (pageChange)="cpp = $event"></pagination-controls>
+                      </div>
       </div>
       </tab>
     
@@ -725,7 +734,7 @@
                                 <th scope="col" style="width:60%;">Notification Message</th>
                                 <th scope="col" style="width:300px;">Date</th>
                                 <th scope="col" style="width:200px;">Time</th>
-                                <!-- <th scope="col" style="width:200px !important;">Action</th> -->
+                                <th scope="col" style="width:200px !important;">Action</th> 
                               </tr>
                             </thead>
                             <tbody *ngIf="notificationList.errorMessage==undefined ">
@@ -733,6 +742,20 @@
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
                                 <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
+                                <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
+                                  <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                    <h5 class="pull-left">Confirmation</h5>
+                                    <button type="button" class="close ">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    <p class="pull-left">Are you sure you want to delete notification ?</p>
+                                    <button class="pull-left confm" aria-label="Close" (click)="deleteNotification(messageList.id)">Yes</button>
+                                    <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
+                                    </div>
+                                    </div>
+                                  </td>
+
                               </tr>
                             </tbody>
                             <tbody  *ngIf="notificationList.errorMessage=='No records found' " >
@@ -975,8 +998,8 @@
                     <div class="col-md-12">
                       <div *ngIf=isEmailcheckBoxValue>
                       <label for="configalerts">Mail To</label>
-                      <input type="text" name="mail_to1" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
-                      required mail_to1  placeholder="Email address ex: abc@xyz.com" />
+                      <input type="text" name="mail_to1" maxlength="50" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
+                      required mail_to1  placeholder="Enter Email" />
                       <!-- <span *ngIf="((mail_to1.invalid && configAlerts.submitted) || (mail_to1.errors && mail_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
                                                         <span *ngIf="mail_to1.errors.required"> Email is required</span>
@@ -988,7 +1011,7 @@
                   <div class="col-md-12">
                     <div *ngIf=isSMScheckBoxValue>
                     <label for="configalerts">Text To</label>
-                    <input type="text" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
+                    <input type="text" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
                       text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" />
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
@@ -1070,8 +1093,8 @@
                   <div class="form-group">
                     <div *ngIf=isEmailcheckBoxValue>
                     <label for="configalerts">Mail To</label>
-                    <input type="text" name="email" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
-                    pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Email address ex: abc@xyz.com" required/>
+                    <input type="text" name="email" maxlength="50" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
+                    pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Enter Email" required/>
                     <span *ngIf="((email.invalid && configAlerts.submitted) || (email.errors && email.touched) ) "
                                                       class='fa fa-info-circle errspan'>
                                                       <span *ngIf="email.errors.required"> Email is required</span>
@@ -1083,7 +1106,7 @@
                 <div class="form-group">
                   <div *ngIf=isSMScheckBoxValue>
                   <label for="configalerts">Text To</label>
-                  <input type="text" name="mobile" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
+                  <input type="text" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
                     mobile placeholder="Enter Mobile Number ex:+91-9999999999"  />
                   <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
                                                       class='fa fa-info-circle errspan'>
@@ -1099,8 +1122,8 @@
               <div class="">
                 <div class="col-12">
             <div class="form-group form-buttons pull-right buttonsblock">        
-                <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
-                <button [disabled]="configurealert.invalid || showErr" class="btn btn-primary btn-save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
+                <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+                <button [disabled]="configurealert.invalid || showErr" class="btn btn-primary btn_alert_save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
             </div>
             
             <div class="clearfix">

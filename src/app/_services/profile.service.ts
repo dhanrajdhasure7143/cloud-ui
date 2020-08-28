@@ -142,5 +142,8 @@ changePassword(pswdbody:any): Observable<any>{
 modifyUserRole(data:any): Observable<any>{
   return this.http.put<any>('/authorizationservice/api/v1/user/role/applications/', data,httpOptions)
 }
+deleteNotification(notificationId):Observable<any>{
+  return this.http.delete<any>('/notificationservice/api/v1/deleteNotification?notificationId='+notificationId,{responseType:"json"})
+}
 
 }

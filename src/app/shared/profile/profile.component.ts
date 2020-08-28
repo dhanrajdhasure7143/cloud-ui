@@ -154,6 +154,9 @@ export class ProfileComponent implements OnInit {
   domain:any;
   p=0;
   c=0;
+  cpp=0;
+  rp=0;
+  pp=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];
@@ -962,7 +965,7 @@ console.log("fksdjflkasd", inviteeList);
       
     
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-    if(invres.message === "Exceeded max users count"){
+    if(invres.message == "Exceeded max users count"){
     Swal.fire({
       title: 'Message!',
       text: "Users max limit exceeded",
@@ -971,7 +974,7 @@ console.log("fksdjflkasd", inviteeList);
       allowOutsideClick: true
     })
   
-  }else if(invres.message === "User Invite is valid"){
+  }else if(invres.message == "User Invite is valid"){
     this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
       Swal.fire({
         title: 'Success!',
@@ -981,8 +984,36 @@ console.log("fksdjflkasd", inviteeList);
         showCancelButton: false,
         allowOutsideClick: true
       })
+    },err=>{
+
+      Swal.fire({
+        title: 'Error',
+        text: `Unable to send invitation link !!`,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+
+    })
+  }else{
+    Swal.fire({
+      title: 'Sorry!',
+      text: "Inivation not sent due to technical issue.",
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
     })
   }
+  },err=>{
+
+    Swal.fire({
+      title: 'Error',
+      text: `Inivation not sent due to technical issue.`,
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+
   })
       let body = [];
       this.selectedroles.forEach(roleid => {
@@ -1340,25 +1371,33 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
         percentageOffTot:this.percentageOffTot,
         amountOff:this.amountOff
           }
-      let input={
+      // let input={
       
-        "currency": "usd",
-        "duration": this.durationTime,
-        "durationInMonth": 0,
-        "name": this.couponNamename,
-        "percent_off": this.percentageOffTot,
-        "redeem_by": 1602050743,
-        "redmee_times": 3
-      }
+      //   "currency": "usd",
+      //   "duration": this.durationTime,
+      //   "durationInMonth": 0,
+      //   "name": this.couponNamename,
+      //   "percent_off": this.percentageOffTot,
+      //   "redeem_by": 1602050743,
+      //   "redmee_times": 3
+      // }
+      let input= {"currency":"usd",
+      "couponid":this.couponIdId,
+      "duration":this.durationTime,
+      "name":this.couponNamename,
+      "amount_off":this.amountOff,
+      "redeem_by":1602050743,
+      "redmee_times":3
+    }
       this.profileservice.createCoupon(input).subscribe(resp=>{this.data=resp
         Swal.fire({
-          title: 'Successful',
-          text: `Coupon creation successful...`,
+          title: 'Success',
+          text: `Coupon creation successfully`,
           type: 'success',
           showCancelButton: false,
           allowOutsideClick: false
         }) 
-           
+           this.getListofCoupons();
             });
             
         console.log('resp is',this.data)
@@ -1396,6 +1435,7 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
       }
      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
      console.log(notificationby)
+     console.log(this.smsselected)
       this.alertsbody ={
         "app_name": this.applicationames,
         "type":this.selectedtype ,
@@ -1480,6 +1520,22 @@ console.log("alertbody",this.alertsbody)
         this.ispublicMail = false;
         this.isSameDomain = false;
       }
+
+
+      deleteNotification(data,index){
+        console.log(data)
+        this.profileservice.deleteNotification(data).subscribe(resp=>{
+          // console.log(resp)
+          this.getAllNotifications();
+          this.notifier.show({
+            type: "success",
+            message: "Notification deleted successfully!"
+          });
+          },err=>{
+            this.getAllNotifications();
+          });
+         this.getAllNotifications();
+    }
 
 
    
