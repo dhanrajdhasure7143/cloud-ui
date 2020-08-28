@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { SuperadminComponent } from './superadmin.component';
 import { SearchPipe } from './custom_pipe/searchPipe';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [DashboardComponent,SuperadminComponent,SearchPipe],
@@ -16,6 +16,7 @@ import { SearchPipe } from './custom_pipe/searchPipe';
     SharedModule,
     SuperadminRoutingModule,
     FormsModule,
+    NgxPaginationModule
   ]
 })
 export class SuperadminModule { }

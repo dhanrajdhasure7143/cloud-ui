@@ -550,7 +550,7 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr *ngFor="let role of allRoles | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                                              <tr *ngFor="let role of allRoles | paginate: {id:'roles_page', itemsPerPage: 2, currentPage: rp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
                                                 <td>{{role.appliationId.name}}</td>
                                                 <td>{{role.name}}</td>
                                                 <td>{{role.description}}</td>
@@ -585,6 +585,9 @@
                                                </tr>
                                             </tbody>
                                           </table>
+                                          <div class="alertspagination">
+                                            <pagination-controls id="roles_page" (pageChange)="rp = $event"></pagination-controls>
+                                            </div>
                             </div>
                             </tab>
 
@@ -611,7 +614,7 @@
                                                 </tr>
                                               </thead>
                                               <tbody>
-                                                <tr *ngFor="let permission of permissionsList | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
+                                                <tr *ngFor="let permission of permissionsList | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp } | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
                                                   <td>{{permission.permissionName}}</td>
                                                   <td>{{permission.description}}</td>
                                                   <td>{{permission.created_at | date:'medium'}}</td>
@@ -636,6 +639,9 @@
                                                  </tr>
                                               </tbody>
                                             </table>
+                                            <div class="permissionpagination">
+                                              <pagination-controls id="permission_page" maxSize="8" (pageChange)="pp = $event"></pagination-controls>
+                                              </div>
                               </div>
                               </tab>
 
@@ -666,7 +672,7 @@
                           <th scope="col" class="types">Coupon Name</th>
                           <th scope="col" class="types">Amount Off</th>
                           <th scope="col" class="types">Percentage Off</th>
-                          <th scope="col" class="types">Available Redeemptions</th>
+                          <th scope="col" class="types">Available Redemptions</th>
                           <th scope="col" class="types">Expires By</th>
                           <th scope="col" class="types">No. of Redemptions
 
@@ -675,7 +681,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let coupon of allCoupons | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
                           <td>{{coupon.id}}</td>
                           <td>{{coupon.name}}</td>
                           <td >{{coupon.amountOff}}</td>
@@ -704,6 +710,9 @@
                          </tr>
                       </tbody>
                     </table>
+                    <div class="alertspagination">
+                      <pagination-controls id="coupon_page" (pageChange)="cpp = $event"></pagination-controls>
+                      </div>
       </div>
       </tab>
     
