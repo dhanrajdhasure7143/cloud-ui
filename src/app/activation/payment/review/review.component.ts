@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
@@ -7,6 +7,7 @@ import { subtract } from 'ngx-bootstrap/chronos';
 import Swal from 'sweetalert2';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
+import { SharedDataService } from 'src/app/_services/shared-data.service';
 
 @Component({
   selector: 'app-review',
@@ -14,6 +15,7 @@ import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./review.component.scss']
 })
 export class ReviewComponent implements OnInit {
+ 
   modalRef: BsModalRef;
 public selected_plans:any={};
 public cardDetails:any;
@@ -48,15 +50,17 @@ public paymentToken:any;
   couponAmount: any;
   newAccessToken: any[];
   userRole: any;
+  freeactive: boolean=true;
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
                 private modalService: BsModalService,
-                private profileService: ProfileService) { }
+                private profileService: ProfileService,
+                private sharedDataService:SharedDataService) { }
 
   ngOnInit() {
     this.EnteredCarddetails();
-
+ 
     this.getproductPlans();
   }
 
@@ -132,7 +136,8 @@ public paymentToken:any;
    
       this.productlistservice.subscribePlan(this.paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
        this.finalAmount=this.subscriptionDetails.amountPaid;
-           this.modalRef = this.modalService.show(template,this.config);
+this.sharedDataService.setFreetrialavailed(false);
+       this.modalRef = this.modalService.show(template,this.config);
              })
    
     })
