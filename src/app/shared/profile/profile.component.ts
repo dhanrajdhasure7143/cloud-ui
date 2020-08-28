@@ -965,7 +965,7 @@ console.log("fksdjflkasd", inviteeList);
       
     
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-    if(invres.message === "Exceeded max users count"){
+    if(invres.message == "Exceeded max users count"){
     Swal.fire({
       title: 'Message!',
       text: "Users max limit exceeded",
@@ -974,7 +974,7 @@ console.log("fksdjflkasd", inviteeList);
       allowOutsideClick: true
     })
   
-  }else if(invres.message === "User Invite is valid"){
+  }else if(invres.message == "User Invite is valid"){
     this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
       Swal.fire({
         title: 'Success!',
@@ -984,8 +984,36 @@ console.log("fksdjflkasd", inviteeList);
         showCancelButton: false,
         allowOutsideClick: true
       })
+    },err=>{
+
+      Swal.fire({
+        title: 'Error',
+        text: `Unable to send invitation link !!`,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+
+    })
+  }else{
+    Swal.fire({
+      title: 'Sorry!',
+      text: "Inivation not sent due to technical issue.",
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
     })
   }
+  },err=>{
+
+    Swal.fire({
+      title: 'Error',
+      text: `Inivation not sent due to technical issue.`,
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+
   })
       let body = [];
       this.selectedroles.forEach(roleid => {

@@ -43,6 +43,23 @@ export class TopheaderComponent implements OnInit {
                                                  
                                                    
                                                     this.decodedInput = atob(input);
+                                                    if(this.decodedInput == 'myAccount'){
+                                                      console.log("entered into myAccount", this.decodedInput);
+                                                      
+                                                      
+                                                      this.accountSlideup()
+                                                
+                                                    }else if(this.decodedInput == 'Signout'){
+                                                                                                            
+                                                      this.logout()
+                                                    }else if(this.decodedInput == 'invite'){
+                                                    this.inviteSlideup()
+                                                
+                                                  }else if(this.decodedInput == 'userManagement'){
+                                                    this.usermanagementslideUp()
+                                                  }else if(this.decodedInput == 'alertsConfig'){
+                                                    this.alertsSlideup()
+                                                  }
                                                    
                                                     
                                                 }
@@ -69,22 +86,7 @@ public myname:any[]
       this.userRole=role.message;
      
     })   
-    if(this.decodedInput === 'myAccount'){
-      console.log("entered into myAccount", this.decodedInput);
-      
-      this.accountSlideup()
-
-    }else if(this.decodedInput === 'Signout'){
-                                                            
-      this.logout()
-    }else if(this.decodedInput === 'invite'){
-    this.inviteSlideup()
-
-  }else if(this.decodedInput === 'userManagement'){
-    this.usermanagementslideUp()
-  }else if(this.decodedInput === 'alertsConfig'){
-    this.alertsSlideup()
-  }
+   
     
     
 
@@ -95,6 +97,7 @@ public myname:any[]
       this.profileName();
       }, 500);
   }
+
 
   accountSlideupTest(){
     
