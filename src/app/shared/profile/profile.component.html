@@ -997,7 +997,7 @@
                   <div class="col-md-12">
                     <div *ngIf=isSMScheckBoxValue>
                     <label for="configalerts">Text To</label>
-                    <input type="number" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
+                    <input type="text" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
                       text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" />
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
@@ -1092,7 +1092,7 @@
                 <div class="form-group">
                   <div *ngIf=isSMScheckBoxValue>
                   <label for="configalerts">Text To</label>
-                  <input type="number" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
+                  <input type="text" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
                     mobile placeholder="Enter Mobile Number ex:+91-9999999999"  />
                   <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
                                                       class='fa fa-info-circle errspan'>
@@ -1108,8 +1108,8 @@
               <div class="">
                 <div class="col-12">
             <div class="form-group form-buttons pull-right buttonsblock">        
-                <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
-                <button [disabled]="configurealert.invalid || showErr" class="btn btn-primary btn-save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
+                <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+                <button [disabled]="configurealert.invalid || showErr" class="btn btn-primary btn_alert_save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
             </div>
             
             <div class="clearfix">

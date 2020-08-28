@@ -1371,16 +1371,24 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
         percentageOffTot:this.percentageOffTot,
         amountOff:this.amountOff
           }
-      let input={
+      // let input={
       
-        "currency": "usd",
-        "duration": this.durationTime,
-        "durationInMonth": 0,
-        "name": this.couponNamename,
-        "percent_off": this.percentageOffTot,
-        "redeem_by": 1602050743,
-        "redmee_times": 3
-      }
+      //   "currency": "usd",
+      //   "duration": this.durationTime,
+      //   "durationInMonth": 0,
+      //   "name": this.couponNamename,
+      //   "percent_off": this.percentageOffTot,
+      //   "redeem_by": 1602050743,
+      //   "redmee_times": 3
+      // }
+      let input= {"currency":"usd",
+      "couponid":this.couponIdId,
+      "duration":this.durationTime,
+      "name":this.couponNamename,
+      "amount_off":this.amountOff,
+      "redeem_by":1602050743,
+      "redmee_times":3
+    }
       this.profileservice.createCoupon(input).subscribe(resp=>{this.data=resp
         Swal.fire({
           title: 'Successful',
@@ -1389,7 +1397,7 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
           showCancelButton: false,
           allowOutsideClick: false
         }) 
-           
+           this.getListofCoupons();
             });
             
         console.log('resp is',this.data)
@@ -1427,6 +1435,7 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
       }
      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
      console.log(notificationby)
+     console.log(this.smsselected)
       this.alertsbody ={
         "app_name": this.applicationames,
         "type":this.selectedtype ,
