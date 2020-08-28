@@ -1391,8 +1391,8 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
     }
       this.profileservice.createCoupon(input).subscribe(resp=>{this.data=resp
         Swal.fire({
-          title: 'Successful',
-          text: `Coupon creation successful...`,
+          title: 'Success',
+          text: `Coupon creation successfully`,
           type: 'success',
           showCancelButton: false,
           allowOutsideClick: false
@@ -1520,6 +1520,22 @@ console.log("alertbody",this.alertsbody)
         this.ispublicMail = false;
         this.isSameDomain = false;
       }
+
+
+      deleteNotification(data,index){
+        console.log(data)
+        this.profileservice.deleteNotification(data).subscribe(resp=>{
+          // console.log(resp)
+          this.getAllNotifications();
+          this.notifier.show({
+            type: "success",
+            message: "Notification deleted successfully!"
+          });
+          },err=>{
+            this.getAllNotifications();
+          });
+         this.getAllNotifications();
+    }
 
 
    

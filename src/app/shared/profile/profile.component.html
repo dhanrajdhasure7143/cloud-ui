@@ -137,7 +137,7 @@
                                           <div class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
                                                   <div>
-                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'us'}"
                                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'> Phone Number is required </span>
@@ -734,7 +734,7 @@
                                 <th scope="col" style="width:60%;">Notification Message</th>
                                 <th scope="col" style="width:300px;">Date</th>
                                 <th scope="col" style="width:200px;">Time</th>
-                                <!-- <th scope="col" style="width:200px !important;">Action</th> -->
+                                <th scope="col" style="width:200px !important;">Action</th> 
                               </tr>
                             </thead>
                             <tbody *ngIf="notificationList.errorMessage==undefined ">
@@ -742,6 +742,20 @@
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
                                 <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
+                                <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
+                                  <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                    <h5 class="pull-left">Confirmation</h5>
+                                    <button type="button" class="close ">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    <p class="pull-left">Are you sure you want to delete notification ?</p>
+                                    <button class="pull-left confm" aria-label="Close" (click)="deleteNotification(messageList.id)">Yes</button>
+                                    <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
+                                    </div>
+                                    </div>
+                                  </td>
+
                               </tr>
                             </tbody>
                             <tbody  *ngIf="notificationList.errorMessage=='No records found' " >
