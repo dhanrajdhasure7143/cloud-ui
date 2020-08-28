@@ -37,8 +37,8 @@ export class ProductlistService {
   contactUs(userdata) : Observable<any>{
     return this.http.post<any>('/api/user/contact-us',userdata)
     }
-    
     getFreeTierInfo(productId) : Observable<any>{
       return this.http.get<any>('/subscriptionservice/v1/freetrials/'+productId+'/freetierExpiry')
       }
+
 }

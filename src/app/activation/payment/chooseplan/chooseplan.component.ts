@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
+import { SharedDataService } from 'src/app/_services/shared-data.service';
 @Component({
   selector: 'app-chooseplan',
   templateUrl: './chooseplan.component.html',
   styleUrls: ['./chooseplan.component.scss']
 })
 export class ChooseplanComponent implements OnInit {
+  
   tab: string;
   selected_plans:any[];
   selected_plansOne:any[];
@@ -24,25 +26,25 @@ export class ChooseplanComponent implements OnInit {
   userRole: any;
   freetrailAvailed: any;
   remainingDays: any;
+  isfreetrail: any;
   constructor(private productlistservice:ProductlistService, private router: Router,
-    private profileService: ProfileService
+    private profileService: ProfileService,private sharedDataService:SharedDataService
     ) { }
  
   ngOnInit() {
   this.getAllPlanes();
+this.sharedDataService.getFreetieravailed().subscribe(data=>{this.isfreetrail=data})
 this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
-  this.freetrailAvailed=data;
-  
-  this.freetrailAvailed=data;
+   this.freetrailAvailed=data;
   if(this.freetrailAvailed.Expirerin!=null){
     this.remainingDays=this.freetrailAvailed.Expirerin;
   }
   else{
     this.remainingDays=null;
   }
+})
+
   
-  console.log("free infor is in plan selection",data)
-})  
 }
   getAllPlanes(){
     this.productId=localStorage.getItem("selectedproductId");
@@ -144,7 +146,8 @@ this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
       "phoneNumber":localStorage.getItem('phoneNumber'),
       "organisation":localStorage.getItem('company'),
          "tenantId":localStorage.getItem('tenantName'),
-         "country":localStorage.getItem('country')
+         "country":localStorage.getItem('country'),
+         "productName": "2.0"
     }
     this.productlistservice.contactUs(userdata).subscribe(res=>{
       Swal.fire({
