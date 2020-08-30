@@ -300,19 +300,65 @@
                       </tab>
 
                       <tab *ngIf = "true" heading = "Change Password">
-                       <div class = "col-md-4 invteform">
-                        <label for="password">Current Password </label>
-                        <input type="password" name="password" #password="ngModel" placeholder = "Enter current password" class="form-control botmbordr" [(ngModel)]="currentPassword"/>
-                        <label for="newpassword">New Password </label>
-                        <input type="password" name="newpassword" #newpassword="ngModel" placeholder = "Enter new password" class="form-control botmbordr" [(ngModel)]="newPassword"/>     
-                        <label for="confpassword">Confirm Password </label>
-                        <input type="password" name="confpassword" #confpassword="ngModel" placeholder = "Confirm new password" class="form-control botmbordr" [(ngModel)]="confirmPassword"/>
+                        <div class = "col-md-12 chngpswd pswd">
+                        <form #f="ngForm" (ngSubmit)="onSubmit()">
+                         
+                          <div class = "form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="password">Current Password </label>
+                          <img src="assets/images/registration/Lock.svg" class="lockicon">
+                          <span (click)="curreyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(eyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                        <input [type]="(eyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="password" ngModel #password="ngModel" [(ngModel)]="pswdmodel.currentPassword" placeholder="Enter Current Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" maxlength="20" required/>
+                        <span *ngIf="((password.invalid && f.submitted) || (password.errors && password.touched) )">
+                          <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
+                          <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
+                        </span>
+                        
+                        <!-- <input type="password" name="password" #password="ngModel" placeholder = "Enter Current Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.currentPassword"/> -->
+                        </div>
+
+                        <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="newpassword">New Password </label>
+                          <img src="assets/images/registration/Lock.svg" class="lockicon1">
+                          <span (click)="neweyetoggle()" class="input-group-add eyeicon1"> <i class="fa fa-eye" [ngClass]="(neweyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                          <input [type]="(neweyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="newpassword" ngModel #newpassword="ngModel" placeholder="Enter New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" maxlength="20" required/>
+                          <!-- <div class="fa fa-info-circle errspan" *ngIf="password.invalid && (password.dirty || password.touched)"> Password is required
+                          </div> -->
+                          <span *ngIf="((newpassword.invalid && f.submitted) || (newpassword.errors && newpassword.touched) )">
+                              <span class='fa fa-info-circle errspan' *ngIf="newpassword.errors.required"> Password is required</span>
+                              <span class='fa fa-info-circle errspan' *ngIf="newpassword.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
+                            </span>
                       </div>
+
+                      <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                        <label for="confpassword">Confirm Password </label>
+                        <img src="assets/images/registration/Lock.svg" class="lockicon">
+                        <span (click)="confeyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(confeyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                        <input [type]="(confeyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="confpassword" [(ngModel)]="pswdmodel.confirmPassword"ngModel #confpassword="ngModel" placeholder="Confirm Password" required compare="newpassword" />
+                        <span *ngIf="confpassword.touched && confpassword.errors">
+                            <span *ngIf="confpassword.errors['required']" class='fa fa-info-circle errspan'> Password confirm is required</span>
+                            <span *ngIf="confpassword.errors['compare'] && !confpassword.errors['required']" class='fa fa-info-circle errspan'> Password confirm do not match</span>
+                        </span>  
+                    </div>
+                  
+                        
+
+
+
+
+                       <!-- <div class = "col-md-4 invteform">
+                        <label for="password">Current Password </label>
+                        <input type="password" name="password" #password="ngModel" placeholder = "Enter Current Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.currentPassword"/>
+                        <label for="newpassword">New Password </label>
+                        <input type="password" name="newpassword" #newpassword="ngModel" placeholder = "Enter New Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.newPassword"/>     
+                        <label for="confpassword">Confirm Password </label>
+                        <input type="password" name="confpassword" #confpassword="ngModel" placeholder = "Confirm New Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.confirmPassword"/>
+                      </div> -->
 
                       <div class="col-md-12 submitbtn">
-                        <button class="btn btn-primary" (click)="passwordChange()">Update</button>
+                        <button class="btn btn-primary pull-right updtpswd" (click)="passwordChange()">Update</button>
                       </div>
-
+                    </form>
+                  </div>
                       </tab>
                       </tabset>
         </div>
@@ -603,7 +649,7 @@
                               <div class="container role">
                                 
                                   <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add New Permission</button>
-                                      <table class="table table-borderless table-hover">
+                                      <table class="table table-borderless table-hover ">
                                               <thead>
                                                 <tr>
                                                   <th scope="col" class="types">Permission</th>
@@ -613,6 +659,7 @@
                                                   <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
                                                 </tr>
                                               </thead>
+                                              
                                               <tbody>
                                                 <tr *ngFor="let permission of permissionsList | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp } | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
                                                   <td>{{permission.permissionName}}</td>
@@ -1251,7 +1298,7 @@
                 </ng-template>
 
               <ng-template #createRole >
-                <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="createNewRole()" class="card_form">
+                <form autocomplete="off" #addrole="ngForm" (ngSubmit)="createNewRole()" class="card_form">
                         <div class="modal-header">
                             <h4 class="modal-title" id="modal-basic-title" >Add New Role</h4>
                             <button type="button" class="close" aria-label="Close" (click)="cancelAddRole()">
@@ -1265,11 +1312,11 @@
                               <div class="col-md-12 infocheck">
 
                                 <label for="role">Role</label>
-                                 <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roleName"/>     
+                                 <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roleName" required/>     
                                            </div>
                                <div class="col-md-12 infocheck">
                                  <label for="roledescription">Description </label>
-                                 <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roleDescription"/>     
+                                 <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roleDescription" required/>     
               
                                  </div>
                                  <div class="col-md-12 infocheck">
@@ -1280,7 +1327,7 @@
                                    placeholder = "Select Product "
                                    bindValue = "id"
                                    bindLabel = "name"
-                                   (change) = "permissionsByapp(selectedApplication)">
+                                   (change) = "permissionsByapp(selectedApplication)" required>
                                   
                                      <!-- <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option> -->
                                    </ng-select>
@@ -1295,7 +1342,7 @@
                                      <label>Permissions</label>
                                      <div class="infocheck">
          
-                                       <ng-select name = "permiss"[multiple]="true" [(ngModel)]="selectedpermidlist" placeholder = "Select Permissions">
+                                       <ng-select name = "permiss"[multiple]="true" [(ngModel)]="selectedpermidlist" placeholder = "Select Permissions" required>
                                          <ng-option *ngFor="let permi of permissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
                                        </ng-select>
                                     
@@ -1313,7 +1360,7 @@
                           <div class="col-12">
                       <div class="form-group form-buttons pull-right buttonsblock">        
                           <!-- <button class="btn btn-primary cancelrole_btn" type="reset" (click)="cancelAddRole()"><div class="anim"></div> Cancel</button> -->
-                          <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
+                          <button [disabled]="addrole.invalid " class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
                       </div>
                       
                       <div class="clearfix">
