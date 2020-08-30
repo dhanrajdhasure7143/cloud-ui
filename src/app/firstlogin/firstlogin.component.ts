@@ -125,8 +125,19 @@ export class FirstloginComponent implements OnInit {
   // }
   onSuccessOfVerifyToken(response: any) {
     if(response){
-      if(response.message==='Token Invalid' || response.message==='Token Expired'){
-        this.router.navigate(['/user']);
+      if(response.errorMessage==='Token invalid'){
+        Swal.fire({
+          title: 'Error',
+          text: `This email has been already registered with us. Please register with different email.`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['/user']);
+          }
+        });
+        // this.router.navigate(['/user']);
       }else {
         //TODO:success data handle
       }
