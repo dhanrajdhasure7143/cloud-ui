@@ -72,10 +72,11 @@ export class NewpasswordComponent implements OnInit {
     if(res){
       if(res.message === 'Password reset is successful'){
         Swal.fire({
-          type: 'success',
-          title: 'Your password reset is successful!',
-          // showConfirmButton: true,
-          
+          title: 'Success',
+            text: `Your password reset is successful!`,
+            type: 'success',
+            
+                  
         }).then(()=>{
          this.router.navigate(['/user'])
         })

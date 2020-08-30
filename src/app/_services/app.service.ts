@@ -57,12 +57,16 @@ export class AppService {
         .pipe(map(user => {
 
             if(isSecurityManagerEnabled){
+              if(user.resp_data.accessToken){
               localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
               CookieStore.set('token', user.resp_data.accessToken, {});
+              }
             }
             else{
+              if(user.accessToken){
               localStorage.setItem('currentUser', JSON.stringify(user));
               CookieStore.set('token', user.accessToken, {});
+              }
             }
             this.setProperties();
             return user;

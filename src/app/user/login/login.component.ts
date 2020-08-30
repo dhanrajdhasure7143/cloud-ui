@@ -10,6 +10,7 @@ import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { Particles } from '../../_models/particlesjs';
 import { ProfileService } from 'src/app/_services/profile.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -96,7 +97,19 @@ export class LoginComponent implements OnInit {
       .login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
+        
         data => {
+          if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
+
+            this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
+            // Swal.fire({
+            //   type: 'error',
+            //   title:"Error!",
+            //   text: "Your account is temporarily locked for 3 hours."
+            // });
+             return
+          }
+          
           if (this.f.rememberme.value) {
             this.set('username', this.f.username.value, {});
             this.set('password', this.f.password.value, {});
@@ -114,6 +127,8 @@ export class LoginComponent implements OnInit {
           this.authenticate();
         },
         error => {
+
+          
           this.error = "Email or Password is invalid.";
           this.loading = false;
         },
