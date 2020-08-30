@@ -252,7 +252,7 @@
                                       </form>
                                 </div>
                         <div class="container paymode">
-                          <button class='btn btn-primary pull-right addCard' (click)='addPaymentCards(addCard)'>Add New Card</button>
+                          <button class='btn btn-primary pull-right addCard' (click)='addPaymentCards(addCard)'>Add Card</button>
                                 <table class="table table-borderless table-hover">
                                   <thead>
                                     <tr>
@@ -387,9 +387,9 @@
                                                   </div>
 
                                             <div class="form-group col-sm-3">
-                                              <label for="application">Application</label>
+                                              <label for="application">Product</label>
                                               <select class="form-control" name="application"  id="application"(change)="onChangeApp($event.target.value)" required>
-                                                <option  [value]="undefined" disabled hidden>Select Application</option>
+                                                <option  [value]="undefined" disabled hidden>Select Product</option>
                                                 <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
                                               </select>
                                             </div>
@@ -429,7 +429,7 @@
                         <table class="table table-borderless table-hover">
                           <thead>
                             <tr>
-                              <th scope="col" class="alerttype">Application</th>
+                              <th scope="col" class="alerttype">Product</th>
                               <th scope="col" class="alerttype">Type</th>
                               <th scope="col" class="alerttype">Activity</th>
                              <th scope="col" class="alerttype">Channel</th>
@@ -584,7 +584,7 @@
                                 </div>
                             <div class="container role">
                               
-                                <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add New Role</button>
+                                <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add Role</button>
                                     <table class="table table-borderless table-hover">
                                             <thead>
                                               <tr>
@@ -648,8 +648,8 @@
                                   </div>
                               <div class="container role">
                                 
-                                  <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add New Permission</button>
-                                      <table class="table table-borderless table-hover ">
+                                  <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add Permission</button>
+                                      <table class="table table-borderless table-hover">
                                               <thead>
                                                 <tr>
                                                   <th scope="col" class="types">Permission</th>
@@ -909,7 +909,7 @@
           <ng-template #addCard >
             <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="addNewCard()" class="card_form">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modal-basic-title" >Add New Card</h4>
+                        <h4 class="modal-title" id="modal-basic-title" >Add Card</h4>
                         <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -1006,7 +1006,7 @@
               <div class="modal-body">
                 
               <div class="col-md-12 ">
-                <label for="subscriptionid">Application : </label>
+                <label for="subscriptionid">Product : </label>
                 <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
                 <select name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="updateApplication" required>
                   <option  [value]="undefined" disabled hidden>Select Type</option>
@@ -1103,10 +1103,10 @@
                 
                 
             <div class="form-group">
-              <label for="application">Application</label>
+              <label for="application">Product</label>
               <select name="product" class="form-control" (change)="onChange($event.target.value)" [(ngModel)]="alertsapplication" required>
-                <option [value]="undefined" disabled hidden>Select Application</option>
-                <option [value]="null" disabled hidden>Select Application</option>
+                <option [value]="undefined" disabled hidden>Select Product</option>
+                <option [value]="null" disabled hidden>Select Product</option>
                 <option *ngFor="let product of application"  [value]="product.id">{{product.displayName}}</option>
                 </select>
             </div>
@@ -1300,7 +1300,7 @@
               <ng-template #createRole >
                 <form autocomplete="off" #addrole="ngForm" (ngSubmit)="createNewRole()" class="card_form">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="modal-basic-title" >Add New Role</h4>
+                            <h4 class="modal-title" id="modal-basic-title" >Add Role</h4>
                             <button type="button" class="close" aria-label="Close" (click)="cancelAddRole()">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -1377,7 +1377,7 @@
                 <ng-template #createPermission >
                   <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="createNewPermission()" class="card_form">
                           <div class="modal-header">
-                              <h4 class="modal-title" id="modal-basic-title" >Add New Permission</h4>
+                              <h4 class="modal-title" id="modal-basic-title" >Add Permission</h4>
                               <button type="button" class="close" aria-label="Close" (click)="cancelAddPermission()">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -1443,7 +1443,7 @@
           
                   <div class="modal-body">
                        <div class="col-md-12 infocheck pull-right">
-                              <label for="application">Application </label>
+                              <label for="application">Product </label>
                               <ng-select [multiple]="false" 
                               [items] =  "applications"
                               [(ngModel)]="selectedApp"
@@ -1549,7 +1549,7 @@
                                 <label for="duration">Coupon Valid</label>
                                 <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" required>
                                     <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
-                                  <option value="forever">Forever</option>
+                                  <option value="forever" >Forever</option>
                                   <option value="once">Once</option>
                                         
                                 </select>

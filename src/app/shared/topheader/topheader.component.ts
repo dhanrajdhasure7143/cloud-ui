@@ -68,17 +68,16 @@ export class TopheaderComponent implements OnInit {
 public myname:any[]
 @HostListener('document:click', ['$event.target']) // spinner overlay hide on out side click
  public onClick(targetElement) {
-   console.log("targetElement",targetElement);
+   
    
  const clickedInside = this.toogleBtn.nativeElement.contains(targetElement);
- console.log("clickedInside", clickedInside);
+
  
  if (!clickedInside) {
   document.getElementById("myDropdown").classList.remove("show");
  
- console.log("outside"); 
  }else{
-  console.log("Inside");
+
  }
  }
   ngOnInit() {

@@ -185,6 +185,7 @@ export class ProfileComponent implements OnInit {
   roleListdata: any;
   pswdmodel:any = {};
   testRolesList: any = [];
+  forever: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -1375,40 +1376,47 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
         this.isReedemTimes=true;
       }
     }
+   
     createNewCoupon(){
+     
       this.couponDetails={
         couponNamename:this.couponNamename,
         couponIdId:this.couponIdId,
         durationTime:this.durationTime,
         percentageOffTot:this.percentageOffTot,
-        amountOff:this.amountOff
+        amountOff:this.amountOff,
+          }         
+          if(this.percentageOffTot!=null){
+            this.amountOff=0;
           }
-      // let input={
-      
-      //   "currency": "usd",
-      //   "duration": this.durationTime,
-      //   "durationInMonth": 0,
-      //   "name": this.couponNamename,
-      //   "percent_off": this.percentageOffTot,
-      //   "redeem_by": 1602050743,
-      //   "redmee_times": 3
-      // }
-      let input= {"currency":"usd",
-      "couponid":this.couponIdId,
-      "duration":this.durationTime,
-      "name":this.couponNamename,
-      "amount_off":this.amountOff,
-      "redeem_by":1602050743,
-      "redmee_times":3
-    }
-      this.profileservice.createCoupon(input).subscribe(resp=>{this.data=resp
-        Swal.fire({
-          title: 'Success',
-          text: `Coupon creation successfully`,
-          type: 'success',
-          showCancelButton: false,
-          allowOutsideClick: false
-        }) 
+          else {
+            this.percentageOffTot=0
+                      }
+         
+      let inputamount={
+         "currency": "usd",
+         "couponid":this.couponIdId,
+        "duration": this.durationTime,
+        "name": this.couponNamename,
+        "percent_off": this.percentageOffTot,
+        "amount_off":this.amountOff,
+        "redeem_by": 1602050743,
+        "redmee_times": 3
+      }
+    //   let input= {"currency":"usd",
+    //   "couponid":this.couponIdId,
+    //   "duration":this.durationTime,
+    //   "name":this.couponNamename,
+    //   "amount_off":this.amountOff,
+    //   "redeem_by":1602050743,
+    //   "redmee_times":3
+    // }
+      this.profileservice.createCoupon(inputamount).subscribe(resp=>{this.data=resp
+        this.modalRef.hide();
+        this.notifier.show({
+          type: "success",
+          message: "created successfully!"
+        });
            this.getListofCoupons();
             });
             
