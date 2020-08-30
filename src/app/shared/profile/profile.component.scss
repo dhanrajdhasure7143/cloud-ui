@@ -502,6 +502,89 @@ label{
     background: none !important;
     border: none !important;
 }
+.inner-addon { 
+    position: relative; 
+  }
+  .inner-addon .lockicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+  width: 40px;
+  margin-top: 20px;
+  margin-left:-110px;
+//   float: left !important;
+ 
+  }
+  .inner-addon .lockicon1 {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    width: 40px;
+    margin-top: 20px;
+    margin-left:-90px;
+  //   float: left !important;
+   
+    }
+  .left-addon input  { padding-left:  50px; }
+  .left-addon select  { padding-left:  50px; }
+  .right-addon input { padding-right: 20px; }
+  
+  .right-addon .eyeicon{
+    position: absolute;
+    padding: 10px;
+    z-index: 1000;
+    margin-left: 50% !important;
+    width: 40px;
+    color: #0061cf !important;
+    margin-top: 20px;
+    // margin-right:60px
+  }
+  .right-addon .eyeicon1{
+    position: absolute;
+    padding: 10px;
+    z-index: 1000;
+    margin-left: 55% !important;
+    width: 40px;
+    color: #0061cf !important;
+    margin-top: 20px;
+    // margin-right:60px
+  }
+
+  .chngpswd{
+    margin-top: 20px;
+    margin-left: 350px;
+  }
+  .updtpswd{
+    color: #f4f4f4;
+    border-radius: 20px;
+    margin-top: -45px;
+    margin-right: 800px;
+  }
+  .pswd form {
+      overflow-y: scroll !important;
+    //   max-height : 180px !important;
+      display: block;
+
+  }
+  .pswd ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+  
+  .scrolltable table {
+      overflow-y:scroll !important;
+      max-height : 200px !important;
+      display: block;
+
+  }
+
+  .scrolltable ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+  
     
     
     

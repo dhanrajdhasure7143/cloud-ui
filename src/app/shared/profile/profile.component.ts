@@ -59,6 +59,9 @@ export class ProfileComponent implements OnInit {
   public userManagement: any=[];
   public userManagementresponse:any=[];
   public show: boolean = true;
+  public eyeshow: boolean = true;
+  public neweyeshow: boolean = true;
+  public confeyeshow: boolean = true;
   public isOpened: any ;
   public showList:boolean =  true;
   public selectedIndex: any;
@@ -180,6 +183,7 @@ export class ProfileComponent implements OnInit {
   roleArray: any = [];
   rolesArryList: any[];
   roleListdata: any;
+  pswdmodel:any = {};
   testRolesList: any = [];
 
   //dropdownSettings:IDropdownSettings;
@@ -844,7 +848,10 @@ this.profileservice.applications().subscribe(resp =>
     }
     cancelAddRole(){
       this.modalRef.hide();
-    //  this.cardModel={}
+      this.roleName = "";
+      this.roleDescription = "";
+      this.selectedpermidlist = [];
+      this.selectedApplication = "";
     }
     cancelAddPermission(){
       this.modalRef.hide();
@@ -1033,8 +1040,9 @@ console.log("fksdjflkasd", inviteeList);
     //     "appId": this.myappId
     //     }}
        
-
-
+    this.emailId = [];
+    // this.selectedroles = [];
+    this.application = "";
  
     }
 
@@ -1318,6 +1326,10 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
       allowOutsideClick: true
     }) 
   })
+  this.roleName = "";
+  this.roleDescription = "";
+  this.selectedpermidlist = [];
+  this.selectedApplication = "";
   
     }
 
@@ -1541,9 +1553,9 @@ console.log("alertbody",this.alertsbody)
    
       passwordChange(){
         let pswdbody = {
-          "confirmPassword": this.confirmPassword,
-          "currentPassword": this.currentPassword,
-          "newPassword":this.newPassword,
+          "confirmPassword": this.pswdmodel.confirmPassword,
+          "currentPassword": this.pswdmodel.currentPassword,
+          "newPassword":this.pswdmodel.confirmPassword,
           "userId": localStorage.getItem('userName')
         }
       this.profileservice.changePassword(pswdbody).subscribe(res => {
@@ -1554,7 +1566,18 @@ console.log("alertbody",this.alertsbody)
         });
       })
       
-      
+      this.pswdmodel = {};
       }
+
+      curreyetoggle() {
+        this.eyeshow = !this.eyeshow;
+      }
+      neweyetoggle() {
+        this.neweyeshow = !this.neweyeshow;
+      }
+      confeyetoggle() {
+        this.confeyeshow = !this.confeyeshow;
+      }
+
 
    }
