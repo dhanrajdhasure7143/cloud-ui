@@ -21,6 +21,7 @@ export class FirstloginComponent implements OnInit {
   selectedItems: any[] = [];
   dropdownSettings: any = {};
   departments:any;
+  phnCountry: any;
   itemsShowLimit = 1;
   stateInfo: any[] = [];
   countryInfo: any[] = [];
@@ -61,6 +62,9 @@ export class FirstloginComponent implements OnInit {
      }
 
   ngOnInit() {
+  
+    
+    
     this.particles.getParticles();
     this.getCountries();
     this.getAllDepartments();
@@ -96,7 +100,12 @@ export class FirstloginComponent implements OnInit {
   onChangeCountry(countryValue) {
     // this.model.country = this.countryInfo[countryValue].CountryName;
     // this.stateInfo=this.countryInfo["India"].States;
-    // console.log('CountryName',countryValue);
+    console.log('CountryName',countryValue);
+    if(countryValue == 'India'){
+      this.phnCountry = 'in'
+    }else if(countryValue == 'United States'){
+      this.phnCountry = 'us'
+    }
     
     for(var i=0; i< this.countryInfo.length; i++){
       if(this.countryInfo[i].CountryName == countryValue ){
