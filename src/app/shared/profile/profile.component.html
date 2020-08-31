@@ -734,7 +734,7 @@
                           <td >{{coupon.amountOff}}</td>
                           <td >{{coupon.percentOff}}</td>
                           <td >{{availableRedeemptions}}</td>
-                          <td >{{coupon.redeemBy | date }}</td>
+                          <td >{{coupon.redeemBy | date : ' dd/MM/yyyy' }}</td>
                           <td>{{coupon.maxRedemptions}}</td>
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
@@ -1519,14 +1519,26 @@
                   <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
-                  class='fa fa-info-circle errspan'> Coupon Name is required </span> 
+                  class='fa fa-info-circle errspan'> Coupon Ammount is required </span> 
                 </div>
               
-              <!-- <div class="col-md-12">
-                <label >Redeemption Limits</label><br>
-            <input type="checkbox" class="payment-input" required name="couponRedeem"  (change)='onSelected($event.target.value)' value='redeemBy' />&nbsp;<span>Limit the date range when customers can redeem this coupon</span><br>
-            <input type="checkbox" class="payment-input" required name="couponRedeem"(change)='onSelected($event.target.value)' value='redeemTimes' />&nbsp;Limit the total number of times  customers can redeem this coupon  
+              
+                <label for="couponRedeem" >Redeemption Limits</label><br>
+           
+            <input type="checkbox" class="payment-input" required name="couponRedeem"(change)='onSelected($event.target.value)' value='redeemTimes' />&nbsp;Limit the total number of times  customers can redeem this coupon  <br>
              
+            <div *ngIf="islimited" >
+                
+   
+              <input type="text" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+              <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+              <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
+              class='fa fa-info-circle errspan'> Limit is required </span> 
+            </div>
+            
+            
+            <!-- <div class="col-md-12">
+            <input type="checkbox" class="payment-input" required name="couponRedeem"  (change)='onSelected($event.target.value)' value='redeemBy' />&nbsp;<span>Limit the date range when customers can redeem this coupon</span><br>
             <div *ngIf="isReedemBy" class="form-group col-sm-10">
             <label for="redeemby">Redeem By</label>
             <input type="text" name="redeemby"  maxlength="30" [(ngModel)]="redeemby" class="form-control payment-input"  placeholder="Enter percentage %" required/>
