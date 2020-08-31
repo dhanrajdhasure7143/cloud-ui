@@ -6,6 +6,7 @@ import { Particles } from 'src/app/_models/particlesjs';
 
 import Swal from 'sweetalert2';
 import { APP_CONFIG } from 'src/app/app.config';
+import { ProfileService } from 'src/app/_services/profile.service';
 
 
 @Component({
@@ -33,16 +34,21 @@ export class PlatformComponent implements OnInit {
    public isenable:boolean=true;
   public selectedIdValue:boolean=false;
   showexpiryinfo: boolean=false;
+  userRole: any = [];
   constructor(private router: Router,
     private productlistservice:ProductlistService,
     public userService: UserService,
+    private profileservice: ProfileService,
     private particles :Particles,
     @Inject(APP_CONFIG) private config,
 ) { }
   ngOnInit() {
     this.particles.getParticles();
     this.tenantId=localStorage.getItem('tenantName')
-    
+    this.profileservice.getUserRole(2).subscribe(role => {
+      this.userRole = role.message;
+
+    })
     this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
       console.log("productList", this.productslist)
     this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
@@ -144,6 +150,7 @@ export class PlatformComponent implements OnInit {
     // }
 
   }
+  
   upgradePlan(){
     localStorage.setItem('selectedproductId',this.selectedId);   
     this.router.navigate(["/activation/payment/chooseplan"])

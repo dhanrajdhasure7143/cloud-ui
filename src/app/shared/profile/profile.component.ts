@@ -186,6 +186,8 @@ export class ProfileComponent implements OnInit {
   pswdmodel:any = {};
   testRolesList: any = [];
   forever: any;
+  islimited: boolean=false;
+  redeemTimeslimit: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -208,6 +210,7 @@ export class ProfileComponent implements OnInit {
     this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
+      console.log("user applications are",resp)
       this.apps = resp,
              this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
@@ -1369,12 +1372,15 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
   
     }
     onSelected(value){
-      if(value=='redeemBy' ){
+      
+      console.log("selected limit",value)
+      if(value!=null ){
+       this.islimited=true;
   this.isReedemBy=true;
       }
-      else{
-        this.isReedemTimes=true;
-      }
+  //     else{
+  //       this.isReedemTimes=true;
+  //     }
     }
    
     createNewCoupon(){
@@ -1385,13 +1391,16 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
         durationTime:this.durationTime,
         percentageOffTot:this.percentageOffTot,
         amountOff:this.amountOff,
+        redeemTimeslimit:this.redeemTimeslimit
           }         
+        
           if(this.percentageOffTot!=null){
             this.amountOff=0;
           }
           else {
             this.percentageOffTot=0
                       }
+                      
          
       let inputamount={
          "currency": "usd",
@@ -1401,7 +1410,7 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
         "percent_off": this.percentageOffTot,
         "amount_off":this.amountOff,
         "redeem_by": 1602050743,
-        "redmee_times": 3
+        "redmee_times": this.redeemTimeslimit
       }
     //   let input= {"currency":"usd",
     //   "couponid":this.couponIdId,
@@ -1411,6 +1420,7 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
     //   "redeem_by":1602050743,
     //   "redmee_times":3
     // }
+   
       this.profileservice.createCoupon(inputamount).subscribe(resp=>{this.data=resp
         this.modalRef.hide();
         this.notifier.show({
