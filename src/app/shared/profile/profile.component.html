@@ -734,7 +734,7 @@
                           <td >{{coupon.amountOff}}</td>
                           <td >{{coupon.percentOff}}</td>
                           <td >{{availableRedeemptions}}</td>
-                          <td >{{coupon.redeemBy | date : ' dd/MM/yyyy' }}</td>
+                          <td >{{coupon.redeemBy*1000 | date  }}</td>
                           <td>{{coupon.maxRedemptions}}</td>
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
