@@ -129,6 +129,17 @@
                   <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
                   class='fa fa-info-circle errspan'> Phone Number is required </span>
                 </div>
+                <div class="form-group col-sm-6 inner-addon left-addon">
+                  <img src="assets/images/registration/ImageUpload.svg" class="imageuploadicon">
+                  <input  class="form-control col-sm-12" id="image" placeholder="Select image to upload"
+                  name='image' #image="ngModel" [(ngModel)]="profileimage" disabled/>
+                  
+                  <div class="fileUpload btn btn-outline-primary">
+                  <span>Choose File</span>
+                 <input id="uploadBtn" type="file" class="upload" (change)="onFileSelected($event)" />
+                 
+                </div>
+              </div>
             <div class="form-group buttns col-sm-12">
               <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an account&#63;</a>
             <!-- </div>

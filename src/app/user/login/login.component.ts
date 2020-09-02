@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.session.startWatching(); 
 
- 
+          localStorage.setItem('ProfileuserId',this.f.username.value)
 
           // user details based on userId
           this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));

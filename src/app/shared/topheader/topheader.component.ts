@@ -30,6 +30,11 @@ export class TopheaderComponent implements OnInit {
   isCoupon: boolean=false;
   firstletter: string;
   decodedInput: any = {};
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  public profilePicture:boolean=false;
+
   @ViewChild("toogleBtn") toogleBtn;
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
@@ -94,8 +99,8 @@ public myname:any[]
     
     // });
     setTimeout(() => {
-      this.profileName();
-      }, 500);
+      this.getImage();
+        },500);
   }
 
 
@@ -203,4 +208,25 @@ public myname:any[]
       this.firstletter=firstnameFirstLetter+lastnameFirstLetter
       
   }
+
+  getImage() {
+    console.log("inside image")
+      const userid=localStorage.getItem('ProfileuserId');
+          this.profileService.getUserDetails(userid).subscribe(res => {
+                this.retrieveResonse = res;
+                if(this.retrieveResonse.image==null||this.retrieveResonse.image==""){
+                 this.profileName();
+                  this.profilePicture=false;
+                }
+                else{
+                  this.profilePicture=true;
+                }
+                this.base64Data= this.retrieveResonse.image;
+               // console.log("image",this.base64Data);
+               // localStorage.setItem('image', this.base64Data);
+                this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+               // console.log(this.retrievedImage);
+              }
+            );
+        }
 }
