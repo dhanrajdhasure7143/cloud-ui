@@ -8,6 +8,7 @@ import { Base64 } from 'js-base64';
 import  countries  from './../../assets/jsons/countries.json';
 import { Particles } from '../_models/particlesjs';
 import { Logger } from 'ag-grid-community';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-firstlogin',
@@ -32,6 +33,8 @@ export class FirstloginComponent implements OnInit {
   public show:boolean=true;
   public otherDepartment:any;
   isCompanydisabled:boolean=false;
+  selectedFile: any;
+  data: any;
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -173,9 +176,37 @@ export class FirstloginComponent implements OnInit {
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
     //userDetails.department = this.model.department[0];
-    this.service.registerUser(userDetails).subscribe(res => {
+   const payload = new FormData();
+   payload.append('userId', userDetails.userId);
+   payload.append('firstName', userDetails.firstName);
+   payload.append('lastName', userDetails.lastName);
+   payload.append('password', userDetails.password);
+   payload.append('phoneNumber', userDetails.phoneNumber);
+   payload.append('country', userDetails.country);
+   payload.append('designation', userDetails.designation);
+   payload.append('company', userDetails.company);
+   payload.append('state', userDetails.state);
+   payload.append('city', userDetails.city);
+   payload.append('zipcode', userDetails.zipcode);
+   if(this.selectedFile!=undefined){
+   payload.append('profilePic', this.selectedFile, this.selectedFile.name);
+  }
+
+    this.service.registerUser(payload).subscribe(res => {
+      this.data=res
       sessionStorage.clear();
       localStorage.clear();
+      if(this.data.body.errorMessage==='Uploaded file is not supported')
+      {
+        Swal.fire({
+          title: 'Error!',
+          text: "Please upload png or jpg image",
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+      }
+    else {
       Swal.fire({
         title: 'Success',
         text: `Registration completed successfully!`,
@@ -187,7 +218,8 @@ export class FirstloginComponent implements OnInit {
           this.router.navigate(['/']);
         }
       });
-    }, err => {
+    }
+  }, err => {
       Swal.fire({
         title: 'Error!',
         type: 'error',
@@ -215,6 +247,7 @@ export class FirstloginComponent implements OnInit {
   }
   resetForm() {
     this.model = new User();
+    $("#image").val('')
   }
     loopTrackBy(index, term){
     return index;
@@ -227,5 +260,12 @@ export class FirstloginComponent implements OnInit {
     event.preventDefault();
     return false;
     }
+    }
+
+    onFileSelected(event)
+    {
+      this.selectedFile=<File>event.target.files[0]
+      console.log(this.selectedFile.name)
+     $("#image").val(this.selectedFile.name)
     }
 }
