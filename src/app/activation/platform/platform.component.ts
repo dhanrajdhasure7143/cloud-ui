@@ -132,7 +132,10 @@ export class PlatformComponent implements OnInit {
     var token=JSON.parse(localStorage.getItem('currentUser'));
     var encryptToken=btoa(token.accessToken)
     var encryptrefreshToken=btoa(token.refreshToken);
-    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken
+    var firstName=localStorage.getItem('firstName');
+    var lastName=localStorage.getItem('lastName');
+    var ProfileuserId=localStorage.getItem('ProfileuserId');
+    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,

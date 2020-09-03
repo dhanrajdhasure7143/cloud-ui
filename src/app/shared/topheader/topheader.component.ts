@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { SELECT_VALUE_ACCESSOR } from '@angular/forms/src/directives/select_control_value_accessor';
 import { containsElement } from '@angular/animations/browser/src/render/shared';
 import { ProfileService } from 'src/app/_services/profile.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'topheader',
@@ -40,7 +41,8 @@ export class TopheaderComponent implements OnInit {
                                                private route: Router,
                                                private router: ActivatedRoute, 
                                                private profileService:ProfileService,
-                                               private appser: AppService, private sharedService :  SharedDataService) { 
+                                               private appser: AppService, private sharedService :  SharedDataService,
+                                               private spinner:NgxSpinnerService) { 
 
                                                 this.router.queryParams.subscribe(params => {
                                                   if(params['input'] != undefined){
@@ -98,9 +100,14 @@ public myname:any[]
     // this.sharedService.getLoggedinUserData().subscribe(data=>{this.mydata=data
     
     // });
+    this.spinner.show();
     setTimeout(() => {
       this.getImage();
         },500);
+        
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 700);
   }
 
 

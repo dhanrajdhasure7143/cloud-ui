@@ -30,7 +30,7 @@ import { TermsconditionsComponent } from './termsconditions/termsconditions.comp
 import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [SideNavBarComponent,
@@ -65,7 +65,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TabsModule.forRoot(),
     NotifierModule,
     NgSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule
   ],
   providers: [NotifierService],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent],
