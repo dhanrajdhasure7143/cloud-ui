@@ -187,7 +187,7 @@
                                   <td>{{sdata.planEntity.nickName}}</td>
                                   <td >{{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
                                   <td>{{sdata.status}}</td>
-                                  <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc" *ngIf = "sdata.status === 'Active' || sdata.planEntity.nickName ==='Free Tier' " [disabled]="sdata.planEntity.nickName==='Free Tier'"  (click)="selecteddata(sdata,i,template)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                  <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i,template)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
                                     <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
                                       <div class="container-fluid deletefrm">
                                     <h5 class="pull-left">Confirmation</h5>
@@ -1257,17 +1257,17 @@
                     <form autocomplete="off" #updateUserRole="ngForm">
                     <div class="modal-body">
                       <div class="col-md-12 infocheck">
-                        <label for="subscriptionid">User ID : </label>
+                        <label for="subscriptionid">User ID </label>
                         <input type="text" [disabled]=true name="useriD" #useriD="ngModel" class="form-control botmbordr" [(ngModel)]="roleListdata.userId"/>     
                                   </div>
                       <div class="col-md-12 infocheck">
-                        <label for="product">Product : </label>
+                        <label for="product">Product </label>
                         <input type="text" [disabled]=true name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="selectedApp"/>     
      
                         </div>
                     
                         <div class="col-md-12 infocheck">
-                          <label for="role"> Role : </label>
+                          <label for="role"> Role </label>
                           <ng-select name = "multiroles" [multiple]="true" [items] =  "allRoles" [(ngModel)] = "testRolesList"
                            
                            bindValue = "name"
