@@ -248,6 +248,7 @@ export class FirstloginComponent implements OnInit {
   resetForm() {
     this.model = new User();
     $("#image").val('')
+    this.selectedFile=null;
   }
     loopTrackBy(index, term){
     return index;
