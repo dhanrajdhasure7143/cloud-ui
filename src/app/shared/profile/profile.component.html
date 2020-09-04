@@ -134,10 +134,20 @@
 
                                              
                                                              
-                                          <div class="form-group col-sm-3">
+                                          <div *ngIf ="!isRefresh" class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
                                                   <div>
-                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: 'us'}"
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
+                                            <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
+                                            class='fa fa-info-circle errspan'> Phone Number is required </span>
+                                                </div>
+                                                </div> 
+                                                      
+                                          <div *ngIf ="isRefresh" class="form-group col-sm-3">
+                                            <label for="phoneumber">Phone</label>
+                                                  <div>
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'> Phone Number is required </span>
@@ -490,7 +500,7 @@
                                       </form>
                                     </div>
                             <div class="container usermanagement">
-                                    <table class="table table-borderless table-hover">
+                                    <table class="table table-borderless col-md-12 table-hover">
                                       <thead>
                                         <tr>
                                           <th scope="col" class="types">User ID</th>
@@ -501,11 +511,12 @@
                                           <!-- <th scope="col" class="types">Department</th> -->
                                           <th scope="col" class="types">Product</th>
                                           <th scope="col" class="types">Roles</th>
+                                          <th scope="col" class="types">Status</th>
                                           <th scope="col" class="types">Action</th>
                                         </tr>
                                       </thead>
-                                      <tbody>
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                                      <tbody class="col-md-12">
+                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy; let m= index">
                                           <td>{{userdata.userId}}</td>
                                           <td>{{userdata.firstName}}</td>
                                           <td>{{userdata.lastName}}</td>
@@ -514,24 +525,26 @@
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
                                             <td class="types">{{userdata.roleIdname}}</td>
+                                            <td>{{userdata.Status}}</td>
+
                                             <td class="deleticon">
-                                              <span  (click)="updateSelectedUserRole(userdata, j, updateRoleTemplate)">
+                                              <span  (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)">
                                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
-                                              <!-- <span  (click)="roledel(role.id,j)"> -->
+                                               <span  (click)="userDel(userdata.userId,m)">
                                                 
 
-                                              <!-- <img src="assets/images/unsubscribe.svg" alt=""></span> -->
-                                              <!-- <div id="myid" [ngClass]="selectedIndex == j?'isdelet':''" class="deletconfm">
+                                               <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                               <div id="myid" [ngClass]="selectedIndex == m?'isdelet':''" class="deletconfm">
                                                   <div class="container-fluid deletefrm">
                                                       <h5 class="pull-left">Confirmation</h5>
-                                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
+                                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(m)">
                                                       <span aria-hidden="true">&times;</span>
                                                       </button>
                                                       <p class="pull-left">Are you sure you want to delete the role ?</p>
-                                                       <button class="pull-left confm" (click)="roleDelYes(role.id,j)">Yes</button>
-                                                       <button class="confm pull-left" (click)="unsubscribeNo(j)">No</button>
+                                                       <button class="pull-left confm" (click)="deleteUserYes(userdata.userId,m)">Yes</button>
+                                                       <button class="confm pull-left" (click)="unsubscribeNo(m)">No</button>
                                                   </div>
-                                              </div> -->
+                                              </div>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -1265,6 +1278,18 @@
                         <input type="text" [disabled]=true name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="selectedApp"/>     
      
                         </div>
+
+                        <div class="col-md-12 ">
+                          <label for="product">Status : </label>
+                          <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
+                          <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="userStatus" required>
+                            <option  [value]="undefined" disabled hidden>Select Type</option>
+                            <option  [value]="null" disabled hidden>Select Type</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                          </div>
+                       
                     
                         <div class="col-md-12 infocheck">
                           <label for="role"> Role </label>
