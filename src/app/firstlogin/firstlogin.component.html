@@ -122,13 +122,22 @@
               <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
                 class='fa fa-info-circle errspan'> Zip Code is required </span>
             </div>
-            <div class="form-group col-sm-6 inner-addon left-addon">
+
+            <div *ngIf ="!isInput"class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
               <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}">
                    <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
                   <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
                   class='fa fa-info-circle errspan'> Phone Number is required </span>
                 </div>
+                <div *ngIf="isInput" class="form-group col-sm-6 inner-addon left-addon">
+                  <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
+                  <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}">
+                       <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
+                      <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
+                      class='fa fa-info-circle errspan'> Phone Number is required </span>
+                    </div>
+
                 <div class="form-group col-sm-6 inner-addon left-addon">
                   <img src="assets/images/registration/ImageUpload.svg" class="imageuploadicon">
                   <input  class="form-control col-sm-12" id="image" placeholder="Select image to upload"
@@ -140,7 +149,7 @@
                  
                 </div>
               </div>
-            <div class="form-group buttns col-sm-12">
+                          <div class="form-group buttns col-sm-12">
               <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an account&#63;</a>
             <!-- </div>
             <div class="form-group col-sm-6 continue_btn pull-right"> -->

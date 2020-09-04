@@ -188,6 +188,11 @@ export class ProfileComponent implements OnInit {
   forever: any;
   islimited: boolean=false;
   redeemTimeslimit: any;
+  closeDeleteForm: boolean = true;
+  phnCountryCode: any;
+  isRefresh: boolean = false;
+  userStatus: any;
+  status: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -201,6 +206,8 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.selectedIndex = '';
+
 
     this.applications = [
       {id: 2, name: "2.0"},
@@ -219,6 +226,7 @@ export class ProfileComponent implements OnInit {
       this.tenantId=localStorage.getItem('tenantName');
       
 this.getAllUsersList();
+
 console.log("local",localStorage.getItem('userRole'))
 this.getRoles();
 this.getListofCoupons();
@@ -269,12 +277,18 @@ this.profileservice.applications().subscribe(resp =>
              });;
              
           elementuser.userId['roleIdname']=this.roleArray;
+          if(elementuser.userId.enabled){
+            elementuser.userId['Status'] = 'Active'
+          }else{
+            elementuser.userId['Status'] = 'Inactive'
+          }
           this.userManagement.push(elementuser.userId);
          
           
         });
         console.log("userManagementttttttttt", this.userManagement);
     });
+
   }
   getListofCoupons() {
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
@@ -339,6 +353,10 @@ this.profileservice.applications().subscribe(resp =>
     return index;
   }
   slideDown() {
+    //this.closeDeleteForm = false;
+    this.selectedIndex = '';
+    this.selectedalertdet = ''
+    
     this.dataid = '';
     document.getElementById("foot").classList.add("slide-down");
     document.getElementById("foot").classList.remove("slide-up");
@@ -530,6 +548,7 @@ this.profileservice.applications().subscribe(resp =>
   }
   
   updateSelectedUserRole(selRoleData, index, template){
+    this.userStatus = selRoleData.Status;
     // this.testArry = ['Admin', 'user', 'RPA Admin'];
     this.permidlist = [];
     this.roleListdata = selRoleData;
@@ -636,9 +655,13 @@ this.profileservice.applications().subscribe(resp =>
   }
 
   onChangeCountry(countryValue) {
+    this.isRefresh = !this.isRefresh;
     // this.formOne.country = this.countryInfo[countryValue].CountryName;
     for (var i = 0; i < this.countryInfo.length; i++) {
       if (this.countryInfo[i].CountryName == countryValue) {
+        this.phnCountryCode = this.countryInfo[i].CountryCode
+        console.log("countryCode", this.countryInfo[i].CountryCode);
+
         this.stateInfo = this.countryInfo[i].States;
       }
     }
@@ -1084,6 +1107,19 @@ console.log("fksdjflkasd", inviteeList);
     
 
 }
+deleteUserYes(user,index){
+  console.log("userrrrrr", user);
+  this.selectedIndex = '';
+  this.profileservice.deleteSelectedUser(user).subscribe(resp =>{
+
+    //this.getAllUsersList();
+
+  })
+
+  
+
+
+}
 
 permDelYes(permission,index){
   this.profileservice.deletePermission(permission).subscribe(response => {
@@ -1148,6 +1184,11 @@ couponDelYes(coupon,index){
         roledel(data,index){
               document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
              }
+             userDel(data,index){
+              this.selectedIndex = index;
+              document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+
+             }
 
              permdel(data,index){
               this.selectedIndex = index;
@@ -1188,7 +1229,8 @@ couponDelYes(coupon,index){
         let arr = [];
         console.log("selectedApp", this.selectedApp);
         
-        
+        this.status = this.userStatus;
+
         arr = this.testRolesList;
         console.log("arrr", arr);
         

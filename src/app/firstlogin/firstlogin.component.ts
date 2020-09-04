@@ -35,6 +35,7 @@ export class FirstloginComponent implements OnInit {
   isCompanydisabled:boolean=false;
   selectedFile: any;
   data: any;
+  isInput: boolean = false;
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -101,17 +102,17 @@ export class FirstloginComponent implements OnInit {
     }
   }
   onChangeCountry(countryValue) {
+    this.isInput = !this.isInput;
     // this.model.country = this.countryInfo[countryValue].CountryName;
     // this.stateInfo=this.countryInfo["India"].States;
     console.log('CountryName',countryValue);
-    if(countryValue == 'India'){
-      this.phnCountry = 'in'
-    }else if(countryValue == 'United States'){
-      this.phnCountry = 'us'
-    }
+    
     
     for(var i=0; i< this.countryInfo.length; i++){
       if(this.countryInfo[i].CountryName == countryValue ){
+        this.phnCountry = this.countryInfo[i].CountryCode
+        console.log("countryCode", this.countryInfo[i].CountryCode);
+        
         this.stateInfo=this.countryInfo[i].States; 
       }
     }

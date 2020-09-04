@@ -11,6 +11,7 @@ import { SELECT_VALUE_ACCESSOR } from '@angular/forms/src/directives/select_cont
 import { containsElement } from '@angular/animations/browser/src/render/shared';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'topheader',
@@ -141,6 +142,7 @@ public myname:any[]
     
     document.getElementById("foot").classList.remove("slide-down");
     document.getElementById("foot").classList.add("slide-up");
+  
     this.isInvite=false;
     this.isAlerts=false;
     this.isMyaccount=true;
