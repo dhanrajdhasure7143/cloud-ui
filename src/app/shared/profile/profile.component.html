@@ -98,7 +98,7 @@
                                                   <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
                                                     class='fa fa-info-circle errspan'> Country is required </span>
                                               </div>
-                                              <div class=" col-md-3 form-group inner-addon left-addon">
+                                              <div class="form-group col-sm-3">
                                                   <label for="state">State</label>
                                                   <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
                                                   <select class="form-control botmbordr" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
@@ -111,7 +111,7 @@
                                                     class='fa fa-info-circle errspan'> State is required </span>
                                                 </div>
                                     
-                                                <div class=" col-md-3 form-group inner-addon left-addon">
+                                                <div class="form-group col-sm-3">
                                                     <label for="city">City</label>
                                                   <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
                                                   <select class="form-control botmbordr" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
@@ -123,7 +123,7 @@
                                                   <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
                                                     class='fa fa-info-circle errspan'> City is required </span>
                                                 </div>
-                                                <div class="form-group col-sm-3 inner-addon left-addon">
+                                                <div class="form-group col-sm-3">
                                                     <label for="zipCode">Zip Code</label>
                                                     <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
                                                     <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.zipcode"
