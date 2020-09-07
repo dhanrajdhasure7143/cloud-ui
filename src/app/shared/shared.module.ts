@@ -31,6 +31,9 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { CompareValidatorDirective } from './comparepsw-validator.directive';
+
+
 
 @NgModule({
   declarations: [SideNavBarComponent,
@@ -52,6 +55,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
       FooterComponent,
       TermsconditionsComponent,
       PrivacypolicyComponent,
+      CompareValidatorDirective
+      
       
       ],
   imports: [

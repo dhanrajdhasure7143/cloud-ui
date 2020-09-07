@@ -98,7 +98,7 @@
                                                   <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
                                                     class='fa fa-info-circle errspan'> Country is required </span>
                                               </div>
-                                              <div class=" col-md-3 form-group inner-addon left-addon">
+                                              <div class="form-group col-sm-3">
                                                   <label for="state">State</label>
                                                   <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
                                                   <select class="form-control botmbordr" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
@@ -111,7 +111,7 @@
                                                     class='fa fa-info-circle errspan'> State is required </span>
                                                 </div>
                                     
-                                                <div class=" col-md-3 form-group inner-addon left-addon">
+                                                <div class="form-group col-sm-3">
                                                     <label for="city">City</label>
                                                   <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
                                                   <select class="form-control botmbordr" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
@@ -123,7 +123,7 @@
                                                   <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
                                                     class='fa fa-info-circle errspan'> City is required </span>
                                                 </div>
-                                                <div class="form-group col-sm-3 inner-addon left-addon">
+                                                <div class="form-group col-sm-3">
                                                     <label for="zipCode">Zip Code</label>
                                                     <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
                                                     <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.zipcode"
@@ -311,13 +311,13 @@
 
                       <tab *ngIf = "true" heading = "Change Password">
                         <div class = "col-md-12 chngpswd pswd">
-                        <form #f="ngForm" (ngSubmit)="onSubmit()">
+                        <form #f="ngForm" (ngSubmit)="passwordChange(f)">
                          
                           <div class = "form-group col-md-4 inner-addon left-addon right-addon">
                           <label for="password">Current Password </label>
                           <img src="assets/images/registration/Lock.svg" class="lockicon">
                           <span (click)="curreyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(eyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
-                        <input [type]="(eyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="password" ngModel #password="ngModel" [(ngModel)]="pswdmodel.currentPassword" placeholder="Enter Current Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" maxlength="20" required/>
+                        <input [type]="(eyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="password" #password="ngModel" [(ngModel)]="pswdmodel.currentPassword" placeholder="Enter Current Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" maxlength="20" required/>
                         <span *ngIf="((password.invalid && f.submitted) || (password.errors && password.touched) )">
                           <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
                           <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
@@ -349,23 +349,9 @@
                             <span *ngIf="confpassword.errors['compare'] && !confpassword.errors['required']" class='fa fa-info-circle errspan'> Password confirm do not match</span>
                         </span>  
                     </div>
-                  
-                        
-
-
-
-
-                       <!-- <div class = "col-md-4 invteform">
-                        <label for="password">Current Password </label>
-                        <input type="password" name="password" #password="ngModel" placeholder = "Enter Current Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.currentPassword"/>
-                        <label for="newpassword">New Password </label>
-                        <input type="password" name="newpassword" #newpassword="ngModel" placeholder = "Enter New Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.newPassword"/>     
-                        <label for="confpassword">Confirm Password </label>
-                        <input type="password" name="confpassword" #confpassword="ngModel" placeholder = "Confirm New Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.confirmPassword"/>
-                      </div> -->
-
+ 
                       <div class="col-md-12 submitbtn">
-                        <button class="btn btn-primary pull-right updtpswd" (click)="passwordChange()">Update</button>
+                        <button class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
                       </div>
                     </form>
                   </div>
