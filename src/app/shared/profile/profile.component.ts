@@ -1611,7 +1611,7 @@ console.log("alertbody",this.alertsbody)
 
 
    
-      passwordChange(){
+      passwordChange(form:NgForm){
         let pswdbody = {
           "confirmPassword": this.pswdmodel.confirmPassword,
           "currentPassword": this.pswdmodel.currentPassword,
@@ -1619,14 +1619,20 @@ console.log("alertbody",this.alertsbody)
           "userId": localStorage.getItem('userName')
         }
       this.profileservice.changePassword(pswdbody).subscribe(res => {
+      // this.pswdmodel = {};
         this.notifier.show({
           type: "success",
           message: "Password Updated successfully!",
           id: "123"
         });
-      })
-      
-      this.pswdmodel = {};
+      }, err => {
+        // console
+        this.notifier.show({
+          type: "error",
+          message: "Please check your current password!",
+          id: "124"
+        });})
+      form.reset();
       }
 
       curreyetoggle() {
