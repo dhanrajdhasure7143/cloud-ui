@@ -277,7 +277,7 @@ this.profileservice.applications().subscribe(resp =>
              });;
              
           elementuser.userId['roleIdname']=this.roleArray;
-          if(elementuser.userId.enabled){
+          if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
           }else{
             elementuser.userId['Status'] = 'Inactive'
@@ -1010,14 +1010,51 @@ console.log("fksdjflkasd", inviteeList);
   
   }else if(invres.message == "User Invite is valid"){
     this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
+      if(res.message == "Invite Mail sent successfully"){
       Swal.fire({
         title: 'Success!',
         text: "Invite mail sent successfully.",
-        // Default card is set successfully!!
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    }else if(res.message == "Inviter not present"){
+      Swal.fire({
+        title: 'Error!',
+        text: res.message,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+
+    }else if(res.message == "Inviter tenant not present"){
+      Swal.fire({
+        title: 'Warning!',
+        text: res.message,
+        type: 'warning',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+
+    }else if(res.message == "Invitee already exists"){
+      Swal.fire({
+        title: 'Warning!',
+        text: res.message,
+        type: 'warning',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+
+    }else{
+      Swal.fire({
+        title: 'Error!',
+        text: res.message,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+
+    }
     },err=>{
 
       Swal.fire({
@@ -1112,10 +1149,32 @@ deleteUserYes(user,index){
   this.selectedIndex = '';
   this.profileservice.deleteSelectedUser(user).subscribe(resp =>{
 
-    //this.getAllUsersList();
+    
+
+    Swal.fire({
+      title: 'Success!',
+      text: resp.message,
+      type: 'success',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+
+
+    this.getAllUsersList();
+
+  }, err =>{
+
+    Swal.fire({
+      title: 'Error',
+      text: `User Not Found`,
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+
 
   })
-
+  this.getAllUsersList();
   
 
 
@@ -1246,7 +1305,8 @@ couponDelYes(coupon,index){
           "userId":resp.userId,
        "appId":this.allRoles[0].appliationId.id,
        "appName":resp.applicationIdname,
-       "rolesList":this.selectedRolesArry
+       "rolesList":this.selectedRolesArry,
+       "status": this.status
        }
        
        this.profileservice.modifyUserRole(body).subscribe(resp => {
