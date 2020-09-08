@@ -489,23 +489,23 @@
                                     <table class="table table-borderless col-md-12 table-hover">
                                       <thead>
                                         <tr>
-                                          <th scope="col" class="types">User ID</th>
-                                          <th scope="col" class="types">First Name</th>
-                                          <th scope="col" class="types">Last Name</th>
-                                          <th scope="col" class="types">Designation</th>
-                                          <th scope="col" class="types">Organisation</th>
+                                          <th scope="col" class="types1">User ID</th>
+                                          <th scope="col" class="types">Name</th>
+                                          <!-- <th scope="col" class="types1">LName</th> -->
+                                          <th scope="col" class="types1">Designation</th>
+                                          <th scope="col" class="types1">Organisation</th>
                                           <!-- <th scope="col" class="types">Department</th> -->
-                                          <th scope="col" class="types">Product</th>
-                                          <th scope="col" class="types">Roles</th>
-                                          <th scope="col" class="types">Status</th>
-                                          <th scope="col" class="types">Action</th>
+                                          <th scope="col" class="types1">Product</th>
+                                          <th scope="col" class="types1">Roles</th>
+                                          <th scope="col" class="types1">Status</th>
+                                          <th scope="col" class="types1">Action</th>
                                         </tr>
                                       </thead>
                                       <tbody class="col-md-12">
                                         <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy; let m= index">
                                           <td>{{userdata.userId}}</td>
-                                          <td>{{userdata.firstName}}</td>
-                                          <td>{{userdata.lastName}}</td>
+                                          <td>{{userdata.firstName}} {{userdata.lastName}}</td>
+                                          <!-- <td>{{userdata.lastName}}</td> -->
                                           <td>{{userdata.designation}}</td>
                                             <td>{{userdata.company}}</td>
                                             <!-- <td>{{userdata.department}}</td> -->
@@ -520,7 +520,7 @@
                                                 
 
                                                <img src="assets/images/unsubscribe.svg" alt=""></span>
-                                               <div id="myid" [ngClass]="selectedIndex == m?'isdelet':''" class="deletconfm">
+                                               <div id="myid" [ngClass]="selectedIndex === m?'isdelet':''" class="deletconfm">
                                                   <div class="container-fluid deletefrm">
                                                       <h5 class="pull-left">Confirmation</h5>
                                                       <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(m)">
