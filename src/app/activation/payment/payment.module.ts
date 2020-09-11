@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
 import { BsModalService } from 'ngx-bootstrap';
 import { CouponComponent } from './coupon/coupon.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+    
 
 @NgModule({
   declarations: [DetailsComponent, ReviewComponent, ChooseplanComponent, CouponComponent],
@@ -19,6 +21,7 @@ import { CouponComponent } from './coupon/coupon.component';
     PaymentRoutingModule,
     TabsModule.forRoot(),
     FormsModule,
+    NgxSpinnerModule,
     ModalModule.forRoot(),
   ],
   providers:[BsModalService]
