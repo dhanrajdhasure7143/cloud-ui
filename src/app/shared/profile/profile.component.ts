@@ -207,7 +207,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.selectedIndex = '';
-
+    
 
     this.applications = [
       {id: 2, name: "2.0"},
@@ -317,6 +317,13 @@ this.profileservice.applications().subscribe(resp =>
   }
 
   ngOnChanges() {
+    if(this.isInvite){
+      this.emailId=[];
+      this.selectedroles=[];
+     // document.getElementsByTagName("form").namedItem("inviteform").reset();
+      
+    }
+   
     if (this.isMyaccount == true) {
       this.userDetails();
 
@@ -972,7 +979,7 @@ cancelAlert(){
      }
    });
  }
-    inviteUser(userId,inviteeId){
+    inviteUser(userId,inviteeId,form){
       
       let stringToSplit = localStorage.getItem("userName");
 let x = stringToSplit.split("@");
@@ -1104,9 +1111,7 @@ console.log("fksdjflkasd", inviteeList);
     //     "appId": this.myappId
     //     }}
        
-    this.emailId = [];
-    // this.selectedroles = [];
-    this.application = "";
+    form.resetForm();
  
     }
 
@@ -1692,7 +1697,7 @@ console.log("alertbody",this.alertsbody)
           message: "Please check your current password!",
           id: "124"
         });})
-      form.reset();
+      form.resetForm();
       }
 
       curreyetoggle() {

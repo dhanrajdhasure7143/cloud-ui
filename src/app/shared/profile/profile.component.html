@@ -366,7 +366,7 @@
                             <h4 class="invite">Invite User</h4>
                     </div>
                     <div class="col-md-12 invteform">
-                                        <form autocomplete="off" #inviteuser="ngForm" class="col-md-12 row">
+                                        <form autocomplete="off" #inviteuser="ngForm" id="inviteform" class="col-md-12 row">
                                             <div class="form-group col-sm-12">
                                                     <label for="email">Email</label>
                                                     
@@ -406,7 +406,7 @@
                                                   </div>
                                                   <!-- <div class="col-sm-4"></div> -->
                                                   <div class="col-sm-2">
-                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" type="submit" (click)='inviteUser(this.useremail,emailId)' >Submit</button>
+                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" type="submit" (click)='inviteUser(this.useremail,emailId,inviteuser)' >Submit</button>
 
                                                   </div>
                                           </form>
