@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-review',
@@ -57,6 +58,7 @@ public paymentToken:any;
                 private  router:Router,
                 private modalService: BsModalService,
                 private profileService: ProfileService,
+                private spinner:NgxSpinnerService,
                 private sharedDataService:SharedDataService) { }
 
   ngOnInit() {
@@ -108,6 +110,9 @@ public paymentToken:any;
   buyProductPlan(template){
      console.log('planslist', this.selected_plans);
      console.log("this.cardDetails",this.cardDetails);
+     this.spinner.show();
+    setTimeout(() => {
+        },200);
     
     const cardValue={
       "number":this.cardDetails.cardnumbertotal,
@@ -134,6 +139,9 @@ public paymentToken:any;
     this.productlistservice.getPaymentToken(cardValue).subscribe(res=>{
       this.paymentToken=res
       console.log('token',this.paymentToken);
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 2200);
    
       this.productlistservice.subscribePlan(this.paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
        this.finalAmount=this.subscriptionDetails.amountPaid;
