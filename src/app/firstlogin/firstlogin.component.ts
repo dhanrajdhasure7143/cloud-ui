@@ -197,7 +197,17 @@ export class FirstloginComponent implements OnInit {
       this.data=res
       sessionStorage.clear();
       localStorage.clear();
-      if(this.data.body.errorMessage==='Uploaded file is not supported')
+      if(this.data.body.errorMessage==='Uploaded file is too large')
+      {
+        Swal.fire({
+          title: 'Error!',
+          text: "Uploaded file is too large",
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+      }
+     else if(this.data.body.errorMessage==='Uploaded file is not supported')
       {
         Swal.fire({
           title: 'Error!',

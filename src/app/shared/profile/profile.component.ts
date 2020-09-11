@@ -1223,8 +1223,10 @@ couponDelYes(coupon,index){
   getRoles(){
   if(localStorage.getItem('userRole').includes('SuperAdmin')){
    this.profileservice.getAllRolesForSuperAdmin().subscribe(resp => {
-   this.allRoles = resp,
-   console.log("All roles",resp)
+   this.allRoles = resp.sort(function(obj1, obj2) {
+      return obj1.id - obj2.id;
+  });
+   console.log("All roles",this.allRoles)
    this.allRoles.forEach(elementRoles => {
        
    this.listOfroles.push(elementRoles.name)

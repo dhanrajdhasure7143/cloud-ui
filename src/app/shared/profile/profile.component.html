@@ -614,7 +614,7 @@
                                                     <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                     <span  (click)="roledel(role.id,j)"> 
                                                     <img src="assets/images/unsubscribe.svg" alt=""></span>
-                                                    <div id="myid" [ngClass]="selectedIndex == j?'isdelet':''" class="deletconfm">
+                                                    <div id="myid" [ngClass]="selectedIndex === j?'isdelet':''" class="deletconfm">
                                                         <div class="container-fluid deletefrm">
                                                             <h5 class="pull-left">Confirmation</h5>
                                                             <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
@@ -1205,7 +1205,7 @@
                         <div class="col-md-12 infocheck">
                           <label for="application">Product</label>
                           <ng-select [multiple]="false" 
-                          
+                          [items]="applications"                          
                           [(ngModel)]="selectedApp"
                           bindValue = "name"
                           bindLabel = "name">
