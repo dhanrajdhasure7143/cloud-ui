@@ -21,6 +21,7 @@ public selected_plans:any={};
 public cardDetails:any;
 public isagree:boolean;
 public isdiable:boolean=true;
+public clicked:boolean=false;
 public productId:any;
 public plantype:any;
 public plansList:any;
