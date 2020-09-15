@@ -320,6 +320,7 @@ this.profileservice.applications().subscribe(resp =>
     if(this.isInvite){
       this.emailId=[];
       this.selectedroles=[];
+     // this.application =[];
      // document.getElementsByTagName("form").namedItem("inviteform").reset();
       
     }
@@ -363,6 +364,9 @@ this.profileservice.applications().subscribe(resp =>
     //this.closeDeleteForm = false;
     this.selectedIndex = '';
     this.selectedalertdet = ''
+    // this.emailId=[];
+    // this.selectedroles=[];
+    document.getElementsByTagName("form").namedItem("inviteform").reset();
     
     this.dataid = '';
     document.getElementById("foot").classList.add("slide-down");
