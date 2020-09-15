@@ -944,7 +944,7 @@ cancelAlert(){
           this.profileservice.setasDefaultCard(cardId).subscribe(res=>{
          
             Swal.fire({
-              title: 'Success!',
+              title: 'Success',
               text: "Default card is set successfully.",
               // Default card is set successfully!!
               type: 'success',
@@ -1209,8 +1209,8 @@ couponDelYes(coupon,index){
     this.getListofCoupons();
     console.log("deleted coupon")
     Swal.fire({
-      title: 'Success!',
-      text: `Coupon deleted successfully.`,
+      title: 'Success',
+      text: `Coupon deleted successfully!`,
       type: 'success',
       showCancelButton: false,
       allowOutsideClick: true
@@ -1486,7 +1486,6 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
     }
     onSelected(value){
       
-      console.log("selected limit",value)
       if(value!=null ){
        this.islimited=true;
   this.isReedemBy=true;
