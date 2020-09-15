@@ -1532,12 +1532,19 @@
                   <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Ammount is required </span> 
                 </div>
+                  <label for="duration">Coupon Valid</label>
+                                <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" (change)='onSelected($event.target.value)' required>
+                                    <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
+                                  <option value="forever" >Limit</option>
+                                  <option value="once">Once</option>
+                                        
+                                </select><br>
               
               
-                <label for="couponRedeem" >Redeemption Limits</label><br>
+                <!-- <label for="couponRedeem" >Redeemption Limits</label><br>
            
-            <input type="checkbox" class="payment-input" required name="couponRedeem"(change)='onSelected($event.target.value)' value='redeemTimes' />&nbsp;Limit the total number of times  customers can redeem this coupon  <br>
-             
+    <input type="checkbox" class="payment-input" required name="couponRedeem"(change)='onSelected($event.target.value)' value='redeemTimes' />&nbsp;Limit the total number of times  customers can redeem this coupon  <br>
+              -->
             <div *ngIf="islimited" >
                 
    
@@ -1569,13 +1576,7 @@
             
             <!-- <div class="col-12 row">
               <div class="col-md-12 infocheck"> -->
-                                <label for="duration">Coupon Valid</label>
-                                <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" required>
-                                    <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
-                                  <option value="forever" >Forever</option>
-                                  <option value="once">Once</option>
-                                        
-                                </select>
+                              
               <!-- </div>
                                    </div> -->
                                  </div>
