@@ -208,11 +208,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.selectedIndex = '';
     
-
-    this.applications = [
-      {id: 2, name: "2.0"},
-      {id: 3, name: "ezflow"}
-  ];
+    this.getAllProducts();
+  //   this.applications = [
+  //     {id: 2, name: "2.0"},
+  //     {id: 3, name: "ezflow"}
+  // ];
     this.getAllPermissions();
     this.yearList=yearslist;
       this.getAllNotifications();
@@ -366,8 +366,9 @@ this.profileservice.applications().subscribe(resp =>
     this.selectedalertdet = ''
     // this.emailId=[];
     // this.selectedroles=[];
+    if(this.isInvite){
     document.getElementsByTagName("form").namedItem("inviteform").reset();
-    
+    }
     this.dataid = '';
     document.getElementById("foot").classList.add("slide-down");
     document.getElementById("foot").classList.remove("slide-up");
@@ -1715,5 +1716,14 @@ console.log("alertbody",this.alertsbody)
         this.confeyeshow = !this.confeyeshow;
       }
 
-
+      getAllProducts(){
+        this.profileservice.getAllApplications().subscribe(response => {
+          this.applications = response
+          // this.applications.forEach(element => {
+          //   this.productname.push(element.id)
+          //  // console.log("All applications",element.id)
+          // });
+          
+        });
+      }
    }

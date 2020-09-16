@@ -238,14 +238,14 @@ th,td{
     overflow: scroll;
     height: 230px;
 }
-.scrollpermissions ng-select{ 
-    overflow:scroll;
-    height:60px;
-}
-.scrollpermissions ::-webkit-scrollbar{
-    width:5px !important;
-    height: 0px !important;
-}
+// .scrollpermissions ng-select{ 
+//     overflow:scroll;
+//     height:60px;
+// }
+// .scrollpermissions ::-webkit-scrollbar{
+//     width:5px !important;
+//     height: 0px !important;
+// }
 
 ::-webkit-scrollbar{
     width:0px !important;
