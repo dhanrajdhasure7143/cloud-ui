@@ -150,5 +150,7 @@ modifyUserRole(data:any): Observable<any>{
 deleteNotification(notificationId):Observable<any>{
   return this.http.delete<any>('/notificationservice/api/v1/deleteNotification?notificationId='+notificationId,{responseType:"json"})
 }
-
+getAllApplications(): Observable<any> {
+  return this.http.get<any>('/authorizationservice/api/v1/user/getApplications');
+}
 }
