@@ -36,7 +36,11 @@ export class TopheaderComponent implements OnInit {
   base64Data: any;
   retrieveResonse: any;
   public profilePicture:boolean=false;
-
+  tenantId: string;
+  role: string;
+  public notificationList: any;
+  notificationscount: any;
+  
   @ViewChild("toogleBtn") toogleBtn;
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
@@ -101,6 +105,10 @@ public myname:any[]
     // this.sharedService.getLoggedinUserData().subscribe(data=>{this.mydata=data
     
     // });
+    setTimeout(() => {
+      this.getAllNotifications();
+    }, 500);
+
     this.spinner.show();
     setTimeout(() => {
       this.getImage();
@@ -237,5 +245,29 @@ public myname:any[]
                // console.log(this.retrievedImage);
               }
             );
+        }
+
+        getCount(){
+          setTimeout(() => {
+            this.getAllNotifications();
+          }, 5000);
+        }
+        getAllNotifications() {
+          let userId =  localStorage.getItem("userName")
+          this.tenantId=localStorage.getItem('tenantName');
+          this.role=localStorage.getItem('userRole')
+        let notificationbody ={
+            "tenantId":this.tenantId
+         }
+          this.profileService.getNotifications(this.role,userId,notificationbody).subscribe(data => {
+            this.notificationList = data
+            this.notificationscount=this.notificationList.length
+            if(this.notificationscount==undefined||this.notificationscount==null)
+            {
+              this.notificationscount=0;
+            }
+           // console.log("count",this.notificationList.length)
+          })
+          this.getCount();
         }
 }
