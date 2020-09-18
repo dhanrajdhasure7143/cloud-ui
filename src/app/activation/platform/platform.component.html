@@ -21,7 +21,7 @@
     <div class="col-md-12"></div>
     <div class="col-md-4"></div>
       <div class="col-md-2" >
-        <button class="btn btn-primary" id="launch_btn" (click)="upgradePlan()" *ngIf="this.selectedIdValue"  >Upgrade</button>
+        <button [disabled]="!this.userRole.includes('Admin')" class="btn btn-primary" id="launch_btn" (click)="upgradePlan()" *ngIf="this.selectedIdValue"  >Upgrade</button>
         <button class="btn btn-primary" *ngIf="!this.selectedIdValue" [disabled]="isenable" (click)="upgradePlan()" id="launch_btn" >Subscribe</button>
       </div>
       <div class="col-md-2" style="padding: 0px;

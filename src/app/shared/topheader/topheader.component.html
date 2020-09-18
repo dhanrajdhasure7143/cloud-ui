@@ -8,7 +8,7 @@
     <li class="col-md-10"></li>
       <li class=" nav-item col-md-1 notificationBell">
           <img class="notification-icon" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt=" ">
-          <div class="notification-count" style = "position:absolute; left:68px; top:10px;">
+          <div *ngIf='notificationscount!=0' class="notification-count" style = "position:absolute; left:68px; top:10px;">
             <span>{{notificationscount}}</span> 
            </div>
         </li>
