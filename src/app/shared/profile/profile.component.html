@@ -516,19 +516,31 @@
                                             <td>{{userdata.Status}}</td>
 
                                             <td class="deleticon">
-                                              <span  (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)">
+                                              <!-- <span  (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)">
                                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                <span  (click)="userDel(userdata.userId,m)">
                                                 
 
-                                               <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                               <img src="assets/images/unsubscribe.svg" alt=""></span> -->
+                                               <button class="subsc"  
+                                                    [disabled]="userdata.roleIdname == 'Admin'"  
+                                             (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)" ><img src="assets/images/eyeIcon.svg" alt=""></button>
+                                               <!-- <span  (click)="userDel(userdata.userId,m)">
+                                                
+
+                                               <img src="assets/images/unsubscribe.svg" alt=""></span> -->
+                                               <button class="subsc"  
+                                               [disabled]="userdata.roleIdname == 'Admin'"  
+                                        (click)="userDel(userdata.userId,m)" ><img src="assets/images/unsubscribe.svg" alt=""></button>
+
+                                               
                                                <div id="myid" [ngClass]="selectedIndex === m?'isdelet':''" class="deletconfm">
                                                   <div class="container-fluid deletefrm">
                                                       <h5 class="pull-left">Confirmation</h5>
                                                       <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(m)">
                                                       <span aria-hidden="true">&times;</span>
                                                       </button>
-                                                      <p class="pull-left">Are you sure you want to delete the role ?</p>
+                                                      <p class="pull-left">Are you sure you want to delete the User ?</p>
                                                        <button class="pull-left confm" (click)="deleteUserYes(userdata.userId,m)">Yes</button>
                                                        <button class="confm pull-left" (click)="unsubscribeNo(m)">No</button>
                                                   </div>
