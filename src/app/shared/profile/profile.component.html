@@ -182,20 +182,22 @@
                             <table class="table table-borderless col-md-12 table-hover">
                               <thead>
                                 <tr>
-                                  <th scope="col" class="types" style="text-align:center">Subscription Id</th>
-                                  <th scope="col" class="types">Product</th>
-                                  <th scope="col" class="types">Plan</th>
-                                  <th scope="col" class="types">Amount</th>
-                                  <th scope="col" class="types">Status</th>
-                                  <th scope="col" class="types">Action</th>
+                                  <th scope="col" class="types2" style="text-align:center">Subscription Id</th>
+                                  <th scope="col" class="types2">Product</th>
+                                  <th scope="col" class="types2">Plan</th>
+                                  <th scope="col" class="types2">Base Amount</th>
+                                  <th scope="col" class="types2">No.of Users</th>
+                                  <th scope="col" class="types2">Status</th>
+                                  <th scope="col" class="types2">Action</th>
                                 </tr>
                               </thead>
-                              <tbody class="col-md-12" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
                                 <tr >
                                   <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
                                   <td>{{sdata.name}}</td>
                                   <td>{{sdata.planEntity.nickName}}</td>
                                   <td >{{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
+                                  <td>{{sdata.noOfUsers}}</td>
                                   <td>{{sdata.status}}</td>
                                   <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i,template)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
                                     <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
@@ -1204,13 +1206,8 @@
                         </div>
                         <div class="col-md-12 infocheck">
                           <label for="application">Product</label>
-                          <ng-select [multiple]="false" 
-                          [items]="applications"                          
-                          [(ngModel)]="selectedApp"
-                          bindValue = "name"
-                          bindLabel = "name">
-                         
-                            <!-- <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option> -->
+                          <ng-select [multiple]="false" [(ngModel)]="selectedApp">
+                            <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option>
                           </ng-select>
 
                          
