@@ -193,6 +193,7 @@ export class ProfileComponent implements OnInit {
   isRefresh: boolean = false;
   userStatus: any;
   status: any;
+  roleresp: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -1434,15 +1435,30 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
    }
    console.log("create role", addRoleBody)
    this.profileservice.createRole(addRoleBody).subscribe(modifyresp => {
+     this.roleresp=modifyresp;
     this.modalRef.hide();
     this.getRoles();
-    Swal.fire({
-      title: 'Success!',
-      text: `Role created successfully.`,
-      type: 'success',
-      showCancelButton: false,
-      allowOutsideClick: true
-    }) 
+    if(this.roleresp.message!='Role already exists'){
+      Swal.fire({
+        title: 'Success!',
+        text: `Role created successfully.`,
+        type: 'success',
+        showCancelButton: false,
+        allowOutsideClick: true
+      }) 
+    }
+    else
+    {
+      Swal.fire({
+        title: 'Role already Exists',
+        text: `Role already exists.`,
+        type: 'info',
+        showCancelButton: false,
+        allowOutsideClick: true
+      }) 
+
+    }
+    
   })
   this.roleName = "";
   this.roleDescription = "";
