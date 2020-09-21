@@ -728,8 +728,8 @@
               <table class="table table-borderless table-hover">
                       <thead>
                         <tr>
-                          <th scope="col" class="types">Coupon ID</th>
                           <th scope="col" class="types">Coupon Name</th>
+                          <th scope="col" class="types">Coupon ID</th>
                           <th scope="col" class="types">Amount Off</th>
                           <th scope="col" class="types">Percentage Off</th>
                           <th scope="col" class="types">Available Redemptions</th>
@@ -742,8 +742,8 @@
                       </thead>
                       <tbody>
                         <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
-                          <td>{{coupon.id}}</td>
                           <td>{{coupon.name}}</td>
+                          <td>{{coupon.id}}</td>
                           <td >{{coupon.amountOff}}</td>
                           <td >{{coupon.percentOff}}</td>
                           <td >{{availableRedeemptions}}</td>
@@ -798,7 +798,7 @@
                               </tr>
                             </thead>
                             <tbody *ngIf="notificationList.errorMessage==undefined ">
-                              <tr *ngFor="let messageList of notificationList | paginate: { itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
+                              <tr *ngFor="let messageList of notificationList | paginate: {id:'notification_page', itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td>{{messageList.createdAt | date}}</td>
                                 <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
@@ -823,7 +823,7 @@
                             </tbody>
                           </table>
                           <div *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
-                            <pagination-controls (pageChange)="c = $event"></pagination-controls>
+                            <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
                             </div>
                 </div>
             </div>
