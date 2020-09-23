@@ -250,7 +250,7 @@ public myname:any[]
         getCount(){
           setTimeout(() => {
             this.getAllNotifications();
-          }, 5000);
+          }, 20000);
         }
         getAllNotifications() {
           let userId =  localStorage.getItem("userName")
