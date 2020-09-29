@@ -68,8 +68,8 @@ setasDefaultCard(paymentModeId){
   return this.http.post('/subscriptionservice/v1/paymentmethods/set-default/'+paymentModeId,{responseType:'json'});
 }
 
-inviteUser(inviterID,inviteeID,body) :Observable<any>{
-  return this.http.post<any[]>('/api/user/inviteUsers?inviterMailId='+inviterID+'&inviteeMailId='+inviteeID,body,httpOptions)
+inviteUser(inviterMailId,payload) :Observable<any>{
+  return this.http.post<any>('/api/user/inviteUsers?inviterMailId='+inviterMailId, payload,{ observe: 'response' })
 }
 
 restrictUserInvite(product) : Observable<any>{

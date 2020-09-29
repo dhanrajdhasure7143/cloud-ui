@@ -363,58 +363,83 @@
 
 
         <div class="container" *ngIf="isInvite">
-                <div class="row">
-                    <div  class="col-md-12">
-                            <h4 class="invite">Invite User</h4>
-                    </div>
-                    <div class="col-md-12 invteform">
-                                        <form autocomplete="off" #inviteuser="ngForm" id="inviteform" class="col-md-12 row">
-                                            <div class="form-group col-sm-12">
-                                                    <label for="email">Email</label>
-                                                    
-                                                    <textarea rows="20" cols="50" name='email' id="email" pattern="^\S*[@]\S*[.]\S*$" #email="ngModel" class="form-control textA"  [(ngModel)]="emailId"
-                    autocomplete="none|false|no" (keyup)='onblur()' placeholder="Enter Emails Separated By Comma(,)" required></textarea>
-                  <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"> 
-                    <span class='fa fa-info-circle errspan' *ngIf="email.errors.required"> Email is required</span>
-                    <span class='fa fa-info-circle errspan' *ngIf="email.errors.pattern"> Enter valid email address</span>
-                  </span>
-                    <!-- <span  class='fa fa-info-circle errspan' *ngIf="email.errors.pattern">Enter valid email address</span> -->
-                    <span *ngIf='ispublicMail' class='fa fa-info-circle errspan'>&nbsp;Only Business Email is allowed</span>
-                    <span *ngIf="isSameDomain" class='fa fa-info-circle errspan'>&nbsp;Sorry...! You Are Allowed to Invite {{domain}} Users Only</span>
-                                                    
-                                                  </div>
+          <div class="row">
+              <div  class="col-md-12">
+                      <h4 class="invite">Invite User</h4>
+              </div>
+              <div class="col-md-4 invteform">
+                <form autocomplete="off" #inviteuser="ngForm" id="inviteform" class="inviterow">
+                    <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" name='email' id="email" #email="ngModel" class="form-control botmbordr"  [(ngModel)]="inviteremailId"
+                             (keyup)="myemailFunction()" 
+                              pattern="^\S*[@]\S*[.]\S*$"  email placeholder="Email address ex: abc@xyz.com"/>
+                              <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"> 
+                                <span class='fa fa-info-circle errspan' *ngIf="email.errors.required"> Email is required</span>
+                                <span class='fa fa-info-circle errspan' *ngIf="email.errors.pattern"> Enter valid email address</span>
+                              </span>
+                                <!-- <span  class='fa fa-info-circle errspan' *ngIf="email.errors.pattern">Enter valid email address</span> -->
+                                <!-- <span *ngIf='ispublicMail' class='fa fa-info-circle errspan'>&nbsp;Only Business Email is allowed</span>
+                                <span *ngIf="isSameDomain" class='fa fa-info-circle errspan'>&nbsp;Sorry...! You Are Allowed to Invite {{domain}} Users Only</span> -->
+                          </div>
 
-                                            <div class="form-group col-sm-3">
-                                              <label for="application">Product</label>
-                                              <select class="form-control" name="application"  id="application"(change)="onChangeApp($event.target.value)" required>
-                                                <option  [value]="undefined" disabled hidden>Select Product</option>
-                                                <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
-                                              </select>
-                                            </div>
-                                            <div class="col-sm-7 form-group">
-                                                    <label for="role">Roles</label>
-                                                    <ng-select name = "multiroles" [multiple]="true" 
-                                                     placeholder="Select Roles"
-                                                     [items] =  "allRoles"
-                                                     [(ngModel)]="selectedroles"
-                                                     bindValue = "id"
-                                                     bindLabel = "name">
-                         
-                                                     </ng-select>
-                                                    <!-- <select class="form-control" name="role"  id="role"(change)="onChangeRole($event.target.value)" required>
-                                                        <option  [value]="undefined" disabled hidden>Select Role</option>
-                                                        <option *ngFor="let role of listOfroles "  [value]="role"  >{{role}}</option>
-                                                    </select> -->
-                                                  </div>
-                                                  <!-- <div class="col-sm-4"></div> -->
-                                                  <div class="col-sm-2">
-                                                  <button [disabled]="inviteuser.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" type="submit" (click)='inviteUser(this.useremail,emailId,inviteuser)' >Submit</button>
+                    <div class="form-group">
+                      <label for="application">Product</label>
+                      <!-- <select class="form-control botmbordr" name="application"  [(ngModel)]="invite_product"  id="invite_product" (change)="onChangeApp($event.target.value)" required>
+                        <option [value]="undefined" disabled hidden>Select Product</option>
+                        <option [value]="null" disabled hidden>Select Product</option>
+                        <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
+                      </select> -->
 
-                                                  </div>
-                                          </form>
-                            </div>
+        <select name="invite_product" #inviteproduct="ngModel" id="product" class="form-control botmbordr" (change)="onChangeApp($event.target.value)" [(ngModel)]="invite_product" required>
+    
+          <option [value]="" disabled selected>Select Product</option>
+          <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
+          </select>
                     </div>
-                </div>
+                    
+                    
+                    <div class="form-group ng_btm_border" id="multipleinviteroles">
+                      <label for="role">Roles</label>
+                       <ng-select name = "multiroles" [multiple]="true" id="multiroles" [disabled]="invitemultirole"
+                       placeholder="Select Roles"
+                       [items] =  "allRoles"
+                       [(ngModel)]="selectedroles"
+                       bindValue = "id"
+                       bindLabel = "name" required>
+                       </ng-select>  
+                        <!-- <select name = "multiroles" class="form-control botmbordr"  required>
+                        <option value="" disabled selected>Select Roles</option>
+                         <option *ngFor="let each of allRoles" >{{each.name}}</option>
+                    </select>  -->
+                   
+                          </div>
+                          <button  class="btn btn-primary invite-button" type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
+                        </form>
+              </div>
+
+              </div>
+              <div class="upload-container">
+                <div class="upload-excel">
+                  <div>
+                    <span>(OR)</span>
+                  </div>
+                  <div class="fileUpload btn ">
+                  <span class="bulk"><b>Bulk Upload</b></span><br>
+                  <span class="downloadbulk">
+                    <b><a href="assets/Sample Bulk Template.xlsx" download>
+                      <u style="color:black">Download Sample Template</u></a></b>
+            </span>
+                 <input id="uploadBtn" type="file" class="upload" name="uploadexcel" #uploadexcel="ngModel" [(ngModel)]="upload_excel"
+                 (change)="onFileSelected($event)" />
+              </div>
+          </div>
+          <div class="uploaded-excel">
+            <div id="excel"></div>
+            </div>
+</div>
+
+  </div>
 
                
                 <div class="container" *ngIf="isAlerts">
@@ -1167,7 +1192,7 @@
                   <div *ngIf=isSMScheckBoxValue>
                   <label for="configalerts">Text To</label>
                   <input type="text" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
-                    mobile placeholder="Enter Mobile Number ex:+91-9999999999"  />
+                  required mobile placeholder="Enter Mobile Number ex:+91-9999999999"  />
                   <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
                                                       class='fa fa-info-circle errspan'>
                                                       <span *ngIf="mobile.errors.required"> Mobile number is required</span>

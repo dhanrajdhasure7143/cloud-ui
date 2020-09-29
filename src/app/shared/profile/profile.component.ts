@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import moment from 'moment';
 import { Observable } from 'rxjs';
 import { log } from 'console';
-
+import * as $ from 'jquery';
 
 
 @Component({
@@ -194,7 +194,12 @@ export class ProfileComponent implements OnInit {
   userStatus: any;
   status: any;
   roleresp: any;
-
+  invite_product: any='';
+  inviterolesid: any=[];
+  selectedFile: any;
+  upload_excel: string;
+  inviteremailId: string;
+  invitemultirole:boolean=false;
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
@@ -362,17 +367,26 @@ this.profileservice.applications().subscribe(resp =>
     return index;
   }
   slideDown() {
-    //this.closeDeleteForm = false;
-    this.selectedIndex = '';
-    this.selectedalertdet = ''
-    // this.emailId=[];
-    // this.selectedroles=[];
-    if(this.isInvite){
-    document.getElementsByTagName("form").namedItem("inviteform").reset();
-    }
-    this.dataid = '';
-    document.getElementById("foot").classList.add("slide-down");
-    document.getElementById("foot").classList.remove("slide-up");
+    console.log("inside slidedown")
+    this.invite_product="";
+    console.log(this.invite_product)
+     //this.closeDeleteForm = false;
+     this.selectedIndex = '';
+     this.selectedalertdet = ''
+     // this.emailId=[];
+     // this.selectedroles=[];
+     if(this.isInvite){
+       $("#excel").empty();
+       this.invite_product="";
+       $("#email").prop('disabled', false);
+       $('.upload').prop('disabled', false);
+       $("#product").prop('disabled', false);
+       this.invitemultirole=false;
+     document.getElementsByTagName("form").namedItem("inviteform").reset();
+     }
+     this.dataid = '';
+     document.getElementById("foot").classList.add("slide-down");
+     document.getElementById("foot").classList.remove("slide-up");
   }
 
  
@@ -985,31 +999,73 @@ cancelAlert(){
      }
    });
  }
+ myemailFunction()
+ {
+  $("#excel").empty();
+  this.selectedFile=null;
+  $("#email").on("input", function(){
+    // Print entered value in a div box
+    $('.upload').prop('disabled', true);
+    var el = document.getElementById('email'); 
+    el.addEventListener('keydown', function(event) { 
+      // Checking for Backspace. 
+      if (event.keyCode == 8) { 
+          //alert('Backspace is Pressed!'); 
+          $('.upload').prop('disabled', false);
+      }  
+      if (event.keyCode == 46) { 
+        $('.upload').prop('disabled', false);
+    } 
+  });
+});
+ }
     inviteUser(userId,inviteeId,form){
+      // let stringToSplit = localStorage.getItem("userName");
+      // let x = stringToSplit.split("@");
+      //       this.domain = x[1];
+      // console.log(x);
+      //       var inviteeList = [];
+      //       inviteeList = inviteeId.split(",");
+      // console.log("fksdjflkasd", inviteeList);
       
-      let stringToSplit = localStorage.getItem("userName");
-let x = stringToSplit.split("@");
-      this.domain = x[1];
-console.log(x);
-      var inviteeList = [];
-      inviteeList = inviteeId.split(",");
-console.log("fksdjflkasd", inviteeList);
-
-      for(var i = 0; i<inviteeList.length; i++){
-
-        if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
-        inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
-       this.ispublicMail=true;
-       return
-  
-     }else if(!(inviteeList[i].endsWith(this.domain))){
-       
-      this.isSameDomain = true;
-      return
-     }
+      //       for(var i = 0; i<inviteeList.length; i++){
+      
+      //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
+      //         inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
+      //        this.ispublicMail=true;
+      //        return
         
-      }    
+      //      }else if(!(inviteeList[i].endsWith(this.domain))){
+             
+      //       this.isSameDomain = true;
+      //       return
+      //      }
+              
+      //       }  
       
+      console.log(this.selectedroles)
+      console.log("inviteid",inviteeId)
+      const payload = new FormData();
+
+      if(this.selectedFile==undefined){
+        console.log("Form email selected");
+       // const payload = new FormData();
+        //payload.append('inviterMailId', userId);
+        payload.append('inviteeMailId', inviteeId);
+        payload.append('userRoles', this.selectedroles);
+       // console.log("payload",payload)
+      }
+      else
+      {
+        console.log("Upload option selected");
+        //payload.append('inviterMailId', userId);
+        this.myappName="2.0"
+        payload.append('file', this.selectedFile, this.selectedFile.name);
+        //payload.append('userRoles', this.selectedroles);
+       // console.log("payload",payload)
+      }
+
+  
     
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
     if(invres.message == "Exceeded max users count"){
@@ -1022,8 +1078,10 @@ console.log("fksdjflkasd", inviteeList);
     })
   
   }else if(invres.message == "User Invite is valid"){
-    this.profileservice.inviteUser(userId,inviteeId,body).subscribe(res=>{
-      if(res.message == "Invite Mail sent successfully"){
+    this.profileservice.inviteUser(userId,payload).subscribe(res=>{
+      this.data=res
+      console.log(this.data.body)
+      if(this.data.body.message == "Invite Mail sent successfully"){
       Swal.fire({
         title: 'Success!',
         text: "Invite mail sent successfully.",
@@ -1031,42 +1089,121 @@ console.log("fksdjflkasd", inviteeList);
         showCancelButton: false,
         allowOutsideClick: true
       })
-    }else if(res.message == "Inviter not present"){
+      this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }
+      else if(this.data.body.errorMessage == "Failed to read content of the upload file"){
+        Swal.fire({
+          title: 'Error!',
+          text:this.data.body.errorMessage,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+        this.upload_excel=""
+        this.selectedFile=null
+        $("#excel").empty();
+        $('.upload').prop('disabled', false);
+        $("#email").prop('disabled', false);
+        $("#product").prop('disabled', false);
+        this.invitemultirole=false;
+    }else if(this.data.body.errorMessage == "Uploaded file is empty"){
+        Swal.fire({
+          title: 'Error!',
+          text:this.data.body.errorMessage,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+        this.upload_excel=""
+        this.selectedFile=null
+        $("#excel").empty();
+        $('.upload').prop('disabled', false);
+        $("#email").prop('disabled', false);
+        $("#product").prop('disabled', false);
+        this.invitemultirole=false;
+    }
+    else if(this.data.body.errorMessage == "Uploaded file is not supported"){
       Swal.fire({
         title: 'Error!',
-        text: res.message,
+        text:this.data.body.errorMessage,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
-
-    }else if(res.message == "Inviter tenant not present"){
+      this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }
+    else if(this.data.body.message == "Inviter not present"){
+      Swal.fire({
+        title: 'Error!',
+        text:this.data.body.message,
+        type: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+      this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }else if(this.data.body.message == "Inviter tenant not present"){
       Swal.fire({
         title: 'Warning!',
-        text: res.message,
+        text: this.data.body.message,
         type: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
-
-    }else if(res.message == "Invitee already exists"){
+      this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }else if(this.data.body.message === "Invitee already exists"){
       Swal.fire({
         title: 'Warning!',
-        text: res.message,
+        text: this.data.body.message,
         type: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
-
+      this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
     }else{
       Swal.fire({
         title: 'Error!',
-        text: res.message,
+        text: this.data.body.message,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
-
+      this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
     }
     },err=>{
 
@@ -1077,7 +1214,13 @@ console.log("fksdjflkasd", inviteeList);
         showCancelButton: false,
         allowOutsideClick: true
       })
-
+      this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
     })
   }else{
     Swal.fire({
@@ -1087,6 +1230,13 @@ console.log("fksdjflkasd", inviteeList);
       showCancelButton: false,
       allowOutsideClick: true
     })
+    this.upload_excel=""
+    this.selectedFile=null
+    $("#excel").empty();
+    $('.upload').prop('disabled', false);
+    $("#email").prop('disabled', false);
+    $("#product").prop('disabled', false);
+    this.invitemultirole=false;
   }
   },err=>{
 
@@ -1097,20 +1247,26 @@ console.log("fksdjflkasd", inviteeList);
       showCancelButton: false,
       allowOutsideClick: true
     })
-
+    this.upload_excel=""
+      this.selectedFile=null
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
   })
-      let body = [];
-      this.selectedroles.forEach(roleid => {
-        let obj = {
-          "id" : roleid,
-          "appliationId" : {
-            "appId" : this.myappId
-          }
-        }
-        body.push(obj);
+    //   let body = [];
+    //   this.selectedroles.forEach(roleid => {
+    //     let obj = {
+    //       "id" : roleid,
+    //       "appliationId" : {
+    //         "appId" : this.myappId
+    //       }
+    //     }
+    //     body.push(obj);
      
-    });
-    console.log("invite input ",body)
+    // });
+    // console.log("invite input ",body)
     // let  body = {
     //     "id": this.myroleId,
     //     "appliationId": {
@@ -1741,5 +1897,16 @@ console.log("alertbody",this.alertsbody)
           // });
           
         });
+      }
+      onFileSelected(event)
+      {
+        $("#excel").empty();
+        $("#email").prop('disabled', true);
+        $("#product").prop('disabled', true);
+        this.invitemultirole=true;
+        this.selectedFile=<File>event.target.files[0]
+        console.log(this.selectedFile.name)
+      // $("#excel").val(this.selectedFile.name)
+       $("#excel").append('('+this.selectedFile.name+')');
       }
    }
