@@ -151,8 +151,10 @@ export class FirstloginComponent implements OnInit {
           }
         });
         // this.router.navigate(['/user']);
-      }else {
-        //TODO:success data handle
+      }else if(response.company!=null){
+        this.isCompanydisabled = true;
+        this.model.company = response.company;
+        
       }
     }
      
