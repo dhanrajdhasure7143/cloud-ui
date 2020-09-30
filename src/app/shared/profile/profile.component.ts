@@ -326,6 +326,7 @@ this.profileservice.applications().subscribe(resp =>
     if(this.isInvite){
       this.emailId=[];
       this.selectedroles=[];
+      this.invite_product='Select Product';
      // this.application =[];
      // document.getElementsByTagName("form").namedItem("inviteform").reset();
       
@@ -376,6 +377,7 @@ this.profileservice.applications().subscribe(resp =>
      // this.emailId=[];
      // this.selectedroles=[];
      if(this.isInvite){
+      this.myappName="";
        $("#excel").empty();
        this.invite_product="";
        $("#email").prop('disabled', false);
@@ -1058,6 +1060,7 @@ cancelAlert(){
       else
       {
         console.log("Upload option selected");
+        
         //payload.append('inviterMailId', userId);
         this.myappName="2.0"
         payload.append('file', this.selectedFile, this.selectedFile.name);
@@ -1090,6 +1093,7 @@ cancelAlert(){
         allowOutsideClick: true
       })
       this.upload_excel=""
+      this.myappName=""
       this.selectedFile=null
       $("#excel").empty();
       $('.upload').prop('disabled', false);
@@ -1107,6 +1111,7 @@ cancelAlert(){
         })
         this.upload_excel=""
         this.selectedFile=null
+        this.myappName=""
         $("#excel").empty();
         $('.upload').prop('disabled', false);
         $("#email").prop('disabled', false);
@@ -1122,6 +1127,7 @@ cancelAlert(){
         })
         this.upload_excel=""
         this.selectedFile=null
+        this.myappName=""
         $("#excel").empty();
         $('.upload').prop('disabled', false);
         $("#email").prop('disabled', false);
@@ -1137,6 +1143,7 @@ cancelAlert(){
         allowOutsideClick: true
       })
       this.upload_excel=""
+      this.myappName=""
       this.selectedFile=null
       $("#excel").empty();
       $('.upload').prop('disabled', false);
@@ -1153,6 +1160,7 @@ cancelAlert(){
         allowOutsideClick: true
       })
       this.upload_excel=""
+      this.myappName=""
       this.selectedFile=null
       $("#excel").empty();
       $('.upload').prop('disabled', false);
@@ -1168,6 +1176,7 @@ cancelAlert(){
         allowOutsideClick: true
       })
       this.upload_excel=""
+      this.myappName=""
       this.selectedFile=null
       $("#excel").empty();
       $('.upload').prop('disabled', false);
@@ -1183,7 +1192,9 @@ cancelAlert(){
         allowOutsideClick: true
       })
       this.upload_excel=""
+      this.myappName=""
       this.selectedFile=null
+      this.myappName=""
       $("#excel").empty();
       $('.upload').prop('disabled', false);
       $("#email").prop('disabled', false);
@@ -1198,6 +1209,7 @@ cancelAlert(){
         allowOutsideClick: true
       })
       this.upload_excel=""
+      this.myappName=""
       this.selectedFile=null
       $("#excel").empty();
       $('.upload').prop('disabled', false);
@@ -1215,6 +1227,7 @@ cancelAlert(){
         allowOutsideClick: true
       })
       this.upload_excel=""
+      this.myappName=""
       this.selectedFile=null
       $("#excel").empty();
       $('.upload').prop('disabled', false);
@@ -1231,6 +1244,7 @@ cancelAlert(){
       allowOutsideClick: true
     })
     this.upload_excel=""
+    this.myappName=""
     this.selectedFile=null
     $("#excel").empty();
     $('.upload').prop('disabled', false);
@@ -1248,6 +1262,7 @@ cancelAlert(){
       allowOutsideClick: true
     })
     this.upload_excel=""
+    this.myappName=""
       this.selectedFile=null
       $("#excel").empty();
       $('.upload').prop('disabled', false);

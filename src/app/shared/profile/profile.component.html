@@ -373,7 +373,7 @@
                             <label for="email">Email</label>
                             <input type="text" name='email' id="email" #email="ngModel" class="form-control botmbordr"  [(ngModel)]="inviteremailId"
                              (keyup)="myemailFunction()" 
-                              pattern="^\S*[@]\S*[.]\S*$"  email placeholder="Email address ex: abc@xyz.com"/>
+                              pattern="^\S*[@]\S*[.]\S*$"  email placeholder="Enter Emails Separated By Comma(,)"/>
                               <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"> 
                                 <span class='fa fa-info-circle errspan' *ngIf="email.errors.required"> Email is required</span>
                                 <span class='fa fa-info-circle errspan' *ngIf="email.errors.pattern"> Enter valid email address</span>
@@ -384,15 +384,8 @@
                           </div>
 
                     <div class="form-group">
-                      <label for="application">Product</label>
-                      <!-- <select class="form-control botmbordr" name="application"  [(ngModel)]="invite_product"  id="invite_product" (change)="onChangeApp($event.target.value)" required>
-                        <option [value]="undefined" disabled hidden>Select Product</option>
-                        <option [value]="null" disabled hidden>Select Product</option>
-                        <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
-                      </select> -->
-
+                  <label for="application">Product</label>
         <select name="invite_product" #inviteproduct="ngModel" id="product" class="form-control botmbordr" (change)="onChangeApp($event.target.value)" [(ngModel)]="invite_product" required>
-    
           <option [value]="" disabled selected>Select Product</option>
           <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
           </select>
@@ -1097,7 +1090,7 @@
                     <div *ngIf=isSMScheckBoxValue>
                     <label for="configalerts">Text To</label>
                     <input type="text" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
-                      text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" />
+                    required text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" />
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
                                                         <span *ngIf="text_to1.errors.required"> Mobile number is required</span>
@@ -1118,7 +1111,7 @@
                   <div class="col-md-12">
                     <div class="form-group form-buttons pull-right buttonsblock">
                     <button class="btn btn-secondary cancel_modify_btn" type="reset" (click)="updateAlertCancel()"><div class="anim"></div> Cancel</button>
-                    <button  class="btn btn-primary update_alert" (click)="modifyalert(alertslistactivitiesdata)">Update</button>
+                    <button [disabled]="updatealert.invalid || showErr"  class="btn btn-primary update_alert" (click)="modifyalert(alertslistactivitiesdata)">Update</button>
                   </div>
                 </div>
             <div class="clearfix">
@@ -1314,13 +1307,9 @@
                         <div class="col-md-12 infocheck">
                           <label for="role"> Role </label>
                           <ng-select name = "multiroles" [multiple]="true" [items] =  "allRoles" [(ngModel)] = "testRolesList"
-                           
                            bindValue = "name"
-                           bindLabel = "name">
-
-
-                           </ng-select>
-                          
+                           bindLabel = "name" required>
+                           </ng-select>         
                         </div>
                           <br>
                         </div>
@@ -1331,7 +1320,7 @@
                         <div class="col-md-12">
                           <div class="form-group form-buttons pull-right buttonsblock">
                           <!-- <button class="btn btn-secondary cancel_btn" tyep = "reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button> -->
-                          <button  class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" (click)="modifyUserRole(roleListdata)">Update</button>
+                          <button [disabled]="updateUserRole.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" (click)="modifyUserRole(roleListdata)">Update</button>
                         </div>
                       </div>
                   <div class="clearfix">
