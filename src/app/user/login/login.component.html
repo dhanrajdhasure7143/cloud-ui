@@ -14,8 +14,9 @@
                     <div class="form-group col-sm-12 inner-addon left-addon">
                         <img src="assets/images/username_icon.png" class="userIcon">
                         <input type="text" formControlName="username" placeholder="Enter Email" class="form-control userinput"
-                          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
+                        pattern="^\S*[@]\S*[.]\S*$"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                          <div *ngIf="f.username.errors.pattern">Enter valid email address</div>
                           <div *ngIf="f.username.errors.required">Email is required</div>
                         </div>
                       </div>
