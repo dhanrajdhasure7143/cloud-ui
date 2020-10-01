@@ -41,8 +41,28 @@
                 <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
                     <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
                   </div>
+                  <div class="form-group row grp-buttons">
+            <div class="col-sm-12 ">
+                    <label class="have_acc have_account">or Login through</label>
+                    
+                  </div>
+                    <div class="col-md-6 text-center">
+                       <!-- <button type="button" class="btn-buttons" a href="http://localhost:9797/oauth2/authorize-client/google">
+                        <img src="assets/login icons/google.svg" class="buuton-icons">Google
+                      </button>  -->
+                      <a href="https://idmdev.epsoftinc.in/api/socialLogin?authProvider=google&redirectPath=https://eiapclouddev.epsoftinc.in/#/user">
+                        <img src="assets/login icons/google.svg" class="buuton-icons"/>Google</a> 
+                    </div>
+                    <div class="col-md-6 text-center" >
+                      <!-- <button type="button" class="btn-buttons" (click)="azureLogin()">
+                        <img src="assets/login icons/office.svg" class="buuton-icons"><label >Office 365</label>
+                      </button> -->
+                      <a href="https://idmdev.epsoftinc.in/api/socialLogin?authProvider=azure&redirectPath=https://eiapclouddev.epsoftinc.in/#/user">
+                        <img src="assets/login icons/office.svg" class="buuton-icons"/>Office</a> 
+                    </div>
+                  </div>
                 </form>
-                <div class="col-sm-12 ">
+                <div >
                     <label class = "have_acc have_account">Don't have an account&#63;</label>
                     <button (click)="requestDemo()" class="btn btn-primary register-btn">Register</button>
     
