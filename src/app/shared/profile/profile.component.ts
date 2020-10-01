@@ -1452,15 +1452,15 @@ couponDelYes(coupon,index){
       getAllPermissions() {
         
         this.profileservice.getAllPermissions().subscribe(data => {
-          this.permissionsList = data.reverse();
-
+          this.permissionsList = data;
+          console.log("perm list===",this.permissionsList)
           
         })
       }
 
       permissionsByapp(id){
         this.profileservice.getPermissionsByAppID(id).subscribe(data => {
-          this.permissionsList = data.reverse();
+          this.permissionsList = data;
          
 
           
