@@ -695,8 +695,8 @@
                                                 <tr *ngFor="let permission of permissionsList | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp } | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
                                                   <td>{{permission.permissionName}}</td>
                                                   <td>{{permission.description}}</td>
-                                                  <td>{{permission.created_at | date:'medium'}}</td>
-                                                  <td>{{permission.modified_at | date:'medium'}}</td>
+                                                  <td>{{permission.audit.created_at | date:'medium'}}</td>
+                                                  <td>{{permission.audit.modified_at | date:'medium'}}</td>
                                                   <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
                                                       <span  (click)="selectedpermdata(permission,p,permtemplate)">
                                                       <img src="assets/images/eyeIcon.svg" alt=""> </span>
