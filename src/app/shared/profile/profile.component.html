@@ -1227,13 +1227,13 @@
                       <div class="col-md-12 infocheck ">
 
                        <label for="role">Role</label>
-                        <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.name" required/>     
+                        <input type="text"  name="role" maxlength="50" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.name" required/>     
                         <span *ngIf="((role.invalid) || (role.errors && role.touched) )" 
                         class='fa fa-info-circle errspan'> Role is required </span> <br>   
                       </div>
                       <div class="col-md-12 infocheck">
                         <label for="roledescription">Description</label>
-                        <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.description" required/>     
+                        <input type="text"  name="roledescription" maxlength="50" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.description" required/>     
                         <span *ngIf="((roledescription.invalid) || (roledescription.errors && roledescription.touched) )" 
                         class='fa fa-info-circle errspan'> Description is required </span> <br> 
                         </div>
@@ -1349,11 +1349,11 @@
                               <div class="col-md-12 infocheck">
 
                                 <label for="role">Role</label>
-                                 <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roleName" required/>     
+                                 <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" maxlength="50" [(ngModel)]="roleName" required/>     
                                            </div>
                                <div class="col-md-12 infocheck">
                                  <label for="roledescription">Description </label>
-                                 <input type="text"  name="roledescription" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roleDescription" required/>     
+                                 <input type="text"  name="roledescription" #roledescription="ngModel" maxlength="50" class="form-control botmbordr" [(ngModel)]="roleDescription" required/>     
               
                                  </div>
                                  <div class="col-md-12 infocheck">
@@ -1438,12 +1438,12 @@
                                     </div>
                                     <div class="col-md-12 infocheck">
                                   <label for="permission">Permission </label>
-                                   <input type="text"  name="permission" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permName" required/>     
+                                   <input type="text"  name="permission" maxlength="50" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permName" required/>     
                                     
                                   </div>
                                  <div class="col-md-12 infocheck">
                                    <label for="permdescription">Description </label>
-                                   <input type="text"  name="permdescription" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permissionDescription" required/>     
+                                   <input type="text"  maxlength="50" name="permdescription" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permissionDescription" required/>     
                                    
                                    </div>
                                    
@@ -1457,7 +1457,7 @@
                             <div class="col-12">
                         <div class="form-group form-buttons pull-right buttonsblock">        
                             <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button> -->
-                            <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
+                            <button class="btn btn-primary clearbtn" [disabled]="addpaymentmode.invalid " type="submit"><div class="anim"></div> Save</button>
                         </div>
                         
                         <!-- <div class="clearfix">
@@ -1498,13 +1498,13 @@
                             <div class="col-md-12 infocheck">
       
                              <label for="permission">Permission </label>
-                              <input type="text"  name="permission" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.permissionName" required/>     
+                              <input type="text"  name="permission" maxlength="50" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.permissionName" required/>     
                               <span *ngIf="((permission.invalid) || (permission.errors && permission.touched) )" 
                         class='fa fa-info-circle errspan'> Permission is required </span> <br>   
                             </div>
                             <div class="col-md-12 infocheck">
                               <label for="permdescription">Description </label>
-                              <input type="text"  name="permdescription" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.description" required/>     
+                              <input type="text"  name="permdescription" maxlength="50" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.description" required/>     
                               <span *ngIf="((permdescription.invalid) || (permdescription.errors && permdescription.touched) )" 
                         class='fa fa-info-circle errspan'> Description is required </span> <br>
                               </div>
@@ -1534,14 +1534,14 @@
                             <label for="couponName">Coupon Name</label>
                             <input type="text" name="couponName" #couponName="ngModel" maxlength="30" [(ngModel)]="couponNamename" class="form-control payment-input" id="couponName" placeholder="Enter Coupon Name" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
-                            <span *ngIf="((couponName.invalid && couponform.submitted) || (couponName.errors && couponName.touched) )" 
-                            class='fa fa-info-circle errspan'> Coupon Name is required </span> <br>
+                            <!-- <span *ngIf="((couponName.invalid && couponform.submitted) || (couponName.errors && couponName.touched) )" 
+                            class='fa fa-info-circle errspan'> Coupon Name is required </span> <br> -->
                          
                          
                             <label for="couponId">Coupon ID</label>
                             <input type="text" class="cc-number form-control payment-input"  minlength="5" maxlength="10" required name="couponId" #couponId="ngModel" [(ngModel)]="couponIdId" placeholder="Enter Coupon ID" required/>
-                            <span *ngIf="((couponId.invalid && couponform.submitted) || (couponId.errors && couponId.touched) )" 
-                            class='fa fa-info-circle errspan'> Coupon ID is required</span> <br>
+                            <!-- <span *ngIf="((couponId.invalid && couponform.submitted) || (couponId.errors && couponId.touched) )" 
+                            class='fa fa-info-circle errspan'> Coupon ID is required</span> <br> -->
                             
                                 <label class="radio-inline">Coupon Type</label><br>
                 <input type="radio" class="payment-input" required name="couponType"  (change)='onChangeRadio($event.target.value)' value='percentageOff' />&nbsp;<span>Percentage Off</span><br>
@@ -1618,7 +1618,7 @@
                                   <div class="col-12">
                               <div class="form-group form-buttons pull-right  buttonsblock">        
                                   <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelCreateCopon()"><div class="anim"></div> Cancel</button> -->
-                                  <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Create</button>
+                                  <button class="btn btn-primary clearbtn" [disabled] = "couponform.invalid" type="submit"><div class="anim"></div> Create</button>
                               </div>
                               
                               <!-- <div class="clearfix">
