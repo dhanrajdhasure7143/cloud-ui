@@ -40,7 +40,8 @@ export class TopheaderComponent implements OnInit {
   role: string;
   public notificationList: any;
   notificationscount: any;
-  
+  public stopnotificationsapicall:any
+
   @ViewChild("toogleBtn") toogleBtn;
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
@@ -133,6 +134,7 @@ public myname:any[]
   }
 
   logout() {
+    clearTimeout(this.stopnotificationsapicall)
     localStorage.clear();
     sessionStorage.clear();
     this.route.navigate(['/']);
@@ -248,8 +250,11 @@ public myname:any[]
         }
 
         getCount(){
-          setTimeout(() => {
+          let userId =  localStorage.getItem("userName")
+          this.stopnotificationsapicall=setTimeout(() => {
+            if(this.role!=null&&userId!=null){
             this.getAllNotifications();
+            }
           }, 20000);
         }
         getAllNotifications() {
