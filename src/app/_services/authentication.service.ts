@@ -75,6 +75,8 @@ export class AuthenticationService {
       return this.appService.homeRef;
     }
     userDetails(username: string) {
+      console.log("I am here");
+      
       return this.http.get('/api/user/details?userId='+username,{responseType:'json'});
     }
 }
