@@ -6,6 +6,11 @@ import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SessionService } from './session/';
 import { CookieStore } from './cookie.store';
+import { APP_CONFIG } from './../app.config';
+import { Inject } from '@angular/core';
+import { IpServiceService } from './ip-service.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,16 +18,56 @@ export class AppService {
   public loggedIn = new BehaviorSubject<boolean>(false);
   public triggered = new BehaviorSubject<boolean>(true);
   public homeRef = new BehaviorSubject<String>('');
-  public _userActionOccured: Subject<void> = new Subject();
+  public _userActionOccured: Subject<void> = new Subject(); 
+  public ipAddress:string; 
+  public deviceInfo = null;
 
-  constructor(private http: HttpClient, private router: Router, private content: ContentfulService) { }
- 
+  constructor(private http: HttpClient, private router: Router, private content: ContentfulService, @Inject(APP_CONFIG) private config, private ip:IpServiceService, private deviceService: DeviceDetectorService) {
+   this.getIP();
+  }
+
+  getIP()
+  {
+    this.ip.getIPAddress().then(res => { 
+
+        var obj = JSON.parse(JSON.stringify(res));
+        this.ipAddress = obj.ip;
+      });
+     
+   }
+  
 
   login(username: string, password: string) {
-    return this.http.post<any>(`/api/login/beta/accessToken`, { 'userId' : username, 'password' : password })
+
+  let headers = {};
+  let url = `/api/login/beta/accessToken`;
+  let isSecurityManagerEnabled = this.config.isSecurityManagerEnabled;
+
+  if(isSecurityManagerEnabled){
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    if(this.ipAddress == undefined)
+     this.ipAddress = '192.168.0.1';
+    headers = { 'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type' : 'W' }
+    localStorage.setItem('ipAddress', this.ipAddress);
+   }
+  
+  if(isSecurityManagerEnabled){url = `/Idm/accessToken`;}
+
+    return this.http.post<any>(url, { 'userId' : username, 'password' : password }, {headers})
         .pipe(map(user => {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            CookieStore.set('token', user.accessToken, {});
+
+            if(isSecurityManagerEnabled){
+              if(user.resp_data.accessToken){
+              localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
+              CookieStore.set('token', user.resp_data.accessToken, {});
+              }
+            }
+            else{
+              if(user.accessToken){
+              localStorage.setItem('currentUser', JSON.stringify(user));
+              CookieStore.set('token', user.accessToken, {});
+              }
+            }
             this.setProperties();
             return user;
         }));

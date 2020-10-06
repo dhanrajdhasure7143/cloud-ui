@@ -2,12 +2,13 @@
   margin-top: 20px;
   }
   #paymnt-subheding{
-    margin-left:10px;
+   // margin-left:20px;
     color: #006ed5;
   }
   .pay_titles{
-    margin-left: 55%;
+    margin-left: 10%;
     margin-top: 15px;
+    font-weight: bold;
   }
   .pay_titles img{
     height: 25px;
@@ -28,13 +29,21 @@
     font-weight: bold;
   }
   
+  // .plan_label .plan{
+  //   border: 1px solid #006ed5;
+  //   border-radius: 50%;
+  //   padding: 3px 5px;
+  //   color : #006ed5;
+  //   font-weight: bold;
+  // }
   .plan_label .plan{
-    border: 1px solid #006ed5;
-    border-radius: 50%;
-    padding: 3px 5px;
+    // border: 1px solid #26c9EE;
+    // border-radius: 50%;
+    // padding: 3px 5px;
     color : #006ed5;
     font-weight: bold;
   }
+  
   
   .carddetail h6{
     font-weight: bold !important;
@@ -175,6 +184,7 @@
 }
 .confirmationmsg{
   text-align: center;
+  margin-top: 20px;
 }
 .confirmationmsg span{
   font-weight: bold;
@@ -183,4 +193,10 @@
 .modal-title{
   text-align: center;
   margin-bottom: 5px;
+}
+
+.sub-confirmation td{
+  padding:4px;
+  margin-bottom: 20px;
+  
 }

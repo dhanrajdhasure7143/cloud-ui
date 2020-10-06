@@ -4,6 +4,7 @@ import { APP_CONFIG } from './../../app.config';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2';
+import { Particles } from '../../_models/particlesjs'
 
 
 @Component({
@@ -16,9 +17,15 @@ export class NewpasswordComponent implements OnInit {
  
   newPwd: any;
   userData: any = {};
-  constructor(private router: Router, private route: ActivatedRoute, private newpasswordServ: NewpasswordService) { }
+  public show:boolean=true;
+  public confmshow:boolean=true;
+  constructor(private router: Router, 
+              private route: ActivatedRoute, 
+              private newpasswordServ: NewpasswordService,
+              private particles :Particles,) { }
 
   ngOnInit() {
+    this.particles.getParticles();
     this.route.queryParams.subscribe(params => {
      
       let token = params['token']
@@ -65,10 +72,11 @@ export class NewpasswordComponent implements OnInit {
     if(res){
       if(res.message === 'Password reset is successful'){
         Swal.fire({
-          type: 'success',
-          title: 'Your password reset is successful!',
-          // showConfirmButton: true,
-          
+          title: 'Success',
+            text: `Your password reset is successful!`,
+            type: 'success',
+            
+                  
         }).then(()=>{
          this.router.navigate(['/user'])
         })
@@ -86,6 +94,12 @@ export class NewpasswordComponent implements OnInit {
     localStorage.clear();
     sessionStorage.clear();
    
+  }
+  toggle() {
+    this.show = !this.show;
+  }
+  confirmtoggle(){
+    this.confmshow = !this.confmshow;
   }
   }
 

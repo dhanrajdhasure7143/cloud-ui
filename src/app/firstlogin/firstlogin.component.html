@@ -20,7 +20,7 @@
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/user.svg" class="icon">
               <input type="text" name="firstName" #firstName="ngModel" class="form-control"
-                [(ngModel)]="model.firstName" maxlength="20" placeholder="First Name" required [ngModelOptions]="{standalone: true}">
+                [(ngModel)]="model.firstName" maxlength="20" placeholder="First Name" required (keypress)="lettersOnly($event)">
               <span *ngIf="((firstName.invalid && firstloginform.submitted)|| (firstName.errors && firstName.touched))"
                 class='fa fa-info-circle errspan'> First Name is required </span>
             </div>
@@ -28,14 +28,13 @@
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/user.svg" class="icon">
               <input type="text" name="lastName" id="lastName" #lastName="ngModel" class="form-control"
-                [(ngModel)]="model.lastName" maxlength="20" placeholder="Last Name" required>
+                [(ngModel)]="model.lastName" maxlength="20" placeholder="Last Name" required (keypress)="lettersOnly($event)">
               <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
                 class='fa fa-info-circle errspan'> Last Name is required </span>
             </div>
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/mail.svg" class="icon">
-              <input type="email" id="email" #email="ngModel" class="form-control" [(ngModel)]="decodedToken" required
-                [ngModelOptions]="{standalone: true}" ngModel maxlength="30" placeholder="Email" disabled>
+              <input type="email" id="email" name='email' #email="ngModel" class="form-control" [(ngModel)]="decodedToken" maxlength="30" placeholder="Email" required disabled>
               <span *ngIf="((email.invalid && firstloginform.submitted)|| (email.errors && email.touched))"
                 class='fa fa-info-circle errspan'> Email is required </span>
             </div>
@@ -43,9 +42,11 @@
             <img src="assets/images/registration/Lock.svg" class="icon">
             <span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
             <input [type]="(show==true) ? 'password' : 'text'" id="password" name="password" #password="ngModel" class="form-control"
-              [(ngModel)]="model.password" [maxLength]="12" placeholder="Password" required>
-            <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))"
-              class='fa fa-info-circle errspan'> Password is required </span>
+              [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" required>
+            <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
+              <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
+              <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
+            </span>
           </div>
 
             <div class="form-group col-sm-6 inner-addon left-addon">
@@ -58,12 +59,12 @@
             
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/company.svg" class="icon">
-              <input type="text" name="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
+              <input type="text" [disabled]="isCompanydisabled" name="company" #company="ngModel" class="form-control" [(ngModel)]="model.company"
                 maxlength="30" placeholder="Company" required>
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
                 class='fa fa-info-circle errspan'> Company is required </span>
             </div>
-            <div class=" col-md-6 form-group inner-addon left-addon">
+            <!-- <div class=" col-md-6 form-group inner-addon left-addon">
                 <img src="assets/images/registration/department.svg" class="icon">
                 <select class="form-control" (change)="onChangeDepartment($event.target.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
                 required>
@@ -73,19 +74,19 @@
                 </select>
                 <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
                 class='fa fa-info-circle errspan'> Department is required </span>
-              </div>
-              <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
+              </div> -->
+              <!-- <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
                   <img src="assets/images/registration/department.svg" class="icon">
                 <input type="text" class="form-control" name="other_department" #other_department="ngModel" [(ngModel)]='otherDepartment' maxlength="20" placeholder="Department" required>
                 <span *ngIf="((other_department.invalid && firstloginform.submitted)|| (other_department.errors && other_department.touched))"
                 class='fa fa-info-circle errspan'> Department is required </span>
-              </div>
+              </div> -->
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/Global.svg" class="icon">
               <select class="form-control" (change)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
                <option  [value]="undefined" disabled hidden>Country</option>
                <!-- <option hidden disabled [selected]=true>Country</option> -->
-                <option *ngFor="let country of countryInfo; let i= index"  value="{{i}}">{{country.CountryName}}
+                <option *ngFor="let country of countryInfo; let i= index"  [value]="country.CountryName">{{country.CountryName}}
                 </option>
               </select>
               <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
@@ -95,9 +96,9 @@
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/State.svg" class="icon">
               <select class="form-control" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
-                <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+                <option *ngIf="stateInfo == ''" value="-1">State</option>
                 <option  [value]="undefined" disabled hidden>State</option>
-                <option *ngFor="let state of stateInfo; let j = index" value="{{j}}">{{state.StateName}}</option>
+                <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
               </select>
               <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
                 class='fa fa-info-circle errspan'> State is required </span>
@@ -108,7 +109,7 @@
               <select class="form-control" name='city' #city='ngModel' [(ngModel)]='model.city' required>
                 <option *ngIf="cityInfo == ''" value="-1">City</option>
                 <option  [value]="undefined" disabled hidden>City</option>
-                <option *ngFor="let city of cityInfo; let k = index" value="{{k}}">{{city}}</option>
+                <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
               </select>
               <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
                 class='fa fa-info-circle errspan'> City is required </span>
@@ -116,25 +117,46 @@
 
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/Zip Code.svg" class="icon">
-              <input type="number" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipCode"
+              <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control" [(ngModel)]="model.zipcode"
                  onKeyPress="if(this.value.length==10) return false;" placeholder="Zip Code" required>
               <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
                 class='fa fa-info-circle errspan'> Zip Code is required </span>
             </div>
-            <div class="form-group col-sm-6 inner-addon left-addon">
+
+            <div *ngIf ="!isInput"class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
-              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==15) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'in'}"
-                   (ng2TelOutput)="getNumber($event)">
-                   <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"  -->
+              <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}">
+                   <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
                   <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
-                  class='fa fa-info-circle errspan'> PhoneNumber is required </span>
+                  class='fa fa-info-circle errspan'> Phone Number is required </span>
                 </div>
-            <div class="form-group buttns col-sm-12">
-              <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an Account&#63;</a>
+                <div *ngIf="isInput" class="form-group col-sm-6 inner-addon left-addon">
+                  <img src="assets/images/registration/smartphone.svg" class="icon phoneicon">
+                  <input type="text" (keydown)="onKeydown($event)" class="form-control phonenumber col-sm-12" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}">
+                       <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
+                      <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
+                      class='fa fa-info-circle errspan'> Phone Number is required </span>
+                    </div>
+
+                <div class="form-group col-sm-6 inner-addon left-addon photoupload">
+                  <img src="assets/images/registration/ImageUpload.svg" class="imageuploadicon">
+                  <input  class="form-control col-sm-12" id="image" placeholder="Select image to upload"
+                  name='image' #image="ngModel" [(ngModel)]="profileimage" disabled/>
+                  <span style="color: black;"><b>Note : Max File Size 128kb </b></span>
+                  <span>
+                  <div class="fileUpload btn btn-primary">
+                  <span>Choose File</span>
+                 <input id="uploadBtn" type="file" class="upload" (change)="onFileSelected($event)" />
+                 
+                </div>
+              </span>
+              </div>
+                          <div class="form-group buttns col-sm-12">
+              <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an account&#63;</a>
             <!-- </div>
             <div class="form-group col-sm-6 continue_btn pull-right"> -->
              <div class='row float-right'>
-              <button type="button" class="btn-back clearbtn" (click)="resetForm()">Clear all</button>
+              <button type="button" class="btn btn-primary clearbtn" (click)="resetForm()" style='margin-right:10px'>Clear all</button>
               <button type="submit" class="btn btn-primary registrbtn"  [disabled]="firstloginform.invalid || showErr">Register</button>
             </div>
             </div>

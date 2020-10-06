@@ -13,15 +13,16 @@
                     
                     <div class="form-group col-sm-12 inner-addon left-addon">
                         <img src="assets/images/username_icon.png" class="userIcon">
-                        <input type="text" formControlName="username" placeholder="Enter User Name" class="form-control userinput"
-                          [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
+                        <input type="text" formControlName="username" placeholder="Enter Email" class="form-control userinput"
+                        pattern="^\S*[@]\S*[.]\S*$"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                          <div *ngIf="f.username.errors.required">Username is required</div>
+                          <div *ngIf="f.username.errors.pattern">Enter valid email address</div>
+                          <div *ngIf="f.username.errors.required">Email is required</div>
                         </div>
                       </div>
                       <div class="form-group col-md-12 inner-addon left-addon right-addon">
                           <img src="assets/images/password_icon.png" class="pswIcon">
-                          <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                          <span  (click)="toggle()" class="input-group-add pwd-class"> <i style="margin-left : 15px" class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
 
                           <input [type]="(show==true) ? 'password' : 'text'" formControlName="password" #password class="form-control pswinput" placeholder="Enter Password"
                             [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required/>
@@ -40,10 +41,30 @@
                 <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
                     <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
                   </div>
+                  <div class="form-group row grp-buttons">
+            <div class="col-sm-12 ">
+                    <label class="have_acc have_account">or Login through</label>
+                    
+                  </div>
+                    <div class="col-md-6 text-center">
+                       <!-- <button type="button" class="btn-buttons" a href="http://localhost:9797/oauth2/authorize-client/google">
+                        <img src="assets/login icons/google.svg" class="buuton-icons">Google
+                      </button>  -->
+                      <a href="https://idmdev.epsoftinc.in/api/socialLogin?authProvider=google&redirectPath=https://eiapclouddev.epsoftinc.in/#/user">
+                        <img src="assets/login icons/google.svg" class="buuton-icons"/>Google</a> 
+                    </div>
+                    <div class="col-md-6 text-center" >
+                      <!-- <button type="button" class="btn-buttons" (click)="azureLogin()">
+                        <img src="assets/login icons/office.svg" class="buuton-icons"><label >Office 365</label>
+                      </button> -->
+                      <a href="https://localhost:9797/api/socialLogin?authProvider=azure&redirectPath=http://localhost:4200/#/user">
+                        <img src="assets/login icons/office.svg" class="buuton-icons"/>Office</a> 
+                    </div>
+                  </div>
                 </form>
-                <div class="col-sm-12">
-                    <label  class="have_acc col-sm-12">Don't have an account&#63;</label>
-                    <button (click)="requestDemo()" class="btn btn-primary login-btn">Register</button>
+                <div >
+                    <label class = "have_acc have_account">Don't have an account&#63;</label>
+                    <button (click)="requestDemo()" class="btn btn-primary register-btn">Register</button>
     
                 </div>
             </div>

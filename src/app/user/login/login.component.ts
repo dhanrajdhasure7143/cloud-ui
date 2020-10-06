@@ -9,6 +9,8 @@ import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { Particles } from '../../_models/particlesjs';
+import { ProfileService } from 'src/app/_services/profile.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  public userRole:any = [];
   public show:boolean=true;
 
   constructor(
@@ -36,7 +39,8 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private sharedData: SharedDataService,
     public userService: UserService,
-    private particles :Particles
+    private particles :Particles,
+    private profileService:ProfileService
     
   ) {
     this.session.stopWatching();
@@ -93,7 +97,19 @@ export class LoginComponent implements OnInit {
       .login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
+        
         data => {
+          if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
+
+            this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
+            // Swal.fire({
+            //   type: 'error',
+            //   title:"Error!",
+            //   text: "Your account is temporarily locked for 3 hours."
+            // });
+             return
+          }
+          
           if (this.f.rememberme.value) {
             this.set('username', this.f.username.value, {});
             this.set('password', this.f.password.value, {});
@@ -101,7 +117,7 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.session.startWatching(); 
 
- 
+          localStorage.setItem('ProfileuserId',this.f.username.value)
 
           // user details based on userId
           this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
@@ -111,6 +127,8 @@ export class LoginComponent implements OnInit {
           this.authenticate();
         },
         error => {
+
+          
           this.error = "Email or Password is invalid.";
           this.loading = false;
         },
@@ -121,16 +139,18 @@ export class LoginComponent implements OnInit {
 
  
   checkSuccessCallback(data:any){
+    console.log('data',data);
+    
     this.sharedData.setLoggedinUserData(data);
-    this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
-    // localStorage.setItem('firstName',data.firstName);
-    // localStorage.setItem('lastName',data.lastName);
+    // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
+     localStorage.setItem('firstName',data.firstName);
+     localStorage.setItem('lastName',data.lastName);
     localStorage.setItem('userName',data.userId);
-    // localStorage.setItem('tenantName',data.tenantId.id);
-    // localStorage.setItem('phoneNumber',data.phoneNumber);
-    // localStorage.setItem('company', data.company);
+   localStorage.setItem('tenantName',data.tenantID);
+     localStorage.setItem('phoneNumber',data.phoneNumber);
+     localStorage.setItem('company', data.company);
     // localStorage.setItem('designation',data.designation);
-    // localStorage.setItem('country',data.country);
+     localStorage.setItem('country',data.country);
     // localStorage.setItem('department', data.department);
 
     //this.userService.getRole(data.company,data.userId).subscribe(data => this.getRoles(data));
@@ -181,13 +201,30 @@ export class LoginComponent implements OnInit {
     CookieStore.set(name, value, opts);
   }
 
+  // authenticate() {
+  //   this.router.navigate(['/activation']);
+  // }
   authenticate() {
-    this.router.navigate(['/activation']);
+    this.profileService.getUserRole(2).subscribe(res=>{
+      this.userRole=res.message;
+      console.log("user role is",this.userRole)
+      localStorage.setItem('userRole',this.userRole);
+     if(this.userRole.includes('SuperAdmin')){
+      this.router.navigate(['/superadmin']);
+      
+     }else{
+      this.router.navigate(['/activation']);
+     }
+    },error => {
+      this.error = "Please complete your registration process";
+      this.loading = false;
+    })
+    // this.router.navigate(['/activation']);
   }
 
   requestDemo() {
     // location.href = this.config.portfolioSite;
-this.router.navigate(['/creataccount'])
+this.router.navigate(['/createaccount'])
   }
 
   googleLogin() {

@@ -16,8 +16,8 @@ export class FirstloginService {
 
   constructor(private http: HttpClient, private router: Router, private content: ContentfulService) { }
 
-  registerUser(user: User): Observable<any> {
-    return this.http.post<any>(`/api/user/registrationcomplete`, user);
+  registerUser(payload): Observable<any> { 
+    return this.http.post<any>(`/api/user/registrationcomplete`, payload,{ observe: 'response' });
   }
   verifyToken(token: any): Observable<any> {
     return this.http.get<any>(`/api/user/registrationConfirm?token=${token}`);
@@ -45,6 +45,9 @@ export class FirstloginService {
   // }
   verifyInvitee(inviteId: any): Observable<any> {
     return this.http.get<any>(`/api/user/invitationConfirm?inviteId=${inviteId}`);
+  }
+  getSuperAdminData():Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/subscriptions/allTenants')
   }
 
 }

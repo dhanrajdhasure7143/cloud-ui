@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 import  countries  from './../../assets/jsons/countries.json';
 import { Particles } from '../_models/particlesjs';
+import { Logger } from 'ag-grid-community';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-firstlogin',
@@ -20,6 +22,7 @@ export class FirstloginComponent implements OnInit {
   selectedItems: any[] = [];
   dropdownSettings: any = {};
   departments:any;
+  phnCountry: any;
   itemsShowLimit = 1;
   stateInfo: any[] = [];
   countryInfo: any[] = [];
@@ -29,6 +32,10 @@ export class FirstloginComponent implements OnInit {
   submitflag:boolean=false;
   public show:boolean=true;
   public otherDepartment:any;
+  isCompanydisabled:boolean=false;
+  selectedFile: any;
+  data: any;
+  isInput: boolean = false;
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -59,6 +66,9 @@ export class FirstloginComponent implements OnInit {
      }
 
   ngOnInit() {
+  
+    
+    
     this.particles.getParticles();
     this.getCountries();
     this.getAllDepartments();
@@ -92,30 +102,70 @@ export class FirstloginComponent implements OnInit {
     }
   }
   onChangeCountry(countryValue) {
+    this.isInput = !this.isInput;
     // this.model.country = this.countryInfo[countryValue].CountryName;
+    // this.stateInfo=this.countryInfo["India"].States;
+    console.log('CountryName',countryValue);
     
-    this.stateInfo=this.countryInfo[countryValue].States;
-    // this.cityInfo=this.stateInfo[0].Cities;
-    this.cityInfo=[];
+    
+    for(var i=0; i< this.countryInfo.length; i++){
+      if(this.countryInfo[i].CountryName == countryValue ){
+        this.phnCountry = this.countryInfo[i].CountryCode
+        console.log("countryCode", this.countryInfo[i].CountryCode);
+        
+        this.stateInfo=this.countryInfo[i].States; 
+      }
+    }
+  
+   
   }
 
   onChangeState(stateValue) {
-    this.cityInfo=this.stateInfo[stateValue].Cities;
+    // this.model.state =this.stateInfo[stateValue].StateName
+    // console.log("state : " + this.model.state);
+    // this.cityInfo=this.stateInfo[stateValue].Cities;
+    for(var i=0; i< this.stateInfo.length; i++){
+      if(this.stateInfo[i].StateName == stateValue ){
+        this.cityInfo=this.stateInfo[i].Cities; 
+      }
+    }
   }
+  
+  // onChangeCity(cityValue){
+  //   console.log('cityValue',cityValue);
+    
+  //   // this.model.city = this.cityInfo[cityValue]
+  // }
   onSuccessOfVerifyToken(response: any) {
     if(response){
-      if(response.message==='Token Invalid' || response.message==='Token Expired'){
-        this.router.navigate(['/user']);
-      }else {
-        //TODO:success data handle
+      if(response.errorMessage==='Token invalid'){
+        Swal.fire({
+          title: 'Error',
+          text: `This email has been already registered with us. Please register with different email.`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['/user']);
+          }
+        });
+        // this.router.navigate(['/user']);
+      }else if(response.company!=null){
+        this.isCompanydisabled = true;
+        this.model.company = response.company;
+        
       }
     }
      
     }
     onSuccessOfConfirmToken(response: any){
+      this.isCompanydisabled = true;
+      this.model.company = response.company;
      if(response.message === 'Invalid User Invite' || response.message === 'User Invitation  Already Confirmed'){
       this.router.navigate(['/user']);
      }
+     
 
     }
   onSubmit() {
@@ -129,12 +179,50 @@ export class FirstloginComponent implements OnInit {
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
     //userDetails.department = this.model.department[0];
-    this.service.registerUser(userDetails).subscribe(res => {
+   const payload = new FormData();
+   payload.append('userId', userDetails.userId);
+   payload.append('firstName', userDetails.firstName);
+   payload.append('lastName', userDetails.lastName);
+   payload.append('password', userDetails.password);
+   payload.append('phoneNumber', userDetails.phoneNumber);
+   payload.append('country', userDetails.country);
+   payload.append('designation', userDetails.designation);
+   payload.append('company', userDetails.company);
+   payload.append('state', userDetails.state);
+   payload.append('city', userDetails.city);
+   payload.append('zipcode', userDetails.zipcode);
+   if(this.selectedFile!=undefined){
+   payload.append('profilePic', this.selectedFile, this.selectedFile.name);
+  }
+
+    this.service.registerUser(payload).subscribe(res => {
+      this.data=res
       sessionStorage.clear();
       localStorage.clear();
+      if(this.data.body.errorMessage==='Uploaded file is too large')
+      {
+        Swal.fire({
+          title: 'Error!',
+          text: "Uploaded file is too large",
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+      }
+     else if(this.data.body.errorMessage==='Uploaded file is not supported')
+      {
+        Swal.fire({
+          title: 'Error!',
+          text: "Please upload png or jpg image",
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+      }
+    else {
       Swal.fire({
-        title: 'Success!',
-        text: `Registration completed successfully.`,
+        title: 'Success',
+        text: `Registration completed successfully!`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: false
@@ -143,7 +231,8 @@ export class FirstloginComponent implements OnInit {
           this.router.navigate(['/']);
         }
       });
-    }, err => {
+    }
+  }, err => {
       Swal.fire({
         title: 'Error!',
         type: 'error',
@@ -160,7 +249,7 @@ export class FirstloginComponent implements OnInit {
   }
   onKeydown(event){
     
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace"]
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
     let temp =numArray.includes(event.key); //gives true or false
    if(!temp){
     event.preventDefault();
@@ -171,8 +260,26 @@ export class FirstloginComponent implements OnInit {
   }
   resetForm() {
     this.model = new User();
+    $("#image").val('')
+    this.selectedFile=null;
   }
     loopTrackBy(index, term){
     return index;
   }
+  lettersOnly(event): boolean {
+ 
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+    }
+    }
+
+    onFileSelected(event)
+    {
+      this.selectedFile=<File>event.target.files[0]
+      console.log(this.selectedFile.name)
+     $("#image").val(this.selectedFile.name)
+    }
 }

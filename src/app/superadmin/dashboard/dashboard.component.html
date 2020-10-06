@@ -1,0 +1,41 @@
+<div class="container-fluid hyperlink-details">
+  <div class='row'>
+  <div class='col-md-8'>
+      <h4> Dashboard</h4>
+  </div>
+  
+  <div class='search-One'>
+    <input class="form-control searchOne pull-right" type="text" name='search' style="margin-left: 150px;" [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off">
+  <!-- <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="userFilter" aria-label="Search" [ngModelOptions]="{standalone: true}"/> -->
+  </div>
+</div>
+</div>
+<div class="container-fluid table-details">
+  <table class="table table-striped col-md-12" border="2">
+    <thead>
+      <tr> 
+        <th scope="col" sortable="area" (sort)="onSort($event)" class="tablecolumn-style" >Admin Name</th>
+        <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Subscribed Plan</th>
+        <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Latest Invoice Amount</th>
+        <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Last Billing Date</th>
+        <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Next Billing Date</th>
+        <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Mobile</th>
+        <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let plan of plans | paginate: { itemsPerPage: 4, currentPage: p } | FilterPipe: searchdashboard">
+         <td>{{plan.tenantAdminName}}</td>
+        <td>{{plan.subscribedPlan}}</td>
+        <td>{{plan.lastInvoiceAmount|currency}}</td>
+        <td>{{plan.lastBillingDate}}</td>
+        <td>{{plan.dueDate}}</td><!--{{plan.nextBillingDate}}-->
+        <td>{{plan.mobile}}</td>
+        <td>{{plan.email}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="plans!=='undefined'" class="dashboardpagination">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+</div>

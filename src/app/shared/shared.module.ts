@@ -28,6 +28,11 @@ import { NotifierModule, NotifierService } from "angular-notifier";
 import { FooterComponent } from './footer/footer.component';
 import { TermsconditionsComponent } from './termsconditions/termsconditions.component';
 import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { CompareValidatorDirective } from './comparepsw-validator.directive';
+
 
 
 @NgModule({
@@ -50,6 +55,9 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
       FooterComponent,
       TermsconditionsComponent,
       PrivacypolicyComponent,
+      CompareValidatorDirective
+      
+      
       ],
   imports: [
     CommonModule,
@@ -60,7 +68,10 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
     Ng2TelInputModule,
     ModalModule.forRoot(),
     TabsModule.forRoot(),
-    NotifierModule
+    NotifierModule,
+    NgSelectModule,
+    NgxPaginationModule,
+    NgxSpinnerModule
   ],
   providers: [NotifierService],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent],

@@ -2,20 +2,21 @@
 
 <div class="container">
     <div class="row">
-      <div class="review-heading">
-      <h2 id="" class="plan_label ">You Have Selected Plan    <span class="plan">{{name}}</span></h2>
-      <h5 id="paymnt-subheding">Review your Order to proceed payment</h5>
-      <p class="pay_titles">Card Details:<button class="btn" (click)="editCardDetails()"><img src="assets/images/editCard.svg" alt=""></button>
+      <div class='col-md-1'></div>
+      <div class="col-md-11 review-heading">
+      <h2 id="" class="plan_label ">Features will be enabled based on the selected plan</h2>
+      <h5 id="paymnt-subheding">Review your order to proceed payment</h5>
+      <p class="pay_titles" style="margin-left:7%;width:100%">Card Details<button class="btn" (click)="editCardDetails()" title="Edit card"><img src="assets/images/editCard.svg" alt=""></button>
       </p>
-  </div>
+      </div>
       <!-- <form  autocomplete="off" class="col-md-12 row carddetail"> -->
-        <div class="col-md-12 carddetail row">
+        <div class="col-md-10 carddetail row">
 
         <div class="col-md-2"></div>
         
         <div class="col-md-3">
               <div class="col-md-12">
-                <label for="cardHolder">Cardholder name</label>
+                <label for="cardHolder">Cardholder Name</label>
                 <h6>{{cardDetails.cardHoldername}}</h6>
               </div>
 
@@ -28,7 +29,7 @@
         <div class="col-md-4">
               <div class="row">
               <div class="col-sm-8">
-                <label for="cardNumber">Card number </label>
+                <label for="cardNumber">Card Number </label>
                 <h6>{{cardNumberdigts}}</h6>
               </div>
               <div class="col-sm-4">
@@ -42,7 +43,7 @@
                 <div class='col-sm-12 apply-coupon'>
                     <p *ngIf='!iscoupon' (click)='haveCoupon()'>Have a coupon ?</p>
                  <span *ngIf='iscoupon' class="row"><input type="text" name='coupon' #coupon='ngModel' [(ngModel)]='couponcode' placeholder="Enter Coupon Code" class='col-sm-6 form-control coupon-input' required>
-                      <button class='btn hoverable applybtn' (click)='applyCoupon()' [disabled] = "coupon.invalid">Apply</button></span>
+                      <button class='btn hoverable applybtn' (click)='applyCoupon(couponcode)' [disabled] = "coupon.invalid || isapplied">Apply</button></span>
                       <div style="overflow-wrap: break-word;" class="errordiv col-md-6">
                           <span *ngIf="success" class="alert-success text-center coupon_alertsuccess">{{success}}</span>
                           </div>
@@ -56,19 +57,23 @@
         <!-- <div class="col-md-2"></div> -->
         <div class="col-md-3 plan_detail_box">
           <div class=" ">
-            <h4 class="select_label">Subscrption Details</h4>
+            <h5 class="select_label">Subscription Details</h5>
             <div class=" ">
               <div class=" ">
                 <h6 class="plan_label">Plan   <span class="plan">  {{name}}</span> <span class="backbtn" [routerLink]="['/activation/payment/chooseplan']">Change plan</span> </h6>
               </div>
               <div class="period">
                 <p>Billing Period : {{selected_plans.term}}</p>
+                <p>Plan Amount :{{selected_plans.amount}}</p>
+                <p>No.of Users: {{noOfusers}}</p>
+                <p *ngIf='isapplied'>Coupon applied : {{couponAmount}}</p>
+                <p>Tax({{taxPercentage}}%): {{taxamount}}</p>
               </div>
             </div>
 
             <div class="plandetails">
               <hr>
-                  <h5 class="plandetails"> Total Payable : $  {{selected_plans.amount}}.00 </h5>
+                 <h5 class="plandetails"> Total Payable : $ {{totalPay}} </h5>
             <hr>
                 </div>
           </div>
@@ -79,9 +84,10 @@
           </div>
         <div class="col-md-3"></div>
 
-           <div class=" col-md-2" >
-              <button class="btn buybtn" (click)="buyProductPlan(template)" [disabled]="isdiable">Buy Now</button>
+           <div class="col-md-1" >
+              <button class="btn buybtn" style="margin-left:40px"(click)="buyProductPlan(template); clicked = true;" [disabled]="isdiable || clicked">Buy Now</button>
             </div>
+            <div class="col-md-3" style="display: block;height: 50px" ></div>
           </div>
       <!-- </form> -->
 
@@ -89,32 +95,38 @@
 </div>
 
 <ng-template #template >
-    <div class="modal modalOne">
-      <div class="container">
-        <div class="modal-body row">
-            <div class="col-md-12">
-                <h5 class="modal-title">Subscribed Succefully</h5>
-                <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                  <span aria-hidden="true">&times;</span>
-                </button> -->
-            </div>
-            <hr>
-            <div></div>
-            <div class="col-md-12 confirmationmsg">
-              <p>Product <span>: {{productId}}</span></p>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Subscription Confirmation</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+
+<div class="modal-body">
+
+            <div class="col-md-12 confirmationmsg" style="text-align:left;">
+              <table class="sub-confirmation">
+                <tr> <td>Product</td> <td> : </td> <td>   {{productId}}</td> </tr>
+                 <tr> <td>Plan</td> <td> : </td> <td>   {{selected_plans.nickName}}</td></tr>
+                 <tr> <td>Order Id</td> <td> :</td> <td>   {{subscriptionDetails.id}}</td></tr>
+                 <tr> <td>Subscription Id</td> <td> :</td> <td>   {{subscriptionDetails.subscriptionId[0]}}</td></tr>
+                 <tr> <td>Amount Paid</td> <td> :</td> <td>   {{totalPay}}</td></tr>
+                 <tr> <td>Period</td> <td> :</td> <td>   {{selected_plans.term}}</td>
+                  </tr>
+              </table>
+              <!-- <p>Product <span>: {{productId}}</span></p>
               <p>Plan <span>: {{selected_plans.nickName}} </span></p>
               <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
               <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
-              <p>Amount paid <span>: $ {{selected_plans.amount}}.00</span></p>
-              <p>Period <span>: {{selected_plans.term}}</span></p>
+              <p>Amount paid <span>: $ {{totalPay}}</span></p>
+              <p>Period <span>: {{selected_plans.term}}</span></p> -->
             </div>
 
             <div class="col-md-12 confirmationmsg">
               <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
             </div>
           </div>
-        </div>
-      </div>
+        
     </ng-template>
 
 
@@ -215,4 +227,6 @@
             </div>
           </div>
         </ng-template>
+
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner>
 

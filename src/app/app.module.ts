@@ -18,6 +18,9 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ValidateComponent } from './validate/validate.component';
 import { BsModalService } from 'ngx-bootstrap';
 
+import { SuperadminModule } from './superadmin/superadmin.module';
+import { DeviceDetectorModule } from 'ngx-device-detector';
+
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
   spaceId: '',
@@ -41,7 +44,7 @@ export const contentfulConfig: ContentfulConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    ValidateComponent,
+    ValidateComponent  
    
   ],
   imports: [
@@ -52,9 +55,11 @@ export const contentfulConfig: ContentfulConfig = {
     DashboardModule,
     UserModule,
     HttpClientModule,
+    SuperadminModule,
     PopoverModule.forRoot(),
     //BotGridModule,
-    Ng4LoadingSpinnerModule.forRoot()
+    Ng4LoadingSpinnerModule.forRoot(),
+    DeviceDetectorModule 
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

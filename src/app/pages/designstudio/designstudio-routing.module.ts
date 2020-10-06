@@ -5,18 +5,18 @@ import { HomeComponent } from './home/home.component';
 import { BoteditComponent } from './home/botedit/botedit.component';
 
 const routes: Routes = [{
-  path: '',
-  component: HomeComponent,
-  children: [
-    {
-      path: 'botedit/:robot',
-      component: BoteditComponent
-    },
-    {
-      path: 'botcreate',
-      component: BotcreateComponent
-    }
-  ]
+  // path: '',
+  // component: HomeComponent,
+  // children: [
+  //   {
+  //     path: 'botedit/:robot',
+  //     component: BoteditComponent
+  //   },
+  //   {
+  //     path: 'botcreate',
+  //     component: BotcreateComponent
+  //   }
+  // ]
 }];
 
 @NgModule({

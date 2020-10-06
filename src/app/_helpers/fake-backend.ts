@@ -21,6 +21,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
       let authorizationendpoint = this.config.authorizationendpoint;
       let notificationsendpoint = this.config.notificationsendpoint;
       let Subscriptionendpoint=this.config.Subscriptionendpoint;
+      let isSecurityManagerEnabled = this.config.isSecurityManagerEnabled;
+      let proxyTokenendpoint = this.config.proxyTokenendpoint;
 
       if (!localStorage.getItem('userName')) {
         //localStorage.setItem('userName', req.body.username);
@@ -35,10 +37,15 @@ export class BackendURLInterceptor implements HttpInterceptor {
         Subscriptionendpoint=Subscriptionendpoint+'/';
       }
 
-     
-      if (req.url !== '/api/login/beta/accessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0) {
+      if (((isSecurityManagerEnabled == true && req.url !== '/Idm/accessToken') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/accessToken')) && req.url !== '/api/login/beta/newAccessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0 && req.url.indexOf('http://api.ipify.org') < 0 ) {
         req = req.clone({
          url: apiendpoint + req.url,
+          body: req.body,
+          headers: req.headers
+        });
+      } else if (req.url.indexOf('http://api.ipify.org') > -1) {
+        req = req.clone({
+          url: req.url,
           body: req.body,
           headers: req.headers
         });
@@ -74,6 +81,9 @@ export class BackendURLInterceptor implements HttpInterceptor {
         });
       }
       else {
+      if(isSecurityManagerEnabled &&  req.url == '/Idm/accessToken'){
+         tokenendpoint = proxyTokenendpoint;
+      }
         req = req.clone({
           url: tokenendpoint + req.url,
           body: req.body,

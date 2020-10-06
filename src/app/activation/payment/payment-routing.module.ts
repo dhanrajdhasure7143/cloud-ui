@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DetailsComponent } from './details/details.component';
 import { ReviewComponent } from './review/review.component';
 import { ChooseplanComponent } from './chooseplan/chooseplan.component';
+import { CouponComponent } from './coupon/coupon.component';
 
 
 const routes: Routes = [{
@@ -14,6 +15,10 @@ const routes: Routes = [{
 }, {
   path: 'review',
   component: ReviewComponent
+},
+{
+  path: 'coupon',
+  component: CouponComponent
 }];
 
 @NgModule({

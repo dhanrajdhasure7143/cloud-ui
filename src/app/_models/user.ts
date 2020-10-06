@@ -11,4 +11,7 @@ export class User {
     email: string;
     company: string;
     department: string;
+    state:string;
+    city:string;
+    zipcode:string;
 }

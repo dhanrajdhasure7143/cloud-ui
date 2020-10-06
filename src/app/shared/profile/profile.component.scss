@@ -17,7 +17,6 @@
   margin: 0;
 }
 
-
 .slide-up{
     bottom: 0px !important;
     transition: 1s;
@@ -31,6 +30,15 @@
 .types{
     color:gray;
     width:17%;
+}
+.types1{
+    color:gray;
+    width:10% !important;
+
+}
+.types2{
+    color:gray;
+    width:15%;
 }
 
 .slider_heading{
@@ -57,10 +65,14 @@
 }
 
 .update_btn{
+    float: right;
     border-radius: 20px;
+    color: #f4f4f4;
     background-color: #0062cf !important;
     margin-top: 20px;
-    margin-right: 10px;
+    // margin-right: 10px;
+    width: 100px;
+    padding: 0px;
 }
 
 .search-One{
@@ -98,6 +110,10 @@
     color: red;
     cursor: pointer;
 }
+.textA{
+    overflow: hidden !important;
+    min-height: 80px !important;
+}
 
 .invite{
     text-align: center;
@@ -107,10 +123,83 @@
     margin-left: 46%;
 }
 .invteform{
-    margin-left: 33.33%;
-    margin-top: 5px;
+      // margin-left: 33.33%;
+      margin-top: 8px;
+      /* margin-right: -414px; */
+      margin-left: 209px;
+      width:150%;
 }
-
+.inviterow
+{
+    overflow: auto !important;
+    height: 230px;
+    display: block;
+}
+.createAlert
+{
+     // background-color: #26c9EE;
+     color: #f4f4f4;
+     // border: #26c9EE;
+     border-radius: 20px;
+     margin-top: 3px;
+     margin-right: 5px;
+     // position: absolute;
+     // right: 20px;
+}
+.configalerts
+{
+    overflow: scroll;
+    height: 230px;
+}
+.alertspagination
+ {
+     margin-left: 60%;
+}
+.permissionpagination
+{
+    margin-left: 52%;
+}
+.notificationpagination
+{
+    margin-left: 52%; 
+}
+.alert
+{
+    text-align: center;
+    font-weight: bold;
+    bottom: 5px;
+    margin-bottom: -3px;
+    float: left;
+    margin-left: 420px; 
+}
+.alertform
+{
+    margin-left: 20.33%;
+    margin-bottom: 70px;
+}
+.alerttype{
+    color:gray;
+    width:15%;
+}
+.norecords
+{
+    position: absolute;
+    top: px;
+    bottom: 90px;
+    /* right: 20px; */
+    padding-left: 440px;
+    // padding-right: 20px;
+}
+.ntfnorecords
+{
+    position: absolute;
+    top: 95px;
+    padding-left: 440px;
+}
+.submitbtn-cancelsub
+{
+    margin-right: 170px;
+}
 .tableborder{
     border-collapse: separate;
     border:solid 1px black !important;
@@ -162,11 +251,99 @@ th,td{
     overflow: scroll;
     height: 230px;
 }
+// .scrollpermissions ng-select{ 
+//     overflow:scroll;
+//     height:60px;
+// }
+// .scrollpermissions ::-webkit-scrollbar{
+//     width:5px !important;
+//     height: 0px !important;
+// }
+
 ::-webkit-scrollbar{
     width:0px !important;
     height: 0px !important;
 
 }
+.set_default{
+    margin-left : 15px
+}
+.updatepermbtn{
+    border-radius: 20px;
+    height: 30px;
+    width: 100px;
+    border: 0px;
+    padding:0px;
+    margin-top: 10px;
+    margin-left: 150px;
+
+}
+.clearbtn{
+    border-radius: 20px;
+    height: 30px;
+    width: 100px;
+    border: 0px;
+    padding:0px;
+    margin-top: 30px;
+    margin-left: 330px;
+  }
+  .change_plan
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
+  }
+  .cancel_sub_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .cancel_modify_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .cancel_feedbackbtn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  
+  .submit_feedbackbtn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
+  }
+  .update_alert
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .cancel_alert_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .btn_alert_save
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
+  }
 .cardtype{
     color:gray;
 }
@@ -232,6 +409,7 @@ th,td{
     left: 65%;
     width: 31%;
     height: 430px;
+    size: initial;
     background-color:white; 
     top: 20%
 }
@@ -284,5 +462,204 @@ label{
     float:left;
 }
 .notificatnmsgs{
-    margin-top: 20px;
+    margin-top: 5px;
 }
+.updat_btndiv{
+    margin-left: auto !important;
+}
+  .default_btn{
+    font-size: 12px;
+    height: 25px;
+    width: 60px;
+    padding: 0px;
+    border-radius: 20px;
+    cursor: initial;
+    background: green;
+    color: white;
+  }
+
+  .loadRole, .hideRole{
+    text-decoration-line: underline;
+    color: #0062cf;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+    }
+
+    .addCard{
+        // background-color: #26c9EE;
+        color: #f4f4f4;
+        // border: #26c9EE;
+        border-radius: 20px;
+        margin-top: 20px;
+        // position: absolute;
+        // right: 20px;
+    }
+
+    .btn-save, .cancel_btn{
+        width: 100px;
+      }
+      .buttonsblock button{
+       margin-right: 20px;
+      }
+    
+      .setDefault_btn{
+        margin-left: 5px;
+      }
+
+     
+      .remov_btn ,.setDefault_btn{
+        font-size: 10px;
+        height: 25px;
+        width: 60px;
+        padding: 0px;
+        border-radius: 20px;
+      }
+.subsc
+{
+    background: none !important;
+    border: none !important;
+}
+.inner-addon { 
+    position: relative; 
+  }
+  .inner-addon .lockicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+  width: 40px;
+  margin-top: 20px;
+  margin-left:-110px;
+//   float: left !important;
+ 
+  }
+  .inner-addon .lockicon1 {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    width: 40px;
+    margin-top: 20px;
+    margin-left:-90px;
+  //   float: left !important;
+   
+    }
+  .left-addon input  { padding-left:  50px; }
+  .left-addon select  { padding-left:  50px; }
+  .right-addon input { padding-right: 20px; }
+  
+  .right-addon .eyeicon{
+    position: absolute;
+    padding: 10px;
+    z-index: 1000;
+    margin-left: 50% !important;
+    width: 40px;
+    color: #0061cf !important;
+    margin-top: 20px;
+    // margin-right:60px
+  }
+  .right-addon .eyeicon1{
+    position: absolute;
+    padding: 10px;
+    z-index: 1000;
+    margin-left: 55% !important;
+    width: 40px;
+    color: #0061cf !important;
+    margin-top: 20px;
+    // margin-right:60px
+  }
+
+  .chngpswd{
+    margin-top: 20px;
+    margin-left: 350px;
+  }
+  .updtpswd{
+    color: #f4f4f4;
+    border-radius: 20px;
+    margin-top: -45px;
+    margin-right: 800px;
+  }
+  .pswd form {
+      overflow-y: scroll !important;
+    //   max-height : 180px !important;
+      display: block;
+
+  }
+  .pswd ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+  
+  .scrolltable table {
+      overflow-y:scroll !important;
+      max-height : 200px !important;
+      display: block;
+
+  }
+
+  .scrolltable ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+
+button.btn.btn-primary.invite-button {
+    color: #f4f4f4;
+    width: 144px;
+    font-weight: bold;
+    border: #26c9EE;
+    border-radius: 33px;
+    margin-top: 3px;
+    margin-left: 109px;
+}
+.upload-container {
+    padding: 20px;
+    margin-top: -165px;
+}
+ 
+.upload-excel {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    margin-left: 603px;
+} 
+.uploaded-excel {
+    width: 50%;
+    float: left;
+    padding: 20px;
+   margin-left: 854px;
+    margin-top: -134px;
+} 
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 4px;
+    left: 54px;
+    bottom: 42px;
+    width: 38%;
+    border-radius: 23px;
+    line-height: 18px;
+  }
+  .fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .bulk
+  {
+      color: #33adff;
+      font-size: 29px;
+  }
+  .downloadbulk
+  {
+    font-size: 12px;
+  }
+
+    
+    
