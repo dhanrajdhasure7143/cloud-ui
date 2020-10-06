@@ -1342,7 +1342,7 @@ deleteUserYes(user,index){
     })
 
 
-    this.getAllUsersList();
+  
 
   }, err =>{
 

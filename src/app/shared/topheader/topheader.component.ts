@@ -220,6 +220,8 @@ public myname:any[]
   }
 
   profileName(){
+    console.log("came to profile icon");
+    
     this.firstname=localStorage.getItem('firstName');
       this.lastname=localStorage.getItem('lastName');
       var firstnameFirstLetter=this.firstname.charAt(0)
