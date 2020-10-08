@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
-
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,12 +10,20 @@ export class DashboardComponent implements OnInit {
 
   searchdashboard:any;
   p=0;
-  constructor(private firstloginservice:FirstloginService) { }
+  constructor(private firstloginservice:FirstloginService,private spinner:NgxSpinnerService) { }
   plans:any=[];
   ngOnInit() {
-    this.getSuperAdminData();
+    this.spinner.show();
+    
+    setTimeout(() => {
+     this.getSuperAdminData()
+       },800);
+       setTimeout(() => {
+         this.spinner.hide();
+     }, 7500);
   }
   getSuperAdminData(){
+    this.spinner.show();
     this.firstloginservice.getSuperAdminData().subscribe(res=>{this.plans=res
       console.log('resr',res);
       
