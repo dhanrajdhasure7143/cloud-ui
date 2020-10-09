@@ -14,13 +14,14 @@ export class JwtInterceptor implements HttpInterceptor {
             let ipAddress = '192.168.0.1';
             if(localStorage.getItem('ipAddress'))
              ipAddress = localStorage.getItem('ipAddress');
-
+             var timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
             request = request.clone({
                 headers: request.headers,
                 setHeaders: {
                     // userName: localStorage.getItem('userName'),
                     Authorization: `Bearer ${currentUser.accessToken}`,
                     'ip-address': ipAddress,
+                    'timezone':timezone
                     // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
                     // 'Access-Control-Allow-Origin': '*',
                     // 'Access-Control-Allow-Credentials': 'true',

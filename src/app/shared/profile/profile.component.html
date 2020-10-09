@@ -451,6 +451,8 @@
                              <th scope="col" class="alerttype">Channel</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mail</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mobile</th>
+                             <th scope="col" class="alerttype" >Created At</th>
+                             <th scope="col" class="alerttype" >Modified At</th>
                              <th scope="col" class="alerttype">Action</th>
                             </tr>
                           </thead>
@@ -462,6 +464,8 @@
                               <td>{{data.channel}}</td>
                               <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
+                              <td style="text-align:center">{{data.audit.created_at | date:'medium'}}</td>
+                              <td style="text-align:center">{{data.audit.modified_at | date:'medium'}}</td>
                               <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                 <span  (click)="alertsdeletedata(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 <div id="myid" [ngClass]="selectedalertdet === l?'isdelet':''" class="deletconfm">
@@ -517,6 +521,8 @@
                                           <!-- <th scope="col" class="types">Department</th> -->
                                           <th scope="col" class="types1">Product</th>
                                           <th scope="col" class="types1">Roles</th>
+                                          <th scope="col" class="types1">Created At</th>
+                                          <th scope="col" class="types1">Modified At</th>
                                           <th scope="col" class="types1">Status</th>
                                           <th scope="col" class="types1">Action</th>
                                         </tr>
@@ -531,6 +537,8 @@
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
                                             <td class="types">{{userdata.roleIdname}}</td>
+                                            <td class="types">{{userdata.created_at | date:'medium'}}</td>
+                                            <td class="types">{{userdata.modified_at | date:'medium'}}</td>
                                             <td>{{userdata.Status}}</td>
 
                                             <td class="deleticon">
@@ -623,6 +631,8 @@
                                                 <th scope="col" class="types">Role</th>
                                                 <th scope="col" class="types">Description</th>
                                                 <th scope="col" class="types">Permissions</th>
+                                                <th scope="col" class="types">Created At</th>
+                                                <th scope="col" class="types">Modified At</th>
                                                 <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
                                               </tr>
                                             </thead>
@@ -631,6 +641,7 @@
                                                 <td>{{role.appliationId.name}}</td>
                                                 <td>{{role.name}}</td>
                                                 <td>{{role.description}}</td>
+                                                
                                                 <td >
                                                   <div > 
                                                     <div *ngFor="let perm of role.permission;let k=index">
@@ -641,6 +652,8 @@
                                                     <span class="hideRole" *ngIf="isOpened == role.id" (click)="hideroleslist(j)">Hide</span>
                                                     </div>
                                                 </td>
+                                                <td>{{role.audit.created_at | date:'medium'}}</td>
+                                                <td>{{role.audit.modified_at | date:'medium' }}</td>
                                                 <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
                                                     <span  (click)="selectedroledata(role,j,rolestemplate)">
                                                     <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -811,15 +824,15 @@
                               <tr>
                                 <th scope="col" style="width:60%;">Notification Message</th>
                                 <th scope="col" style="width:300px;">Date</th>
-                                <th scope="col" style="width:200px;">Time</th>
+                                <!-- <th scope="col" style="width:200px;">Time</th> -->
                                 <th scope="col" style="width:200px !important;">Action</th> 
                               </tr>
                             </thead>
                             <tbody *ngIf="notificationList.errorMessage==undefined ">
                               <tr *ngFor="let messageList of notificationList | paginate: {id:'notification_page', itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
-                                <td>{{messageList.createdAt | date}}</td>
-                                <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
+                                <td>{{messageList.createdAt | date:'medium'}}</td>
+                                <!-- <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td> -->
                                 <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
                                   <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
                                       <div class="container-fluid deletefrm">
