@@ -200,6 +200,7 @@ export class ProfileComponent implements OnInit {
   upload_excel: string;
   inviteremailId: string;
   invitemultirole:boolean=false;
+  currentUserId: any;
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
@@ -268,6 +269,8 @@ this.profileservice.applications().subscribe(resp =>
 
   }
   getAllUsersList(){
+
+    this.currentUserId = localStorage.getItem("ProfileuserId");
     this.userManagement = [];
     this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
       console.log("responseeeeee", resp);
@@ -288,10 +291,12 @@ this.profileservice.applications().subscribe(resp =>
           }else{
             elementuser.userId['Status'] = 'Inactive'
           }
+          if(this.currentUserId != elementuser.userId.userId)
           this.userManagement.push(elementuser.userId);
          
           
         });
+        
         console.log("userManagementttttttttt", this.userManagement);
     });
 
