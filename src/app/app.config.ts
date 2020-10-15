@@ -17,15 +17,13 @@ export interface AiotalAppConfig {
 
 export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
-  apiendpoint: 'http://apdev.epsoftinc.in',
-  tokenendpoint: 'http://idmdev.epsoftinc.in',
+  apiendpoint: 'http://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
+  tokenendpoint: 'http://eiapdemoapi.epsoftinc.com:96/idm',
   proxyTokenendpoint: 'http://10.11.0.112:3001',
-  authorizationendpoint: 'http://authdev.epsoftinc.in',
+  authorizationendpoint: 'http://eiapdemoapi.epsoftinc.com:96/authservices',
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
-  notificationsendpoint: 'http://alertsdev.epsoftinc.in',
-  Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
-  productendpoint: 'http://eiapdev.epsoftinc.in',
-  isSecurityManagerEnabled : true
+  notificationsendpoint: 'http://eiapdemoapi.epsoftinc.com:96/alerts',
+  Subscriptionendpoint:'http://eiapdemoapi.epsoftinc.com:96/subscriptions',
+  productendpoint: 'http://eiapdemo.epsoftinc.com:86',
+  isSecurityManagerEnabled : false
 };
-
-
