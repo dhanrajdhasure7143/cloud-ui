@@ -30,6 +30,7 @@ export class DetailsComponent implements OnInit {
   // public yearList:any[]=[{"value":2020,"year":2020},{"value":2021,"year":2021},{"value":2022,"year":2022},{"value":2023,"year":2023},{"value":2024,"year":2024},{"value":2025,"year":2025},{"value":2026,"year":2026},{"value":2027,"year":2027}]
   public yearList:number[] = new Array(11);
   public userscount:number[] = new Array(17);
+  public monthlist:number[] = new Array(12);
   tenantID: string;
   isStandard: boolean;
   isFreetierDisabled: boolean=false;
@@ -39,6 +40,12 @@ export class DetailsComponent implements OnInit {
               private route:ActivatedRoute,) { }
 
   ngOnInit() {
+    if(localStorage.getItem('cardholdername')!=undefined){
+    this.cardHoldername=localStorage.getItem('cardholdername')
+    this.cardmonth=localStorage.getItem('cardExpMonth')
+    this.cardnumbertotal=localStorage.getItem('cardLast4')
+    this.cardyear=localStorage.getItem('cardExpYear')
+    }
     this.getproductPlans();
     this.editCardDetails();
     this.getYears();
@@ -103,6 +110,7 @@ export class DetailsComponent implements OnInit {
   }
   this.cardEncode=Base64.encode(JSON.stringify(this.cardDetails));
   this.card={id:this.cardEncode}
+  console.log("Card details",this.card)
   this.router.navigate(['/activation/payment/review',this.card]);
   }
 

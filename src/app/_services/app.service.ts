@@ -21,6 +21,7 @@ export class AppService {
   public _userActionOccured: Subject<void> = new Subject(); 
   public ipAddress:string; 
   public deviceInfo = null;
+  agent: string;
 
   constructor(private http: HttpClient, private router: Router, private content: ContentfulService, @Inject(APP_CONFIG) private config, private ip:IpServiceService, private deviceService: DeviceDetectorService) {
    this.getIP();
@@ -41,13 +42,15 @@ export class AppService {
 
   let headers = {};
   let url = `/api/login/beta/accessToken`;
+  const browser=this.getBrowserName();
   let isSecurityManagerEnabled = this.config.isSecurityManagerEnabled;
 
   if(isSecurityManagerEnabled){
     this.deviceInfo = this.deviceService.getDeviceInfo();
     if(this.ipAddress == undefined)
      this.ipAddress = '192.168.0.1';
-    headers = { 'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type' : 'W' }
+    headers = { 'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type' : 'W',
+  'browser': browser}
     localStorage.setItem('ipAddress', this.ipAddress);
    }
   
@@ -58,7 +61,7 @@ export class AppService {
 
             if(isSecurityManagerEnabled){
               if(user.resp_data.accessToken){
-              localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
+                              localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
               CookieStore.set('token', user.resp_data.accessToken, {});
               }
             }
@@ -72,7 +75,27 @@ export class AppService {
             return user;
         }));
   }
-
+  public getBrowserName() {
+    this.agent = window.navigator.userAgent.toLowerCase()
+  
+    switch (true) {
+      case this.agent.indexOf('edge') > -1:
+                return 'edge';
+      case this.agent.indexOf('opr') > -1 && !!(<any>window).opr:
+        return 'opera';
+      case this.agent.indexOf('chrome') > -1 && !!(<any>window).chrome:
+          return 'chrome';
+      case this.agent.indexOf('trident') > -1:
+        return 'ie';
+      case this.agent.indexOf('firefox') > -1:
+        return 'firefox';
+      case this.agent.indexOf('safari') > -1:
+        return 'safari';
+      default:
+        return 'other';
+    }
+    
+}
   logout() {
     this.loggedIn.next(false);
     this.triggered.next(true);
