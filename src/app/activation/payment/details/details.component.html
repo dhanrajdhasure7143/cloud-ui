@@ -21,8 +21,9 @@
                   <div class="form-group col-sm-8">
                     <label for="month">Month (MM)</label>
                     <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardmonth" required>
-                        <option  [value]="undefined" disabled hidden>Select Month</option>
-                      <option value="01">01</option>
+                      <option  [value]="undefined" disabled hidden>Select Month</option>
+                      <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
+                      <!-- <option value="01">01</option>
                       <option value="02">02</option>
                       <option value="03">03</option>
                       <option value="04">04</option>
@@ -33,7 +34,7 @@
                       <option value="09">09</option>
                       <option value="10">10</option>
                       <option value="11">11</option>
-                      <option value="12">12</option>
+                      <option value="12">12</option> -->
                     </select>
                   </div>
                   <div class="form-group col-sm-8">

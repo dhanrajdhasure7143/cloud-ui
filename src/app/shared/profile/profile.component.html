@@ -445,23 +445,23 @@
                         <table class="table table-borderless table-hover">
                           <thead>
                             <tr>
-                              <th scope="col" class="alerttype">Product</th>
-                              <th scope="col" class="alerttype">Type</th>
-                              <th scope="col" class="alerttype">Activity</th>
-                             <th scope="col" class="alerttype">Channel</th>
+                              <th scope="col" class="alerttype" style="text-align:center">Product</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Type</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Activity</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Channel</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mail</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mobile</th>
-                             <th scope="col" class="alerttype" >Created At</th>
-                             <th scope="col" class="alerttype" >Modified At</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Created At</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
                              <th scope="col" class="alerttype">Action</th>
                             </tr>
                           </thead>
                           <tbody >
                             <tr *ngFor="let data of alertslistactivitiesdata | paginate: { itemsPerPage: 5, currentPage: p }; let l=index">
-                              <td>{{data.app_name}}</td>
-                              <td>{{data.type}}</td>
-                              <td>{{data.activity_name}}</td>
-                              <td>{{data.channel}}</td>
+                              <td style="text-align:center">{{data.app_name}}</td>
+                              <td style="text-align:center">{{data.type}}</td>
+                              <td style="text-align:center">{{data.activity_name}}</td>
+                              <td style="text-align:center">{{data.channel}}</td>
                               <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
                               <td style="text-align:center">{{data.audit.created_at | date:'medium'}}</td>
