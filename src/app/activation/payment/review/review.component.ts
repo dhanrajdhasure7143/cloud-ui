@@ -115,6 +115,7 @@ public paymentToken:any;
         },200);
     
     const cardValue={
+      "name":this.cardDetails.cardHoldername,
       "number":this.cardDetails.cardnumbertotal,
       "exp_month":this.cardDetails.cardmonth,
       "exp_year":this.cardDetails.cardyear,

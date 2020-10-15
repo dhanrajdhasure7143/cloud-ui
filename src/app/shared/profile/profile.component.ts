@@ -214,7 +214,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.selectedIndex = '';
-    
+    this.getAllPaymentmodes();
     this.getAllProducts();
   //   this.applications = [
   //     {id: 2, name: "2.0"},
@@ -323,8 +323,19 @@ this.profileservice.applications().subscribe(resp =>
   }
   getAllPaymentmodes() {
 
-    this.profileservice.listofPaymentModes().subscribe(response => { this.paymentMode = response });
-
+    this.profileservice.listofPaymentModes().subscribe(response => {
+       console.log("paymentmode",response)
+       this.paymentMode = response 
+        let result = this.paymentMode.filter(obj => {
+         return obj.defaultSource === true
+        })
+       localStorage.setItem('cardExpMonth',result[0].cardExpMonth)
+       localStorage.setItem('cardExpYear',result[0].cardExpYear)
+        localStorage.setItem('cardholdername',result[0].name)
+       localStorage.setItem('cardLast4',result[0].cardLast4)
+        console.log(result)
+        console.log(this.paymentMode)
+        });
   }
 
   ngOnChanges() {
@@ -927,6 +938,7 @@ this.profileservice.applications().subscribe(resp =>
     }
     addNewCard(){
       this.cardDetails={
+          "name":this.cardModel.cardHoldername,
           "number":this.cardModel.cardNumber,
           "exp_month":this.cardModel.cardmonth,
           "exp_year":this.cardModel.cardyear,
