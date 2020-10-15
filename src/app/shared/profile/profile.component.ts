@@ -122,6 +122,7 @@ export class ProfileComponent implements OnInit {
   couponNamename: any;
   couponIdId: any;
   durationTime: any;
+  durationInMonths: any;
   percentageOffTot: any;
   data: any;
   allCoupons: any;
@@ -201,6 +202,9 @@ export class ProfileComponent implements OnInit {
   inviteremailId: string;
   invitemultirole:boolean=false;
   currentUserId: any;
+  datetime: any;
+  redeemdate: any;
+
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
     private firstloginservice: FirstloginService,
@@ -615,8 +619,17 @@ this.profileservice.applications().subscribe(resp =>
     this.modalRef = this.modalService.show(template)
   }
   selectedCoupondata(selCouponData, index, template){
+    console.log("selected coupon ",selCouponData)
     this.coupondata=selCouponData;
+    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-M-DTH:mm")
     this.modalRef = this.modalService.show(template)
+    if(selCouponData.amountOff != ' - ' && selCouponData.percentOff == ' - '){
+      this.isPercentage=false;
+        this.isAmount=true;
+    }else {
+      this.isPercentage=true;
+        this.isAmount=false;
+    }
 
   }
   infoModelSubmit() {
@@ -1595,8 +1608,25 @@ couponDelYes(coupon,index){
    }
 
     modifycoupon(couponData){
+      console.log("coupon data",couponData)
+      if(this.isPercentage){
+        couponData.amountOff = null
+      }else if(this.isAmount){
+        couponData.percentOff = null
+      }
+      let modifycouponinput = {
+        "currency": "usd",
+         "couponid":couponData.id,
+        "duration": couponData.duration,
+        "durationInMonth":couponData.durationInMonths,
+        "name": couponData.name,
+        "percent_off": couponData.percentOff,
+        "amount_off":couponData.amountOff,
+        "redeem_by": moment(this.redeemdate, "YYYY-M-DTH:mm").valueOf()/1000,
+        "redmee_times": couponData.maxRedemptions
+      }
       
-this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>{
+this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
   this.modalRef.hide();
   this.getListofCoupons();
   Swal.fire({
@@ -1701,7 +1731,9 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
     }
    
     createNewCoupon(){
-     
+      console.log("date time", this.datetime)
+      this.datetime = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
+      console.log("timestamp ",this.datetime)
       this.couponDetails={
         couponNamename:this.couponNamename,
         couponIdId:this.couponIdId,
@@ -1723,10 +1755,11 @@ this.profileservice.modifyCoupon(couponData.name,couponData.id).subscribe(resp=>
          "currency": "usd",
          "couponid":this.couponIdId,
         "duration": this.durationTime,
+        "durationInMonth":this.durationInMonths,
         "name": this.couponNamename,
         "percent_off": this.percentageOffTot,
         "amount_off":this.amountOff,
-        "redeem_by": 1602050743,
+        "redeem_by": this.datetime/1000,
         "redmee_times": this.redeemTimeslimit
       }
     //   let input= {"currency":"usd",
