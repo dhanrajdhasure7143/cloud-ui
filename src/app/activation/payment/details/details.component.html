@@ -12,7 +12,7 @@
         <div class="col-md-4">
               <div class="form-group col-sm-10">
                 <label for="cardHolder">Cardholder Name</label>
-                <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control payment-input" id="cardHolder" placeholder="Enter Cardholder Name" required/>
+                <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control payment-input" id="cardHolder" placeholder="Enter Cardholder Name" required/>
                 <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                 <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
                 class='fa fa-info-circle errspan'> Cardholder Name is required </span> 
@@ -20,7 +20,7 @@
 
                   <div class="form-group col-sm-8">
                     <label for="month">Month (MM)</label>
-                    <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardmonth" required>
+                    <select id="month" [disabled]="expmonth" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardmonth" required>
                       <option  [value]="undefined" disabled hidden>Select Month</option>
                       <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
                       <!-- <option value="01">01</option>
@@ -65,13 +65,16 @@
 
               <div class="form-group col-sm-8">
                 <label for="cardNumber">Card Number</label>
-                <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardnumbertotal" id="cardNumber" placeholder="Enter Card Number" required/>
-                <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
-                class='fa fa-info-circle errspan'> Card Number is required</span> 
+                <input  type="text" class="cc-number1 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1"  required/>
+                <input  type="text" class="cc-number2 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
+                <input  type="text" class="cc-number3 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
+                <input  type="text" [disabled]="number" class="cc-number4 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/>
+                <!-- <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
+                class='fa fa-info-circle errspan'> Card Number is required</span>  -->
               </div>
               <div class="form-group col-sm-8">
                 <label for="year">Year (YYYY)</label>
-                <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
+                <select id="year" [disabled]="expyear" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
                   <option  [value]="undefined" disabled hidden>Select Year</option>
                   <option *ngFor="let obj of yearList; let i=index" [value]="2019+(i+1)">{{2019+(i+1)}}</option>
                   <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
