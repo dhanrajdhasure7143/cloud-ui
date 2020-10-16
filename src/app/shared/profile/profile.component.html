@@ -759,27 +759,29 @@
               <table class="table table-borderless table-hover">
                       <thead>
                         <tr>
-                          <th scope="col" class="types">Coupon Name</th>
-                          <th scope="col" class="types">Coupon ID</th>
-                          <th scope="col" class="types">Amount Off</th>
-                          <th scope="col" class="types">Percentage Off</th>
-                          <th scope="col" class="types">Available Redemptions</th>
-                          <th scope="col" class="types">Expires By</th>
-                          <th scope="col" class="types">No. of Redemptions
+                          <th scope="col" class="types" style="text-align:center">Coupon Name</th>
+                          <th scope="col" class="types" style="text-align:center">Coupon ID</th>
+                          <th scope="col" class="types" style="text-align:center">Amount Off</th>
+                          <th scope="col" class="types" style="text-align:center">Percentage Off</th>
+                          <th scope="col" class="types" style="text-align:center">Available Redemptions</th>
+                          <th scope="col" class="types" style="text-align:center">Created At</th>
+                          <th scope="col" class="types" style="text-align:center">Expires By</th>
+                          <th scope="col" class="types" style="text-align:center">No. of Redemptions
 
                           </th>
                           <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
-                          <td>{{coupon.name}}</td>
-                          <td>{{coupon.id}}</td>
-                          <td >{{coupon.amountOff}}</td>
-                          <td >{{coupon.percentOff}}</td>
-                          <td >{{availableRedeemptions}}</td>
-                          <td >{{coupon.redeemBy*1000 | date  }}</td>
-                          <td>{{coupon.maxRedemptions}}</td>
+                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 1, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                          <td style="text-align:center">{{coupon.name}}</td>
+                          <td style="text-align:center">{{coupon.id}}</td>
+                          <td style="text-align:center">{{coupon.amountOff}}</td>
+                          <td style="text-align:center">{{coupon.percentOff}}</td>
+                          <td style="text-align:center">{{availableRedeemptions}}</td>
+                          <td style="text-align:center">{{coupon.created*1000 | date:'medium'}}</td>
+                          <td style="text-align:center">{{coupon.redeemBy*1000 | date:'medium'  }}</td>
+                          <td style="text-align:center">{{coupon.maxRedemptions}}</td>
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -801,8 +803,8 @@
                          </tr>
                       </tbody>
                     </table>
-                    <div class="alertspagination">
-                      <pagination-controls id="coupon_page" (pageChange)="cpp = $event"></pagination-controls>
+                    <div class="couponpagination">
+                      <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
                       </div>
       </div>
       </tab>
