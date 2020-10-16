@@ -786,7 +786,7 @@
                               <span  (click)="couponDel(coupon.id,j)"> 
                               <img src="assets/images/unsubscribe.svg" alt=""></span>
                              </div>
-                              <div id="myid" [ngClass]="selectedIndex == j?'isdelet':''" class="deletconfm">
+                              <div id="myid" [ngClass]="selectedIndex === j?'isdelet':''" class="deletconfm">
                                   <div class="container-fluid deletefrm">
                                       <h5 class="pull-left">Confirmation</h5>
                                       <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">

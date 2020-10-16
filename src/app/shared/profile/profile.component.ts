@@ -621,7 +621,7 @@ this.profileservice.applications().subscribe(resp =>
   selectedCoupondata(selCouponData, index, template){
     console.log("selected coupon ",selCouponData)
     this.coupondata=selCouponData;
-    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-M-DTH:mm")
+    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-M-DThh:mm")
     this.modalRef = this.modalService.show(template)
     if(selCouponData.amountOff != ' - ' && selCouponData.percentOff == ' - '){
       this.isPercentage=false;
