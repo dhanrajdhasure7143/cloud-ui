@@ -12,6 +12,7 @@ import { containsElement } from '@angular/animations/browser/src/render/shared';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ProfileComponent } from '../profile/profile.component';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'topheader',
@@ -43,10 +44,12 @@ export class TopheaderComponent implements OnInit {
   public stopnotificationsapicall:any
 
   @ViewChild("toogleBtn") toogleBtn;
+  logintype: string;
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
                                                private router: ActivatedRoute, 
                                                private profileService:ProfileService,
+                                               @Inject(APP_CONFIG) private config,
                                                private appser: AppService, private sharedService :  SharedDataService,
                                                private spinner:NgxSpinnerService) { 
 
@@ -134,10 +137,21 @@ public myname:any[]
   }
 
   logout() {
+    this.logintype = localStorage.getItem('loginType');
     clearTimeout(this.stopnotificationsapicall)
     localStorage.clear();
     sessionStorage.clear();
-    this.route.navigate(['/']);
+    
+    console.log('came to logout', this.logintype)
+
+    if(this.logintype == 'Azure'){
+      
+      window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
+
+    }else{
+      this.route.navigate(['/']);
+ }
+
     this.appser.logout();
   }
 
