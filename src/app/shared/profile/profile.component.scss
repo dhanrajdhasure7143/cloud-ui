@@ -29,7 +29,7 @@
 
 .types{
     color:gray;
-    width:17%;
+    width:10%;
 }
 .types1{
     color:gray;
@@ -129,6 +129,10 @@
       margin-left: 209px;
       width:150%;
 }
+.couponpagination
+{
+    margin-left: 52%;
+}
 .inviterow
 {
     overflow: auto !important;
@@ -179,7 +183,7 @@
 }
 .alerttype{
     color:gray;
-    width:15%;
+    width:6%;
 }
 .norecords
 {
@@ -659,6 +663,9 @@ button.btn.btn-primary.invite-button {
   .downloadbulk
   {
     font-size: 12px;
+  }
+  .calexp{
+    border-color: beige;
   }
 
     
