@@ -12,6 +12,7 @@ export interface AiotalAppConfig {
   notificationsendpoint: String;
   Subscriptionendpoint:String;
   productendpoint: String;
+  socialLoginRedirectURL: String;
   isSecurityManagerEnabled : boolean;
 }
 
@@ -25,6 +26,7 @@ export const AppConfig: AiotalAppConfig = {
   notificationsendpoint: 'http://alertsdev.epsoftinc.in',
   Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
   productendpoint: 'http://eiapdev.epsoftinc.in',
+  socialLoginRedirectURL: 'http://eiapclouddev.epsoftinc.in/#/user',
   isSecurityManagerEnabled : true
 };
 

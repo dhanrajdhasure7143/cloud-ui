@@ -33,7 +33,7 @@ export class SocialLoginComponent implements OnInit {
    
     this.authenticate(this.email);
     localStorage.setItem('ProfileuserId',this.email)
-
+     localStorage.setItem('loginType', 'Azure')
  
    
 }
