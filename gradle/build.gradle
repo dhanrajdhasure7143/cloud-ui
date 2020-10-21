@@ -17,7 +17,7 @@ node {
 
 ext {
   dockerImage = "nexus.epsoftinc.in/cloud-ui"
-  dockerTag   = "0.0.1-QM1"
+  dockerTag   = "0.0.1-DM1"
 }
 
 task cleanAll (type:Delete) {
@@ -48,3 +48,4 @@ task buildAll {
 
 jar.dependsOn "npm_run_build"
 clean.dependsOn "cleanAll"
+
