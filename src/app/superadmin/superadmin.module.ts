@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { SuperadminComponent } from './superadmin.component';
 import { SearchPipe } from './custom_pipe/searchPipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [DashboardComponent,SuperadminComponent,SearchPipe],
@@ -16,7 +17,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SharedModule,
     SuperadminRoutingModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule
   ]
 })
 export class SuperadminModule { }

@@ -445,23 +445,27 @@
                         <table class="table table-borderless table-hover">
                           <thead>
                             <tr>
-                              <th scope="col" class="alerttype">Product</th>
-                              <th scope="col" class="alerttype">Type</th>
-                              <th scope="col" class="alerttype">Activity</th>
-                             <th scope="col" class="alerttype">Channel</th>
+                              <th scope="col" class="alerttype" style="text-align:center">Product</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Type</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Activity</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Channel</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mail</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mobile</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Created At</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
                              <th scope="col" class="alerttype">Action</th>
                             </tr>
                           </thead>
                           <tbody >
                             <tr *ngFor="let data of alertslistactivitiesdata | paginate: { itemsPerPage: 5, currentPage: p }; let l=index">
-                              <td>{{data.app_name}}</td>
-                              <td>{{data.type}}</td>
-                              <td>{{data.activity_name}}</td>
-                              <td>{{data.channel}}</td>
+                              <td style="text-align:center">{{data.app_name}}</td>
+                              <td style="text-align:center">{{data.type}}</td>
+                              <td style="text-align:center">{{data.activity_name}}</td>
+                              <td style="text-align:center">{{data.channel}}</td>
                               <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
+                              <td style="text-align:center">{{data.audit.created_at | date:'medium'}}</td>
+                              <td style="text-align:center">{{data.audit.modified_at | date:'medium'}}</td>
                               <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                 <span  (click)="alertsdeletedata(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 <div id="myid" [ngClass]="selectedalertdet === l?'isdelet':''" class="deletconfm">
@@ -517,6 +521,8 @@
                                           <!-- <th scope="col" class="types">Department</th> -->
                                           <th scope="col" class="types1">Product</th>
                                           <th scope="col" class="types1">Roles</th>
+                                          <th scope="col" class="types1">Created At</th>
+                                          <!-- <th scope="col" class="types1">Modified At</th> -->
                                           <th scope="col" class="types1">Status</th>
                                           <th scope="col" class="types1">Action</th>
                                         </tr>
@@ -531,6 +537,8 @@
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
                                             <td class="types">{{userdata.roleIdname}}</td>
+                                            <td class="types">{{userdata.created_at | date:'medium'}}</td>
+                                            <!-- <td class="types">{{userdata.modified_at | date:'medium'}}</td> -->
                                             <td>{{userdata.Status}}</td>
 
                                             <td class="deleticon">
@@ -623,6 +631,8 @@
                                                 <th scope="col" class="types">Role</th>
                                                 <th scope="col" class="types">Description</th>
                                                 <th scope="col" class="types">Permissions</th>
+                                                <th scope="col" class="types">Created At</th>
+                                                <th scope="col" class="types">Modified At</th>
                                                 <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
                                               </tr>
                                             </thead>
@@ -631,6 +641,7 @@
                                                 <td>{{role.appliationId.name}}</td>
                                                 <td>{{role.name}}</td>
                                                 <td>{{role.description}}</td>
+                                                
                                                 <td >
                                                   <div > 
                                                     <div *ngFor="let perm of role.permission;let k=index">
@@ -641,6 +652,8 @@
                                                     <span class="hideRole" *ngIf="isOpened == role.id" (click)="hideroleslist(j)">Hide</span>
                                                     </div>
                                                 </td>
+                                                <td>{{role.audit.created_at | date:'medium'}}</td>
+                                                <td>{{role.audit.modified_at | date:'medium' }}</td>
                                                 <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
                                                     <span  (click)="selectedroledata(role,j,rolestemplate)">
                                                     <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -746,34 +759,36 @@
               <table class="table table-borderless table-hover">
                       <thead>
                         <tr>
-                          <th scope="col" class="types">Coupon Name</th>
-                          <th scope="col" class="types">Coupon ID</th>
-                          <th scope="col" class="types">Amount Off</th>
-                          <th scope="col" class="types">Percentage Off</th>
-                          <th scope="col" class="types">Available Redemptions</th>
-                          <th scope="col" class="types">Expires By</th>
-                          <th scope="col" class="types">No. of Redemptions
+                          <th scope="col" class="types" style="text-align:center">Coupon Name</th>
+                          <th scope="col" class="types" style="text-align:center">Coupon ID</th>
+                          <th scope="col" class="types" style="text-align:center">Amount Off</th>
+                          <th scope="col" class="types" style="text-align:center">Percentage Off</th>
+                          <th scope="col" class="types" style="text-align:center">Available Redemptions</th>
+                          <th scope="col" class="types" style="text-align:center">Created At</th>
+                          <th scope="col" class="types" style="text-align:center">Expires By</th>
+                          <th scope="col" class="types" style="text-align:center">No. of Redemptions
 
                           </th>
                           <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
-                          <td>{{coupon.name}}</td>
-                          <td>{{coupon.id}}</td>
-                          <td >{{coupon.amountOff}}</td>
-                          <td >{{coupon.percentOff}}</td>
-                          <td >{{availableRedeemptions}}</td>
-                          <td >{{coupon.redeemBy*1000 | date  }}</td>
-                          <td>{{coupon.maxRedemptions}}</td>
+                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 1, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                          <td style="text-align:center">{{coupon.name}}</td>
+                          <td style="text-align:center">{{coupon.id}}</td>
+                          <td style="text-align:center">{{coupon.amountOff}}</td>
+                          <td style="text-align:center">{{coupon.percentOff}}</td>
+                          <td style="text-align:center">{{availableRedeemptions}}</td>
+                          <td style="text-align:center">{{coupon.created*1000 | date:'medium'}}</td>
+                          <td style="text-align:center">{{coupon.redeemBy*1000 | date:'medium'  }}</td>
+                          <td style="text-align:center">{{coupon.maxRedemptions}}</td>
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
                               <span  (click)="couponDel(coupon.id,j)"> 
                               <img src="assets/images/unsubscribe.svg" alt=""></span>
                              </div>
-                              <div id="myid" [ngClass]="selectedIndex == j?'isdelet':''" class="deletconfm">
+                              <div id="myid" [ngClass]="selectedIndex === j?'isdelet':''" class="deletconfm">
                                   <div class="container-fluid deletefrm">
                                       <h5 class="pull-left">Confirmation</h5>
                                       <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
@@ -788,8 +803,8 @@
                          </tr>
                       </tbody>
                     </table>
-                    <div class="alertspagination">
-                      <pagination-controls id="coupon_page" (pageChange)="cpp = $event"></pagination-controls>
+                    <div class="couponpagination">
+                      <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
                       </div>
       </div>
       </tab>
@@ -811,15 +826,15 @@
                               <tr>
                                 <th scope="col" style="width:60%;">Notification Message</th>
                                 <th scope="col" style="width:300px;">Date</th>
-                                <th scope="col" style="width:200px;">Time</th>
+                                <!-- <th scope="col" style="width:200px;">Time</th> -->
                                 <th scope="col" style="width:200px !important;">Action</th> 
                               </tr>
                             </thead>
                             <tbody *ngIf="notificationList.errorMessage==undefined ">
                               <tr *ngFor="let messageList of notificationList | paginate: {id:'notification_page', itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
                                 <td>{{messageList.notificationAuditId[0].contentType}}</td>
-                                <td>{{messageList.createdAt | date}}</td>
-                                <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td>
+                                <td>{{messageList.createdAt | date:'medium'}}</td>
+                                <!-- <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td> -->
                                 <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
                                   <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
                                       <div class="container-fluid deletefrm">
@@ -1559,31 +1574,40 @@
                 
                   <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
-                  <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
-                  class='fa fa-info-circle errspan'> Coupon Ammount is required </span> 
+                  <!-- <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
+                  class='fa fa-info-circle errspan'> Coupon Ammount is required </span>  -->
                 </div>
+                
+              <div>
                   <label for="duration">Coupon Valid</label>
                                 <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" (change)='onSelected($event.target.value)' required>
                                     <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
-                                  <option value="forever" >Limit</option>
+                                  <option value="forever" >Forever</option>
                                   <option value="once">Once</option>
+                                  <option value="repeating">Repeating</option>
                                         
-                                </select><br>
-              
-              
+                                </select>
+                  <div *ngIf="durationTime==='repeating'">
+                    <input type="text" name="months"  maxlength="30" #months [(ngModel)]="durationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" required/>
+ 
+                  </div>
+                </div>
                 <!-- <label for="couponRedeem" >Redeemption Limits</label><br>
            
     <input type="checkbox" class="payment-input" required name="couponRedeem"(change)='onSelected($event.target.value)' value='redeemTimes' />&nbsp;Limit the total number of times  customers can redeem this coupon  <br>
               -->
-            <div *ngIf="islimited" >
-                
+            <div >
+                <label for="red">Maximum Redemptions</label>
    
               <input type="text" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
               <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
               <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
               class='fa fa-info-circle errspan'> Limit is required </span> 
             </div>
-            
+            <div >
+              <label for="daytime">Expires By </label><br>
+              <input class="calexp" type="datetime-local" id="daytime" name="daytime" [(ngModel)]="datetime">
+            </div>
             
             <!-- <div class="col-md-12">
             <input type="checkbox" class="payment-input" required name="couponRedeem"  (change)='onSelected($event.target.value)' value='redeemBy' />&nbsp;<span>Limit the date range when customers can redeem this coupon</span><br>
@@ -1651,7 +1675,43 @@
                               <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="coupondata.id"/>     
            
                               </div>
-                           
+                              <label class="radio-inline">Coupon Type</label><br>
+                              <input type="radio" class="payment-input" required name="couponType"  (change)='onChangeRadio($event.target.value)' value='percentageOff' [checked]="coupondata.percentOff != ' - '"/>&nbsp;<span>Percentage Off</span><br>
+                              <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' [checked]="coupondata.amountOff != ' - '"/>&nbsp;<span>Amount Off</span> <br>
+                                           
+                              <div *ngIf="isPercentage" >
+                                 <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="coupondata.percentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                              </div>
+                          
+                              <div *ngIf="isAmount" >
+                                <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="coupondata.amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                              </div>
+                              
+                            <div>
+                                <label for="duration">Coupon Valid</label>
+                                              <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="coupondata.duration" (change)='onSelected($event.target.value)' required>
+                                                  <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
+                                                <option value="forever" >Forever</option>
+                                                <option value="once">Once</option>
+                                                <option value="repeating">Repeating</option>
+                                                      
+                                              </select>
+                                <div *ngIf="coupondata.duration==='repeating'">
+                                  <input type="text" name="months"  maxlength="30" #months [(ngModel)]="coupondata.durationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" required/>
+               
+                                </div>
+                              </div>
+                           <div >
+                              <label for="red">Maximum Redemptions</label>
+                            <input type="text" name="red"  maxlength="30" #red [(ngModel)]="coupondata.maxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+                            <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                            <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
+                            class='fa fa-info-circle errspan'> Limit is required </span> 
+                          </div>
+                          <div >
+                            <label for="daytime">Expires By </label><br>
+                            <input class="calexp" type="datetime-local" id="daytime" name="daytime" [(ngModel)]="redeemdate">
+                          </div>
                                                
                                        
                             <div class="col-md-12 submitbtn">

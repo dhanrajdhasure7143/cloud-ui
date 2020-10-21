@@ -88,8 +88,8 @@ deleteSelectedUser(userId):Observable<any>{
     
 }
 
-modifyCoupon(couponName,couponId):Observable<any>{
-  return this.http.post<any>('/subscriptionservice/v1/orders/updateCoupon?name='+couponName+'&couponid='+couponId,httpOptions)
+modifyCoupon(modifycouponinput):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/orders/updateCoupon',modifycouponinput,httpOptions)
 }
 validateCoupon(promo,planAmount,quantity):Observable<any>{
 return this.http.get<any>('/subscriptionservice/v1/orders/validateCoupon/'+promo+'?planamount='+planAmount+'&quantity='+quantity)
