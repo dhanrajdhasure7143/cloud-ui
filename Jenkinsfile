@@ -1,5 +1,5 @@
 def jobTokens = "${env.JOB_NAME}".tokenize("//")
-def appRepo = jobTokens.get(jobTokens.size())
+def appRepo = jobTokens.get(jobTokens.size()-1)
 
 node {
   stage('SCM Check Out') {
