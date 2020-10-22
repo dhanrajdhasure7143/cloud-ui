@@ -1,10 +1,7 @@
+def jobTokens = "${env.JOB_NAME}".tokenize("//")
+def appRepo = jobTokens.get(jobTokens.size() - 3)
+
 node {
-  stage("Init") {
-    script {
-      def jobTokens = "${env.JOB_NAME}".tokenize("//")
-	  	def appRepo = jobTokens.get(jobTokens.size() - 3)
-    }
-  }
   stage('SCM Check Out') {
     script {
       checkout([$class: 'GitSCM', branches: [[name: env.BRANCH_NAME]], 
