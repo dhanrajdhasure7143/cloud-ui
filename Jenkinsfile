@@ -1,8 +1,6 @@
 node {
   stage("Init") {
-    sh '''
-      echo "${JOB_NAME}"
-    '''
+    print ${env.JOB_NAME}
   }
   stage('SCM Check Out'){
     checkout([$class: 'GitSCM', branches: [[name: ${env.BRANCH_NAME}]], 
