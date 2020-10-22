@@ -14,3 +14,5 @@ services:
     deploy:
     networks:
       - eps_net
+    ports:
+      - '9999:9090'
