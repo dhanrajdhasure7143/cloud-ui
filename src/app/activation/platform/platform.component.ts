@@ -135,7 +135,8 @@ export class PlatformComponent implements OnInit {
     var firstName=localStorage.getItem('firstName');
     var lastName=localStorage.getItem('lastName');
     var ProfileuserId=localStorage.getItem('ProfileuserId');
-    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId
+    var tenantName=localStorage.getItem('tenantName');
+    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,
