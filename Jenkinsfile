@@ -1,7 +1,7 @@
 node {
   stage("Init") {
     sh '''
-      echo "${env.JOB_NAME}"
+      echo "${JOB_NAME}"
     '''
   }
   stage('SCM Check Out'){
