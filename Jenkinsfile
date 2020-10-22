@@ -1,15 +1,18 @@
 node {
   stage("Init") {
-    echo  env.JOB_NAME
-    echo env.BRANCH_NAME
+    def jobTokens = "${env.JOB_NAME}".tokenize("//")
+		def appRepo = jobTokens.get(jobTokens.size() - 3)
   }
-  stage('SCM Check Out'){
+  stage('SCM Check Out') {
     checkout([$class: 'GitSCM', branches: [[name: env.BRANCH_NAME]], 
     doGenerateSubmoduleConfigurations: false, 
     extensions: [], submoduleCfg: [], 
-    userRemoteConfigs: [[credentialsId: 'jenkins', url: 'git@10.11.0.91:aiotal/cloud-ui.git']]])
+    userRemoteConfigs: [[credentialsId: 'jenkins', url: "git@10.11.0.91:aiotal/${appRepo}.git"]]])
   }
-  stage('Build Application'){
-    sh label: '', script: './gradlew buildAll'
+  //stage('Build Application') {
+  //  sh "./gradlew buildAll"
+  //}
+  stage('Deploy Application') {
+    sh "docker ps"
   }
 }
