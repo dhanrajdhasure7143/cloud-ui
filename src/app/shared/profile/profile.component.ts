@@ -204,6 +204,7 @@ export class ProfileComponent implements OnInit {
   currentUserId: any;
   datetime: any;
   redeemdate: any;
+  public notificationreadlist:any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -1973,5 +1974,27 @@ console.log("alertbody",this.alertsbody)
         console.log(this.selectedFile.name)
       // $("#excel").val(this.selectedFile.name)
        $("#excel").append('('+this.selectedFile.name+')');
+      }
+
+      notificationclick(id)
+      {
+        let userId =  localStorage.getItem("userName")
+        this.tenantId=localStorage.getItem('tenantName');
+        this.role=localStorage.getItem('userRole')
+       this.notificationbody ={
+          "tenantId":this.tenantId
+       }
+       console.log("notification id",id)
+       if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
+        this.profileservice.getReadNotificaionCount(this.role,userId,this.notificationbody).subscribe(data => {
+          this.notificationreadlist = data
+          this.notificationList.find(ntf=>ntf.id==id).status='read'
+         //document.getElementById('msg_'+id).style.color="grey"
+         //document.getElementById('date_'+id).style.color="grey"
+         //document.getElementById(id).style.cursor="none"
+          console.log(this.notificationreadlist)
+        })
+       
+      }
       }
    }
