@@ -12,6 +12,7 @@ services:
   cloud-ui:
     image: nexus.epsoftinc.in/cloud-ui:${DOCKER_TAG}
     deploy:
+      mode: global
     networks:
       - eps_net
     ports:
