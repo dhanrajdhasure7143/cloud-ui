@@ -16,5 +16,4 @@ services:
     networks:
       - eps_net
     ports:
-      - '80:80'
       - '9090:80'
