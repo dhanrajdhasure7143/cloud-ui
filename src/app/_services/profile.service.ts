@@ -153,4 +153,10 @@ deleteNotification(notificationId):Observable<any>{
 getAllApplications(): Observable<any> {
   return this.http.get<any>('/authorizationservice/api/v1/user/getApplications');
 }
+getReadNotificaionCount(role,userId,notificationbody):Observable<any>{
+  return this.http.post<any>('/notificationservice/api/v1/NotificationsCount?roles='+role+'&userId='+userId,notificationbody,httpOptions);
+}
+getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
+  return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
+}
 }
