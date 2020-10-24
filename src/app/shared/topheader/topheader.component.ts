@@ -280,9 +280,12 @@ public myname:any[]
         let notificationbody ={
             "tenantId":this.tenantId
          }
-          this.profileService.getNotifications(this.role,userId,notificationbody).subscribe(data => {
+         if(this.role=='Admin' ||this.role== 'SuperAdmin')
+         {
+          this.profileService.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
             this.notificationList = data
-            this.notificationscount=this.notificationList.length
+            this.notificationscount=this.notificationList
+            console.log(this.notificationscount)
             if(this.notificationscount==undefined||this.notificationscount==null)
             {
               this.notificationscount=0;
@@ -291,4 +294,5 @@ public myname:any[]
           })
           this.getCount();
         }
+      }
 }
