@@ -1986,7 +1986,7 @@ console.log("alertbody",this.alertsbody)
        }
        console.log("notification id",id)
        if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
-        this.profileservice.getReadNotificaionCount(this.role,userId,this.notificationbody).subscribe(data => {
+        this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
           this.notificationreadlist = data
           this.notificationList.find(ntf=>ntf.id==id).status='read'
          //document.getElementById('msg_'+id).style.color="grey"
