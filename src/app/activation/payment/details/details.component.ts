@@ -42,6 +42,7 @@ export class DetailsComponent implements OnInit {
   cardnumber3: string;
   cardnumber4: string;
   public number: boolean;
+  cards: any;
 
   constructor( private productlistservice:ProductlistService, 
               private router:Router,
@@ -158,4 +159,10 @@ export class DetailsComponent implements OnInit {
       }
     });
   }
+
+  onChangeCardType(cardNumber) {
+    var creditCardType = require("credit-card-type"); 
+    this.cards = creditCardType(cardNumber);
+  }
+
 }

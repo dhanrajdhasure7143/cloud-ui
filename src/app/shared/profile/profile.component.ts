@@ -205,6 +205,7 @@ export class ProfileComponent implements OnInit {
   datetime: any;
   redeemdate: any;
   public notificationreadlist:any;
+  cards: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -950,6 +951,13 @@ this.profileservice.applications().subscribe(resp =>
       this.modalRef.hide();
       this.cardModel={}
     }
+
+    onChangeCardType(cardNumber) {
+      var creditCardType = require("credit-card-type"); 
+      this.cards = creditCardType(cardNumber);
+      console.log(this.cards[0].type);
+    }
+    
     addNewCard(){
       this.cardDetails={
           "name":this.cardModel.cardHoldername,
