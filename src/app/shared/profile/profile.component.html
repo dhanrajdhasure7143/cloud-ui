@@ -973,8 +973,16 @@
                     
                     <div class="form-group col-sm-8">
                             <label for="cardNumber">Card Number</label>
-                            <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
-                            [(ngModel)]="cardModel.cardNumber" id="cardNumber" placeholder="Card Number" required/>
+                            <div class="input-group ">
+                              <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
+                                [(ngModel)]="cardModel.cardNumber" id="cardNumber" placeholder="Card Number" (change)='onChangeCardType(cardModel.cardNumber)' required/>
+                              <div class="input-group-append">
+                                <span *ngIf= "cards && cards[0].type =='visa' && cardNumber.value >= 4">
+                                  <img class="card" src="assets/images/CardLogo/visa.png"></span>
+                                <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber.value >= 4">
+                                  <img class="card" src="assets/images/CardLogo/master.png"></span>
+                                </div>
+                              </div>
                             <span *ngIf="((cardNumber.invalid && addpaymentmode.submitted) || (cardNumber.errors && cardNumber.touched) )" 
                             class='fa fa-info-circle errspan'> Card Number is required</span>
                     </div>
