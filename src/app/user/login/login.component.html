@@ -31,13 +31,28 @@
                           </div>
                         </div>
 
+                        <div *ngIf="isOTP" class="form-group col-md-12 inner-addon left-addon right-addon">
+                          <img src="assets/images/password_icon.png" class="otpIcon">
+                       
+
+                          <input type="text" maxlength="6" name = "otp" id="otp" formControlName="otpNum" class="form-control otpinput" placeholder="Enter OTP"
+                            required/>
+                          
+                        </div>
+
                         <div class="form-group col-sm-12">
                             <a [routerLink]="['/user/forgotpassword']" class="for_pass">Forgot Password&#63;</a>
                           </div>
                     
-                    <div class="col-sm-12">
-                    <button class="btn btn-primary login-btn" type="submit" id="btn">Sign in</button>
+                    <div class="col-sm-12 row">
+                      <div class="col-sm-6">
+                    <button [disabled]="loginForm.invalid" class="btn btn-primary login-btn" type="submit" id="btn">Sign in</button>
+                  </div>
+                  <div class="col-sm-6" *ngIf="twoFactorAuthenticationEnabled">
+                    <button [disabled]="f.username.errors || isOTP" class="btn btn-primary login-btn" (click)="generateOTP()" id="btnn">Generate OTP</button>
+                  </div>
                 </div>
+               
                 <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
                     <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
                   </div>
