@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService, UserService } from 'src/app/_services';
 import { SessionService } from './../../_services/session/session';
 import { first } from 'rxjs/operators';
@@ -28,6 +28,10 @@ export class LoginComponent implements OnInit {
   error = '';
   public userRole:any = [];
   public show:boolean=true;
+  public isOTP:boolean = false;
+  public twoFactorAuthenticationEnabled:boolean = true;
+  public enteredOTP:boolean = false;
+  public otp:any;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -58,12 +62,31 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
+    console.log("status",this.twoFactorAuthenticationEnabled);
+    
+if(this.twoFactorAuthenticationEnabled){
+  console.log("came to if loop");
+  
+  this.particles.getParticles();
+  this.loginForm = this.formBuilder.group({
+    username: [this.get('username') ? this.get('username') : '', Validators.required],
+    password: [this.get('password') ? this.get('password') : '', Validators.required],
+    otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required],
+    rememberme: [false]
+  });
+
+}else{
+    
   this.particles.getParticles();
     this.loginForm = this.formBuilder.group({
       username: [this.get('username') ? this.get('username') : '', Validators.required],
       password: [this.get('password') ? this.get('password') : '', Validators.required],
+     // otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required, Validators.maxLength(5)],
       rememberme: [false]
     });
+  }
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     // this.checkbox.nativeElement.onchange = () => {
@@ -73,13 +96,41 @@ export class LoginComponent implements OnInit {
     //     this.password.nativeElement.type = 'password';
     //   }
     // };
+    
   }
+  generateOTP(){
+    console.log("OTP method");
+    
+    this.isOTP = true;
 
+    this.authenticationService.generateOTP(this.f.username.value).subscribe(data => {
+
+      //swwet alert
+      Swal.fire({
+        title: 'Success!',
+        text: `OTP has been sent to your registred Email and Mobile number.`,
+        type: 'success',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+          },error => {
+
+          
+      this.error = "Failed to generate One Time Password.";
+      this.loading = false;
+    },
+    
+  
+    );
+
+  }
   get f() {
     return this.loginForm.controls;
   }
 
   onSubmit() {
+    console.log("otp data", this.f.otpNum);
+    
     localStorage.clear();
     this.submitted = true;
     this.session.stopWatching();
@@ -93,51 +144,82 @@ export class LoginComponent implements OnInit {
  
 
     this.loading = true;
-    this.authenticationService
-      .login(this.f.username.value, this.f.password.value)
-      .pipe(first())
-      .subscribe(
+    //if two factor authentication is enabled 
+    if(this.twoFactorAuthenticationEnabled){
+      
+      this.authenticationService.validateOTP(this.f.username.value, this.f.otpNum.value).subscribe(data => {
+
+        this.authenticationMeothod();
+  
+      },error => {
+  
+            
+        this.error = "Invalid OTP. Please check and try again.";
+        this.loading = false;
+        return
         
-        data => {
-          if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
-
-            this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
-            // Swal.fire({
-            //   type: 'error',
-            //   title:"Error!",
-            //   text: "Your account is temporarily locked for 3 hours."
-            // });
-             return
-          }
-          
-          if (this.f.rememberme.value) {
-            this.set('username', this.f.username.value, {});
-            this.set('password', this.f.password.value, {});
-          }
-          this.loading = false;
-          this.session.startWatching(); 
-
-          localStorage.setItem('ProfileuserId',this.f.username.value)
-
-          // user details based on userId
-          this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
-
- 
-
-          this.authenticate();
-        },
-        error => {
-
-          
-          this.error = "Email or Password is invalid.";
-          this.loading = false;
-        },
-        
+      },
+      
+    
       );
+
+    }else{
+      this.authenticationMeothod();
+    }
+      //
        
   }
 
- 
+ authenticationMeothod(){
+  this.authenticationService
+  .login(this.f.username.value, this.f.password.value)
+  .pipe(first())
+  .subscribe(
+    
+    data => {
+      if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
+
+        this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
+        // Swal.fire({
+        //   type: 'error',
+        //   title:"Error!",
+        //   text: "Your account is temporarily locked for 3 hours."
+        // });
+         return
+      }
+      
+      if (this.f.rememberme.value) {
+        this.set('username', this.f.username.value, {});
+        this.set('password', this.f.password.value, {});
+        if(this.twoFactorAuthenticationEnabled){
+        this.set('otpNum', this.f.otpNum.value, {});
+        }
+
+      }
+      console.log(this.f);
+      
+      this.loading = false;
+      this.session.startWatching(); 
+
+      localStorage.setItem('ProfileuserId',this.f.username.value)
+
+      // user details based on userId
+      this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
+
+
+
+      this.authenticate();
+    },
+    error => {
+
+      
+      this.error = "Email or Password is invalid.";
+      this.loading = false;
+    },
+    
+  );
+
+ }
   checkSuccessCallback(data:any){
     console.log('data',data);
     
@@ -235,6 +317,9 @@ this.router.navigate(['/createaccount'])
     this.loginService.azureLogin().subscribe();
   }
   toggle() {
+    this.show = !this.show;
+  }
+  toggleOTP(){
     this.show = !this.show;
   }
 
