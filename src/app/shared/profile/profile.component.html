@@ -436,10 +436,18 @@
 
                
                 <div class="container" *ngIf="isAlerts">
+                  <div  class="">
+                    <tabset >
+                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Configure Alerts" id="tab1">
+                        <div class="search-One">
+                            <form class="form-inline d-flex  md-form form-sm">
+                                <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                              </form>
+                            </div>
+                  
                   <div class="row">
-                      <div  class="col-md-12">
-                              <h4 class="alert">Configure Alerts</h4>
-                      </div>
+                     
                       <div class="container configalerts">
                         <button class='btn btn-primary pull-right createAlert'  (click)='addAlert(configAlerts)'>Create Alert</button>
                         <table class="table table-borderless table-hover">
@@ -495,9 +503,70 @@
                     
                 </div>
                       </div>
+                    </tab>
+                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Email Templates" >
+                      <div class="search-One">
+                        <form class="form-inline d-flex  md-form form-sm">
+                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                            <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                          </form>
+                        </div>
+                        <div class="row">
+                     
+                          <div class="container configalerts">
+                            <button class='btn btn-primary pull-right createAlert'  (click)='addTemplate(configEmail)'>Create Template</button>
+                            <table class="table table-borderless table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="alerttype" style="text-align:center">Name</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Subject</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Body</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Type</th>
+                                 <th scope="col" class="alerttype">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody >
+                                <tr *ngFor="let data of templates | paginate: { itemsPerPage: 5, currentPage: p }; let t=index">
+                                  <td style="text-align:center">{{data.templateName}}</td>
+                                  <td style="text-align:center">{{data.subject}}</td>
+                                  <td style="text-align:center">{{data.templateBody}}</td>
+                                  <td style="text-align:center">{{data.templateType}}</td>
+                                  <td  class="deleticon"><span  (click)="updateemailtemplate(data,l,emaildetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                    <span  (click)="emailtempdelete(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                    <!-- <div id="myid" [ngClass]="selectedtempdet === l?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                          <h5 class="pull-left">Confirmation</h5>
+                                          <button type="button" class="close " aria-label="Close" (click)="unsubscribealertNo(l)">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          <p class="pull-left">Are you sure you want to delete the template ?</p>
+                                           <button class="pull-left confm" (click)="alertDelYes(data.id,l)">Yes</button>
+                                           <button class="confm pull-left" (click)="unsubscribealertNo(l)">No</button>
+                                      </div>
+                                  </div> -->
+                                  </td>
+                                </tr>
+                                <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                                  
+                                    <div class="norecords"><h4>No records found</h4></div>
+                                 
+                                  </tr>
+    
+                              </tbody>
+                            </table>
+                            <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                        
+                    </div>
+                          </div>
+                    </tab>
+                   
+                  </tabset>
                   </div>
 
-
+                
+                </div>
 
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
@@ -1235,7 +1304,48 @@
           </form>
            </ng-template>
 
+           <ng-template #configEmail >
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title" >Configure Email</h4>
+              <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form autocomplete="off" id="configureemail" name="configureemail" #configureemail="ngForm">
+            <div class="modal-body">
+              
+              
+          <div class="form-group">
+            <label for="application">Template Name</label>
+            <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" maxlength="50" [(ngModel)]="roleName" required/> 
+          </div>
+          <div class="infocheck">
+            <label for="activity">Subject</label>
+            <input type="text"  name="subject" #subject="ngModel" class="form-control botmbordr" maxlength="50" [(ngModel)]="mailsubject" required/> 
+          </div>
+          <div class="textbody">
+                  <label for="body">Body</label><br>
+                  <textarea rows="7" name="body" ></textarea>
+                </div>
+         
 
+                </div>
+              
+          <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+          <div class="form-group form-buttons pull-right buttonsblock">        
+              <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+              <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
+          </div>
+          
+          <div class="clearfix">
+          </div>
+          </div>
+          </div>
+          </div>
+        </form>
+         </ng-template>
 
             <ng-template #rolestemplate >
 
