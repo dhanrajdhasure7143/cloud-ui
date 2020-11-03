@@ -206,6 +206,7 @@ export class ProfileComponent implements OnInit {
   redeemdate: any;
   public notificationreadlist:any;
   cards: any;
+  templates: any=[];
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -219,6 +220,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.templates = [{templateBody:"Hi $user The BPMN Process Notation $bpmnProcessName is submitted. Please review and approve the notation.$reviewComments.Thanks, $modelerName.",templateName:"BPMN Process",subject:"BPMN Process $type",templateType:"email-template"}]
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
@@ -766,6 +768,9 @@ this.profileservice.applications().subscribe(resp =>
       this.isPushNotificationcheckBoxValue=true
       this.isEmailcheckBoxValue=false
       this.isSMScheckBoxValue=false
+      this.modalRef = this.modalService.show(template,this.config)
+    }
+    addTemplate(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
     alertsdeletedata(data,index){
