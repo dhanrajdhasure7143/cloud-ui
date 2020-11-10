@@ -881,7 +881,65 @@
     </tabset>
 </div>
 </div>
-
+<div  *ngIf="isvaultMangment" class="container">
+  <div  class="">
+      <tabset >
+            <tab heading="Security Vault">
+      <div class="search-One">
+          <form class="form-inline d-flex  md-form form-sm">
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+            </form>
+          </div>
+      <div class="container">
+        
+          <button  class='btn btn-primary pull-right addCard' (click)='createSecret(createsecret)'>Create Secret</button>
+          <table class="table table-borderless table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="types" style="text-align:center">Secret Name</th>
+                <th scope="col" class="types" style="text-align:center">created_time</th>
+                <th scope="col" class="types" style="text-align:center">View Data</th>
+                
+                <th *ngIf="this.userRole == 'Admin'" scope="col" class="types">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 1, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                <td style="text-align:center">{{keys.key}}</td>
+                <td style="text-align:center">{{keys.created_time}}</td>
+                <td style="text-align:center">{{23}}</td>
+               
+                <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
+                  <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
+                    <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                    <span  (click)="couponDel(coupon.id,j)"> 
+                    <img src="assets/images/unsubscribe.svg" alt=""></span>
+                   </div>
+                    <div id="myid" [ngClass]="selectedIndex === j?'isdelet':''" class="deletconfm">
+                        <div class="container-fluid deletefrm">
+                            <h5 class="pull-left">Confirmation</h5>
+                            <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p class="pull-left">Are you sure you want to delete this coupon ?</p>
+                             <button class="pull-left confm" (click)="couponDelYes(coupon.id,j)">Yes</button>
+                             <button class="confm pull-left" (click)="unsubscribeNo(j)">No</button>
+                        </div>
+                    </div>
+               
+               </tr>
+            </tbody>
+          </table>
+                    <div class="couponpagination">
+                      <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
+                      </div>
+      </div>
+      </tab>
+    
+    </tabset>
+</div>
+</div>
 
 
             <div *ngIf="isnotification" class="container">
@@ -1839,3 +1897,70 @@
                       
                      
                     </ng-template>
+<!-- this is vault managment -->
+             
+
+<ng-template #createsecret >
+  <form autocomplete="off" #vaultform="ngForm" (ngSubmit)="createNewSecret()" >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Create Secret</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancelCreateCopon()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="">
+      <div class="col-12 row">        
+        <div class="col-md-12 infocheck">
+         
+            <label for="secretkey">Secret Key</label>
+            <input type="text"  class="form-control payment-input" id="secretkey" placeholder="Enter Secret Key" required/>
+            <label>Version Data</label>
+            <div *ngFor="let secret of secretes; let i = index;" class="form-section">
+                
+                <button type="button" class="btn btn-danger btn-sm" (click)="removeSecrete(i)">Remove</button>
+                <div  class="info-table-row">
+                  <div class="column is-one-quarter info-table-row-edit">
+                    <input type="text"  [(ngModel)]="secret.key"
+                    name="key_{{secret.id}}"  placeholder="key">
+                  </div>
+                
+                  <div class="column info-table-row-edit" style="
+                  display: flex;
+                  align-items: center;
+              ">
+                    <div id="ember355" class="ember-view"><div class="masked-input masked  ">
+              <textarea  [(ngModel)]="secret.value"
+              name="value_{{secret.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 36px;"></textarea><!----> 
+          </div></div>
+                  </div>
+                  <button class="button is-outlined is-primary" type="button" (click)="addSecret()">
+                    Add
+                  </button>
+                </div>
+               </div>                           
+
+                 </div>
+              </div>
+           </div>
+  </div>
+              <div class="modal-footer">
+                <div class="">
+                  <div class="col-12">
+              <div class="form-group form-buttons pull-right  buttonsblock">        
+                  <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelCreateCopon()"><div class="anim"></div> Cancel</button> -->
+                  <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Create</button>
+              </div>
+              
+              <!-- <div class="clearfix">
+              
+              </div> -->
+              
+              </div>
+              </div>
+              </div>
+        </form>
+  </ng-template>
+  <!-- update secret -->
+
+

@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
   @Input() public isusers: boolean;
   @Input() public isCoupon: boolean;
   @Input() public isnotification: boolean;
+  @Input() public isvaultMangment:boolean;
   public model: User;
   public yearList:any;
   config = {
@@ -50,6 +51,12 @@ export class ProfileComponent implements OnInit {
   public tableData: any[];
   public formOne: any = {};
   countryInfo: any[] = [];
+  public secretes: any[] = [{
+    id: 1,
+    key: '',
+    value: ''
+    
+  }];
   isReedemBy:boolean=false;
   isReedemTimes:boolean=false;
   isAmount:boolean=false;
@@ -140,6 +147,8 @@ export class ProfileComponent implements OnInit {
   result: void;
   checkedData: any;
   demo: any = [];
+  secreteKey: any;
+  key: any;
   application: any = [];
   listOfNames: any = [];
   listOfId: any = [];
@@ -938,6 +947,21 @@ this.profileservice.applications().subscribe(resp =>
     createCoupon(createCoupon){
       this.modalRef = this.modalService.show(createCoupon,this.config)
     }
+    createSecret(createSecret){
+      this.modalRef = this.modalService.show(createSecret,this.config)
+    }
+    
+    addSecret(){
+      this.secretes.push({
+        id: this.secretes.length + 1,
+        key: '',
+        value: ''
+        
+      });
+    }
+    removeSecrete(i : number){
+      this.secretes.splice(i, 1);
+    }
     cancelAddRole(){
       this.modalRef.hide();
       this.roleName = "";
@@ -1335,7 +1359,36 @@ cancelAlert(){
     form.resetForm();
  
     }
+//create secrets
+createNewSecret(){
+      
+  this.couponDetails={
+    secreteKey:this.secreteKey,
+    key:this.key
+    
+      }         
+    let input={
+      "options": {
+        "cas": 0
+      },
+      "data": {
+        "hostIP": "10.11.0.117",
+        "username": "salma",
+        "password":"welcome@123"
+      }
+    }
 
+
+  this.profileservice.creatSecret(input,this.secreteKey).subscribe(resp=>{this.data=resp
+    this.modalRef.hide();
+    this.notifier.show({
+      type: "success",
+      message: "created successfully!"
+    });
+      
+        });
+   
+}
   
     myFunction(role) { 
       this.isOpened = role.id;
