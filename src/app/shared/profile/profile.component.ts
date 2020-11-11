@@ -136,6 +136,7 @@ export class ProfileComponent implements OnInit {
   mod: any;
   coupondata: any;
   testArry: any = [];
+   allKeys : any = [];
   
   /**alerts */
   isEmailcheckBoxValue:any;
@@ -218,6 +219,9 @@ export class ProfileComponent implements OnInit {
   cards: any;
   templates: any=[];
   emailtemplateslist: any;
+  viewdata: any;
+ 
+
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -235,6 +239,7 @@ export class ProfileComponent implements OnInit {
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
+    this.getAllKeys();
   //   this.applications = [
   //     {id: 2, name: "2.0"},
   //     {id: 3, name: "ezflow"}
@@ -341,6 +346,21 @@ this.profileservice.applications().subscribe(resp =>
     console.log("doupns are",this.allCoupons)})
  
   }
+  getAllKeys(){
+    
+    this.profileservice.getAllSecretKeys().subscribe(resp=>{
+     this.allKeys=resp
+        }
+      );
+    
+  }
+  viewSecreteData(template,keys){
+    
+    this.viewdata=keys;
+   this.modalRef = this.modalService.show(template,this.config);
+  }
+  close_modal(){
+    this.modalRef.hide();}
   getAllPaymentmodes() {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
