@@ -465,7 +465,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: { itemsPerPage: 5, currentPage: p }; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p }; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -498,7 +498,7 @@
                           </tbody>
                         </table>
                         <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        <pagination-controls id="alert_page" maxSize="8" (pageChange)="p = $event"></pagination-controls>
                         </div>
                     
                 </div>
@@ -526,7 +526,7 @@
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of templates | paginate: { itemsPerPage: 5, currentPage: p }; let t=index">
+                                <tr *ngFor="let data of templates | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em }; let t=index">
                                   <td style="text-align:center">{{data.templateName}}</td>
                                   <td style="text-align:center">{{data.subject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
@@ -555,7 +555,7 @@
                               </tbody>
                             </table>
                             <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
-                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
                             </div>
                         
                     </div>
@@ -1177,7 +1177,7 @@
             <!--alerts-->
             <ng-template #alertdetailstemplate >
               <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title" >Alert Details</h4>
+                <h4 class="modal-title" id="modal-basic-title" >Modify Alert</h4>
                     <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()"> 
                     <span aria-hidden="true">&times;</span>
                   </button>-->
@@ -1274,7 +1274,7 @@
               
             <ng-template #configAlerts >
               <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title" >Configure Alerts</h4>
+                <h4 class="modal-title" id="modal-basic-title" >Create Alert</h4>
                 <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -1320,14 +1320,20 @@
 
                   <div class="form-group">
                     <div *ngIf=isEmailcheckBoxValue>
-                    <label for="configalerts">Mail To</label>
+                    <!-- <label for="configalerts">Mail To</label>
                     <input type="text" name="email" maxlength="50" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
                     pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Enter Email" required/>
                     <span *ngIf="((email.invalid && configAlerts.submitted) || (email.errors && email.touched) ) "
                                                       class='fa fa-info-circle errspan'>
                                                       <span *ngIf="email.errors.required"> Email is required</span>
                                                       <span *ngIf="email.errors.pattern"> Enter valid email address</span>
-                                                    </span>
+                                                    </span> -->
+                  <label for="configalerts">Email Template</label>
+                     <select name="product" class="form-control"  [(ngModel)]="emailtemplate" required>
+                            <option [value]="undefined" disabled hidden>Select Email Template</option>
+                            <option [value]="null" disabled hidden>Select Email Template</option>
+                             <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option>
+                      </select>     
                   </div>
                 </div>
 

@@ -170,6 +170,7 @@ export class ProfileComponent implements OnInit {
   cpp=0;
   rp=0;
   pp=0;
+  em=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];
@@ -216,6 +217,7 @@ export class ProfileComponent implements OnInit {
   public notificationreadlist:any;
   cards: any;
   templates: any=[];
+  emailtemplateslist: any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -237,6 +239,7 @@ export class ProfileComponent implements OnInit {
   //     {id: 2, name: "2.0"},
   //     {id: 3, name: "ezflow"}
   // ];
+  this.getListOfEmailTemplates();
     this.getAllPermissions();
     this.yearList=yearslist;
       this.getAllNotifications();
@@ -881,7 +884,7 @@ this.profileservice.applications().subscribe(resp =>
           "type": this.updateType
       }
       console.log("alertmodifybody",this.alertmodifybody)
-        this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
+        this.profileservice.modifyAlert(this.alertmodifybody).subscribe(resp=>{
           this.notifier.show({
             type: "success",
             message: "Alert Updated successfully!"
@@ -2063,4 +2066,13 @@ console.log("alertbody",this.alertsbody)
        
       }
       }
+
+      getListOfEmailTemplates()
+      {
+        this.profileservice.getEmailTemplates().subscribe(data => {
+          this.emailtemplateslist=data
+          console.log(this.emailtemplateslist)
+        })
+      }
+      
    }

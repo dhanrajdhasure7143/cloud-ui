@@ -135,8 +135,8 @@ saveConfig(data:any): Observable<any>{
 listofactivities(tenantId,userrole):Observable<any>{
    return this.http.get<any>('/notificationservice/api/v1/listalerts?roles='+userrole+'&tenantId='+tenantId ,httpOptions);  
  }
- modifyAlert(alertmodifybody,userId):Observable<any>{
-  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert?userId='+userId+'',alertmodifybody,httpOptions)
+ modifyAlert(alertmodifybody):Observable<any>{
+  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert',alertmodifybody,httpOptions)
 }
 deleteAlert(alertId):Observable<any>{
   return this.http.delete<any>('/notificationservice/api/v1/deleteAlert?alertId='+alertId,{responseType:"json"})
@@ -164,5 +164,8 @@ creatSecret( data,path) : Observable<any>{
 }
 getAllSecretKeys(): Observable<any> {
   return this.http.get<any>('/api/vault/get-all-secretekeys');
+}
+getEmailTemplates(): Observable<any> {
+  return this.http.get<any>('/mailService/listmailTemplates');
 }
 }
