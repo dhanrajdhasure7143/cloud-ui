@@ -898,17 +898,19 @@
             <thead>
               <tr>
                 <th scope="col" class="types" style="text-align:center">Secret Name</th>
-                <th scope="col" class="types" style="text-align:center">created_time</th>
+                <th scope="col" class="types" style="text-align:center">created time</th>
+                <th scope="col" class="types" style="text-align:center">Version</th>
                 <th scope="col" class="types" style="text-align:center">View Data</th>
                 
-                <th *ngIf="this.userRole == 'Admin'" scope="col" class="types">Action</th>
+                
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 1, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
-                <td style="text-align:center">{{keys.key}}</td>
-                <td style="text-align:center">{{keys.created_time}}</td>
-                <td style="text-align:center">{{23}}</td>
+                <td style="text-align:center">{{keys.keyname}}</td>
+                <td style="text-align:center">{{keys.data.metadata.created_time | date}}</td>
+                <td style="text-align:center">{{keys.data.metadata.version}}</td>
+                <td style="text-align:center" (click)="viewSecreteData(datatemplate,keys)">data</td>
                
                 <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
                   <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
@@ -940,6 +942,33 @@
     </tabset>
 </div>
 </div>
+<!--show secret template-->
+<ng-template #datatemplate >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Secuirty Vault Data</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+
+<div class="modal-body">
+
+            <div class="col-md-12 confirmationmsg" style="text-align:left;">
+              <table class="sub-confirmation">
+                <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
+                <th>Secrete Data</th><tr> <td>Host IP</td> <td> : </td> <td>   {{viewdata.data.data.hostIP}}</td> </tr>
+                <tr> <td>User Name</td> <td> : </td> <td>   {{viewdata.data.data.username}}</td> </tr>
+                <tr> <td>Password</td> <td> : </td> <td>   {{viewdata.data.data.password}}</td> </tr>
+              </table>
+             
+            </div>
+
+            <div class="col-md-12 confirmationmsg">
+              <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
+            </div>
+          </div>
+        
+    </ng-template>
 
 
             <div *ngIf="isnotification" class="container">
