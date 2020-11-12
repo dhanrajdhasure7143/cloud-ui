@@ -168,4 +168,7 @@ getAllSecretKeys(): Observable<any> {
 getEmailTemplates(): Observable<any> {
   return this.http.get<any>('/mailService/listmailTemplates');
 }
+saveTemplate(templateip:any): Observable<any>{
+  return this.http.post<any>('/mailService/savemailtemplate', templateip,httpOptions)
+}
 }
