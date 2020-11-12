@@ -521,16 +521,16 @@
                                   <th scope="col" class="alerttype" style="text-align:center">Name</th>
                                  <th scope="col" class="alerttype" style="text-align:center">Subject</th>
                                  <th scope="col" class="alerttype" style="text-align:center">Body</th>
-                                 <th scope="col" class="alerttype" style="text-align:center">Type</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Created By</th>
                                  <th scope="col" class="alerttype">Action</th>
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of templates | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em }; let t=index">
+                                <tr *ngFor="let data of emailtemplateslist | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em }; let t=index">
                                   <td style="text-align:center">{{data.templateName}}</td>
-                                  <td style="text-align:center">{{data.subject}}</td>
+                                  <td style="text-align:center">{{data.templateSubject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
-                                  <td style="text-align:center">{{data.templateType}}</td>
+                                  <td style="text-align:center">{{data.createdBy}}</td>
                                   <td  class="deleticon"><span  (click)="updateemailtemplate(data,l,emaildetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                     <span  (click)="emailtempdelete(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                     <!-- <div id="myid" [ngClass]="selectedtempdet === l?'isdelet':''" class="deletconfm">
@@ -1254,14 +1254,21 @@
                    <br>
                     <div class="col-md-12">
                       <div *ngIf=isEmailcheckBoxValue>
-                      <label for="configalerts">Mail To</label>
+                       <!--<label for="configalerts">Mail To</label>
                       <input type="text" name="mail_to1" maxlength="50" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
                       required mail_to1  placeholder="Enter Email" pattern="^\S*[@]\S*[.]\S*$"/>
                       <span *ngIf="((mail_to1.invalid && configAlerts.submitted) || (mail_to1.errors && mail_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
                                                         <span *ngIf="mail_to1.errors.required"> Email is required</span>
                                                         <span *ngIf="mail_to1.errors.pattern"> Enter valid email address</span>
-                                                      </span>
+                                                      </span> -->
+                                                       
+                                                   <label for="configalerts">Mail To</label>
+                                                       <select name="product" class="form-control"  [(ngModel)]="updateMail" required>
+                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                                                         <option [value]="null" disabled hidden>Select Registered Email</option>
+                                                          <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.userId}}</option>
+                                                       </select>    
                     </div>
                   </div>
                   
@@ -1357,12 +1364,20 @@
                                                       <span *ngIf="email.errors.required"> Email is required</span>
                                                       <span *ngIf="email.errors.pattern"> Enter valid email address</span>
                                                     </span> -->
+                                                   
+                  
                   <label for="configalerts">Email Template</label>
                      <select name="product" class="form-control"  [(ngModel)]="emailtemplate" required>
                             <option [value]="undefined" disabled hidden>Select Email Template</option>
                             <option [value]="null" disabled hidden>Select Email Template</option>
                              <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option>
-                      </select>     
+                      </select>  
+                  <label for="configalerts">Mail To</label>
+                      <select name="product" class="form-control"  [(ngModel)]="emailselected" required>
+                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                        <option [value]="null" disabled hidden>Select Registered Email</option>
+                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.userId}}</option>
+                      </select>    
                   </div>
                 </div>
 
@@ -1410,7 +1425,7 @@
               
           <div class="form-group">
             <label for="application">Template Name</label>
-            <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" maxlength="50" [(ngModel)]="roleName" required/> 
+            <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" maxlength="50" [(ngModel)]="templateName" required/> 
           </div>
           <div class="infocheck">
             <label for="activity">Subject</label>
@@ -1418,7 +1433,7 @@
           </div>
           <div class="textbody">
                   <label for="body">Body</label><br>
-                  <textarea rows="7" name="body" ></textarea>
+                  <textarea rows="7" name="body" [(ngModel)]="mailbody"></textarea>
                 </div>
          
 
@@ -1429,7 +1444,7 @@
               <div class="col-12">
           <div class="form-group form-buttons pull-right buttonsblock">        
               <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
-              <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
+              <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
           </div>
           
           <div class="clearfix">

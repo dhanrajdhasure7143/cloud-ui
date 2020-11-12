@@ -220,7 +220,9 @@ export class ProfileComponent implements OnInit {
   templates: any=[];
   emailtemplateslist: any;
   viewdata: any;
- 
+  mailsubject:any;
+  templateName:any;
+  mailbody: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -2094,5 +2096,33 @@ console.log("alertbody",this.alertsbody)
           console.log(this.emailtemplateslist)
         })
       }
+
+      savetemplate(form:NgForm)
+      {
+        let templateip = {
+
+          "templateBody": this.mailbody,
+          "templateName": this.templateName,
+          "templateSubject": this.mailsubject
+  
+        }
+        this.profileservice.saveTemplate(templateip).subscribe(data => {
+          this.modalRef.hide();
+         if(data.message === "Email template saved successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Template saved successfully."            
+          })
+           
+          }else {
+           this.notifier.show({
+              message: `Failed to save template.`,
+              type: 'error'
+            }) 
+          }
+        })
+        form.resetForm();
+      }
+      
       
    }
