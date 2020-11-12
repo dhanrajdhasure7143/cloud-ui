@@ -171,4 +171,10 @@ getEmailTemplates(): Observable<any> {
 saveTemplate(templateip:any): Observable<any>{
   return this.http.post<any>('/mailService/savemailtemplate', templateip,httpOptions)
 }
+deleteTemplate(temp:any): Observable<any>{
+  return this.http.post<any>('/mailService/deleteTemplate',temp,httpOptions)
+}
+modifyTemplate(template:any): Observable<any>{
+  return this.http.post<any>('/mailService/modifyTemplate', template,httpOptions)
+}
 }

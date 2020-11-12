@@ -223,6 +223,8 @@ export class ProfileComponent implements OnInit {
   mailsubject:any;
   templateName:any;
   mailbody: any;
+  templatedata: any;
+  selectedtempdet: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -237,7 +239,6 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.templates = [{templateBody:"Hi $user The BPMN Process Notation $bpmnProcessName is submitted. Please review and approve the notation.$reviewComments.Thanks, $modelerName.",templateName:"BPMN Process",subject:"BPMN Process $type",templateType:"email-template"}]
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
@@ -2107,6 +2108,7 @@ console.log("alertbody",this.alertsbody)
   
         }
         this.profileservice.saveTemplate(templateip).subscribe(data => {
+          this.getListOfEmailTemplates();
           this.modalRef.hide();
          if(data.message === "Email template saved successfully"){
           this.notifier.show({
@@ -2122,6 +2124,66 @@ console.log("alertbody",this.alertsbody)
           }
         })
         form.resetForm();
+      }
+
+      selectedtemplate(data, index, template) {
+    
+        this.templatedata = data;
+        this.modalRef = this.modalService.show(template)
+       
+      }
+      emailtempdelete(data,index){
+        document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+        this.selectedtempdet = index;
+      }
+      tempdelno(index){
+      this.selectedtempdet=" ";
+      document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+      }
+
+      tempDelYes(data,index){
+        this.selectedtempdet=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+       // this.modalRef.hide();
+        this.profileservice.deleteTemplate(data).subscribe(data => {
+          this.getListOfEmailTemplates();
+         if(data.message === "Template deleted successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Template deleted successfully."            
+          })
+           
+          }else {
+           this.notifier.show({
+              message: `Failed to delete template.`,
+              type: 'error'
+            }) 
+          }
+        })
+       
+      }
+      cancelEmail(){
+        this.modalRef.hide();
+      }
+
+      updateemailtemplate(){
+         this.profileservice.modifyTemplate(this.templatedata).subscribe(data => {
+          this.getListOfEmailTemplates();
+          this.modalRef.hide();
+         if(data.message === "Template updated successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Template updated successfully."            
+          })
+           
+          }else {
+           this.notifier.show({
+              message: `Failed to save template.`,
+              type: 'error'
+            }) 
+          }
+        })
+
       }
       
       
