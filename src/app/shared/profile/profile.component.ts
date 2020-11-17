@@ -57,6 +57,12 @@ export class ProfileComponent implements OnInit {
     value: ''
     
   }];
+  public secretes1: any[] = [{
+    id: 1,
+    key: '',
+    value: ''
+    
+  }];
   isReedemBy:boolean=false;
   isReedemTimes:boolean=false;
   isAmount:boolean=false;
@@ -137,6 +143,7 @@ export class ProfileComponent implements OnInit {
   coupondata: any;
   testArry: any = [];
    allKeys : any = [];
+ 
   
   /**alerts */
   isEmailcheckBoxValue:any;
@@ -220,11 +227,21 @@ export class ProfileComponent implements OnInit {
   templates: any=[];
   emailtemplateslist: any;
   viewdata: any;
+  secreteDetails: { secreteKey: any; key: any; };
+  secretkey1: any;
+  secretkeyname:any;
+  versiondata: any;
+  updateSecretedata: any;
+  mykeys: any=[];
+  myvalue:  any=[];
+  finalObj: any;
+  input1: any;
   mailsubject:any;
   templateName:any;
   mailbody: any;
   templatedata: any;
   selectedtempdet: any;
+  updatesecreteobj: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -360,7 +377,70 @@ this.profileservice.applications().subscribe(resp =>
   viewSecreteData(template,keys){
     
     this.viewdata=keys;
-   this.modalRef = this.modalService.show(template,this.config);
+    console.log("viewing data is",this.viewdata.data.data)
+    this.versiondata=this.viewdata.data.metadata.version;
+    this.updateSecretedata=this.viewdata
+    // this.mykeys= Object.keys(this.updateSecretedata.data.data)
+    // this.myvalue=Object.values(this.updateSecretedata.data.data)
+    
+    this.modalRef = this.modalService.show(template,this.config);
+
+  }
+  
+  updateSecret(){
+
+  }
+  
+  addSecretupdate(){
+    //this.secretes=[];
+    this.secretes1.push({
+      id: this.secretes1.length + 1,
+      key: '',
+      value: ''
+      
+    });
+    console.log("oooodsdsddddddo",this.secretes1)
+    this.secretes1.forEach(element => {
+      this.updatesecreteobj[element.key] = element.value
+      
+});  
+//this.secretes1=[];
+console.log("my pdate data",this.updateSecretedata)
+    //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
+    console.log("my pdate data 2222",this.updatesecreteobj)
+    this.finalObj=Object.assign(this.updatesecreteobj,this.updateSecretedata.data.data)
+    console.log("finallll",this.finalObj)
+    this.input1={
+      "options": {
+        "cas": this.versiondata
+      },
+      "data": this.finalObj
+    }
+  }
+  //update secrete
+  updateSecreteData(updateSecretedata){
+    console.log("to update",updateSecretedata)
+   
+
+    this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
+    console.log("in updatessssssssss",this.input1)
+   
+   
+    this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
+      this.getAllKeys();
+      this.modalRef.hide();
+        this.notifier.show({
+          type: "success",
+          message: "updated Succesfully!"
+        });
+      });
+   this.mykeys= Object.keys(this.updateSecretedata.data.data)
+   this.myvalue=Object.values(this.updateSecretedata.data.data)
+   // updatesecreteobj[key] = this.updateSecretedata.data.data
+    console.log("updatesec",Object.values(this.updateSecretedata.data.data))
+    
+  
+   this.modalRef = this.modalService.show(this.config);
   }
   close_modal(){
     this.modalRef.hide();}
