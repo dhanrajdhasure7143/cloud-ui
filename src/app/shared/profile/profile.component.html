@@ -1351,7 +1351,8 @@
                     <label for="configalerts">Channel</label><br>
                     Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Incident <input type="checkbox"  name="incidentcheck"   [(ngModel)]="isIncidentcheckBoxValue"/>
                   </div>
 
                   <div class="form-group">
@@ -1379,6 +1380,18 @@
                          <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
                       </select>    
                   </div>
+                </div>
+                <div class="form-group">
+                  <div *ngIf=isIncidentcheckBoxValue>
+                    <label for="configalerts">Incident System</label>
+                     <select name="product" class="form-control"  [(ngModel)]="incidentselected" required>
+                            <option [value]="undefined" disabled hidden>Select Incident System</option>
+                            <option value="EZDesk" >EZDesk</option>
+                            <option value="EZSupport">EZSupport</option>
+                            <option value="ServiceNow" >ServiceNow</option>
+                             <!-- <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option> -->
+                      </select> 
+                    </div>
                 </div>
 
                 <div class="form-group">
