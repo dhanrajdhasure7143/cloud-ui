@@ -160,7 +160,7 @@ getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
   return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
 }
 creatSecret( data,path) : Observable<any>{
-  return this.http.post<any>('/api/vault/create-secret?secreteName='+path,httpOptions);
+  return this.http.post<any>('/api/vault/create-secret?secreteName='+path,data,httpOptions);
 }
 getAllSecretKeys(): Observable<any> {
   return this.http.get<any>('/api/vault/get-all-secretekeys');
