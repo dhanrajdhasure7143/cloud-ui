@@ -436,10 +436,18 @@
 
                
                 <div class="container" *ngIf="isAlerts">
+                  <div  class="">
+                    <tabset >
+                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Alerts" id="tab1">
+                        <div class="search-One">
+                            <form class="form-inline d-flex  md-form form-sm">
+                                <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                              </form>
+                            </div>
+                  
                   <div class="row">
-                      <div  class="col-md-12">
-                              <h4 class="alert">Configure Alerts</h4>
-                      </div>
+                     
                       <div class="container configalerts">
                         <button class='btn btn-primary pull-right createAlert'  (click)='addAlert(configAlerts)'>Create Alert</button>
                         <table class="table table-borderless table-hover">
@@ -457,7 +465,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: { itemsPerPage: 5, currentPage: p }; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p }; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -490,14 +498,75 @@
                           </tbody>
                         </table>
                         <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        <pagination-controls id="alert_page" maxSize="8" (pageChange)="p = $event"></pagination-controls>
                         </div>
                     
                 </div>
                       </div>
+                    </tab>
+                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Email Templates" >
+                      <div class="search-One">
+                        <form class="form-inline d-flex  md-form form-sm">
+                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                            <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                          </form>
+                        </div>
+                        <div class="row">
+                     
+                          <div class="container configalerts">
+                            <button class='btn btn-primary pull-right createAlert'  (click)='addTemplate(configEmail)'>Create Template</button>
+                            <table class="table table-borderless table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="alerttype" style="text-align:center">Name</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Subject</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Body</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Created By</th>
+                                 <th scope="col" class="alerttype">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody >
+                                <tr *ngFor="let data of emailtemplateslist | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em }; let t=index">
+                                  <td style="text-align:center">{{data.templateName}}</td>
+                                  <td style="text-align:center">{{data.templateSubject}}</td>
+                                  <td style="text-align:center">{{data.templateBody}}</td>
+                                  <td style="text-align:center">{{data.createdBy}}</td>
+                                  <td  class="deleticon"><span  (click)="selectedtemplate(data,t,emaildetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                    <span  (click)="emailtempdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                    <div id="myid" [ngClass]="selectedtempdet === t?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                          <h5 class="pull-left">Confirmation</h5>
+                                          <button type="button" class="close " aria-label="Close" (click)="tempdelno(t)">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          <p class="pull-left">Are you sure you want to delete the template ?</p>
+                                           <button class="pull-left confm" (click)="tempDelYes(data,t)">Yes</button>
+                                           <button class="confm pull-left" (click)="tempdelno(t)">No</button>
+                                      </div>
+                                  </div>
+                                  </td>
+                                </tr>
+                                <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                                  
+                                    <div class="norecords"><h4>No records found</h4></div>
+                                 
+                                  </tr>
+    
+                              </tbody>
+                            </table>
+                            <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                            <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
+                            </div>
+                        
+                    </div>
+                          </div>
+                    </tab>
+                   
+                  </tabset>
                   </div>
 
-
+                
+                </div>
 
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
@@ -812,6 +881,114 @@
     </tabset>
 </div>
 </div>
+<!--vault creation-->
+<div  *ngIf="isvaultMangment" class="container">
+  <div  class="">
+      <tabset >
+            <tab heading="Security Vault">
+      <div class="search-One">
+          <form class="form-inline d-flex  md-form form-sm">
+             
+            </form>
+          </div>
+      <div class="container">
+        
+          <button  class='btn btn-primary pull-right addCard' (click)='createSecret(createsecret)'>Create Secret</button>
+          <table class="table table-borderless table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="types" style="text-align:center">Secret Name</th>
+                <th scope="col" class="types" style="text-align:center">created time</th>
+                <th scope="col" class="types" style="text-align:center">Version</th>
+                <th scope="col" class="types" style="text-align:center">Actions</th>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                <td style="text-align:center">{{keys.keyname}}</td>
+                <td style="text-align:center">{{keys.data.metadata.created_time | date}}</td>
+                <td style="text-align:center">{{keys.data.metadata.version}}</td>
+                <td style="text-align:center">
+                <span  (click)="viewSecreteData(datatemplate,keys)">
+                  <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                </td>
+               
+              
+                  
+               
+               </tr>
+            </tbody>
+          </table>
+                    <div class="couponpagination">
+                      <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
+                      </div>
+      </div>
+      </tab>
+    
+    </tabset>
+</div>
+</div>
+<!--show secret template-->
+<ng-template #datatemplate >
+  
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Secuirty Vault Details</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+
+<div class="modal-body">
+
+            <div  class="col-md-12 confirmationmsg" style="text-align:left;">
+              <table class="sub-confirmation">
+                <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
+                <th>Secrete Data</th>
+                             <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder"  [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  name="valueholder"  [(ngModel)]="mykey.value" ></td>
+                            <td>
+                                <span  (click)="removeSecrete(i)"> 
+                                  <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                </td>
+                              
+                            </tr>
+                           
+                            <tr *ngFor="let secret1 of secretes1; let i = index;">
+                             
+                              <td>
+                                <input type="text"  [(ngModel)]="secret1.key"
+                                name="key_{{secret1.id}}"  placeholder="key">
+                                                        </td>
+                              <td>:</td>
+                            <td>
+                              
+                              
+                          <input type="text"  [(ngModel)]="secret1.value"
+                          name="value_{{secret1.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;"><!----> 
+            
+                             </td>
+                            <td>
+                             
+                                <span  (click)="addSecretupdate()"> 
+                                  <img src="assets/images/Add.svg" alt=""></span>
+                            </td>
+                            
+                            </tr>
+                         
+                           </table>
+             
+            </div>
+
+            <div class="col-md-12 confirmationmsg">
+              <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
+            </div>
+            <div class="col-md-12 confirmationmsg">
+              <button class="btn btn-primary" type="submit" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
+            </div>
+          </div>
+      
+    </ng-template>
+
 
 
 
@@ -831,9 +1008,9 @@
                               </tr>
                             </thead>
                             <tbody *ngIf="notificationList.errorMessage==undefined ">
-                              <tr *ngFor="let messageList of notificationList | paginate: {id:'notification_page', itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
-                                <td>{{messageList.notificationAuditId[0].contentType}}</td>
-                                <td>{{messageList.createdAt | date:'medium'}}</td>
+                              <tr [id]="'ntf_'+messageList.id" [ngClass]="messageList.status == 'read'?'isRead':'unread'"     *ngFor="let messageList of notificationList | paginate: {id:'notification_page', itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
+                                <td [id]="'msg_'+messageList.id" (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.notificationAuditId[0].contentType}}</td>
+                                <td [id]="'date_'+messageList.id" (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.createdAt | date:'medium'}}</td>
                                 <!-- <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td> -->
                                 <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
                                   <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
@@ -973,8 +1150,16 @@
                     
                     <div class="form-group col-sm-8">
                             <label for="cardNumber">Card Number</label>
-                            <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
-                            [(ngModel)]="cardModel.cardNumber" id="cardNumber" placeholder="Card Number" required/>
+                            <div class="input-group ">
+                              <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
+                                [(ngModel)]="cardModel.cardNumber" id="cardNumber" placeholder="Card Number" (change)='onChangeCardType(cardModel.cardNumber)' required/>
+                              <div class="input-group-append">
+                                <span *ngIf= "cards && cards[0].type =='visa' && cardNumber.value >= 4">
+                                  <img class="card" src="assets/images/CardLogo/visa.png"></span>
+                                <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber.value >= 4">
+                                  <img class="card" src="assets/images/CardLogo/master.png"></span>
+                                </div>
+                              </div>
                             <span *ngIf="((cardNumber.invalid && addpaymentmode.submitted) || (cardNumber.errors && cardNumber.touched) )" 
                             class='fa fa-info-circle errspan'> Card Number is required</span>
                     </div>
@@ -1042,7 +1227,7 @@
             <!--alerts-->
             <ng-template #alertdetailstemplate >
               <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title" >Alert Details</h4>
+                <h4 class="modal-title" id="modal-basic-title" >Modify Alert</h4>
                     <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()"> 
                     <span aria-hidden="true">&times;</span>
                   </button>-->
@@ -1090,14 +1275,21 @@
                    <br>
                     <div class="col-md-12">
                       <div *ngIf=isEmailcheckBoxValue>
-                      <label for="configalerts">Mail To</label>
+                       <!--<label for="configalerts">Mail To</label>
                       <input type="text" name="mail_to1" maxlength="50" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
                       required mail_to1  placeholder="Enter Email" pattern="^\S*[@]\S*[.]\S*$"/>
                       <span *ngIf="((mail_to1.invalid && configAlerts.submitted) || (mail_to1.errors && mail_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
                                                         <span *ngIf="mail_to1.errors.required"> Email is required</span>
                                                         <span *ngIf="mail_to1.errors.pattern"> Enter valid email address</span>
-                                                      </span>
+                                                      </span> -->
+                                                       
+                                                   <label for="configalerts">User(s)</label>
+                                                       <select name="product" class="form-control"  [(ngModel)]="updateMail" required>
+                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                                                         <option [value]="null" disabled hidden>Select Registered Email</option>
+                                                          <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                                                       </select>    
                     </div>
                   </div>
                   
@@ -1139,7 +1331,7 @@
               
             <ng-template #configAlerts >
               <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title" >Configure Alerts</h4>
+                <h4 class="modal-title" id="modal-basic-title" >Create Alert</h4>
                 <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -1180,20 +1372,47 @@
                     <label for="configalerts">Channel</label><br>
                     Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Incident <input type="checkbox"  name="incidentcheck"   [(ngModel)]="isIncidentcheckBoxValue"/>
                   </div>
 
                   <div class="form-group">
                     <div *ngIf=isEmailcheckBoxValue>
-                    <label for="configalerts">Mail To</label>
+                    <!-- <label for="configalerts">Mail To</label>
                     <input type="text" name="email" maxlength="50" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
                     pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Enter Email" required/>
                     <span *ngIf="((email.invalid && configAlerts.submitted) || (email.errors && email.touched) ) "
                                                       class='fa fa-info-circle errspan'>
                                                       <span *ngIf="email.errors.required"> Email is required</span>
                                                       <span *ngIf="email.errors.pattern"> Enter valid email address</span>
-                                                    </span>
+                                                    </span> -->
+                                                   
+                  
+                  <label for="configalerts">Email Template</label>
+                     <select name="product" class="form-control"  [(ngModel)]="emailtemplate" required>
+                            <option [value]="undefined" disabled hidden>Select Email Template</option>
+                            <option [value]="null" disabled hidden>Select Email Template</option>
+                             <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option>
+                      </select>  
+                  <label for="configalerts">User(s)</label>
+                      <select name="product" class="form-control"  [(ngModel)]="emailselected" required>
+                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                        <option [value]="null" disabled hidden>Select Registered Email</option>
+                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                      </select>    
                   </div>
+                </div>
+                <div class="form-group">
+                  <div *ngIf=isIncidentcheckBoxValue>
+                    <label for="configalerts">Incident System</label>
+                     <select name="product" class="form-control"  [(ngModel)]="incidentselected" required>
+                            <option [value]="undefined" disabled hidden>Select Incident System</option>
+                            <option value="EZDesk" >EZDesk</option>
+                            <option value="EZSupport">EZSupport</option>
+                            <option value="ServiceNow" >ServiceNow</option>
+                             <!-- <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option> -->
+                      </select> 
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -1227,7 +1446,91 @@
           </form>
            </ng-template>
 
+           <ng-template #configEmail >
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title" >Create Template</h4>
+              <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form autocomplete="off" id="configureemail" name="configureemail" #configureemail="ngForm">
+            <div class="modal-body">
+              
+              
+          <div class="form-group">
+            <label for="application">Template Name</label>
+            <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" placeholder="Enter Template Name " maxlength="50" [(ngModel)]="templateName" required/> 
+          </div>
+          <div class="infocheck">
+            <label for="activity">Subject</label>
+            <input type="text"  name="subject" #subject="ngModel" class="form-control botmbordr" placeholder="Enter Subject" maxlength="50" [(ngModel)]="mailsubject" required/> 
+          </div>
+          <div class="textbody">
+                  <label for="body">Body</label><br>
+                  <textarea rows="7" name="body" placeholder="Enter Body" [(ngModel)]="mailbody"></textarea>
+                </div>
+         
 
+                </div>
+              
+          <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+          <div class="form-group form-buttons pull-right buttonsblock">        
+              <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+              <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
+          </div>
+          
+          <div class="clearfix">
+          </div>
+          </div>
+          </div>
+          </div>
+        </form>
+         </ng-template>
+
+         <ng-template #emaildetailstemplate >
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title" >Modify Template</h4>
+            <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form autocomplete="off" id="configureemailupdate" name="configureemailupdate" #configureemailupdate="ngForm">
+          <div class="modal-body">
+            
+            
+        <div class="form-group">
+          <label for="application">Template Name</label>
+          <input type="text"  name="tempname" #role="ngModel" class="form-control botmbordr" placeholder="Enter Template Name" maxlength="50" [(ngModel)]="templatedata.templateName" required/> 
+        </div>
+        <div class="infocheck">
+          <label for="activity">Subject</label>
+          <input type="text"  name="subject" #subject="ngModel" class="form-control botmbordr" placeholder="Enter Subject" maxlength="50" [(ngModel)]="templatedata.templateSubject" required/> 
+        </div>
+        <div class="textbody">
+                <label for="body">Body</label><br>
+                <textarea rows="7" name="body" placeholder="Enter Body" [(ngModel)]="templatedata.templateBody"></textarea>
+              </div>
+       
+
+              </div>
+            
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right buttonsblock">        
+            <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelEmail()"><div class="anim"></div> Cancel</button>
+            <button [disabled]="configureemailupdate.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="updateemailtemplate()"><div class="anim" ></div> Save</button>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+       </ng-template>
 
             <ng-template #rolestemplate >
 
@@ -1721,3 +2024,76 @@
                       
                      
                     </ng-template>
+<!-- this is vault managment -->
+             
+
+             
+
+<ng-template #createsecret >
+  <form autocomplete="off" #vaultform="ngForm" (ngSubmit)="createNewSecret()" >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Create Secret</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancelAddSecrete()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="">
+      <div class="col-12 row">        
+        <div class="col-md-12 infocheck">
+         
+            <label >Secret Key</label>
+            <input type="text"  class="form-control payment-input"name="secretkey1"  [(ngModel)]="secretkeyname" placeholder="Enter Secret Key" required/>
+            
+              <label>Version Data</label>
+              
+            <table class="sub-confirmation">
+            <tr *ngFor="let secret of secretes; let i = index;" class="form-section">
+             
+                  <td >
+                    <input type="text"  [(ngModel)]="secret.key"
+                    name="key_{{secret.id}}"  placeholder="key">
+                  </td>
+                
+                  <td >
+                  
+              <input type="text"  [(ngModel)]="secret.value"
+              name="value_{{secret.id}}"   placeholder="value"><!----> 
+
+                </td>
+                 
+                    <td>
+                    <span  (click)="addSecret()"> 
+                      <img src="assets/images/Add.svg" alt=""></span>
+                    
+                    <span  (click)="removeSecrete(i)"> 
+                      <img src="assets/images/unsubscribe.svg" alt=""></span>
+                    </td>
+                 
+                              
+               
+              </tr>                           
+            </table>
+                 </div>
+              </div>
+           </div>
+  </div>
+              <div class="modal-footer">
+                <div class="">
+                  <div class="col-12">
+              <div class="form-group form-buttons pull-right  buttonsblock">        
+                  
+                  <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Create</button>
+              </div>
+              
+
+              
+              </div>
+              </div>
+              </div>
+        </form>
+  </ng-template>
+
+  <!-- update secret -->
+
+

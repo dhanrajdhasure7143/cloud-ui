@@ -78,4 +78,12 @@ export class AuthenticationService {
          
       return this.http.get('/api/user/details?userId='+username,{responseType:'json'});
     }
+    generateOTP(username: string) {
+         
+      return this.http.get('/api/login/beta/generateOTP?userId='+username ,{responseType:'json'});
+    }
+    validateOTP(username: string, otp: string) {
+         
+      return this.http.get('/api/login/beta/validateOTP?userId='+username+"&otp="+otp,{responseType:'json'});
+    }
 }

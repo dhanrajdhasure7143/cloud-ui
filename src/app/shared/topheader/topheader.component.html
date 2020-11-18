@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
   <div class="row">
 <nav class=" navbar-light naveOne col-md-12">
@@ -8,7 +7,7 @@
     <li class="col-md-10"></li>
       <li class=" nav-item col-md-1 notificationBell">
           <img class="notification-icon" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt=" ">
-          <div *ngIf='notificationscount!=0' class="notification-count" style = "position:absolute; left:68px; top:10px;">
+          <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:68px; top:10px;">
             <span>{{notificationscount}}</span> 
            </div>
         </li>
@@ -21,9 +20,10 @@
         <div  id="myDropdown" class="dropdown-content">
                <p (click)="accountSlideup()"><img  src="assets/images/account.svg"><span>My Account</span></p>
                   <p *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
-                  <p *ngIf="this.userRole.includes('Admin')" (click)="alertsSlideup()"><img  src="assets/images/config_alerts.svg"><span>Configure Alerts</span></p>
+                  <p *ngIf="this.userRole.includes('Admin')" (click)="alertsSlideup()"><img  src="assets/images/config_alerts.svg"><span>Configuration</span></p>
                   <p *ngIf="this.userRole.includes('Admin')" (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
                   <p *ngIf="this.userRole.includes('SuperAdmin')"  (click)="couponSlideup()"><img  src="assets/images/inviteuser.svg"><span>Create Coupon</span></p>
+                  <p *ngIf="this.userRole.includes('Admin')"  (click)="vaultManagement()"><img  src="assets/images/Vault.svg"><span>Vault Management</span></p>
                   <p (click)="logout()"><img src="assets/images/Sign_Out.svg"><span>Signout</span></p>
               </div> 
         </div>
@@ -35,5 +35,5 @@
 
 
 
-  <app-profile [isMyaccount]="isMyaccount" [isInvite]="isInvite" [isAlerts]="isAlerts" [isusers]="isusers" [isnotification]="isnotification" [isCoupon]="isCoupon"></app-profile>
+  <app-profile [isMyaccount]="isMyaccount" [isInvite]="isInvite" [isAlerts]="isAlerts" [isusers]="isusers" [isnotification]="isnotification" [isCoupon]="isCoupon" [isvaultMangment]="isvaultMangment"></app-profile>
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner>

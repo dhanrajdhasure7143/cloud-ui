@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
   @Input() public isusers: boolean;
   @Input() public isCoupon: boolean;
   @Input() public isnotification: boolean;
+  @Input() public isvaultMangment:boolean;
   public model: User;
   public yearList:any;
   config = {
@@ -50,6 +51,13 @@ export class ProfileComponent implements OnInit {
   public tableData: any[];
   public formOne: any = {};
   countryInfo: any[] = [];
+  public secretes: any[] = [{
+    id: 1,
+    key: '',
+    value: ''
+    
+  }];
+
   isReedemBy:boolean=false;
   isReedemTimes:boolean=false;
   isAmount:boolean=false;
@@ -129,6 +137,8 @@ export class ProfileComponent implements OnInit {
   mod: any;
   coupondata: any;
   testArry: any = [];
+   allKeys : any = [];
+ 
   
   /**alerts */
   isEmailcheckBoxValue:any;
@@ -140,6 +150,8 @@ export class ProfileComponent implements OnInit {
   result: void;
   checkedData: any;
   demo: any = [];
+  secreteKey: any;
+  key: any;
   application: any = [];
   listOfNames: any = [];
   listOfId: any = [];
@@ -161,6 +173,7 @@ export class ProfileComponent implements OnInit {
   cpp=0;
   rp=0;
   pp=0;
+  em=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];
@@ -204,6 +217,36 @@ export class ProfileComponent implements OnInit {
   currentUserId: any;
   datetime: any;
   redeemdate: any;
+  public notificationreadlist:any;
+  cards: any;
+  templates: any=[];
+  emailtemplateslist: any;
+  viewdata: any;
+  secreteDetails: { secreteKey: any; key: any; };
+   public secretes1: any[] = [{
+    id: 1,
+    key: '',
+    value: ''
+    
+  }];
+  public mydata = {
+  };
+  public updatesecreteobj={};
+
+  secretkeyname:any;
+  versiondata: any;
+  updateSecretedata: any;
+  mykeys: any=[];
+  myvalue:  any=[];
+  finalObj: any;
+  input1: any;
+  mailsubject:any;
+  templateName:any;
+  mailbody: any;
+  templatedata: any;
+  selectedtempdet: any;
+
+
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -220,10 +263,12 @@ export class ProfileComponent implements OnInit {
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
+    this.getAllKeys();
   //   this.applications = [
   //     {id: 2, name: "2.0"},
   //     {id: 3, name: "ezflow"}
   // ];
+  this.getListOfEmailTemplates();
     this.getAllPermissions();
     this.yearList=yearslist;
       this.getAllNotifications();
@@ -325,6 +370,82 @@ this.profileservice.applications().subscribe(resp =>
     console.log("doupns are",this.allCoupons)})
  
   }
+  getAllKeys(){
+    
+    this.profileservice.getAllSecretKeys().subscribe(resp=>{
+     this.allKeys=resp
+        }
+      );
+    
+  }
+  viewSecreteData(template,keys){
+    
+    this.viewdata=keys;
+    console.log("viewing data is",this.viewdata.data.data)
+    this.versiondata=this.viewdata.data.metadata.version;
+    this.updateSecretedata=this.viewdata
+    // this.mykeys= Object.keys(this.updateSecretedata.data.data)
+    // this.myvalue=Object.values(this.updateSecretedata.data.data)
+    
+    this.modalRef = this.modalService.show(template,this.config);
+
+  }
+  
+  updateSecret(){
+
+  }
+  
+  addSecretupdate(){
+    //this.secretes=[];
+    this.secretes1.push({
+      id: this.secretes1.length + 1,
+      key: '',
+      value: ''
+      
+    });
+    console.log("oooodsdsddddddo",this.secretes1)
+    this.secretes1.forEach(element => {
+      this.updatesecreteobj[element.key] = element.value
+      
+});  
+//this.secretes1=[];
+console.log("my pdate data",this.updateSecretedata)
+    //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
+    console.log("my pdate data 2222",this.updatesecreteobj)
+    this.finalObj=Object.assign(this.updatesecreteobj,this.updateSecretedata.data.data)
+    console.log("finallll",this.finalObj)
+    this.input1={
+      "options": {
+        "cas": this.versiondata
+      },
+      "data": this.finalObj
+    }
+  }
+  //update secrete
+  updateSecreteData(updateSecretedata){
+    console.log("to update",updateSecretedata)
+   
+
+    this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
+    console.log("in updatessssssssss",this.input1)
+   
+   
+    this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
+      this.getAllKeys();
+      this.modalRef.hide();
+        this.notifier.show({
+          type: "success",
+          message: "updated Succesfully!"
+        });
+      });
+   this.mykeys= Object.keys(this.updateSecretedata.data.data)
+   this.myvalue=Object.values(this.updateSecretedata.data.data)
+   // updatesecreteobj[key] = this.updateSecretedata.data.data
+    console.log("updatesec",Object.values(this.updateSecretedata.data.data))
+
+  }
+  close_modal(){
+    this.modalRef.hide();}
   getAllPaymentmodes() {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
@@ -766,6 +887,9 @@ this.profileservice.applications().subscribe(resp =>
       this.isSMScheckBoxValue=false
       this.modalRef = this.modalService.show(template,this.config)
     }
+    addTemplate(template){
+      this.modalRef = this.modalService.show(template,this.config)
+    }
     alertsdeletedata(data,index){
       this.selectedalertdet=index
       console.log("index",index)
@@ -865,7 +989,7 @@ this.profileservice.applications().subscribe(resp =>
           "type": this.updateType
       }
       console.log("alertmodifybody",this.alertmodifybody)
-        this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
+        this.profileservice.modifyAlert(this.alertmodifybody).subscribe(resp=>{
           this.notifier.show({
             type: "success",
             message: "Alert Updated successfully!"
@@ -931,6 +1055,21 @@ this.profileservice.applications().subscribe(resp =>
     createCoupon(createCoupon){
       this.modalRef = this.modalService.show(createCoupon,this.config)
     }
+    createSecret(createSecret){
+      this.modalRef = this.modalService.show(createSecret,this.config)
+    }
+    
+    addSecret(){
+      this.secretes.push({
+        id: this.secretes.length + 1,
+        key: '',
+        value: ''
+        
+      });
+    }
+    removeSecrete(i : number){
+      this.secretes.splice(i, 1);
+    }
     cancelAddRole(){
       this.modalRef.hide();
       this.roleName = "";
@@ -944,11 +1083,23 @@ this.profileservice.applications().subscribe(resp =>
     cancelCreateCopon(){
       this.modalRef.hide();
     }
+    cancelAddSecrete(){
+      this.modalRef.hide();
+      
+    }
+
    
     cancelAddCard(){
       this.modalRef.hide();
       this.cardModel={}
     }
+
+    onChangeCardType(cardNumber) {
+      var creditCardType = require("credit-card-type"); 
+      this.cards = creditCardType(cardNumber);
+      console.log(this.cards[0].type);
+    }
+    
     addNewCard(){
       this.cardDetails={
           "name":this.cardModel.cardHoldername,
@@ -1321,6 +1472,34 @@ cancelAlert(){
     form.resetForm();
  
     }
+//create secrets
+createNewSecret(){
+             
+            this.secretes.forEach(element => {
+                    this.mydata[element.key] = element.value
+              });  
+      let input={
+      "options": {
+        "cas": 0
+      },
+      
+      "data": this.mydata
+    }
+
+ this.profileservice.creatSecret(input,this.secretkeyname).subscribe(resp=>{this.data=resp
+  this.getAllKeys();
+  this.modalRef.hide();
+    this.notifier.show({
+      type: "success",
+     
+      message: "Created Succesfully!"
+    });
+      
+        });
+
+   
+}
+ 
 
   
     myFunction(role) { 
@@ -1974,4 +2153,124 @@ console.log("alertbody",this.alertsbody)
       // $("#excel").val(this.selectedFile.name)
        $("#excel").append('('+this.selectedFile.name+')');
       }
+
+      notificationclick(id)
+      {
+        let userId =  localStorage.getItem("userName")
+        this.tenantId=localStorage.getItem('tenantName');
+        this.role=localStorage.getItem('userRole')
+       this.notificationbody ={
+          "tenantId":this.tenantId
+       }
+       console.log("notification id",id)
+       if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
+        this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
+          this.notificationreadlist = data
+          this.notificationList.find(ntf=>ntf.id==id).status='read'
+         //document.getElementById('msg_'+id).style.color="grey"
+         //document.getElementById('date_'+id).style.color="grey"
+         //document.getElementById(id).style.cursor="none"
+          console.log(this.notificationreadlist)
+        })
+       
+      }
+      }
+
+      getListOfEmailTemplates()
+      {
+        this.profileservice.getEmailTemplates().subscribe(data => {
+          this.emailtemplateslist=data
+          console.log(this.emailtemplateslist)
+        })
+      }
+
+      savetemplate(form:NgForm)
+      {
+        let templateip = {
+
+          "templateBody": this.mailbody,
+          "templateName": this.templateName,
+          "templateSubject": this.mailsubject
+  
+        }
+        this.profileservice.saveTemplate(templateip).subscribe(data => {
+          this.getListOfEmailTemplates();
+          this.modalRef.hide();
+         if(data.message === "Email template saved successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Template saved successfully."            
+          })
+           
+          }else {
+           this.notifier.show({
+              message: `Failed to save template.`,
+              type: 'error'
+            }) 
+          }
+        })
+        form.resetForm();
+      }
+
+      selectedtemplate(data, index, template) {
+    
+        this.templatedata = data;
+        this.modalRef = this.modalService.show(template)
+       
+      }
+      emailtempdelete(data,index){
+        document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+        this.selectedtempdet = index;
+      }
+      tempdelno(index){
+      this.selectedtempdet=" ";
+      document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+      }
+
+      tempDelYes(data,index){
+        this.selectedtempdet=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+       // this.modalRef.hide();
+        this.profileservice.deleteTemplate(data).subscribe(data => {
+          this.getListOfEmailTemplates();
+         if(data.message === "Template deleted successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Template deleted successfully."            
+          })
+           
+          }else {
+           this.notifier.show({
+              message: `Failed to delete template.`,
+              type: 'error'
+            }) 
+          }
+        })
+       
+      }
+      cancelEmail(){
+        this.modalRef.hide();
+      }
+
+      updateemailtemplate(){
+         this.profileservice.modifyTemplate(this.templatedata).subscribe(data => {
+          this.getListOfEmailTemplates();
+          this.modalRef.hide();
+         if(data.message === "Template updated successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Template updated successfully."            
+          })
+           
+          }else {
+           this.notifier.show({
+              message: `Failed to save template.`,
+              type: 'error'
+            }) 
+          }
+        })
+
+      }
+      
+      
    }

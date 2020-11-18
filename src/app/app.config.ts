@@ -13,6 +13,7 @@ export interface AiotalAppConfig {
   Subscriptionendpoint:String;
   productendpoint: String;
   socialLoginRedirectURL: String;
+  isTwoFactorAuthenticationEnabled : boolean
   isSecurityManagerEnabled : boolean;
 }
 
@@ -20,13 +21,14 @@ export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
   apiendpoint: 'http://apdev.epsoftinc.in',
   tokenendpoint: 'http://idmdev.epsoftinc.in',
-  proxyTokenendpoint: 'http://10.11.0.112:3001',
+  proxyTokenendpoint: 'http://10.11.0.107:3001',
   authorizationendpoint: 'http://authdev.epsoftinc.in',
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
   notificationsendpoint: 'http://alertsdev.epsoftinc.in',
   Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
   productendpoint: 'http://eiapdev.epsoftinc.in',
   socialLoginRedirectURL: 'http://eiapclouddev.epsoftinc.in/#/user',
+  isTwoFactorAuthenticationEnabled: false,
   isSecurityManagerEnabled : true
 };
 

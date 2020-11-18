@@ -45,6 +45,7 @@ export class TopheaderComponent implements OnInit {
 
   @ViewChild("toogleBtn") toogleBtn;
   logintype: string;
+  isvaultMangment: boolean;
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
                                                private router: ActivatedRoute, 
@@ -171,10 +172,21 @@ public myname:any[]
     this.isAlerts=false;
     this.isMyaccount=true;
     this.isusers=false;
+    this.isvaultMangment=false;
     this.isCoupon=false;
     this.isnotification=false;
   }
-
+  vaultManagement(){
+    document.getElementById("foot").classList.remove("slide-down");
+    document.getElementById("foot").classList.add("slide-up");
+    this.isvaultMangment=true;
+    this.isCoupon=false;
+    this.isAlerts=false;
+    this.isusers=false;  
+    this.isInvite=false;
+    this.isMyaccount=false;
+    this.isnotification=false;
+  }
   inviteSlideup(){
     document.getElementById("foot").classList.remove("slide-down");
     document.getElementById("foot").classList.add("slide-up");
@@ -183,6 +195,7 @@ public myname:any[]
     this.isMyaccount=false;
     this.isusers=false;
     this.isnotification=false;
+    this.isvaultMangment=false;
     this.isCoupon=false;
   }
 
@@ -194,6 +207,7 @@ public myname:any[]
     this.isInvite=false;
     this.isMyaccount=false;
     this.isusers=false;
+    this.isvaultMangment=false;
     this.isnotification=false;
    }
 
@@ -209,6 +223,7 @@ public myname:any[]
     this.isAlerts=false;
     this.isInvite=false;
     this.isMyaccount=false;
+    this.isvaultMangment=false;
     this.isnotification=false;
     this.isCoupon=false;
   }
@@ -219,6 +234,7 @@ public myname:any[]
     this.isAlerts=false;
     this.isusers=false;  
     this.isInvite=false;
+    this.isvaultMangment=false;
     this.isMyaccount=false;
     this.isnotification=false;
   }
@@ -231,6 +247,7 @@ public myname:any[]
     this.isMyaccount=false;
     this.isCoupon=false;
     this.isusers=false;
+    this.isvaultMangment=false;
   }
 
   profileName(){
@@ -280,9 +297,11 @@ public myname:any[]
         let notificationbody ={
             "tenantId":this.tenantId
          }
-          this.profileService.getNotifications(this.role,userId,notificationbody).subscribe(data => {
+         
+          this.profileService.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
             this.notificationList = data
-            this.notificationscount=this.notificationList.length
+            this.notificationscount=this.notificationList
+            console.log(this.notificationscount)
             if(this.notificationscount==undefined||this.notificationscount==null)
             {
               this.notificationscount=0;
@@ -290,5 +309,6 @@ public myname:any[]
            // console.log("count",this.notificationList.length)
           })
           this.getCount();
-        }
+        
+      }
 }

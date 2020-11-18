@@ -37,7 +37,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
         Subscriptionendpoint=Subscriptionendpoint+'/';
       }
 
-      if (((isSecurityManagerEnabled == true && req.url !== '/Idm/accessToken') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/accessToken')) && req.url !== '/api/login/beta/newAccessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0 && req.url.indexOf('http://api.ipify.org') < 0 ) {
+      if (((isSecurityManagerEnabled == true && req.url !== '/Idm/accessToken') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/accessToken')) && req.url !== '/api/login/beta/newAccessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('generateOTP') < 0 && req.url.indexOf('validateOTP') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0 && req.url.indexOf('mailService') < 0 && req.url.indexOf('http://api.ipify.org') < 0 ) {
         req = req.clone({
          url: apiendpoint + req.url,
           body: req.body,
@@ -80,6 +80,14 @@ export class BackendURLInterceptor implements HttpInterceptor {
           headers: req.headers
         });
       }
+      else if(req.url.indexOf('mailService') > -1){  
+        req = req.clone({
+          //url : url + req.url,
+          url: notificationsendpoint + req.url,
+          body: req.body,
+          headers: req.headers
+        });
+      }
       else {
       if(isSecurityManagerEnabled &&  req.url == '/Idm/accessToken'){
          tokenendpoint = proxyTokenendpoint;
@@ -90,6 +98,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
           headers: req.headers
         });
       }
+     
 
       return next.handle(req);
     }
