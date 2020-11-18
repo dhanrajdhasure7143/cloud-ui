@@ -144,6 +144,7 @@ export class ProfileComponent implements OnInit {
   isEmailcheckBoxValue:any;
   isPushNotificationcheckBoxValue:any;
   isSMScheckBoxValue:any;
+  isIncidentcheckBoxValue:any;
   activitieslist:any = [];
   selectValue:any = [];
   isChecked:any = [];
@@ -161,6 +162,7 @@ export class ProfileComponent implements OnInit {
   selectedtype:any;
   emailselected:any;
   smsselected:any;
+  incidentselected:any;
   pushNotifications:any;
   pushEmailNotificationsTo:any;
   pushsmsNotificationsTo:any;
@@ -180,6 +182,7 @@ export class ProfileComponent implements OnInit {
   applicationames: any;
   notificationbody: { tenantId: string; };
   updatetext_to: any;
+  updateIncident: any;
   updateApplication: any;
   updateType: any;
   updateActivities: any;
@@ -885,6 +888,7 @@ console.log("my pdate data",this.updateSecretedata)
       this.isPushNotificationcheckBoxValue=true
       this.isEmailcheckBoxValue=false
       this.isSMScheckBoxValue=false
+      this.isIncidentcheckBoxValue=false
       this.modalRef = this.modalService.show(template,this.config)
     }
     addTemplate(template){
@@ -907,6 +911,7 @@ console.log("my pdate data",this.updateSecretedata)
      this.updateActivities=data.activity_name
      this.updateMail=data.mail_to
      this.updatetext_to=data.text_to
+     this.updateIncident=data.incident_type
 
     console.log("alertslistactivitiesdata",this.updatetext_to)
     let channelsplit=data.channel.split(',')
@@ -933,6 +938,14 @@ console.log("my pdate data",this.updateSecretedata)
       {
         this.isSMScheckBoxValue=true;
       }
+      if(channelname&&channelname==' Incident')
+      {
+        this.isIncidentcheckBoxValue=true;
+      }
+      if(channelname&&channelname=='Incident')
+      {
+        this.isIncidentcheckBoxValue=true;
+      }
     });
     
     this.modalRef = this.modalService.show(template)
@@ -949,7 +962,7 @@ console.log("my pdate data",this.updateSecretedata)
     this.modalRef.hide();
   }
   modifyalert(alertslistactivitiesdata){
-    
+    this.useremail=localStorage.getItem('userName');
     let alertconfiguration=''
     console.log("sms",this.isSMScheckBoxValue)
       if(this.isPushNotificationcheckBoxValue==true)
@@ -968,6 +981,11 @@ console.log("my pdate data",this.updateSecretedata)
         alertconfiguration+='SMS'
         alertconfiguration+=', '
       }
+      if(this.isIncidentcheckBoxValue==true)
+      {
+        alertconfiguration+='Incident'
+        alertconfiguration+=', '
+      }
       if(this.isEmailcheckBoxValue==false)
       {
         this.updateMail=null
@@ -976,20 +994,26 @@ console.log("my pdate data",this.updateSecretedata)
       {
         this.updatetext_to=null
       }
+      if(this.isIncidentcheckBoxValue==false)
+      {
+        this.updateIncident=null
+      }
       console.log("Alert activities",this.alertsactivities)
       var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
-    this.useremail=localStorage.getItem('userName');
+    
         this.alertmodifybody = {
-          "activity_name": this.updateActivities,
-          "app_name": this.updateApplication,
-          "channel": notificationby,
           "id": alertslistactivitiesdata.id,
-          "mail_to": this.updateMail,
+          "app_name": this.updateApplication,
+          "type": this.updateType,
+          "activity_name": this.updateActivities,
+          "channel": notificationby,
+          "mail_to":  this.updateMail,
           "text_to": this.updatetext_to,
-          "type": this.updateType
+          "incident_type": this.updateIncident
+          
       }
       console.log("alertmodifybody",this.alertmodifybody)
-        this.profileservice.modifyAlert(this.alertmodifybody).subscribe(resp=>{
+        this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
           this.notifier.show({
             type: "success",
             message: "Alert Updated successfully!"
@@ -1984,6 +2008,11 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         alertconfiguration+='SMS'
         alertconfiguration+=', '
       }
+      if(this.isIncidentcheckBoxValue==true)
+      {
+        alertconfiguration+='Incident'
+        alertconfiguration+=', '
+      }
       if(this.isEmailcheckBoxValue==false)
       {
         this.emailselected=null
@@ -1992,20 +2021,24 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       {
         this.smsselected=null
       }
+      if(this.isIncidentcheckBoxValue==false)
+      {
+        this.incidentselected=null
+      }
      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
      console.log(notificationby)
      console.log(this.smsselected)
       this.alertsbody ={
-        "app_name": this.applicationames,
-        "type":this.selectedtype ,
-         "activity_names":this.alertsactivities,
-       "channel":notificationby,
-         "mail_to":  this.emailselected,
-         "text_to":  this.smsselected,
-         "created_by":  this.useremail ,
-         "tenant_id":  this.tenantId
-
-    }
+          "activity_names" : this.alertsactivities,
+          "app_name": this.applicationames,
+          "channel": notificationby,
+          "incident_type": this.incidentselected,
+          "mail_to": this.emailselected,
+          "tenant_id": this.tenantId,
+          "text_to": this.smsselected,
+          "type": this.selectedtype
+        }
+    
     
         console.log(this.alertsbody)
       
@@ -2022,8 +2055,10 @@ console.log("alertbody",this.alertsbody)
       this.isEmailcheckBoxValue=false;
       this.isSMScheckBoxValue=false;
       this.isPushNotificationcheckBoxValue=false;
+      this.isIncidentcheckBoxValue=false;
       this.smsselected="";
       this.emailselected="";
+      this.incidentselected="";
           this.modalRef.hide();
           this.getAllAlertsActivities();
          //  this.configurealertform.reset();
