@@ -459,6 +459,7 @@
                              <th scope="col" class="alerttype" style="text-align:center">Channel</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mail</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mobile</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Incident System</th>
                              <th scope="col" class="alerttype" style="text-align:center">Created At</th>
                              <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
                              <th scope="col" class="alerttype">Action</th>
@@ -472,6 +473,7 @@
                               <td style="text-align:center">{{data.channel}}</td>
                               <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
+                              <td style="text-align:center">{{data.incident_type?data.incident_type:'-'}}</td>
                               <td style="text-align:center">{{data.audit.created_at | date:'medium'}}</td>
                               <td style="text-align:center">{{data.audit.modified_at | date:'medium'}}</td>
                               <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -1270,7 +1272,8 @@
                     <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
                     Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Incident <input type="checkbox"  name="incidentcheck"   [(ngModel)]="isIncidentcheckBoxValue"/>
                     </div>
                    <br>
                     <div class="col-md-12">
@@ -1284,12 +1287,11 @@
                                                         <span *ngIf="mail_to1.errors.pattern"> Enter valid email address</span>
                                                       </span> -->
                                                        
-                                                   <label for="configalerts">User(s)</label>
-                                                       <select name="product" class="form-control"  [(ngModel)]="updateMail" required>
-                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
-                                                         <option [value]="null" disabled hidden>Select Registered Email</option>
-                                                          <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
-                                                       </select>    
+                                                      <label for="configalerts">User(s)</label>
+                                                      <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updateMail" required>
+                                                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                                                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                                                      </select>                                     
                     </div>
                   </div>
                   
@@ -1306,6 +1308,17 @@
 
                                                       
                   </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div *ngIf=isIncidentcheckBoxValue>
+                      <label for="configalerts">Incident System</label>
+                      <select name="incident" #incident="ngModel" class="form-control botmbordr"  [(ngModel)]="updateIncident" required>
+                        <option  [value]="undefined" disabled hidden>Select Incident System</option>
+                        <option value="EZDesk" >EZDesk</option>
+                            <option value="EZSupport">EZSupport</option>
+                            <option value="ServiceNow" >ServiceNow</option>
+                       </select>
+                    </div>
                   </div>
                    <br><br>
             
