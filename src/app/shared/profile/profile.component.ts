@@ -57,12 +57,7 @@ export class ProfileComponent implements OnInit {
     value: ''
     
   }];
-  public secretes1: any[] = [{
-    id: 1,
-    key: '',
-    value: ''
-    
-  }];
+
   isReedemBy:boolean=false;
   isReedemTimes:boolean=false;
   isAmount:boolean=false;
@@ -228,7 +223,16 @@ export class ProfileComponent implements OnInit {
   emailtemplateslist: any;
   viewdata: any;
   secreteDetails: { secreteKey: any; key: any; };
-  secretkey1: any;
+   public secretes1: any[] = [{
+    id: 1,
+    key: '',
+    value: ''
+    
+  }];
+  public mydata = {
+  };
+  public updatesecreteobj={};
+
   secretkeyname:any;
   versiondata: any;
   updateSecretedata: any;
@@ -241,7 +245,7 @@ export class ProfileComponent implements OnInit {
   mailbody: any;
   templatedata: any;
   selectedtempdet: any;
-  updatesecreteobj: any;
+
 
 
   //dropdownSettings:IDropdownSettings;
@@ -438,9 +442,7 @@ console.log("my pdate data",this.updateSecretedata)
    this.myvalue=Object.values(this.updateSecretedata.data.data)
    // updatesecreteobj[key] = this.updateSecretedata.data.data
     console.log("updatesec",Object.values(this.updateSecretedata.data.data))
-    
-  
-   this.modalRef = this.modalService.show(this.config);
+
   }
   close_modal(){
     this.modalRef.hide();}
@@ -1081,6 +1083,11 @@ console.log("my pdate data",this.updateSecretedata)
     cancelCreateCopon(){
       this.modalRef.hide();
     }
+    cancelAddSecrete(){
+      this.modalRef.hide();
+      
+    }
+
    
     cancelAddCard(){
       this.modalRef.hide();
@@ -1467,34 +1474,33 @@ cancelAlert(){
     }
 //create secrets
 createNewSecret(){
-      
-  this.couponDetails={
-    secreteKey:this.secreteKey,
-    key:this.key
-    
-      }         
-    let input={
+             
+            this.secretes.forEach(element => {
+                    this.mydata[element.key] = element.value
+              });  
+      let input={
       "options": {
         "cas": 0
       },
-      "data": {
-        "hostIP": "10.11.0.117",
-        "username": "salma",
-        "password":"welcome@123"
-      }
+      
+      "data": this.mydata
     }
 
-
-  this.profileservice.creatSecret(input,this.secreteKey).subscribe(resp=>{this.data=resp
-    this.modalRef.hide();
+ this.profileservice.creatSecret(input,this.secretkeyname).subscribe(resp=>{this.data=resp
+  this.getAllKeys();
+  this.modalRef.hide();
     this.notifier.show({
       type: "success",
-      message: "created successfully!"
+     
+      message: "Created Succesfully!"
     });
       
         });
+
    
 }
+ 
+
   
     myFunction(role) { 
       this.isOpened = role.id;

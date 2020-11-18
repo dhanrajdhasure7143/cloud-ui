@@ -269,6 +269,21 @@ th,td{
     height: 0px !important;
 
 }
+.info-table-row-edit{
+    padding-left:0
+}
+.info-table-row-edit-value{
+    display: flex;
+    align-items: center;
+    margin-left: 50%;
+    margin-top: -9%;
+}
+.info-table-row-edit-icons{
+    padding: 5%;
+    margin-left: 90%;
+    margin-top: -12%;
+}
+
 .set_default{
     margin-left : 15px
 }
