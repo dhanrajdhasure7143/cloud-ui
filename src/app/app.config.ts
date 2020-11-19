@@ -23,8 +23,6 @@ export const AppConfig: AiotalAppConfig = {
   proxyTokenendpoint: 'http://10.11.0.112:3001',
   authorizationendpoint: 'http://eiapdemoapi.epsoftinc.com:96/authservices',
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
-  productendpoint: 'http://eiapdev.epsoftinc.in',
-  socialLoginRedirectURL: 'http://eiapclouddev.epsoftinc.in/#/user',
   notificationsendpoint: 'http://eiapdemoapi.epsoftinc.com:96/alerts',
   Subscriptionendpoint:'http://eiapdemoapi.epsoftinc.com:96/subscriptions',
   productendpoint: 'http://eiapclouddemo.epsoftinc.com:86',
