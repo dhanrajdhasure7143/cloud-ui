@@ -8,7 +8,7 @@ import { Base64 } from 'js-base64';
 export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        console.log("i cam to jwt", currentUser);
+        // console.log("i cam to jwt", currentUser);
         
         if (currentUser && currentUser.accessToken && request.url !== '/api/beta/accessToken') {
             console.log(localStorage.getItem('userName'));

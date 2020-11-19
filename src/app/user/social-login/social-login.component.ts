@@ -12,6 +12,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 })
 export class SocialLoginComponent implements OnInit {
   email: any;
+  authProvider: any;
   userRole: any = [];
   error = '';
   loading = false;
@@ -27,13 +28,14 @@ export class SocialLoginComponent implements OnInit {
      localStorage.clear();
      this.route.queryParams.subscribe(params => {
       this.email = params['email']
+      this.authProvider = params['authProvider']
       console.log("email" , this.email)
     });
 
    
     this.authenticate(this.email);
     localStorage.setItem('ProfileuserId',this.email)
-     localStorage.setItem('loginType', 'Azure')
+     localStorage.setItem('loginType', this.authProvider)
  
    
 }

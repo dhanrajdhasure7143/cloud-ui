@@ -269,6 +269,21 @@ th,td{
     height: 0px !important;
 
 }
+.info-table-row-edit{
+    padding-left:0
+}
+.info-table-row-edit-value{
+    display: flex;
+    align-items: center;
+    margin-left: 50%;
+    margin-top: -9%;
+}
+.info-table-row-edit-icons{
+    padding: 5%;
+    margin-left: 90%;
+    margin-top: -12%;
+}
+
 .set_default{
     margin-left : 15px
 }
@@ -667,6 +682,23 @@ button.btn.btn-primary.invite-button {
   .calexp{
     border-color: beige;
   }
+  .isRead
+  {
+      color: grey;
+  }
 
+.card{    
+  width: 10%;
+  position: absolute;
+  top: 6px;
+  right: 4px;
+}
+
+
+  .textbody textarea{
+      border-color:slategray;
+      width:100%;
+     
+  }
     
     

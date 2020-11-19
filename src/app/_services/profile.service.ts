@@ -135,8 +135,8 @@ saveConfig(data:any): Observable<any>{
 listofactivities(tenantId,userrole):Observable<any>{
    return this.http.get<any>('/notificationservice/api/v1/listalerts?roles='+userrole+'&tenantId='+tenantId ,httpOptions);  
  }
- modifyAlert(alertmodifybody,userId):Observable<any>{
-  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert?userId='+userId+'',alertmodifybody,httpOptions)
+ modifyAlert(alertmodifybody):Observable<any>{
+  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert',alertmodifybody,httpOptions)
 }
 deleteAlert(alertId):Observable<any>{
   return this.http.delete<any>('/notificationservice/api/v1/deleteAlert?alertId='+alertId,{responseType:"json"})
@@ -152,5 +152,29 @@ deleteNotification(notificationId):Observable<any>{
 }
 getAllApplications(): Observable<any> {
   return this.http.get<any>('/authorizationservice/api/v1/user/getApplications');
+}
+getReadNotificaionCount(role,userId,id,notificationbody):Observable<any>{
+  return this.http.post<any>('/notificationservice/api/v1/NotificationsCount?roles='+role+'&userId='+userId+'&id='+id,notificationbody,httpOptions);
+}
+getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
+  return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
+}
+creatSecret( data,path) : Observable<any>{
+  return this.http.post<any>('/api/vault/create-secret?secreteName='+path,data,httpOptions);
+}
+getAllSecretKeys(): Observable<any> {
+  return this.http.get<any>('/api/vault/get-all-secretekeys');
+}
+getEmailTemplates(): Observable<any> {
+  return this.http.get<any>('/mailService/listmailTemplates');
+}
+saveTemplate(templateip:any): Observable<any>{
+  return this.http.post<any>('/mailService/savemailtemplate', templateip,httpOptions)
+}
+deleteTemplate(temp:any): Observable<any>{
+  return this.http.post<any>('/mailService/deleteTemplate',temp,httpOptions)
+}
+modifyTemplate(template:any): Observable<any>{
+  return this.http.post<any>('/mailService/modifyTemplate', template,httpOptions)
 }
 }
