@@ -226,12 +226,7 @@ export class ProfileComponent implements OnInit {
   emailtemplateslist: any;
   viewdata: any;
   secreteDetails: { secreteKey: any; key: any; };
-   public secretes1: any[] = [{
-    id: 1,
-    key: '',
-    value: ''
-    
-  }];
+   public secretes1: any[] = [];
   public mydata = {
   };
   public updatesecreteobj={};
@@ -248,6 +243,7 @@ export class ProfileComponent implements OnInit {
   mailbody: any;
   templatedata: any;
   selectedtempdet: any;
+  isadd: boolean=false;
 
 
 
@@ -400,18 +396,24 @@ this.profileservice.applications().subscribe(resp =>
   
   addSecretupdate(){
     //this.secretes=[];
+    this.isadd=true;
     this.secretes1.push({
       id: this.secretes1.length + 1,
       key: '',
       value: ''
       
     });
-    console.log("oooodsdsddddddo",this.secretes1)
+   
+    
+  }
+  //update secrete
+  updateSecreteData(updateSecretedata){
+    console.log("to update",updateSecretedata)
     this.secretes1.forEach(element => {
       this.updatesecreteobj[element.key] = element.value
       
 });  
-//this.secretes1=[];
+
 console.log("my pdate data",this.updateSecretedata)
     //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
     console.log("my pdate data 2222",this.updatesecreteobj)
@@ -423,24 +425,18 @@ console.log("my pdate data",this.updateSecretedata)
       },
       "data": this.finalObj
     }
-  }
-  //update secrete
-  updateSecreteData(updateSecretedata){
-    console.log("to update",updateSecretedata)
-   
-
-    this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
+     // this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
     console.log("in updatessssssssss",this.input1)
-   
-   
-    this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
+        this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
       this.getAllKeys();
       this.modalRef.hide();
         this.notifier.show({
           type: "success",
-          message: "updated Succesfully!"
+          message: "Updated Succesfully!"
         });
+        this.secretes1=[];
       });
+
    this.mykeys= Object.keys(this.updateSecretedata.data.data)
    this.myvalue=Object.values(this.updateSecretedata.data.data)
    // updatesecreteobj[key] = this.updateSecretedata.data.data

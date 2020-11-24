@@ -949,16 +949,22 @@
                 <th>Secrete Data</th>
                              <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder"  [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td>
+                           
                                 <span  (click)="removeSecrete(i)"> 
                                   <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 </td>
+                                <td *ngIf="secretes1.length==0">
+                             
+                                  <span  (click)="addSecretupdate()"> 
+                                    <img src="assets/images/Add.svg" alt=""></span>
+                              </td>
                               
                             </tr>
-                           
+                           <div *ngIf="isadd" >
                             <tr *ngFor="let secret1 of secretes1; let i = index;">
                              
                               <td>
-                                <input type="text"  [(ngModel)]="secret1.key"
+                          <input type="text"  [(ngModel)]="secret1.key"
                                 name="key_{{secret1.id}}"  placeholder="key">
                                                         </td>
                               <td>:</td>
@@ -976,7 +982,7 @@
                             </td>
                             
                             </tr>
-                         
+                           </div>
                            </table>
                     </div>
  
