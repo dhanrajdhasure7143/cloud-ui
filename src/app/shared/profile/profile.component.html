@@ -459,6 +459,7 @@
                              <th scope="col" class="alerttype" style="text-align:center">Channel</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mail</th>
                              <th scope="col" class="alerttype" style="text-align:center">Mobile</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Incident System</th>
                              <th scope="col" class="alerttype" style="text-align:center">Created At</th>
                              <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
                              <th scope="col" class="alerttype">Action</th>
@@ -472,6 +473,7 @@
                               <td style="text-align:center">{{data.channel}}</td>
                               <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
+                              <td style="text-align:center">{{data.incident_type?data.incident_type:'-'}}</td>
                               <td style="text-align:center">{{data.audit.created_at | date:'medium'}}</td>
                               <td style="text-align:center">{{data.audit.modified_at | date:'medium'}}</td>
                               <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -947,16 +949,22 @@
                 <th>Secrete Data</th>
                              <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder"  [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td>
+                           
                                 <span  (click)="removeSecrete(i)"> 
                                   <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 </td>
+                                <td *ngIf="secretes1.length==0">
+                             
+                                  <span  (click)="addSecretupdate()"> 
+                                    <img src="assets/images/Add.svg" alt=""></span>
+                              </td>
                               
                             </tr>
-                           
+                           <div *ngIf="isadd" >
                             <tr *ngFor="let secret1 of secretes1; let i = index;">
                              
                               <td>
-                                <input type="text"  [(ngModel)]="secret1.key"
+                          <input type="text"  [(ngModel)]="secret1.key"
                                 name="key_{{secret1.id}}"  placeholder="key">
                                                         </td>
                               <td>:</td>
@@ -974,19 +982,26 @@
                             </td>
                             
                             </tr>
-                         
+                           </div>
                            </table>
-             
-            </div>
-
-            <div class="col-md-12 confirmationmsg">
-              <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
-            </div>
-            <div class="col-md-12 confirmationmsg">
-              <button class="btn btn-primary" type="submit" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
-            </div>
+                    </div>
+ 
           </div>
-      
+
+          <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+                <div class="col-md-12">
+                  <div class="form-group form-buttons pull-right buttonsblock">
+                    <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
+                    <button class="btn btn-primary change_plan" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
+                </div>
+              </div>
+          <div class="clearfix">
+          </div>
+          </div>
+          </div>
+          </div>
     </ng-template>
 
 
@@ -1270,7 +1285,8 @@
                     <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
                     Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Incident <input type="checkbox"  name="incidentcheck"   [(ngModel)]="isIncidentcheckBoxValue"/>
                     </div>
                    <br>
                     <div class="col-md-12">
@@ -1284,12 +1300,11 @@
                                                         <span *ngIf="mail_to1.errors.pattern"> Enter valid email address</span>
                                                       </span> -->
                                                        
-                                                   <label for="configalerts">User(s)</label>
-                                                       <select name="product" class="form-control"  [(ngModel)]="updateMail" required>
-                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
-                                                         <option [value]="null" disabled hidden>Select Registered Email</option>
-                                                          <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
-                                                       </select>    
+                                                      <label for="configalerts">User(s)</label>
+                                                      <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updateMail" required>
+                                                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                                                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                                                      </select>                                     
                     </div>
                   </div>
                   
@@ -1306,6 +1321,17 @@
 
                                                       
                   </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div *ngIf=isIncidentcheckBoxValue>
+                      <label for="configalerts">Incident System</label>
+                      <select name="incident" #incident="ngModel" class="form-control botmbordr"  [(ngModel)]="updateIncident" required>
+                        <option  [value]="undefined" disabled hidden>Select Incident System</option>
+                        <option value="EZDesk" >EZDesk</option>
+                            <option value="EZSupport">EZSupport</option>
+                            <option value="ServiceNow" >ServiceNow</option>
+                       </select>
+                    </div>
                   </div>
                    <br><br>
             
@@ -2030,7 +2056,7 @@
              
 
 <ng-template #createsecret >
-  <form autocomplete="off" #vaultform="ngForm" (ngSubmit)="createNewSecret()" >
+  <form autocomplete="off" #vaultform="ngForm" (ngSubmit)="createNewSecret(vaultform)" >
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" >Create Secret</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancelAddSecrete()">
@@ -2043,7 +2069,7 @@
         <div class="col-md-12 infocheck">
          
             <label >Secret Key</label>
-            <input type="text"  class="form-control payment-input"name="secretkey1"  [(ngModel)]="secretkeyname" placeholder="Enter Secret Key" required/>
+            <input type="text" required class="form-control payment-input"name="secretkey1"  [(ngModel)]="secretkeyname" maxlength="15" placeholder="Enter Secret Key" required/>
             
               <label>Version Data</label>
               
@@ -2051,13 +2077,13 @@
             <tr *ngFor="let secret of secretes; let i = index;" class="form-section">
              
                   <td >
-                    <input type="text"  [(ngModel)]="secret.key"
+                    <input required type="text"  [(ngModel)]="secret.key"
                     name="key_{{secret.id}}"  placeholder="key">
                   </td>
                 
                   <td >
                   
-              <input type="text"  [(ngModel)]="secret.value"
+              <input required type="text"  [(ngModel)]="secret.value"
               name="value_{{secret.id}}"   placeholder="value"><!----> 
 
                 </td>
@@ -2083,7 +2109,7 @@
                   <div class="col-12">
               <div class="form-group form-buttons pull-right  buttonsblock">        
                   
-                  <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Create</button>
+                  <button class="btn btn-primary clearbtn" [disabled]="vaultform.invalid || showErr"   type="submit"><div class="anim"></div> Create</button>
               </div>
               
 

@@ -135,8 +135,8 @@ saveConfig(data:any): Observable<any>{
 listofactivities(tenantId,userrole):Observable<any>{
    return this.http.get<any>('/notificationservice/api/v1/listalerts?roles='+userrole+'&tenantId='+tenantId ,httpOptions);  
  }
- modifyAlert(alertmodifybody):Observable<any>{
-  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert',alertmodifybody,httpOptions)
+ modifyAlert(alertmodifybody,useremail):Observable<any>{
+  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert?userId='+useremail,alertmodifybody,httpOptions)
 }
 deleteAlert(alertId):Observable<any>{
   return this.http.delete<any>('/notificationservice/api/v1/deleteAlert?alertId='+alertId,{responseType:"json"})
