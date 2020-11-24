@@ -1497,7 +1497,7 @@ cancelAlert(){
  
     }
 //create secrets
-createNewSecret(){
+createNewSecret(form:NgForm){
              
             this.secretes.forEach(element => {
                     this.mydata[element.key] = element.value
@@ -1520,7 +1520,7 @@ createNewSecret(){
     });
       
         });
-
+form.resetForm();
    
 }
  
