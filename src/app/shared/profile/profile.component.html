@@ -978,17 +978,24 @@
                             </tr>
                          
                            </table>
-             
-            </div>
-
-            <div class="col-md-12 confirmationmsg">
-              <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
-            </div>
-            <div class="col-md-12 confirmationmsg">
-              <button class="btn btn-primary" type="submit" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
-            </div>
+                    </div>
+ 
           </div>
-      
+
+          <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+                <div class="col-md-12">
+                  <div class="form-group form-buttons pull-right buttonsblock">
+                    <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
+                    <button class="btn btn-primary change_plan" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
+                </div>
+              </div>
+          <div class="clearfix">
+          </div>
+          </div>
+          </div>
+          </div>
     </ng-template>
 
 
@@ -2056,7 +2063,7 @@
         <div class="col-md-12 infocheck">
          
             <label >Secret Key</label>
-            <input type="text"  class="form-control payment-input"name="secretkey1"  [(ngModel)]="secretkeyname" placeholder="Enter Secret Key" required/>
+            <input type="text" required class="form-control payment-input"name="secretkey1"  [(ngModel)]="secretkeyname" maxlength="15" placeholder="Enter Secret Key" required/>
             
               <label>Version Data</label>
               
@@ -2064,13 +2071,13 @@
             <tr *ngFor="let secret of secretes; let i = index;" class="form-section">
              
                   <td >
-                    <input type="text"  [(ngModel)]="secret.key"
+                    <input required type="text"  [(ngModel)]="secret.key"
                     name="key_{{secret.id}}"  placeholder="key">
                   </td>
                 
                   <td >
                   
-              <input type="text"  [(ngModel)]="secret.value"
+              <input required type="text"  [(ngModel)]="secret.value"
               name="value_{{secret.id}}"   placeholder="value"><!----> 
 
                 </td>
@@ -2096,7 +2103,7 @@
                   <div class="col-12">
               <div class="form-group form-buttons pull-right  buttonsblock">        
                   
-                  <button class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Create</button>
+                  <button class="btn btn-primary clearbtn" [disabled]="vaultform.invalid || showErr"   type="submit"><div class="anim"></div> Create</button>
               </div>
               
 
