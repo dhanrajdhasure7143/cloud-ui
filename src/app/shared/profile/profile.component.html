@@ -563,6 +563,64 @@
                     </div>
                           </div>
                     </tab>
+                    <!--vault configure tab-->
+                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Security Vault" >
+                      <div class="search-One">
+                        <form class="form-inline d-flex  md-form form-sm">
+                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                            <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                          </form>
+                        </div>
+                        <div class="row">
+                     
+                          <div class="container configalerts">
+                            <button class='btn btn-primary pull-right createAlert'  (click)='addVault(vaultconfiguration)'>Configure Vault</button>
+                            <table class="table table-borderless table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="alerttype" style="text-align:center">Product</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Module</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Page</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Field</th>
+                                 <th scope="col" class="alerttype">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody >
+                                <tr *ngFor="let data of vaulConfigureList | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em }; let t=index">
+                                  <td style="text-align:center">{{data.product}}</td>
+                                  <td style="text-align:center">{{data.module}}</td>
+                                  <td style="text-align:center">{{data.page}}</td>
+                                  <td style="text-align:center">{{data.field}}</td>
+                                  <td  class="deleticon"><span  (click)="selectedVaultConfig(data,t,configvault)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                    <span  (click)="emailtempdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                    <div id="myid" [ngClass]="selectedtempdet === t?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                          <h5 class="pull-left">Confirmation</h5>
+                                          <button type="button" class="close " aria-label="Close" (click)="tempdelno(t)">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          <p class="pull-left">Are you sure you want to delete the vault configuration ?</p>
+                                           <button class="pull-left confm" (click)="tempDelYes(data,t)">Yes</button>
+                                           <button class="confm pull-left" (click)="tempdelno(t)">No</button>
+                                      </div>
+                                  </div>
+                                  </td>
+                                </tr>
+                                <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                                  
+                                    <div class="norecords"><h4>No records found</h4></div>
+                                 
+                                  </tr>
+    
+                              </tbody>
+                            </table>
+                            <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                            <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
+                            </div>
+                        
+                    </div>
+                          </div>
+                    </tab>
                    
                   </tabset>
                   </div>
@@ -883,7 +941,7 @@
     </tabset>
 </div>
 </div>
-<!--vault creation-->
+<!--vault management creation-->
 <div  *ngIf="isvaultMangment" class="container">
   <div  class="">
       <tabset >
@@ -946,7 +1004,7 @@
             <div  class="col-md-12 confirmationmsg" style="text-align:left;">
               <table class="sub-confirmation">
                 <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
-                <th>Secrete Data</th>
+                <th>Secret Data</th>
                              <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder"  [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td>
                            
@@ -967,17 +1025,17 @@
                           <input type="text"  [(ngModel)]="secret1.key"
                                 name="key_{{secret1.id}}"  placeholder="key">
                                                         </td>
-                              <td>:</td>
-                            <td>
+                              <td *ngIf="addpressed" >:</td>
+                            <td *ngIf="addpressed">
                               
                               
                           <input type="text"  [(ngModel)]="secret1.value"
                           name="value_{{secret1.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;"><!----> 
             
                              </td>
-                            <td>
+                            <td *ngIf="addpressed">
                              
-                                <span  (click)="addSecretupdate()"> 
+                                <span  (click)="addSecretupdatenew()"> 
                                   <img src="assets/images/Add.svg" alt=""></span>
                             </td>
                             
@@ -1166,7 +1224,7 @@
                     <div class="form-group col-sm-8">
                             <label for="cardNumber">Card Number</label>
                             <div class="input-group ">
-                              <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16" maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
+                              <input type="text" class="cc-number form-control payment-input" (keypress)="numberOnly($event)" minlength="16"   maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
                                 [(ngModel)]="cardModel.cardNumber" id="cardNumber" placeholder="Card Number" (change)='onChangeCardType(cardModel.cardNumber)' required/>
                               <div class="input-group-append">
                                 <span *ngIf= "cards && cards[0].type =='visa' && cardNumber.value >= 4">
@@ -1557,7 +1615,170 @@
         </div>
       </form>
        </ng-template>
+<!-- Vault config-->
 
+<ng-template #configvault >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Update Vault Configuration</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form autocomplete="off" id="configurevault" name="configurevault" #configvault="ngForm">
+  <div class="modal-body">
+    
+    
+<div class="form-group">
+  <label for="subscriptionid">Product : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="updateprod" required>
+    <option  [value]="undefined" disabled hidden>Select Type</option>
+    <option  [value]="null" disabled hidden>Select Type</option>
+    <option [value]="alertslistactivitiesdata.app_name">{{alertslistactivitiesdata.app_name}}</option>
+</select>
+</div>
+
+
+
+
+      </div>
+    
+<div class="modal-footer">
+  <div class="">
+    <div class="col-12">
+<div class="form-group form-buttons pull-right buttonsblock">        
+    <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+    <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
+</div>
+
+<div class="clearfix">
+</div>
+</div>
+</div>
+</div>
+</form>
+</ng-template>
+<!--
+  creat vault congig
+-->
+<ng-template #vaultconfiguration >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Configure Vault</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form autocomplete="off" id="vaultconfig" name="vaultconfig" #vaultconfig="ngForm">
+  <div class="modal-body">
+    
+    
+<div class="form-group">
+  <label for="application">Product</label>
+  <select name="product" class="form-control" (change)="onChangeprod($event.target)" [(ngModel)]="alertsapplication" required>
+    <option [value]="undefined" disabled hidden>Select Product</option>
+    <option [value]="null" disabled hidden>Select Product</option>
+    <option *ngFor="let product of application"  [value]="product.id">{{product.displayName}}</option>
+    </select>
+</div>
+<div class="infocheck">
+  <label for="modules">Module</label>
+  <select class="form-control"  name="modules" placeholder="Select Module"  (change)="changeModule()"
+
+  [(ngModel)]="modules" required>
+  <option [value]="undefined" disabled hidden>Select Module</option>
+  <option [value]="null" disabled hidden>Select Module</option>
+  <option *ngFor="let module of modulesList"  [value]="product.id">{{module}}</option>
+
+  <!-- <ng-option *ngFor="let item of activitieslist" [value]="item.id">{{ item.activity }}</ng-option> -->
+  </select>
+</div>
+<br>
+<div class="form-group">
+        <label for="page">Page</label>
+        <select class="form-control" name="page" [(ngModel)]="page" required>
+            <option  [value]="undefined"  >Select page</option>
+            
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="feild">Field</label>
+        <select class="form-control" name="feild" [(ngModel)]="feild" required>
+            <option  [value]="undefined"  >Select feild</option>
+            
+        </select>
+      </div>
+
+      <div class="form-group">
+        <div *ngIf=isEmailcheckBoxValue>
+        <!-- <label for="configalerts">Mail To</label>
+        <input type="text" name="email" maxlength="50" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
+        pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Enter Email" required/>
+        <span *ngIf="((email.invalid && configAlerts.submitted) || (email.errors && email.touched) ) "
+                                          class='fa fa-info-circle errspan'>
+                                          <span *ngIf="email.errors.required"> Email is required</span>
+                                          <span *ngIf="email.errors.pattern"> Enter valid email address</span>
+                                        </span> -->
+                                       
+      
+      <label for="configalerts">Email Template</label>
+         <select name="product" class="form-control"  [(ngModel)]="emailtemplate" required>
+                <option [value]="undefined" disabled hidden>Select Email Template</option>
+                <option [value]="null" disabled hidden>Select Email Template</option>
+                 <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option>
+          </select>  
+      <label for="configalerts">User(s)</label>
+          <select name="product" class="form-control"  [(ngModel)]="emailselected" required>
+            <option [value]="undefined" disabled hidden>Select Registered Email</option>
+            <option [value]="null" disabled hidden>Select Registered Email</option>
+             <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+          </select>    
+      </div>
+    </div>
+    <div class="form-group">
+      <div *ngIf=isIncidentcheckBoxValue>
+        <label for="configalerts">Incident System</label>
+         <select name="product" class="form-control"  [(ngModel)]="incidentselected" required>
+                <option [value]="undefined" disabled hidden>Select Incident System</option>
+                <option value="EZDesk" >EZDesk</option>
+                <option value="EZSupport">EZSupport</option>
+                <option value="ServiceNow" >ServiceNow</option>
+                 <!-- <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option> -->
+          </select> 
+        </div>
+    </div>
+
+    <div class="form-group">
+      <div *ngIf=isSMScheckBoxValue>
+      <label for="configalerts">Text To</label>
+      <input type="text" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
+      required mobile placeholder="Enter Mobile Number ex:+91-9999999999"  />
+      <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
+                                          class='fa fa-info-circle errspan'>
+                                          <span *ngIf="mobile.errors.required"> Mobile number is required</span>
+                                          <span *ngIf="mobile.errors.pattern"> Enter valid mobile number</span>
+                                        </span> -->
+    </div>
+  </div>
+
+      </div>
+    
+<div class="modal-footer">
+  <div class="">
+    <div class="col-12">
+<div class="form-group form-buttons pull-right buttonsblock">        
+    <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+    <button [disabled]="configurealert.invalid || showErr" class="btn btn-primary btn_alert_save"  type="submit" (click)="saveConfig()"><div class="anim" ></div> Save</button>
+</div>
+
+<div class="clearfix">
+</div>
+</div>
+</div>
+</div>
+</form>
+</ng-template>
+<!--end creation of vault config-->
+<!-- Vault config end-->
             <ng-template #rolestemplate >
 
               <div class="modal-header">
@@ -2074,7 +2295,7 @@
               <label>Version Data</label>
               
             <table class="sub-confirmation">
-            <tr *ngFor="let secret of secretes; let i = index;" class="form-section">
+            <tr  *ngFor="let secret of secretes; let i = index;" class="form-section">
              
                   <td >
                     <input required type="text"  [(ngModel)]="secret.key"
