@@ -177,4 +177,31 @@ deleteTemplate(temp:any): Observable<any>{
 modifyTemplate(template:any): Observable<any>{
   return this.http.post<any>('/mailService/modifyTemplate', template,httpOptions)
 }
+getprocessnames(): Observable<any>{
+  return this.http.get("/rpa-service/process-name");
+  }
+  getAllActiveBots(): Observable<any>{
+     return this.http.get("/rpa-service/get-bots")
+  }
+  getCardsCount(): Observable<any>{
+     return this.http.get("/subscriptionservice/v1/orders/getCardsCount")
+  }
+  getSubscribedProductsCount(): Observable<any>{
+   return this.http.get("/subscriptionservice/v1/orders/getSubscribedProductsCount")
+  }
+  getUserRoleMetrics(tenantId): Observable<any>{
+     return this.http.get("/api/user/getUserRoleMetrics/"+tenantId+"")
+  }
+  getVaultKeysCount(): Observable<any>{
+    return this.http.get("/api/vault/get-keyscount")
+   }
+  getAlertsActivityKPI(){
+   return this.http.get("/alertConfigurationService/api/v1/AlertsActivityKPI")
+  }
+  getalertsCountBasedOnType(){
+  return this.http.get("/alertConfigurationService/api/v1/alertsCountBasedOnType")
+  }
+  getUsersMetrics(tenantId){
+    return this.http.get("/api/user/getUsersMetrics/"+tenantId+"")
+  }
 }
