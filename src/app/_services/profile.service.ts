@@ -204,4 +204,15 @@ getprocessnames(): Observable<any>{
   getUsersMetrics(tenantId){
     return this.http.get("/api/user/getUsersMetrics/"+tenantId+"")
   }
+getVaultConfigurations(tenantId): Observable<any> {
+  return this.http.get<any>('/api/vault/config/getInfo/'+tenantId);
+}
+ 
+ fetchAllProds(): Observable<any> {
+  return this.http.get<any>('/api/vault/config/fetchAllProducts');
+}
+
+getmodulesbyProduct(prod): Observable<any> {
+  return this.http.get<any>('/api/vault/config/fetchModulesBy/'+prod);
+}
 }

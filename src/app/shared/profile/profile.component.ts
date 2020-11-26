@@ -147,6 +147,7 @@ export class ProfileComponent implements OnInit {
   isSMScheckBoxValue:any;
   isIncidentcheckBoxValue:any;
   activitieslist:any = [];
+  modulesList:any;
   selectValue:any = [];
   isChecked:any = [];
   result: void;
@@ -226,6 +227,7 @@ export class ProfileComponent implements OnInit {
   templates: any=[];
   emailtemplateslist: any;
   emailtemplate: any;
+  vaulConfigureList:any;
   viewdata: any;
   secreteDetails: { secreteKey: any; key: any; };
    public secretes1: any[] = [];
@@ -246,6 +248,8 @@ export class ProfileComponent implements OnInit {
   templatedata: any;
   selectedtempdet: any;
   isadd: boolean=false;
+  addpressed: boolean=false;
+  modules: any;
 
 
 
@@ -271,6 +275,7 @@ export class ProfileComponent implements OnInit {
   // ];
   this.getListOfEmailTemplates();
     this.getAllPermissions();
+    this.getListOfVaultconfigs();
     this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
@@ -399,6 +404,7 @@ this.profileservice.applications().subscribe(resp =>
   addSecretupdate(){
     //this.secretes=[];
     this.isadd=true;
+    this.addpressed=true;
     this.secretes1.push({
       id: this.secretes1.length + 1,
       key: '',
@@ -889,6 +895,9 @@ console.log("my pdate data",this.updateSecretedata)
       this.isIncidentcheckBoxValue=false
       this.modalRef = this.modalService.show(template,this.config)
     }
+    addVault(template){
+      this.modalRef = this.modalService.show(template,this.config)
+    } 
     addTemplate(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
@@ -2085,6 +2094,7 @@ console.log("alertbody",this.alertsbody)
       }
       onChange(product){
      // console.log("application",this.application)
+    
        this.profileservice.alertsConfig(product).subscribe(res => this.successCallback(res))
         this.application.forEach(element => {
           if(element.id==product){
@@ -2094,6 +2104,9 @@ console.log("alertbody",this.alertsbody)
           }
           
         });
+      
+
+   
       }
       successCallback(data) {
        // console.log("data",JSON.parse(data))
@@ -2103,6 +2116,15 @@ console.log("alertbody",this.alertsbody)
           if(element.userSelected)
           this.selectValue.push(element.notification_id)      
         });
+      }
+      onChangeprod(product){
+        console.log("my prodsssss",product)
+        this.profileservice.getmodulesbyProduct(product).subscribe(data => 
+          {
+            this.modulesList=data.module;
+            console.log("modules",this.modulesList)
+          })
+   
       }
       changeActivity()
       {
@@ -2217,7 +2239,13 @@ console.log("alertbody",this.alertsbody)
           console.log(this.emailtemplateslist)
         })
       }
+      getListOfVaultconfigs(){
+        this.profileservice.getVaultConfigurations(this.tenantId).subscribe(data =>
+          {
+            this.vaulConfigureList=data
+          })
 
+      }
       savetemplate(form:NgForm)
       {
         let templateip = {
@@ -2251,6 +2279,12 @@ console.log("alertbody",this.alertsbody)
         this.templatedata = data;
         this.modalRef = this.modalService.show(template)
        
+      }
+      selectedVaultConfig(data,i,template){
+        this.templatedata = data;
+        this.modalRef = this.modalService.show(template)
+       
+
       }
       emailtempdelete(data,index){
         document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
