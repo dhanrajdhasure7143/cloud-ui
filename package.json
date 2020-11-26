@@ -31,6 +31,7 @@
     "@angular/router": "~7.2.0",
     "@ng-select/ng-select": "^2.20.5",
     "@ngtools/webpack": "^8.0.4",
+    "@swimlane/ngx-charts": "^12.1.0",
     "@types/js-base64": "^2.3.1",
     "@webcomponents/custom-elements": "^1.2.4",
     "ag-grid": "^18.1.2",

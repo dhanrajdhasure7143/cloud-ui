@@ -17,13 +17,17 @@ import { UsermanagementService } from '../_services/usermanagement.service';
 import { AlertsComponent } from './alerts/alerts.component';
 import { Cellrender } from './usermanagement/cellrender';
 import { Particles } from '../_models/particlesjs';
+import { MetricsComponent } from './metrics/metrics.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @NgModule({
- declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent, UsermanagementComponent, AlertsComponent,Cellrender],
+ declarations: [ActivationComponent, PlatformComponent, PlandetailsComponent, UsermanagementComponent, AlertsComponent,Cellrender,MetricsComponent],
  imports: [
  CommonModule,
  ActivationRoutingModule,
  SharedModule,
  BsDropdownModule,
+ NgxChartsModule,
  ProgressbarModule.forRoot(),
  ModalModule.forRoot(),
  AgGridModule.withComponents([
