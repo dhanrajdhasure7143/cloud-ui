@@ -1418,7 +1418,7 @@
                      <select name="product" class="form-control"  [(ngModel)]="emailtemplate" required>
                             <option [value]="undefined" disabled hidden>Select Email Template</option>
                             <option [value]="null" disabled hidden>Select Email Template</option>
-                             <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option>
+                             <option *ngFor="let template of emailtemplateslist"  [value]="template.templateName">{{template.templateName}}</option>
                       </select>  
                   <label for="configalerts">User(s)</label>
                       <select name="product" class="form-control"  [(ngModel)]="emailselected" required>

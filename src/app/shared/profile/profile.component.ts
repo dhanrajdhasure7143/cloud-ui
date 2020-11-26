@@ -19,6 +19,7 @@ import { log } from 'console';
 import * as $ from 'jquery';
 
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -224,6 +225,7 @@ export class ProfileComponent implements OnInit {
   cards: any;
   templates: any=[];
   emailtemplateslist: any;
+  emailtemplate: any;
   viewdata: any;
   secreteDetails: { secreteKey: any; key: any; };
    public secretes1: any[] = [];
@@ -2032,7 +2034,8 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
           "mail_to": this.emailselected,
           "tenant_id": this.tenantId,
           "text_to": this.smsselected,
-          "type": this.selectedtype
+          "type": this.selectedtype,
+          "email_template": this.emailtemplate
         }
     
     
