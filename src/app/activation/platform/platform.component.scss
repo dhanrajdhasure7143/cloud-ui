@@ -51,22 +51,22 @@
   padding: 13px 10px 0px 10px;
   font-size: 14px;
 }
-.active{
+.activeModule{
   text-decoration: none;
   background-color: #006ed5;
 }
-.active #subheading{
+.activeModule #subheading{
   color:white;
 }
-.active  img{
+.activeModule  img{
   filter: invert(1) sepia(1) hue-rotate(200deg) saturate(-1) brightness(2);
 }
 
-.active  .expiryInfoclock, .active .infoicon{
+.activeModule  .expiryInfoclock, .activeModule .infoicon{
   filter: invert(1) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
 }
 
-.active .expiryInfo{
+.activeModule .expiryInfo{
   color :white;
 }
 

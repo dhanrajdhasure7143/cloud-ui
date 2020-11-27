@@ -11,7 +11,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { UsermanagementComponent } from './usermanagement/usermanagement.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ModalModule } from 'ngx-bootstrap';
- 
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule } from '@angular/forms';
 import { UsermanagementService } from '../_services/usermanagement.service';
 import { AlertsComponent } from './alerts/alerts.component';
@@ -30,6 +30,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
  NgxChartsModule,
  ProgressbarModule.forRoot(),
  ModalModule.forRoot(),
+ TabsModule.forRoot(),
  AgGridModule.withComponents([
  UsermanagementComponent,Cellrender
  ]),
