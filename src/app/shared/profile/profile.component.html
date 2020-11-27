@@ -509,7 +509,7 @@
                     <tab  *ngIf="this.userRole.includes('Admin')" heading="Email Templates" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
-                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchtemplate" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                             <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                           </form>
                         </div>
@@ -528,7 +528,7 @@
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of emailtemplateslist | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em }; let t=index">
+                                <tr *ngFor="let data of emailtemplateslist | FilterPipe: searchtemplate ; let t=index">
                                   <td style="text-align:center">{{data.templateName}}</td>
                                   <td style="text-align:center">{{data.templateSubject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
@@ -556,9 +556,9 @@
     
                               </tbody>
                             </table>
-                            <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                            <!-- <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
                             <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
-                            </div>
+                            </div> -->
                         
                     </div>
                           </div>
@@ -948,7 +948,9 @@
             <tab heading="Security Vault">
       <div class="search-One">
           <form class="form-inline d-flex  md-form form-sm">
-             
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                     
             </form>
           </div>
       <div class="container">
@@ -1357,7 +1359,12 @@
                                                         <span *ngIf="mail_to1.errors.required"> Email is required</span>
                                                         <span *ngIf="mail_to1.errors.pattern"> Enter valid email address</span>
                                                       </span> -->
-                                                       
+                                                      <label for="configalerts">Email Template</label>
+                                                      <select name="product" class="form-control"  [(ngModel)]="updatetemp" required>
+                                                             <option [value]="undefined" disabled hidden>Select Email Template</option>
+                                                             <option [value]="null" disabled hidden>Select Email Template</option>
+                                                              <option *ngFor="let template of emailtemplateslist"  [value]="template.templateName">{{template.templateName}}</option>
+                                                       </select> 
                                                       <label for="configalerts">User(s)</label>
                                                       <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updateMail" required>
                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
@@ -1586,15 +1593,15 @@
             
         <div class="form-group">
           <label for="application">Template Name</label>
-          <input type="text"  name="tempname" #role="ngModel" class="form-control botmbordr" placeholder="Enter Template Name" maxlength="50" [(ngModel)]="templatedata.templateName" required/> 
+          <input type="text"  name="tempname" #role="ngModel" class="form-control botmbordr" placeholder="Enter Template Name" maxlength="50" [(ngModel)]="modtempname" required/> 
         </div>
         <div class="infocheck">
           <label for="activity">Subject</label>
-          <input type="text"  name="subject" #subject="ngModel" class="form-control botmbordr" placeholder="Enter Subject" maxlength="50" [(ngModel)]="templatedata.templateSubject" required/> 
+          <input type="text"  name="subject" #subject="ngModel" class="form-control botmbordr" placeholder="Enter Subject" maxlength="50" [(ngModel)]="modtempsub" required/> 
         </div>
         <div class="textbody">
                 <label for="body">Body</label><br>
-                <textarea rows="7" name="body" placeholder="Enter Body" [(ngModel)]="templatedata.templateBody"></textarea>
+                <textarea rows="7" name="body" placeholder="Enter Body" [(ngModel)]="modtempbody"></textarea>
               </div>
        
 
