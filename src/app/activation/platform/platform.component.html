@@ -1,11 +1,16 @@
+
+ 
 <div class="container">
-  <div class="row">
+  <div class="">
+    <tabset *ngIf="this.userRole.includes('Admin')">
+      <tab heading="Products" id="tab1">
+        <div class="row">
       <div class="welcm_heading col-md-12"> 
         <div class="row"><h1 >Welcome to EPSoft</h1><span>  ( Intelligent Automation Platform )</span></div>
         <div class="row"><h4 id="sbtl">Select below service to Activate or Upgrade</h4></div>
       </div>
           <div class="col-md-2 dataCardBox" *ngFor="let eachData of visibletest;let i=index;trackBy:loopTrackBy">
-              <div *ngIf="this.userRole.includes('Admin') || this.userRole.includes('User') || eachData.subscribed" [id]="eachData.id" class="dataCard" [ngClass]="eachData.id==selectedId?'active':''" (click)="selecteddata(eachData, i)">
+              <div *ngIf="this.userRole.includes('Admin') || this.userRole.includes('User') || eachData.subscribed" [id]="eachData.id" class="dataCard" [ngClass]="eachData.id==selectedId?'activeModule':''" (click)="selecteddata(eachData, i)">
                   <img [src]="eachData.img"/>
                   <h6 id="subheading">{{eachData.title}}</h6>
 
@@ -29,8 +34,48 @@
                   <button  [disabled]="!this.selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
          
         </div>
-    </div>
+      </div>
+</tab>
+<tab (selectTab)=onselectMetrics() heading="Metrics" >
+  <!-- <app-metrics></app-metrics> -->
+</tab>
+</tabset>
 
+
+<div *ngIf="!this.userRole.includes('Admin')">
+  <div class="container">
+    <div class="row">
+  <div class="welcm_heading col-md-12"> 
+    <div class="row"><h1 >Welcome to EPSoft</h1><span>  ( Intelligent Automation Platform )</span></div>
+    <div class="row"><h4 id="sbtl">Select below service to Activate or Upgrade</h4></div>
+  </div>
+      <div class="col-md-2 dataCardBox" *ngFor="let eachData of visibletest;let i=index;trackBy:loopTrackBy">
+          <div *ngIf="this.userRole.includes('Admin') || this.userRole.includes('User') || eachData.subscribed" [id]="eachData.id" class="dataCard" [ngClass]="eachData.id==selectedId?'activeModule':''" (click)="selecteddata(eachData, i)">
+              <img [src]="eachData.img"/>
+              <h6 id="subheading">{{eachData.title}}</h6>
+
+              <div class=" " >
+                <p *ngIf="!eachData.subscribed">Activate Free Tier
+                </p> </div> 
+                <div>
+                <p class="expiryInfo" *ngIf="this.showexpiryinfo"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
+            </div>
+          </div>
+      </div>
+
+<div class="col-md-12"></div>
+<div class="col-md-4"></div>
+  <div class="col-md-2" >
+    <button [disabled]="!this.userRole.includes('Admin')" class="btn btn-primary" id="launch_btn" (click)="upgradePlan()" *ngIf="this.selectedIdValue"  >Upgrade</button>
+    <button class="btn btn-primary" *ngIf="!this.selectedIdValue" [disabled]="isenable" (click)="upgradePlan()" id="launch_btn" >Subscribe</button>
+  </div>
+  <div class="col-md-2" style="padding: 0px;
+  margin-left: -50px;" >
+              <button  [disabled]="!this.selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
+     
+    </div>
 </div>
 
+</div>
+</div>
 <div id="particles-js"></div>

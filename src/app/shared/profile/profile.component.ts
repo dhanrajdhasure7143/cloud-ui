@@ -341,6 +341,7 @@ this.profileservice.applications().subscribe(resp =>
              });;
              
           elementuser.userId['roleIdname']=this.roleArray;
+          elementuser.userId['created_at']=elementuser.created_at;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
           }else{
