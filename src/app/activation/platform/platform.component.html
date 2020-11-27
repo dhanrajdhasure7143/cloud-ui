@@ -1,6 +1,6 @@
 
  
-<div class="container">
+<div class="container-fluid">
   <div class="">
     <tabset *ngIf="this.userRole.includes('Admin')">
       <tab heading="Products" id="tab1">
@@ -36,8 +36,8 @@
         </div>
       </div>
 </tab>
-<tab (selectTab)=onselectMetrics() heading="Metrics" >
-  <!-- <app-metrics></app-metrics> -->
+<tab  heading="Metrics" >
+  <app-metrics></app-metrics>
 </tab>
 </tabset>
 

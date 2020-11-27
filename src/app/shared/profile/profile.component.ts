@@ -189,6 +189,7 @@ export class ProfileComponent implements OnInit {
   updateType: any;
   updateActivities: any;
   updateMail: any;
+  updatetemp:any;
   selectedalertdet:any;
   selectedRolesArry: any = [];
   permName: any;
@@ -250,6 +251,13 @@ export class ProfileComponent implements OnInit {
   isadd: boolean=false;
   addpressed: boolean=false;
   modules: any;
+  modtempcreated: any;
+  modtempbody: any;
+  modtempid: any;
+  modtempname: any;
+  modtempsub: any;
+  modtemptenant: any;
+  searchtemplate:any;
 
 
 
@@ -920,6 +928,7 @@ console.log("my pdate data",this.updateSecretedata)
      this.updateMail=data.mail_to
      this.updatetext_to=data.text_to
      this.updateIncident=data.incident_type
+     this.updatetemp = data.email_template
 
     console.log("alertslistactivitiesdata",this.updatetext_to)
     let channelsplit=data.channel.split(',')
@@ -1017,7 +1026,8 @@ console.log("my pdate data",this.updateSecretedata)
           "channel": notificationby,
           "mail_to":  this.updateMail,
           "text_to": this.updatetext_to,
-          "incident_type": this.updateIncident
+          "incident_type": this.updateIncident,
+          "email_template":this.updatetemp
           
       }
       console.log("alertmodifybody",this.alertmodifybody)
@@ -2278,6 +2288,12 @@ console.log("alertbody",this.alertsbody)
       selectedtemplate(data, index, template) {
     
         this.templatedata = data;
+        this.modtempcreated=data.createdBy;
+        this.modtempbody=data.templateBody;
+        this.modtempid=data.templateId;
+        this.modtempname=data.templateName;
+        this.modtempsub=data.templateSubject;
+        this.modtemptenant=data.tenantId;
         this.modalRef = this.modalService.show(template)
        
       }
@@ -2322,7 +2338,15 @@ console.log("alertbody",this.alertsbody)
       }
 
       updateemailtemplate(){
-         this.profileservice.modifyTemplate(this.templatedata).subscribe(data => {
+        let modtempip={
+          "createdBy": this.modtempcreated,
+          "templateBody": this.modtempbody,
+          "templateId": this.modtempid,
+          "templateName": this.modtempname,
+          "templateSubject": this.modtempsub,
+          "tenantId": this.modtemptenant
+        }
+         this.profileservice.modifyTemplate(modtempip).subscribe(data => {
           this.getListOfEmailTemplates();
           this.modalRef.hide();
          if(data.message === "Template updated successfully"){
