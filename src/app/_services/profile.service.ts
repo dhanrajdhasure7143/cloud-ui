@@ -215,4 +215,14 @@ getVaultConfigurations(tenantId): Observable<any> {
 getmodulesbyProduct(prod): Observable<any> {
   return this.http.get<any>('/api/vault/config/fetchModulesBy/'+prod);
 }
+
+getpagesfromModule( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/fetchAllPages',data,httpOptions);
+}
+getFieldsfromPage( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/fetchAllFields',data,httpOptions);
+}
+saveVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/save',data,httpOptions);
+}
 }

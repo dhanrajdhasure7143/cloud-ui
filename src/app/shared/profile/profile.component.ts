@@ -147,7 +147,7 @@ export class ProfileComponent implements OnInit {
   isSMScheckBoxValue:any;
   isIncidentcheckBoxValue:any;
   activitieslist:any = [];
-  modulesList:any;
+  modulesList:any=[];
   selectValue:any = [];
   isChecked:any = [];
   result: void;
@@ -258,6 +258,14 @@ export class ProfileComponent implements OnInit {
   modtempsub: any;
   modtemptenant: any;
   searchtemplate:any;
+  configprods: any=[];
+  selectedproduct: any;
+  mypages: any=[];
+  selectedmodule: any;
+  myfields: any=[];
+  seleftedFeild: any;
+  selectedPage: any;
+  selectedFeild: any;
 
 
 
@@ -1170,6 +1178,10 @@ console.log("my pdate data",this.updateSecretedata)
 cancelAlert(){
   this.modalRef.hide();
   this.alertModel={}
+}
+cancelVaultconfig(){
+  this.modalRef.hide();
+ 
 }
     setAsDefaultCard(selectedCardData){
       const cardId=selectedCardData.id
@@ -2128,14 +2140,78 @@ console.log("alertbody",this.alertsbody)
           this.selectValue.push(element.notification_id)      
         });
       }
-      onChangeprod(product){
-        console.log("my prodsssss",product)
-        this.profileservice.getmodulesbyProduct(product).subscribe(data => 
+      onChangeprod(pro){
+        this.selectedproduct=pro;
+        this.profileservice.getmodulesbyProduct(pro).subscribe(data => 
           {
-            this.modulesList=data.module;
-            console.log("modules",this.modulesList)
+            console.log("my prodsssss",data)
+            data.forEach(element => {
+
+              this.modulesList.push(element.module)
+            });
+           
+            
           })
    
+      }
+      changeModule(module){
+        this.selectedmodule=module;
+      
+        var input={
+             "module": module,
+             "product": this.selectedproduct
+         
+        }
+        this.profileservice.getpagesfromModule(input).subscribe(resp =>{
+         
+          resp.forEach(element => {
+            this.mypages.push(element.page)
+            
+          });
+       
+        })
+
+      }
+      changePage(page){
+        this.selectedPage=page;
+        
+        var input={
+          "module": this.selectedmodule,
+          "page":page,
+          "product": this.selectedproduct
+      
+     }
+     this.profileservice.getFieldsfromPage(input).subscribe(resp=>{
+       resp.forEach(element => {
+         this.myfields.push(element.field)
+         
+       });
+     })
+    
+      }
+      chanageFeild(feild){
+        this.selectedFeild=feild;
+      }
+      saveVaultConfig(form:NgForm){
+        var input={
+          "module": this.selectedmodule,
+        "page":this.selectedPage,
+          "product": this.selectedproduct,
+        "field":this.selectedFeild,
+        "tenantId":this.tenantId
+        }
+        this.profileservice.saveVaultConfig(input).subscribe(resp=>{
+          this.modalRef.hide();
+          this.getListOfVaultconfigs();
+          this.notifier.show({
+            type: "success",
+            message: "Vault Configured successfully!"
+          });
+          },err=>{
+            this.getListOfVaultconfigs();
+          });
+          form.resetForm();
+       
       }
       changeActivity()
       {
@@ -2208,6 +2284,13 @@ console.log("alertbody",this.alertsbody)
           // });
           
         });
+        this.profileservice.fetchAllProds().subscribe(myresp=>{
+          
+          myresp.forEach(element => {
+            this.configprods.push(element.product)
+
+          });
+        })
       }
       onFileSelected(event)
       {
