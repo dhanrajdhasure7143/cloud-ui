@@ -48,9 +48,9 @@
       <div class="col-md-5  text-center">
           <h5><b>Users - Registered vs Invited</b></h5>
           <!-- <canvas id="users" style="height:300px!important ; width:100%"></canvas> -->
-          <div id="piechart1" class="box_shadw34"> 
+          <div id="piechart1"  #containerRef class="box_shadw34"> 
           <ngx-charts-pie-chart
-  [view]="[600, 300]"
+          [view]="[containerRef.offsetWidth, 300]"
   [scheme]="{domain: ['#5AA454', '#A10A28']}"
   [results]="registeredvsinvited"
   [gradient]="true"
@@ -69,9 +69,9 @@
 
           <h5><b>Configured Alerts - Success vs Failure</b></h5>
           <!-- <canvas id="alertbytype" style="height:300px!important ; width:100%"></canvas> -->
-          <div id="piechart2" class="box_shadw34">
+          <div id="piechart2" #containerRef class="box_shadw34">
             <ngx-charts-pie-chart
-            [view]="[600, 300]"
+            [view]="[containerRef.offsetWidth, 300]"
             [scheme]="{domain: ['#C7B42C', '#AAAAAA']}"
             [results]="alertsCountBasedOnType"
             [gradient]="true"
@@ -96,18 +96,19 @@
       <div class="col-md-5 text-center">
           <h5><b>User vs Role</b></h5>
           <!-- <canvas id="uservsrole" style="height:300px!important ; width:100%"></canvas> -->
-          <div id="uservsrolechart" class="uservsrolechart">
-          <ngx-charts-bar-vertical [view]="view" [scheme] ="colorScheme" [results]="uservsrole" [gradient]="gradient" [xAxis]="showXAxis"
+          <div id="uservsrolechart" #containerRef class="uservsrolechart">
+          <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme" [results]="uservsrole" [gradient]="gradient" [xAxis]="showXAxis"
           [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yAxisLabel" >
+          [yAxisLabel]="yAxisLabel">
          </ngx-charts-bar-vertical>
         </div>
       </div>
      
       <div class="col-md-5  text-center">
           <h5><b>Activity vs Alert</b></h5>
+          <div id="activityvsalert" #containerRef class="activityvsalert">
 <ngx-charts-bar-vertical-stacked
-      [view]="view2"
+[view]="[containerRef.offsetWidth, 400]"
       [results]="activityvsalert"
       [gradient]="gradient2"
       [xAxis]="showXAxis2"
@@ -119,7 +120,7 @@
       [xAxisLabel]="xAxisLabel2"
       [yAxisLabel]="yAxisLabel2">
 </ngx-charts-bar-vertical-stacked>
-          
+</div>
       </div>
 
       <div class="col-md-1"></div>
@@ -134,9 +135,9 @@
 
         <h5><b>Visa vs Mastercard</b></h5>
         <!-- <canvas id="noofcards" style="width:100% !important"></canvas> -->
-        <div id="piechart3" class="box_shadw34">
+        <div id="piechart3" #containerRef class="box_shadw34">
           <ngx-charts-pie-chart
-          [view]="[600, 300]"
+          [view]="[containerRef.offsetWidth, 300]"
           [scheme]="{domain: ['#66ccff', '#ff4d88']}"
           [results]="cards"
           [gradient]="true"
@@ -154,10 +155,12 @@
 
           <h5><b>Vault - Secret Name vs Key Count</b></h5>
           <!-- <canvas id="vaults" style="width:100% !important"></canvas> -->
-          <ngx-charts-bar-vertical [view]="view1" [scheme] ="colorScheme1" [results]="vaultkeycount" [gradient]="gradient1" [xAxis]="showXAxis1"
+          <div id="secretvscount" #containerRef class="secretvscount">
+          <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme1" [results]="vaultkeycount" [gradient]="gradient1" [xAxis]="showXAxis1"
           [yAxis]="showYAxis1" [legend]="showLegend1" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel1" [showYAxisLabel]="showYAxisLabel1" [xAxisLabel]="xAxisLabel1"
           [yAxisLabel]="yAxisLabel1">
          </ngx-charts-bar-vertical>
+        </div>
       </div>
      
     <div class="col-md-4"></div>
