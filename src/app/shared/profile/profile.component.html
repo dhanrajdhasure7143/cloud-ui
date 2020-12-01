@@ -960,7 +960,7 @@
             <thead>
               <tr>
                 <th scope="col" class="types" style="text-align:center">Secret Name</th>
-                <th scope="col" class="types" style="text-align:center">created time</th>
+                <th scope="col" class="types" style="text-align:center">Created Date</th>
                 <th scope="col" class="types" style="text-align:center">Version</th>
                 <th scope="col" class="types" style="text-align:center">Actions</th>
                
@@ -995,7 +995,7 @@
 <ng-template #datatemplate >
   
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" >Secuirty Vault Details</h4>
+    <h4 class="modal-title" id="modal-basic-title" >Security Vault Details</h4>
     <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
       <span aria-hidden="true">&times;</span>
     </button> -->
@@ -1003,10 +1003,10 @@
 
 <div class="modal-body">
 
-            <div  class="col-md-12 confirmationmsg" style="text-align:left;">
-              <table class="sub-confirmation">
-                <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
-                <th>Secret Data</th>
+  <div  class="col-md-12 confirmationmsg">
+    <table class="vault-table">
+      <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
+      <th>Secret Data</th>
                              <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder"  [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td>
                            
@@ -2260,13 +2260,16 @@
 
                 </td>
                  
-                    <td>
-                    <span  (click)="addSecret()"> 
-                      <img src="assets/images/Add.svg" alt=""></span>
-                    
-                    <span  (click)="removeSecrete(i)"> 
-                      <img src="assets/images/unsubscribe.svg" alt=""></span>
-                    </td>
+                <td>
+                  <span  (click)="addSecret()"style="padding: 0px;
+                  margin-left: 0px;"> 
+                    <img src="assets/images/Add.svg" alt=""></span>
+                  </td>
+                  <td>
+                  <span  (click)="removeSecrete(i)" style="padding: 0px;
+                  margin-left: -7px;"> 
+                    <img src="assets/images/unsubscribe.svg" alt=""></span>
+                  </td>
                  
                               
                

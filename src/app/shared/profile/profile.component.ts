@@ -410,7 +410,7 @@ this.profileservice.applications().subscribe(resp =>
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
     // this.myvalue=Object.values(this.updateSecretedata.data.data)
     
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
 
   }
   
