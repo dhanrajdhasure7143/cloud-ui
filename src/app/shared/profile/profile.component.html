@@ -1007,20 +1007,20 @@
     <table class="vault-table">
       <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
       <th>Secret Data</th>
-                             <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder"  [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  name="valueholder"  [(ngModel)]="mykey.value" ></td>
-                            <td>
+                             <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder" class="form-control" [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
+                            <td class="text-center">
                            
                                 <span  (click)="removeSecrete(i)"> 
                                   <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 </td>
-                                <td *ngIf="secretes1.length==0">
+                                <td  class="text-center" *ngIf="secretes1.length==0">
                              
                                   <span  (click)="addSecretupdate()"> 
                                     <img src="assets/images/Add.svg" alt=""></span>
                               </td>
                               
                             </tr>
-                           <div *ngIf="isadd" >
+                           <div  class="text-center" *ngIf="isadd" >
                             <tr *ngFor="let secret1 of secretes1; let i = index;">
                              
                               <td>
