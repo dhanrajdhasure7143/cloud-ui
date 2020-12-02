@@ -3,6 +3,9 @@
 <div class="container-fluid">
   <div class="">
     <tabset *ngIf="this.userRole.includes('Admin')">
+      <tab  heading="Dashboard">
+        <app-metrics></app-metrics>
+      </tab>
       <tab heading="Products" id="tab1">
         <div class="row" id="products">
       <div class="welcm_heading col-md-12"> 
@@ -35,9 +38,6 @@
          
         </div>
       </div>
-</tab>
-<tab  heading="Metrics" >
-  <app-metrics></app-metrics>
 </tab>
 </tabset>
 
