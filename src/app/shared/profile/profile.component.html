@@ -592,16 +592,16 @@
                                   <td style="text-align:center">{{data.page}}</td>
                                   <td style="text-align:center">{{data.field}}</td>
                                   <td  class="deleticon"><span  (click)="selectedVaultConfig(data,t,configvault)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
-                                    <span  (click)="emailtempdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
-                                    <div id="myid" [ngClass]="selectedtempdet === t?'isdelet':''" class="deletconfm">
+                                    <span  (click)="vaultconfigdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                    <div id="myid" [ngClass]="selectedvaultconfig === t?'isdelet':''" class="deletconfm">
                                       <div class="container-fluid deletefrm">
                                           <h5 class="pull-left">Confirmation</h5>
-                                          <button type="button" class="close " aria-label="Close" (click)="tempdelno(t)">
+                                          <button type="button" class="close " aria-label="Close" (click)="vaultconfigdelno(t)">
                                           <span aria-hidden="true">&times;</span>
                                           </button>
                                           <p class="pull-left">Are you sure you want to delete the vault configuration ?</p>
-                                           <button class="pull-left confm" (click)="tempDelYes(data,t)">Yes</button>
-                                           <button class="confm pull-left" (click)="tempdelno(t)">No</button>
+                                           <button class="pull-left confm" (click)="vaultconfigDelYes(data,t)">Yes</button>
+                                           <button class="confm pull-left" (click)="vaultconfigdelno(t)">No</button>
                                       </div>
                                   </div>
                                   </td>

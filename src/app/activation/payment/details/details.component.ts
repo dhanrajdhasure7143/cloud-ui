@@ -47,11 +47,13 @@ export class DetailsComponent implements OnInit {
   cardid: string;
   paymentMode: any;
   public cardfulldetails: any[];
+  allpaymentsList: any[];
 
   constructor( private productlistservice:ProductlistService,
               private profileservice: ProfileService,   
               private router:Router,
-              private route:ActivatedRoute,) { }
+              private route:ActivatedRoute,
+              private paymentmode:ProfileService) { }
 
   ngOnInit() {
     if(localStorage.getItem('cardholdername')!=undefined){
@@ -73,9 +75,11 @@ export class DetailsComponent implements OnInit {
     this.cardyear=localStorage.getItem('cardExpYear')
     }
     this.getproductPlans();
+    this.allPaymentModes();
     this.editCardDetails();
     this.getYears();
     this.getAllPaymentmodes();
+
   }
 
   getYears(){
@@ -118,6 +122,15 @@ export class DetailsComponent implements OnInit {
            
   }
 
+allPaymentModes()
+{
+  this.paymentmode.listofPaymentModes().subscribe(resp => {
+    
+this.allpaymentsList=resp
+  })
+  console.log("all payments areee",this.allpaymentsList)
+ 
+}
   getproductPlans(){
     this.productId=localStorage.getItem("selectedproductId"),
     this.plantype=localStorage.getItem("selectedplan")
@@ -188,6 +201,8 @@ export class DetailsComponent implements OnInit {
     return Object.keys(obj).length === 0;
    }
   editCardDetails(){
+
+    console.log("came to editCardDetails")
     this.route.params.subscribe(data=>{this.cardEdit=data
       if(this.isEmpty(data) != true){
     this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));
