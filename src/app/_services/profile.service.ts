@@ -225,4 +225,8 @@ getFieldsfromPage( data) : Observable<any>{
 saveVaultConfig( data) : Observable<any>{
   return this.http.post<any>('/api/vault/config/save',data,httpOptions);
 }
+
+deleteVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/delete',data,httpOptions);
+}
 }
