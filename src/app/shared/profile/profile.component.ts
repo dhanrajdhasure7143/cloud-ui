@@ -2240,7 +2240,7 @@ console.log("alertbody",this.alertsbody)
          if(data1.message === "Deleted Successfully"){
           this.notifier.show({
             type: "success",
-            message: "configuration deleted successfully."            
+            message: "Vault configuration deleted successfully."            
           })
           this.getListOfVaultconfigs();
           }else {

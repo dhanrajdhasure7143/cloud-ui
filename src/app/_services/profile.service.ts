@@ -215,9 +215,7 @@ getVaultConfigurations(tenantId): Observable<any> {
 getmodulesbyProduct(prod): Observable<any> {
   return this.http.get<any>('/api/vault/config/fetchModulesBy/'+prod);
 }
-deleteVaultConfig( data) : Observable<any>{
-  return this.http.post<any>('/api/vault/config/delete',data,httpOptions);
-}
+
 getpagesfromModule( data) : Observable<any>{
   return this.http.post<any>('/api/vault/config/fetchAllPages',data,httpOptions);
 }
@@ -228,4 +226,7 @@ saveVaultConfig( data) : Observable<any>{
   return this.http.post<any>('/api/vault/config/save',data,httpOptions);
 }
 
+deleteVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/delete',data,httpOptions);
+}
 }
