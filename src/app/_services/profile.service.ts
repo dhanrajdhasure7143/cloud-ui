@@ -192,8 +192,8 @@ getprocessnames(): Observable<any>{
   getUserRoleMetrics(tenantId): Observable<any>{
      return this.http.get("/api/user/getUserRoleMetrics/"+tenantId+"")
   }
-  getVaultKeysCount(): Observable<any>{
-    return this.http.get("/api/vault/get-keyscount")
+  getVaultKeysCount(tenantId): Observable<any>{
+       return this.http.get("/api/vault/get-keyscount/"+tenantId+"")
    }
   getAlertsActivityKPI(){
    return this.http.get("/alertConfigurationService/api/v1/AlertsActivityKPI")

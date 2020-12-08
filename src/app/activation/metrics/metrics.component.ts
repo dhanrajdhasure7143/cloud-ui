@@ -23,7 +23,7 @@ export class MetricsComponent implements OnInit {
   data: any;
 
  //user vs role bar chart
- uservsrole: any;
+ uservsrole: any=[];
  view: any[] = [600, 400];
   showXAxis = true;
   showYAxis = true;
@@ -55,7 +55,7 @@ export class MetricsComponent implements OnInit {
   };
 
   // Activitvy vs alert grouped chart
-  activityvsalert:any;
+  activityvsalert:any=[];
   view2: any[] = [600, 400];
   showXAxis2: boolean = true;
   showYAxis2: boolean = true;
@@ -73,9 +73,9 @@ export class MetricsComponent implements OnInit {
   cards: any;
   subscribedproductscount: any;
   count: any;
-  vaultkeycount: any;
-  alertsCountBasedOnType: any;
-  registeredvsinvited: Object;
+  vaultkeycount: any=[];
+  alertsCountBasedOnType: any=[];
+  registeredvsinvited: any=[];
   
 
 
@@ -83,6 +83,8 @@ export class MetricsComponent implements OnInit {
 
   ngOnInit() {
     
+    //this.alertsCountBasedOnType=[{"name":"No data found","value": "0"}];
+
     this.getVaultKeysCount();  
     this.getCardsCount();
     this.getAllUsersList();
@@ -165,7 +167,8 @@ getListOfEmailTemplates()
 
       getVaultKeysCount()
       {
-        this.profileService.getVaultKeysCount().subscribe(vault=>{
+        this.tenantId=localStorage.getItem('tenantName')
+        this.profileService.getVaultKeysCount(this.tenantId).subscribe(vault=>{
           this.vaultkeycount=vault
         })
       }
