@@ -1612,7 +1612,7 @@
             <div class="col-12">
         <div class="form-group form-buttons pull-right buttonsblock">        
             <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelEmail()"><div class="anim"></div> Cancel</button>
-            <button [disabled]="configureemailupdate.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="updateemailtemplate()"><div class="anim" ></div> Save</button>
+            <button [disabled]="configureemailupdate.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="updateemailtemplate()"><div class="anim" ></div> Update</button>
         </div>
         
         <div class="clearfix">
@@ -1627,25 +1627,51 @@
 <ng-template #configvault >
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" >Update Vault Configuration</h4>
-    <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+    <button type="button" class="close" aria-label="Close" (click)="cancelUpdateVaultConfig()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form autocomplete="off" id="configurevault" name="configurevault" #configvault="ngForm">
+  <form autocomplete="off" id="configurevault" name="configurevault" #configurevault="ngForm">
   <div class="modal-body">
     
     
 <div class="form-group">
   <label for="subscriptionid">Product : </label>
   <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
-  <select name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="updateprod" required>
+  <select name="prodname"  class="form-control botmbordr" (change)="onChangeprod($event.target.value)"  required>
     <option  [value]="undefined" disabled hidden>Select Type</option>
     <option  [value]="null" disabled hidden>Select Type</option>
-    <option [value]="alertslistactivitiesdata.app_name">{{alertslistactivitiesdata.app_name}}</option>
+    <option *ngFor="let product of configprods"  [value]="product">{{modprod}}</option>
+</select>
+</div>
+<div class="form-group">
+  <label for="module">Module : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" [(ngModel)]="modmodule"  #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="modulename"  class="form-control botmbordr"  (change)='changeModule($event.target.value)' required>
+    <!-- <option  [value]="undefined" disabled hidden>Select Type</option>
+    <option  [value]="null" disabled hidden>Select Type</option> -->
+    <option *ngFor="let module of modulesList" [value]="modmodule">{{modmodule}}</option>
 </select>
 </div>
 
-
+<div class="form-group">
+  <label for="page">Pages : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="pagename"  class="form-control botmbordr" (change)='changePage($event.target.value)' required>
+    <option  [value]="undefined" disabled hidden>Select Module</option> 
+   <option  [value]="null" disabled hidden>Select Module</option>
+    <option *ngFor="let page of mypages" [value]="modpage">{{modpage}}</option>
+</select>
+</div>
+<div class="form-group">
+  <label for="page">Fields : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="fieldname" class="form-control botmbordr" (change)='chanageFeild($event.target.value)'  required>
+    <option  [value]="undefined" disabled hidden>Select Field</option>
+    <option  [value]="null" disabled hidden>Select Field</option>
+    <option *ngFor="let feild of myfields"   [value]="modfield">{{feild}}</option>
+</select>
+</div>
 
 
       </div>
@@ -1655,7 +1681,7 @@
     <div class="col-12">
 <div class="form-group form-buttons pull-right buttonsblock">        
     <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
-    <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
+    <button class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
 </div>
 
 <div class="clearfix">
@@ -2216,7 +2242,7 @@
                                                
                                        
                             <div class="col-md-12 submitbtn">
-                              <button class="btn btn-primary updatepermbtn" (click)="modifycoupon(coupondata)">Update</button>
+                              <button class="btn btn-primary updatepermbtn" (click)="modifycoupon(coupondata)" [disabled]='isupdatecouponclicked'>Update</button>
                             </div>
                          </div>
                       
