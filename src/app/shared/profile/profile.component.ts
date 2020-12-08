@@ -267,6 +267,12 @@ export class ProfileComponent implements OnInit {
   selectedPage: any;
   selectedFeild: any;
   selectedvaultconfig: string;
+  modprod: any;
+  modmodule: any;
+  modpage: any;
+  modfield: any;
+  modconfigId: any;
+  isupdatecouponclicked: boolean=false;
 
 
 
@@ -1843,6 +1849,7 @@ couponDelYes(coupon,index){
    }
 
     modifycoupon(couponData){
+      
       console.log("coupon data",couponData)
       if(this.isPercentage){
         couponData.amountOff = null
@@ -2424,7 +2431,13 @@ console.log("alertbody",this.alertsbody)
        
       }
       selectedVaultConfig(data,i,template){
+        console.log("my selected vault cocnfig is-----",data)
         this.templatedata = data;
+        this.modprod=data.product;
+        this.modmodule=data.module;
+        this.modpage=data.page;
+        this.modfield=data.field;
+        this.modconfigId=data.id;
         this.modalRef = this.modalService.show(template)
        
 
@@ -2460,6 +2473,9 @@ console.log("alertbody",this.alertsbody)
        
       }
       cancelEmail(){
+        this.modalRef.hide();
+      }
+      cancelUpdateVaultConfig(){
         this.modalRef.hide();
       }
 
