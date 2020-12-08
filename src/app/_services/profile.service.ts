@@ -177,4 +177,56 @@ deleteTemplate(temp:any): Observable<any>{
 modifyTemplate(template:any): Observable<any>{
   return this.http.post<any>('/mailService/modifyTemplate', template,httpOptions)
 }
+getprocessnames(): Observable<any>{
+  return this.http.get("/rpa-service/process-name");
+  }
+  getAllActiveBots(): Observable<any>{
+     return this.http.get("/rpa-service/get-bots")
+  }
+  getCardsCount(): Observable<any>{
+     return this.http.get("/subscriptionservice/v1/orders/getCardsCount")
+  }
+  getSubscribedProductsCount(): Observable<any>{
+   return this.http.get("/subscriptionservice/v1/orders/getSubscribedProductsCount")
+  }
+  getUserRoleMetrics(tenantId): Observable<any>{
+     return this.http.get("/api/user/getUserRoleMetrics/"+tenantId+"")
+  }
+  getVaultKeysCount(tenantId): Observable<any>{
+       return this.http.get("/api/vault/get-keyscount/"+tenantId+"")
+   }
+  getAlertsActivityKPI(){
+   return this.http.get("/alertConfigurationService/api/v1/AlertsActivityKPI")
+  }
+  getalertsCountBasedOnType(){
+  return this.http.get("/alertConfigurationService/api/v1/alertsCountBasedOnType")
+  }
+  getUsersMetrics(tenantId){
+    return this.http.get("/api/user/getUsersMetrics/"+tenantId+"")
+  }
+getVaultConfigurations(tenantId): Observable<any> {
+  return this.http.get<any>('/api/vault/config/getInfo/'+tenantId);
+}
+ 
+ fetchAllProds(): Observable<any> {
+  return this.http.get<any>('/api/vault/config/fetchAllProducts');
+}
+
+getmodulesbyProduct(prod): Observable<any> {
+  return this.http.get<any>('/api/vault/config/fetchModulesBy/'+prod);
+}
+
+getpagesfromModule( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/fetchAllPages',data,httpOptions);
+}
+getFieldsfromPage( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/fetchAllFields',data,httpOptions);
+}
+saveVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/save',data,httpOptions);
+}
+
+deleteVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/delete',data,httpOptions);
+}
 }

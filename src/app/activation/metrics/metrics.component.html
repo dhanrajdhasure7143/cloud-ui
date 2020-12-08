@@ -1,0 +1,210 @@
+<div class="backgr">
+  <div class="container-fluid">
+    <br>
+    <div class="row" id="boxes">
+        <div *ngIf="userManagementresponse!=undefined" class=" col-md-2 text-center">
+            <div class="divbox divbox0"><span class="text-white">
+              Users<br>
+              {{userManagementresponse.length}}
+            </span></div>
+        </div>
+  
+        <div *ngIf="departments!=undefined" class=" col-md-2 text-center">
+          <div class="divbox divbox1"><span class="text-white">
+            Departments<br>
+            {{departments.length}}
+          </span></div>
+      </div>
+  
+      <div *ngIf="emailtemplateslist!=undefined" class=" col-md-2 text-center">
+        <div class="divbox divbox2"><span class="text-white">
+          Email Templates<br>
+          {{emailtemplateslist.length}}
+        </span></div>
+    </div>
+  
+    <div  class=" col-md-2 text-center">
+      <div class="divbox divbox3"><span class="text-white">
+       Subscribed Products<br>
+  {{count}}</span></div>
+  </div>
+  
+  <div  class=" col-md-2 text-center">
+    <div *ngIf="processnames!=undefined" class="divbox divbox4"><span class="text-white">
+      Processes<br>
+      {{processnames.length}}</span></div>
+  </div>
+  
+  <div  class=" col-md-2 text-center">
+    <div *ngIf="botnames!=undefined" class="divbox divbox5"><span class="text-white">
+      Bots<br>
+      {{botnames.length}}</span></div>
+  </div>
+  
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div *ngIf="registeredvsinvited!=0" class="col-md-5  text-center">
+            <h5><b>Users - Registered vs Invited</b></h5>
+            <div id="piechart1"  #containerRef class="box_shadw34"> 
+            <ngx-charts-pie-chart
+            [view]="[containerRef.offsetWidth, 300]"
+    [scheme]="{domain: ['#5AA454', '#A10A28']}"
+    [results]="registeredvsinvited"
+    [gradient]="true"
+    [legend]="true"
+    [legendTitle]="''"
+    [legendPosition]="'right'"
+    [labels]="true"
+    [doughnut]="false"
+    >
+  </ngx-charts-pie-chart>
+       </div>
+        </div>
+  
+        <div *ngIf="registeredvsinvited==0" class="col-md-5  text-center">
+          <h5><b>Users - Registered vs Invited</b></h5>
+          <div id="nodatafound"   class="box_shadw34"> 
+            <h3>No Data Available</h3>
+     </div>
+      </div>
+  
+  
+  
+        <div *ngIf="alertsCountBasedOnType!=0" class="col-md-5  text-center">
+  
+            <h5><b>Configured Alerts - Success vs Failure</b></h5>
+            <div id="piechart2" #containerRef class="box_shadw34">
+               <ngx-charts-pie-chart
+              [view]="[containerRef.offsetWidth, 300]"
+              [scheme]="{domain: ['#C7B42C', '#AAAAAA']}"
+              [results]="alertsCountBasedOnType"
+              [gradient]="true"
+              [legend]="true"
+              [legendPosition]="'right'"
+              [labels]="true"
+              [doughnut]="true"
+              [legendTitle]="''"
+              [arcWidth]="0.50">
+            </ngx-charts-pie-chart> 
+            </div>
+        </div>
+  
+        <div *ngIf="alertsCountBasedOnType==0" class="col-md-5  text-center">
+          <h5><b>Configured Alerts - Success vs Failure</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+  
+        <div class="col-md-1"></div>
+  
+    </div>
+    <br><br>
+    <div class="col-md-12 btm-line"></div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+  
+        <div *ngIf="uservsrole!=0" class="col-md-5 text-center">
+            <h5><b>User vs Role</b></h5>
+            <div id="uservsrolechart" #containerRef class="uservsrolechart">
+            <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme" [results]="uservsrole" [gradient]="gradient" [xAxis]="showXAxis"
+            [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+           </ngx-charts-bar-vertical>
+          </div>
+        </div>
+  
+        <div *ngIf="uservsrole==0" class="col-md-5 text-center">
+          <h5><b>User vs Role</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+       
+        <div *ngIf="activityvsalert!=0" class="col-md-5  text-center">
+            <h5><b>Activity vs Alert</b></h5>
+            <div id="activityvsalert" #containerRef class="activityvsalert">
+  <ngx-charts-bar-vertical-stacked
+  [view]="[containerRef.offsetWidth, 400]"
+        [results]="activityvsalert"
+        [gradient]="gradient2"
+        [xAxis]="showXAxis2"
+        [yAxis]="showYAxis2"
+        [legend]="showLegend2"
+        [legendTitle]="''"
+        [showXAxisLabel]="showXAxisLabel2"
+        [showYAxisLabel]="showYAxisLabel2"
+        [xAxisLabel]="xAxisLabel2"
+        [yAxisLabel]="yAxisLabel2">
+  </ngx-charts-bar-vertical-stacked>
+  </div>
+        </div>
+  
+        <div *ngIf="activityvsalert==0" class="col-md-5  text-center">
+          <h5><b>Activity vs Alert</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+  
+        <div class="col-md-1"></div>
+  
+    </div>
+    <br> <br>
+    <div class="col-md-12 btm-line"></div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div *ngIf="cards!=0" class="col-md-5  text-center">
+  
+          <h5><b>Visa vs Mastercard</b></h5>
+          <div id="piechart3" #containerRef class="box_shadw34">
+            <ngx-charts-pie-chart
+            [view]="[containerRef.offsetWidth, 300]"
+            [scheme]="{domain: ['#66ccff', '#ff4d88']}"
+            [results]="cards"
+            [gradient]="true"
+            [legend]="true"
+            [legendTitle]="''"
+            [legendPosition]="'right'"
+            [labels]="true"
+            [doughnut]="true"
+            [arcWidth]="0.50">
+          </ngx-charts-pie-chart>
+          </div>
+  
+      </div>
+      <div *ngIf="cards==0" class="col-md-5  text-center">
+  
+        <h5><b>Visa vs Mastercard</b></h5>
+        <div id="nodatafound" class="box_shadw34">
+          <h3>No Data Available</h3>
+        </div>
+  
+    </div>
+        <div *ngIf="vaultkeycount!=0" class="col-md-5  text-center">
+  
+            <h5><b>Vault - Secret Name vs Key Count</b></h5>
+            <div id="secretvscount" #containerRef class="secretvscount">
+            <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme1" [results]="vaultkeycount" [gradient]="gradient1" [xAxis]="showXAxis1"
+            [yAxis]="showYAxis1" [legend]="showLegend1" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel1" [showYAxisLabel]="showYAxisLabel1" [xAxisLabel]="xAxisLabel1"
+            [yAxisLabel]="yAxisLabel1">
+           </ngx-charts-bar-vertical>
+          </div>
+        </div>
+  
+        <div *ngIf="vaultkeycount==0" class="col-md-5  text-center">
+  
+          <h5><b>Vault - Secret Name vs Key Count</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+       
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+  </div>

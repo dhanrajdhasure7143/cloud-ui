@@ -158,5 +158,8 @@ export class PlatformComponent implements OnInit {
   upgradePlan(){
     localStorage.setItem('selectedproductId',this.selectedId);   
     this.router.navigate(["/activation/payment/chooseplan"])
-  }  
+  } 
+  onselectMetrics(){
+    this.router.navigate(["/activation/metrics"])
+  }
 }

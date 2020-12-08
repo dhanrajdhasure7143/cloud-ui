@@ -19,6 +19,7 @@ import { log } from 'console';
 import * as $ from 'jquery';
 
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -146,6 +147,7 @@ export class ProfileComponent implements OnInit {
   isSMScheckBoxValue:any;
   isIncidentcheckBoxValue:any;
   activitieslist:any = [];
+  modulesList:any=[];
   selectValue:any = [];
   isChecked:any = [];
   result: void;
@@ -187,6 +189,7 @@ export class ProfileComponent implements OnInit {
   updateType: any;
   updateActivities: any;
   updateMail: any;
+  updatetemp:any;
   selectedalertdet:any;
   selectedRolesArry: any = [];
   permName: any;
@@ -224,6 +227,8 @@ export class ProfileComponent implements OnInit {
   cards: any;
   templates: any=[];
   emailtemplateslist: any;
+  emailtemplate: any;
+  vaulConfigureList:any;
   viewdata: any;
   secreteDetails: { secreteKey: any; key: any; };
    public secretes1: any[] = [];
@@ -244,6 +249,24 @@ export class ProfileComponent implements OnInit {
   templatedata: any;
   selectedtempdet: any;
   isadd: boolean=false;
+  addpressed: boolean=false;
+  modules: any;
+  modtempcreated: any;
+  modtempbody: any;
+  modtempid: any;
+  modtempname: any;
+  modtempsub: any;
+  modtemptenant: any;
+  searchtemplate:any;
+  configprods: any=[];
+  selectedproduct: any;
+  mypages: any=[];
+  selectedmodule: any;
+  myfields: any=[];
+  seleftedFeild: any;
+  selectedPage: any;
+  selectedFeild: any;
+  selectedvaultconfig: string;
 
 
 
@@ -269,6 +292,7 @@ export class ProfileComponent implements OnInit {
   // ];
   this.getListOfEmailTemplates();
     this.getAllPermissions();
+    this.getListOfVaultconfigs();
     this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
@@ -334,6 +358,7 @@ this.profileservice.applications().subscribe(resp =>
              });;
              
           elementuser.userId['roleIdname']=this.roleArray;
+          elementuser.userId['created_at']=elementuser.created_at;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
           }else{
@@ -386,7 +411,7 @@ this.profileservice.applications().subscribe(resp =>
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
     // this.myvalue=Object.values(this.updateSecretedata.data.data)
     
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
 
   }
   
@@ -397,6 +422,7 @@ this.profileservice.applications().subscribe(resp =>
   addSecretupdate(){
     //this.secretes=[];
     this.isadd=true;
+    this.addpressed=true;
     this.secretes1.push({
       id: this.secretes1.length + 1,
       key: '',
@@ -453,6 +479,7 @@ console.log("my pdate data",this.updateSecretedata)
         let result = this.paymentMode.filter(obj => {
          return obj.defaultSource === true
         })
+        localStorage.setItem('cardId',result[0].id)
        localStorage.setItem('cardExpMonth',result[0].cardExpMonth)
        localStorage.setItem('cardExpYear',result[0].cardExpYear)
         localStorage.setItem('cardholdername',result[0].name)
@@ -887,6 +914,9 @@ console.log("my pdate data",this.updateSecretedata)
       this.isIncidentcheckBoxValue=false
       this.modalRef = this.modalService.show(template,this.config)
     }
+    addVault(template){
+      this.modalRef = this.modalService.show(template,this.config)
+    } 
     addTemplate(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
@@ -908,6 +938,7 @@ console.log("my pdate data",this.updateSecretedata)
      this.updateMail=data.mail_to
      this.updatetext_to=data.text_to
      this.updateIncident=data.incident_type
+     this.updatetemp = data.email_template
 
     console.log("alertslistactivitiesdata",this.updatetext_to)
     let channelsplit=data.channel.split(',')
@@ -1005,7 +1036,8 @@ console.log("my pdate data",this.updateSecretedata)
           "channel": notificationby,
           "mail_to":  this.updateMail,
           "text_to": this.updatetext_to,
-          "incident_type": this.updateIncident
+          "incident_type": this.updateIncident,
+          "email_template":this.updatetemp
           
       }
       console.log("alertmodifybody",this.alertmodifybody)
@@ -1148,6 +1180,10 @@ console.log("my pdate data",this.updateSecretedata)
 cancelAlert(){
   this.modalRef.hide();
   this.alertModel={}
+}
+cancelVaultconfig(){
+  this.modalRef.hide();
+ 
 }
     setAsDefaultCard(selectedCardData){
       const cardId=selectedCardData.id
@@ -2032,7 +2068,8 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
           "mail_to": this.emailselected,
           "tenant_id": this.tenantId,
           "text_to": this.smsselected,
-          "type": this.selectedtype
+          "type": this.selectedtype,
+          "email_template": this.emailtemplate
         }
     
     
@@ -2082,6 +2119,7 @@ console.log("alertbody",this.alertsbody)
       }
       onChange(product){
      // console.log("application",this.application)
+    
        this.profileservice.alertsConfig(product).subscribe(res => this.successCallback(res))
         this.application.forEach(element => {
           if(element.id==product){
@@ -2091,6 +2129,9 @@ console.log("alertbody",this.alertsbody)
           }
           
         });
+      
+
+   
       }
       successCallback(data) {
        // console.log("data",JSON.parse(data))
@@ -2101,6 +2142,120 @@ console.log("alertbody",this.alertsbody)
           this.selectValue.push(element.notification_id)      
         });
       }
+      onChangeprod(pro){
+        this.selectedproduct=pro;
+        this.profileservice.getmodulesbyProduct(pro).subscribe(data => 
+          {
+            console.log("my prodsssss",data)
+            data.forEach(element => {
+
+              this.modulesList.push(element.module)
+            });
+           
+            
+          })
+   
+      }
+      changeModule(module){
+        this.selectedmodule=module;
+      
+        var input={
+             "module": module,
+             "product": this.selectedproduct
+         
+        }
+        this.profileservice.getpagesfromModule(input).subscribe(resp =>{
+         
+          resp.forEach(element => {
+            this.mypages.push(element.page)
+            
+          });
+       
+        })
+
+      }
+      changePage(page){
+        this.selectedPage=page;
+        
+        var input={
+          "module": this.selectedmodule,
+          "page":page,
+          "product": this.selectedproduct
+      
+     }
+     this.profileservice.getFieldsfromPage(input).subscribe(resp=>{
+       resp.forEach(element => {
+         this.myfields.push(element.field)
+         
+       });
+     })
+    
+      }
+      chanageFeild(feild){
+        this.selectedFeild=feild;
+      }
+      saveVaultConfig(form:NgForm){
+        var input={
+          "module": this.selectedmodule,
+        "page":this.selectedPage,
+          "product": this.selectedproduct,
+        "field":this.selectedFeild,
+        "tenantId":this.tenantId
+        }
+        this.profileservice.saveVaultConfig(input).subscribe(resp=>{
+          this.modalRef.hide();
+          this.getListOfVaultconfigs();
+          this.notifier.show({
+            type: "success",
+            message: "Vault Configured successfully!"
+          });
+          },err=>{
+            this.getListOfVaultconfigs();
+          });
+          form.resetForm();
+       
+      }
+      vaultconfigdelete(data,index){
+        document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+        this.selectedvaultconfig = index;
+      }
+      vaultconfigDelYes(data,index){
+        console.log("got data is -----",data)
+        var input={
+          "id":data.id,
+          "field": data.field,
+          "module": data.module,
+          "page": data.page,
+          "product": data.product,
+          "tenantId": this.tenantId
+        }
+        this.selectedvaultconfig=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+       // this.modalRef.hide();
+     
+
+        this.profileservice.deleteVaultConfig(input).subscribe(data1 => {
+          console.log("my delte is-------",data1)
+        
+         if(data1.message === "Deleted Successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Vault configuration deleted successfully."            
+          })
+          this.getListOfVaultconfigs();
+          }else {
+           this.notifier.show({
+              message: `Failed to delete vault configuration.`,
+              type: 'error'
+            }) 
+          }
+        })
+      }
+      vaultconfigdelno(index){
+        this.selectedvaultconfig=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+        }
+
       changeActivity()
       {
         //this.modifyactivities=this.activitieslist
@@ -2172,6 +2327,13 @@ console.log("alertbody",this.alertsbody)
           // });
           
         });
+        this.profileservice.fetchAllProds().subscribe(myresp=>{
+          
+          myresp.forEach(element => {
+            this.configprods.push(element.product)
+
+          });
+        })
       }
       onFileSelected(event)
       {
@@ -2214,7 +2376,13 @@ console.log("alertbody",this.alertsbody)
           console.log(this.emailtemplateslist)
         })
       }
+      getListOfVaultconfigs(){
+        this.profileservice.getVaultConfigurations(this.tenantId).subscribe(data =>
+          {
+            this.vaulConfigureList=data
+          })
 
+      }
       savetemplate(form:NgForm)
       {
         let templateip = {
@@ -2246,8 +2414,20 @@ console.log("alertbody",this.alertsbody)
       selectedtemplate(data, index, template) {
     
         this.templatedata = data;
+        this.modtempcreated=data.createdBy;
+        this.modtempbody=data.templateBody;
+        this.modtempid=data.templateId;
+        this.modtempname=data.templateName;
+        this.modtempsub=data.templateSubject;
+        this.modtemptenant=data.tenantId;
         this.modalRef = this.modalService.show(template)
        
+      }
+      selectedVaultConfig(data,i,template){
+        this.templatedata = data;
+        this.modalRef = this.modalService.show(template)
+       
+
       }
       emailtempdelete(data,index){
         document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
@@ -2284,7 +2464,15 @@ console.log("alertbody",this.alertsbody)
       }
 
       updateemailtemplate(){
-         this.profileservice.modifyTemplate(this.templatedata).subscribe(data => {
+        let modtempip={
+          "createdBy": this.modtempcreated,
+          "templateBody": this.modtempbody,
+          "templateId": this.modtempid,
+          "templateName": this.modtempname,
+          "templateSubject": this.modtempsub,
+          "tenantId": this.modtemptenant
+        }
+         this.profileservice.modifyTemplate(modtempip).subscribe(data => {
           this.getListOfEmailTemplates();
           this.modalRef.hide();
          if(data.message === "Template updated successfully"){

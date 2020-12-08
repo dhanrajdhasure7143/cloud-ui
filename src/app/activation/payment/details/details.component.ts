@@ -3,6 +3,7 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Base64 } from 'js-base64';
 import {yearslist } from './../../../../assets/jsons/yearlist.json'
+import { ProfileService } from 'src/app/_services/profile.service';
 
 
 @Component({
@@ -43,10 +44,16 @@ export class DetailsComponent implements OnInit {
   cardnumber4: string;
   public number: boolean;
   cards: any;
+  cardid: string;
+  paymentMode: any;
+  public cardfulldetails: any[];
+  allpaymentsList: any[];
 
-  constructor( private productlistservice:ProductlistService, 
+  constructor( private productlistservice:ProductlistService,
+              private profileservice: ProfileService,   
               private router:Router,
-              private route:ActivatedRoute,) { }
+              private route:ActivatedRoute,
+              private paymentmode:ProfileService) { }
 
   ngOnInit() {
     if(localStorage.getItem('cardholdername')!=undefined){
@@ -63,18 +70,67 @@ export class DetailsComponent implements OnInit {
     this.cardnumber2='XXXX'
     this.cardnumber3='XXXX'
     this.cardnumber4=localStorage.getItem('cardLast4')
+    this.cardid=localStorage.getItem('cardId')
     this.cardnumbertotal=this.cardnumber1+this.cardnumber2+this.cardnumber3+this.cardnumber4
     this.cardyear=localStorage.getItem('cardExpYear')
     }
     this.getproductPlans();
+    this.allPaymentModes();
     this.editCardDetails();
     this.getYears();
+    this.getAllPaymentmodes();
+
   }
 
   getYears(){
     // this.yearList=yearslist
   }
 
+  getAllPaymentmodes() {
+
+    this.profileservice.listofPaymentModes().subscribe(response => {
+       this.paymentMode = response 
+        console.log("aditya",this.paymentMode)
+        });
+  }
+
+  onChangeCard(id){
+    if(localStorage.getItem('cardholdername')!=undefined){
+      if(localStorage.getItem('selectedplan')!='Free Tier')
+    {
+    this.cardname=false;
+    this.number=false;
+    this.expmonth=false;
+    this.expyear=false;
+    }
+    console.log("inside onchange",this.paymentMode)
+
+    }
+    this.cardfulldetails = this.paymentMode.filter(obj => {
+      return obj.id == id
+     })
+     console.log("selectedcardinfo",this.cardfulldetails)
+    
+       this.cardHoldername=this.cardfulldetails[0].name
+       this.cardmonth=this.cardfulldetails[0].cardExpMonth
+       this.cardnumber1='XXXX'
+       this.cardnumber2='XXXX'
+       this.cardnumber3='XXXX'
+       this.cardnumber4=this.cardfulldetails[0].cardLast4
+       this.cardnumbertotal=this.cardnumber1+this.cardnumber2+this.cardnumber3+this.cardnumber4
+       this.cardyear=this.cardfulldetails[0].cardExpYear
+           
+  }
+
+allPaymentModes()
+{
+  this.paymentmode.listofPaymentModes().subscribe(resp => {
+    
+this.allpaymentsList=resp
+  })
+  console.log("all payments areee",this.allpaymentsList)
+ 
+}
   getproductPlans(){
     this.productId=localStorage.getItem("selectedproductId"),
     this.plantype=localStorage.getItem("selectedplan")
@@ -145,6 +201,8 @@ export class DetailsComponent implements OnInit {
     return Object.keys(obj).length === 0;
    }
   editCardDetails(){
+
+    console.log("came to editCardDetails")
     this.route.params.subscribe(data=>{this.cardEdit=data
       if(this.isEmpty(data) != true){
     this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));
