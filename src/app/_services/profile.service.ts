@@ -192,8 +192,8 @@ getprocessnames(): Observable<any>{
   getUserRoleMetrics(tenantId): Observable<any>{
      return this.http.get("/api/user/getUserRoleMetrics/"+tenantId+"")
   }
-  getVaultKeysCount(): Observable<any>{
-    return this.http.get("/api/vault/get-keyscount")
+  getVaultKeysCount(tenantId): Observable<any>{
+       return this.http.get("/api/vault/get-keyscount/"+tenantId+"")
    }
   getAlertsActivityKPI(){
    return this.http.get("/alertConfigurationService/api/v1/AlertsActivityKPI")
@@ -224,5 +224,9 @@ getFieldsfromPage( data) : Observable<any>{
 }
 saveVaultConfig( data) : Observable<any>{
   return this.http.post<any>('/api/vault/config/save',data,httpOptions);
+}
+
+deleteVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/delete',data,httpOptions);
 }
 }

@@ -2222,6 +2222,47 @@ console.log("alertbody",this.alertsbody)
           form.resetForm();
        
       }
+      vaultconfigdelete(data,index){
+        document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+        this.selectedvaultconfig = index;
+      }
+      vaultconfigDelYes(data,index){
+        console.log("got data is -----",data)
+        var input={
+          "id":data.id,
+          "field": data.field,
+          "module": data.module,
+          "page": data.page,
+          "product": data.product,
+          "tenantId": this.tenantId
+        }
+        this.selectedvaultconfig=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+       // this.modalRef.hide();
+     
+
+        this.profileservice.deleteVaultConfig(input).subscribe(data1 => {
+          console.log("my delte is-------",data1)
+        
+         if(data1.message === "Deleted Successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Vault configuration deleted successfully."            
+          })
+          this.getListOfVaultconfigs();
+          }else {
+           this.notifier.show({
+              message: `Failed to delete vault configuration.`,
+              type: 'error'
+            }) 
+          }
+        })
+      }
+      vaultconfigdelno(index){
+        this.selectedvaultconfig=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+        }
+
       changeActivity()
       {
         //this.modifyactivities=this.activitieslist
