@@ -229,4 +229,19 @@ saveVaultConfig( data) : Observable<any>{
 deleteVaultConfig( data) : Observable<any>{
   return this.http.post<any>('/api/vault/config/delete',data,httpOptions);
 }
+getTenantCount(): Observable<any> {
+  return this.http.get<any>('/api/tenant/tenants');
+}
+getTenantvsUser(): Observable<any> {
+  return this.http.get<any>('/api/user/tenantAndUsers');
+}
+getvaultkeycount(): Observable<any> {
+  return this.http.get<any>('/api/vault/get-keyscount');
+}
+getsubscriptionAndProducts(): Observable<any> {
+  return this.http.get<any>('/subscriptionservice/v1/subscriptions/subscriptionAndProducts');
+}
+getSubscriptionsdetails(): Observable<any> {
+  return this.http.get<any>('/subscriptionservice/v1/subscriptions/subscriptionPlans');
+}
 }
