@@ -9,16 +9,23 @@ import { SuperadminComponent } from './superadmin.component';
 import { SearchPipe } from './custom_pipe/searchPipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { SuperadminmetricsComponent } from './superadminmetrics/superadminmetrics.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
-  declarations: [DashboardComponent,SuperadminComponent,SearchPipe],
+  declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent],
   imports: [
     CommonModule,
     SharedModule,
     SuperadminRoutingModule,
     FormsModule,
     NgxPaginationModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TabsModule.forRoot(),
+    NgxPaginationModule,
+    NgxSpinnerModule,
+    NgxChartsModule
   ]
 })
 export class SuperadminModule { }
