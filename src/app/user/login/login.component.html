@@ -13,7 +13,7 @@
                     
                     <div class="form-group col-sm-12 inner-addon left-addon">
                         <img src="assets/images/username_icon.png" class="userIcon">
-                        <input type="text" formControlName="username" placeholder="Enter Email" class="form-control userinput"
+                        <input type="text"  formControlName="username" (change)="onEmailChange()"  placeholder="Enter Email" class="form-control userinput"
                         pattern="^\S*[@]\S*[.]\S*$"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                         <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                           <div *ngIf="f.username.errors.pattern">Enter valid email address</div>
@@ -48,8 +48,8 @@
                       <div class="col-sm-6">
                     <button [disabled]="loginForm.invalid" class="btn btn-primary login-btn" type="submit" id="btn">Sign in</button>
                   </div>
-                  <div class="col-sm-6" *ngIf="twoFactorAuthenticationEnabled">
-                    <button [disabled]="f.username.errors || isOTP" class="btn btn-primary login-btn" (click)="generateOTP()" id="btnn">Generate OTP</button>
+                  <div class="col-sm-6">
+                    <button [disabled]="twoFactorAuthConButton || isOTP" class="btn btn-primary login-btn" (click)="generateOTP()" id="btnn">Generate OTP</button>
                   </div>
                 </div>
                

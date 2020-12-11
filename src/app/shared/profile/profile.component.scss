@@ -220,7 +220,7 @@ th,td{
 
 .active, .btnOne:hover {
     // background-color: blue !important;
-    color: white;
+   // color: white;
     height:50px !important;
   }
 
@@ -702,5 +702,26 @@ button.btn.btn-primary.invite-button {
   }
   .vault-table{
     width: 100% !important;
+}
+.twoFactor{
+    margin-top: 20px;
+    margin-left: 350px;
+  }
+  .updTwoFactor{
+    color: #f4f4f4;
+    border-radius: 20px;
+    margin-top: -45px;
+    margin-right: 800px;
+  }
+  .factor form {
+      overflow-y: scroll !important;
+    //   max-height : 180px !important;
+      display: block;
+
+  }
+  .factor ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
 }
     

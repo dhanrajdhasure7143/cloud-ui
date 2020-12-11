@@ -51,6 +51,9 @@ export class ProfileComponent implements OnInit {
   public sentFromOne: any;
   public tableData: any[];
   public formOne: any = {};
+  public formTwoFactor: any = {};
+  // public isEmailcheckForOTP: any;
+  // public isSMScheckForOTP: any;
   countryInfo: any[] = [];
   public secretes: any[] = [{
     id: 1,
@@ -273,6 +276,7 @@ export class ProfileComponent implements OnInit {
   modfield: any;
   modconfigId: any;
   isupdatecouponclicked: boolean=false;
+  emailvalue: any;
 
 
 
@@ -292,6 +296,12 @@ export class ProfileComponent implements OnInit {
     this.getAllPaymentmodes();
     this.getAllProducts();
     this.getAllKeys();
+    this.emailvalue = "false";
+    //this.formTwoFactor.enableTwoFactor = false;
+    this.formTwoFactor.isEmailcheckForOTP = true;
+    this.formTwoFactor.isSMScheckForOTP = false;
+    this.getTwoFactroConfigurations();
+    //this.formTwoFactor.company = "Epsoft";
   //   this.applications = [
   //     {id: 2, name: "2.0"},
   //     {id: 3, name: "ezflow"}
@@ -2508,4 +2518,58 @@ console.log("alertbody",this.alertsbody)
       }
       
       
+      twoFactorAuthConfig(form:NgForm){
+        var tentName = localStorage.getItem('tenantName');
+        
+    //this.formTwoFactor.company = "Epsoft";
+        let twoFactorAuthBody = {
+          "twoFactorEnabled": Boolean(this.emailvalue) ,
+          "emailEnabled":this.formTwoFactor.isEmailcheckForOTP,
+          "smsEnabled": this.formTwoFactor.isSMScheckForOTP,
+        }
+        console.log("bodyyy", twoFactorAuthBody)
+      this.profileservice.twoFactorConfig(twoFactorAuthBody, tentName).subscribe(res => {
+      // this.pswdmodel = {};
+      this.getTwoFactroConfigurations()
+      if(res.errorCode){
+        this.notifier.show({
+          type: "error",
+          message: res.errorMessage,
+          id: "123"
+        });
+      }else{
+        this.notifier.show({
+          type: "success",
+          message: "Two Factor Authentication Configurations Updated successfully!",
+          id: "123"
+        });
+      }
+      }, err => {
+        // console
+        this.notifier.show({
+          type: "error",
+          message: "Failed To Update Two Factor Authentication Configurations!",
+          id: "124"
+        });})
+      form.resetForm();
+      }
+      
+      getTwoFactroConfigurations(){
+        
+      let userId = localStorage.getItem("userName");
+      this.profileservice.getTwoFactroConfig(userId).subscribe(res=>{
+
+        if(!res.message){
+          if(res.twoFactorEnabled == true){
+            this.emailvalue = "true";
+          }else{
+            this.emailvalue = "false";
+          }
+        //  this.formTwoFactor.enableTwoFactor = res.twoFactorEnabled;
+          this.formTwoFactor.isEmailcheckForOTP = res.emailEnabled;
+          this.formTwoFactor.isSMScheckForOTP = res.smsEnabled;
+        }        
+      });
+    }
+
    }

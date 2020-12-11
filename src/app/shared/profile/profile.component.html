@@ -621,6 +621,53 @@
                     </div>
                           </div>
                     </tab>
+
+                    <tab *ngIf = "true" heading = "Two Factor Authentication">
+                        <div class = "col-md-12 twoFactor factor">
+                        <form #f="ngForm" (ngSubmit)="twoFactorAuthConfig(f)">
+                         
+                          <!-- <div class = "form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="company">Company</label>
+                          
+                          
+                            <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formTwoFactor.company"
+                                       required email placeholder="Send from ex: Epsoft" disabled/>
+                          
+                          
+                        </div> -->
+
+                        <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="enableTwoFactor">Enable Two Factor Authentication </label>
+                          <select name="enableTwoFactor" #enableTwoFactor="ngModel" class="form-control botmbordr" [(ngModel)]="emailvalue" required>
+                            <option  [value]="undefined" disabled hidden>Select Type</option>
+                            <option  [value]="null" disabled hidden>Select Type</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                          
+                      </div>
+                      <br>
+
+                      <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                        <label for="status">OTP Send To : </label><br>
+                        <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
+                        Email  <input type="checkbox"  name="emailcheck"   [(ngModel)]="formTwoFactor.isEmailcheckForOTP"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                        SMS  <input type="checkbox"  name="smscheck"   [(ngModel)]="formTwoFactor.isSMScheckForOTP"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                       
+                       
+                      </div>
+                    
+ 
+                      <div class="col-md-12 submitbtn">
+                        <button class="btn btn-primary pull-right updTwoFactor" type="submit">Update</button>
+                      </div>
+                    </form>
+                  </div>
+                      </tab>
+
+                  
+
+
                    
                   </tabset>
                   </div>
@@ -1299,6 +1346,10 @@
                 </form>
             </ng-template>
 
+           <!-- two factor authentication template -->
+ 
+           
+
             <!--alerts-->
             <ng-template #alertdetailstemplate >
               <div class="modal-header">
@@ -1419,6 +1470,12 @@
             </div>
           </form>
               </ng-template>
+
+              <!-- create two factor authentication -->
+
+              
+
+
               
             <ng-template #configAlerts >
               <div class="modal-header">
