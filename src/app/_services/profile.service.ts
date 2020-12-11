@@ -244,4 +244,10 @@ getsubscriptionAndProducts(): Observable<any> {
 getSubscriptionsdetails(): Observable<any> {
   return this.http.get<any>('/subscriptionservice/v1/subscriptions/subscriptionPlans');
 }
+twoFactorConfig(twoFactorAuthBody:any, tenantId): Observable<any>{
+  return this.http.post<any>('/api/user/twoFactorAuthConfig/'+tenantId, twoFactorAuthBody,httpOptions)
+}
+getTwoFactroConfig(userId:any): Observable<any>{
+  return this.http.get<any>('/api/user/getTwoFactorAuthConfig/'+userId)
+}
 }
