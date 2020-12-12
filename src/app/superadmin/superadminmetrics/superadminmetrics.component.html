@@ -36,9 +36,9 @@
         <div class="col-md-1"></div>
         <div  class="col-md-5  text-center">
           <div id="Rolesbarchart">
-            <h5><b>Product - Roles & Permission</b></h5>
+            <h5><b>Product - Roles & Permissions</b></h5>
             <div  #containerRef class="verticalbarchart"><br><br>
-           <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#009933', '#e6e600', '#9999ff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="rolespermissions" [gradient]="false" [xAxis]="true"
+           <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#009933', '#e6e600','#cc00cc', '#660033', '#9999ff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="rolesandproducts" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel1"
           [yAxisLabel]="yaxislabel1" (select)="getPermissions($event)">
          </ngx-charts-bar-vertical>
@@ -59,7 +59,7 @@
 
         <div  class="col-md-5  text-center">
           <div id="productsbarchart">
-            <h5><b>Subscriptions - Plans & Tenant</b></h5>
+            <h5><b>Subscriptions - Plans & Tenants</b></h5>
             <div *ngIf="products!=0" #productcontainer class="verticalbarchart"><br><br>
            <ngx-charts-bar-vertical [view]="[220, 400]" [scheme] ="{domain: ['#ffd24d', '#009999', '#999966', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="products" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="false" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel3"
@@ -101,7 +101,7 @@
       </div>
   </div>
   <div *ngIf="products==[]" class="col-md-5  text-center">
-    <h5><b>Subscriptions - Plans & Tenant</b></h5>
+    <h5><b>Subscriptions - Plans & Tenants</b></h5>
     <div id="nodatafound" class="box_shadw34">
     <h3>No Data Available</h3>
   </div>
@@ -155,7 +155,7 @@
       </div>
        
       <div  class="col-md-5  text-center">
-        <h5><b>Coupons - Available,Redeemed & Expired</b></h5>
+        <h5><b>Coupons</b></h5>
         <div id="piechart1" #containerRef class="box_shadw34">
            <ngx-charts-pie-chart
           [view]="[containerRef.offsetWidth, 300]"
@@ -189,7 +189,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div *ngIf="tenantvsuser!=0" class="col-md-5  text-center">
-           <h5 class="teus"><b>Tenant vs User</b></h5>
+           <h5 class="teus"><b>Tenant Vs Users</b></h5>
            <div id="tenantvsuser" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;" ><br>
             <ngx-charts-bar-vertical [view]="[1300, 600]" [scheme] ="{domain: ['#99ff33', '#cc6600', '#cc00cc', '#660033','#ffff99', '#999966','#cc0066','#339933','#99ff33', '#cc6600', '#cc00cc']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
             [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel5"
