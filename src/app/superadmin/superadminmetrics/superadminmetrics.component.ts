@@ -21,21 +21,21 @@ export class SuperadminmetricsComponent implements OnInit {
   yaxislabel1='Roles Count';
 
   // Permissions
-  permissions: any[];
-  xaxislabel2='Roles'
-  yaxislabel2='Permission Count';
+  public permissions: any[];
+  xaxislabel2='No. of Roles'
+  yaxislabel2='No. of Permissions';
 
   // Subscription plan
   products:any=[];
   xaxislabel3='Product'
-  yaxislabel3='Subscriptions Count'
+  yaxislabel3='No. of Subscriptions'
   xaxislabel4='Plans'
-  yaxislabel4='Count'
+  yaxislabel4='No. of Plans'
   
   // tenant vs user
   tenantvsuser: any=[];
   xAxisLabel5='Tenant'
-  yaxislabel5='Users'
+  yaxislabel5='No. of Users'
 
   // Secret name vs key count
   vaultkeycount: any=[];
@@ -56,6 +56,8 @@ export class SuperadminmetricsComponent implements OnInit {
   public dsss: any;
   public subscriptiontotolcount: any;
   sdfdfd: { name: string; value: any; }[];
+  public rolesproduct: any=[];
+  public rolesandproducts: any;
 
   
 
@@ -63,54 +65,11 @@ export class SuperadminmetricsComponent implements OnInit {
 
   ngOnInit() {
 
-
-    this.coupons=[{"name": "Coupons Available","value": 1},{"name": "Coupons Redeemed","value": 20},{"name": "Coupons Expired","value": 5}];
-
-this.rolespermissions=[
-  {
-    "name": "2.0",
-    "value": 40632
-  },
-  {
-    "name": "EzBot",
-    "value": 50000
-  },
-  {
-    "name": "EzFlow",
-    "value": 50000
-  }
-]
-
-
-  
-  this.permissions=[
-    {
-      "role": "Admin",
-      "permissioncount": 1,
-      "product":'2.0'
-    },
-    {
-      "role": "RPA Admin",
-      "permissioncount": 20,
-      "product":'2.0'
-    },
-    {
-      "role": "User",
-      "permissioncount": 6,
-      "product":'2.0'
-  },
-  {
-    "role": "User",
-    "permissioncount": 6,
-    "product":'2.0'
-}
-]
-
-  
 $("#Permissionbarchart").hide();
 $("#subscriptionsbarchart").hide();
 $("#tenantsubscription").hide();
 
+this.getRolesAndPermissions();
 this.getsubscriptionAndProducts();
 this.getSubscriptionsdetails();
 this.getCouponsCount();
@@ -119,29 +78,32 @@ this.getTenantCount();
 this.getTenantvsUser();
 this.getvaultkeycount();
 this.getSubscriptionCount();
+this.getRolesProducts();
+this.getCouponsCountKpi();
+
   }
-  
+
+  getRolesAndPermissions(){
+    this.profileService.getRolesAndPermissionKpi().subscribe(count=>{
+      this.permissions=count
+    })
+  }
   
   getPermissions(event) {
     
     $("#Rolesbarchart").hide();
     $("#Permissionbarchart").show();
-    
-    
-    console.log("product name",event.name)
-    this.roleproductname=event.name;
-   //let arr=this.permissions.filter(item=>item.product=="2.0")
-    if(this.roleproductname=="2.0"){
-    this.permissions.forEach(element => {
+    let productname=event.name;
+    let arr=this.permissions.filter(item=>item.product==productname)
+    this.rolesdata=[];
+    arr.forEach(element => {
       this.rolesdata.push({
         "name":element.role,
         "value":element.permissioncount
       })
      
     });
-    this.dsss= this.rolesdata;
-    console.log("rolesdata",this.rolesdata)
-  }
+    this.dsss= this.rolesdata; 
   } 
 
   onClickBack(){
@@ -243,5 +205,25 @@ getTenantvsUser(){
           this.tenantplansubscription=subtenant
         })
       }
+      
 
+      getRolesProducts(){
+        this.profileService.getAllApplications().subscribe(app=>{
+          this.rolespermissions=app
+        this.rolespermissions.forEach(element => {
+          let arr=this.permissions.filter(item=>item.product==element.name).length
+          this.rolesproduct.push({
+            "name":element.name,
+            "value":arr
+          })
+        });
+        this.rolesandproducts= this.rolesproduct; 
+        })
+      }
+
+      getCouponsCountKpi(){
+        this.profileService.getCouponsCountKpi().subscribe(count=>{
+          this.coupons=count
+        })
+      }   
 }

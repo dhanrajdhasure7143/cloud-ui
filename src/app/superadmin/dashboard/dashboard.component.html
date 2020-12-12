@@ -2,19 +2,19 @@
   <tab  heading="Dashboard" id="tab1">
     <app-superadminmetrics></app-superadminmetrics>
   </tab>
-  <tab heading="Customers" id="tab2">
+  <tab heading="Tenants" id="tab2">
     <div class="container-fluid hyperlink-details">
       <div class='row'>
       <div class='col-md-8'>
           <h4> </h4>
       </div>
       
-      <div class='search-One'>
-        <input class="form-control searchOne pull-right" type="text" name='search' style="margin-left: 150px;" [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off">
+      <div class='search-One'><br>
+        <input class="form-control searchOne pull-right" type="text" name='search' id="search1"  [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off">
       <!-- <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="userFilter" aria-label="Search" [ngModelOptions]="{standalone: true}"/> -->
       </div>
     </div>
-    </div>
+    </div><br>
     <div class="container-fluid table-details">
       <table class="table table-striped col-md-12" border="2">
         <thead>

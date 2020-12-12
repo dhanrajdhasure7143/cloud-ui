@@ -250,4 +250,10 @@ twoFactorConfig(twoFactorAuthBody:any, tenantId): Observable<any>{
 getTwoFactroConfig(userId:any): Observable<any>{
   return this.http.get<any>('/api/user/getTwoFactorAuthConfig/'+userId)
 }
+getCouponsCountKpi(): Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/orders/getKpiCouponsData?limit=0')
+}
+getRolesAndPermissionKpi(): Observable<any>{
+  return this.http.get<any>('/api/user/roleAndPermission')
+}
 }
