@@ -52,7 +52,7 @@ export class SuperadminmetricsComponent implements OnInit {
   roleproductname:any=[];
   tabledata: any=[];
   tenantplansubscription: any[];  
-  rolesdata: any=[];
+  public rolesdata: any=[];
   public dsss: any;
   public subscriptiontotolcount: any;
   sdfdfd: { name: string; value: any; }[];
