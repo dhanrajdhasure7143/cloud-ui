@@ -20,6 +20,7 @@ import { BsModalService } from 'ngx-bootstrap';
 
 import { SuperadminModule } from './superadmin/superadmin.module';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { UserIdleModule } from 'angular-user-idle';
 
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
@@ -59,7 +60,8 @@ export const contentfulConfig: ContentfulConfig = {
     PopoverModule.forRoot(),
     //BotGridModule,
     Ng4LoadingSpinnerModule.forRoot(),
-    DeviceDetectorModule 
+    DeviceDetectorModule,
+    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740})
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
