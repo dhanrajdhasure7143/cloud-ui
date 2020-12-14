@@ -1000,7 +1000,7 @@
                      
             </form>
           </div>
-      <div class="container">
+      <div class="container vaultcss" >
         
           <button  class='btn btn-primary pull-right addCard' (click)='createSecret(createsecret)'>Create Secret</button>
           <table class="table table-borderless table-hover">
@@ -1014,13 +1014,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let t= index">
                 <td style="text-align:center">{{keys.keyname}}</td>
                 <td style="text-align:center">{{keys.data.metadata.created_time | date}}</td>
                 <td style="text-align:center">{{keys.data.metadata.version}}</td>
                 <td style="text-align:center">
-                <span  (click)="viewSecreteData(datatemplate,keys)">
+                <span  (click)="viewSecreteData(keys,t,datatemplate)">
                   <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                  <span  (click)="secretdelete(keys.keyname,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                  <div id="myid" [ngClass]="selectedsecret === t?'isdelet':''" class="deletconfm">
+                    <div class="container-fluid deletefrm">
+                        <h5 class="pull-left">Confirmation</h5>
+                        <button type="button" class="close " aria-label="Close" (click)="secretdelno(t)">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p class="pull-left">Are you sure you want to delete the secret ?</p>
+                         <button class="pull-left confm" (click)="secretDelYes(keys.keyname,t)">Yes</button>
+                         <button class="confm pull-left" (click)="secretdelno(t)">No</button>
+                    </div>
+                </div>
                 </td>
                
               
@@ -1683,19 +1695,19 @@
 
 <ng-template #configvault >
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" >Update Vault Configuration</h4>
+    <h4 class="modal-title" id="modal-basic-title" >Modify Vault Configuration</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancelUpdateVaultConfig()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form autocomplete="off" id="configurevault" name="configurevault" #configurevault="ngForm">
+  <form autocomplete="off" id="configurevault" name="configurevault" (ngSubmit)="updateVaultconfig(configurevault)" #configurevault="ngForm">
   <div class="modal-body">
     
     
 <div class="form-group">
   <label for="subscriptionid">Product : </label>
   <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
-  <select name="prodname"  class="form-control botmbordr" (change)="onChangeprod($event.target.value)"  required>
+  <select name="prodname"  class="form-control botmbordr" [(ngModel)]='modprod' (change)="onChangeprod($event.target.value)"  required>
     <option  [value]="undefined" disabled hidden>Select Type</option>
     <option  [value]="null" disabled hidden>Select Type</option>
     <option *ngFor="let product of configprods"  [value]="product">{{modprod}}</option>
@@ -1704,7 +1716,7 @@
 <div class="form-group">
   <label for="module">Module : </label>
   <!-- <input type="text" [disabled]=true  name="app_name" [(ngModel)]="modmodule"  #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
-  <select name="modulename"  class="form-control botmbordr"  (change)='changeModule($event.target.value)' required>
+  <select name="modulename"  class="form-control botmbordr"   [(ngModel)]="modmodule" (change)='changeModule($event.target.value)' required>
     <!-- <option  [value]="undefined" disabled hidden>Select Type</option>
     <option  [value]="null" disabled hidden>Select Type</option> -->
     <option *ngFor="let module of modulesList" [value]="modmodule">{{modmodule}}</option>
@@ -1714,19 +1726,19 @@
 <div class="form-group">
   <label for="page">Pages : </label>
   <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
-  <select name="pagename"  class="form-control botmbordr" (change)='changePage($event.target.value)' required>
+  <select name="pagename"  class="form-control botmbordr"  [(ngModel)]="modpage" (change)='changePage($event.target.value)' required>
     <option  [value]="undefined" disabled hidden>Select Module</option> 
    <option  [value]="null" disabled hidden>Select Module</option>
-    <option *ngFor="let page of mypages" [value]="modpage">{{modpage}}</option>
+    <option *ngFor="let page of mypages" [value]="page">{{page}}</option>
 </select>
 </div>
 <div class="form-group">
   <label for="page">Fields : </label>
   <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
-  <select name="fieldname" class="form-control botmbordr" (change)='chanageFeild($event.target.value)'  required>
+  <select name="fieldname" class="form-control botmbordr"  [(ngModel)]="modfield" (change)='chanageFeild($event.target.value)'  required>
     <option  [value]="undefined" disabled hidden>Select Field</option>
     <option  [value]="null" disabled hidden>Select Field</option>
-    <option *ngFor="let feild of myfields"   [value]="modfield">{{feild}}</option>
+    <option *ngFor="let feild of myfields"   [value]="feild">{{feild}}</option>
 </select>
 </div>
 
@@ -1737,8 +1749,8 @@
   <div class="">
     <div class="col-12">
 <div class="form-group form-buttons pull-right buttonsblock">        
-    <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
-    <button class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
+    <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelUpdateVaultConfig()"><div class="anim"></div> Cancel</button>
+    <button class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Update</button>
 </div>
 
 <div class="clearfix">
