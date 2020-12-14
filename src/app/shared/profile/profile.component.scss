@@ -710,7 +710,8 @@ button.btn.btn-primary.invite-button {
   .updTwoFactor{
     color: #f4f4f4;
     border-radius: 20px;
-    margin-top: -45px;
+   // margin-top: -45px;
+   margin-left: -370px;
     margin-right: 800px;
   }
   .factor form {
@@ -723,5 +724,13 @@ button.btn.btn-primary.invite-button {
     width:10px !important;
     height: 0px !important;
 
+}
+.bottwofactor{
+    border-left: 5px  !important;
+    border-top: 0px;
+    border-right: 5px;
+    border-radius: 0px;
+    width: 60% !important;
+    padding-left: 0px !important;
 }
     
