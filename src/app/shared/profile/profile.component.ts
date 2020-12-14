@@ -79,6 +79,7 @@ export class ProfileComponent implements OnInit {
   public selectedIndex: any;
   public deletCardIndex: number;
   public defaultcard: number = 0;
+  modifyprod:any;
   modalRef: BsModalRef;
   public stopcheckbox: any;
   public pricecheckbox: any;
@@ -101,6 +102,7 @@ export class ProfileComponent implements OnInit {
   selectedroles: any = [];
   department: any;
   userDepartment: any;
+  updateConfigData:any;
   listOfUserApplications: any = [];
   userManagementRole :any=[];
   userManagementApps :any=[];
@@ -278,6 +280,8 @@ export class ProfileComponent implements OnInit {
   isupdatecouponclicked: boolean=false;
   emailvalue: any;
   enableTwoFactorConfig: boolean;
+  selectedsecret: any;
+  modvaultId: any;
 
 
 
@@ -419,9 +423,9 @@ this.profileservice.applications().subscribe(resp =>
       );
     
   }
-  viewSecreteData(template,keys){
-    
-    this.viewdata=keys;
+  viewSecreteData(keys,i,template){
+   
+        this.viewdata=keys;
     console.log("viewing data is",this.viewdata.data.data)
     this.versiondata=this.viewdata.data.metadata.version;
     this.updateSecretedata=this.viewdata
@@ -2253,7 +2257,7 @@ console.log("alertbody",this.alertsbody)
      
 
         this.profileservice.deleteVaultConfig(input).subscribe(data1 => {
-          console.log("my delte is-------",data1)
+         
         
          if(data1.message === "Deleted Successfully"){
           this.notifier.show({
@@ -2273,7 +2277,72 @@ console.log("alertbody",this.alertsbody)
         this.selectedvaultconfig=" ";
         document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
         }
+        updateVaultconfig(form:NgForm){
+          var input={
+            "module": this.modmodule,
+          "page":this.modpage,
+            "product": this.modprod,
+          "field":this.modfield,
+          "tenantId":this.tenantId,
+          "id":this.modvaultId
+          }
+          this.profileservice.updateVaultConfig(input).subscribe(resp =>{
+            this.modalRef.hide();
+          this.getListOfVaultconfigs();
+          this.notifier.show({
+            type: "success",
+            message: "Vault Updated successfully!"
+          });
+          },err=>{
+            this.getListOfVaultconfigs();
+          });
+          form.resetForm();
 
+        
+        }
+        secretdelete(data,index){
+         
+       // document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+          this.selectedsecret = index;
+        }
+          secretDelYes(data,index){
+           console.log("secrete deleteee",data)
+        
+            this.selectedsecret=" ";
+            let versionsList=data.data.metadata.version;
+          const s=  Array.from({length: versionsList}, (_, i) => i + 1)
+           
+     // document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+        
+            let input={
+              "versions":s
+            }
+            console.log("secrete deleteeen     input   iss ",input)
+           
+           // this.modalRef.hide();
+       
+         this.profileservice.deleteSecret(input,data.keyname).subscribe(resp=>{
+          if(resp.message === "secret deleted"){
+              this.notifier.show({
+                type: "success",
+                message: "Vault Secret deleted successfully."            
+              })
+           this.getAllKeys();
+              }else {
+               this.notifier.show({
+                  message: `Failed to delete vault Secret.`,
+                  type: 'error'
+                }) 
+              }
+         })
+              
+           }
+
+
+          secretdelno(index){
+            this.selectedsecret=" ";
+            document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+            }
       changeActivity()
       {
         //this.modifyactivities=this.activitieslist
@@ -2442,8 +2511,39 @@ console.log("alertbody",this.alertsbody)
        
       }
       selectedVaultConfig(data,i,template){
-        console.log("my selected vault cocnfig is-----",data)
+        this.onChangeprod(data.product);
+        
+        var input={
+          "module": data.module,
+          "product": data.product
+      
+     }
+     this.profileservice.getpagesfromModule(input).subscribe(resp =>{
+    
+      
+       resp.forEach(element => {
+         this.mypages.push(element.page)
+         
+       });
+    
+     })
+     var input1={
+      "module": data.module,
+      "page":data.page,
+      "product": data.product
+  
+ }
+ this.profileservice.getFieldsfromPage(input1).subscribe(resp=>{
+  
+   resp.forEach(element => {
+     this.myfields.push(element.field)
+     
+   });
+ })
+
+       
         this.templatedata = data;
+        this.modvaultId=data.id;
         this.modprod=data.product;
         this.modmodule=data.module;
         this.modpage=data.page;
@@ -2577,5 +2677,4 @@ console.log("alertbody",this.alertsbody)
         }        
       });
     }
-
-   }
+     }

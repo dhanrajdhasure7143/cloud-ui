@@ -162,6 +162,9 @@ getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
 creatSecret( data,path) : Observable<any>{
   return this.http.post<any>('/api/vault/create-secret?secreteName='+path,data,httpOptions);
 }
+deleteSecret( data,path) : Observable<any>{
+  return this.http.post<any>('/api/vault/delete-secrete?secreteName='+path,data,httpOptions);
+}
 getAllSecretKeys(): Observable<any> {
   return this.http.get<any>('/api/vault/get-all-secretekeys');
 }
@@ -207,7 +210,10 @@ getprocessnames(): Observable<any>{
 getVaultConfigurations(tenantId): Observable<any> {
   return this.http.get<any>('/api/vault/config/getInfo/'+tenantId);
 }
- 
+
+updateVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/update',data,httpOptions);
+}
  fetchAllProds(): Observable<any> {
   return this.http.get<any>('/api/vault/config/fetchAllProducts');
 }
