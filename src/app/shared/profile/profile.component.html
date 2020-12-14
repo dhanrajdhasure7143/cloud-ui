@@ -638,7 +638,7 @@
 
                         <div class="form-group col-md-4 inner-addon left-addon right-addon">
                           <label for="enableTwoFactor">Enable Two Factor Authentication </label>
-                          <select name="enableTwoFactor" #enableTwoFactor="ngModel" class="form-control botmbordr" [(ngModel)]="emailvalue" required>
+                          <select name="enableTwoFactor" #enableTwoFactor="ngModel" class="form-control bottwofactor" [(ngModel)]="emailvalue" required>
                             <option  [value]="undefined" disabled hidden>Select Type</option>
                             <option  [value]="null" disabled hidden>Select Type</option>
                             <option value="true">True</option>
@@ -659,7 +659,7 @@
                     
  
                       <div class="col-md-12 submitbtn">
-                        <button class="btn btn-primary pull-right updTwoFactor" type="submit">Update</button>
+                        <button class="btn btn-primary updTwoFactor" type="submit">Update</button>
                       </div>
                     </form>
                   </div>

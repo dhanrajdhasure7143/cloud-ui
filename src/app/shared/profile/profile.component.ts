@@ -277,6 +277,7 @@ export class ProfileComponent implements OnInit {
   modconfigId: any;
   isupdatecouponclicked: boolean=false;
   emailvalue: any;
+  enableTwoFactorConfig: boolean;
 
 
 
@@ -2522,8 +2523,13 @@ console.log("alertbody",this.alertsbody)
         var tentName = localStorage.getItem('tenantName');
         
     //this.formTwoFactor.company = "Epsoft";
+    if(this.emailvalue == 'true'){
+      this.enableTwoFactorConfig = true;
+    }else if(this.emailvalue == 'false'){
+      this.enableTwoFactorConfig = false;
+    }
         let twoFactorAuthBody = {
-          "twoFactorEnabled": Boolean(this.emailvalue) ,
+          "twoFactorEnabled": this.enableTwoFactorConfig ,
           "emailEnabled":this.formTwoFactor.isEmailcheckForOTP,
           "smsEnabled": this.formTwoFactor.isSMScheckForOTP,
         }
