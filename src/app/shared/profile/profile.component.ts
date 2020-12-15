@@ -385,7 +385,7 @@ this.profileservice.applications().subscribe(resp =>
           }else{
             elementuser.userId['Status'] = 'Inactive'
           }
-          if(this.currentUserId != elementuser.userId.userId)
+         // if(this.currentUserId != elementuser.userId.userId)
           this.userManagement.push(elementuser.userId);
          
           
