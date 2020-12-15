@@ -78,7 +78,7 @@
           <div id="Rolesbarchart">
             <h5><b>Product - Roles & Permissions</b></h5>
             <div  #containerRef class="verticalbarchart"><br><br>
-           <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#009933', '#e6e600','#cc00cc', '#660033', '#9999ff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="rolesandproducts" [gradient]="false" [xAxis]="true"
+           <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#34568b', '#cd212a','#4b5335', '#660033', '#9999ff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="rolesandproducts" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel1"
           [yAxisLabel]="yaxislabel1" (select)="getPermissions($event)">
          </ngx-charts-bar-vertical>
@@ -88,7 +88,7 @@
        <h5><b>Permission</b></h5>
        <div  #permissioncontainer class="verticalbarchart"> 
         <button type="button"  class="btn btn-primary back_btn" (click)="onClickBack()">Back</button><br><br>
-        <ngx-charts-bar-vertical [view]="[permissioncontainer.offsetWidth, 400]" [scheme] ="{domain: ['#132639', '#79d2a6', '#ff9900', '#AAAAAA','#66ccff', '#ff8d13']}" [results]="dsss" [gradient]="false" [xAxis]="true"
+        <ngx-charts-bar-vertical [view]="[permissioncontainer.offsetWidth, 400]" [scheme] ="{domain: ['#fa7a35', '#79d2a6', '#ff9900', '#9c4722','#d9ce52', '#006b54']}" [results]="dsss" [gradient]="false" [xAxis]="true"
         [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel2"
         [yAxisLabel]="yaxislabel2" [noBarWhenZero]="true">
       </ngx-charts-bar-vertical>
@@ -181,7 +181,7 @@
 
           <h5><b>Vault - Secret Name vs Key Count</b></h5>
           <div id="secretvscount" #containerRef class="secretvscount"><br><br><br>
-          <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#99ff33', '#cc6600', '#cc00cc', '#660033','#ffff99', '#999966']}" [results]="vaultkeycount" [gradient]="false" [xAxis]="true"
+          <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#9bb7d4', '#cc6600', '#cc00cc', '#00a170','#ffff99', '#999966']}" [results]="vaultkeycount" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel6"
           [yAxisLabel]="yaxislabel6">
          </ngx-charts-bar-vertical>
@@ -231,7 +231,7 @@
         <div *ngIf="tenantvsuser!=0" class="col-md-5  text-center">
            <h5 class="teus"><b>Tenant Vs Users</b></h5>
            <div id="tenantvsuser" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;" ><br>
-            <ngx-charts-bar-vertical [view]="[1300, 600]" [scheme] ="{domain: ['#99ff33', '#cc6600', '#cc00cc', '#660033','#ffff99', '#999966','#cc0066','#339933','#99ff33', '#cc6600', '#cc00cc']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
+            <ngx-charts-bar-vertical [view]="[1300, 600]" [scheme] ="{domain: ['#926aa6', '#efe1ce', '#e0b589', '#660033','#f7786b', '#034f84','#98ddde','#dd4132','#99ff33', '#cc6600', '#cc00cc']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
             [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel5"
              [yAxisLabel]="yaxislabel5" [barPadding]="8">
            </ngx-charts-bar-vertical> 
