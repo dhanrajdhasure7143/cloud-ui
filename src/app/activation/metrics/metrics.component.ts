@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/_services/profile.service';
+import moment from 'moment';
+import Chart from 'chart.js';
 
 @Component({
   selector: 'app-metrics',
@@ -35,7 +37,7 @@ export class MetricsComponent implements OnInit {
   yAxisLabel = 'User';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA','#66ccff', '#ff4d88']
+    domain: ['#b55a30', '#0072b5', '#00a170', '#926aa6','#66ccff', '#ff4d88']
   };
   
   // Secret name vs key count
@@ -51,7 +53,7 @@ export class MetricsComponent implements OnInit {
   yAxisLabel1 = 'Key Count';
 
   colorScheme1 = {
-    domain: ['#99ff33', '#cc6600', '#cc00cc', '#660033','#ffff99', '#999966']
+    domain: ['#99ff33', '#e94b3c', '#bc70a4', '#944743','#dbb1cd', '#00a591']
   };
 
   // Activitvy vs alert grouped chart
@@ -68,7 +70,7 @@ export class MetricsComponent implements OnInit {
   legendTitle: string = 'Years';
 
   colorScheme2 = {
-    domain: ['#5AA454', '#C7B42C', '#AAAAAA']
+    domain: ['#9995b7', '#C7B42C', '#d69c2f']
   };
   cards: any;
   subscribedproductscount: any;
@@ -76,6 +78,8 @@ export class MetricsComponent implements OnInit {
   vaultkeycount: any=[];
   alertsCountBasedOnType: any=[];
   registeredvsinvited: any=[];
+  alertuserroles: string;
+  chart6: any;
   
 
 
@@ -97,6 +101,7 @@ export class MetricsComponent implements OnInit {
     this.getAlertsActivityKPI();
     this.getalertsCountBasedOnType();
     this.getRegisteredvsInvitedMetrics();
+    this.getAlertTransactions();
   }
  
 getAllUsersList(){
@@ -193,5 +198,117 @@ getListOfEmailTemplates()
         this.profileService.getUsersMetrics(this.tenantId).subscribe(count=>{
           this.registeredvsinvited=count
         })
+      }
+
+      dateranges(from , to)
+      {
+        var arr = new Array(), dt = new Date(from);
+        while (dt <= to) {
+          arr.push(new Date(dt));
+          dt.setDate(dt.getDate() + 1);
+        }
+        return arr;
+      }
+
+      getAlertTransactions(){
+        this.tenantId=localStorage.getItem('tenantName');
+        this.alertuserroles=localStorage.getItem('userRole');
+         this.profileService.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => {
+          
+          let resp:any=alertresponse;
+          let to=new Date();
+          let from=new Date();
+          from.setDate(to.getDate()-30);
+          let dates:any=this.dateranges(from,to)
+          let labels:any=[];
+          let success:any=[];
+          let failed:any=[];
+          let total:any=[];
+          dates.forEach(date=>{
+            labels.push(moment(date).format("D-MM-YYYY"));
+            success.push((resp.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Success')).length))
+            failed.push((resp.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Failure')).length))
+            total.push((resp.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+          });
+          console.log("labels",labels)
+          console.log("success",success)
+          console.log("total",total)
+          this.linechart(labels,success,failed,total)
+        });
+    
+      }
+
+      linechart(labels,success,failed,total)
+      {
+    
+          this.chart6 = new Chart('linechart', {
+                        type: 'line',
+                          data: {
+                            labels: labels,
+                            datasets: [
+                            {
+                              label: 'Success',
+                              borderColor: "#2eb82e",
+                              pointBackgroundColor: "#2eb82e",
+                              backgroundColor: "rgba(0,255,0,0.2)",
+                              fill: true,
+                              data: success,
+                            },
+                            {
+                              label: 'Failure',
+                              borderColor: "#ff3300",
+                              pointBackgroundColor: "#ff3300",
+                              backgroundColor: "rgba(255,0,0,0.2)",
+                              fill: true,
+                              data: failed,
+                            },
+                            {
+                              label: 'Total',
+                              borderColor: "#00ace6",
+                              pointBackgroundColor: "#00ace6",
+                              backgroundColor: "rgba(0,0,255,0.2)",
+                              fill: true,
+                              data: total,
+                            }
+                          ]
+                          },
+    
+    
+                          options: {
+                            responsive: true,
+                            legend: {
+                              display: true,
+                              position:'right',
+                              labels: {
+                                padding:10,
+                              }
+                            },
+                            scales: {
+                              yAxes: [{
+                                scaleLabel: {
+                                     display: true,
+                                     labelString: 'No of Alerts'
+                                   },
+                                  display: true,
+                                  position: 'left',
+                                  ticks:{
+                                      beginAtZero:true
+                                      }
+                              }],
+                              xAxes: [{
+                                scaleLabel: {
+                                     display: true,
+                                     labelString: 'Transaction Date'
+                                   },
+                                ticks: {
+                                     autoSkip: false,
+                                     maxRotation: 90,
+                                     minRotation: 90
+                                 }
+                               }]
+                             }
+                          }
+                      });
+    
       }
 }
