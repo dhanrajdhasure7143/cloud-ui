@@ -69,7 +69,10 @@ $("#Permissionbarchart").hide();
 $("#subscriptionsbarchart").hide();
 $("#tenantsubscription").hide();
 
-this.getRolesAndPermissions();
+this.profileService.getRolesAndPermissionKpi().subscribe(count=>{
+  this.permissions=count
+})
+
 this.getsubscriptionAndProducts();
 this.getSubscriptionsdetails();
 this.getCouponsCount();
@@ -83,11 +86,11 @@ this.getCouponsCountKpi();
 
   }
 
-  getRolesAndPermissions(){
-    this.profileService.getRolesAndPermissionKpi().subscribe(count=>{
-      this.permissions=count
-    })
-  }
+  // getRolesAndPermissions(){
+  //   this.profileService.getRolesAndPermissionKpi().subscribe(count=>{
+  //     this.permissions=count
+  //   })
+  // }
   
   getPermissions(event) {
     
