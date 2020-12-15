@@ -53,8 +53,8 @@ export class ForgotpasswordComponent implements OnInit {
         } else {
           Swal.fire({
             type: 'error',
-            title:"Error",
-            text: "User Not Found!!"
+            title:"Error!",
+            text: "User Not Found."
             
             
           });
