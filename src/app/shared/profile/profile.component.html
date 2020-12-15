@@ -689,53 +689,57 @@
                                     <table class="table table-borderless col-md-12 table-hover">
                                       <thead>
                                         <tr>
-                                          <th scope="col" class="types1">User ID</th>
-                                          <th scope="col" class="types">Name</th>
+                                          <th scope="col" class="">Name</th>
+                                          <th scope="col" class="emailCs">Email</th>
                                           <!-- <th scope="col" class="types1">LName</th> -->
-                                          <th scope="col" class="types1">Designation</th>
-                                          <th scope="col" class="types1">Organisation</th>
+                                          <th scope="col" class="">Designation</th>
+                                          <th scope="col" class="">Organisation</th>
                                           <!-- <th scope="col" class="types">Department</th> -->
-                                          <th scope="col" class="types1">Product</th>
-                                          <th scope="col" class="types1">Roles</th>
-                                          <th scope="col" class="types1">Created At</th>
+                                          <th scope="col" class="">Product</th>
+                                          <th scope="col" class="roleCs">Roles</th>
+                                          <th scope="col" class="">Created At</th>
                                           <!-- <th scope="col" class="types1">Modified At</th> -->
-                                          <th scope="col" class="types1">Status</th>
-                                          <th scope="col" class="types1">Action</th>
+                                          <th scope="col" class="">Status</th>
+                                          <th scope="col" class="action-btns">Action</th>
                                         </tr>
                                       </thead>
                                       <tbody class="col-md-12">
                                         <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy; let m= index">
-                                          <td>{{userdata.userId}}</td>
                                           <td>{{userdata.firstName}} {{userdata.lastName}}</td>
+                                          <td class="emailCs">{{userdata.userId}}</td>
                                           <!-- <td>{{userdata.lastName}}</td> -->
                                           <td>{{userdata.designation}}</td>
                                             <td>{{userdata.company}}</td>
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
-                                            <td class="types">{{userdata.roleIdname}}</td>
-                                            <td class="types">{{userdata.created_at | date:'medium'}}</td>
+                                            <td class="">{{userdata.roleIdname}}</td>
+                                            <td class="">{{userdata.created_at | date:'medium'}}</td>
                                             <!-- <td class="types">{{userdata.modified_at | date:'medium'}}</td> -->
                                             <td>{{userdata.Status}}</td>
 
-                                            <td class="deleticon">
+                                            <td class="">
                                               <!-- <span  (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)">
                                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                <span  (click)="userDel(userdata.userId,m)">
                                                 
 
                                                <img src="assets/images/unsubscribe.svg" alt=""></span> -->
-                                               <button class="subsc"  
-                                                    [disabled]="userdata.roleIdname == 'Admin'"  
+                                               <div>
+                                               <button class="subsc edit-Btn"  
+                                                    [disabled]="userdata.userId == currentUserId"  
                                              (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)" ><img src="assets/images/eyeIcon.svg" alt=""></button>
-                                               <!-- <span  (click)="userDel(userdata.userId,m)">
+                                            </div>  
+                                             <!-- <span  (click)="userDel(userdata.userId,m)">
                                                 
 
                                                <img src="assets/images/unsubscribe.svg" alt=""></span> -->
+                                               <div>
+
                                                <button class="subsc"  
-                                               [disabled]="userdata.roleIdname == 'Admin'"  
+                                               [disabled]="userdata.userId == currentUserId"  
                                         (click)="userDel(userdata.userId,m)" ><img src="assets/images/unsubscribe.svg" alt=""></button>
 
-                                               
+                                      </div>
                                                <div id="myid" [ngClass]="selectedIndex === m?'isdelet':''" class="deletconfm">
                                                   <div class="container-fluid deletefrm">
                                                       <h5 class="pull-left">Confirmation</h5>
