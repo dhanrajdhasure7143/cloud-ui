@@ -9,6 +9,7 @@ import  countries  from './../../assets/jsons/countries.json';
 import { Particles } from '../_models/particlesjs';
 import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-firstlogin',
@@ -258,7 +259,8 @@ export class FirstloginComponent implements OnInit {
   toggle() {
     this.show = !this.show;
   }
-  resetForm() {
+  resetForm(form:NgForm) {
+    form.resetForm();
     this.model = new User();
     $("#image").val('')
     this.selectedFile=null;
