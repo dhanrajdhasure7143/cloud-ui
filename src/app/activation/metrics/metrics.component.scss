@@ -94,10 +94,11 @@ h5.teus {
 .example-card {
   width: 82% !important;
     background-color: white;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    /* padding-top: 20px; */
+    height: 62px;
+    /* padding-bottom: 20px; */
     border-radius: 10px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 .icon{
   font-size:18px;

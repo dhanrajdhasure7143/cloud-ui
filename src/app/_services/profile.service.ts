@@ -262,4 +262,7 @@ getCouponsCountKpi(): Observable<any>{
 getRolesAndPermissionKpi(): Observable<any>{
   return this.http.get<any>('/api/user/roleAndPermission')
 }
+getalerttransactions(tenantid): Observable<any>{
+  return this.http.get<any>('/alertConfigurationService/api/v1/allAlerts/'+tenantid)
+}
 }

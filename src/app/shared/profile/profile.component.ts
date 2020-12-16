@@ -183,6 +183,7 @@ export class ProfileComponent implements OnInit {
   rp=0;
   pp=0;
   em=0;
+  emailtemp=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];
@@ -2460,7 +2461,7 @@ console.log("alertbody",this.alertsbody)
       {
         this.profileservice.getEmailTemplates().subscribe(data => {
           this.emailtemplateslist=data
-          console.log(this.emailtemplateslist)
+          console.log("email template",this.emailtemplateslist)
         })
       }
       getListOfVaultconfigs(){

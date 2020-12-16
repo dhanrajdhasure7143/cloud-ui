@@ -8,7 +8,7 @@
             <span class="icon"><i class="fa fa-users text-primary" aria-hidden="true"></i></span>
             &nbsp;&nbsp;&nbsp;
           </div> 
-            <div class="form-group">Users</div>
+            Users
             <div class="count-text form-group ">{{userManagementresponse.length}}</div>
           </div>
     </div>
@@ -22,10 +22,10 @@
         <div *ngIf="departments!=undefined" class=" col-md-3 form-inline">
           <div class="example-card form-inline" >
             <div class="count-text form-group">
-              <span class="icon"><i class="fa fa-building-o" aria-hidden="true"></i></span>
+              <span class="icon"><img  src="assets/images/department.svg"></span>
               &nbsp;&nbsp;&nbsp;
             </div> 
-              <div class="form-group">Departments</div>
+              Departments
               <div class="count-text form-group pull-right">{{departments.length}}</div>
             </div>
       </div>
@@ -42,7 +42,7 @@
             <span class="icon"><i class="fa fa-envelope text-primary" aria-hidden="true"></i></span>
             &nbsp;&nbsp;&nbsp;
           </div> 
-            <div class="form-group">Email Templates</div>
+            Email Templates
             <div class="count-text form-group pull-right">{{emailtemplateslist.length}}</div>
           </div>
     </div>
@@ -56,10 +56,10 @@
     <div  class=" col-md-3 form-inline">
       <div class="example-card form-inline" >
         <div class="product-text form-group">
-          <span class="icon"><i class="fa  fa-sitemap text-primary" aria-hidden="true"></i></span>
+          <span class="icon"><img  src="assets/images/Subscribed_products.svg"></span>
           &nbsp;&nbsp;&nbsp;
         </div> 
-          <div class="form-group">Subscribed Products</div>
+          Subscribed Products
           <div class="count-text form-group pull-right">{{count}}</div>
         </div>
   </div><br> <br> <br>
@@ -78,7 +78,7 @@
         <span class="icon"><i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
         &nbsp;&nbsp;&nbsp;
       </div>
-        <div class="form-group">Processes</div>
+        Processes
         <div class="count-text form-group pull-right">{{processnames.length}}</div>
       </div>
 </div>
@@ -92,10 +92,10 @@
   <div *ngIf="botnames!=undefined" class=" col-md-3 form-inline">
     <div class="example-card form-inline" >
       <div class="count-text form-group">
-        <span class="icon"><i class="fa fa-android" aria-hidden="true"></i></span>
+        <span class="icon"><img  src="assets/images/android-logo.svg"></span>
         &nbsp;&nbsp;&nbsp;
       </div>
-        <div class="form-group">Bots</div>
+       Bots
         <div class="count-text form-group pull-right">{{botnames.length}}</div>
       </div>
 </div>
@@ -275,26 +275,42 @@
 <br><br><br>
     <div class="row">
       <div class="col-md-1"></div>
-      <div class="col-md-8  text-center">
+      <div *ngIf="alerttransction!=0" class="col-md-8  text-center">
 
         <h5 class="teus"><b>Alert Transactions</b></h5>
         
-        <div id="alerttransaction"><br><br>
-        <canvas id="linechart" style="width:100% !important ;height:300px !important;"></canvas> 
+        <div  id="alerttransaction"><br><br>
+        <canvas  id="linechart" style="width:100% !important ;height:300px !important;"></canvas> 
         </div>
-
+       
     </div>
-    <!-- <div *ngIf="cards==0" class="col-md-5  text-center">
+    <!-- <div *ngIf="alerttransction==0" class="col-md-5  text-center">
 
-      <h5><b>Visa vs Mastercard</b></h5>
+      <h5><b>Alert Transactions</b></h5>
       <div id="nodatafound" class="box_shadw34">
         <h3>No Data Available</h3>
       </div>
 
-  </div> -->
+  </div>
      
      
-    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>  -->
+
+
+
+    <div class="col-md-1"></div>
+    <!-- <div *ngIf="alerttransction!=0" id="alerttransaction" class="col-md-5  text-center">
+        <h5  class="teus"><b>Alert Transactions</b></h5>
+        <div   #containerRef class="box_shadw34"> 
+          <canvas  id="linechart" style="width:100% !important ;height:300px !important;"></canvas>
+   </div>
+    </div> -->
+    <div *ngIf="alerttransction==0" class="col-md-8  text-center">
+      <h5><b>Alert Transactions</b></h5>
+      <div id="nodatafound"   class="box_shadw34"> 
+        <h3>No Data Available</h3>
+ </div>
+  </div>
   </div>
   </div>
   </div>

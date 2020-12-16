@@ -80,6 +80,7 @@ export class MetricsComponent implements OnInit {
   registeredvsinvited: any=[];
   alertuserroles: string;
   chart6: any;
+ alerttransction: any;
   
 
 
@@ -213,9 +214,9 @@ getListOfEmailTemplates()
       getAlertTransactions(){
         this.tenantId=localStorage.getItem('tenantName');
         this.alertuserroles=localStorage.getItem('userRole');
-         this.profileService.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => {
+         this.profileService.getalerttransactions(this.tenantId).subscribe(alertresponse => {
           
-          let resp:any=alertresponse;
+         this.alerttransction=alertresponse;
           let to=new Date();
           let from=new Date();
           from.setDate(to.getDate()-30);
@@ -226,13 +227,10 @@ getListOfEmailTemplates()
           let total:any=[];
           dates.forEach(date=>{
             labels.push(moment(date).format("D-MM-YYYY"));
-            success.push((resp.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Success')).length))
-            failed.push((resp.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Failure')).length))
-            total.push((resp.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+            success.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Success')).length))
+            failed.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Failure')).length))
+            total.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
           });
-          console.log("labels",labels)
-          console.log("success",success)
-          console.log("total",total)
           this.linechart(labels,success,failed,total)
         });
     
