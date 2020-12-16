@@ -58,7 +58,7 @@ export class SuperadminmetricsComponent implements OnInit {
   sdfdfd: { name: string; value: any; }[];
   public rolesproduct: any=[];
   public rolesandproducts: any;
-
+  public rolesgraph:boolean=false;
   
 
   constructor(private profileService:ProfileService) { }
@@ -93,7 +93,7 @@ this.getCouponsCountKpi();
   // }
   
   getPermissions(event) {
-    
+    this.rolesgraph=true;
     $("#Rolesbarchart").hide();
     $("#Permissionbarchart").show();
     let productname=event.name;
@@ -110,6 +110,7 @@ this.getCouponsCountKpi();
   } 
 
   onClickBack(){
+    this.rolesgraph=false;
     $("#Rolesbarchart").show();
     $("#Permissionbarchart").hide();
   }
@@ -221,6 +222,7 @@ getTenantvsUser(){
           })
         });
         this.rolesandproducts= this.rolesproduct; 
+        console.log("roles",this.rolesandproducts)
         })
       }
 

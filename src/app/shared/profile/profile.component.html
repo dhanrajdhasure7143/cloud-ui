@@ -466,7 +466,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p }; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -528,7 +528,7 @@
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of emailtemplateslist | FilterPipe: searchtemplate ; let t=index">
+                                <tr *ngFor="let data of emailtemplateslist | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
                                   <td style="text-align:center">{{data.templateName}}</td>
                                   <td style="text-align:center">{{data.templateSubject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
@@ -556,9 +556,9 @@
     
                               </tbody>
                             </table>
-                            <!-- <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
-                            <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
-                            </div> -->
+                             <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                            <pagination-controls id="email_template_page" maxSize="8" (pageChange)="emailtemp = $event"></pagination-controls>
+                            </div> 
                         
                     </div>
                           </div>
@@ -567,7 +567,7 @@
                     <tab  *ngIf="this.userRole.includes('Admin')" heading="Security Vault" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
-                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvault" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                             <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                           </form>
                         </div>
@@ -586,7 +586,7 @@
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of vaulConfigureList | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em }; let t=index">
+                                <tr *ngFor="let data of vaulConfigureList | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em } | FilterPipe:searchvault; trackBy:loopTrackBy; let t=index">
                                   <td style="text-align:center">{{data.product}}</td>
                                   <td style="text-align:center">{{data.module}}</td>
                                   <td style="text-align:center">{{data.page}}</td>
