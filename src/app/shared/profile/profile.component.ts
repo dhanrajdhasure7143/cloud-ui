@@ -1066,7 +1066,7 @@ console.log("my pdate data",this.updateSecretedata)
         this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
           this.notifier.show({
             type: "success",
-            message: "Alert Updated successfully!"
+            message: "Alert updated successfully"
           });
         this.modalRef.hide();
         this.getAllAlertsActivities();
@@ -1074,7 +1074,7 @@ console.log("my pdate data",this.updateSecretedata)
           }, err => {
             this.notifier.show({
               type: "error",
-              message: "Please try again!"
+              message: "Failed to update alert"
             });
           });
     }
@@ -1087,7 +1087,7 @@ console.log("my pdate data",this.updateSecretedata)
           // this.notifier.notify(type,message,data);
           this.notifier.show({
             type: "success",
-            message: "Alert deleted successfully!"
+            message: "Alert deleted successfully"
           });
           this.selectedalertdet= " ";
         //   Swal.fire({
@@ -2041,7 +2041,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         console.log('resp is',this.data)
     }
     /** alerts */
-    saveConfig() {
+    saveConfig(form:NgForm) {
       this.tenantId=localStorage.getItem('tenantName');
       this.useremail=localStorage.getItem('userName');
         console.log("tenant : "+this.tenantId);
@@ -2103,28 +2103,28 @@ console.log("alertbody",this.alertsbody)
            this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
             this.notifier.show({
               type: "success",
-              message: "Saved successfully!"
+              message: "Alert saved successfully"
             });
-            this.alertsapplication="";
-      this.alertsactivities=[];
-      this.selectedtype="";
-      this.isEmailcheckBoxValue=false;
-      this.isSMScheckBoxValue=false;
-      this.isPushNotificationcheckBoxValue=false;
-      this.isIncidentcheckBoxValue=false;
-      this.smsselected="";
-      this.emailselected="";
-      this.incidentselected="";
-          this.modalRef.hide();
-          this.getAllAlertsActivities();
+      //       this.alertsapplication="";
+      // this.alertsactivities=[];
+      // this.selectedtype="";
+      // this.isEmailcheckBoxValue=false;
+      // this.isSMScheckBoxValue=false;
+      // this.isPushNotificationcheckBoxValue=false;
+      // this.isIncidentcheckBoxValue=false;
+      // this.smsselected="";
+      // this.emailselected="";
+      // this.incidentselected="";
+           this.modalRef.hide();
+           this.getAllAlertsActivities();
          //  this.configurealertform.reset();
             }, err => {
               this.notifier.show({
                 type: "error",
-                message: "Please try again!"
+                message: "Failed to save alert"
               });
             });
-
+            form.resetForm();
       }
 
       getAllAlertsActivities() {
@@ -2263,12 +2263,12 @@ console.log("alertbody",this.alertsbody)
          if(data1.message === "Deleted Successfully"){
           this.notifier.show({
             type: "success",
-            message: "Vault configuration deleted successfully."            
+            message: "Vault configuration deleted"            
           })
           this.getListOfVaultconfigs();
           }else {
            this.notifier.show({
-              message: `Failed to delete vault configuration.`,
+              message: `Failed to delete vault configuration`,
               type: 'error'
             }) 
           }
@@ -2292,7 +2292,7 @@ console.log("alertbody",this.alertsbody)
           this.getListOfVaultconfigs();
           this.notifier.show({
             type: "success",
-            message: "Vault Updated successfully!"
+            message: "Vault updated successfully"
           });
           },err=>{
             this.getListOfVaultconfigs();
@@ -2486,12 +2486,12 @@ console.log("alertbody",this.alertsbody)
          if(data.message === "Email template saved successfully"){
           this.notifier.show({
             type: "success",
-            message: "Template saved successfully."            
+            message: "Template saved successfully"            
           })
            
           }else {
            this.notifier.show({
-              message: `Failed to save template.`,
+              message: `Failed to save template`,
               type: 'error'
             }) 
           }
@@ -2572,12 +2572,12 @@ console.log("alertbody",this.alertsbody)
          if(data.message === "Template deleted successfully"){
           this.notifier.show({
             type: "success",
-            message: "Template deleted successfully."            
+            message: "Template deleted successfully"            
           })
            
           }else {
            this.notifier.show({
-              message: `Failed to delete template.`,
+              message: `Failed to delete template`,
               type: 'error'
             }) 
           }
@@ -2606,12 +2606,12 @@ console.log("alertbody",this.alertsbody)
          if(data.message === "Template updated successfully"){
           this.notifier.show({
             type: "success",
-            message: "Template updated successfully."            
+            message: "Template updated successfully"            
           })
            
           }else {
            this.notifier.show({
-              message: `Failed to save template.`,
+              message: `Failed to update template`,
               type: 'error'
             }) 
           }
