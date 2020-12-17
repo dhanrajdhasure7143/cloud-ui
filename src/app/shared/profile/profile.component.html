@@ -548,7 +548,7 @@
                                   </div>
                                   </td>
                                 </tr>
-                                <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                                <tr *ngIf="emailtemplateslist==0">
                                   
                                     <div class="norecords"><h4>No records found</h4></div>
                                  
@@ -556,7 +556,7 @@
     
                               </tbody>
                             </table>
-                             <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                             <div *ngIf="emailtemplateslist!=0" class="alertspagination">
                             <pagination-controls id="email_template_page" maxSize="8" (pageChange)="emailtemp = $event"></pagination-controls>
                             </div> 
                         
@@ -606,7 +606,7 @@
                                   </div>
                                   </td>
                                 </tr>
-                                <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                                <tr *ngIf="vaulConfigureList==0 ">
                                   
                                     <div class="norecords"><h4>No records found</h4></div>
                                  
@@ -614,7 +614,7 @@
     
                               </tbody>
                             </table>
-                            <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                            <div *ngIf="vaulConfigureList!=0" class="alertspagination">
                             <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
                             </div>
                         
