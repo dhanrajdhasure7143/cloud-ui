@@ -83,6 +83,11 @@
           [yAxisLabel]="yaxislabel1" (select)="getPermissions($event)">
          </ngx-charts-bar-vertical>
        </div>
+       <div id="productnotfound" *ngIf="rolesandproducts==undefined" class="box_shadw34">
+        <div id="nodatafound" >
+        <h3>No Data Available</h3>
+      </div>
+      </div>
       </div>
        <div id="Permissionbarchart">
        <h5><b>Permission</b></h5>
@@ -106,7 +111,13 @@
           [yAxisLabel]="yaxislabel3"  (select)="onSelectProduct($event)">
          </ngx-charts-bar-vertical>
        </div>
+       <div id="productnotfound" *ngIf="products==0" class="box_shadw34">
+        <div id="nodatafound" >
+        <h3>No Data Available</h3>
       </div>
+      </div>
+      
+    </div>
        <div id="subscriptionsbarchart">
        <h5><b>Plans</b></h5>
        <div *ngIf="plansdata!=0" #planscontainer class="verticalbarchart"> 
@@ -140,13 +151,8 @@
       </table>
       </div>
   </div>
-  <div *ngIf="products==[]" class="col-md-5  text-center">
-    <h5><b>Subscriptions - Plans & Tenants</b></h5>
-    <div id="nodatafound" class="box_shadw34">
-    <h3>No Data Available</h3>
-  </div>
-</div>
-<div *ngIf="plansdata==[]" class="col-md-5  text-center">
+  
+<!-- <div *ngIf="plansdata==[]" class="col-md-5  text-center">
   <h5><b>Plans</b></h5>
   <div id="nodatafound" class="box_shadw34">
   <h3>No Data Available</h3>
@@ -157,7 +163,7 @@
   <div id="nodatafound" class="box_shadw34">
   <h3>No Data Available</h3>
 </div>
-</div>
+</div> -->
         </div>
       
   
@@ -196,7 +202,7 @@
        
       <div  class="col-md-5  text-center">
         <h5><b>Coupons</b></h5>
-        <div id="piechart1" #containerRef class="box_shadw34">
+        <div *ngIf="coupons!=0" id="piechart1" #containerRef class="box_shadw34">
            <ngx-charts-pie-chart
           [view]="[containerRef.offsetWidth, 300]"
           [scheme]="{domain: ['#ff3300', '#cc0066','#339933']}"
@@ -211,15 +217,14 @@
           [maxLabelLength]="20">
         </ngx-charts-pie-chart> 
         </div>
+        <div *ngIf="coupons==0"  class="box_shadw34">
+          <div id="nodatafound"> 
+            <h3>No Data Available</h3>
+            </div>
+      </div> 
     </div>
   
-        <!-- <div *ngIf="activityvsalert==0" class="col-md-5  text-center">
-          <h5><b>Activity vs Alert</b></h5>
-          <div id="activityvsalert" #containerRef class="activityvsalert">
-  <h1>No Data Found</h1>
-  </div>
-      </div> -->
-  
+        
         <div class="col-md-1"></div>
   
     </div>
@@ -229,7 +234,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div *ngIf="tenantvsuser!=0" class="col-md-5  text-center">
-           <h5 class="teus"><b>Tenant Vs Users</b></h5>
+           <h5 class="teus"><b>Customers Vs Users</b></h5>
            <div id="tenantvsuser" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;" ><br>
             <ngx-charts-bar-vertical [view]="[1300, 600]" [scheme] ="{domain: ['#926aa6', '#efe1ce', '#e0b589', '#660033','#f7786b', '#034f84','#98ddde','#dd4132','#99ff33', '#cc6600', '#cc00cc']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
             [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel5"
@@ -248,8 +253,8 @@
   
       </div>
       <div *ngIf="tenantvsuser==0" class="col-md-5 text-center">
-        <h5><b>User vs Role</b></h5>
-        <div id="nodatafound" class="box_shadw34">
+        <h5><b>Customers Vs Users</b></h5>
+        <div id="nodatafound"   class="box_shadw34"> 
           <h3>No Data Available</h3>
         </div>
     </div>

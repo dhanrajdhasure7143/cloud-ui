@@ -34,7 +34,7 @@ export class SuperadminmetricsComponent implements OnInit {
   
   // tenant vs user
   tenantvsuser: any=[];
-  xAxisLabel5='Tenant'
+  xAxisLabel5='Customers'
   yaxislabel5='No. of Users'
 
   // Secret name vs key count
