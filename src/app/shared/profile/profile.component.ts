@@ -232,9 +232,9 @@ export class ProfileComponent implements OnInit {
   public notificationreadlist:any;
   cards: any;
   templates: any=[];
-  emailtemplateslist: any;
+  emailtemplateslist: any=[];
   emailtemplate: any;
-  vaulConfigureList:any;
+  vaulConfigureList:any=[];
   viewdata: any;
   secreteDetails: { secreteKey: any; key: any; };
    public secretes1: any[] = [];
@@ -2468,6 +2468,7 @@ console.log("alertbody",this.alertsbody)
         this.profileservice.getVaultConfigurations(this.tenantId).subscribe(data =>
           {
             this.vaulConfigureList=data
+            console.log("vault",this.vaulConfigureList)
           })
 
       }
