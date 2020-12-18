@@ -1619,7 +1619,7 @@ deleteUserYes(user,index){
   this.selectedIndex = '';
   this.profileservice.deleteSelectedUser(user).subscribe(resp =>{
 
-    
+    this.getAllUsersList();
 
     Swal.fire({
       title: 'Success',
@@ -1630,7 +1630,7 @@ deleteUserYes(user,index){
     })
 
 
-    this.getAllUsersList();
+    
 
   }, err =>{
 
@@ -2366,6 +2366,7 @@ console.log("alertbody",this.alertsbody)
             type: "success",
             message: "Notification deleted successfully!"
           });
+          this.dataid = '';
           },err=>{
             this.getAllNotifications();
           });
@@ -2683,5 +2684,15 @@ console.log("alertbody",this.alertsbody)
     }
     onEmailChange(){
       this.isSameDomain = false;
+    }
+    onselectincident(){
+      this.incidentselected=undefined;
+    }
+    onselectsms(){
+      this.smsselected='';
+    }
+    onselectemail(){
+      this.emailtemplate=undefined;
+      this.emailselected=undefined;
     }
      }
