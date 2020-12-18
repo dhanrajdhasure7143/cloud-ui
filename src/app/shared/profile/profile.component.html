@@ -371,7 +371,7 @@
                 <form autocomplete="off" #inviteuser="ngForm" id="inviteform" class="inviterow">
                     <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" name='email' id="email" #email="ngModel" class="form-control botmbordr"  [(ngModel)]="inviteremailId"
+                            <input type="text" name='email' id="email" #email="ngModel" (change)="onEmailChange()" class="form-control botmbordr"  [(ngModel)]="inviteremailId"
                              (keyup)="myemailFunction()" 
                               pattern="^\S*[@]\S*[.]\S*$"  email placeholder="Enter Emails Separated By Comma(,)"/>
                               <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"> 
@@ -379,8 +379,8 @@
                                 <span class='fa fa-info-circle errspan' *ngIf="email.errors.pattern"> Enter valid email address</span>
                               </span>
                                 <!-- <span  class='fa fa-info-circle errspan' *ngIf="email.errors.pattern">Enter valid email address</span> -->
-                                <!-- <span *ngIf='ispublicMail' class='fa fa-info-circle errspan'>&nbsp;Only Business Email is allowed</span>
-                                <span *ngIf="isSameDomain" class='fa fa-info-circle errspan'>&nbsp;Sorry...! You Are Allowed to Invite {{domain}} Users Only</span> -->
+                                <!-- <span *ngIf='ispublicMail' class='fa fa-info-circle errspan'>&nbsp;Only Business Email is allowed</span>-->
+                                <span *ngIf="isSameDomain" class='fa fa-info-circle errspan'>&nbsp;Sorry...! You Are Allowed to Invite {{domain}} Users Only</span> 
                           </div>
 
                     <div class="form-group">
@@ -704,7 +704,7 @@
                                         </tr>
                                       </thead>
                                       <tbody class="col-md-12">
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy; let m= index">
+                                        <tr *ngFor="let userdata of userManagement | paginate: {id:'user_data', itemsPerPage: 2, currentPage: userTemp } | FilterPipe:searchUser; trackBy:loopTrackBy; let m= index">
                                           <td>{{userdata.firstName}} {{userdata.lastName}}</td>
                                           <td class="emailCs">{{userdata.userId}}</td>
                                           <!-- <td>{{userdata.lastName}}</td> -->
@@ -713,7 +713,7 @@
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
                                             <td class="">{{userdata.roleIdname}}</td>
-                                            <td class="">{{userdata.created_at | date:'medium'}}</td>
+                                            <td class="">{{userdata.created_at | date:'medium'}} {{userdata.created_at.split("T")[1].split(".")[0]}}</td>
                                             <!-- <td class="types">{{userdata.modified_at | date:'medium'}}</td> -->
                                             <td>{{userdata.Status}}</td>
 
@@ -753,8 +753,16 @@
                                               </div>
                                           </td>
                                         </tr>
+                                        <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                              
+                                          <div class="norecords"><h4>No records found</h4></div>
+                                       
+                                        </tr>
                                       </tbody>
                                     </table>
+                                    <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="userManagementpagination">
+                                      <pagination-controls id="user_data" maxSize="8" (pageChange)="userTemp= $event"></pagination-controls>
+                                      </div>
                             </div>
                       </tab>
                       <!-- <tab *ngIf="this.userRole.includes('Admin')" heading="Departments">
@@ -1911,16 +1919,7 @@
      
                         </div>
 
-                        <div class="col-md-12 ">
-                          <label for="product">Status : </label>
-                          <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
-                          <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="userStatus" required>
-                            <option  [value]="undefined" disabled hidden>Select Type</option>
-                            <option  [value]="null" disabled hidden>Select Type</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                          </div>
+                        
                        
                     
                         <div class="col-md-12 infocheck">
@@ -1930,6 +1929,16 @@
                            bindLabel = "name" required>
                            </ng-select>         
                         </div>
+                        <div class="col-md-12 ">
+                          <label for="product">Status</label>
+                          <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
+                          <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="userStatus" required>
+                            <option  [value]="undefined" disabled hidden>Select Type</option>
+                            <option  [value]="null" disabled hidden>Select Type</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                          </div>
                           <br>
                         </div>
                       

@@ -1262,6 +1262,7 @@ cancelVaultconfig(){
  }
  myemailFunction()
  {
+   this.isSameDomain = false;
   $("#excel").empty();
   this.selectedFile=null;
   $("#email").on("input", function(){
@@ -1281,28 +1282,28 @@ cancelVaultconfig(){
 });
  }
     inviteUser(userId,inviteeId,form){
-      // let stringToSplit = localStorage.getItem("userName");
-      // let x = stringToSplit.split("@");
-      //       this.domain = x[1];
+       let stringToSplit = localStorage.getItem("userName");
+       let x = stringToSplit.split("@");
+             this.domain = x[1];
       // console.log(x);
-      //       var inviteeList = [];
-      //       inviteeList = inviteeId.split(",");
+            var inviteeList = [];
+             inviteeList = inviteeId.split(",");
       // console.log("fksdjflkasd", inviteeList);
       
-      //       for(var i = 0; i<inviteeList.length; i++){
+             for(var i = 0; i<inviteeList.length; i++){
       
       //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
       //         inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
       //        this.ispublicMail=true;
       //        return
         
-      //      }else if(!(inviteeList[i].endsWith(this.domain))){
+             if(!(inviteeList[i].endsWith(this.domain))){
              
-      //       this.isSameDomain = true;
-      //       return
-      //      }
+            this.isSameDomain = true;
+             return
+            }
               
-      //       }  
+             }  
       
       console.log(this.selectedroles)
       console.log("inviteid",inviteeId)
@@ -1332,8 +1333,8 @@ cancelVaultconfig(){
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
     if(invres.message == "Exceeded max users count"){
     Swal.fire({
-      title: 'Message!',
-      text: "Users max limit exceeded",
+      title: 'Message',
+      text: "Users max limit exceeded!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
@@ -1345,8 +1346,8 @@ cancelVaultconfig(){
       console.log(this.data.body)
       if(this.data.body.message == "Invite Mail sent successfully"){
       Swal.fire({
-        title: 'Success!',
-        text: "Invite mail sent successfully.",
+        title: 'Success',
+        text: "Invite mail sent successfully!",
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
@@ -1362,7 +1363,7 @@ cancelVaultconfig(){
     }
       else if(this.data.body.errorMessage == "Failed to read content of the upload file"){
         Swal.fire({
-          title: 'Error!',
+          title: 'Error',
           text:this.data.body.errorMessage,
           type: 'error',
           showCancelButton: false,
@@ -1378,7 +1379,7 @@ cancelVaultconfig(){
         this.invitemultirole=false;
     }else if(this.data.body.errorMessage == "Uploaded file is empty"){
         Swal.fire({
-          title: 'Error!',
+          title: 'Error',
           text:this.data.body.errorMessage,
           type: 'error',
           showCancelButton: false,
@@ -1601,8 +1602,8 @@ form.resetForm();
           this.profileservice.deleteRole(role).subscribe(response => {
           this.getRoles();
           Swal.fire({
-            title: 'Success!',
-            text: `Role deleted successfully.`,
+            title: 'Success',
+            text: `Role deleted successfully!`,
             type: 'success',
             showCancelButton: false,
             allowOutsideClick: true
@@ -1621,7 +1622,7 @@ deleteUserYes(user,index){
     
 
     Swal.fire({
-      title: 'Success!',
+      title: 'Success',
       text: resp.message,
       type: 'success',
       showCancelButton: false,
@@ -1629,7 +1630,7 @@ deleteUserYes(user,index){
     })
 
 
-  
+    this.getAllUsersList();
 
   }, err =>{
 
@@ -1755,6 +1756,7 @@ couponDelYes(coupon,index){
       }
 
       modifyUserRole(resp){
+        this.searchUser = '';
         this.selectedRolesArry = [];
         let arr = [];
         console.log("selectedApp", this.selectedApp);
@@ -2678,5 +2680,8 @@ console.log("alertbody",this.alertsbody)
           this.formTwoFactor.isSMScheckForOTP = res.smsEnabled;
         }        
       });
+    }
+    onEmailChange(){
+      this.isSameDomain = false;
     }
      }
