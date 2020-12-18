@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
        },800);
        setTimeout(() => {
          this.spinner.hide();
-     }, 1500);
+     }, 1800);
   }
   getSuperAdminData(){
     this.spinner.show();
