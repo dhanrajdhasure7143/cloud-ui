@@ -632,7 +632,7 @@ button.btn.btn-primary.invite-button {
     font-weight: bold;
     border: #26c9EE;
     border-radius: 33px;
-    margin-top: 3px;
+    margin-top: -5px !important;
     margin-left: 109px;
 }
 .upload-container {
@@ -755,4 +755,8 @@ button.btn.btn-primary.invite-button {
     }
     .action-btns{
         width: 140px;
+    }
+    .userManagementpagination
+    {
+     margin-left: 55%;
     }

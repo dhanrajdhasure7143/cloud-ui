@@ -42,7 +42,7 @@ export class SocialLoginComponent implements OnInit {
  
 // }
  authenticate(userId) {
-  this.appService.login(userId, "Welcome@123").subscribe(user => {
+  this.appService.socialLogin(userId).subscribe(user => {
     //localStorage.setItem('currentUser',JSON.stringify({"token":data}))
     //localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
       //        CookieStore.set('token', user.resp_data.accessToken, {});
