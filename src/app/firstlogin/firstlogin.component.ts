@@ -22,7 +22,7 @@ export class FirstloginComponent implements OnInit {
   decodedToken: any = {};
   selectedItems: any[] = [];
   dropdownSettings: any = {};
-  departments:any;
+  departments:any[]=[];
   phnCountry: any;
   itemsShowLimit = 1;
   stateInfo: any[] = [];
@@ -36,7 +36,9 @@ export class FirstloginComponent implements OnInit {
   isCompanydisabled:boolean=false;
   selectedFile: any;
   data: any;
+  domain: any;
   isInput: boolean = false;
+  categories:any[] = [];
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -155,7 +157,16 @@ export class FirstloginComponent implements OnInit {
       }else if(response.company!=null){
         this.isCompanydisabled = true;
         this.model.company = response.company;
-        
+        let x = this.decodedToken.split("@");
+            this.domain = x[1];
+        this.service.getAllCategories(this.domain).subscribe(response=> {
+          this.departments = response.data;  
+          this.departments.forEach(element => {
+            this.categories.push(element.categoryName)
+            
+          });  
+          console.log("dropdown",this.categories)
+        })
       }
     }
      
@@ -179,7 +190,7 @@ export class FirstloginComponent implements OnInit {
     //localStorage.setItem('company',userDetails.company);
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
-    //userDetails.department = this.model.department[0];
+    userDetails.department = this.model.department;
    const payload = new FormData();
    payload.append('userId', userDetails.userId);
    payload.append('firstName', userDetails.firstName);
@@ -192,6 +203,7 @@ export class FirstloginComponent implements OnInit {
    payload.append('state', userDetails.state);
    payload.append('city', userDetails.city);
    payload.append('zipcode', userDetails.zipcode);
+   payload.append('department', userDetails.department);
    if(this.selectedFile!=undefined){
    payload.append('profilePic', this.selectedFile, this.selectedFile.name);
   }

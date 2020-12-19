@@ -283,6 +283,11 @@ export class ProfileComponent implements OnInit {
   enableTwoFactorConfig: boolean;
   selectedsecret: any;
   modvaultId: any;
+  searchDept:any;
+  categories:any;
+  deptName:any;
+  dept:any;
+  categoryname:any;
 
 
 
@@ -510,8 +515,16 @@ console.log("my pdate data",this.updateSecretedata)
         console.log(this.paymentMode)
         });
   }
-
+   getAllCategories(){
+    this.profileservice.getCategories().subscribe(resp => {
+      this.categories = resp.data
+      console.log("categories  ",this.categories)
+    })
+   }
   ngOnChanges() {
+    if(this.isusers){
+      this.getAllCategories();
+    }
     if(this.isInvite){
       this.emailId=[];
       this.selectedroles=[];
@@ -1126,6 +1139,9 @@ console.log("my pdate data",this.updateSecretedata)
 
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
+    }
+    adddept(template){
+      this.modalRef = this.modalService.show(template, this.config)
     }
     addpermission(template){
       this.modalRef = this.modalService.show(template,this.config)
@@ -2700,6 +2716,84 @@ console.log("alertbody",this.alertsbody)
       this.emailtemplate=undefined;
       this.emailselected=undefined;
     }
+    createNewDept(){
+      let body = {
+        "categoryName": this.deptName
+      }
+      this.profileservice.createCategory(body).subscribe(resp => {
+        console.log("create category===", resp)
+        this.modalRef.hide();
+        this.getAllCategories();
+        if(resp.message === "Successfully created the category"){
+          this.notifier.show({
+            type: "success",
+            message: "Department created successfully!"
+          });
+        }else {
+          this.notifier.show({
+            type: "error",
+            message: "Failed to create department",
+          });
+        }
+      })
+    }
+    viewDept(category, template){
+      this.categoryname=category.categoryName;
+      this.dept=category;
+      this.modalRef = this.modalService.show(template)
+    }
+    modifydept(){
+      let catbody = {
+        "categoryId": this.dept.categoryId,
+        "categoryName": this.categoryname
+      }
+      this.profileservice.updateCategory(catbody).subscribe(resp => {
+        console.log("modify category===", resp)
+        this.modalRef.hide();
+        this.getAllCategories();
+        if(resp.message === "Successfully updated the category"){
+          this.notifier.show({
+            type: "success",
+            message: "Department modified successfully!"
+          });
+        }else {
+          this.notifier.show({
+            type: "error",
+            message: "Failed to modify department",
+          });
+        }
+      })
+    }
+    depdel(data,index){
+      this.selectedIndex = index;
+      document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+
+     }
+     deletedepYes(data,index){
+       let delbody={
+        "categoryId": data.categoryId,
+        "categoryName": data.categoryName
+      }
+      console.log("delbody===",delbody)
+       this.profileservice.deleteCategory(delbody).subscribe(resp => {
+         this.getAllCategories();
+         if(resp.message==="Successfully deleted the category"){
+          this.notifier.show({
+            type: "success",
+            message: "Department deleted successfully!"
+          });
+         }else{
+          this.notifier.show({
+            type: "error",
+            message: "Failed to delete department",
+          });
+         }
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+       })
+     }
+     cancelAddDept(){
+       this.modalRef.hide();
+     }
      }
 
      @Pipe({name: 'Tablereverse'})

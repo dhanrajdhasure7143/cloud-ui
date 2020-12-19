@@ -39,6 +39,9 @@ export class ProfileService {
   getDepartments():Observable<any>{
     return this.http.get<any>('/api/user/departments')
   }
+  getCategories():Observable<any>{
+    return this.http.get<any>('processintelligence/v1/processgraph/categories', {responseType:"json"})
+  }
   getAllRoles(appId):Observable<any>{
     return this.http.get<any>('/authorizationservice/api/v1/application/'+appId+'/roles')
 
@@ -264,5 +267,21 @@ getRolesAndPermissionKpi(): Observable<any>{
 }
 getalerttransactions(tenantid): Observable<any>{
   return this.http.get<any>('/alertConfigurationService/api/v1/allAlerts/'+tenantid)
+}
+createCategory(body:any): Observable<any>{
+  return this.http.post<any>('/processintelligence/v1/processgraph/categories', body,httpOptions)
+}
+updateCategory(data:any): Observable<any>{
+  return this.http.put<any>('/processintelligence/v1/processgraph/categories', data,httpOptions)
+}
+deleteCategory(data):Observable<any>{
+  const httpOps = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+          }),
+    body: data
+  }
+  return this.http.delete<any>('/processintelligence/v1/processgraph/categories',httpOps)
+   
 }
 }
