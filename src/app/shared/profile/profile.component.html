@@ -765,42 +765,59 @@
                                       </div>
                             </div>
                       </tab>
-                      <!-- <tab *ngIf="this.userRole.includes('Admin')" heading="Departments">
+                      <tab *ngIf="this.userRole.includes('Admin')" heading="Departments">
                           <div class="search-One">
                               <form class="form-inline d-flex  md-form form-sm">
-                                  <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                  <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchDept" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                   <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                 </form>
                               </div>
                             <div class="container department">
+                              <button *ngIf="this.userRole.includes('Admin')" class='btn btn-primary pull-right addCard' (click)='adddept(createDept)'>Add Department</button>
+
                             <table class="table table-borderless table-hover">
                                     <thead>
                                       <tr>
-                                        <th scope="col" class="types">User Id</th>
-                                        <th scope="col" class="types">First Name</th>
-                                        <th scope="col" class="types">Last Name</th>
-                                        <th scope="col" class="types">Designation</th>
-                                        <th scope="col" class="types">Organisation</th>
+                                        <th scope="col" class="types">ID</th>
                                         <th scope="col" class="types">Department</th>
-                                        <th scope="col" class="types">Product</th>
-                                        <th scope="col" class="types">Roles</th>
+                                        <th scope="col" class="types">Created By</th>
+                                        <th scope="col" class="types">Created At</th>
+                                        <th *ngIf="this.userRole.includes('Admin')" scope="col" class="types">Action</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let userdata of userManagement | FilterPipe:searchUser; trackBy:loopTrackBy;">
-                                            <td>{{userdata.id}}</td>
-                                            <td>{{userdata.firstName}}</td>
-                                            <td>{{userdata.lastName}}</td>
-                                            <td>{{userdata.designation}}</td>
-                                            <td>{{userdata.company}}</td>
-                                            <td>{{userdata.department}}</td>
-                                            <td >{{userdata.applicationIdname}}</td>
-                                            <td >{{userdata.roleIdname}}</td>
-                                            </tr>
+                                        <tr *ngFor="let category of categories  | FilterPipe:searchDept; trackBy:loopTrackBy; let d=index">
+                                            <td>{{category.categoryId}}</td>
+                                            <td>{{category.categoryName}}</td>
+                                            <td>{{category.createdBy}}</td>
+                                            <td>{{category.createdAt}}</td>
+                                            <td>
+                                              <div>
+                                              <button class="subsc edit-Btn" (click)="viewDept(category, updateDepttemp)" ><img src="assets/images/eyeIcon.svg" alt=""></button>
+                                              </div>
+                                              <div>
+                                                <button class="subsc" (click)="depdel(category,d)" ><img src="assets/images/unsubscribe.svg" alt=""></button>
+                                              </div>
+                                                <div id="myid" [ngClass]="selectedIndex === d?'isdelet':''" class="deletconfm">
+                                                   <div class="container-fluid deletefrm">
+                                                       <h5 class="pull-left">Confirmation</h5>
+                                                       <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(d)">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                       <p class="pull-left">Are you sure you want to delete the department ?</p>
+                                                        <button class="pull-left confm" (click)="deletedepYes(category,d)">Yes</button>
+                                                        <button class="confm pull-left" (click)="unsubscribeNo(d)">No</button>
+                                                   </div>
+                                               </div>
+                                          </td>
+                                        </tr>
+                                        <!-- <div class="deptpagination">
+                                          <pagination-controls id="dept_page" maxSize="3" (pageChange)="dp = $event"></pagination-controls>
+                                          </div> -->
                                     </tbody>
                                   </table>
                             </div>
-                          </tab> -->
+                          </tab>
 
                          <tab *ngIf="true" heading="Roles">
                             <div class="search-One">
@@ -2404,6 +2421,58 @@
         </form>
   </ng-template>
 
-  <!-- update secret -->
+  <ng-template #createDept>
+    <form autocomplete="off" #adddept="ngForm" (ngSubmit)="createNewDept()" class="card_form">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" >Add Department</h4>
+                <button type="button" class="close" aria-label="Close" (click)="cancelAddDept()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+    
+            <div class="modal-body">
+                <div class="">
+                <div class="col-12 row">        
+                  <div class="col-md-12 infocheck">
+                       <label for="application">Department </label>
+                      <input type="text"  name="dept" maxlength="20" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="deptName" required/>     
+                  </div>
+          </div>
+        </div>
+        </div>
+    
+        <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+          <div class="form-group form-buttons pull-right buttonsblock">        
+              <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button> -->
+              <button class="btn btn-primary clearbtn" [disabled]="adddept.invalid " type="submit"><div class="anim"></div> Save</button>
+          </div>
+          
+          </div>
+          </div>
+          </div>
+        </form>
+    </ng-template>
+
+    <ng-template #updateDepttemp >
+
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" >Modify Department</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+    <div class="modal-body">
+         <div class="col-md-12 infocheck pull-right">
+                <label for="application">Department </label>
+                <input type="text"  name="dept" maxlength="20" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="categoryname" required/>     
+         </div>
+         <div class="col-md-12 submitbtn">
+                <button class="btn btn-primary updatepermbtn" (click)="modifydept()">Update</button>
+         </div>
+    </div>
+      </ng-template>
 
 

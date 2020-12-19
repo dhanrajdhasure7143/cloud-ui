@@ -16,6 +16,7 @@ export interface AiotalAppConfig {
   isTwoFactorAuthenticationEnabled : boolean
   isSecurityManagerEnabled : boolean;
   rpaendpoint:String;
+  piendpoint:String;
 }
 
 export const AppConfig: AiotalAppConfig = {
@@ -29,6 +30,7 @@ export const AppConfig: AiotalAppConfig = {
   Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
   productendpoint: 'http://eiapdev.epsoftinc.in',
   rpaendpoint:"http://rpadev.epsoftinc.in",
+  piendpoint:"http://pidev.epsoftinc.in",
   socialLoginRedirectURL: 'http://eiapclouddev.epsoftinc.in/#/user',
   isTwoFactorAuthenticationEnabled: false,
   isSecurityManagerEnabled : true

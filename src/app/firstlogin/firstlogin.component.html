@@ -64,17 +64,29 @@
               <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
                 class='fa fa-info-circle errspan'> Company is required </span>
             </div>
-            <!-- <div class=" col-md-6 form-group inner-addon left-addon">
+            <div *ngIf="!isCompanydisabled" class=" col-md-6 form-group inner-addon left-addon">
                 <img src="assets/images/registration/department.svg" class="icon">
                 <select class="form-control" (change)="onChangeDepartment($event.target.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
                 required>
                   <option [value]="undefined" disabled hidden>Department</option>
                   <option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;'>{{departments[i]}}</option>
-                  <option value="others">Others</option>
+                  <!-- <option value="others">Others</option> -->
                 </select>
                 <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
                 class='fa fa-info-circle errspan'> Department is required </span>
-              </div> -->
+              </div>
+
+              <div *ngIf="isCompanydisabled" class=" col-md-6 form-group inner-addon left-addon">
+                <img src="assets/images/registration/department.svg" class="icon">
+                <select class="form-control" (change)="onChangeDepartment($event.target.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
+                required>
+                  <option [value]="undefined" disabled hidden>Department</option>
+                  <option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;'>{{categories[c]}}</option>
+                  <!-- <option value="others">Others</option> -->
+                </select>
+                <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
+                class='fa fa-info-circle errspan'> Department is required </span>
+              </div>
               <!-- <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
                   <img src="assets/images/registration/department.svg" class="icon">
                 <input type="text" class="form-control" name="other_department" #other_department="ngModel" [(ngModel)]='otherDepartment' maxlength="20" placeholder="Department" required>
