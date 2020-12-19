@@ -110,10 +110,10 @@ public paymentToken:any;
   buyProductPlan(template){
      console.log('planslist', this.selected_plans);
      console.log("this.cardDetails",this.cardDetails);
-     this.spinner.show();
-    setTimeout(() => {
-        },200);
     
+    //  setTimeout(() => {
+       
+    // }, 5000);
     const cardValue={
       "name":this.cardDetails.cardHoldername,
       "number":this.cardDetails.cardnumbertotal,
@@ -137,14 +137,16 @@ public paymentToken:any;
                 "visible":true,
                 "product_id":"2.0"}
                 }
+                this.spinner.show();
+    
     this.productlistservice.getPaymentToken(cardValue).subscribe(res=>{
       this.paymentToken=res
       console.log('token',this.paymentToken);
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 2200);
+      
+    
    
       this.productlistservice.subscribePlan(this.paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
+        this.spinner.hide();
        this.finalAmount=this.subscriptionDetails.amountPaid;
 this.sharedDataService.setFreetrialavailed(false);
        this.modalRef = this.modalService.show(template,this.config);
