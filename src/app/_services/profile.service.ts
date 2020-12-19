@@ -37,7 +37,7 @@ export class ProfileService {
     return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
   }
   getDepartments():Observable<any>{
-    return this.http.get<any>('/api/user/departments')
+    return this.http.get<any>('/processintelligence/v1/processgraph/categories')
   }
   getCategories():Observable<any>{
     return this.http.get<any>('processintelligence/v1/processgraph/categories', {responseType:"json"})

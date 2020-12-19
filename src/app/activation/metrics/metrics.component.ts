@@ -119,8 +119,8 @@ getAllUsersList(){
 getDepartments()
 {
   this.profileService.getDepartments().subscribe(resp=>{
-      this.departments = resp
-        
+    let departmentcount=resp.data
+    this.departments = departmentcount
       });
 }
 
@@ -144,6 +144,9 @@ getListOfEmailTemplates()
       {
         this.profileService.getAllActiveBots().subscribe(bots=>{
           this.botnames=bots;
+          if(this.botnames.errorMessage=="No data found"){
+            this.botnames=[];
+          }
         })
       }
 
