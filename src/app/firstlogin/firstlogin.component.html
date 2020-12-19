@@ -28,7 +28,7 @@
             <div class="form-group col-sm-6 inner-addon left-addon">
               <img src="assets/images/registration/user.svg" class="icon">
               <input type="text" name="lastName" id="lastName" #lastName="ngModel" class="form-control"
-                [(ngModel)]="model.lastName" maxlength="20" minlength="3" placeholder="Last Name" required (keypress)="lettersOnly($event)">
+                [(ngModel)]="model.lastName" maxlength="20" minlength="1" placeholder="Last Name" required (keypress)="lettersOnly($event)">
               <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
                 class='fa fa-info-circle errspan'> Last Name is required </span>
             </div>
@@ -85,6 +85,7 @@
               <img src="assets/images/registration/Global.svg" class="icon">
               <select class="form-control" (change)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
                <option  [value]="undefined" disabled hidden>Country</option>
+               <option  [value]="null" disabled hidden>Country</option>
                <!-- <option hidden disabled [selected]=true>Country</option> -->
                 <option *ngFor="let country of countryInfo; let i= index"  [value]="country.CountryName">{{country.CountryName}}
                 </option>
@@ -98,6 +99,7 @@
               <select class="form-control" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
                 <option *ngIf="stateInfo == ''" value="-1">State</option>
                 <option  [value]="undefined" disabled hidden>State</option>
+                <option  [value]="null" disabled hidden>State</option>
                 <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
               </select>
               <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
@@ -109,6 +111,7 @@
               <select class="form-control" name='city' #city='ngModel' [(ngModel)]='model.city' required>
                 <option *ngIf="cityInfo == ''" value="-1">City</option>
                 <option  [value]="undefined" disabled hidden>City</option>
+                <option  [value]="null" disabled hidden>City</option>
                 <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
               </select>
               <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"

@@ -641,6 +641,7 @@ console.log("my pdate data",this.updateSecretedata)
     this.modalRef.hide();
     this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {
       this.getAllSubscrptions();
+      this.router.navigate(['/activation/payment/chooseplan']);
       this.notifier.show({
         type: "success",
         message: "Subscription cancelled successfully!"
