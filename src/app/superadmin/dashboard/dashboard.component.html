@@ -3,14 +3,15 @@
     <app-superadminmetrics></app-superadminmetrics>
   </tab>
   <tab heading="Customers" id="tab2">
-    <div class="container-fluid hyperlink-details">
+    <div class="background">
+    <div class="container-fluid customer-table">
       <div class='row'>
       <div class='col-md-8'>
           <h4> </h4>
       </div>
       
       <div class='search-One'><br>
-        <input class="form-control searchOne pull-right" type="text" name='search' id="search1"  [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off">
+        <input class="form-control searchOne searching" type="text" name='search' id="search1"  [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off">
       <!-- <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="userFilter" aria-label="Search" [ngModelOptions]="{standalone: true}"/> -->
       </div>
     </div>
@@ -45,6 +46,7 @@
         </div>
     </div>
     <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner>
+  </div>
   </tab>
 </tabset>
 

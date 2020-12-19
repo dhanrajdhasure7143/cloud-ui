@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, PipeTransform, Pipe } from '@angular/core';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { User } from './../../_models/user';
 import { FormControl, FormGroup, Validators, NgForm, FormBuilder } from '@angular/forms';
@@ -935,9 +935,13 @@ console.log("my pdate data",this.updateSecretedata)
       this.isEmailcheckBoxValue=false
       this.isSMScheckBoxValue=false
       this.isIncidentcheckBoxValue=false
+      this.activitieslist=[];
       this.modalRef = this.modalService.show(template,this.config)
     }
     addVault(template){
+      this.mypages=[];
+      this.modulesList=[];
+     this.myfields=[];
       this.modalRef = this.modalService.show(template,this.config)
     } 
     addTemplate(template){
@@ -2652,7 +2656,7 @@ console.log("alertbody",this.alertsbody)
       }else{
         this.notifier.show({
           type: "success",
-          message: "Two Factor Authentication Configurations Updated successfully!",
+          message: "Configurations Updated successfully",
           id: "123"
         });
       }
@@ -2696,4 +2700,14 @@ console.log("alertbody",this.alertsbody)
       this.emailtemplate=undefined;
       this.emailselected=undefined;
     }
+     }
+
+     @Pipe({name: 'Tablereverse'})
+    export class Tablereverse implements PipeTransform {
+      transform(value: any)
+      {
+         let values:any=[];
+         values=value;
+         return values.reverse();
+       }
      }
