@@ -2281,12 +2281,16 @@ console.log("alertbody",this.alertsbody)
         this.selectedFeild=feild;
       }
       saveVaultConfig(form:NgForm){
+        let firstname=localStorage.getItem("firstName");
+        let lastname=localStorage.getItem("lastName");
+        let created_by=firstname+" "+lastname
         var input={
+          "createdBy": created_by,
+          "field": this.selectedFeild,
           "module": this.selectedmodule,
-        "page":this.selectedPage,
+          "page": this.selectedPage,
           "product": this.selectedproduct,
-        "field":this.selectedFeild,
-        "tenantId":this.tenantId
+          "tenantId": this.tenantId
         }
         this.profileservice.saveVaultConfig(input).subscribe(resp=>{
           this.modalRef.hide();
@@ -2342,13 +2346,17 @@ console.log("alertbody",this.alertsbody)
         document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
         }
         updateVaultconfig(form:NgForm){
+          let firstname=localStorage.getItem("firstName");
+          let lastname=localStorage.getItem("lastName");
+          let modified_by=firstname+" "+lastname
           var input={
-            "module": this.modmodule,
-          "page":this.modpage,
+            "id": this.modvaultId,
+            "tenantId": this.tenantId,
             "product": this.modprod,
-          "field":this.modfield,
-          "tenantId":this.tenantId,
-          "id":this.modvaultId
+            "module": this.modmodule,
+            "page": this.modpage,
+            "field": this.modfield,
+            "modifiedBy": modified_by
           }
           this.profileservice.updateVaultConfig(input).subscribe(resp =>{
             this.modalRef.hide();
