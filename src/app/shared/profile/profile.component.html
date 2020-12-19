@@ -378,6 +378,7 @@
                                 <span class='fa fa-info-circle errspan' *ngIf="email.errors.required"> Email is required</span>
                                 <span class='fa fa-info-circle errspan' *ngIf="email.errors.pattern"> Enter valid email address</span>
                               </span>
+                              <span class='fa fa-info-circle errspan' *ngIf="emailRequired"> Email is required</span>
                                 <!-- <span  class='fa fa-info-circle errspan' *ngIf="email.errors.pattern">Enter valid email address</span> -->
                                 <!-- <span *ngIf='ispublicMail' class='fa fa-info-circle errspan'>&nbsp;Only Business Email is allowed</span>-->
                                 <span *ngIf="isSameDomain" class='fa fa-info-circle errspan'>&nbsp;Sorry...! You Are Allowed to Invite {{domain}} Users Only</span> 
@@ -385,8 +386,11 @@
 
                     <div class="form-group">
                   <label for="application">Product</label>
-        <select name="invite_product" #inviteproduct="ngModel" id="product" class="form-control botmbordr" (change)="onChangeApp($event.target.value)" [(ngModel)]="invite_product" required>
+        <select name="invite_product" #inviteproduct="ngModel"  (change)="onInviteProduct($event)" id="product" class="form-control botmbordr" (change)="onChangeApp($event.target.value)" [(ngModel)]="invite_product" required>
           <option [value]="" disabled selected>Select Product</option>
+          <option  [value]="undefined" disabled hidden>Select Product</option>
+          <option  [value]="null" disabled hidden>Select Product</option>
+
           <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
           </select>
                     </div>
@@ -396,7 +400,7 @@
                       <label for="role">Roles</label>
                        <ng-select name = "multiroles" [multiple]="true" id="multiroles" [disabled]="invitemultirole"
                        placeholder="Select Roles"
-                       [items] =  "allRoles"
+                       [items] =  "inviteAllRoles"
                        [(ngModel)]="selectedroles"
                        bindValue = "id"
                        bindLabel = "name" required>
@@ -407,7 +411,7 @@
                     </select>  -->
                    
                           </div>
-                          <button  class="btn btn-primary invite-button" type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
+                          <button  class="btn btn-primary invite-button" [disabled] ="isSameDomain || emailRequired"  type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
                         </form>
               </div>
 
@@ -429,6 +433,9 @@
           </div>
           <div class="uploaded-excel">
             <div id="excel"></div>
+            <!-- <div *ngIf='upload_excel'> 
+              <button class="close" type="button">x</button>
+               </div> -->
             </div>
 </div>
 
@@ -1991,11 +1998,11 @@
                               <div class="col-md-12 infocheck">
 
                                 <label for="role">Role</label>
-                                 <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" maxlength="50" [(ngModel)]="roleName" required/>     
+                                 <input type="text"  name="role" #role="ngModel" placeholder="Enter Role Name" class="form-control botmbordr" maxlength="50" [(ngModel)]="roleName" required/>     
                                            </div>
                                <div class="col-md-12 infocheck">
                                  <label for="roledescription">Description </label>
-                                 <input type="text"  name="roledescription" #roledescription="ngModel" maxlength="50" class="form-control botmbordr" [(ngModel)]="roleDescription" required/>     
+                                 <input type="text"  name="roledescription" #roledescription="ngModel" placeholder="Enter Description" maxlength="150" class="form-control botmbordr" [(ngModel)]="roleDescription" required/>     
               
                                  </div>
                                  <div class="col-md-12 infocheck">
@@ -2006,7 +2013,7 @@
                                    placeholder = "Select Product "
                                    bindValue = "id"
                                    bindLabel = "name"
-                                   (change) = "permissionsByapp(selectedApplication)" required>
+                                   (change) = "permissionsByapp(selectedApplication)" placeholder="Select Product" required>
                                   
                                      <!-- <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option> -->
                                    </ng-select>
@@ -2022,7 +2029,7 @@
                                      <div class="infocheck">
          
                                        <ng-select name = "permiss"[multiple]="true" [(ngModel)]="selectedpermidlist" placeholder = "Select Permissions" required>
-                                         <ng-option *ngFor="let permi of permissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
+                                         <ng-option *ngFor="let permi of addRolePermissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
                                        </ng-select>
                                     
                           
@@ -2080,12 +2087,12 @@
                                     </div>
                                     <div class="col-md-12 infocheck">
                                   <label for="permission">Permission </label>
-                                   <input type="text"  name="permission" maxlength="50" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permName" required/>     
+                                   <input type="text"  name="permission" maxlength="50" placeholder="Enter Permission Name" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permName" required/>     
                                     
                                   </div>
                                  <div class="col-md-12 infocheck">
                                    <label for="permdescription">Description </label>
-                                   <input type="text"  maxlength="50" name="permdescription" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permissionDescription" required/>     
+                                   <input type="text"  maxlength="50" name="permdescription" placeholder="Enter Description" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permissionDescription" required/>     
                                    
                                    </div>
                                    

@@ -144,6 +144,8 @@ export class ProfileComponent implements OnInit {
   coupondata: any;
   testArry: any = [];
    allKeys : any = [];
+   inviteAllRoles: any;
+   public addRolePermissionsList: any;
  
   
   /**alerts */
@@ -288,6 +290,7 @@ export class ProfileComponent implements OnInit {
   deptName:any;
   dept:any;
   categoryname:any;
+  emailRequired: boolean = false;
 
 
 
@@ -570,6 +573,7 @@ console.log("my pdate data",this.updateSecretedata)
     return index;
   }
   slideDown() {
+    this.inviteAllRoles = '';
     console.log("inside slidedown")
     this.invite_product="";
     console.log(this.invite_product)
@@ -696,16 +700,16 @@ console.log("my pdate data",this.updateSecretedata)
         this.profileservice.deletePaymentMode(data.id).subscribe(data => { this.delData = data
           this.getAllPaymentmodes();
           Swal.fire({
-            title: 'Success!',
-            text: `Card deleted successfully.`,
+            title: 'Success',
+            text: `Card deleted successfully!`,
             type: 'success',
             showCancelButton: false,
             allowOutsideClick: true
           }) 
         },err=>{
           Swal.fire({
-            title: 'Error!',
-            text: `Please try again.`,
+            title: 'Error',
+            text: `Please try again!`,
             type: 'error',
             showCancelButton: false,
             allowOutsideClick: true
@@ -1171,6 +1175,7 @@ console.log("my pdate data",this.updateSecretedata)
       this.roleDescription = "";
       this.selectedpermidlist = [];
       this.selectedApplication = "";
+      this.addRolePermissionsList = '';
     }
     cancelAddPermission(){
       this.modalRef.hide();
@@ -1284,6 +1289,7 @@ cancelVaultconfig(){
  myemailFunction()
  {
    this.isSameDomain = false;
+   this.emailRequired = false;
   $("#excel").empty();
   this.selectedFile=null;
   $("#email").on("input", function(){
@@ -1303,27 +1309,37 @@ cancelVaultconfig(){
 });
  }
     inviteUser(userId,inviteeId,form){
+      this.isSameDomain = false;
        let stringToSplit = localStorage.getItem("userName");
        let x = stringToSplit.split("@");
              this.domain = x[1];
-      // console.log(x);
             var inviteeList = [];
+            console.log("inviteeId", inviteeId)
+            if((inviteeId == undefined || inviteeId == null) && this.selectedFile == undefined){
+              this.emailRequired = true;
+              return
+            }
+            if(this.upload_excel == null && inviteeId !== undefined){
              inviteeList = inviteeId.split(",");
-      // console.log("fksdjflkasd", inviteeList);
-      
+             console.log("came to upload", inviteeList);
+             
              for(var i = 0; i<inviteeList.length; i++){
       
-      //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
-      //         inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
-      //        this.ispublicMail=true;
-      //        return
-        
-             if(!(inviteeList[i].endsWith(this.domain))){
+              //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
+              //         inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
+              //        this.ispublicMail=true;
+              //        return
+                
+                     if(!(inviteeList[i].endsWith(this.domain))){
+                     
+                    this.isSameDomain = true;
+                     return
+                    }
+                      
              
-            this.isSameDomain = true;
-             return
             }
-              
+      // console.log("fksdjflkasd", inviteeList);
+      
              }  
       
       console.log(this.selectedroles)
@@ -1341,7 +1357,7 @@ cancelVaultconfig(){
       else
       {
         console.log("Upload option selected");
-        
+        this.emailRequired = false;
         //payload.append('inviterMailId', userId);
         this.myappName="2.0"
         payload.append('file', this.selectedFile, this.selectedFile.name);
@@ -1354,14 +1370,16 @@ cancelVaultconfig(){
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
     if(invres.message == "Exceeded max users count"){
     Swal.fire({
-      title: 'Message',
+      title: 'Warning',
       text: "Users max limit exceeded!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
+    this.inviteAllRoles = '';
   
-  }else if(invres.message == "User Invite is valid"){
+  }else if(invres.allowedUsers){
+    payload.append('allowedUserCount', invres.allowedUsers)
     this.profileservice.inviteUser(userId,payload).subscribe(res=>{
       this.data=res
       console.log(this.data.body)
@@ -1373,6 +1391,8 @@ cancelVaultconfig(){
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1390,6 +1410,8 @@ cancelVaultconfig(){
           showCancelButton: false,
           allowOutsideClick: true
         })
+    this.inviteAllRoles = '';
+
         this.upload_excel=""
         this.selectedFile=null
         this.myappName=""
@@ -1406,6 +1428,8 @@ cancelVaultconfig(){
           showCancelButton: false,
           allowOutsideClick: true
         })
+    this.inviteAllRoles = '';
+
         this.upload_excel=""
         this.selectedFile=null
         this.myappName=""
@@ -1417,12 +1441,14 @@ cancelVaultconfig(){
     }
     else if(this.data.body.errorMessage == "Uploaded file is not supported"){
       Swal.fire({
-        title: 'Error!',
+        title: 'Error',
         text:this.data.body.errorMessage,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1434,12 +1460,14 @@ cancelVaultconfig(){
     }
     else if(this.data.body.message == "Inviter not present"){
       Swal.fire({
-        title: 'Error!',
+        title: 'Error',
         text:this.data.body.message,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1450,12 +1478,14 @@ cancelVaultconfig(){
       this.invitemultirole=false;
     }else if(this.data.body.message == "Inviter tenant not present"){
       Swal.fire({
-        title: 'Warning!',
+        title: 'Warning',
         text: this.data.body.message,
         type: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1466,12 +1496,14 @@ cancelVaultconfig(){
       this.invitemultirole=false;
     }else if(this.data.body.message === "Invitee already exists"){
       Swal.fire({
-        title: 'Warning!',
+        title: 'Warning',
         text: this.data.body.message,
         type: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1483,12 +1515,14 @@ cancelVaultconfig(){
       this.invitemultirole=false;
     }else{
       Swal.fire({
-        title: 'Error!',
+        title: 'Error',
         text: this.data.body.message,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1507,6 +1541,8 @@ cancelVaultconfig(){
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1518,12 +1554,14 @@ cancelVaultconfig(){
     })
   }else{
     Swal.fire({
-      title: 'Sorry!',
+      title: 'Error',
       text: "Inivation not sent due to technical issue.",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
+    this.inviteAllRoles = '';
+
     this.upload_excel=""
     this.myappName=""
     this.selectedFile=null
@@ -1542,6 +1580,8 @@ cancelVaultconfig(){
       showCancelButton: false,
       allowOutsideClick: true
     })
+    this.inviteAllRoles = '';
+
     this.upload_excel=""
     this.myappName=""
       this.selectedFile=null
@@ -1769,7 +1809,7 @@ couponDelYes(coupon,index){
 
       permissionsByapp(id){
         this.profileservice.getPermissionsByAppID(id).subscribe(data => {
-          this.permissionsList = data;
+          this.addRolePermissionsList = data;
          
 
           
@@ -1852,8 +1892,8 @@ couponDelYes(coupon,index){
         this.modalRef.hide();
         this.getRoles();
         Swal.fire({
-          title: 'Success!',
-          text: `Role updated successfully.`,
+          title: 'Success',
+          text: `Role updated successfully!`,
           type: 'success',
           showCancelButton: false,
           allowOutsideClick: true
@@ -1911,8 +1951,8 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
   this.modalRef.hide();
   this.getListofCoupons();
   Swal.fire({
-    title: 'Success!',
-    text: `Coupon updated successfully.`,
+    title: 'Success',
+    text: `Coupon updated successfully!`,
     type: 'success',
     showCancelButton: false,
     allowOutsideClick: true
@@ -1939,8 +1979,8 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     this.getRoles();
     if(this.roleresp.message!='Role already exists'){
       Swal.fire({
-        title: 'Success!',
-        text: `Role created successfully.`,
+        title: 'Success',
+        text: `Role created successfully!`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
@@ -1949,8 +1989,8 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     else
     {
       Swal.fire({
-        title: 'Role already Exists',
-        text: `Role already exists.`,
+        title: 'Error',
+        text: `Role already exists!`,
         type: 'info',
         showCancelButton: false,
         allowOutsideClick: true
@@ -2449,6 +2489,7 @@ console.log("alertbody",this.alertsbody)
       }
       onFileSelected(event)
       {
+        this.emailRequired = false;
         $("#excel").empty();
         $("#email").prop('disabled', true);
         $("#product").prop('disabled', true);
@@ -2456,7 +2497,7 @@ console.log("alertbody",this.alertsbody)
         this.selectedFile=<File>event.target.files[0]
         console.log(this.selectedFile.name)
       // $("#excel").val(this.selectedFile.name)
-       $("#excel").append('('+this.selectedFile.name+')');
+       $("#excel").append(this.selectedFile.name);
       }
 
       notificationclick(id)
@@ -2705,6 +2746,7 @@ console.log("alertbody",this.alertsbody)
     }
     onEmailChange(){
       this.isSameDomain = false;
+      this.emailRequired = false;
     }
     onselectincident(){
       this.incidentselected=undefined;
@@ -2794,6 +2836,10 @@ console.log("alertbody",this.alertsbody)
      cancelAddDept(){
        this.modalRef.hide();
      }
+    onInviteProduct(event){
+
+      this.inviteAllRoles = this.allRoles;
+    }
      }
 
      @Pipe({name: 'Tablereverse'})
