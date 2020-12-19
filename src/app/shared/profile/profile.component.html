@@ -466,7 +466,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata | Tablereverse | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -474,7 +474,7 @@
                               <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
                               <td style="text-align:center">{{data.incident_type?data.incident_type:'-'}}</td>
-                              <td style="text-align:center">{{data.audit.created_at | date:'medium'}}</td>
+                              <td style="text-align:center">{{data.audit.created_at | date}} {{data.audit.created_at.split("T")[1].split(".")[0]}}</td>
                               <td style="text-align:center">{{data.audit.modified_at | date:'medium'}}</td>
                               <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                 <span  (click)="alertsdeletedata(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
@@ -528,7 +528,7 @@
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of emailtemplateslist | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
+                                <tr *ngFor="let data of emailtemplateslist | Tablereverse | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
                                   <td style="text-align:center">{{data.templateName}}</td>
                                   <td style="text-align:center">{{data.templateSubject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
@@ -638,7 +638,7 @@
 
                         <div class="form-group col-md-4 inner-addon left-addon right-addon">
                           <label for="enableTwoFactor">Enable Two Factor Authentication </label>
-                          <select name="enableTwoFactor" #enableTwoFactor="ngModel" class="form-control bottwofactor" [(ngModel)]="emailvalue" required>
+                          <select name="enableTwoFactor" class="twofactor" #enableTwoFactor="ngModel" class="form-control bottwofactor" [(ngModel)]="emailvalue" required>
                             <option  [value]="undefined" disabled hidden>Select Type</option>
                             <option  [value]="null" disabled hidden>Select Type</option>
                             <option value="true">True</option>
@@ -1648,7 +1648,7 @@
           <div class="modal-footer">
             <div class="">
               <div class="col-12">
-          <div class="form-group form-buttons pull-right buttonsblock">        
+          <div class="form-group form-buttons pull-right emailsblock">        
               <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
               <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
           </div>
@@ -1691,7 +1691,7 @@
         <div class="modal-footer">
           <div class="">
             <div class="col-12">
-        <div class="form-group form-buttons pull-right buttonsblock">        
+        <div class="form-group form-buttons pull-right emailsblock">        
             <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelEmail()"><div class="anim"></div> Cancel</button>
             <button [disabled]="configureemailupdate.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="updateemailtemplate()"><div class="anim" ></div> Update</button>
         </div>
