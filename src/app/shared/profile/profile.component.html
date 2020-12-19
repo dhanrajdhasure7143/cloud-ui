@@ -482,7 +482,7 @@
                               <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
                               <td style="text-align:center">{{data.incident_type?data.incident_type:'-'}}</td>
                               <td style="text-align:center">{{data.audit.created_at | date}} {{data.audit.created_at.split("T")[1].split(".")[0]}}</td>
-                              <td style="text-align:center">{{data.audit.modified_at | date:'medium'}}</td>
+                              <td style="text-align:center">{{data.audit.modified_at | date}} {{data.audit.modified_at.split("T")[1].split(".")[0]}}</td>
                               <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                 <span  (click)="alertsdeletedata(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 <div id="myid" [ngClass]="selectedalertdet === l?'isdelet':''" class="deletconfm">
@@ -530,7 +530,8 @@
                                   <th scope="col" class="alerttype" style="text-align:center">Name</th>
                                  <th scope="col" class="alerttype" style="text-align:center">Subject</th>
                                  <th scope="col" class="alerttype" style="text-align:center">Body</th>
-                                 <th scope="col" class="alerttype" style="text-align:center">Created By</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Created At</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
                                  <th scope="col" class="alerttype">Action</th>
                                 </tr>
                               </thead>
@@ -539,7 +540,8 @@
                                   <td style="text-align:center">{{data.templateName}}</td>
                                   <td style="text-align:center">{{data.templateSubject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
-                                  <td style="text-align:center">{{data.createdBy}}</td>
+                                  <td style="text-align:center">{{data.audit.created_at | date}} {{data.audit.created_at.split("T")[1].split(".")[0]}} </td>
+                                  <td style="text-align:center">{{data.audit.modified_at | date}} {{data.audit.modified_at.split("T")[1].split(".")[0]}}</td>
                                   <td  class="deleticon"><span  (click)="selectedtemplate(data,t,emaildetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                     <span  (click)="emailtempdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                     <div id="myid" [ngClass]="selectedtempdet === t?'isdelet':''" class="deletconfm">
@@ -589,6 +591,8 @@
                                  <th scope="col" class="alerttype" style="text-align:center">Module</th>
                                  <th scope="col" class="alerttype" style="text-align:center">Page</th>
                                  <th scope="col" class="alerttype" style="text-align:center">Field</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Created At</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
                                  <th scope="col" class="alerttype">Action</th>
                                 </tr>
                               </thead>
@@ -598,6 +602,8 @@
                                   <td style="text-align:center">{{data.module}}</td>
                                   <td style="text-align:center">{{data.page}}</td>
                                   <td style="text-align:center">{{data.field}}</td>
+                                  <td style="text-align:center">{{data.audit.created_at | date}} {{data.audit.created_at.split("T")[1].split(".")[0]}}</td>
+                                  <td style="text-align:center">{{data.audit.modified_at | date}} {{data.audit.modified_at.split("T")[1].split(".")[0]}}</td>
                                   <td  class="deleticon"><span  (click)="selectedVaultConfig(data,t,configvault)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
                                     <span  (click)="vaultconfigdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
                                     <div id="myid" [ngClass]="selectedvaultconfig === t?'isdelet':''" class="deletconfm">
