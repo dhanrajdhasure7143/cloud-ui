@@ -200,8 +200,8 @@ this.sharedDataService.setFreetrialavailed(false);
 
         this.promo=null;
         Swal.fire({
-          title: 'Invalid',
-          text: `Invalid Coupon Code...`,
+          title: 'Error',
+          text: `Invalid Coupon Code!!`,
           type: 'error',
           showCancelButton: false,
           allowOutsideClick: false
