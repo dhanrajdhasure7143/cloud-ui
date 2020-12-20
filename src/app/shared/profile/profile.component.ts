@@ -1748,14 +1748,10 @@ permDelYes(permission,index){
 couponDelYes(coupon,index){
   this.profileservice.deleteCoupon(coupon).subscribe(resp=>{
     this.getListofCoupons();
-    console.log("deleted coupon")
-    Swal.fire({
-      title: 'Success',
-      text: `Coupon deleted successfully!`,
-      type: 'success',
-      showCancelButton: false,
-      allowOutsideClick: true
-    }) 
+      this.notifier.show({
+      type: "success",
+      message: "Coupon deleted successfully!!"
+    });
     
 
   },err => {
@@ -1969,18 +1965,15 @@ couponDelYes(coupon,index){
 this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
   this.modalRef.hide();
   this.getListofCoupons();
-  Swal.fire({
-    title: 'Success',
-    text: `Coupon updated successfully!`,
-    type: 'success',
-    showCancelButton: false,
-    allowOutsideClick: true
-  }) 
+  this.notifier.show({
+    type: "success",
+    message: "Coupon updated successfully!!"
+  });
 })
 
     }
     createNewRole(){
-      
+
       let addRoleBody = {  
       "name":this.roleName,
       "description":this.roleDescription,
@@ -2115,12 +2108,12 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.modalRef.hide();
         this.notifier.show({
           type: "success",
-          message: "created successfully!"
+          message: "created coupon successfully!!"
         });
            this.getListofCoupons();
             });
             
-        console.log('resp is',this.data)
+      
     }
     /** alerts */
     saveConfig(form:NgForm) {
@@ -2396,23 +2389,18 @@ console.log("alertbody",this.alertsbody)
        // document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
           this.selectedsecret = index;
         }
-          secretDelYes(data,index){
+          secretDelYes(data,data2,index){
            console.log("secrete deleteee",data)
         
             this.selectedsecret=" ";
-            let versionsList=data.data.metadata.version;
+            let versionsList=data2.data.metadata.version;
           const s=  Array.from({length: versionsList}, (_, i) => i + 1)
-           
-     // document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
-        
-            let input={
+          let input={
               "versions":s
             }
             console.log("secrete deleteeen     input   iss ",input)
-           
-           // this.modalRef.hide();
-       
-         this.profileservice.deleteSecret(input,data.keyname).subscribe(resp=>{
+      
+         this.profileservice.deleteSecret(input,data).subscribe(resp=>{
           if(resp.message === "secret deleted"){
               this.notifier.show({
                 type: "success",
