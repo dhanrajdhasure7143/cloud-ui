@@ -291,6 +291,7 @@ export class ProfileComponent implements OnInit {
   dept:any;
   categoryname:any;
   emailRequired: boolean = false;
+  tot: any=[];
 
 
 
@@ -645,26 +646,18 @@ console.log("my pdate data",this.updateSecretedata)
   //   localStorage.setItem('formOne',JSON.stringify(this.formOne));
   // }
 
-  selecteddata(data, index, template) {
+  selecteddata(data, index) {
     document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
     this.subscribeddata = data;
-    this.modalRef = this.modalService.show(template)
+   
     this.selectedIndex = index;
   }
 
   
 
-  unsubscribeYes(index) {
-    this.modalRef.hide();
-    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {
-      this.getAllSubscrptions();
-      this.router.navigate(['/activation/payment/chooseplan']);
-      this.notifier.show({
-        type: "success",
-        message: "Subscription cancelled successfully!"
-      });
-    }, err => {
-    });
+  unsubscribeYes(index,template) {
+    this.modalRef = this.modalService.show(template)
+   
     
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
@@ -757,10 +750,11 @@ console.log("my pdate data",this.updateSecretedata)
 
   subscriptiondata(data, index, template) {
     this.subscribeddata = data;
+    this.modalRef = this.modalService.show(template)
     if(this.subscribeddata.subscriptionId==null||this.subscribeddata.subscriptionId==undefined){
       this.subscribeddata.subscriptionId="--"
     }
-    this.modalRef = this.modalService.show(template)
+    
   }
 
   alertsdata(data,index,template)
@@ -861,6 +855,13 @@ console.log("my pdate data",this.updateSecretedata)
   }
 
   getAllSubscrptions() {
+   
+      this.profileservice.listofinvoices().subscribe(response => { this.invoicedata = response.data 
+     this.invoicedata.forEach(element => {
+      this.tot.push(element.amount)
+     });
+       });
+   
     this.profileservice.listofsubscriptions().subscribe(response => { 
       this.tableData = response 
       this.tableData.forEach(element => {
@@ -1125,9 +1126,27 @@ console.log("my pdate data",this.updateSecretedata)
           });
          this.getAllAlertsActivities();
     }
-    subscriptionCancelModalSubmit()
+    subscriptionCancelModalSubmit(template)
   {
-    this.unsubscribeYes(this.selectedIndex);
+    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {
+      this.getAllSubscrptions();
+      this.modalRef.hide();
+      this.router.navigate(['/activation/payment/chooseplan']);
+      if(data.message!='Cancellation Abrupted!!'){
+      this.notifier.show({
+        type: "success",
+        message: "Subscription cancelled successfully!"
+      });
+    }
+    else{
+      this.notifier.show({
+        type: "error",
+        message: "Subscription cancelled in progress!"
+      });
+    }
+    }, err => {
+    });
+   // this.unsubscribeYes(this.selectedIndex,template);
   }
   changePlanCancel()
   {
