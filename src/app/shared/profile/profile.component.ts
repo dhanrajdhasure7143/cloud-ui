@@ -2390,7 +2390,7 @@ console.log("alertbody",this.alertsbody)
           this.selectedsecret = index;
         }
           secretDelYes(data,data2,index){
-           console.log("secrete deleteee",data)
+    
         
             this.selectedsecret=" ";
             let versionsList=data2.data.metadata.version;
@@ -2398,10 +2398,12 @@ console.log("alertbody",this.alertsbody)
           let input={
               "versions":s
             }
-            console.log("secrete deleteeen     input   iss ",input)
+          
       
          this.profileservice.deleteSecret(input,data).subscribe(resp=>{
+          this.getAllKeys();
           if(resp.message === "secret deleted"){
+           
               this.notifier.show({
                 type: "success",
                 message: "Vault Secret deleted successfully."            

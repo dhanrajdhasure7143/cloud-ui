@@ -32,18 +32,25 @@ export class NewpasswordComponent implements OnInit {
       console.log(token);
       this.newpasswordServ.resetPassword({token}).subscribe(res => {this.onSuccessOfVerifyToken(res),err=>{
         this.router.navigate['/user']
-        console.log('res ...', res);
-        
-      }});
+          }});
     });
    
     
   }
 
   onSuccessOfVerifyToken(response: any) {
-    if(response){
+     if(response){
       if(response.message !== 'reset token found'){
-        this.router.navigate(['/user']);
+        Swal.fire({
+          title: 'Error',
+            text: `Reset password token expired!!`,
+            type: 'error',
+            
+                  
+        }).then(()=>{
+         this.router.navigate(['/user'])
+        })
+        
       }else {
         
       }
