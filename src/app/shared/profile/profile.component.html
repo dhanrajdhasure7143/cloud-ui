@@ -979,29 +979,34 @@
               <table class="table table-borderless table-hover">
                       <thead>
                         <tr>
-                          <th scope="col" class="types" style="text-align:center">Coupon Name</th>
                           <th scope="col" class="types" style="text-align:center">Coupon ID</th>
+                          <th scope="col" class="types" style="text-align:center">Coupon Name</th>
+                          
                           <th scope="col" class="types" style="text-align:center">Amount Off</th>
                           <th scope="col" class="types" style="text-align:center">Percentage Off</th>
-                          <th scope="col" class="types" style="text-align:center">Available Redemptions</th>
-                          <th scope="col" class="types" style="text-align:center">Created At</th>
-                          <th scope="col" class="types" style="text-align:center">Expires By</th>
                           <th scope="col" class="types" style="text-align:center">No. of Redemptions
-
-                          </th>
+                                                     </th>
+                          <th scope="col" class="types" style="text-align:center">Available Redemptions</th>
+                          <th scope="col" class="types" style="text-align:center">Expires By</th>
+                         
+                          <th scope="col" class="types" style="text-align:center">Created At</th>
+                         
                           <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 1, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
-                          <td style="text-align:center">{{coupon.name}}</td>
                           <td style="text-align:center">{{coupon.id}}</td>
+                          <td style="text-align:center">{{coupon.name}}</td>
+                          
                           <td style="text-align:center">{{coupon.amountOff}}</td>
                           <td style="text-align:center">{{coupon.percentOff}}</td>
-                          <td style="text-align:center">{{availableRedeemptions}}</td>
-                          <td style="text-align:center">{{coupon.created*1000 | date:'medium'}}</td>
-                          <td style="text-align:center">{{coupon.redeemBy*1000 | date:'medium'  }}</td>
                           <td style="text-align:center">{{coupon.maxRedemptions}}</td>
+                          <td style="text-align:center">{{availableRedeemptions}}</td>
+                          <td style="text-align:center">{{coupon.redeemBy*1000 | date:'medium'  }}</td>
+                          <td style="text-align:center">{{coupon.created*1000 | date:'medium'}}</td>
+                          
+                          
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -1050,8 +1055,8 @@
           <table class="table table-borderless table-hover">
             <thead>
               <tr>
-                <th scope="col" class="types" style="text-align:center">Secret Name</th>
-                <th scope="col" class="types" style="text-align:center">Created Date</th>
+                <th scope="col" class="types" style="text-align:center">Secret Key</th>
+                <th scope="col" class="types" style="text-align:center">Created At</th>
                 <th scope="col" class="types" style="text-align:center">Version</th>
                 <th scope="col" class="types" style="text-align:center">Actions</th>
                
@@ -1060,7 +1065,7 @@
             <tbody>
               <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let t= index">
                 <td style="text-align:center">{{keys.keyname}}</td>
-                <td style="text-align:center">{{keys.data.metadata.created_time | date}}</td>
+                <td style="text-align:center">{{keys.data.metadata.created_time |   date:'medium'}}</td>
                 <td style="text-align:center">{{keys.data.metadata.version}}</td>
                 <td style="text-align:center">
                 <span  (click)="viewSecreteData(keys,t,datatemplate)">
@@ -1073,7 +1078,7 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                         <p class="pull-left">Are you sure you want to delete the secret ?</p>
-                         <button class="pull-left confm" (click)="secretDelYes(keys.keyname,t)">Yes</button>
+                         <button class="pull-left confm" (click)="secretDelYes(keys.keyname,keys,t)">Yes</button>
                          <button class="confm pull-left" (click)="secretdelno(t)">No</button>
                     </div>
                 </div>
@@ -1098,7 +1103,7 @@
 <ng-template #datatemplate >
   
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" >Security Vault Details</h4>
+    <h4 class="modal-title" id="modal-basic-title" >Modify Secret</h4>
     <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
       <span aria-hidden="true">&times;</span>
     </button> -->
@@ -2223,7 +2228,7 @@
               <div>
                   <label for="duration">Coupon Valid</label>
                                 <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" (change)='onSelected($event.target.value)' required>
-                                    <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
+                                    <option  [value]="undefined" disabled hidden>Selet Coupon Validity</option>
                                   <option value="forever" >Forever</option>
                                   <option value="once">Once</option>
                                   <option value="repeating">Repeating</option>
