@@ -18,7 +18,7 @@ export class ProfileService {
       return this.http.post<any>('/notificationservice/api/v1/listNotifications?roles='+role+'&userId='+userId,notificationbody,httpOptions);
   }
   cancelSubscription( data) : Observable<any>{
-    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel='+true,null);
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel='+true,{responseType:'json'});
   }
  
   listofsubscriptions() : Observable<any> {

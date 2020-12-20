@@ -185,6 +185,7 @@
                                   <th scope="col" class="types2" style="text-align:center">Subscription Id</th>
                                   <th scope="col" class="types2">Product</th>
                                   <th scope="col" class="types2">Plan</th>
+                                  <th scope="col" class="types2">Total Amount</th>
                                   <th scope="col" class="types2">Base Amount</th>
                                   <th scope="col" class="types2">No.of Users</th>
                                   <th scope="col" class="types2">Status</th>
@@ -192,14 +193,15 @@
                                 </tr>
                               </thead>
                               <tbody class="col-md-10" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
-                                <tr >
+                                <tr  >
                                   <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
                                   <td>{{sdata.name}}</td>
                                   <td>{{sdata.planEntity.nickName}}</td>
+                                  <td >{{1000}}</td>
                                   <td >{{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
                                   <td>{{sdata.noOfUsers}}</td>
                                   <td>{{sdata.status}}</td>
-                                  <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i,template)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                  <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
                                     <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
                                       <div class="container-fluid deletefrm">
                                     <h5 class="pull-left">Confirmation</h5>
@@ -207,7 +209,7 @@
                                         <span aria-hidden="true">&times;</span>
                                       </button>
                                     <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
-                                    <button class="pull-left confm" (click)="unsubscribeYes(i)">Yes</button>
+                                    <button class="pull-left confm" (click)="unsubscribeYes(i,template)">Yes</button>
                                     <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
                                     </div>
                                     </div>
