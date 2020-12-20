@@ -681,37 +681,27 @@ console.log("my pdate data",this.updateSecretedata)
     // this.closeFlag = true;
     // this.deletCardIndex = index;
     // document.getElementsByClassName("deletconfm")[index].classList.add("isdeletcard")
-    Swal.fire({
-      title: 'Confirmation',
-      // text: `Updated failed, Please try again.`,
-      html: '<h4> Do you want to delete the selected card?</h4> ',
-      type: 'warning',
-      showCancelButton: true,
-      allowOutsideClick: true,
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: 'Confirmation',
+    //   // text: `Updated failed, Please try again.`,
+    //   html: '<h4> Do you want to delete the selected card?</h4> ',
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   allowOutsideClick: true,
+    // }).then((result) => {
+    //   if (result.value) {
         this.profileservice.deletePaymentMode(data.id).subscribe(data => { this.delData = data
           this.getAllPaymentmodes();
-          Swal.fire({
-            title: 'Success',
-            text: `Card deleted successfully!`,
-            type: 'success',
-            showCancelButton: false,
-            allowOutsideClick: true
-          }) 
-        },err=>{
-          Swal.fire({
-            title: 'Error',
-            text: `Please try again!`,
-            type: 'error',
-            showCancelButton: false,
-            allowOutsideClick: true
-          })
-
+          this.notifier.show({
+            type: "success",
+            message: "Card deleted successfully"
+          });
+          document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
         })
-        this.getAllPaymentmodes();
-      }
-    })
+        // this.getAllPaymentmodes();
+        
+      // }
+    // })
   }
 
   // deletCard(data, index) {
@@ -1229,7 +1219,14 @@ console.log("my pdate data",this.updateSecretedata)
         }
 
       this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
-          this.paymentToken=res
+        this.paymentToken=res
+        // if(this.paymentToken.errorMessage==="Failed to generate payment token"){
+        //   this.notifier.show({
+        //     type: "error",
+        //     message: "Please enter valid card details"
+        //   });
+        // } else {
+          
         
       this.profileservice.addNewCard(this.paymentToken,this.isdefault).subscribe(res=>{
           // console.log('res',res);
@@ -1237,7 +1234,13 @@ console.log("my pdate data",this.updateSecretedata)
           this.modalRef.hide();
       this.cardModel={}
       })
-      })
+    // }
+      }),err=>{
+        this.notifier.show({
+          type: "error",
+          message: "Please enter valid card details"
+        });
+      }
   
       // this.profileservice.addNewCard(token).subscribe(res=>{})
       // api call
@@ -1789,6 +1792,10 @@ couponDelYes(coupon,index){
        }
       }
         roledel(data,index){
+              document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+             }
+             paymodedel(data,index){
+              this.selectedIndex = index;
               document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
              }
              userDel(data,index){
