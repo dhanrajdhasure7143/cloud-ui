@@ -32,6 +32,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { CompareValidatorDirective } from './comparepsw-validator.directive';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -72,7 +73,8 @@ import { CompareValidatorDirective } from './comparepsw-validator.directive';
     NotifierModule,
     NgSelectModule,
     NgxPaginationModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    Ng2SearchPipeModule
   ],
   providers: [NotifierService],
   exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent],

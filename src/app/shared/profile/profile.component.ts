@@ -392,12 +392,18 @@ this.profileservice.applications().subscribe(resp =>
           elementuser.userId['created_at']=elementuser.created_at;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
-          }else{
+          }else if(elementuser.userId.enabled == 'false'){
             elementuser.userId['Status'] = 'Inactive'
+          }else{
+            elementuser.userId['Status'] = 'Not Registred'
           }
          // if(this.currentUserId != elementuser.userId.userId)
           this.userManagement.push(elementuser.userId);
-         
+          // this.userManagement.sort(function(a,b){
+          //   // Turn your strings into dates, and then subtract them
+          //   // to get a value that is either negative, positive, or zero.
+          //   return b.created_at - a.created_at;
+          // });
           
         });
         
@@ -522,10 +528,11 @@ console.log("my pdate data",this.updateSecretedata)
    getAllCategories(){
     this.profileservice.getCategories().subscribe(resp => {
       this.categories = resp.data
-      console.log("categories  ",this.categories)
     })
    }
   ngOnChanges() {
+    console.log("user management", this.userManagement)
+    
     if(this.isusers){
       this.getAllCategories();
     }
@@ -1442,7 +1449,7 @@ cancelVaultconfig(){
         $("#email").prop('disabled', false);
         $("#product").prop('disabled', false);
         this.invitemultirole=false;
-    }else if(this.data.body.errorMessage == "Uploaded file is empty"){
+    }else if(this.data.body.errorMessage == "Uploaded file is empty/incorrect. Please verify the data entered in file"){
         Swal.fire({
           title: 'Error',
           text:this.data.body.errorMessage,
@@ -1480,10 +1487,10 @@ cancelVaultconfig(){
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
     }
-    else if(this.data.body.message == "Inviter not present"){
+    else if(this.data.body.errorMessage == "Inviter not present"){
       Swal.fire({
         title: 'Error',
-        text:this.data.body.message,
+        text:this.data.body.errorMessage,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
@@ -1498,10 +1505,10 @@ cancelVaultconfig(){
       $("#email").prop('disabled', false);
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
-    }else if(this.data.body.message == "Inviter tenant not present"){
+    }else if(this.data.body.errorMessage == "Inviter tenant not present"){
       Swal.fire({
         title: 'Warning',
-        text: this.data.body.message,
+        text: this.data.body.errorMessage,
         type: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
@@ -1535,7 +1542,46 @@ cancelVaultconfig(){
       $("#email").prop('disabled', false);
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
-    }else{
+    }else if(this.data.body.message === "You are trying to invite invalid Domain/Product. Please verify the file and re upload with valid data."){
+      Swal.fire({
+        title: 'Warning',
+        text: "You are trying to invite invalid Domain/Product!",
+        type: 'warning',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+    this.inviteAllRoles = '';
+
+      this.upload_excel=""
+      this.myappName=""
+      this.selectedFile=null
+      this.myappName=""
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }else if(this.data.body.message === "Only few users are invited, please upgrade plan to invite others"){
+      Swal.fire({
+        title: 'Warning',
+        text: this.data.body.message,
+        type: 'warning',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+    this.inviteAllRoles = '';
+
+      this.upload_excel=""
+      this.myappName=""
+      this.selectedFile=null
+      this.myappName=""
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }
+    else{
       Swal.fire({
         title: 'Error',
         text: this.data.body.message,
