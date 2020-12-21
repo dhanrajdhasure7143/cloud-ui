@@ -736,7 +736,7 @@
                                         </tr>
                                       </thead>
                                       <tbody class="col-md-12">
-                                        <tr *ngFor="let userdata of userManagement | paginate: {id:'user_data', itemsPerPage: 2, currentPage: userTemp } | FilterPipe:searchUser; trackBy:loopTrackBy; let m= index">
+                                        <tr *ngFor="let userdata of userManagement | filter:searchUser | paginate: {id:'user_data', itemsPerPage: 2, currentPage: userTemp };  trackBy:loopTrackBy; let m= index">
                                           <td>{{userdata.firstName}} {{userdata.lastName}}</td>
                                           <td class="emailCs">{{userdata.userId}}</td>
                                           <!-- <td>{{userdata.lastName}}</td> -->
@@ -745,7 +745,7 @@
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
                                             <td class="">{{userdata.roleIdname}}</td>
-                                            <td class="">{{userdata.created_at | date:'medium'}} {{userdata.created_at.split("T")[1].split(".")[0]}}</td>
+                                            <td class="">{{userdata.created_at | date}} {{userdata.created_at.split("T")[1].split(".")[0]}}</td>
                                             <!-- <td class="types">{{userdata.modified_at | date:'medium'}}</td> -->
                                             <td>{{userdata.Status}}</td>
 
@@ -785,14 +785,11 @@
                                               </div>
                                           </td>
                                         </tr>
-                                        <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
-                              
-                                          <div class="norecords"><h4>No records found</h4></div>
-                                       
-                                        </tr>
+                  
                                       </tbody>
                                     </table>
-                                    <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="userManagementpagination">
+                                    <div *ngIf="(userManagement | filter:searchUser).length==0" class=""><h4>No records found</h4></div>
+                                    <div *ngIf="(userManagement | filter:searchUser).length" class="userManagementpagination">
                                       <pagination-controls id="user_data" maxSize="8" (pageChange)="userTemp= $event"></pagination-controls>
                                       </div>
                             </div>
@@ -818,7 +815,7 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let category of categories  | FilterPipe:searchDept; trackBy:loopTrackBy; let d=index">
+                                        <tr *ngFor="let category of categories  | FilterPipe:searchDept | paginate: {id:'dept_page', itemsPerPage: 2, currentPage: dp }; trackBy:loopTrackBy; let d=index">
                                             <td>{{category.categoryId}}</td>
                                             <td>{{category.categoryName}}</td>
                                             <td>{{category.createdBy}}</td>
@@ -843,18 +840,20 @@
                                                </div>
                                           </td>
                                         </tr>
-                                        <!-- <div class="deptpagination">
-                                          <pagination-controls id="dept_page" maxSize="3" (pageChange)="dp = $event"></pagination-controls>
-                                          </div> -->
+                                          
                                     </tbody>
                                   </table>
+                                  <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div>
+                                  <div class="deptpagination">
+                                    <pagination-controls id="dept_page" maxSize="3" (pageChange)="dp = $event"></pagination-controls>
+                                    </div>
                             </div>
                           </tab>
 
                          <tab *ngIf="true" heading="Roles">
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
-                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchRole" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                     <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                   </form>
                                 </div>
@@ -874,7 +873,7 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr *ngFor="let role of allRoles | paginate: {id:'roles_page', itemsPerPage: 2, currentPage: rp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                                              <tr *ngFor="let role of allRoles | FilterPipe:searchRole | paginate: {id:'roles_page', itemsPerPage: 2, currentPage: rp }  trackBy:loopTrackBy; let j= index">
                                                 <td>{{role.appliationId.name}}</td>
                                                 <td>{{role.name}}</td>
                                                 <td>{{role.description}}</td>
@@ -912,6 +911,7 @@
                                                </tr>
                                             </tbody>
                                           </table>
+                                          <div *ngIf="(allRoles | filter:searchRole).length==0" class=""><h4>No records found</h4></div>
                                           <div class="permissionpagination">
                                             <pagination-controls id="roles_page" maxSize="8" (pageChange)="rp = $event"></pagination-controls>
                                             </div>
@@ -923,7 +923,7 @@
                             <tab *ngIf="this.userRole.includes('SuperAdmin')" heading="Permissions">
                               <div class="search-One">
                                   <form class="form-inline d-flex  md-form form-sm">
-                                      <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                      <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchPermission" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                       <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                     </form>
                                   </div>
@@ -942,7 +942,7 @@
                                               </thead>
                                               
                                               <tbody>
-                                                <tr *ngFor="let permission of permissionsList | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp } | FilterPipe:searchUser; trackBy:loopTrackBy; let p= index">
+                                                <tr *ngFor="let permission of permissionsList | FilterPipe:searchPermission | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp }  trackBy:loopTrackBy; let p= index">
                                                   <td>{{permission.permissionName}}</td>
                                                   <td>{{permission.description}}</td>
                                                   <td>{{permission.audit.created_at | date:'medium'}}</td>
@@ -967,6 +967,7 @@
                                                  </tr>
                                               </tbody>
                                             </table>
+                                            <div *ngIf="(permissionsList | filter:searchPermission).length==0" class=""><h4>No records found</h4></div>
                                             <div class="permissionpagination">
                                               <pagination-controls id="permission_page" maxSize="8" (pageChange)="pp = $event"></pagination-controls>
                                               </div>
@@ -1910,9 +1911,9 @@
                         class='fa fa-info-circle errspan'> Role is required </span> <br>   
                       </div>
                       <div class="col-md-12 infocheck">
-                        <label for="roledescription">Description</label>
-                        <input type="text"  name="roledescription" maxlength="50" #roledescription="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.description" required/>     
-                        <span *ngIf="((roledescription.invalid) || (roledescription.errors && roledescription.touched) )" 
+                        <label for="roledescriptionOne">Description</label>
+                        <input type="text"  name="roledescriptionOne" maxlength="50" #roledescriptionOne="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.description" required/>     
+                        <span *ngIf="((roledescriptionOne.invalid) || (roledescriptionOne.errors && roledescriptionOne.touched) )" 
                         class='fa fa-info-circle errspan'> Description is required </span> <br> 
                         </div>
                         <div class="col-md-12 infocheck">
