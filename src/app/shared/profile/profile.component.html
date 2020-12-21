@@ -1199,7 +1199,7 @@
                     <h4 class="noticationheading">Notifications</h4>
                 </div>
                 <div class="notificatnmsgs col-md-12">
-                    <table class="table table-borderless table-hover">
+                    <table *ngIf="this.userRole.includes('Admin')" class="table table-borderless table-hover">
                             <thead>
                               <tr>
                                 <th scope="col" style="width:60%;">Notification Message</th>
@@ -1208,7 +1208,7 @@
                                 <th scope="col" style="width:200px !important;">Action</th> 
                               </tr>
                             </thead>
-                            <tbody *ngIf="notificationList.errorMessage==undefined ">
+                            <tbody>
                               <tr [id]="'ntf_'+messageList.id" [ngClass]="messageList.status == 'read'?'isRead':'unread'"     *ngFor="let messageList of notificationList | paginate: {id:'notification_page', itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
                                 <td [id]="'msg_'+messageList.id" (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.notificationAuditId[0].contentType}}</td>
                                 <td [id]="'date_'+messageList.id" (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.createdAt | date}} {{messageList.createdAt.split("T")[1].split(".")[0]}}</td>
@@ -1236,6 +1236,42 @@
                           <div *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
                             <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
                             </div>
+                            <table *ngIf="this.userRole.includes('SuperAdmin')" class="table table-borderless table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" style="width:60%;">Notification Message</th>
+                                  <th scope="col" style="width:300px;">Date</th>
+                                  <th scope="col" style="width:200px !important;">Action</th> 
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr   *ngFor="let messageList of superadminnotificationList | paginate: {id:'superadmin_notification_page', itemsPerPage: 2, currentPage: sn}; let i = index; trackBy:loopTrackBy;">
+                                  <td  (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.notificationmessage}}</td>
+                                  <td  (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.created_at | date}} {{messageList.created_at.split("T")[1].split(".")[0]}} </td>
+                                  <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
+                                    <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
+                                        <div class="container-fluid deletefrm">
+                                      <h5 class="pull-left">Confirmation</h5>
+                                      <button type="button" class="close ">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      <p class="pull-left">Are you sure you want to delete the notification ?</p>
+                                      <button class="pull-left confm" aria-label="Close" (click)="deletesuperadminnotificatio(messageList.id)">Yes</button>
+                                      <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
+                                      </div>
+                                      </div>
+                                    </td>
+  
+                                </tr>
+                              </tbody>
+                              <tbody  *ngIf="superadminnotificationList.errorMessage=='No records found' " >
+                                <div class="ntfnorecords"><h4>No records found</h4></div>
+                              </tbody>
+                              <div *ngIf="superadminnotificationList.errorMessage!='No records found'" class="superadminnotificationpagination">
+                                <pagination-controls id="superadmin_notification_page" maxSize="8" (pageChange)="sn = $event"></pagination-controls>
+                                </div>
+                            </table>
+                            
                 </div>
             </div>
           </div>
@@ -1505,9 +1541,14 @@
                   
                   <div class="col-md-12">
                     <div *ngIf=isSMScheckBoxValue>
-                    <label for="configalerts">Text To</label>
+                    <!-- <label for="configalerts">Text To</label>
                     <input type="text" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
-                    required text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" />
+                    required text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" /> -->
+                    <label for="configalerts">User(s)</label>
+                                                      <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updatetext_to" required>
+                                                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                                                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                                                      </select>   
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
                                                         <span *ngIf="text_to1.errors.required"> Mobile number is required</span>
@@ -1644,9 +1685,15 @@
 
                 <div class="form-group">
                   <div *ngIf=isSMScheckBoxValue>
-                  <label for="configalerts">Text To</label>
+                  <!-- <label for="configalerts">Text To</label>
                   <input type="text" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
-                  required mobile placeholder="Enter Mobile Number ex:+91-9999999999"  />
+                  required mobile placeholder="Enter Mobile Number ex:+91-9999999999"  /> -->
+                  <label for="configalerts">User(s)</label>
+                      <select name="product" class="form-control"  [(ngModel)]="smsselected" required>
+                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                        <option [value]="null" disabled hidden>Select Registered Email</option>
+                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                      </select>    
                   <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
                                                       class='fa fa-info-circle errspan'>
                                                       <span *ngIf="mobile.errors.required"> Mobile number is required</span>

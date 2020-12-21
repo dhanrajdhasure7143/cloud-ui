@@ -284,4 +284,10 @@ deleteCategory(data):Observable<any>{
   return this.http.delete<any>('/processintelligence/v1/processgraph/categories',httpOps)
    
 }
+getSuperadminNotifications(): Observable<any>{
+  return this.http.get<any>('/subscriptionservice/v1/subscriptions/listNotifications');
+}
+deletesuperadminNotifications(notificationid):Observable<any>{
+  return this.http.delete<any>('/subscriptionservice/v1/subscriptions/deleteNotification?notificationId='+notificationid,{responseType:"json"})
+}
 }
