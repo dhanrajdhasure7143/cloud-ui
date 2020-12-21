@@ -1129,13 +1129,13 @@ console.log("my pdate data",this.updateSecretedata)
       this.getAllSubscrptions();
       this.modalRef.hide();
       this.router.navigate(['/activation/payment/chooseplan']);
-      if(data.message!='Cancellation Abrupted!!'){
+         if(data==null){
       this.notifier.show({
         type: "success",
         message: "Subscription cancelled successfully!"
       });
     }
-    else{
+    else if(data.message=='Cancellation Abrupted!!'){
       this.notifier.show({
         type: "error",
         message: "Subscription cancelled in progress!"
