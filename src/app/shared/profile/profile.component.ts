@@ -185,6 +185,7 @@ export class ProfileComponent implements OnInit {
   rp=0;
   pp=0;
   em=0;
+  sn=0;
   emailtemp=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
@@ -292,7 +293,7 @@ export class ProfileComponent implements OnInit {
   categoryname:any;
   emailRequired: boolean = false;
   tot: any=[];
-
+  superadminnotificationList: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -321,6 +322,7 @@ export class ProfileComponent implements OnInit {
   //     {id: 2, name: "2.0"},
   //     {id: 3, name: "ezflow"}
   // ];
+  this.getAllSuperAdminNotifications();
   this.getListOfEmailTemplates();
     this.getAllPermissions();
     this.getListOfVaultconfigs();
@@ -566,6 +568,11 @@ console.log("my pdate data",this.updateSecretedata)
    }
     this.profileservice.getNotifications(this.role,userId,this.notificationbody).subscribe(data => {
       this.notificationList = data
+    })
+  }
+  getAllSuperAdminNotifications(){
+    this.profileservice.getSuperadminNotifications().subscribe(data => {
+      this.superadminnotificationList = data
     })
   }
   userDetails() {
@@ -2504,6 +2511,20 @@ console.log("alertbody",this.alertsbody)
          this.getAllNotifications();
     }
 
+    deletesuperadminnotificatio(data){
+      this.profileservice.deletesuperadminNotifications(data).subscribe(resp=>{
+        // console.log(resp)
+        this.getAllSuperAdminNotifications();
+        this.notifier.show({
+          type: "success",
+          message: "Notification deleted successfully!"
+        });
+        this.dataid = '';
+        },err=>{
+          this.getAllSuperAdminNotifications();
+        });
+       this.getAllSuperAdminNotifications();
+    }
 
    
       passwordChange(form:NgForm){
