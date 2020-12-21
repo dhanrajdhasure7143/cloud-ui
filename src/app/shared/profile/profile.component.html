@@ -12,7 +12,7 @@
 
                       
                     <tabset >
-                        <tab heading="My Account" id="tab1">
+                        <tab heading="Account Details" id="tab1">
                         <div>
                             <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
                                 <div class="row">
@@ -92,8 +92,10 @@
                                           <div class="form-group col-sm-3">
                                                 <label for="country">Country</label>
                                                 <select id="country" name='country' class="form-control botmbordr" (change)='onChangeCountry(formOne.country)' #country="ngModel" [(ngModel)]="formOne.country" required>
-                                                        <option hidden disabled [ngValue]="undefined" [selected]=true>Country</option>
-                                                 <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
+                                                        <!-- <option hidden disabled [ngValue]="undefined" [selected]=true>Country</option> -->
+                                                        <option  [value]="undefined" disabled hidden>Country</option>
+                                                        <option  [value]="null" disabled hidden>Select Country</option>
+                                                        <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
                                                   </select>
                                                   <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
                                                     class='fa fa-info-circle errspan'> Country is required </span>
@@ -104,7 +106,7 @@
                                                   <select class="form-control botmbordr" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
                                                     <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
                                                     <option  [value]="undefined" disabled hidden>State</option>
-                                                    <option  [value]="null" disabled hidden>State</option>
+                                                    <option  [value]="null" disabled hidden>Select State</option>
                                                     <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
                                                   </select>
                                                   <span *ngIf="((state.invalid && updateUser.submitted)|| (state.errors && state.touched))"
@@ -117,7 +119,7 @@
                                                   <select class="form-control botmbordr" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
                                                     <option *ngIf="cityInfo == ''" value="-1">City</option>
                                                     <option  [value]="undefined" disabled hidden>City</option>
-                                                    <option  [value]="null" disabled hidden>City</option>
+                                                    <option  [value]="null" disabled hidden>Select City</option>
                                                     <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
                                                   </select>
                                                   <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
@@ -127,7 +129,7 @@
                                                     <label for="zipCode">Zip Code</label>
                                                     <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
                                                     <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.zipcode"
-                                                       onKeyPress="if(this.value.length==6) return false;" placeholder="Zip Code" required>
+                                                       onKeyPress="if(this.value.length==6) return false;" placeholder="Enter Zip Code" required>
                                                     <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
                                                       class='fa fa-info-circle errspan'> Zip Code is required </span>
                                                   </div>
@@ -163,8 +165,8 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                 </div> -->
-                                    <div class="form-group updat_btndiv">
-                                        <button type="submit" class="btn btn-continue float-right update_btn"  [disabled] = "updateUser.invalid">Save</button>
+                                    <div class="col-md-12 submitbtn">
+                                        <button type="submit" class="btn btn-primary pull-right updtpswd1"  [disabled] = "updateUser.invalid">Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -198,7 +200,7 @@
                                   <td>{{sdata.name}}</td>
                                   <td>{{sdata.planEntity.nickName}}</td>
                                   <td >{{1000}}</td>
-                                  <td >{{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
+                                  <td >${{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
                                   <td>{{sdata.noOfUsers}}</td>
                                   <td>{{sdata.status}}</td>
                                   <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
@@ -237,9 +239,10 @@
                                       <th scope="col" class="types">Invoice Number</th>
                                       <th scope="col" class="types">Subscription ID</th>
                                       <th scope="col" class="types">Amount</th>
+                                      <th scope="col" class="types">Paid On</th>
                                       <!-- <th scope="col" class="types">Refund</th> -->
-                                      <th scope="col" class="types">Due Date</th>
-                                      <th scope="col" class="types">Status</th>
+                                      <th scope="col" class="types">Next Due</th>
+                                      <th scope="col" class="types3">Status</th>
                                       <th scope="col" class="types">Action</th>
                                     </tr>
                                   </thead>
@@ -247,7 +250,8 @@
                                     <tr *ngFor="let invdata of invoicedata | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
                                       <td>{{invdata.invoiceNumber}}</td>
                                       <td>{{invdata.subscriptionId}}</td>
-                                      <td>$ {{invdata.amount}}.00 </td>
+                                      <td>${{invdata.amount}}.00 </td>
+                                      <td>{{invdata.createDate | date:'MM/dd/yyyy'}}</td>
                                       <!-- <td>{{invdata.refund || "NA"}}</td> -->
                                         <td>{{getinvoiceDate(invdata.createDate) |date:'MM/dd/yyyy'}}</td>
                                         <td>{{invdata.status|titlecase}}</td>
@@ -291,7 +295,20 @@
                                         <!-- </button>  -->
                                         <!-- <button *ngIf='!cardData.defaultSource' class='btn btn-primary setDefault_btn' (click)='setAsDefaultCard(cardData)'>Set Default</button> -->
                                         <button  class="subsc" [disabled]="cardData.defaultSource === true" (click)='setAsDefaultCard(cardData)'><img src="assets/images/eyeIcon.svg" alt=""> </button>
-                                        <button class="subsc" [disabled]="cardData.defaultSource === true" (click)="deletCard(cardData,i)"> <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                        <button class="subsc" [disabled]="cardData.defaultSource === true" (click)="paymodedel(cardData,i)"> <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                        <!-- <span  (click)="paymodedel(cardData,i)"> 
+                                          <img src="assets/images/unsubscribe.svg" alt=""></span> -->
+                                        <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
+                                          <div class="container-fluid deletefrm">
+                                        <h5 class="pull-left">Confirmation</h5>
+                                        <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
+                                        <button class="pull-left confm" (click)="deletCard(cardData,i)">Yes</button>
+                                        <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
+                                        </div>
+                                        </div>
                                         <!-- <span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
                                         
                                         <div id="delete-card"  *ngIf="closeFlag" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
@@ -355,7 +372,7 @@
                     </div>
  
                       <div class="col-md-12 submitbtn">
-                        <button class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
+                        <button [disabled]="f.invalid" class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
                       </div>
                     </form>
                   </div>
