@@ -418,7 +418,7 @@ this.profileservice.applications().subscribe(resp =>
           }else if(elementuser.userId.enabled == 'false'){
             elementuser.userId['Status'] = 'Inactive'
           }else{
-            elementuser.userId['Status'] = 'Not Registred'
+            elementuser.userId['Status'] = 'Not Registered'
           }
          // if(this.currentUserId != elementuser.userId.userId)
           this.userManagement.push(elementuser.userId);

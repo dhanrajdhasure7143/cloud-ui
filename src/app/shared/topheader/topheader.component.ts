@@ -163,7 +163,7 @@ public myname:any[]
     if(this.logintype == 'Azure'){
       
       window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
-
+      this.route.navigate(['/']);
     }else{
       this.route.navigate(['/']);
  }
