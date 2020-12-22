@@ -2554,7 +2554,7 @@ console.log("alertbody",this.alertsbody)
          this.getAllNotifications();
     }
 
-    deletesuperadminnotificatio(data){
+    deletesuperadminnotification(data){
       this.profileservice.deletesuperadminNotifications(data).subscribe(resp=>{
         // console.log(resp)
         this.getAllSuperAdminNotifications();

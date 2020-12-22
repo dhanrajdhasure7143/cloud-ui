@@ -70,7 +70,7 @@ export class MetricsComponent implements OnInit {
   legendTitle: string = 'Years';
 
   colorScheme2 = {
-    domain: ['#9995b7', '#C7B42C', '#d69c2f']
+    domain: ['#0099ff', '#00ffcc', '#ffcccc']
   };
   cards: any;
   subscribedproductscount: any;
