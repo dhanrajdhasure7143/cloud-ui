@@ -106,8 +106,8 @@
           <div id="productsbarchart">
             <h5><b>Subscriptions - Plans & Tenants</b></h5>
             <div *ngIf="products!=0" #productcontainer class="verticalbarchart"><br><br>
-           <ngx-charts-bar-vertical [view]="[220, 400]" [scheme] ="{domain: ['#ffd24d', '#009999', '#999966', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="products" [gradient]="false" [xAxis]="true"
-          [yAxis]="true" [legend]="false" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel3"
+           <ngx-charts-bar-vertical [view]="[productcontainer.offsetWidth, 400]" [scheme] ="{domain: ['#ffd24d', '#009999', '#999966', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="products" [gradient]="false" [xAxis]="true"
+          [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel3"
           [yAxisLabel]="yaxislabel3"  (select)="onSelectProduct($event)">
          </ngx-charts-bar-vertical>
        </div>

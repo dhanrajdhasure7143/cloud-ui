@@ -2563,6 +2563,7 @@ console.log("alertbody",this.alertsbody)
           message: "Notification deleted successfully!"
         });
         this.dataid = '';
+        this.getAllSuperAdminNotifications();
         },err=>{
           this.getAllSuperAdminNotifications();
         });
@@ -2647,6 +2648,28 @@ console.log("alertbody",this.alertsbody)
         this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
           this.notificationreadlist = data
           this.notificationList.find(ntf=>ntf.id==id).status='read'
+         //document.getElementById('msg_'+id).style.color="grey"
+         //document.getElementById('date_'+id).style.color="grey"
+         //document.getElementById(id).style.cursor="none"
+          console.log(this.notificationreadlist)
+        })
+       
+      }
+      }
+      notificationsuperadminclick(id)
+      {
+        let userId =  localStorage.getItem("userName")
+        this.tenantId=localStorage.getItem('tenantName');
+        this.role=localStorage.getItem('userRole')
+       this.notificationbody ={
+          "tenantId":this.tenantId
+       }
+       console.log("notification id",id)
+       let notificationid=id;
+       if(this.superadminnotificationList.find(ntf=>ntf.id==notificationid).status!='read'){
+        this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
+          this.notificationreadlist = data
+          this.superadminnotificationList.find(ntf=>ntf.id==notificationid).status='read'
          //document.getElementById('msg_'+id).style.color="grey"
          //document.getElementById('date_'+id).style.color="grey"
          //document.getElementById(id).style.cursor="none"
@@ -2886,7 +2909,7 @@ console.log("alertbody",this.alertsbody)
       this.incidentselected=undefined;
     }
     onselectsms(){
-      this.smsselected='';
+      this.smsselected=undefined;
     }
     onselectemail(){
       this.emailtemplate=undefined;
