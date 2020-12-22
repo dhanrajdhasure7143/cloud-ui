@@ -11,9 +11,9 @@
                     <!-- <div class="row"> -->
 
                       
-                    <tabset >
+                    <tabset id="staticTabs" #staticTabs>
                         <tab heading="Account Details" id="tab1">
-                        <div>
+                        <div class="myaccount">
                             <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
                                 <div class="row">
                                   <div class="form-group col-sm-3">
@@ -139,7 +139,7 @@
                                           <div *ngIf ="!isRefresh" class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
                                                   <div>
-                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:60px;" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'> Phone Number is required </span>
@@ -149,7 +149,7 @@
                                           <div *ngIf ="isRefresh" class="form-group col-sm-3">
                                             <label for="phoneumber">Phone</label>
                                                   <div>
-                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:60px;" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
                                             <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                             class='fa fa-info-circle errspan'> Phone Number is required </span>
@@ -275,7 +275,7 @@
                                   <thead>
                                     <tr>
                                       <th scope="col" class="cardtype">Card Type</th>
-                                      <th scope="col" class="cardtype">Card Number</th>
+                                      <th scope="col" class="cardtype1">Card Number</th>
                                       <th scope="col" class="cardtype">Expiration Date</th>
                                       <th scope="col" class="cardtype">Created Date</th>
                                       <th scope="col" class="cardtype">Action</th>
@@ -294,7 +294,7 @@
                                           <!-- <img src="assets/images/unsubscribe.svg" alt=""> -->
                                         <!-- </button>  -->
                                         <!-- <button *ngIf='!cardData.defaultSource' class='btn btn-primary setDefault_btn' (click)='setAsDefaultCard(cardData)'>Set Default</button> -->
-                                        <button  class="subsc" [disabled]="cardData.defaultSource === true" (click)='setAsDefaultCard(cardData)'><img src="assets/images/eyeIcon.svg" alt=""> </button>
+                                        <button  class="subsc" style="padding:0" [disabled]="cardData.defaultSource === true" (click)='setAsDefaultCard(cardData)'><img src="assets/images/Default_Card.svg" alt="" style="max-width: 60%;"> </button>
                                         <button class="subsc" [disabled]="cardData.defaultSource === true" (click)="paymodedel(cardData,i)"> <img src="assets/images/unsubscribe.svg" alt=""></button>
                                         <!-- <span  (click)="paymodedel(cardData,i)"> 
                                           <img src="assets/images/unsubscribe.svg" alt=""></span> -->

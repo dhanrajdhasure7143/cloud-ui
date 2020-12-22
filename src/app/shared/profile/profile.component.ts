@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, PipeTransform, Pipe } from '@angular/core';
+import { Component, OnInit, Input, PipeTransform, Pipe, ViewChild } from '@angular/core';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { User } from './../../_models/user';
 import { FormControl, FormGroup, Validators, NgForm, FormBuilder } from '@angular/forms';
@@ -17,6 +17,7 @@ import moment from 'moment';
 import { Observable } from 'rxjs';
 import { log } from 'console';
 import * as $ from 'jquery';
+import { TabsetComponent } from 'ngx-bootstrap';
 
 
 
@@ -34,6 +35,8 @@ export class ProfileComponent implements OnInit {
   @Input() public isCoupon: boolean;
   @Input() public isnotification: boolean;
   @Input() public isvaultMangment:boolean;
+  // @ViewChild('staticTabs') staticTabs: TabsetComponent;
+  @ViewChild('staticTabs') staticTabs: TabsetComponent;
   public model: User;
   public yearList:any;
   config = {
@@ -308,6 +311,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+   
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
@@ -358,6 +362,7 @@ this.getListofCoupons();
     })
     this.countryInfo = countries.Countries;
     this.useremail=localStorage.getItem('userName');
+    
   
 
 /**alerts */
@@ -547,9 +552,9 @@ console.log("my pdate data",this.updateSecretedata)
       
     }
    
-    if (this.isMyaccount == true) {
+    if (this.isMyaccount) {
       this.userDetails();
-
+     
     }
     this.getAllNotifications();
 
@@ -581,13 +586,21 @@ console.log("my pdate data",this.updateSecretedata)
       this.getAllDepartments()
       this. getAllStates();
       this.gatAllCities();
-
+      this.isRefresh = !this.isRefresh;
+      for (var i = 0; i < this.countryInfo.length; i++) {
+        if (this.countryInfo[i].CountryName == this.formOne.country) {
+          this.phnCountryCode = this.countryInfo[i].CountryCode
+          console.log("countryCode", this.countryInfo[i].CountryCode);
+        }
+      }
     })
+   
   }
   loopTrackBy(index, term) {
     return index;
   }
   slideDown() {
+    this.userDetails();
     this.inviteAllRoles = '';
     console.log("inside slidedown")
     this.invite_product="";
@@ -1234,21 +1247,34 @@ console.log("my pdate data",this.updateSecretedata)
 
       this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
         this.paymentToken=res
-        // if(this.paymentToken.errorMessage==="Failed to generate payment token"){
-        //   this.notifier.show({
-        //     type: "error",
-        //     message: "Please enter valid card details"
-        //   });
-        // } else {
+        if(this.paymentToken.errorMessage==="Failed to generate payment token"){
+          this.notifier.show({
+            type: "error",
+            message: "Please enter valid card details"
+          });
+        } else {
           
-        
-      this.profileservice.addNewCard(this.paymentToken,this.isdefault).subscribe(res=>{
+        console.log("paytoken",this.paymentToken.message)
+      this.profileservice.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
           // console.log('res',res);
           this.getAllPaymentmodes();
           this.modalRef.hide();
+          if(res===null){
+            this.notifier.show({
+              type: "success",
+              message: "Card added successfully!"
+            });
+          }
+          if(res.errorMessage==="Failed to create payment method"){
+            this.notifier.show({
+              type: "error",
+              message: "Failed to add card."
+            });
+          }
+         
       this.cardModel={}
       })
-    // }
+    }
       }),err=>{
         this.notifier.show({
           type: "error",
