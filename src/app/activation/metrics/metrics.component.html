@@ -1,45 +1,110 @@
 <div class="backgr">
   <div class="container-fluid">
     <br>
-    <div class="row" id="boxes">
-        <div *ngIf="userManagementresponse!=undefined" class=" col-md-2 text-center">
+    <div class="row" >
+      <div *ngIf="userManagementresponse!=undefined" class=" col-md-3 form-inline">
+        <div class="example-card form-inline" >
+          <div class="count-text form-group">
+            <span class="icon"><i class="fa fa-users text-primary" aria-hidden="true"></i></span>
+            &nbsp;&nbsp;&nbsp;
+          </div> 
+            Users
+            <div class="count-text form-group ">{{userManagementresponse.length}}</div>
+          </div>
+    </div>
+
+        <!-- <div *ngIf="userManagementresponse!=undefined" class=" col-md-2 text-center">
             <div class="divbox divbox0"><span class="text-white">
               Users<br>
               {{userManagementresponse.length}}
             </span></div>
-        </div>
+        </div> -->
+        <div *ngIf="departments!=undefined" class=" col-md-3 form-inline">
+          <div class="example-card form-inline" >
+            <div class="count-text form-group">
+              <span class="icon"><img  src="assets/images/department.svg"></span>
+              &nbsp;&nbsp;&nbsp;
+            </div> 
+              Departments
+              <div class="count-text form-group pull-right">{{departments.length}}</div>
+            </div>
+      </div>
   
-        <div *ngIf="departments!=undefined" class=" col-md-2 text-center">
+        <!-- <div *ngIf="departments!=undefined" class=" col-md-2 text-center">
           <div class="divbox divbox1"><span class="text-white">
             Departments<br>
             {{departments.length}}
           </span></div>
-      </div>
+      </div> -->
+      <div *ngIf="emailtemplateslist!=undefined" class=" col-md-3 form-inline">
+        <div class="example-card form-inline" >
+          <div class="email-text form-group">
+            <span class="icon"><i class="fa fa-envelope text-primary" aria-hidden="true"></i></span>
+            &nbsp;&nbsp;&nbsp;
+          </div> 
+            Email Templates
+            <div class="count-text form-group pull-right">{{emailtemplateslist.length}}</div>
+          </div>
+    </div>
   
-      <div *ngIf="emailtemplateslist!=undefined" class=" col-md-2 text-center">
+      <!-- <div *ngIf="emailtemplateslist!=undefined" class=" col-md-2 text-center">
         <div class="divbox divbox2"><span class="text-white">
           Email Templates<br>
           {{emailtemplateslist.length}}
         </span></div>
-    </div>
-  
-    <div  class=" col-md-2 text-center">
+    </div> -->
+    <div  class=" col-md-3 form-inline">
+      <div class="example-card form-inline" >
+        <div class="product-text form-group">
+          <span class="icon"><img  src="assets/images/Subscribed_products.svg"></span>
+          &nbsp;&nbsp;&nbsp;
+        </div> 
+          Subscriptions
+          <div class="count-text form-group pull-right">{{count}}</div>
+        </div>
+  </div><br> <br> <br>
+
+    <!-- <div  class=" col-md-2 text-center">
       <div class="divbox divbox3"><span class="text-white">
        Subscribed Products<br>
   {{count}}</span></div>
-  </div>
+  </div> -->
+</div>
+<br><br>
+<div class="row"> 
+  <div *ngIf="processnames!=undefined" class=" col-md-3 form-inline">
+    <div class="example-card form-inline" >
+      <div class="count-text form-group">
+        <span class="icon"><i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
+        &nbsp;&nbsp;&nbsp;
+      </div>
+        Processes
+        <div class="count-text form-group pull-right">{{processnames.length}}</div>
+      </div>
+</div>
+
   
-  <div  class=" col-md-2 text-center">
+  <!-- <div  class=" col-md-2 text-center">
     <div *ngIf="processnames!=undefined" class="divbox divbox4"><span class="text-white">
       Processes<br>
       {{processnames.length}}</span></div>
-  </div>
-  
-  <div  class=" col-md-2 text-center">
+  </div> -->
+  <div *ngIf="botnames!=undefined" class=" col-md-3 form-inline">
+    <div class="example-card form-inline" >
+      <div class="count-text form-group">
+        <span class="icon"><img  src="assets/images/android-logo.svg"></span>
+        &nbsp;&nbsp;&nbsp;
+      </div>
+       Bots
+        <div class="count-text form-group pull-right">{{botnames.length}}</div>
+      </div>
+</div>
+
+  <!-- <div  class=" col-md-2 text-center">
     <div *ngIf="botnames!=undefined" class="divbox divbox5"><span class="text-white">
       Bots<br>
       {{botnames.length}}</span></div>
-  </div>
+  </div> -->
   
     </div>
     <br><br>
@@ -50,7 +115,7 @@
             <div id="piechart1"  #containerRef class="box_shadw34"> 
             <ngx-charts-pie-chart
             [view]="[containerRef.offsetWidth, 300]"
-    [scheme]="{domain: ['#5AA454', '#A10A28']}"
+    [scheme]="{domain: ['#34568b', '#dd4124']}"
     [results]="registeredvsinvited"
     [gradient]="true"
     [legend]="true"
@@ -78,7 +143,7 @@
             <div id="piechart2" #containerRef class="box_shadw34">
                <ngx-charts-pie-chart
               [view]="[containerRef.offsetWidth, 300]"
-              [scheme]="{domain: ['#C7B42C', '#AAAAAA']}"
+              [scheme]="{domain: ['#98ddde', '#f2552c']}"
               [results]="alertsCountBasedOnType"
               [gradient]="true"
               [legend]="true"
@@ -109,7 +174,7 @@
   
         <div *ngIf="uservsrole!=0" class="col-md-5 text-center">
             <h5><b>User vs Role</b></h5>
-            <div id="uservsrolechart" #containerRef class="uservsrolechart">
+            <div id="uservsrolechart" #containerRef class="uservsrolechart"><br><br>
             <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme" [results]="uservsrole" [gradient]="gradient" [xAxis]="showXAxis"
             [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel">
@@ -126,10 +191,11 @@
        
         <div *ngIf="activityvsalert!=0" class="col-md-5  text-center">
             <h5><b>Activity vs Alert</b></h5>
-            <div id="activityvsalert" #containerRef class="activityvsalert">
+            <div id="activityvsalert" #containerRef class="activityvsalert"><br><br>
   <ngx-charts-bar-vertical-stacked
   [view]="[containerRef.offsetWidth, 400]"
         [results]="activityvsalert"
+        [scheme]="colorScheme2"
         [gradient]="gradient2"
         [xAxis]="showXAxis2"
         [yAxis]="showYAxis2"
@@ -145,7 +211,7 @@
   
         <div *ngIf="activityvsalert==0" class="col-md-5  text-center">
           <h5><b>Activity vs Alert</b></h5>
-          <div id="nodatafound" class="box_shadw34">
+          <div id="nodatafound" class="activityvsalert">
             <h3>No Data Available</h3>
           </div>
       </div>
@@ -188,7 +254,7 @@
         <div *ngIf="vaultkeycount!=0" class="col-md-5  text-center">
   
             <h5><b>Vault - Secret Name vs Key Count</b></h5>
-            <div id="secretvscount" #containerRef class="secretvscount">
+            <div id="secretvscount" #containerRef class="secretvscount"><br><br>
             <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme1" [results]="vaultkeycount" [gradient]="gradient1" [xAxis]="showXAxis1"
             [yAxis]="showYAxis1" [legend]="showLegend1" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel1" [showYAxisLabel]="showYAxisLabel1" [xAxisLabel]="xAxisLabel1"
             [yAxisLabel]="yAxisLabel1">
@@ -206,5 +272,26 @@
        
       <div class="col-md-4"></div>
     </div>
+<br><br><br>
+     <div class="row">
+      <div class="col-md-1"></div>
+      <div *ngIf="alerttransction!=0" class="col-md-8  text-center">
+
+        <h5 class="teus"><b>Alert Transactions</b></h5>
+        <div  id="alerttransaction"><br><br>
+        <canvas  id="linechart" style="width:100% !important ;height:300px !important;"></canvas> 
+        </div>
+       
+    </div>
+
+    <div class="col-md-1"></div>
+    
+    <div *ngIf="alerttransction==0" class="col-md-8  text-center">
+      <h5><b>Alert Transactions</b></h5>
+      <div id="nodatafound"   class="box_shadw34"> 
+        <h3>No Data Available</h3>
+ </div>
+  </div>
+  </div> 
   </div>
   </div>

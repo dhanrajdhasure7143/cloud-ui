@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, throwError, Subject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ContentfulService } from './../../contentful/services/contentful.service';
@@ -24,6 +24,14 @@ export class FirstloginService {
   }
   getAllDepartments(): Observable<any> {
     return this.http.get<any>(`/api/user/departments`);
+  }
+  getAllCategories(domain): Observable<any> {
+    const httpOps = {
+      headers: new HttpHeaders({
+        'domain': domain
+            })
+          }
+    return this.http.get<any>('/processintelligence/v1/processgraph/categories/domain',httpOps);
   }
   listofsubscriptions() : Observable<any> {
     return this.http.get<any>('/subscriptionservice/v1/subscriptions');

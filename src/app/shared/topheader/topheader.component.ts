@@ -46,6 +46,9 @@ export class TopheaderComponent implements OnInit {
   @ViewChild("toogleBtn") toogleBtn;
   logintype: string;
   isvaultMangment: boolean;
+  customUserRole: any;
+  userManagementEnabled: boolean = false;
+
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
                                                private router: ActivatedRoute, 
@@ -103,6 +106,18 @@ public myname:any[]
       this.userRole=role.message;
      
     })   
+    this.profileService.getCustomUserRole(2).subscribe(role=>{
+
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('UserManagement_Full')){
+          this.userManagementEnabled = true;
+        }
+
+      });
+     
+    })
+
    
     
     
@@ -121,7 +136,7 @@ public myname:any[]
         
         setTimeout(() => {
           this.spinner.hide();
-        }, 700);
+        }, 1600);
   }
 
 
@@ -148,7 +163,7 @@ public myname:any[]
     if(this.logintype == 'Azure'){
       
       window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
-
+      this.route.navigate(['/']);
     }else{
       this.route.navigate(['/']);
  }

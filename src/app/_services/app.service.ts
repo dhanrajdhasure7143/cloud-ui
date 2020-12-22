@@ -149,5 +149,43 @@ export class AppService {
     let url = '/api/user/inviteUsers?inviterMailId='+inviterMailId+'&inviteeMailId='+inviteeMailId;
     return this.http.post<any>(url,data)
     }
+
+    socialLogin(username: string) {
+
+      let headers = {};
+      let url = `/api/login/beta/token`;
+      const browser=this.getBrowserName();
+      let isSecurityManagerEnabled = this.config.isSecurityManagerEnabled;
+    
+      if(isSecurityManagerEnabled){
+        this.deviceInfo = this.deviceService.getDeviceInfo();
+        if(this.ipAddress == undefined)
+         this.ipAddress = '192.168.0.1';
+        headers = { 'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type' : 'W',
+      'browser': browser}
+        localStorage.setItem('ipAddress', this.ipAddress);
+       }
+      
+      if(isSecurityManagerEnabled){url = `/Idm/token`;}
+    
+        return this.http.post<any>(url, { 'userId' : username}, {headers})
+            .pipe(map(user => {
+    
+                if(isSecurityManagerEnabled){
+                  if(user.resp_data.accessToken){
+                                  localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
+                  CookieStore.set('token', user.resp_data.accessToken, {});
+                  }
+                }
+                else{
+                  if(user.accessToken){
+                  localStorage.setItem('currentUser', JSON.stringify(user));
+                  CookieStore.set('token', user.accessToken, {});
+                  }
+                }
+                this.setProperties();
+                return user;
+            }));
+      }
   
 }

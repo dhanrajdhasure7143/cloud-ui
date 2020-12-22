@@ -33,14 +33,17 @@
 }
 .types1{
     color:gray;
-    width:10% !important;
+    width:15%;
 
 }
 .types2{
     color:gray;
     width:15%;
 }
-
+.types3{
+    color:gray;
+    width:7%;
+}
 .slider_heading{
     background-color: #f4f4f4;
     height: 43px;
@@ -57,7 +60,11 @@
     font-weight: bold;
     
 }
-
+.vaultcss
+{
+    overflow: scroll;
+    height: 230px;
+}
 
 .cross_closeOne{
     font-size: 30px;
@@ -157,7 +164,7 @@
 }
 .alertspagination
  {
-     margin-left: 60%;
+    margin-left: 52%;
 }
 .permissionpagination
 {
@@ -165,7 +172,11 @@
 }
 .notificationpagination
 {
-    margin-left: 52%; 
+    margin-left:43%;
+}
+.superadminnotificationpagination
+{
+    margin-left:57%;
 }
 .alert
 {
@@ -220,7 +231,7 @@ th,td{
 
 .active, .btnOne:hover {
     // background-color: blue !important;
-    color: white;
+   // color: white;
     height:50px !important;
   }
 
@@ -365,6 +376,10 @@ th,td{
   }
 .cardtype{
     color:gray;
+}
+.cardtype1{
+    color:gray;
+    width: 25%;
 }
 .cardbox{
     border: 1px solid gray;
@@ -521,7 +536,9 @@ label{
       .buttonsblock button{
        margin-right: 20px;
       }
-    
+      .emailsblock button{
+          margin-right: 13px;
+      }
       .setDefault_btn{
         margin-left: 5px;
       }
@@ -597,6 +614,12 @@ label{
     margin-top: -45px;
     margin-right: 800px;
   }
+  .updtpswd1{
+    color: #f4f4f4;
+    border-radius: 20px;
+    margin-top: -45px;
+    margin-right: 450px;
+  }
   .pswd form {
       overflow-y: scroll !important;
     //   max-height : 180px !important;
@@ -628,7 +651,7 @@ button.btn.btn-primary.invite-button {
     font-weight: bold;
     border: #26c9EE;
     border-radius: 33px;
-    margin-top: 3px;
+    margin-top: -5px !important;
     margin-left: 109px;
 }
 .upload-container {
@@ -703,4 +726,61 @@ button.btn.btn-primary.invite-button {
   .vault-table{
     width: 100% !important;
 }
-    
+.twoFactor{
+    margin-top: 20px;
+    margin-left: 350px;
+  }
+  .updTwoFactor{
+    color: #f4f4f4;
+    border-radius: 20px;
+   // margin-top: -45px;
+   margin-left: -246px;
+    margin-right: 800px;
+  }
+  .factor form {
+      overflow-y: scroll !important;
+    //   max-height : 180px !important;
+      display: block;
+
+  }
+  .factor ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+.bottwofactor{
+    border-left: 5px  !important;
+    border-top: 0px;
+    border-right: 5px;
+    border-radius: 0px;
+    width: 60% !important;
+    padding-left: 0px !important;
+    margin-top: -27px;
+    margin-left: 51px;
+}
+    .typesss{
+        
+    color:gray;
+    width:20% !important;
+    }
+    .emailCs{
+        width: 100px !important;
+        word-wrap: break-word;
+    }
+    .roleCs{
+        width: 130px !important;
+
+    }
+    .edit-Btn{
+        float: left;
+    }
+    .action-btns{
+        width: 140px;
+    }
+    .userManagementpagination
+    {
+     margin-left: 55%;
+    }
+    .deptpagination{
+        margin-left: 52%;
+    }

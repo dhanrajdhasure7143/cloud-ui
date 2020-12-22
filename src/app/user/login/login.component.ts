@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
   public userRole:any = [];
   public show:boolean=true;
   public isOTP:boolean = false;
-  public twoFactorAuthenticationEnabled:boolean = true;
+  public twoFactorAuthenticationEnabled:boolean = false;
+  public twoFactorAuthConButton:boolean = true;
   public enteredOTP:boolean = false;
   public otp:any;
 
@@ -63,30 +64,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
-    console.log("status",this.twoFactorAuthenticationEnabled);
-    
-if(this.twoFactorAuthenticationEnabled){
-  console.log("came to if loop");
-  
+    //this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
   this.particles.getParticles();
+
+    
+// if(!this.twoFactorAuthConButton){
+  
   this.loginForm = this.formBuilder.group({
     username: [this.get('username') ? this.get('username') : '', Validators.required],
     password: [this.get('password') ? this.get('password') : '', Validators.required],
-    otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required],
+    
     rememberme: [false]
   });
 
-}else{
+// }else{
     
-  this.particles.getParticles();
-    this.loginForm = this.formBuilder.group({
-      username: [this.get('username') ? this.get('username') : '', Validators.required],
-      password: [this.get('password') ? this.get('password') : '', Validators.required],
-     // otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required, Validators.maxLength(5)],
-      rememberme: [false]
-    });
-  }
+    // this.loginForm = this.formBuilder.group({
+    //   username: [this.get('username') ? this.get('username') : '', Validators.required],
+    //   password: [this.get('password') ? this.get('password') : '', Validators.required],
+    //  // otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required, Validators.maxLength(5)],
+    //   rememberme: [false]
+    // });
+  //}
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     // this.checkbox.nativeElement.onchange = () => {
@@ -145,7 +144,7 @@ if(this.twoFactorAuthenticationEnabled){
 
     this.loading = true;
     //if two factor authentication is enabled 
-    if(this.twoFactorAuthenticationEnabled){
+    if(!this.twoFactorAuthConButton){
       
       this.authenticationService.validateOTP(this.f.username.value, this.f.otpNum.value).subscribe(data => {
 
@@ -196,7 +195,6 @@ if(this.twoFactorAuthenticationEnabled){
         }
 
       }
-      console.log(this.f);
       
       this.loading = false;
       this.session.startWatching(); 
@@ -205,7 +203,6 @@ if(this.twoFactorAuthenticationEnabled){
 
       // user details based on userId
       this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
-
 
 
       this.authenticate();
@@ -221,7 +218,6 @@ if(this.twoFactorAuthenticationEnabled){
 
  }
   checkSuccessCallback(data:any){
-    console.log('data',data);
     
     this.sharedData.setLoggedinUserData(data);
     // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
@@ -322,6 +318,44 @@ this.router.navigate(['/createaccount'])
   toggleOTP(){
     this.show = !this.show;
   }
+  onKeydown(event){
+    var emailpattern= new RegExp("^\S*[@]\S*[.]\S*$");
+    console.log("keyDown-Event", this.f.username.value);
+    var str = true;
+    if(str){
+      
 
+      
+      
+    }
+    
+  
+    
+
+  }
+ 
+  onEmailChange(){
+    this.isOTP=false;
+    this.twoFactorAuthConButton = true;
+    
+    if(this.f.username.valid){
+    this.profileService.getTwoFactroConfig(this.f.username.value).subscribe(res=>{
+      if(!res.message){
+        if(res.twoFactorEnabled == true){
+          this.loginForm.addControl('otpNum', this.formBuilder.control('',[Validators.required]))
+
+          this.twoFactorAuthConButton = false;
+        }else{
+          this.twoFactorAuthConButton = true;
+          this.loginForm.removeControl('otpNum')
+          
+        }
+      } else{
+        this.twoFactorAuthConButton = true;
+        this.loginForm.removeControl('otpNum')
+      }       
+    });
+  }
+  }
       
 }

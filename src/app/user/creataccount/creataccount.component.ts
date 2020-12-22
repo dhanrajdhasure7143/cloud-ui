@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { Particles } from '../../_models/particlesjs';
 import { LoginService } from '../_services/login.service';
 
@@ -44,6 +45,13 @@ export class CreataccountComponent implements OnInit {
   }
   resendVerificationMail(){
     this.loginservice.resendVerificationMail(this.userId).subscribe(res=>{
+      Swal.fire({
+        title: 'Success',
+        text: `Account activation email resent successfully !!`,
+        type: 'success',
+        showCancelButton: false,
+        allowOutsideClick: true
+      }) 
     });
     this.count++
     if(this.count== 2){
