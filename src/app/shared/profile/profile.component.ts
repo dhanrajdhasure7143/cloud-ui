@@ -616,6 +616,7 @@ console.log("my pdate data",this.updateSecretedata)
     return index;
   }
   slideDown() {
+    this.isSameDomain=false;
     this.userDetails();
     this.inviteAllRoles = '';
     console.log("inside slidedown")
