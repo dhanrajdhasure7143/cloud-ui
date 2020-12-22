@@ -297,6 +297,10 @@ export class ProfileComponent implements OnInit {
   emailRequired: boolean = false;
   tot: any=[];
   superadminnotificationList: any;
+  customUserRole: any;
+  userManagementEnabled: boolean = false;
+  myAccountFull: boolean = false;
+
 
 
   //dropdownSettings:IDropdownSettings;
@@ -311,6 +315,18 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.profileservice.getCustomUserRole(2).subscribe(role=>{
+
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('UserManagement_Full')){
+          this.userManagementEnabled = true;
+        }else if(element.permissionName.includes('MyAccount_Full')){}
+                 this.myAccountFull = true;
+      });
+     
+    })
+
    
     this.selectedIndex = '';
     this.getAllPaymentmodes();

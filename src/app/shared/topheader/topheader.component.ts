@@ -46,6 +46,9 @@ export class TopheaderComponent implements OnInit {
   @ViewChild("toogleBtn") toogleBtn;
   logintype: string;
   isvaultMangment: boolean;
+  customUserRole: any;
+  userManagementEnabled: boolean = false;
+
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
                                                private router: ActivatedRoute, 
@@ -103,6 +106,18 @@ public myname:any[]
       this.userRole=role.message;
      
     })   
+    this.profileService.getCustomUserRole(2).subscribe(role=>{
+
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('UserManagement_Full')){
+          this.userManagementEnabled = true;
+        }
+
+      });
+     
+    })
+
    
     
     

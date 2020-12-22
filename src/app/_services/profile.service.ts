@@ -290,4 +290,8 @@ getSuperadminNotifications(): Observable<any>{
 deletesuperadminNotifications(notificationid):Observable<any>{
   return this.http.delete<any>('/subscriptionservice/v1/subscriptions/deleteNotification?notificationId='+notificationid,{responseType:"json"})
 }
+getCustomUserRole(appID):Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/user/role/'+appID,httpOptions)
+}
+
 }

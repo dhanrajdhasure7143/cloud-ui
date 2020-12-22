@@ -173,7 +173,7 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('Admin')" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
                                     <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -225,7 +225,7 @@
                     </div>
                   </tab>
 
-                        <tab *ngIf="this.userRole.includes('Admin')" heading="Payment History" (selectTab)=onselectInvoiceTab()>
+                  <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -262,7 +262,7 @@
                         </div>
                       </tab>
                         
-                        <tab *ngIf="this.userRole.includes('Admin')" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
+                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -710,7 +710,7 @@
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
                             <tabset >
-                            <tab  *ngIf="this.userRole.includes('Admin')" heading="Users" id="tab1">
+                              <tab  *ngIf="this.userRole.includes('Admin') || this.userManagementEnabled" heading="Users" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -794,7 +794,7 @@
                                       </div>
                             </div>
                       </tab>
-                      <tab *ngIf="this.userRole.includes('Admin')" heading="Departments">
+                      <tab *ngIf="this.userRole.includes('Admin') || this.userManagementEnabled" heading="Departments">
                           <div class="search-One">
                               <form class="form-inline d-flex  md-form form-sm">
                                   <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchDept" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
