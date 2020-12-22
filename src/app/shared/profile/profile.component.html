@@ -187,7 +187,7 @@
                                   <th scope="col" class="types2" style="text-align:center">Subscription Id</th>
                                   <th scope="col" class="types2">Product</th>
                                   <th scope="col" class="types2">Plan</th>
-                                  <th scope="col" class="types2">Total Amount</th>
+                                  <!-- <th scope="col" class="types2">Total Amount</th> -->
                                   <th scope="col" class="types2">Base Amount</th>
                                   <th scope="col" class="types2">No.of Users</th>
                                   <th scope="col" class="types2">Status</th>
@@ -199,7 +199,7 @@
                                   <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
                                   <td>{{sdata.name}}</td>
                                   <td>{{sdata.planEntity.nickName}}</td>
-                                  <td >{{1000}}</td>
+                                  <!-- <td >{{1000}}</td> -->
                                   <td >${{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
                                   <td>{{sdata.noOfUsers}}</td>
                                   <td>{{sdata.status}}</td>
@@ -843,7 +843,7 @@
                                           
                                     </tbody>
                                   </table>
-                                  <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div>
+                                  <!-- <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div> -->
                                   <div class="deptpagination">
                                     <pagination-controls id="dept_page" maxSize="3" (pageChange)="dp = $event"></pagination-controls>
                                     </div>
