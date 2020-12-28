@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 networks:
   eps_net:
@@ -12,7 +12,11 @@ services:
   cloud-ui:
     image: nexus.epsoftinc.in/cloud-ui:${DOCKER_TAG}
     deploy:
-      mode: global
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.role.eiap.apps == 1  
     networks:
       - eps_net
     ports:
