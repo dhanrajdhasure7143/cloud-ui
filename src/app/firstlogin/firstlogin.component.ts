@@ -174,6 +174,16 @@ export class FirstloginComponent implements OnInit {
     onSuccessOfConfirmToken(response: any){
       this.isCompanydisabled = true;
       this.model.company = response.company;
+      let x = this.decodedToken.split("@");
+      this.domain = x[1];
+  this.service.getAllCategories(this.domain).subscribe(response=> {
+    this.departments = response.data;  
+    this.departments.forEach(element => {
+      this.categories.push(element.categoryName)
+      
+    });  
+    console.log("dropdown",this.categories)
+  })
      if(response.message === 'Invalid User Invite' || response.message === 'User Invitation  Already Confirmed'){
       this.router.navigate(['/user']);
      }
