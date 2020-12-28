@@ -1,7 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ProfileService } from 'src/app/_services/profile.service';
 import moment from 'moment';
 import Chart from 'chart.js';
+import { NgForm } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-metrics',
@@ -82,13 +84,36 @@ export class MetricsComponent implements OnInit {
   chart6: any;
  alerttransction: any;
   
+ modalRef: BsModalRef;
+ config = {
+  animated: false,
+  ignoreBackdropClick: true
+};
+years: any[];
+from_date: any;
+to_date: any;
+  fromyear: any=[];
+  toyear: any=[];
+  from_month: any;
+  to_month: any;
+  from_year: any=[];
+  months: any[];
 
-
-  constructor( private profileService:ProfileService) { }
+  constructor( private profileService:ProfileService,private modalService: BsModalService) { }
 
   ngOnInit() {
-    
+    let years=[];
+    let currentdate=new Date();
+    let year=currentdate.getFullYear()-10;
+    for(var i=1;i<11;i++)
+      years.push(year+i)
+    this.years=years;
     //this.alertsCountBasedOnType=[{"name":"No data found","value": "0"}];
+
+    let months=[];
+    months=["January","February","March","April","May","June","July",
+    "August","September","October","November","December"];
+    this.months=months;
 
     this.getVaultKeysCount();  
     this.getCardsCount();
@@ -105,6 +130,19 @@ export class MetricsComponent implements OnInit {
     this.getAlertTransactions();
   }
  
+  click(){
+    document.getElementById("drop").style.display='block';
+  }
+  openDialog(template){
+  this.modalRef = this.modalService.show(template,this.config)
+  
+}
+
+cancelFilter(){
+  this.modalRef.hide();
+  document.getElementById("drop").style.display='none';
+}
+
 getAllUsersList(){
 
   this.tenantId = localStorage.getItem("tenantName");
@@ -214,6 +252,85 @@ getListOfEmailTemplates()
         return arr;
       }
 
+      submitbydate(form:NgForm){
+        document.getElementById("drop").style.display='none';
+        this.tenantId=localStorage.getItem('tenantName');
+        this.alertuserroles=localStorage.getItem('userRole');
+        // this.profileService.getalerttransactions(this.tenantId).subscribe(alertresponse => {
+          // this.alert_main_list=alertresponse
+        let filterdata:any=[];
+        let success:any=[];
+        let failed:any=[];
+        let total:any=[];
+        let labels:any=[];
+        
+          let from:any=this.from_date;
+          let to:any=this.to_date;
+          let todate=new Date(to);
+          let fromdate=new Date(from);
+          
+          let date_array=this.dateranges(fromdate,todate);
+          date_array.forEach(date=>{
+            labels.push(moment(date).format("D-MM-YYYY"));
+            success.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Success')).length))
+            failed.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.type=='Failure')).length))
+            total.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+          });
+          this.linechart(labels,success,failed,total)
+          this.modalRef.hide();
+          document.getElementById("drop").style.display='none';
+          form.resetForm();
+       // });
+        }
+        submitbymonth(form:NgForm){
+          let success:any=[];
+          let failed:any=[];
+          let total:any=[];
+          let labels:any=[];
+          let year=this.from_year;
+          let from_month=this.from_month;
+          let to_month=this.to_month;
+          let months=["January","February","March","April","May","June","July",
+          "August","September","October","November","December"];
+          let finalmonths:any=months.slice(months.indexOf(from_month),months.indexOf(to_month)+1);
+          console.log(finalmonths);
+ 
+          finalmonths.forEach(date=>{
+            labels.push(date+"-"+year);
+            success.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("MMMM-YYYY")==(date+"-"+year) && alert.type=='Success')).length))
+            failed.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("MMMM-YYYY")==(date+"-"+year) && alert.type=='Failure')).length))
+            total.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("MMMM-YYYY")==(date+"-"+year))).length))
+          });
+          this.linechart(labels,success,failed,total)
+          this.modalRef.hide();
+          document.getElementById("drop").style.display='none';
+          form.resetForm();
+        }
+
+        submitbyyear(form:NgForm){
+          let success:any=[];
+          let failed:any=[];
+          let total:any=[];
+          let labels:any=[];
+          let from_year=this.fromyear;
+          let to_year=this.toyear;
+          console.log("from year",from_year)
+          let years:any=[];
+          for(let p=1; from_year<=to_year;p++)
+            years.push(from_year++);
+ 
+          years.forEach(date=>{
+            labels.push(date);
+            success.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("YYYY")==(date) && alert.type=='Success')).length))
+            failed.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("YYYY")==(date) && alert.type=='Failure')).length))
+            total.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("YYYY")==(date))).length))
+          });
+          this.linechart(labels,success,failed,total)
+          this.modalRef.hide();
+          document.getElementById("drop").style.display='none';
+          form.resetForm();
+        }
+        
       getAlertTransactions(){
         this.tenantId=localStorage.getItem('tenantName');
         this.alertuserroles=localStorage.getItem('userRole');
@@ -312,4 +429,13 @@ getListOfEmailTemplates()
                       });
     
       }
+}
+@Pipe({name: 'Slicedate'})
+export class Slicedate implements PipeTransform {
+  transform(value: any,arg:any)
+  {
+    let selectedArray:any=[]
+    selectedArray=value;
+    return selectedArray.slice(selectedArray.indexOf(arg),selectedArray.length);
+  }
 }
