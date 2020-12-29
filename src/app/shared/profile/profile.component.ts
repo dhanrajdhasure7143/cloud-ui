@@ -190,6 +190,9 @@ export class ProfileComponent implements OnInit {
   em=0;
   sn=0;
   emailtemp=0;
+  subtemp=0;
+  phtemp=0;
+  pmtemp=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];
@@ -1301,7 +1304,7 @@ console.log("my pdate data",this.updateSecretedata)
   
       // this.profileservice.addNewCard(token).subscribe(res=>{})
       // api call
-      
+      this.cardModel={}
     }
 /**alert */
 cancelAlert(){
