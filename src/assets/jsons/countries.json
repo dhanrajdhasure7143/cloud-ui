@@ -1357,40 +1357,7 @@
             "CountryName": "Anguilla",
             "CountryCode":"ai"
         },
-        {
-            "States": [
-                {
-                    "Cities": [],
-                    "StateName": "Sector claimed by Argentina\/Ch"
-                },
-                {
-                    "Cities": [],
-                    "StateName": "Sector claimed by Argentina\/UK"
-                },
-                {
-                    "Cities": [],
-                    "StateName": "Sector claimed by Australia"
-                },
-                {
-                    "Cities": [],
-                    "StateName": "Sector claimed by France"
-                },
-                {
-                    "Cities": [],
-                    "StateName": "Sector claimed by New Zealand"
-                },
-                {
-                    "Cities": [],
-                    "StateName": "Sector claimed by Norway"
-                },
-                {
-                    "Cities": [],
-                    "StateName": "Unclaimed Sector"
-                }
-            ],
-            "CountryName": "Antarctica"
-        },
-        {
+              {
             "States": [
                 {
                     "Cities": [
@@ -2788,7 +2755,7 @@
                     "StateName": "San Salvador"
                 }
             ],
-            "CountryName": "Bahamas The",
+            "CountryName": "Bahamas",
             "CountryCode":"bs"
         },
         {
@@ -11853,7 +11820,7 @@
                     "StateName": "Sud-Kivu"
                 }
             ],
-            "CountryName": "Congo The Democratic Republic Of The",
+            "CountryName": "Democratic Republic Of The Congo",
             "CountryCode":"cg"
         },
         {
@@ -16688,7 +16655,7 @@
                 }
             ],
             "CountryName": "Fiji Islands",
-            "CountryCode":"fz"
+            "CountryCode":"fj"
         },
         {
             "States": [
@@ -19051,7 +19018,7 @@
                     "StateName": "Mansakonko"
                 }
             ],
-            "CountryName": "Gambia The",
+            "CountryName": "Gambia",
             "CountryCode":"gm"
         },
         {
@@ -36109,7 +36076,7 @@
                     "StateName": "Zuid-Holland"
                 }
             ],
-            "CountryName": "Netherlands The",
+            "CountryName": "Netherlands",
             "CountryCode":"gl"
         },
         {
@@ -38815,7 +38782,7 @@
                 }
             ],
             "CountryName": "Serbia",
-            "CountryCode":"rs   "
+            "CountryCode":"rs"
         },
         {
             "States": [
