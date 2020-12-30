@@ -351,55 +351,6 @@
     </div>
   </ng-template>
 
-  <ng-template #byyear >
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
-      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
-        <span aria-hidden="true">&times;</span>
-      </button> -->
-    </div>
-    <div class="modal-body">
-    
-      <form (ngSubmit)="submitbyyear(byyear)" #byyear="ngForm">
-        <div class="form-group">
-        <label for="from">Select From year</label>
-        <select name="fromyear" class="form-control"  [(ngModel)]="fromyear" required>
-          <option [value]="undefined" disabled hidden>Select From year</option>
-          <option [value]="null" disabled hidden>Select From year</option>
-           <option *ngFor="let year of years"  [value]="year">{{year}}</option>
-    </select>  
-        </div>
-        <div class="form-group">
-          <label for="to">Select To Year</label>
-          <select name="toyear" class="form-control"  [(ngModel)]="toyear" required>
-            <option [value]="undefined" disabled hidden>Select To Year</option>
-            <option [value]="null" disabled hidden>Select To Year</option>
-             <option *ngFor="let year of years"  [value]="year">{{year}}</option>
-      </select> 
-          </div>
-
-          
-      
-        <div class="modal-footer">
-          <div class="">
-            <div class="col-12">
-        <div class="form-group form-buttons pull-right ">        
-          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
-          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
-        </div>
-        
-        <div class="clearfix">
-        </div>
-        </div>
-        </div>
-        </div>
-      </form>
-
-    
-
-    </div>
-  </ng-template>
-
   <ng-template #bymonth >
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
@@ -437,6 +388,56 @@
                <option *ngFor="let month of months | Slicedate : from_month" [value]="month">{{month}}</option>
         </select>
             </div>
+      
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right ">        
+          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
+          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+
+    
+
+    </div>
+  </ng-template>
+
+  <ng-template #byyear >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+    
+      <form (ngSubmit)="submitbyyear(byyear)" #byyear="ngForm">
+        <div class="form-group">
+        <label for="from">Select from year</label>
+        <select name="fromyear" class="form-control" #fromyear="ngModel" [(ngModel)]="yearmodel.fromyear_graph" required>
+          <option [value]="undefined" disabled hidden>Select From year</option>
+          <option [value]="null" disabled hidden>Select From year</option>
+           <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+    </select>  
+        </div>
+        <div class="form-group">
+          <label for="to">Select to year</label>
+          <!-- <input class="form-control" [(ngModel)]="from_month" type="month" id="from" name="from"> -->
+          <select name="toyear" class="form-control" #toyear="ngModel" [(ngModel)]="yearmodel.to_yeargraph" required>
+            <option [value]="undefined" disabled hidden>Select To year</option>
+            <option [value]="null" disabled hidden>Select To year</option>
+            <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+      </select>
+          </div>
+
+        
       
         <div class="modal-footer">
           <div class="">

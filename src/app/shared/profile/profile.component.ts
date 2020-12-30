@@ -2872,7 +2872,7 @@ console.log("alertbody",this.alertsbody)
       }else{
         this.notifier.show({
           type: "success",
-          message: "Configurations Updated successfully",
+          message: "Configuration Updated successfully",
           id: "123"
         });
       }

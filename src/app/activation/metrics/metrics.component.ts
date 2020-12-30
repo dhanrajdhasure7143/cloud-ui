@@ -92,13 +92,13 @@ export class MetricsComponent implements OnInit {
 years: any[];
 from_date: any;
 to_date: any;
-  fromyear: any=[];
-  toyear: any=[];
+  // fromyear: any=[];
+  // toyear: any=[];
   from_month: any;
   to_month: any;
   from_year: any=[];
   months: any[];
-
+  public yearmodel:any={};
   constructor( private profileService:ProfileService,private modalService: BsModalService) { }
 
   ngOnInit() {
@@ -312,9 +312,8 @@ getListOfEmailTemplates()
           let failed:any=[];
           let total:any=[];
           let labels:any=[];
-          let from_year=this.fromyear;
-          let to_year=this.toyear;
-          console.log("from year",from_year)
+          let from_year=this.yearmodel.fromyear_graph;
+          let to_year=this.yearmodel.to_yeargraph;
           let years:any=[];
           for(let p=1; from_year<=to_year;p++)
             years.push(from_year++);
