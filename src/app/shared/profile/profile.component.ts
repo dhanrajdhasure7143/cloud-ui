@@ -643,6 +643,7 @@ console.log("my pdate data",this.updateSecretedata)
      this.dataid = '';
      document.getElementById("foot").classList.add("slide-down");
      document.getElementById("foot").classList.remove("slide-up");
+     this.staticTabs.tabs[0].active = true;
   }
 
  
