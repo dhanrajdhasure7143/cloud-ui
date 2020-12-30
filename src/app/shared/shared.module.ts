@@ -19,7 +19,7 @@ import { BodyComponent } from './body/body.component';
 import { TrailheaderComponent } from './trailheader/trailheader.component';
 import { StepselectionComponent } from './stepselection/stepselection.component';
 import { FormsModule } from '@angular/forms';
-import { ProfileComponent, Tablereverse } from './profile/profile.component';
+import { ProfileComponent } from './profile/profile.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { SearchPipe } from './custom_pipe/searchpipe';
 import { ModalModule } from 'ngx-bootstrap';
@@ -46,7 +46,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
       InfopanelComponent,
       SystemComponent,
       UserComponent,
-      Tablereverse,
       NotificationComponent,
       TopheaderComponent,
       BodyComponent,

@@ -503,7 +503,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata | Tablereverse | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata  | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -566,7 +566,7 @@
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of emailtemplateslist | Tablereverse | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
+                                <tr *ngFor="let data of emailtemplateslist  | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
                                   <td style="text-align:center">{{data.templateName}}</td>
                                   <td style="text-align:center">{{data.templateSubject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
