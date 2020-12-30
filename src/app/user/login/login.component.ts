@@ -173,17 +173,16 @@ export class LoginComponent implements OnInit {
   this.authenticationService
   .login(this.f.username.value, this.f.password.value)
   .pipe(first())
-  .subscribe(
-    
-    data => {
+  .subscribe(data => {
+     
       if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
 
         this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
-        // Swal.fire({
-        //   type: 'error',
-        //   title:"Error!",
-        //   text: "Your account is temporarily locked for 3 hours."
-        // });
+        Swal.fire({
+          type: 'error',
+          title:"Error",
+          text: "Your account is temporarily locked for 3 hours!!"
+        });
          return
       }
       
@@ -208,9 +207,14 @@ export class LoginComponent implements OnInit {
       this.authenticate();
     },
     error => {
-
-      
-      this.error = "Email or Password is invalid.";
+      console.log("my error",error)
+      if(error.error.status=='LOCKED'){
+        this.error = "Account Locked !! Please try after 3 hrs.";
+      }
+      else{
+        this.error = "Email or Password is invalid.";
+      }
+    
       this.loading = false;
     },
     
