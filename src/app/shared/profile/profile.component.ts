@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, PipeTransform, Pipe, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { User } from './../../_models/user';
 import { FormControl, FormGroup, Validators, NgForm, FormBuilder } from '@angular/forms';
@@ -3000,14 +3000,4 @@ console.log("alertbody",this.alertsbody)
 
       this.inviteAllRoles = this.allRoles;
     }
-     }
-
-     @Pipe({name: 'Tablereverse'})
-    export class Tablereverse implements PipeTransform {
-      transform(value: any)
-      {
-         let values:any=[];
-         values=value;
-         return values.reverse();
-       }
      }
