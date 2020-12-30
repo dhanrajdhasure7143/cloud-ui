@@ -41,7 +41,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
         piendpoint=piendpoint+'/';
       }
 
-      if (((isSecurityManagerEnabled == true && req.url !== '/Idm/accessToken') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/accessToken')) && req.url !== '/api/login/beta/token' && req.url !== '/api/login/beta/newAccessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('generateOTP') < 0 && req.url.indexOf('validateOTP') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0 && req.url.indexOf('mailService') < 0 && req.url.indexOf('rpa-service') < 0 && req.url.indexOf('processintelligence') < 0 && req.url.indexOf('alertConfigurationService') < 0 && req.url.indexOf('http://api.ipify.org') < 0 ) {
+      if (((isSecurityManagerEnabled == true && req.url !== '/Idm/accessToken') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/accessToken')) &&  req.url !== '/api/login/beta/newAccessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('generateOTP') < 0 && req.url.indexOf('validateOTP') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0 && req.url.indexOf('mailService') < 0 && req.url.indexOf('rpa-service') < 0 && req.url.indexOf('processintelligence') < 0 && req.url.indexOf('alertConfigurationService') < 0 && req.url.indexOf('http://api.ipify.org') < 0 ) {
         req = req.clone({
          url: apiendpoint + req.url,
           body: req.body,

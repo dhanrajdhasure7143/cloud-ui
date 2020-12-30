@@ -1826,7 +1826,6 @@ deleteUserYes(user,index){
 
 
   })
-  this.getAllUsersList();
   
 
 
