@@ -21,7 +21,7 @@
                     <p *ngIf="!eachData.subscribed">Activate Free Tier
                     </p> </div> 
                     <div>
-                    <p class="expiryInfo" *ngIf="this.showexpiryinfo"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
+                    <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" title=" 20 Days To Expaire"></p>
                 </div>
               </div>
           </div>

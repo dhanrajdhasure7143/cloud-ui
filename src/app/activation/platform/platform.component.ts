@@ -50,44 +50,89 @@ export class PlatformComponent implements OnInit {
 
     })
     this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
-      console.log("productList", this.productslist)
-    this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
-      this.freetrailAvailed=data;
-      if(this.freetrailAvailed.Expirerin!=null){
-        this.remainingDays=this.freetrailAvailed.Expirerin;
-      }
-      else{
-        this.remainingDays=null;
-      }
-    })  
-    this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
-      console.log("productList", this.productslist)
-      
-      this.productslist.forEach(prod => {
+    this.productslist.forEach(prod => {
         // if(!prod.freetrailAvailed){}
          if(prod.id === "2.0"){
            prod.img = "assets/images/2.0.svg"
-           if(prod.subscribed==true&&this.remainingDays==null){
-             this.showexpiryinfo=false;
-             console.log("free trial completed")
- 
-           }
-           else if(prod.subscribed==true&&this.remainingDays>=1){
-             console.log("remaining days",this.remainingDays)
-             this.showexpiryinfo=true;
-           }
-           else if(prod.subscribed==false){
-             this.showexpiryinfo=false;
-             console.log("u need to subscribe")
-           }
+           this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
+             
+            this.freetrailAvailed=data;
+            if(this.freetrailAvailed.Expirerin!=null){
+              this.remainingDays=this.freetrailAvailed.Expirerin;
+              console.log("muy daataaaaaaaaaa",this.remainingDays)
+            }
+            else{
+              this.remainingDays=null;
+            }
+            if(prod.subscribed==true&&this.remainingDays==null){
+              this.showexpiryinfo=false;
+              console.log("free trial 2.0 completed")
+  
+            }
+            else if(prod.subscribed==true&&this.remainingDays>=1){
+              console.log("remaining days",this.remainingDays)
+              this.showexpiryinfo=true;
+            }
+            else if(prod.subscribed==false){
+              this.showexpiryinfo=false;
+           
+            }
+          }) 
+          
          }
-         if(prod.id === "ezflow"){
-           this.showexpiryinfo=false;
+        else if(prod.id === "ezflow"){
+          
            prod.img = "assets/images/ezflow.svg"
+           this.productlistservice.getFreeTierInfo('ezflow').subscribe(data=>{
+            this.freetrailAvailed=data;
+            if(this.freetrailAvailed.Expirerin!=null){
+              this.remainingDays=this.freetrailAvailed.Expirerin;
+            }
+            else{
+              this.remainingDays=null;
+            }
+            if(prod.subscribed==true&&this.remainingDays==null){
+              this.showexpiryinfo=false;
+              console.log("free trial ezflow completed")
+  
+            }
+            else if(prod.subscribed==true&&this.remainingDays>=1){
+              console.log("remaining days",this.remainingDays)
+              this.showexpiryinfo=true;
+            }
+            else if(prod.subscribed==false){
+              this.showexpiryinfo=false;
+              console.log("u need to subscribe ezf;pow")
+            }
+          }) 
+           
          }
-         if(prod.id === "ezbot"){
-           this.showexpiryinfo=false;
+       else  if(prod.id === "ezbot"){
+           
            prod.img = "assets/images/Ezbot.svg"
+           this.productlistservice.getFreeTierInfo('ezbot').subscribe(data=>{
+            this.freetrailAvailed=data;
+            if(this.freetrailAvailed.Expirerin!=null){
+              this.remainingDays=this.freetrailAvailed.Expirerin;
+            }
+            else{
+              this.remainingDays=null;
+            }
+            if(prod.subscribed==true&&this.remainingDays==null){
+              this.showexpiryinfo=false;
+              console.log("free trial ezbot completed")
+  
+            }
+            else if(prod.subscribed==true&&this.remainingDays>=1){
+              console.log("remaining days",this.remainingDays)
+              this.showexpiryinfo=true;
+            }
+            else if(prod.subscribed==false){
+              this.showexpiryinfo=false;
+              console.log("u need to subscribe ezbot")
+            }
+          }) 
+        
          }
  
         
@@ -108,7 +153,7 @@ export class PlatformComponent implements OnInit {
       // }else{
       //   this.productslist[1].title = 'Upgrade';
       // }
-        });
+        
   })
 }
 

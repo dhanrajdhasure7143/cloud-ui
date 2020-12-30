@@ -11,7 +11,8 @@
             </div>
         <span *ngIf='!error' class="col-md-12 row">
         <div class="col-md-3 plansBox" *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
-                <h4><span id="planName"><b>{{planlist.nickName}}</b></span> <span *ngIf="planlist.subscribed" class="current-plan">Current Plan</span></h4>
+                <h4><span id="planName"><b>{{planlist.nickName}}</b></span> <span *ngIf="planlist.subscribed" class="current-plan">Current Plan</span>
+                    <span *ngIf="planlist.subscribedEnterprise&&planlist.nickName =='Enterprise'" class="requested-plan">Requested</span></h4>
                 <h6 class="processes" *ngFor='let value of planlist.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
                         <label *ngIf="value.limited">Limited</label></span>
                     </h6>
