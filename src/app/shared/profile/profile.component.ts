@@ -333,7 +333,7 @@ export class ProfileComponent implements OnInit {
    
     this.selectedIndex = '';
     this.getAllPaymentmodes();
-    //this.getAllProducts();
+    this.getAllProducts();
     this.getAllKeys();
     this.emailvalue = "false";
     //this.formTwoFactor.enableTwoFactor = false;
