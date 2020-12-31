@@ -416,6 +416,7 @@ this.profileservice.applications().subscribe(resp =>
              
           elementuser.userId['roleIdname']=this.roleArray;
           elementuser.userId['created_at']=elementuser.created_at;
+          elementuser.userId['department']=elementuser.userId.department;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
           }else if(elementuser.userId.enabled == 'false'){
