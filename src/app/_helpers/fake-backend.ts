@@ -117,7 +117,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
          });
         }
       else {
-      if(isSecurityManagerEnabled &&  req.url == '/Idm/accessToken'){
+      if(isSecurityManagerEnabled &&  req.url == '/Idm/accessToken') || (isSecurityManagerEnabled &&  req.url == '/Idm/token'){
          tokenendpoint = proxyTokenendpoint;
       }
         req = req.clone({
