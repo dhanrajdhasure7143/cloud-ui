@@ -35,6 +35,10 @@ export class PlatformComponent implements OnInit {
   public selectedIdValue:boolean=false;
   showexpiryinfo: boolean=false;
   userRole: any = [];
+  showexpiryinfoezflow: boolean=false;
+  showexpiryinfoezbot: boolean=false;
+  remainingDaysezflow: any;
+  remainingDaysezbot: number;
   constructor(private router: Router,
     private productlistservice:ProductlistService,
     public userService: UserService,
@@ -49,7 +53,14 @@ export class PlatformComponent implements OnInit {
       this.userRole = role.message;
 
     })
+   
     this.productlistservice.getAllProducts().subscribe(data => {this.productslist = data
+      this.products=this.productslist;
+      this.products.forEach(element => {
+            if(element.meta.visible=='true'){
+                   this.visibletest.push(element)
+                }
+                  });
     this.productslist.forEach(prod => {
         // if(!prod.freetrailAvailed){}
          if(prod.id === "2.0"){
@@ -86,22 +97,22 @@ export class PlatformComponent implements OnInit {
            this.productlistservice.getFreeTierInfo('ezflow').subscribe(data=>{
             this.freetrailAvailed=data;
             if(this.freetrailAvailed.Expirerin!=null){
-              this.remainingDays=this.freetrailAvailed.Expirerin;
+              this.remainingDaysezflow=this.freetrailAvailed.Expirerin;
             }
             else{
-              this.remainingDays=null;
+              this.remainingDaysezflow=null;
             }
-            if(prod.subscribed==true&&this.remainingDays==null){
-              this.showexpiryinfo=false;
+            if(prod.subscribed==true&&this.remainingDaysezflow==null){
+              this.showexpiryinfoezflow=false;
               console.log("free trial ezflow completed")
   
             }
-            else if(prod.subscribed==true&&this.remainingDays>=1){
-              console.log("remaining days",this.remainingDays)
-              this.showexpiryinfo=true;
+            else if(prod.subscribed==true&&this.remainingDaysezflow>=1){
+              console.log("remaining days",this.remainingDaysezflow)
+              this.showexpiryinfoezflow=true;
             }
             else if(prod.subscribed==false){
-              this.showexpiryinfo=false;
+              this.showexpiryinfoezflow=false;
               console.log("u need to subscribe ezf;pow")
             }
           }) 
@@ -113,22 +124,22 @@ export class PlatformComponent implements OnInit {
            this.productlistservice.getFreeTierInfo('ezbot').subscribe(data=>{
             this.freetrailAvailed=data;
             if(this.freetrailAvailed.Expirerin!=null){
-              this.remainingDays=this.freetrailAvailed.Expirerin;
+              this.remainingDaysezbot=this.freetrailAvailed.Expirerin;
             }
             else{
-              this.remainingDays=null;
+              this.remainingDaysezbot=null;
             }
-            if(prod.subscribed==true&&this.remainingDays==null){
-              this.showexpiryinfo=false;
+            if(prod.subscribed==true&&this.remainingDaysezbot==null){
+              this.showexpiryinfoezbot=false;
               console.log("free trial ezbot completed")
   
             }
-            else if(prod.subscribed==true&&this.remainingDays>=1){
-              console.log("remaining days",this.remainingDays)
-              this.showexpiryinfo=true;
+            else if(prod.subscribed==true&&this.remainingDaysezbot>=1){
+              console.log("remaining days",this.remainingDaysezbot)
+              this.showexpiryinfoezbot=true;
             }
             else if(prod.subscribed==false){
-              this.showexpiryinfo=false;
+              this.showexpiryinfoezbot=false;
               console.log("u need to subscribe ezbot")
             }
           }) 
@@ -141,12 +152,7 @@ export class PlatformComponent implements OnInit {
       //this.productslist[1].img="assets/images/2.0.svg";
       // this.productslist[1].freetier=false;
       // this.productslist[1].expirytime=10;
-      this.products=this.productslist;
-      this.products.forEach(element => {
-            if(element.meta.visible=='true'){
-                   this.visibletest.push(element)
-                }
-                  });
+    
      
       // if( this.productslist[1].freetier == true){
       //   this.productslist[1].title = 'Active Free Tier';
@@ -155,6 +161,7 @@ export class PlatformComponent implements OnInit {
       // }
         
   })
+  console.log("visibletest",this.visibletest)
 }
 
 
