@@ -133,3 +133,61 @@ h5.teus {
   font-size: 16px;
   margin-left: 4px
 }
+.graph-card {
+  position: relative;
+  width: 100% !important;
+  background-color:white;
+  padding:10px;
+  border-radius:10px;
+
+  min-height:420px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+  .bar-chart{
+    height:400px !important;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 91%;
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 142px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    
+  }
+  
+  .dropdown-content {
+    display: none;
+  }
+
+  
+
+  .btn:hover {background-color: #31ad61}
+  
+  .cancel_alert_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .btn_alert_save
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
+    margin-left: 11px;
+  }
+  .dots
+  {
+    margin-top: -54px;
+    margin-left: 95%;
+  }

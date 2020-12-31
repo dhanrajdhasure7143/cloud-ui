@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, PipeTransform, Pipe, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { User } from './../../_models/user';
 import { FormControl, FormGroup, Validators, NgForm, FormBuilder } from '@angular/forms';
@@ -190,6 +190,9 @@ export class ProfileComponent implements OnInit {
   em=0;
   sn=0;
   emailtemp=0;
+  subtemp=0;
+  phtemp=0;
+  pmtemp=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];
@@ -413,6 +416,7 @@ this.profileservice.applications().subscribe(resp =>
              
           elementuser.userId['roleIdname']=this.roleArray;
           elementuser.userId['created_at']=elementuser.created_at;
+          elementuser.userId['department']=elementuser.userId.department;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
           }else if(elementuser.userId.enabled == 'false'){
@@ -640,6 +644,7 @@ console.log("my pdate data",this.updateSecretedata)
      this.dataid = '';
      document.getElementById("foot").classList.add("slide-down");
      document.getElementById("foot").classList.remove("slide-up");
+     this.staticTabs.tabs[0].active = true;
   }
 
  
@@ -1301,7 +1306,7 @@ console.log("my pdate data",this.updateSecretedata)
   
       // this.profileservice.addNewCard(token).subscribe(res=>{})
       // api call
-      
+      this.cardModel={}
     }
 /**alert */
 cancelAlert(){
@@ -1823,7 +1828,6 @@ deleteUserYes(user,index){
 
 
   })
-  this.getAllUsersList();
   
 
 
@@ -2870,7 +2874,7 @@ console.log("alertbody",this.alertsbody)
       }else{
         this.notifier.show({
           type: "success",
-          message: "Configurations Updated successfully",
+          message: "Configuration Updated successfully",
           id: "123"
         });
       }
@@ -2997,14 +3001,4 @@ console.log("alertbody",this.alertsbody)
 
       this.inviteAllRoles = this.allRoles;
     }
-     }
-
-     @Pipe({name: 'Tablereverse'})
-    export class Tablereverse implements PipeTransform {
-      transform(value: any)
-      {
-         let values:any=[];
-         values=value;
-         return values.reverse();
-       }
      }

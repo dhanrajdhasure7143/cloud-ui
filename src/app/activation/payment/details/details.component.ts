@@ -98,10 +98,10 @@ export class DetailsComponent implements OnInit {
     if(localStorage.getItem('cardholdername')!=undefined){
       if(localStorage.getItem('selectedplan')!='Free Tier')
     {
-    this.cardname=false;
-    this.number=false;
-    this.expmonth=false;
-    this.expyear=false;
+      this.cardname=true;
+      this.number=true;
+      this.expmonth=true;
+      this.expyear=true;
     }
     console.log("inside onchange",this.paymentMode)
 

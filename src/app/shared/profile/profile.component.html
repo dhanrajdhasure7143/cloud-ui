@@ -194,7 +194,7 @@
                                   <th scope="col" class="types2">Action</th>
                                 </tr>
                               </thead>
-                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | paginate: {id:'sub_page', itemsPerPage:4 , currentPage: subtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
                                 <tr  >
                                   <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
                                   <td>{{sdata.name}}</td>
@@ -222,6 +222,9 @@
                                 </tr>
                               </tbody>
                             </table>
+                            <div  class="alertspagination">
+                              <pagination-controls id="sub_page" maxSize="8" (pageChange)="subtemp = $event"></pagination-controls>
+                              </div>
                     </div>
                   </tab>
 
@@ -247,7 +250,7 @@
                                     </tr>
                                   </thead>
                                   <tbody >
-                                    <tr *ngFor="let invdata of invoicedata | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                                    <tr *ngFor="let invdata of invoicedata | paginate: {id:'ph_page', itemsPerPage:4 , currentPage: phtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
                                       <td>{{invdata.invoiceNumber}}</td>
                                       <td>{{invdata.subscriptionId}}</td>
                                       <td>${{invdata.amount}}.00 </td>
@@ -259,6 +262,9 @@
                                     </tr>
                                   </tbody>
                                 </table>
+                                <div  class="alertspagination">
+                                  <pagination-controls id="ph_page" maxSize="8" (pageChange)="phtemp = $event"></pagination-controls>
+                                  </div>
                         </div>
                       </tab>
                         
@@ -277,18 +283,20 @@
                                       <th scope="col" class="cardtype">Card Type</th>
                                       <th scope="col" class="cardtype1">Card Number</th>
                                       <th scope="col" class="cardtype">Expiration Date</th>
+                                      <th scope="col" class="cardtype">Created By</th>
                                       <th scope="col" class="cardtype">Created Date</th>
                                       <th scope="col" class="cardtype">Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr *ngFor="let cardData of paymentMode | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
+                                    <tr *ngFor="let cardData of paymentMode | paginate: {id:'pm_page', itemsPerPage:2 , currentPage: pmtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
                                       <td>{{cardData.cardBrand|titlecase}}</td>
                                       <td class="cardtable">XXXX-XXXX-XXXX-{{cardData.cardLast4}} 
                                         <!-- <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td> -->
                                         <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span> 
                                       <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
-                                      <td>{{cardData.created | date}}</td>
+                                      <td>{{cardData.name}}</td>
+                                      <td>{{cardData.created | date:'medium'}}</td>
                                       <td >
                                         <!-- <button aria-hidden="true" *ngIf='!cardData.defaultSource' class="btn btn-danger remov_btn"  (click)="deletCard(cardData,i)">Remove -->
                                           <!-- <img src="assets/images/unsubscribe.svg" alt=""> -->
@@ -327,6 +335,9 @@
                                     </tr>
                                   </tbody>
                                 </table>
+                                <div  class="alertspagination">
+                                  <pagination-controls id="pm_page" maxSize="8" (pageChange)="pmtemp = $event"></pagination-controls>
+                                  </div>
                         </div>
                       </tab>
 
@@ -463,7 +474,7 @@
                
                 <div class="container" *ngIf="isAlerts">
                   <div  class="">
-                    <tabset >
+                    <tabset id="staticTabs" #staticTabs>
                     <tab  *ngIf="this.userRole.includes('Admin')" heading="Alerts" id="tab1">
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
@@ -492,7 +503,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata | Tablereverse | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata  | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -555,7 +566,7 @@
                                 </tr>
                               </thead>
                               <tbody >
-                                <tr *ngFor="let data of emailtemplateslist | Tablereverse | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
+                                <tr *ngFor="let data of emailtemplateslist  | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
                                   <td style="text-align:center">{{data.templateName}}</td>
                                   <td style="text-align:center">{{data.templateSubject}}</td>
                                   <td style="text-align:center">{{data.templateBody}}</td>
@@ -709,7 +720,7 @@
 
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
-                            <tabset >
+                            <tabset id="staticTabs" #staticTabs>
                               <tab  *ngIf="this.userRole.includes('Admin') || this.userManagementEnabled" heading="Users" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
@@ -725,7 +736,7 @@
                                           <th scope="col" class="emailCs">Email</th>
                                           <!-- <th scope="col" class="types1">LName</th> -->
                                           <th scope="col" class="">Designation</th>
-                                          <th scope="col" class="">Organisation</th>
+                                          <th scope="col" class="">Department</th>
                                           <!-- <th scope="col" class="types">Department</th> -->
                                           <th scope="col" class="">Product</th>
                                           <th scope="col" class="roleCs">Roles</th>
@@ -741,7 +752,7 @@
                                           <td class="emailCs">{{userdata.userId}}</td>
                                           <!-- <td>{{userdata.lastName}}</td> -->
                                           <td>{{userdata.designation}}</td>
-                                            <td>{{userdata.company}}</td>
+                                            <td>{{userdata.department}}</td>
                                             <!-- <td>{{userdata.department}}</td> -->
                                             <td >{{userdata.applicationIdname}}</td>
                                             <td class="">{{userdata.roleIdname}}</td>
@@ -1369,12 +1380,12 @@
       </form>
           </ng-template>
           <ng-template #addCard >
-            <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="addNewCard()" class="card_form">
+            <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="addNewCard(addpaymentmode)" class="card_form">
                     <div class="modal-header">
                         <h4 class="modal-title" id="modal-basic-title" >Add Card</h4>
-                        <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+                         <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
                           <span aria-hidden="true">&times;</span>
-                        </button>
+                        </button>  -->
                       </div>
             
                     <div class="modal-body">
@@ -1449,7 +1460,7 @@
                     <div class="">
                       <div class="col-12">
                   <div class="form-group form-buttons pull-right buttonsblock">        
-                      <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddCard()"><div class="anim"></div> Cancel</button> -->
+                     <button class="btn btn-secondary cancel_btn" type="button"  aria-label="Close" (click)="cancelAddCard()"><div class="anim"></div> Cancel</button>
                       <button class="btn btn-primary updatepermbtn" [disabled] = "addpaymentmode.invalid" type="submit"><div class="anim"></div> Save</button>
                   </div>
                   
@@ -1602,7 +1613,7 @@
             <ng-template #configAlerts >
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Create Alert</h4>
-                <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+                 <!-- <button type="reset" class="close" aria-label="Close" (click)="cancelAlert()">
                   <span aria-hidden="true">&times;</span>
                 </button> -->
               </div>
@@ -1725,9 +1736,9 @@
            <ng-template #configEmail >
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title" >Create Template</h4>
-              <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+              <!-- <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
                 <span aria-hidden="true">&times;</span>
-              </button>
+              </button> -->
             </div>
             <form autocomplete="off" id="configureemail" name="configureemail" #configureemail="ngForm">
             <div class="modal-body">
@@ -1882,9 +1893,9 @@
 <ng-template #vaultconfiguration >
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" >Configure Vault</h4>
-    <button type="button" class="close" aria-label="Close" (click)="cancelVaultconfig()">
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelVaultconfig()">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> -->
   </div>
   <form autocomplete="off" id="vaultconfig" name="vaultconfig" #vaultconfig="ngForm"  (ngSubmit)="saveVaultConfig(vaultconfig)">
   <div class="modal-body">
@@ -1946,9 +1957,9 @@
 
               <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Modify Role</h4>
-                <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                <!-- <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
                   <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
               </div>
     
             <div class="modal-body">
@@ -1993,8 +2004,9 @@
                             </div>
                                          
                                  
-                      <div class="col-md-12 submitbtn float-right">
-                        <button class="btn btn-primary clearbtn" (click)="modifyrole(roledata)">Update</button>
+                      <div class="col-md-12 submitbtn">
+                        <button class="btn btn-secondary cancel_btn" type="reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
+                        <button class="btn btn-primary updaterolebtn" (click)="modifyrole(roledata)">Update</button>
                       </div>
                    </div>
               </ng-template>
@@ -2006,9 +2018,9 @@
                           <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()"> 
                           <span aria-hidden="true">&times;</span>
                         </button>-->
-                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                           <span aria-hidden="true">&times;</span>
-                        </button>
+                        </button> -->
                    
                     </div>
                     <form autocomplete="off" #updateUserRole="ngForm">
@@ -2051,8 +2063,8 @@
                       <div class="col-12">
                         <div class="col-md-12">
                           <div class="form-group form-buttons pull-right buttonsblock">
-                          <!-- <button class="btn btn-secondary cancel_btn" tyep = "reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button> -->
-                          <button [disabled]="updateUserRole.invalid || showErr" class="btn btn-primary btn-rounded btn-block my-4 waves-effect update_alert" (click)="modifyUserRole(roleListdata)">Update</button>
+                           <button class="btn btn-secondary cancel_btn" type = "reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
+                          <button [disabled]="updateUserRole.invalid || showErr" class="btn btn-primary clearbtn" (click)="modifyUserRole(roleListdata)">Update</button>
                         </div>
                       </div>
                   <div class="clearfix">
@@ -2067,9 +2079,9 @@
                 <form autocomplete="off" #addrole="ngForm" (ngSubmit)="createNewRole()" class="card_form">
                         <div class="modal-header">
                             <h4 class="modal-title" id="modal-basic-title" >Add Role</h4>
-                            <button type="button" class="close" aria-label="Close" (click)="cancelAddRole()">
+                            <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddRole()">
                               <span aria-hidden="true">&times;</span>
-                            </button>
+                            </button> -->
                           </div>
                 
                         <div class="modal-body">
@@ -2125,7 +2137,7 @@
                         <div class="">
                           <div class="col-12">
                       <div class="form-group form-buttons pull-right buttonsblock">        
-                          <!-- <button class="btn btn-primary cancelrole_btn" type="reset" (click)="cancelAddRole()"><div class="anim"></div> Cancel</button> -->
+                          <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddRole()"><div class="anim"></div> Cancel</button> 
                           <button [disabled]="addrole.invalid " class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
                       </div>
                       
@@ -2144,9 +2156,9 @@
                   <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="createNewPermission()" class="card_form">
                           <div class="modal-header">
                               <h4 class="modal-title" id="modal-basic-title" >Add Permission</h4>
-                              <button type="button" class="close" aria-label="Close" (click)="cancelAddPermission()">
+                              <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddPermission()">
                                 <span aria-hidden="true">&times;</span>
-                              </button>
+                              </button> -->
                             </div>
                   
                           <div class="modal-body">
@@ -2185,7 +2197,7 @@
                           <div class="">
                             <div class="col-12">
                         <div class="form-group form-buttons pull-right buttonsblock">        
-                            <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button> -->
+                             <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button>
                             <button class="btn btn-primary clearbtn" [disabled]="addpaymentmode.invalid " type="submit"><div class="anim"></div> Save</button>
                         </div>
                         
@@ -2203,9 +2215,9 @@
 
                     <div class="modal-header">
                       <h4 class="modal-title" id="modal-basic-title" >Modify Permission</h4>
-                      <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                      <!-- <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
                         <span aria-hidden="true">&times;</span>
-                      </button>
+                      </button> -->
                     </div>
           
                   <div class="modal-body">
@@ -2241,6 +2253,7 @@
                                       
                                        
                             <div class="col-md-12 submitbtn">
+                              <button class="btn btn-secondary cancel_btn" type="reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
                               <button class="btn btn-primary updatepermbtn" (click)="modifyperm(permdata)">Update</button>
                             </div>
                           </div>
@@ -2251,9 +2264,9 @@
                   <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon()" >
                   <div class="modal-header">
                     <h4 class="modal-title" id="modal-basic-title" >Create Coupon</h4>
-                    <button type="button" class="close" aria-label="Close" (click)="cancelCreateCopon()">
+                    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelCreateCopon()">
                       <span aria-hidden="true">&times;</span>
-                    </button>
+                    </button> -->
                   </div>
                   <div class="modal-body">
                     <div class="">
@@ -2355,7 +2368,7 @@
                                 <div class="">
                                   <div class="col-12">
                               <div class="form-group form-buttons pull-right  buttonsblock">        
-                                  <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelCreateCopon()"><div class="anim"></div> Cancel</button> -->
+                                 <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelCreateCopon()"><div class="anim"></div> Cancel</button>
                                   <button class="btn btn-primary clearbtn" [disabled] = "couponform.invalid" type="submit"><div class="anim"></div> Create</button>
                               </div>
                               
@@ -2374,17 +2387,17 @@
                       
                             <div class="modal-header">
                                 <h4 class="modal-title">Modify Coupon</h4>
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                                   <span aria-hidden="true">&times;</span>
-                                </button>
+                                </button> -->
                             </div >
                             <div class="modal-body">
-                            <div class="col-md-12 infocheck">
+                            <div class="col-md-12 infocheck" style="margin-left: -3%;">
       
                              <label for="coupon">Coupon Name </label>
                               <input type="text"  name="coupon" #coupon="ngModel" class="form-control botmbordr" [(ngModel)]="coupondata.name"/>     
                                         </div>
-                            <div class="col-md-12 infocheck">
+                            <div class="col-md-12 infocheck" style="margin-left: -3%;">
                               <label for="couponName">Coupon ID  </label>
                               <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="coupondata.id"/>     
            
@@ -2429,7 +2442,8 @@
                                                
                                        
                             <div class="col-md-12 submitbtn">
-                              <button class="btn btn-primary updatepermbtn" (click)="modifycoupon(coupondata)" [disabled]='isupdatecouponclicked'>Update</button>
+                              <button class="btn btn-secondary cancel_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
+                              <button class="btn btn-primary updatecouponmbtn" (click)="modifycoupon(coupondata)" [disabled]='isupdatecouponclicked'>Update</button>
                             </div>
                          </div>
                       
@@ -2444,9 +2458,9 @@
   <form autocomplete="off" #vaultform="ngForm" (ngSubmit)="createNewSecret(vaultform)" >
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" >Create Secret</h4>
-    <button type="button" class="close" aria-label="Close" (click)="cancelAddSecrete()">
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddSecrete()">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> -->
   </div>
   <div class="modal-body">
     <div class="">
@@ -2496,7 +2510,7 @@
                 <div class="">
                   <div class="col-12">
               <div class="form-group form-buttons pull-right  buttonsblock">        
-                  
+                <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddSecrete()"><div class="anim"></div> Cancel</button>
                   <button class="btn btn-primary clearbtn" [disabled]="vaultform.invalid || showErr"   type="submit"><div class="anim"></div> Create</button>
               </div>
               
@@ -2512,9 +2526,9 @@
     <form autocomplete="off" #adddept="ngForm" (ngSubmit)="createNewDept()" class="card_form">
             <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Add Department</h4>
-                <button type="button" class="close" aria-label="Close" (click)="cancelAddDept()">
+                <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddDept()">
                   <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
               </div>
     
             <div class="modal-body">
@@ -2532,7 +2546,7 @@
             <div class="">
               <div class="col-12">
           <div class="form-group form-buttons pull-right buttonsblock">        
-              <!-- <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button> -->
+              <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddDept()"><div class="anim"></div> Cancel</button>
               <button class="btn btn-primary clearbtn" [disabled]="adddept.invalid " type="submit"><div class="anim"></div> Save</button>
           </div>
           
@@ -2546,9 +2560,9 @@
 
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title" >Modify Department</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+        <!-- <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button> -->
       </div>
 
     <div class="modal-body">
@@ -2557,7 +2571,8 @@
                 <input type="text"  name="dept" maxlength="20" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="categoryname" required/>     
          </div>
          <div class="col-md-12 submitbtn">
-                <button class="btn btn-primary updatepermbtn" (click)="modifydept()">Update</button>
+          <button class="btn btn-secondary cancel_btn" type="reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
+          <button class="btn btn-primary updatepermbtn" (click)="modifydept()">Update</button>
          </div>
     </div>
       </ng-template>

@@ -61,7 +61,12 @@ export class SuperadminmetricsComponent implements OnInit {
   public rolesgraph:boolean=false;
   
 
-  constructor(private profileService:ProfileService) { }
+  constructor(private profileService:ProfileService) { 
+
+    this.profileService.getRolesAndPermissionKpi().subscribe(count=>{
+      this.permissions=count
+    })
+  }
 
   ngOnInit() {
 
@@ -69,9 +74,7 @@ $("#Permissionbarchart").hide();
 $("#subscriptionsbarchart").hide();
 $("#tenantsubscription").hide();
 
-this.profileService.getRolesAndPermissionKpi().subscribe(count=>{
-  this.permissions=count
-})
+
 
 this.getsubscriptionAndProducts();
 this.getSubscriptionsdetails();

@@ -45,12 +45,8 @@ export class SocialLoginComponent implements OnInit {
    let userName = {
      "userId" : userId
    }
-  this.authenticationService.getToken(userName).subscribe(user => {
-    console.log("accessToken", user)
-      if(user.accessToken){
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        CookieStore.set('token', user.accessToken, {});
-        }
+  this.appService.socialLogin(userId).subscribe(user => {
+    
     
     //localStorage.setItem('currentUser',JSON.stringify({"token":data}))
     //localStorage.setItem('currentUser', JSON.stringify(user.resp_data));

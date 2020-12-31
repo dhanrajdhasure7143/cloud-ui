@@ -176,7 +176,7 @@
 }
 .superadminnotificationpagination
 {
-    margin-left:57%;
+    margin-left:43%;
 }
 .alert
 {
@@ -298,15 +298,14 @@ th,td{
 .set_default{
     margin-left : 15px
 }
-.updatepermbtn{
+
+.updatecouponmbtn,.updaterolebtn,.updatepermbtn{
     border-radius: 20px;
     height: 30px;
     width: 100px;
     border: 0px;
     padding:0px;
-    margin-top: 10px;
-    margin-left: 150px;
-
+    margin-left: 26px;
 }
 .clearbtn{
     border-radius: 20px;
@@ -314,8 +313,7 @@ th,td{
     width: 100px;
     border: 0px;
     padding:0px;
-    margin-top: 30px;
-    margin-left: 330px;
+    
   }
   .change_plan
   {
@@ -531,7 +529,11 @@ label{
     }
 
     .btn-save, .cancel_btn{
-        width: 100px;
+        border-radius: 20px;
+    height: 30px;
+    width: 100px;
+    border: 0px;
+    padding:0px;
       }
       .buttonsblock button{
        margin-right: 20px;

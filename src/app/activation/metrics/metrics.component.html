@@ -279,12 +279,31 @@
 
         <h5 class="teus"><b>Alert Transactions</b></h5>
         <div  id="alerttransaction"><br><br>
+          <div class="dots">
+            <button (click)="click()" class="btn">
+              <i class="fa fa-ellipsis-v" aria-hidden="true" ></i>
+              </button>
+          </div>
+          <div class="dropdown">
+            
+            <div class="dropdown-content" id="drop">
+                <button class="btn" (click)="openDialog(bydate)">
+                  <span><i id="date" class="fa fa-filter text-primary" aria-hidden="true"></i> By Date</span>
+                </button>
+              <button  class="btn" (click)="openDialog(bymonth)">
+                <span><i id="month" class="fa fa-filter text-primary" aria-hidden="true"></i> By Month</span>
+              </button>
+              <button  class="btn" (click)="openDialog(byyear)">
+                <span><i id="year" class="fa fa-filter text-primary" aria-hidden="true"></i> By Year</span>
+              </button>
+            </div>
+          </div>
         <canvas  id="linechart" style="width:100% !important ;height:300px !important;"></canvas> 
         </div>
        
     </div>
 
-    <div class="col-md-1"></div>
+  
     
     <div *ngIf="alerttransction==0" class="col-md-8  text-center">
       <h5><b>Alert Transactions</b></h5>
@@ -292,6 +311,153 @@
         <h3>No Data Available</h3>
  </div>
   </div>
+  <ng-template #bydate >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+    
+      <form (ngSubmit)="submitbydate(bydate)" #bydate="ngForm">
+        <div class="form-group">
+        <label for="from">From Date</label>
+        <input class="form-control" [(ngModel)]="from_date" type="date" id="from" name="from">
+        </div>
+        <div class="form-group">
+          <label for="to">To Date</label>
+          <input class="form-control" [(ngModel)]="to_date" type="date" id="to" name="to">
+          </div>
+      
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right ">        
+          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
+          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
+    
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+
+    
+
+    </div>
+  </ng-template>
+
+  <ng-template #bymonth >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+    
+      <form (ngSubmit)="submitbymonth(bymonth)" #bymonth="ngForm">
+        <div class="form-group">
+        <label for="from">Select year</label>
+        <select name="product" class="form-control"  [(ngModel)]="from_year" required>
+          <option [value]="undefined" disabled hidden>Select year</option>
+          <option [value]="null" disabled hidden>Select year</option>
+           <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+    </select>  
+        </div>
+        <div class="form-group">
+          <label for="to">Select From Month</label>
+          <!-- <input class="form-control" [(ngModel)]="from_month" type="month" id="from" name="from"> -->
+          <select name="product" class="form-control"  [(ngModel)]="from_month" required>
+            <option [value]="undefined" disabled hidden>Select From Month</option>
+            <option [value]="null" disabled hidden>Select From Month</option>
+             <option *ngFor="let month of months" [value]="month">{{month}}</option>
+      </select>
+          </div>
+
+          <div class="form-group">
+            <label for="to">Select To Month</label>
+            <!-- <input class="form-control" [(ngModel)]="to_month" type="month" id="to" name="to"> -->
+            <select name="product" class="form-control"  [(ngModel)]="to_month" required>
+              <option [value]="undefined" disabled hidden>Select To Month</option>
+              <option [value]="null" disabled hidden>Select To Month</option>
+               <option *ngFor="let month of months | Slicedate : from_month" [value]="month">{{month}}</option>
+        </select>
+            </div>
+      
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right ">        
+          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
+          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+
+    
+
+    </div>
+  </ng-template>
+
+  <ng-template #byyear >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+    
+      <form (ngSubmit)="submitbyyear(byyear)" #byyear="ngForm">
+        <div class="form-group">
+        <label for="from">Select from year</label>
+        <select name="fromyear" class="form-control" #fromyear="ngModel" [(ngModel)]="yearmodel.fromyear_graph" required>
+          <option [value]="undefined" disabled hidden>Select From year</option>
+          <option [value]="null" disabled hidden>Select From year</option>
+           <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+    </select>  
+        </div>
+        <div class="form-group">
+          <label for="to">Select to year</label>
+          <!-- <input class="form-control" [(ngModel)]="from_month" type="month" id="from" name="from"> -->
+          <select name="toyear" class="form-control" #toyear="ngModel" [(ngModel)]="yearmodel.to_yeargraph" required>
+            <option [value]="undefined" disabled hidden>Select To year</option>
+            <option [value]="null" disabled hidden>Select To year</option>
+            <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+      </select>
+          </div>
+
+        
+      
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right ">        
+          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
+          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+
+    
+
+    </div>
+  </ng-template>
   </div> 
   </div>
   </div>
