@@ -2349,6 +2349,7 @@ console.log("alertbody",this.alertsbody)
       }
       onChangeprod(pro){
         this.selectedproduct=pro;
+        this.modulesList=[];
         this.profileservice.getmodulesbyProduct(pro).subscribe(data => 
           {
             console.log("my prodsssss",data)
@@ -2370,7 +2371,7 @@ console.log("alertbody",this.alertsbody)
          
         }
         this.profileservice.getpagesfromModule(input).subscribe(resp =>{
-         
+          this.mypages=[];
           resp.forEach(element => {
             this.mypages.push(element.page)
             
@@ -2389,6 +2390,7 @@ console.log("alertbody",this.alertsbody)
       
      }
      this.profileservice.getFieldsfromPage(input).subscribe(resp=>{
+      this.myfields=[];
        resp.forEach(element => {
          this.myfields.push(element.field)
          
@@ -2747,7 +2749,7 @@ console.log("alertbody",this.alertsbody)
       
      }
      this.profileservice.getpagesfromModule(input).subscribe(resp =>{
-    
+      this.mypages=[];
       
        resp.forEach(element => {
          this.mypages.push(element.page)
@@ -2762,7 +2764,7 @@ console.log("alertbody",this.alertsbody)
   
  }
  this.profileservice.getFieldsfromPage(input1).subscribe(resp=>{
-  
+  this.myfields=[];
    resp.forEach(element => {
      this.myfields.push(element.field)
      
