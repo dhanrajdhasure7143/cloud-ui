@@ -33,7 +33,7 @@ export const AppConfig: AiotalAppConfig = {
   piendpoint:"http://pidev.epsoftinc.in",
   socialLoginRedirectURL: 'http://eiapclouddev.epsoftinc.in/#/user',
   isTwoFactorAuthenticationEnabled: false,
-  isSecurityManagerEnabled : true
+  isSecurityManagerEnabled : false
 };
 
 
