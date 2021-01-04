@@ -1462,7 +1462,19 @@ cancelVaultconfig(){
     })
     this.inviteAllRoles = '';
   
-  }else if(invres.allowedUsers){
+  }
+  if(invres.message == "No user allowed for the product"){
+    Swal.fire({
+      title: 'Warning',
+      text: "Failed to fetch  users for the product!",
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+    this.inviteAllRoles = '';
+  
+  }
+  else if(invres.allowedUsers){
     payload.append('allowedUserCount', invres.allowedUsers)
     this.profileservice.inviteUser(userId,payload).subscribe(res=>{
       this.data=res

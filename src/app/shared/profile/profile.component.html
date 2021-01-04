@@ -665,7 +665,7 @@
                           </div>
                     </tab>
 
-                    <tab *ngIf = "true" heading = "Two Factor Authentication">
+                    <tab *ngIf="this.userRole.includes('Admin')" heading = "Two Factor Authentication">
                         <div class = "col-md-12 twoFactor factor">
                         <form #f="ngForm" (ngSubmit)="twoFactorAuthConfig(f)">
                          
@@ -1094,7 +1094,7 @@
             <tbody>
               <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let t= index">
                 <td style="text-align:center">{{keys.keyname}}</td>
-                <td style="text-align:center">{{keys.data.metadata.created_time |   date:'medium'}}</td>
+                <td style="text-align:center">{{keys.data.metadata.created_time |   date}} {{keys.data.metadata.created_time.split("T")[1].split(".")[0]}}</td>
                 <td style="text-align:center">{{keys.data.metadata.version}}</td>
                 <td style="text-align:center">
                 <span  (click)="viewSecreteData(keys,t,datatemplate)">
