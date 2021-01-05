@@ -1094,7 +1094,7 @@
             <tbody>
               <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let t= index">
                 <td style="text-align:center">{{keys.keyname}}</td>
-                <td style="text-align:center">{{keys.data.metadata.created_time |   date}} {{keys.data.metadata.created_time.split("T")[1].split(".")[0]}}</td>
+                <td style="text-align:center">{{keys.convertedTime |   date}} {{keys.convertedTime.split("T")[1].split(".")[0]}}</td>
                 <td style="text-align:center">{{keys.data.metadata.version}}</td>
                 <td style="text-align:center">
                 <span  (click)="viewSecreteData(keys,t,datatemplate)">
@@ -2395,11 +2395,11 @@
                             <div class="col-md-12 infocheck" style="margin-left: -3%;">
       
                              <label for="coupon">Coupon Name </label>
-                              <input type="text"  name="coupon" #coupon="ngModel" class="form-control botmbordr" [(ngModel)]="coupondata.name"/>     
+                              <input type="text"  name="coupon" #coupon="ngModel" class="form-control botmbordr" [(ngModel)]="couponname"/>     
                                         </div>
                             <div class="col-md-12 infocheck" style="margin-left: -3%;">
                               <label for="couponName">Coupon ID  </label>
-                              <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="coupondata.id"/>     
+                              <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="couponid"/>     
            
                               </div>
                               <label class="radio-inline">Coupon Type</label><br>
@@ -2407,30 +2407,30 @@
                               <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' [checked]="coupondata.amountOff != ' - '"/>&nbsp;<span>Amount Off</span> <br>
                                            
                               <div *ngIf="isPercentage" >
-                                 <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="coupondata.percentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                                 <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                               </div>
                           
                               <div *ngIf="isAmount" >
-                                <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="coupondata.amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                                <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                               </div>
                               
                             <div>
                                 <label for="duration">Coupon Valid</label>
-                                              <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="coupondata.duration" (change)='onSelected($event.target.value)' required>
+                                              <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="couponduration" (change)='onSelected($event.target.value)' required>
                                                   <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
                                                 <option value="forever" >Forever</option>
                                                 <option value="once">Once</option>
                                                 <option value="repeating">Repeating</option>
                                                       
                                               </select>
-                                <div *ngIf="coupondata.duration==='repeating'">
-                                  <input type="text" name="months"  maxlength="30" #months [(ngModel)]="coupondata.durationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" required/>
+                                <div *ngIf="couponduration==='repeating'">
+                                  <input type="text" name="months"  maxlength="30" #months [(ngModel)]="coupondurationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" required/>
                
                                 </div>
                               </div>
                            <div >
                               <label for="red">Maximum Redemptions</label>
-                            <input type="text" name="red"  maxlength="30" #red [(ngModel)]="coupondata.maxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+                            <input type="text" name="red"  maxlength="30" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
                             class='fa fa-info-circle errspan'> Limit is required </span> 
