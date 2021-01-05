@@ -303,6 +303,13 @@ export class ProfileComponent implements OnInit {
   customUserRole: any;
   userManagementEnabled: boolean = false;
   myAccountFull: boolean = false;
+  couponid: any;
+  couponduration: any;
+  coupondurationInMonths: any;
+  couponname: any;
+  couponpercentOff: any;
+  couponamountOff: any;
+  couponmaxRedemptions: any;
 
 
 
@@ -839,6 +846,15 @@ console.log("my pdate data",this.updateSecretedata)
     this.modalRef = this.modalService.show(template)
   }
   selectedCoupondata(selCouponData, index, template){
+
+       this.couponid=selCouponData.id
+       this.couponduration=selCouponData.duration
+       this.coupondurationInMonths=selCouponData.durationInMonths,
+       this.couponname=selCouponData.name
+       this.couponpercentOff=selCouponData.percentOff
+       this.couponamountOff=selCouponData.amountOff
+       this.couponmaxRedemptions=selCouponData.maxRedemptions
+
     console.log("selected coupon ",selCouponData)
     this.coupondata=selCouponData;
     this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-M-DThh:mm")
@@ -1466,7 +1482,7 @@ cancelVaultconfig(){
   if(invres.message == "No user allowed for the product"){
     Swal.fire({
       title: 'Warning',
-      text: "Failed to fetch  users for the product!",
+      text: "No subscriptions found for the product!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
@@ -2065,20 +2081,22 @@ couponDelYes(coupon,index){
       
       console.log("coupon data",couponData)
       if(this.isPercentage){
+        couponData.percentOff = this.couponpercentOff
         couponData.amountOff = null
       }else if(this.isAmount){
         couponData.percentOff = null
+        couponData.amountOff = this.couponamountOff
       }
       let modifycouponinput = {
         "currency": "usd",
-         "couponid":couponData.id,
-        "duration": couponData.duration,
-        "durationInMonth":couponData.durationInMonths,
-        "name": couponData.name,
+         "couponid":this.couponid,
+        "duration":this.couponduration,
+        "durationInMonth":this.coupondurationInMonths,
+        "name": this.couponname,
         "percent_off": couponData.percentOff,
         "amount_off":couponData.amountOff,
         "redeem_by": moment(this.redeemdate, "YYYY-M-DTH:mm").valueOf()/1000,
-        "redmee_times": couponData.maxRedemptions
+        "redmee_times": this.couponmaxRedemptions
       }
       
 this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
