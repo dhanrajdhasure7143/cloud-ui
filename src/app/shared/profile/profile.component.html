@@ -1030,7 +1030,7 @@
                           <td style="text-align:center">{{coupon.amountOff}}</td>
                           <td style="text-align:center">{{coupon.percentOff}}</td>
                           <td style="text-align:center">{{coupon.maxRedemptions}}</td>
-                          <td style="text-align:center">{{availableRedeemptions}}</td>
+                          <td style="text-align:center">{{coupon.availableRedeemptions}}</td>
                           <td style="text-align:center">{{coupon.redeemBy*1000 | date:'medium'  }}</td>
                           <td style="text-align:center">{{coupon.created*1000 | date:'medium'}}</td>
                           
@@ -2290,7 +2290,7 @@
                              
                 <div *ngIf="isPercentage" >
                   
-                  <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                  <input type="number" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Name is required </span>  -->
@@ -2298,7 +2298,7 @@
             
                 <div *ngIf="isAmount" >
                 
-                  <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                  <input type="number" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Ammount is required </span>  -->
@@ -2325,14 +2325,14 @@
             <div >
                 <label for="red">Maximum Redemptions</label>
    
-              <input type="text" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+              <input type="number" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
               <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
               <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
               class='fa fa-info-circle errspan'> Limit is required </span> 
             </div>
             <div >
               <label for="daytime">Expires By </label><br>
-              <input class="calexp" type="datetime-local" id="daytime" name="daytime" [(ngModel)]="datetime">
+              <input class="calexp" type="date" id="daytime" name="daytime" min="mindate" [(ngModel)]="datetime">
             </div>
             
             <!-- <div class="col-md-12">
@@ -2428,7 +2428,7 @@
                                 </div>
                               </div>
                            <div >
-                              <label for="red">Maximum Redemptions</label>
+                              <label for="number">Maximum Redemptions</label>
                             <input type="text" name="red"  maxlength="30" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
@@ -2436,7 +2436,7 @@
                           </div>
                           <div >
                             <label for="daytime">Expires By </label><br>
-                            <input class="calexp" type="datetime-local" id="daytime" name="daytime" [(ngModel)]="redeemdate">
+                            <input class="calexp" type="date" id="daytime" name="daytime" [(ngModel)]="redeemdate">
                           </div>
                                                
                                        

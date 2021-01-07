@@ -237,6 +237,7 @@ export class ProfileComponent implements OnInit {
   invitemultirole:boolean=false;
   currentUserId: any;
   datetime: any;
+  datetimeinput:any;
   redeemdate: any;
   public notificationreadlist:any;
   cards: any;
@@ -310,6 +311,7 @@ export class ProfileComponent implements OnInit {
   couponpercentOff: any;
   couponamountOff: any;
   couponmaxRedemptions: any;
+  mindate: any;
 
 
 
@@ -337,7 +339,8 @@ export class ProfileComponent implements OnInit {
      
     })
 
-   
+   this.mindate= moment().format("YYYY-MM-DD");
+
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
@@ -447,7 +450,8 @@ this.profileservice.applications().subscribe(resp =>
   getListofCoupons() {
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
       this.allCoupons.forEach(element => {
-        this.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
+       element.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
+       
         if(element.amountOff!=null)
         {
           element.percentOff=' - '
@@ -2079,7 +2083,7 @@ couponDelYes(coupon,index){
     modifycoupon(couponData){
       this.isupdatecouponclicked=true;
  // this.close_modal();
-      console.log("coupon data",couponData)
+
       if(this.isPercentage){
         couponData.percentOff = this.couponpercentOff
         couponData.amountOff = null
@@ -2202,9 +2206,10 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     }
    
     createNewCoupon(){
-      console.log("date time", this.datetime)
-      this.datetime = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
-      console.log("timestamp ",this.datetime)
+     
+      this.datetimeinput = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
+ //console.log("date time is in dddddddddddddd",moment(this.datetimeinput, "YYYY-M-DTH:mm").subtract(1, 'seconds').valueOf())
+ //console.log("date time is",this.datetimeinput+1) 
       this.couponDetails={
         couponNamename:this.couponNamename,
         couponIdId:this.couponIdId,
@@ -2230,7 +2235,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         "name": this.couponNamename,
         "percent_off": this.percentageOffTot,
         "amount_off":this.amountOff,
-        "redeem_by": this.datetime/1000,
+        "redeem_by": (this.datetimeinput/1000)+86399,
         "redmee_times": this.redeemTimeslimit
       }
     //   let input= {"currency":"usd",
