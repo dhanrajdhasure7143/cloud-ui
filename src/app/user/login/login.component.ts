@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
       //swwet alert
       Swal.fire({
         title: 'Success!',
-        text: `OTP has been sent to your registred Email and Mobile number.`,
+        text: `OTP has been sent to your registered Email and Mobile number.`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
