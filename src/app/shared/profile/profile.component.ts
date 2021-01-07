@@ -441,7 +441,6 @@ this.profileservice.applications().subscribe(resp =>
           
         });
         
-        console.log("userManagementttttttttt", this.userManagement);
     });
 
   }
@@ -476,7 +475,7 @@ this.profileservice.applications().subscribe(resp =>
   viewSecreteData(keys,i,template){
    
         this.viewdata=keys;
-    console.log("viewing data is",this.viewdata.data.data)
+ 
     this.versiondata=this.viewdata.data.metadata.version;
     this.updateSecretedata=this.viewdata
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
@@ -846,7 +845,7 @@ console.log("my pdate data",this.updateSecretedata)
     this.modalRef = this.modalService.show(template)
   }
   selectedCoupondata(selCouponData, index, template){
-
+this.isupdatecouponclicked=false;
        this.couponid=selCouponData.id
        this.couponduration=selCouponData.duration
        this.coupondurationInMonths=selCouponData.durationInMonths,
@@ -855,9 +854,9 @@ console.log("my pdate data",this.updateSecretedata)
        this.couponamountOff=selCouponData.amountOff
        this.couponmaxRedemptions=selCouponData.maxRedemptions
 
-    console.log("selected coupon ",selCouponData)
     this.coupondata=selCouponData;
-    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-M-DThh:mm")
+    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-MM-DDTkk:mm")
+ 
     this.modalRef = this.modalService.show(template)
     if(selCouponData.amountOff != ' - ' && selCouponData.percentOff == ' - '){
       this.isPercentage=false;
@@ -2078,7 +2077,8 @@ couponDelYes(coupon,index){
    }
 
     modifycoupon(couponData){
-      
+      this.isupdatecouponclicked=true;
+ // this.close_modal();
       console.log("coupon data",couponData)
       if(this.isPercentage){
         couponData.percentOff = this.couponpercentOff
@@ -2106,6 +2106,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     type: "success",
     message: "Coupon updated successfully!!"
   });
+ 
 })
 
     }
@@ -2481,7 +2482,7 @@ console.log("alertbody",this.alertsbody)
          if(data1.message === "Deleted Successfully"){
           this.notifier.show({
             type: "success",
-            message: "Vault configuration deleted"            
+            message: "Vault configuration deleted!"            
           })
           this.getListOfVaultconfigs();
           }else {

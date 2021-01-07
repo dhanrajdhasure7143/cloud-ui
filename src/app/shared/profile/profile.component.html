@@ -117,7 +117,6 @@
                                                     <label for="city">City</label>
                                                   <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
                                                   <select class="form-control botmbordr" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
-                                                    <option *ngIf="cityInfo == ''" value="-1">City</option>
                                                     <option  [value]="undefined" disabled hidden>City</option>
                                                     <option  [value]="null" disabled hidden>Select City</option>
                                                     <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
