@@ -50,6 +50,7 @@ export class ProfileComponent implements OnInit {
   public isdefault:boolean=false;
   public searchvalue: any;
   public searchUser: any;
+  public searchCoupon: any;
   public emailId: any[];
   public sentFromOne: any;
   public tableData: any[];
@@ -72,6 +73,7 @@ export class ProfileComponent implements OnInit {
   public departments: any;
   public password: any;
   public userManagement: any=[];
+  public userManagementalerts: any=[];
   public userManagementresponse:any=[];
   public show: boolean = true;
   public eyeshow: boolean = true;
@@ -312,6 +314,7 @@ export class ProfileComponent implements OnInit {
   couponamountOff: any;
   couponmaxRedemptions: any;
   mindate: any;
+  public usersalertsdata: any=[];
 
 
 
@@ -371,7 +374,7 @@ export class ProfileComponent implements OnInit {
       this.tenantId=localStorage.getItem('tenantName');
       
 this.getAllUsersList();
-
+this.getAlertUsersList();
 console.log("local",localStorage.getItem('userRole'))
 this.getRoles();
 this.getListofCoupons();
@@ -446,6 +449,47 @@ this.profileservice.applications().subscribe(resp =>
         
     });
 
+  }
+
+  getAlertUsersList(){
+    this.currentUserId = localStorage.getItem("ProfileuserId");
+    this.userManagementalerts = [];
+    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
+      console.log("responseeeeee", resp);
+        this.userManagementresponse = resp
+           this.userManagementresponse.forEach(elementuser => {
+             this.roleArray = [];
+             elementuser.userId['applicationIdname']=elementuser.applicationId.name;
+             this.rolesArryList = elementuser.rolesEntityList;
+            
+             this.rolesArryList.forEach(element => {
+               this.roleArray.push(element.name);
+               
+             });;
+             
+          elementuser.userId['roleIdname']=this.roleArray;
+          elementuser.userId['created_at']=elementuser.created_at;
+          elementuser.userId['department']=elementuser.userId.department;
+          if(elementuser.userId.enabled == 'true'){
+            elementuser.userId['Status'] = 'Active'
+          }else if(elementuser.userId.enabled == 'false'){
+            elementuser.userId['Status'] = 'Inactive'
+          }else{
+            elementuser.userId['Status'] = 'Not Registered'
+          }
+         // if(this.currentUserId != elementuser.userId.userId)
+          this.userManagementalerts.push(elementuser.userId);
+          
+          this.usersalertsdata=this.userManagementalerts.filter(item=>item.firstName!=null && item.lastName!=null);
+          // this.userManagement.sort(function(a,b){
+          //   // Turn your strings into dates, and then subtract them
+          //   // to get a value that is either negative, positive, or zero.
+          //   return b.created_at - a.created_at;
+          // });
+          
+        });
+        console.log("data",this.usersalertsdata)
+    });
   }
   getListofCoupons() {
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
@@ -630,6 +674,7 @@ console.log("my pdate data",this.updateSecretedata)
     return index;
   }
   slideDown() {
+    this.searchCoupon = '';
     this.isSameDomain=false;
     this.userDetails();
     this.inviteAllRoles = '';

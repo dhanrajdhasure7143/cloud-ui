@@ -991,16 +991,17 @@
             </div>
 
 
-<div class="container coupons" *ngIf="isCoupon">
+<div class="container" *ngIf="isCoupon">
   <div  class="">
       <tabset >
             <tab heading="Coupon">
       <div class="search-One">
           <form class="form-inline d-flex  md-form form-sm">
-              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchCoupon" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
               <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
             </form>
           </div>
+          <div class="row">
       <div class="container coupons">
         
           <button *ngIf="this.userRole == 'SuperAdmin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
@@ -1023,7 +1024,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 1, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchCoupon; trackBy:loopTrackBy; let j= index">
                           <td style="text-align:center">{{coupon.id}}</td>
                           <td style="text-align:center">{{coupon.name}}</td>
                           
@@ -1059,6 +1060,7 @@
                     <div class="couponpagination">
                       <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
                       </div>
+      </div>
       </div>
       </tab>
     
@@ -1546,7 +1548,7 @@
                                                       <label for="configalerts">User(s)</label>
                                                       <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updateMail" required>
                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
-                                                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                                                         <option *ngFor="let user of usersalertsdata"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
                                                       </select>                                     
                     </div>
                   </div>
@@ -1557,9 +1559,9 @@
                     <input type="text" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
                     required text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" /> -->
                     <label for="configalerts">User(s)</label>
-                                                      <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updatetext_to" required>
+                                                      <select name="updatesms"  #updatesms="ngModel" class="form-control botmbordr"  [(ngModel)]="updatetext_to" required>
                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
-                                                         <option *ngFor="let user of userManagement"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
+                                                         <option *ngFor="let user of usersalertsdata"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
                                                       </select>   
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
@@ -1678,7 +1680,7 @@
                       <select name="product" class="form-control"  [(ngModel)]="emailselected" required>
                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
                         <option [value]="null" disabled hidden>Select Registered Email</option>
-                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                         <option *ngFor="let user of usersalertsdata"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
                       </select>    
                   </div>
                 </div>
@@ -1704,7 +1706,7 @@
                       <select name="sms" class="form-control"  [(ngModel)]="smsselected" required>
                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
                         <option [value]="null" disabled hidden>Select Registered Email</option>
-                         <option *ngFor="let user of userManagement"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
+                         <option *ngFor="let user of usersalertsdata"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
                       </select>    
                   <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
                                                       class='fa fa-info-circle errspan'>
