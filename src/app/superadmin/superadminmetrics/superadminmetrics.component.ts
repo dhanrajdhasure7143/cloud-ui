@@ -135,6 +135,10 @@ this.getCouponsCountKpi();
       {
       "name":"Enterprise",
       "value":this.tenantplansubscription.filter(item=>item.plan=="Enterprise" && item.product==this.productname).length
+      },
+      {
+      "name":"Freetrial",
+      "value":this.tenantplansubscription.filter(item=>item.plan=="Freetrial" && item.product==this.productname).length
       }
       ]
     console.log(event);
