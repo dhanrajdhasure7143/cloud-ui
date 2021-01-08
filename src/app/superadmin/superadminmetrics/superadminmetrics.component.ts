@@ -200,10 +200,13 @@ getTenantvsUser(){
       getSubscriptionCount(){
         this.profileService.getsubscriptionAndProducts().subscribe(subproducts=>{
           this.subscriptionbarcount=subproducts
-          let result = this.subscriptionbarcount.filter(obj => {
-            return obj.name === "2.0"
-           })
-          this.subscriptiontotolcount=result[0].value;
+          // let result = this.subscriptionbarcount.filter(obj => {
+          //   return obj.name === "2.0"
+          //  })
+          // this.subscriptiontotolcount=result[0].value;
+          let sum: number = 0;
+            this.subscriptionbarcount.forEach(a => sum += a.value);
+          this.subscriptiontotolcount=sum;
         })
       }
       
