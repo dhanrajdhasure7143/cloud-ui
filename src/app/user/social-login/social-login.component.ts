@@ -29,7 +29,7 @@ export class SocialLoginComponent implements OnInit {
      this.route.queryParams.subscribe(params => {
       this.email = params['email']
       this.authProvider = params['authProvider']
-      console.log("email" , this.email)
+
     });
 
    
@@ -61,11 +61,10 @@ export class SocialLoginComponent implements OnInit {
 }
  
 checkSuccessCallback(data:any){
-  console.log("i cam to success call back", data);
   
   this.sharedData.setLoggedinUserData(data);
  // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
-  console.log("social login data-----", data);
+
   localStorage.setItem('firstName',data.firstName);
   localStorage.setItem('lastName',data.lastName);
   localStorage.setItem('userName',data.userId);
@@ -80,8 +79,7 @@ checkSuccessCallback(data:any){
 authorize() {
   this.profileService.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
-    console.log("user role is",this.userRole)
-    localStorage.setItem('userRole',this.userRole);
+     localStorage.setItem('userRole',this.userRole);
    if(this.userRole.includes('SuperAdmin')){
     this.router.navigate(['/superadmin']);
     

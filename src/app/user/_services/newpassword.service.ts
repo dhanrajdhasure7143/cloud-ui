@@ -19,8 +19,7 @@ export class NewpasswordService {
     return this.http.get<any>('/api/user/reset?token='+ data.token);
   }
   newPassword(userData: any = {}): Observable<any> {
-    console.log(userData.user.pwd,userData.user.tkn)
-    return this.http.post<any>('/api/user/passwordReset?token='+userData.user.tkn, {'password':userData.user.pwd}, httpOptions);
+       return this.http.post<any>('/api/user/passwordReset?token='+userData.user.tkn, {'password':userData.user.pwd}, httpOptions);
   }
   
 }

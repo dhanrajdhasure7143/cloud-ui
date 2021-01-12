@@ -111,11 +111,11 @@ export class UsermanagementComponent implements OnInit {
     }
     onclickUpdate() {
         this.modifyModel.tenantId = this.dataArray[0].tenantId;
-        console.log(this.modifyModel);
+  
         this.userService.updateRole(this.modifyModel).subscribe(data => this.checkSuccessCallback(data));
     }
     checkSuccessCallback(data) {
-        console.log(data.message);
+       
         this.isRoleStatus = data.message;
         if (this.isRoleStatus === 'Successfully updated user in OPA') {
             Swal.fire({

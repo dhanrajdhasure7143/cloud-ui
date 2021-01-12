@@ -54,14 +54,9 @@ export class UserComponent implements OnInit {
 
     this.tenantId = localStorage.getItem("tenantName")
     this.email = localStorage.getItem("userName");
-    console.log("hsdkjfhskdfh", this.tenantId, this.email);
+
 
     this.userService.getUserApplications().subscribe(data => this.successGetApps(data));
-
-
-
-    console.log(this.dbValue);
-
     this.name = localStorage.getItem("firstName");
 
     this.phone = localStorage.getItem("phoneNumber");
@@ -88,7 +83,6 @@ export class UserComponent implements OnInit {
 
 
   successGetApps(data) {
-    console.log("appname", data);
     data.forEach(element => {
       this.dbValue.push(element)
 
@@ -100,11 +94,11 @@ export class UserComponent implements OnInit {
     this.submitButton = true
     // console.log("rolesList", this.rolesList);
 
-    console.log(selectedValue);
+   
     this.dbValue.forEach(element => {
       if (element.name == selectedValue) {
         this.appSelectedId = element.appId
-        console.log("app selected", this.appSelectedId);
+        
         this.userService.inviteUsersLimit(selectedValue).subscribe(data => {
          // let count = 20;
           this.userService.countOfUsersForTenantForProduct(element.appId).subscribe(respData => {this.usersCount(respData, data, element.appId),err=>{
@@ -156,7 +150,7 @@ export class UserComponent implements OnInit {
       this.userService.getSelectedRole(this.appSelectedId).subscribe(data => this.successRoles(data));
 
       // this.appSelectedId = element.appId
-      console.log(this.appSelectedId);
+
     } else {
       Swal.fire({
         title: 'Error',
@@ -175,7 +169,7 @@ export class UserComponent implements OnInit {
 
   successRoles(a) {
     this.rolesList = []
-    console.log(a);
+
     this.roleData = a
     a.forEach(ele => {
       this.rolesList.push(ele.name)
@@ -203,7 +197,6 @@ export class UserComponent implements OnInit {
   changeRole(e) {
     // this.selectedroleId = []
     this.submitButton = false
-    console.log(e);
     this.roleData.forEach(ele => {
       if (ele.name == e) {
         this.selectedroleId = ele.id
@@ -216,8 +209,6 @@ export class UserComponent implements OnInit {
     this.selectedModel.appName = undefined
     this.submitButton = true;
     this.modalRef = this.modal.show(template);
-    console.log("email", this.iemail);
-    console.log("inviteID", this.inviteeUserId);
     // console.log(this.result[0].name);
 
     // this.selectedModel.appName = this.result[0].name
@@ -259,8 +250,7 @@ export class UserComponent implements OnInit {
 
     }
     this.appSer.invitefriends(inviterMailId, inviteeMailId, reqObj).subscribe((data: any) => {
-      console.log("sucess data", data);
-      Swal.fire({
+       Swal.fire({
         title: 'Success',
         text: `Invitation email sent successfully!!`,
         type: 'success',

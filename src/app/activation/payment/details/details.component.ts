@@ -90,7 +90,7 @@ export class DetailsComponent implements OnInit {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
        this.paymentMode = response 
-        console.log("aditya",this.paymentMode)
+  
         });
   }
 
@@ -103,13 +103,13 @@ export class DetailsComponent implements OnInit {
       this.expmonth=true;
       this.expyear=true;
     }
-    console.log("inside onchange",this.paymentMode)
+
 
     }
     this.cardfulldetails = this.paymentMode.filter(obj => {
       return obj.id == id
      })
-     console.log("selectedcardinfo",this.cardfulldetails)
+  
     
        this.cardHoldername=this.cardfulldetails[0].name
        this.cardmonth=this.cardfulldetails[0].cardExpMonth
@@ -128,7 +128,7 @@ allPaymentModes()
     
 this.allpaymentsList=resp
   })
-  console.log("all payments areee",this.allpaymentsList)
+  
  
 }
   getproductPlans(){
@@ -186,7 +186,7 @@ this.allpaymentsList=resp
   }
   this.cardEncode=Base64.encode(JSON.stringify(this.cardDetails));
   this.card={id:this.cardEncode}
-  console.log("Card details",this.card)
+
   this.router.navigate(['/activation/payment/review',this.card]);
   }
 
@@ -202,7 +202,7 @@ this.allpaymentsList=resp
    }
   editCardDetails(){
 
-    console.log("came to editCardDetails")
+  
     this.route.params.subscribe(data=>{this.cardEdit=data
       if(this.isEmpty(data) != true){
     this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));

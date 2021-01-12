@@ -365,7 +365,7 @@ export class ProfileComponent implements OnInit {
     this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
-      console.log("user applications are",resp)
+     
       this.apps = resp,
              this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
@@ -375,7 +375,7 @@ export class ProfileComponent implements OnInit {
       
 this.getAllUsersList();
 this.getAlertUsersList();
-console.log("local",localStorage.getItem('userRole'))
+
 this.getRoles();
 this.getListofCoupons();
     // this.profileservice.getAllRoles(2).subscribe(resp => {
@@ -401,7 +401,7 @@ this.getListofCoupons();
 this.profileservice.applications().subscribe(resp => 
   {
     this.application = resp,
-    console.log("list of names",resp);
+   
   this.application.forEach(element => {
     this.listOfNames.push(element)
     this.listOfId.push(element.app_id)
@@ -415,7 +415,7 @@ this.profileservice.applications().subscribe(resp =>
     this.currentUserId = localStorage.getItem("ProfileuserId");
     this.userManagement = [];
     this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-      console.log("responseeeeee", resp);
+     
         this.userManagementresponse = resp
            this.userManagementresponse.forEach(elementuser => {
              this.roleArray = [];
@@ -455,7 +455,7 @@ this.profileservice.applications().subscribe(resp =>
     this.currentUserId = localStorage.getItem("ProfileuserId");
     this.userManagementalerts = [];
     this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-      console.log("responseeeeee", resp);
+      
         this.userManagementresponse = resp
            this.userManagementresponse.forEach(elementuser => {
              this.roleArray = [];
@@ -488,7 +488,7 @@ this.profileservice.applications().subscribe(resp =>
           // });
           
         });
-        console.log("data",this.usersalertsdata)
+        
     });
   }
   getListofCoupons() {
@@ -509,7 +509,7 @@ this.profileservice.applications().subscribe(resp =>
         }
         
       });
-    console.log("doupns are",this.allCoupons)})
+  })
  
   }
   getAllKeys(){
@@ -552,17 +552,17 @@ this.profileservice.applications().subscribe(resp =>
   }
   //update secrete
   updateSecreteData(updateSecretedata){
-    console.log("to update",updateSecretedata)
+   
     this.secretes1.forEach(element => {
       this.updatesecreteobj[element.key] = element.value
       
 });  
 
-console.log("my pdate data",this.updateSecretedata)
+
     //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
-    console.log("my pdate data 2222",this.updatesecreteobj)
+   
     this.finalObj=Object.assign(this.updatesecreteobj,this.updateSecretedata.data.data)
-    console.log("finallll",this.finalObj)
+   
     this.input1={
       "options": {
         "cas": this.versiondata
@@ -570,7 +570,7 @@ console.log("my pdate data",this.updateSecretedata)
       "data": this.finalObj
     }
      // this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
-    console.log("in updatessssssssss",this.input1)
+    
         this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
       this.getAllKeys();
       this.modalRef.hide();
@@ -584,7 +584,7 @@ console.log("my pdate data",this.updateSecretedata)
    this.mykeys= Object.keys(this.updateSecretedata.data.data)
    this.myvalue=Object.values(this.updateSecretedata.data.data)
    // updatesecreteobj[key] = this.updateSecretedata.data.data
-    console.log("updatesec",Object.values(this.updateSecretedata.data.data))
+   
 
   }
   close_modal(){
@@ -592,7 +592,7 @@ console.log("my pdate data",this.updateSecretedata)
   getAllPaymentmodes() {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
-       console.log("paymentmode",response)
+     
        this.paymentMode = response 
         let result = this.paymentMode.filter(obj => {
          return obj.defaultSource === true
@@ -602,8 +602,7 @@ console.log("my pdate data",this.updateSecretedata)
        localStorage.setItem('cardExpYear',result[0].cardExpYear)
         localStorage.setItem('cardholdername',result[0].name)
        localStorage.setItem('cardLast4',result[0].cardLast4)
-        console.log(result)
-        console.log(this.paymentMode)
+      
         });
   }
    getAllCategories(){
@@ -612,8 +611,7 @@ console.log("my pdate data",this.updateSecretedata)
     })
    }
   ngOnChanges() {
-    console.log("user management", this.userManagement)
-    
+   
     if(this.isusers){
       this.getAllCategories();
     }
@@ -664,7 +662,7 @@ console.log("my pdate data",this.updateSecretedata)
       for (var i = 0; i < this.countryInfo.length; i++) {
         if (this.countryInfo[i].CountryName == this.formOne.country) {
           this.phnCountryCode = this.countryInfo[i].CountryCode
-          console.log("countryCode", this.countryInfo[i].CountryCode);
+        
         }
       }
     })
@@ -678,9 +676,9 @@ console.log("my pdate data",this.updateSecretedata)
     this.isSameDomain=false;
     this.userDetails();
     this.inviteAllRoles = '';
-    console.log("inside slidedown")
+    
     this.invite_product="";
-    console.log(this.invite_product)
+   
      //this.closeDeleteForm = false;
      this.selectedIndex = '';
      this.selectedalertdet = ''
@@ -866,7 +864,6 @@ console.log("my pdate data",this.updateSecretedata)
        
       this.permidlist.push(elementperm.id)
       });
-      console.log("selroledata", selRoleData)
     this.selectedApp = selRoleData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
@@ -877,19 +874,16 @@ console.log("my pdate data",this.updateSecretedata)
     this.permidlist = [];
     this.roleListdata = selRoleData;
     this.testRolesList = this.roleListdata.roleIdname;
-
-    console.log("dataaaaa", selRoleData);
-    console.log("rols arry", this.allRoles);
-    
+  
     this.selectedApp  = selRoleData.applicationIdname;
-       
+     
     this.modalRef = this.modalService.show(template)
   }
 
 
   selectedpermdata(selPermData, index, template){
     this.permdata = selPermData;
-    console.log("selroledata", selPermData)
+
     this.selectedApp = selPermData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
@@ -1009,8 +1003,6 @@ this.isupdatecouponclicked=false;
     for (var i = 0; i < this.countryInfo.length; i++) {
       if (this.countryInfo[i].CountryName == countryValue) {
         this.phnCountryCode = this.countryInfo[i].CountryCode
-        console.log("countryCode", this.countryInfo[i].CountryCode);
-
         this.stateInfo = this.countryInfo[i].States;
       }
     }
@@ -1070,7 +1062,7 @@ this.isupdatecouponclicked=false;
     }
     alertsdeletedata(data,index){
       this.selectedalertdet=index
-      console.log("index",index)
+
   }
   updateselecttedalertdata(data,index,template){ 
     
@@ -1087,12 +1079,10 @@ this.isupdatecouponclicked=false;
      this.updatetext_to=data.text_to
      this.updateIncident=data.incident_type
      this.updatetemp = data.email_template
-
-    console.log("alertslistactivitiesdata",this.updatetext_to)
     let channelsplit=data.channel.split(',')
-    console.log("channel",channelsplit)
+   
     channelsplit.forEach(channelname => {
-      console.log("channel name",channelname)
+     
       if(channelname&&channelname=='Notification')
       {
         this.isPushNotificationcheckBoxValue=true;
@@ -1139,7 +1129,7 @@ this.isupdatecouponclicked=false;
   modifyalert(alertslistactivitiesdata){
     this.useremail=localStorage.getItem('userName');
     let alertconfiguration=''
-    console.log("sms",this.isSMScheckBoxValue)
+   
       if(this.isPushNotificationcheckBoxValue==true)
       {
         alertconfiguration+='Notification'
@@ -1173,7 +1163,7 @@ this.isupdatecouponclicked=false;
       {
         this.updateIncident=null
       }
-      console.log("Alert activities",this.alertsactivities)
+    
       var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
     
         this.alertmodifybody = {
@@ -1188,7 +1178,7 @@ this.isupdatecouponclicked=false;
           "email_template":this.updatetemp
           
       }
-      console.log("alertmodifybody",this.alertmodifybody)
+     
         this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
           this.notifier.show({
             type: "success",
@@ -1319,7 +1309,7 @@ this.isupdatecouponclicked=false;
     onChangeCardType(cardNumber) {
       var creditCardType = require("credit-card-type"); 
       this.cards = creditCardType(cardNumber);
-      console.log(this.cards[0].type);
+     
     }
     
     addNewCard(){
@@ -1340,7 +1330,7 @@ this.isupdatecouponclicked=false;
           });
         } else {
           
-        console.log("paytoken",this.paymentToken.message)
+      
       this.profileservice.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
           // console.log('res',res);
           this.getAllPaymentmodes();
@@ -1462,15 +1452,14 @@ cancelVaultconfig(){
        let x = stringToSplit.split("@");
              this.domain = x[1];
             var inviteeList = [];
-            console.log("inviteeId", inviteeId)
+           
             if((inviteeId == undefined || inviteeId == null) && this.selectedFile == undefined){
               this.emailRequired = true;
               return
             }
             if(this.upload_excel == null && inviteeId !== undefined){
              inviteeList = inviteeId.split(",");
-             console.log("came to upload", inviteeList);
-             
+          
              for(var i = 0; i<inviteeList.length; i++){
       
               //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
@@ -1489,13 +1478,11 @@ cancelVaultconfig(){
       // console.log("fksdjflkasd", inviteeList);
       
              }  
-      
-      console.log(this.selectedroles)
-      console.log("inviteid",inviteeId)
+   
       const payload = new FormData();
 
       if(this.selectedFile==undefined){
-        console.log("Form email selected");
+     
        // const payload = new FormData();
         //payload.append('inviterMailId', userId);
         payload.append('inviteeMailId', inviteeId);
@@ -1504,7 +1491,7 @@ cancelVaultconfig(){
       }
       else
       {
-        console.log("Upload option selected");
+      
         this.emailRequired = false;
         //payload.append('inviterMailId', userId);
         this.myappName="2.0"
@@ -1542,7 +1529,6 @@ cancelVaultconfig(){
     payload.append('allowedUserCount', invres.allowedUsers)
     this.profileservice.inviteUser(userId,payload).subscribe(res=>{
       this.data=res
-      console.log(this.data.body)
       if(this.data.body.message == "Invite Mail sent successfully"){
       Swal.fire({
         title: 'Success',
@@ -1875,7 +1861,7 @@ form.resetForm();
 
 }
 deleteUserYes(user,index){
-  console.log("userrrrrr", user);
+ 
   this.selectedIndex = '';
   this.profileservice.deleteSelectedUser(user).subscribe(resp =>{
 
@@ -1946,7 +1932,7 @@ couponDelYes(coupon,index){
    this.allRoles = resp.sort(function(obj1, obj2) {
       return obj1.id - obj2.id;
   });
-   console.log("All roles",this.allRoles)
+
    this.allRoles.forEach(elementRoles => {
        
    this.listOfroles.push(elementRoles.name)
@@ -1956,8 +1942,7 @@ couponDelYes(coupon,index){
    }else {
      this.profileservice.getAllRoles(2).subscribe(resp => {
             this.allRoles = resp,
-            console.log("resp is",resp)
-      
+          
             this.allRoles.forEach(elementRoles => {
                   
             this.listOfroles.push(elementRoles.name)
@@ -2000,8 +1985,7 @@ couponDelYes(coupon,index){
         
         this.profileservice.getAllPermissions().subscribe(data => {
           this.permissionsList = data;
-          console.log("perm list===",this.permissionsList)
-          
+       
         })
       }
 
@@ -2018,13 +2002,11 @@ couponDelYes(coupon,index){
         this.searchUser = '';
         this.selectedRolesArry = [];
         let arr = [];
-        console.log("selectedApp", this.selectedApp);
-        
+      
         this.status = this.userStatus;
 
         arr = this.testRolesList;
-        console.log("arrr", arr);
-        
+       
         for(var i = 0; i< arr.length; i++){
           for(var j = 0; j<this.allRoles.length; j++){
             if(arr[i] == this.allRoles[j].name){
@@ -2085,7 +2067,7 @@ couponDelYes(coupon,index){
           "permissionId":  this.permidlist
        
        }
-       console.log("rolesbody", rolesbody)
+   
        this.profileservice.modifyRole(rolesbody).subscribe(modifyresp => {
         this.modalRef.hide();
         this.getRoles();
@@ -2113,7 +2095,7 @@ couponDelYes(coupon,index){
         "appliationId":{
         "id":this.selectedApp}
       }
-      console.log("permbody", permbody)
+  
       this.profileservice.modifyPermission(permbody).subscribe(permmodifyresp => {
        this.modalRef.hide();
        this.getAllPermissions();
@@ -2171,7 +2153,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
    },
       "permissionId": this.selectedpermidlist
    }
-   console.log("create role", addRoleBody)
+
    this.profileservice.createRole(addRoleBody).subscribe(modifyresp => {
      this.roleresp=modifyresp;
     this.modalRef.hide();
@@ -2214,7 +2196,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         "id":this.selectedApplication
          }
         }
-      console.log("Create permission ",addpermission);
+    
       this.profileservice.createPermission(addpermission).subscribe(createpermresp => {
         this.modalRef.hide();
         this.getAllPermissions();
@@ -2236,7 +2218,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.isAmount=true;
         this.isPercentage=false;
       }
-      console.log("value is",value)
+    
   
     }
     onSelected(value){
@@ -2253,9 +2235,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     createNewCoupon(){
      
       this.datetimeinput = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
- //console.log("date time is in dddddddddddddd",moment(this.datetimeinput, "YYYY-M-DTH:mm").subtract(1, 'seconds').valueOf())
- //console.log("date time is",this.datetimeinput+1) 
-      this.couponDetails={
+       this.couponDetails={
         couponNamename:this.couponNamename,
         couponIdId:this.couponIdId,
         durationTime:this.durationTime,
@@ -2307,7 +2287,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     saveConfig(form:NgForm) {
       this.tenantId=localStorage.getItem('tenantName');
       this.useremail=localStorage.getItem('userName');
-        console.log("tenant : "+this.tenantId);
+     
 
       let alertconfiguration=''
       if(this.isPushNotificationcheckBoxValue==true)
@@ -2344,9 +2324,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.incidentselected=null
       }
      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
-     console.log(notificationby)
-     console.log(this.smsselected)
-      this.alertsbody ={
+           this.alertsbody ={
           "activity_names" : this.alertsactivities,
           "app_name": this.applicationames,
           "channel": notificationby,
@@ -2358,12 +2336,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
           "email_template": this.emailtemplate
         }
     
-    
-        console.log(this.alertsbody)
-      
-
-console.log("alertbody",this.alertsbody)
-           this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
+               this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
             this.notifier.show({
               type: "success",
               message: "Alert saved successfully"
@@ -2396,8 +2369,7 @@ console.log("alertbody",this.alertsbody)
   this.alertuserroles=localStorage.getItem('userRole');
    this.profileservice.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => {
       this.alertslistactivitiesdata = alertresponse
-      console.log("All Activities",this.alertslistactivitiesdata)
-    });
+         });
   }
 
       saveClick(item,e){
@@ -2422,8 +2394,7 @@ console.log("alertbody",this.alertsbody)
       successCallback(data) {
        // console.log("data",JSON.parse(data))
        this.activitieslist = data
-       console.log("activitieslist",this.activitieslist)
-        data.forEach(element => {
+              data.forEach(element => {
           if(element.userSelected)
           this.selectValue.push(element.notification_id)      
         });
@@ -2433,7 +2404,7 @@ console.log("alertbody",this.alertsbody)
         this.modulesList=[];
         this.profileservice.getmodulesbyProduct(pro).subscribe(data => 
           {
-            console.log("my prodsssss",data)
+           
             data.forEach(element => {
 
               this.modulesList.push(element.module)
@@ -2512,7 +2483,7 @@ console.log("alertbody",this.alertsbody)
         this.selectedvaultconfig = index;
       }
       vaultconfigDelYes(data,index){
-        console.log("got data is -----",data)
+      
         var input={
           "id":data.id,
           "field": data.field,
@@ -2617,7 +2588,7 @@ console.log("alertbody",this.alertsbody)
       changeActivity()
       {
         //this.modifyactivities=this.activitieslist
-        console.log("Activities fjdbfdsfbd",this.activitieslist);
+      
       }
       onblur(){
         this.ispublicMail = false;
@@ -2626,7 +2597,7 @@ console.log("alertbody",this.alertsbody)
 
 
       deleteNotification(data,index){
-        console.log(data)
+       
         this.profileservice.deleteNotification(data).subscribe(resp=>{
           // console.log(resp)
           this.getAllNotifications();
@@ -2717,7 +2688,7 @@ console.log("alertbody",this.alertsbody)
         $("#product").prop('disabled', true);
         this.invitemultirole=true;
         this.selectedFile=<File>event.target.files[0]
-        console.log(this.selectedFile.name)
+      
       // $("#excel").val(this.selectedFile.name)
        $("#excel").append(this.selectedFile.name);
       }
@@ -2730,7 +2701,7 @@ console.log("alertbody",this.alertsbody)
        this.notificationbody ={
           "tenantId":this.tenantId
        }
-       console.log("notification id",id)
+      
        if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
         this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
           this.notificationreadlist = data
@@ -2738,7 +2709,7 @@ console.log("alertbody",this.alertsbody)
          //document.getElementById('msg_'+id).style.color="grey"
          //document.getElementById('date_'+id).style.color="grey"
          //document.getElementById(id).style.cursor="none"
-          console.log(this.notificationreadlist)
+         
         })
        
       }
@@ -2751,7 +2722,7 @@ console.log("alertbody",this.alertsbody)
        this.notificationbody ={
           "tenantId":this.tenantId
        }
-       console.log("notification id",id)
+    
        let notificationid=id;
        if(this.superadminnotificationList.find(ntf=>ntf.id==notificationid).status!='read'){
         this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
@@ -2760,7 +2731,7 @@ console.log("alertbody",this.alertsbody)
          //document.getElementById('msg_'+id).style.color="grey"
          //document.getElementById('date_'+id).style.color="grey"
          //document.getElementById(id).style.cursor="none"
-          console.log(this.notificationreadlist)
+    
         })
        
       }
@@ -2770,14 +2741,14 @@ console.log("alertbody",this.alertsbody)
       {
         this.profileservice.getEmailTemplates().subscribe(data => {
           this.emailtemplateslist=data
-          console.log("email template",this.emailtemplateslist)
+        
         })
       }
       getListOfVaultconfigs(){
         this.profileservice.getVaultConfigurations(this.tenantId).subscribe(data =>
           {
             this.vaulConfigureList=data
-            console.log("vault",this.vaulConfigureList)
+           
           })
 
       }
@@ -2944,7 +2915,7 @@ console.log("alertbody",this.alertsbody)
           "emailEnabled":this.formTwoFactor.isEmailcheckForOTP,
           "smsEnabled": this.formTwoFactor.isSMScheckForOTP,
         }
-        console.log("bodyyy", twoFactorAuthBody)
+    
       this.profileservice.twoFactorConfig(twoFactorAuthBody, tentName).subscribe(res => {
       // this.pswdmodel = {};
       this.getTwoFactroConfigurations()
@@ -3007,8 +2978,7 @@ console.log("alertbody",this.alertsbody)
         "categoryName": this.deptName
       }
       this.profileservice.createCategory(body).subscribe(resp => {
-        console.log("create category===", resp)
-        this.modalRef.hide();
+               this.modalRef.hide();
         this.getAllCategories();
         if(resp.message === "Successfully created the category"){
           this.notifier.show({
@@ -3034,7 +3004,7 @@ console.log("alertbody",this.alertsbody)
         "categoryName": this.categoryname
       }
       this.profileservice.updateCategory(catbody).subscribe(resp => {
-        console.log("modify category===", resp)
+        
         this.modalRef.hide();
         this.getAllCategories();
         if(resp.message === "Successfully updated the category"){
@@ -3060,7 +3030,7 @@ console.log("alertbody",this.alertsbody)
         "categoryId": data.categoryId,
         "categoryName": data.categoryName
       }
-      console.log("delbody===",delbody)
+     
        this.profileservice.deleteCategory(delbody).subscribe(resp => {
          this.getAllCategories();
          if(resp.message==="Successfully deleted the category"){

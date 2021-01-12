@@ -54,7 +54,7 @@ export class RolesAndPermissionsComponent implements OnInit {
 
     })
 
-    console.log("roelsand permissins applications: ", this.result);
+  
   }
 
 
@@ -67,10 +67,10 @@ export class RolesAndPermissionsComponent implements OnInit {
     this.result.forEach(element => {
       if (element.name == selectedProduct) {
         this.appSelectedId = element.appId
-        console.log("app selected", this.appSelectedId);
+      
         this.userService.getSelectedRole(element.appId).subscribe(data => this.successRoles(data));
         this.appSelectedId = element.appId
-        console.log(this.appSelectedId);
+      
       }
     })
     //   if(selectedProduct == ){
@@ -108,16 +108,14 @@ export class RolesAndPermissionsComponent implements OnInit {
     this.selectedRole = [];
     this.permissions = [];
     this.roles = roleData;
-    console.log("rolesDataaaaa", roleData);
-
-    roleData.forEach(element => {
+       roleData.forEach(element => {
       this.selectedRole.push(element.name)
       this.rolesData.push(element)
     });
   }
   onChangerole(event) {
     this.permissions = [];
-    console.log("onChangerole", this.rolesData)
+   
     this.roles.forEach(element => {
       if (event == element.name) {
 
@@ -129,7 +127,7 @@ export class RolesAndPermissionsComponent implements OnInit {
         // this.permissionsValue.forEach(elemnt => {
         //   this.permissions.push(elemnt.permissionName)
         // })
-        console.log("permissionssss", this.permissions);
+       
       }
     })
 

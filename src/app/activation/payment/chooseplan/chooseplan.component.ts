@@ -93,7 +93,7 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
 
   }
   selectedPlan(planData){
-    console.log('my free tier?',planData)
+    
     localStorage.setItem('selectedplan',planData.nickName);
    
     if(planData.nickName =="Free Tier"){
@@ -113,12 +113,11 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
         }) 
         this.productlistservice.getNewAccessToken().subscribe(resp=>{
           this.newAccessToken=resp
-          console.log("token",resp)
+       
           localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
         })
         this.profileService.getUserRole(2).subscribe(res=>{
           this.userRole=res.message;
-          console.log("user role is",this.userRole)
           localStorage.setItem('userRole',this.userRole);
         })
         this.router.navigate(['/activation/platform'])

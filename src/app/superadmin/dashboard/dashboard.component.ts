@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   getSuperAdminData(){
     this.spinner.show();
     this.firstloginservice.getSuperAdminData().subscribe(res=>{this.plans=res
-      console.log('resr',res);
+
       
     })
   }
