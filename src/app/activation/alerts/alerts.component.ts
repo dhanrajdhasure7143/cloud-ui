@@ -34,13 +34,10 @@ export class AlertsComponent implements OnInit {
   }
 
   saveConfig() {
-    console.log("data : "+this.checkedData);
-    console.log("value : "+this.checkboxValue);
-     let data = this.checkboxValue
+       let data = this.checkboxValue
      this.alertservice.saveConfig(data).subscribe(res => this.successCallbackSubmit(res))
   }
   successCallbackSubmit(data) {
-    console.log(data);
     Swal.fire({
       type: 'success',
       text: 'Successfully Updated'

@@ -86,7 +86,7 @@ public myname:any[]
  }
   ngOnInit() {
     if(this.decodedInput == 'myAccount'){
-      console.log("entered into myAccount", this.decodedInput);
+   
       
       
       this.accountSlideup()
@@ -158,8 +158,6 @@ public myname:any[]
     localStorage.clear();
     sessionStorage.clear();
     
-    console.log('came to logout', this.logintype)
-
     if(this.logintype == 'Azure'){
       
       window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
@@ -266,7 +264,8 @@ public myname:any[]
   }
 
   profileName(){
-    console.log("came to profile icon");
+ 
+    
     
     this.firstname=localStorage.getItem('firstName');
       this.lastname=localStorage.getItem('lastName');
@@ -277,7 +276,7 @@ public myname:any[]
   }
 
   getImage() {
-    console.log("inside image")
+    
       const userid=localStorage.getItem('ProfileuserId');
           this.profileService.getUserDetails(userid).subscribe(res => {
                 this.retrieveResonse = res;
@@ -316,7 +315,7 @@ public myname:any[]
           this.profileService.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
             this.notificationList = data
             this.notificationscount=this.notificationList
-            console.log(this.notificationscount)
+          
             if(this.notificationscount==undefined||this.notificationscount==null)
             {
               this.notificationscount=0;

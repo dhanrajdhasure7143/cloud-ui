@@ -45,7 +45,7 @@ export class UserdetailsComponent implements OnInit {
     //   const letter=name;
        this.name.split(" ")
        let first=this.name[0];
-       console.log(first);
+      
        if(this.role== "null"){
         this.role="NA"
         }

@@ -95,12 +95,9 @@ public paymentToken:any;
     this.route.params.subscribe(data=>{this.cardData=data
 
       this.cardDetails=JSON.parse(Base64.decode(this.cardData.id));
-      console.log("this.cardDetails.token",this.cardDetails);
-
-          this.cardnumber=this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X')+this.cardDetails.cardnumbertotal.slice(-4);
+               this.cardnumber=this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X')+this.cardDetails.cardnumbertotal.slice(-4);
           // this.cardNumberdigts=this.cardnumber.toString().split('').slice(12).join('');
           this.cardNumberdigts=this.cardnumber.match(new RegExp('.{1,4}', 'g')).join('-')
-            console.log("this.cardDetails",this.cardData);
           this.cvvnumber=this.cardDetails.cvvNumber.replace(new RegExp("[0-9]", "g"), "X")
         });
   }
@@ -158,7 +155,7 @@ this.sharedDataService.setFreetrialavailed(false);
      this.modalRef = this.modalService.show(template,this.config);
            })
       }
-      console.log(' carddddddddddddddddddv token',this.paymentToken);
+
       
     })
 
@@ -180,7 +177,7 @@ this.sharedDataService.setFreetrialavailed(false);
     this.iscoupon=true;
   }
   applyCoupon(couponcode){
-    console.log("my card in coupon",this.cardDetails)
+    
    
     const cardValue={
       "name":this.cardDetails.cardHoldername,
@@ -255,12 +252,12 @@ this.sharedDataService.setFreetrialavailed(false);
     this.modalRef.hide();
     this.productlistservice.getNewAccessToken().subscribe(resp=>{
       this.newAccessToken=resp
-      console.log("token",resp)
+   
       localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
     })
     this.profileService.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
-      console.log("user role is",this.userRole)
+    
       localStorage.setItem('userRole',this.userRole);
     })
     this.router.navigate(['/activation'])

@@ -63,7 +63,6 @@ export class AppComponent {
       if(localStorage.getItem("userName") != null){
       this.productservice.getNewAccessToken().subscribe(resp=>{
         this.newAccessToken=resp
-        console.log("token",resp)
         localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
       });
       }
