@@ -172,7 +172,7 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                      <tab *ngIf="this.userRole.includes('Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
                                     <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -202,7 +202,7 @@
                                   <td >${{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
                                   <td>{{sdata.noOfUsers}}</td>
                                   <td>{{sdata.status}}</td>
-                                  <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                  <td class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
                                     <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
                                       <div class="container-fluid deletefrm">
                                     <h5 class="pull-left">Confirmation</h5>
@@ -227,7 +227,7 @@
                     </div>
                   </tab>
 
-                  <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Payment History" (selectTab)=onselectInvoiceTab()>
+                  <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -267,7 +267,7 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
+                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -474,7 +474,7 @@
                 <div class="container" *ngIf="isAlerts">
                   <div  class="">
                     <tabset id="staticTabs" #staticTabs>
-                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Alerts" id="tab1">
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_Alerts_Full" heading="Alerts" id="tab1">
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
                                 <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -542,7 +542,7 @@
                 </div>
                       </div>
                     </tab>
-                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Email Templates" >
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_EmailTempt_Full" heading="Email Templates" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
                             <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchtemplate" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -602,7 +602,7 @@
                           </div>
                     </tab>
                     <!--vault configure tab-->
-                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Security Vault" >
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.confuguration_SecureVault_Full" heading="Security Vault" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
                             <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvault" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -664,7 +664,7 @@
                           </div>
                     </tab>
 
-                    <tab *ngIf="this.userRole.includes('Admin')" heading = "Two Factor Authentication">
+                    <tab *ngIf="this.userRole.includes('Admin') || this.configuration_TwoFactor_Full" heading = "Two Factor Authentication">
                         <div class = "col-md-12 twoFactor factor">
                         <form #f="ngForm" (ngSubmit)="twoFactorAuthConfig(f)">
                          
@@ -720,7 +720,7 @@
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
                             <tabset id="staticTabs" #staticTabs>
-                              <tab  *ngIf="this.userRole.includes('Admin') || this.userManagementEnabled" heading="Users" id="tab1">
+                              <tab  *ngIf="this.userRole.includes('Admin') || this.userManagement_Users_Full" heading="Users" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -804,7 +804,7 @@
                                       </div>
                             </div>
                       </tab>
-                      <tab *ngIf="this.userRole.includes('Admin') || this.userManagementEnabled" heading="Departments">
+                      <tab *ngIf="this.userRole.includes('Admin') || this.userManagement_Depart_Full" heading="Departments">
                           <div class="search-One">
                               <form class="form-inline d-flex  md-form form-sm">
                                   <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchDept" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -919,7 +919,7 @@
                                                 </td>
                                                
                                                </tr>
-                                            </tbody>
+                                            </tbody>  
                                           </table>
                                           <div *ngIf="(allRoles | filter:searchRole).length==0" class=""><h4>No records found</h4></div>
                                           <div class="permissionpagination">
@@ -1370,7 +1370,7 @@
               <div class="col-md-12">
                 <div class="form-group form-buttons pull-right buttonsblock">
                   <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
-                  <button class="btn btn-primary change_plan" (click)="infoModelSubmit()">Change Plan</button>
+                  <button [disabled] = "myAccount_Subsription_Read" class="btn btn-primary change_plan" (click)="infoModelSubmit()">Change Plan</button>
               </div>
             </div>
         <div class="clearfix">

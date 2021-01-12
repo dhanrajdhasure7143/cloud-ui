@@ -48,6 +48,8 @@ export class TopheaderComponent implements OnInit {
   isvaultMangment: boolean;
   customUserRole: any;
   userManagementEnabled: boolean = false;
+  inviteUserEnabled: boolean = false;
+  configurationEnabled: boolean = false;
 
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
@@ -110,8 +112,12 @@ public myname:any[]
 
       this.customUserRole=role.message[0].permission;
       this.customUserRole.forEach(element => {
-        if(element.permissionName.includes('UserManagement_Full')){
+        if(element.permissionName.includes('UserManagement_Users_Full') || element.permissionName.includes('UserManagement_Roles_Full') || element.permissionName.includes('UserManagement_Departments_Full')){
           this.userManagementEnabled = true;
+        }else if(element.permissionName.includes('InviteUser_Full')){
+         this.inviteUserEnabled = true;
+        }else if(element.permissionName.includes('Configuration_Alerts_Full') || element.permissionName.includes('Configuration_EmailTemplates_Full') || element.permissionName.includes('Configuration_SecureVault_Full') || element.permissionName.includes('Configuration_TwoFactor_Full')){
+         this.configurationEnabled = true;
         }
 
       });
