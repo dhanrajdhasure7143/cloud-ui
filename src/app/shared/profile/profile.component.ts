@@ -306,6 +306,11 @@ export class ProfileComponent implements OnInit {
   customUserRole: any;
   userManagementEnabled: boolean = false;
   myAccountFull: boolean = false;
+  myAccount_PaymentHistory_All: boolean = false;
+  myAccount_PaymentMode_All: boolean = false;
+  myAccount_Subsription_Update: boolean = false;
+  myAccount_Subsription_Delete: boolean = false;
+  myAccount_Subsription_All: boolean = false;
   couponid: any;
   couponduration: any;
   coupondurationInMonths: any;
@@ -315,6 +320,13 @@ export class ProfileComponent implements OnInit {
   couponmaxRedemptions: any;
   mindate: any;
   public usersalertsdata: any=[];
+  userManagement_Users_Full: boolean = false;
+  userManagement_Roles_Full: boolean = false;
+  userManagement_Depart_Full: boolean = false;
+  configuration_Alerts_Full: boolean = false;
+  configuration_EmailTempt_Full: boolean = false;
+  confuguration_SecureVault_Full: boolean = false;
+  configuration_TwoFactor_Full: boolean = false;
 
 
 
@@ -334,10 +346,36 @@ export class ProfileComponent implements OnInit {
 
       this.customUserRole=role.message[0].permission;
       this.customUserRole.forEach(element => {
-        if(element.permissionName.includes('UserManagement_Full')){
+        if(element.permissionName.includes('UserManagement_All')){
           this.userManagementEnabled = true;
-        }else if(element.permissionName.includes('MyAccount_Full')){}
-                 this.myAccountFull = true;
+        }else if(element.permissionName.includes('MyAccount_All')){
+          this.myAccountFull = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_All')){
+          this.myAccount_Subsription_All = true;
+        }else if(element.permissionName.includes('MyAccount_PaymentMode_Full')){
+          this.myAccount_PaymentMode_All = true;
+        }else if(element.permissionName.includes('MyAccount_PaymentHistory_Full')){
+          this.myAccount_PaymentHistory_All = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_Update')){
+          this.myAccount_Subsription_Update = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_Delete')){
+          this.myAccount_Subsription_Delete = true;
+        }else if(element.permissionName.includes('UserManagement_Users_Full')){
+         this.userManagement_Users_Full = true;
+        }else if(element.permissionName.includes('UserManagement_Roles_Full')){
+        this.userManagement_Roles_Full = true;
+        }else if(element.permissionName.includes('UserManagement_Departments_Full')){
+         this.userManagement_Depart_Full = true;
+        }else if(element.permissionName.includes('Configuration_Alerts_Full')){
+        this.configuration_Alerts_Full = true;
+        }else if(element.permissionName.includes('Configuration_EmailTemplates_Full')){
+        this.configuration_EmailTempt_Full = true;
+        }else if(element.permissionName.includes('Configuration_SecureVault_Full')){
+        this.confuguration_SecureVault_Full = true;
+        }else if(element.permissionName.includes('Configuration_TwoFactor_Full')){
+        this.configuration_TwoFactor_Full = true;
+        }
+                 
       });
      
     })
