@@ -175,7 +175,7 @@
                       <tab *ngIf="this.userRole.includes('Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
-                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchsub" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                     <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                   </form>
                             </div>
@@ -193,7 +193,7 @@
                                   <th scope="col" class="types2">Action</th>
                                 </tr>
                               </thead>
-                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | paginate: {id:'sub_page', itemsPerPage:4 , currentPage: subtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | paginate: {id:'sub_page', itemsPerPage:4 , currentPage: subtemp } | FilterPipe: searchsub ;let i=index;trackBy:loopTrackBy;">
                                 <tr  >
                                   <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
                                   <td>{{sdata.name}}</td>
@@ -221,7 +221,8 @@
                                 </tr>
                               </tbody>
                             </table>
-                            <div  class="alertspagination">
+                            <div *ngIf="(tableData | filter:searchsub).length==0" class=""><h4>No records found</h4></div>
+                            <div *ngIf="(tableData | filter:searchsub).length" class="alertspagination">
                               <pagination-controls id="sub_page" maxSize="8" (pageChange)="subtemp = $event"></pagination-controls>
                               </div>
                     </div>
@@ -230,7 +231,7 @@
                   <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
-                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchpayment" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                         <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                       </form>
                                 </div>
@@ -249,7 +250,7 @@
                                     </tr>
                                   </thead>
                                   <tbody >
-                                    <tr *ngFor="let invdata of invoicedata | paginate: {id:'ph_page', itemsPerPage:4 , currentPage: phtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                                    <tr *ngFor="let invdata of invoicedata | paginate: {id:'ph_page', itemsPerPage:4 , currentPage: phtemp } | FilterPipe: searchpayment ;let i=index;trackBy:loopTrackBy;">
                                       <td>{{invdata.invoiceNumber}}</td>
                                       <td>{{invdata.subscriptionId}}</td>
                                       <td>${{invdata.amount}}.00 </td>
@@ -261,7 +262,8 @@
                                     </tr>
                                   </tbody>
                                 </table>
-                                <div  class="alertspagination">
+                                <div *ngIf="(invoicedata | filter:searchpayment).length==0" class=""><h4>No records found</h4></div>
+                                <div *ngIf="(invoicedata | filter:searchpayment).length" class="alertspagination">
                                   <pagination-controls id="ph_page" maxSize="8" (pageChange)="phtemp = $event"></pagination-controls>
                                   </div>
                         </div>
@@ -270,7 +272,7 @@
                       <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
-                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchmode" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                         <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                       </form>
                                 </div>
@@ -288,7 +290,7 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr *ngFor="let cardData of paymentMode | paginate: {id:'pm_page', itemsPerPage:2 , currentPage: pmtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
+                                    <tr *ngFor="let cardData of paymentMode | paginate: {id:'pm_page', itemsPerPage:2 , currentPage: pmtemp } | FilterPipe: searchmode ;let i=index;trackBy:loopTrackBy;" >
                                       <td>{{cardData.cardBrand|titlecase}}</td>
                                       <td class="cardtable">XXXX-XXXX-XXXX-{{cardData.cardLast4}} 
                                         <!-- <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td> -->
@@ -334,7 +336,8 @@
                                     </tr>
                                   </tbody>
                                 </table>
-                                <div  class="alertspagination">
+                                <div *ngIf="(paymentMode | filter:searchmode).length==0" class=""><h4>No records found</h4></div>
+                                <div *ngIf="(paymentMode | filter:searchmode).length" class="alertspagination">
                                   <pagination-controls id="pm_page" maxSize="8" (pageChange)="pmtemp = $event"></pagination-controls>
                                   </div>
                         </div>
@@ -477,7 +480,7 @@
                     <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_Alerts_Full" heading="Alerts" id="tab1">
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
-                                <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchalert" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                 <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                               </form>
                             </div>
@@ -502,7 +505,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata  | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata  | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchalert; trackBy:loopTrackBy; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -535,10 +538,11 @@
 
                           </tbody>
                         </table>
-                        <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                        <div *ngIf="(alertslistactivitiesdata | filter:searchalert).length==0" class=""><h4>No records found</h4></div>
+                        <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found' && (alertslistactivitiesdata | filter:searchalert).length" class="alertspagination">
                         <pagination-controls id="alert_page" maxSize="8" (pageChange)="p = $event"></pagination-controls>
                         </div>
-                    
+                        
                 </div>
                       </div>
                     </tab>
@@ -594,7 +598,8 @@
     
                               </tbody>
                             </table>
-                             <div *ngIf="emailtemplateslist!=0" class="alertspagination">
+                            <div *ngIf="emailtemplateslist!=0 && (emailtemplateslist | filter:searchtemplate).length==0" class=""><h4>No records found</h4></div>
+                             <div *ngIf="emailtemplateslist!=0 && (emailtemplateslist | filter:searchtemplate).length " class="alertspagination">
                             <pagination-controls id="email_template_page" maxSize="8" (pageChange)="emailtemp = $event"></pagination-controls>
                             </div> 
                         
@@ -656,6 +661,7 @@
     
                               </tbody>
                             </table>
+                            <div *ngIf="vaulConfigureList!=0 && (vaulConfigureList | filter:searchvault).length==0" class=""><h4>No records found</h4></div>
                             <div *ngIf="vaulConfigureList!=0" class="alertspagination">
                             <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
                             </div>
@@ -853,8 +859,8 @@
                                           
                                     </tbody>
                                   </table>
-                                  <!-- <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div> -->
-                                  <div class="deptpagination">
+                                   <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div> 
+                                  <div *ngIf="(categories | filter:searchDept).length" class="deptpagination">
                                     <pagination-controls id="dept_page" maxSize="3" (pageChange)="dp = $event"></pagination-controls>
                                     </div>
                             </div>
@@ -1057,7 +1063,8 @@
                          </tr>
                       </tbody>
                     </table>
-                    <div class="couponpagination">
+                    <div *ngIf="(allCoupons | filter:searchCoupon).length==0" class=""><h4>No records found</h4></div>
+                    <div *ngIf="(allCoupons | filter:searchCoupon).length" class="couponpagination">
                       <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
                       </div>
       </div>
@@ -1074,7 +1081,7 @@
             <tab heading="Security Vault">
       <div class="search-One">
           <form class="form-inline d-flex  md-form form-sm">
-              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvaultmng" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
               <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                      
             </form>
@@ -1093,7 +1100,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let t= index">
+              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchvaultmng; trackBy:loopTrackBy; let t= index">
                 <td style="text-align:center">{{keys.keyname}}</td>
                 <td style="text-align:center">{{keys.convertedTime |   date}} {{keys.convertedTime.split("T")[1].split(".")[0]}}</td>
                 <td style="text-align:center">{{keys.data.metadata.version}}</td>
@@ -1120,7 +1127,8 @@
                </tr>
             </tbody>
           </table>
-                    <div class="couponpagination">
+          <div *ngIf="(allKeys | filter:searchvaultmng).length==0" class=""><h4>No records found</h4></div>
+                    <div *ngIf="(allKeys | filter:searchvaultmng).length" class="couponpagination">
                       <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
                       </div>
       </div>
@@ -2028,7 +2036,7 @@
                     <div class="modal-body">
                       <div class="col-md-12 infocheck">
                         <label for="subscriptionid">User ID </label>
-                        <input type="text" [disabled]=true name="useriD" #useriD="ngModel" class="form-control botmbordr" [(ngModel)]="roleListdata.userId"/>     
+                        <input type="text" [disabled]=true name="useriD" #useriD="ngModel" class="form-control botmbordr" [(ngModel)]="testuserid"/>     
                                   </div>
                       <div class="col-md-12 infocheck">
                         <label for="product">Product </label>

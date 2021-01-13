@@ -143,8 +143,8 @@
           </thead>
           <tbody>
               <tr *ngFor="let data of tabledata">
-                  <td>{{data.tenantName}}</td>
-                  <td>{{data.name}}</td>
+                  <td>{{data.tenantName?data.tenantName:'-'}}</td>
+                  <td>{{data.name?data.name:'-'}}</td>
                   <td>{{data.subscribedOn| date:'medium'}}</td>
               </tr>
           </tbody>
@@ -202,7 +202,7 @@
        
       <div  class="col-md-5  text-center">
         <h5><b>Coupons</b></h5>
-        <div *ngIf="coupons!=0" id="piechart1" #containerRef class="box_shadw34">
+        <div *ngIf="coupons!=0" id="piechart1" #containerRef class="box_shadw34"><br>
            <ngx-charts-pie-chart
           [view]="[containerRef.offsetWidth, 300]"
           [scheme]="{domain: ['#ff3300', '#cc0066','#339933']}"

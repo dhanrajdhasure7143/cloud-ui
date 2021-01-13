@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
   public searchCoupon: any;
   public emailId: any[];
   public sentFromOne: any;
-  public tableData: any[];
+  public tableData: any=[];
   public formOne: any = {};
   public formTwoFactor: any = {};
   // public isEmailcheckForOTP: any;
@@ -90,8 +90,8 @@ export class ProfileComponent implements OnInit {
   public pricecheckbox: any;
   public plancheckbox: any;
   public feedbackbox: any;
-  public paymentMode: any;
-  public invoicedata: any[];
+  public paymentMode: any=[];
+  public invoicedata: any=[];
   public notificationList: any;
   public dataid: any;
   public userId: any;
@@ -144,7 +144,7 @@ export class ProfileComponent implements OnInit {
   durationInMonths: any;
   percentageOffTot: any;
   data: any;
-  allCoupons: any;
+  allCoupons: any=[];
   mod: any;
   coupondata: any;
   testArry: any = [];
@@ -296,7 +296,7 @@ export class ProfileComponent implements OnInit {
   selectedsecret: any;
   modvaultId: any;
   searchDept:any;
-  categories:any;
+  categories:any=[];
   deptName:any;
   dept:any;
   categoryname:any;
@@ -327,7 +327,15 @@ export class ProfileComponent implements OnInit {
   configuration_EmailTempt_Full: boolean = false;
   confuguration_SecureVault_Full: boolean = false;
   configuration_TwoFactor_Full: boolean = false;
-
+  searchsub: string;
+  searchpayment: string;
+  searchmode: string;
+  searchalert: string;
+  searchvault: string;
+  searchRole: string;
+  searchPermission: string;
+  searchvaultmng: string;
+  testuserid: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -711,6 +719,17 @@ this.profileservice.applications().subscribe(resp =>
   }
   slideDown() {
     this.searchCoupon = '';
+    this.searchsub='';
+    this.searchpayment='';
+    this.searchmode='';
+    this.searchalert='';
+    this.searchtemplate='';
+    this.searchvault='';
+    this.searchRole='';
+    this.searchPermission='';
+    this.searchUser='';
+    this.searchDept='';
+    this.searchvaultmng='';
     this.isSameDomain=false;
     this.userDetails();
     this.inviteAllRoles = '';
@@ -911,6 +930,7 @@ this.profileservice.applications().subscribe(resp =>
     // this.testArry = ['Admin', 'user', 'RPA Admin'];
     this.permidlist = [];
     this.roleListdata = selRoleData;
+    this.testuserid=this.roleListdata.userId;
     this.testRolesList = this.roleListdata.roleIdname;
   
     this.selectedApp  = selRoleData.applicationIdname;
