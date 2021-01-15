@@ -112,7 +112,7 @@
         <div class="col-md-1"></div>
         <div *ngIf="registeredvsinvited!=0" class="col-md-5  text-center">
             <h5><b>Users - Registered vs Invited</b></h5>
-            <div id="piechart1"  #containerRef class="box_shadw34"> 
+            <div id="piechart1"  #containerRef class="box_shadw34"><br>
             <ngx-charts-pie-chart
             [view]="[containerRef.offsetWidth, 300]"
     [scheme]="{domain: ['#34568b', '#dd4124']}"
@@ -140,10 +140,10 @@
         <div *ngIf="alertsCountBasedOnType!=0" class="col-md-5  text-center">
   
             <h5><b>Configured Alerts - Success vs Failure</b></h5>
-            <div id="piechart2" #containerRef class="box_shadw34">
+            <div id="piechart2" #containerRef class="box_shadw34"><br>
                <ngx-charts-pie-chart
               [view]="[containerRef.offsetWidth, 300]"
-              [scheme]="{domain: ['#98ddde', '#f2552c']}"
+              [scheme]="{domain: ['#00cc99', '#cc66ff']}"
               [results]="alertsCountBasedOnType"
               [gradient]="true"
               [legend]="true"
@@ -195,7 +195,7 @@
   <ngx-charts-bar-vertical-stacked
   [view]="[containerRef.offsetWidth, 400]"
         [results]="activityvsalert"
-        [scheme]="colorScheme2"
+        [scheme] ="colorScheme2"
         [gradient]="gradient2"
         [xAxis]="showXAxis2"
         [yAxis]="showYAxis2"
@@ -227,7 +227,7 @@
         <div *ngIf="cards!=0" class="col-md-5  text-center">
   
           <h5><b>Visa vs Mastercard</b></h5>
-          <div id="piechart3" #containerRef class="box_shadw34">
+          <div id="piechart3" #containerRef class="box_shadw34"><br>
             <ngx-charts-pie-chart
             [view]="[containerRef.offsetWidth, 300]"
             [scheme]="{domain: ['#66ccff', '#ff4d88']}"
