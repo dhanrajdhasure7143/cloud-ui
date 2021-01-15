@@ -110,7 +110,7 @@
                     <option value="100">100</option>
                   </select>
                 </div>
-                <div *ngIf='!isStandard' class="form-group col-sm-5 state_input card_form">
+                <div *ngIf='!isStandard' class="form-group col-sm-10 state_input card_form">
                     <label for="customerCount">No of Users</label>
                     <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
                         <option  [value]="undefined" disabled hidden>Select Users</option>

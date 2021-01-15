@@ -142,7 +142,7 @@ public myname:any[]
         
         setTimeout(() => {
           this.spinner.hide();
-        }, 1600);
+        }, 5000);
   }
 
 
