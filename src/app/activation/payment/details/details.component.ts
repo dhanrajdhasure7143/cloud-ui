@@ -176,12 +176,14 @@ this.allpaymentsList=resp
   }
 
   paymentfromSubmit(){
+    this.cardnumber4=this.paymentMode.find(item=>item.id==this.cardid).cardLast4
   this.cardDetails={
     cardHoldername:this.cardHoldername,
     cardmonth:this.cardmonth,
     cardnumbertotal:this.cardnumber1+this.cardnumber2+this.cardnumber3+this.cardnumber4,
     cardyear:this.cardyear,
     cvvNumber:this.cvvNumber,
+    id:this.cardid,
     customerCount: parseInt(this.customerCount)
   }
   this.cardEncode=Base64.encode(JSON.stringify(this.cardDetails));
@@ -207,6 +209,7 @@ this.allpaymentsList=resp
       if(this.isEmpty(data) != true){
     this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));
       this.cardHoldername=this.cardDetails.cardHoldername;
+      this.cardid=this.cardDetails.id;
       this.cardmonth=this.cardDetails.cardmonth;
       this.cardnumber1=this.cardDetails.cardnumbertotal.slice(0, 4);
       this.cardnumber2=this.cardDetails.cardnumbertotal.slice(0, 4);
