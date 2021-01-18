@@ -240,6 +240,7 @@ export class ProfileComponent implements OnInit {
   currentUserId: any;
   datetime: any;
   datetimeinput:any;
+  prevdate:any;
   redeemdate: any;
   public notificationreadlist:any;
   cards: any;
@@ -538,6 +539,7 @@ this.profileservice.applications().subscribe(resp =>
     });
   }
   getListofCoupons() {
+    this.prevdate = new Date().getFullYear() + "-" +  new Date().getMonth()+1 + "-" + new Date().getDate() + "T" + "08:30"
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
       this.allCoupons.forEach(element => {
        element.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
@@ -634,7 +636,8 @@ this.profileservice.applications().subscribe(resp =>
 
   }
   close_modal(){
-    this.modalRef.hide();}
+    this.modalRef.hide();
+  }
   getAllPaymentmodes() {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
@@ -956,7 +959,7 @@ this.isupdatecouponclicked=false;
        this.couponmaxRedemptions=selCouponData.maxRedemptions
 
     this.coupondata=selCouponData;
-    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-MM-DDTkk:mm")
+    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-MM-DD")
  
     this.modalRef = this.modalService.show(template)
     if(selCouponData.amountOff != ' - ' && selCouponData.percentOff == ' - '){

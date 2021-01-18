@@ -861,7 +861,7 @@
                                   </table>
                                    <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div> 
                                   <div *ngIf="(categories | filter:searchDept).length" class="deptpagination">
-                                    <pagination-controls id="dept_page" maxSize="3" (pageChange)="dp = $event"></pagination-controls>
+                                    <pagination-controls id="dept_page" maxSize="8" (pageChange)="dp = $event"></pagination-controls>
                                     </div>
                             </div>
                           </tab>
@@ -2393,7 +2393,7 @@
                   <ng-template #modifyCoupon >
                    
                      
-                      
+                    <form autocomplete="off" #couponmodform="ngForm" (ngSubmit)="modifycoupon(coupondata)" >
                             <div class="modal-header">
                                 <h4 class="modal-title">Modify Coupon</h4>
                                 <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -2451,12 +2451,12 @@
                                                
                                        
                             <div class="col-md-12 submitbtn">
-                              <button class="btn btn-secondary cancel_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
-                              <button class="btn btn-primary updatecouponmbtn" (click)="modifycoupon(coupondata)" [disabled]='isupdatecouponclicked'>Update</button>
+                              <button class="btn btn-secondary cancel_btn" type="button" (click)="close_modal()"><div class="anim"></div> Cancel</button>
+                              <button class="btn btn-primary updatecouponmbtn" [disabled]="!couponmodform.dirty" (click)="modifycoupon(coupondata)" >Update</button>
                             </div>
                          </div>
                       
-                     
+                    </form>
                     </ng-template>
 <!-- this is vault managment -->
              
