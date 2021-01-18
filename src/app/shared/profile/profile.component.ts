@@ -1389,7 +1389,15 @@ this.isupdatecouponclicked=false;
             type: "error",
             message: "Please enter valid card details"
           });
-        } else {
+        }
+        if(this.paymentToken.message==="Card already exists"){
+          this.notifier.show({
+            type: "error",
+            message: "Card already exists."
+          });
+          this.modalRef.hide();
+        } 
+        else {
           
       
       this.profileservice.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{

@@ -103,7 +103,29 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.generateOTP(this.f.username.value).subscribe(data => {
 
-      //swwet alert
+      this.profileService.getTwoFactroConfig(this.f.username.value).subscribe(res=>{
+
+        //swwet alert
+        if(res.emailEnabled == true){
+          Swal.fire({
+            title: 'Success!',
+            text: `OTP has been sent to your registered Email.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+             
+        }
+        if(res.smsEnabled == true){
+          Swal.fire({
+            title: 'Success!',
+            text: `OTP has been sent to your registered Mobile Number.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+        }
+        if(res.emailEnabled == true && res.smsEnabled == true){
       Swal.fire({
         title: 'Success!',
         text: `OTP has been sent to your registered Email and Mobile number.`,
@@ -111,11 +133,15 @@ export class LoginComponent implements OnInit {
         showCancelButton: false,
         allowOutsideClick: true
       })
+    }
           },error => {
+            this.error = "Failed to generate One Time Password.";
+            this.loading = false;
+      });
+      
 
           
-      this.error = "Failed to generate One Time Password.";
-      this.loading = false;
+      
     },
     
   
