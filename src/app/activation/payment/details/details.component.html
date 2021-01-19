@@ -65,25 +65,33 @@
 
               <div class="form-group col-sm-8">
                 <label for="cardNumber">Card Number</label>
-                <input  type="text" class="cc-number1 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
-                (change)='onChangeCardType(cardnumber1)' required/>
-                <input  type="text" class="cc-number2 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
-                <input  type="text" class="cc-number3 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
+                
                 <!-- <input  type="text" [disabled]="number" class="cc-number4 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/> -->
                 <!-- <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
                 class='fa fa-info-circle errspan'> Card Number is required</span>  -->
                 <div *ngIf="cardid !=undefined">
+                  <input  type="text" class="cc-number1 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
+                (change)='onChangeCardType(cardnumber1)' required/>
+                <input  type="text" class="cc-number2 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
+                <input  type="text" class="cc-number3 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
                   <select name="cardNumber" id="cardNumber" class="cc-number4 form-control payment-input" (change)="onChangeCard($event.target.value)" [(ngModel)]="cardid" >
                     <option [value]="undefined" disabled hidden>Select Card</option>
                     <option [value]="null" disabled hidden>Select Card</option>
                     <option *ngFor="let pay of paymentMode" [value]="pay.id">{{pay.cardLast4}}</option>
                     </select>
+                    <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png"></span>
+                    <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png"></span>  
                   </div>
                   <div *ngIf="cardid ==undefined">
+                    <input  type="text" class="cc-number1 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
+                (change)='onChangeCardType(cardnumber1)' required/>
+                <input  type="text" class="cc-number2 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
+                <input  type="text" class="cc-number3 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
                     <input  type="text"  class="cc-number4 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/>
-                    </div>
-                <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png"></span>
-                <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png"></span>
+                    <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png"></span>
+                    <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png"></span>  
+                  </div>
+                
               </div>
               <div class="form-group col-sm-10">
                 <label for="year">Year (YYYY)</label>
