@@ -176,7 +176,9 @@ this.allpaymentsList=resp
   }
 
   paymentfromSubmit(){
+    if(this.cardid !=undefined){
     this.cardnumber4=this.paymentMode.find(item=>item.id==this.cardid).cardLast4
+  }
   this.cardDetails={
     cardHoldername:this.cardHoldername,
     cardmonth:this.cardmonth,
@@ -203,8 +205,7 @@ this.allpaymentsList=resp
     return Object.keys(obj).length === 0;
    }
   editCardDetails(){
-
-  
+   
     this.route.params.subscribe(data=>{this.cardEdit=data
       if(this.isEmpty(data) != true){
     this.cardDetails=JSON.parse(Base64.decode(this.cardEdit.id));
@@ -214,6 +215,7 @@ this.allpaymentsList=resp
       this.cardnumber1=this.cardDetails.cardnumbertotal.slice(0, 4);
       this.cardnumber2=this.cardDetails.cardnumbertotal.slice(0, 4);
       this.cardnumber3=this.cardDetails.cardnumbertotal.slice(0, 4);
+      this.cardnumber4=this.cardDetails.cardnumbertotal.substring(12, this.cardDetails.cardnumbertotal.length-0);
       this.cardyear=this.cardDetails.cardyear;
       this.cvvNumber=this.cardDetails.cvvNumber;
       this.customerCount=this.cardDetails.customerCount;
