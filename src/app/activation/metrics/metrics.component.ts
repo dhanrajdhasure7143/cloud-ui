@@ -72,7 +72,7 @@ export class MetricsComponent implements OnInit {
   legendTitle: string = 'Years';
 
   colorScheme2 = {
-    domain: ['#0099ff', '#00ffcc', '#ffcccc']
+    domain: ['#e64d19', '#ce3175', '#e9897e','#578ca9']
   };
   cards: any;
   subscribedproductscount: any;
@@ -148,8 +148,7 @@ getAllUsersList(){
   this.tenantId = localStorage.getItem("tenantName");
   this.userManagement = [];
   this.profileService.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-    console.log("responseeeeee", resp);
-      this.userManagementresponse = resp
+        this.userManagementresponse = resp
         
       });
 }
@@ -192,7 +191,7 @@ getListOfEmailTemplates()
       {
         this.profileService.getCardsCount().subscribe(cards=>{
           this.cards=cards;
-          console.log("cards",this.cards)
+         
         })
       }
 
@@ -293,7 +292,7 @@ getListOfEmailTemplates()
           let months=["January","February","March","April","May","June","July",
           "August","September","October","November","December"];
           let finalmonths:any=months.slice(months.indexOf(from_month),months.indexOf(to_month)+1);
-          console.log(finalmonths);
+    
  
           finalmonths.forEach(date=>{
             labels.push(date+"-"+year);

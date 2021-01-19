@@ -50,9 +50,10 @@ export class ProfileComponent implements OnInit {
   public isdefault:boolean=false;
   public searchvalue: any;
   public searchUser: any;
+  public searchCoupon: any;
   public emailId: any[];
   public sentFromOne: any;
-  public tableData: any[];
+  public tableData: any=[];
   public formOne: any = {};
   public formTwoFactor: any = {};
   // public isEmailcheckForOTP: any;
@@ -72,6 +73,7 @@ export class ProfileComponent implements OnInit {
   public departments: any;
   public password: any;
   public userManagement: any=[];
+  public userManagementalerts: any=[];
   public userManagementresponse:any=[];
   public show: boolean = true;
   public eyeshow: boolean = true;
@@ -88,8 +90,8 @@ export class ProfileComponent implements OnInit {
   public pricecheckbox: any;
   public plancheckbox: any;
   public feedbackbox: any;
-  public paymentMode: any;
-  public invoicedata: any[];
+  public paymentMode: any=[];
+  public invoicedata: any=[];
   public notificationList: any;
   public dataid: any;
   public userId: any;
@@ -142,7 +144,7 @@ export class ProfileComponent implements OnInit {
   durationInMonths: any;
   percentageOffTot: any;
   data: any;
-  allCoupons: any;
+  allCoupons: any=[];
   mod: any;
   coupondata: any;
   testArry: any = [];
@@ -237,6 +239,8 @@ export class ProfileComponent implements OnInit {
   invitemultirole:boolean=false;
   currentUserId: any;
   datetime: any;
+  datetimeinput:any;
+  prevdate:any;
   redeemdate: any;
   public notificationreadlist:any;
   cards: any;
@@ -293,7 +297,7 @@ export class ProfileComponent implements OnInit {
   selectedsecret: any;
   modvaultId: any;
   searchDept:any;
-  categories:any;
+  categories:any=[];
   deptName:any;
   dept:any;
   categoryname:any;
@@ -303,7 +307,36 @@ export class ProfileComponent implements OnInit {
   customUserRole: any;
   userManagementEnabled: boolean = false;
   myAccountFull: boolean = false;
-
+  myAccount_PaymentHistory_All: boolean = false;
+  myAccount_PaymentMode_All: boolean = false;
+  myAccount_Subsription_Update: boolean = false;
+  myAccount_Subsription_Delete: boolean = false;
+  myAccount_Subsription_All: boolean = false;
+  couponid: any;
+  couponduration: any;
+  coupondurationInMonths: any;
+  couponname: any;
+  couponpercentOff: any;
+  couponamountOff: any;
+  couponmaxRedemptions: any;
+  mindate: any;
+  public usersalertsdata: any=[];
+  userManagement_Users_Full: boolean = false;
+  userManagement_Roles_Full: boolean = false;
+  userManagement_Depart_Full: boolean = false;
+  configuration_Alerts_Full: boolean = false;
+  configuration_EmailTempt_Full: boolean = false;
+  confuguration_SecureVault_Full: boolean = false;
+  configuration_TwoFactor_Full: boolean = false;
+  searchsub: string;
+  searchpayment: string;
+  searchmode: string;
+  searchalert: string;
+  searchvault: string;
+  searchRole: string;
+  searchPermission: string;
+  searchvaultmng: string;
+  testuserid: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -322,15 +355,42 @@ export class ProfileComponent implements OnInit {
 
       this.customUserRole=role.message[0].permission;
       this.customUserRole.forEach(element => {
-        if(element.permissionName.includes('UserManagement_Full')){
+        if(element.permissionName.includes('UserManagement_All')){
           this.userManagementEnabled = true;
-        }else if(element.permissionName.includes('MyAccount_Full')){}
-                 this.myAccountFull = true;
+        }else if(element.permissionName.includes('MyAccount_All')){
+          this.myAccountFull = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_All')){
+          this.myAccount_Subsription_All = true;
+        }else if(element.permissionName.includes('MyAccount_PaymentMode_Full')){
+          this.myAccount_PaymentMode_All = true;
+        }else if(element.permissionName.includes('MyAccount_PaymentHistory_Full')){
+          this.myAccount_PaymentHistory_All = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_Update')){
+          this.myAccount_Subsription_Update = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_Delete')){
+          this.myAccount_Subsription_Delete = true;
+        }else if(element.permissionName.includes('UserManagement_Users_Full')){
+         this.userManagement_Users_Full = true;
+        }else if(element.permissionName.includes('UserManagement_Roles_Full')){
+        this.userManagement_Roles_Full = true;
+        }else if(element.permissionName.includes('UserManagement_Departments_Full')){
+         this.userManagement_Depart_Full = true;
+        }else if(element.permissionName.includes('Configuration_Alerts_Full')){
+        this.configuration_Alerts_Full = true;
+        }else if(element.permissionName.includes('Configuration_EmailTemplates_Full')){
+        this.configuration_EmailTempt_Full = true;
+        }else if(element.permissionName.includes('Configuration_SecureVault_Full')){
+        this.confuguration_SecureVault_Full = true;
+        }else if(element.permissionName.includes('Configuration_TwoFactor_Full')){
+        this.configuration_TwoFactor_Full = true;
+        }
+                 
       });
      
     })
 
-   
+   this.mindate= moment().format("YYYY-MM-DD");
+
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
@@ -352,7 +412,7 @@ export class ProfileComponent implements OnInit {
     this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
-      console.log("user applications are",resp)
+     
       this.apps = resp,
              this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
@@ -361,8 +421,8 @@ export class ProfileComponent implements OnInit {
       this.tenantId=localStorage.getItem('tenantName');
       
 this.getAllUsersList();
+this.getAlertUsersList();
 
-console.log("local",localStorage.getItem('userRole'))
 this.getRoles();
 this.getListofCoupons();
     // this.profileservice.getAllRoles(2).subscribe(resp => {
@@ -388,7 +448,7 @@ this.getListofCoupons();
 this.profileservice.applications().subscribe(resp => 
   {
     this.application = resp,
-    console.log("list of names",resp);
+   
   this.application.forEach(element => {
     this.listOfNames.push(element)
     this.listOfId.push(element.app_id)
@@ -402,7 +462,7 @@ this.profileservice.applications().subscribe(resp =>
     this.currentUserId = localStorage.getItem("ProfileuserId");
     this.userManagement = [];
     this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-      console.log("responseeeeee", resp);
+     
         this.userManagementresponse = resp
            this.userManagementresponse.forEach(elementuser => {
              this.roleArray = [];
@@ -434,14 +494,56 @@ this.profileservice.applications().subscribe(resp =>
           
         });
         
-        console.log("userManagementttttttttt", this.userManagement);
     });
 
   }
+
+  getAlertUsersList(){
+    this.currentUserId = localStorage.getItem("ProfileuserId");
+    this.userManagementalerts = [];
+    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
+      
+        this.userManagementresponse = resp
+           this.userManagementresponse.forEach(elementuser => {
+             this.roleArray = [];
+             elementuser.userId['applicationIdname']=elementuser.applicationId.name;
+             this.rolesArryList = elementuser.rolesEntityList;
+            
+             this.rolesArryList.forEach(element => {
+               this.roleArray.push(element.name);
+               
+             });;
+             
+          elementuser.userId['roleIdname']=this.roleArray;
+          elementuser.userId['created_at']=elementuser.created_at;
+          elementuser.userId['department']=elementuser.userId.department;
+          if(elementuser.userId.enabled == 'true'){
+            elementuser.userId['Status'] = 'Active'
+          }else if(elementuser.userId.enabled == 'false'){
+            elementuser.userId['Status'] = 'Inactive'
+          }else{
+            elementuser.userId['Status'] = 'Not Registered'
+          }
+         // if(this.currentUserId != elementuser.userId.userId)
+          this.userManagementalerts.push(elementuser.userId);
+          
+          this.usersalertsdata=this.userManagementalerts.filter(item=>item.firstName!=null && item.lastName!=null);
+          // this.userManagement.sort(function(a,b){
+          //   // Turn your strings into dates, and then subtract them
+          //   // to get a value that is either negative, positive, or zero.
+          //   return b.created_at - a.created_at;
+          // });
+          
+        });
+        
+    });
+  }
   getListofCoupons() {
+    this.prevdate = new Date().getFullYear() + "-" +  new Date().getMonth()+1 + "-" + new Date().getDate() + "T" + "08:30"
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
       this.allCoupons.forEach(element => {
-        this.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
+       element.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
+       
         if(element.amountOff!=null)
         {
           element.percentOff=' - '
@@ -455,7 +557,7 @@ this.profileservice.applications().subscribe(resp =>
         }
         
       });
-    console.log("doupns are",this.allCoupons)})
+  })
  
   }
   getAllKeys(){
@@ -469,7 +571,7 @@ this.profileservice.applications().subscribe(resp =>
   viewSecreteData(keys,i,template){
    
         this.viewdata=keys;
-    console.log("viewing data is",this.viewdata.data.data)
+ 
     this.versiondata=this.viewdata.data.metadata.version;
     this.updateSecretedata=this.viewdata
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
@@ -498,17 +600,17 @@ this.profileservice.applications().subscribe(resp =>
   }
   //update secrete
   updateSecreteData(updateSecretedata){
-    console.log("to update",updateSecretedata)
+   
     this.secretes1.forEach(element => {
       this.updatesecreteobj[element.key] = element.value
       
 });  
 
-console.log("my pdate data",this.updateSecretedata)
+
     //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
-    console.log("my pdate data 2222",this.updatesecreteobj)
+   
     this.finalObj=Object.assign(this.updatesecreteobj,this.updateSecretedata.data.data)
-    console.log("finallll",this.finalObj)
+   
     this.input1={
       "options": {
         "cas": this.versiondata
@@ -516,7 +618,7 @@ console.log("my pdate data",this.updateSecretedata)
       "data": this.finalObj
     }
      // this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
-    console.log("in updatessssssssss",this.input1)
+    
         this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
       this.getAllKeys();
       this.modalRef.hide();
@@ -530,15 +632,16 @@ console.log("my pdate data",this.updateSecretedata)
    this.mykeys= Object.keys(this.updateSecretedata.data.data)
    this.myvalue=Object.values(this.updateSecretedata.data.data)
    // updatesecreteobj[key] = this.updateSecretedata.data.data
-    console.log("updatesec",Object.values(this.updateSecretedata.data.data))
+   
 
   }
   close_modal(){
-    this.modalRef.hide();}
+    this.modalRef.hide();
+  }
   getAllPaymentmodes() {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
-       console.log("paymentmode",response)
+     
        this.paymentMode = response 
         let result = this.paymentMode.filter(obj => {
          return obj.defaultSource === true
@@ -548,8 +651,7 @@ console.log("my pdate data",this.updateSecretedata)
        localStorage.setItem('cardExpYear',result[0].cardExpYear)
         localStorage.setItem('cardholdername',result[0].name)
        localStorage.setItem('cardLast4',result[0].cardLast4)
-        console.log(result)
-        console.log(this.paymentMode)
+      
         });
   }
    getAllCategories(){
@@ -558,8 +660,7 @@ console.log("my pdate data",this.updateSecretedata)
     })
    }
   ngOnChanges() {
-    console.log("user management", this.userManagement)
-    
+   
     if(this.isusers){
       this.getAllCategories();
     }
@@ -610,7 +711,7 @@ console.log("my pdate data",this.updateSecretedata)
       for (var i = 0; i < this.countryInfo.length; i++) {
         if (this.countryInfo[i].CountryName == this.formOne.country) {
           this.phnCountryCode = this.countryInfo[i].CountryCode
-          console.log("countryCode", this.countryInfo[i].CountryCode);
+        
         }
       }
     })
@@ -620,12 +721,24 @@ console.log("my pdate data",this.updateSecretedata)
     return index;
   }
   slideDown() {
+    this.searchCoupon = '';
+    this.searchsub='';
+    this.searchpayment='';
+    this.searchmode='';
+    this.searchalert='';
+    this.searchtemplate='';
+    this.searchvault='';
+    this.searchRole='';
+    this.searchPermission='';
+    this.searchUser='';
+    this.searchDept='';
+    this.searchvaultmng='';
     this.isSameDomain=false;
     this.userDetails();
     this.inviteAllRoles = '';
-    console.log("inside slidedown")
+    
     this.invite_product="";
-    console.log(this.invite_product)
+   
      //this.closeDeleteForm = false;
      this.selectedIndex = '';
      this.selectedalertdet = ''
@@ -811,7 +924,6 @@ console.log("my pdate data",this.updateSecretedata)
        
       this.permidlist.push(elementperm.id)
       });
-      console.log("selroledata", selRoleData)
     this.selectedApp = selRoleData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
@@ -821,27 +933,34 @@ console.log("my pdate data",this.updateSecretedata)
     // this.testArry = ['Admin', 'user', 'RPA Admin'];
     this.permidlist = [];
     this.roleListdata = selRoleData;
+    this.testuserid=this.roleListdata.userId;
     this.testRolesList = this.roleListdata.roleIdname;
-
-    console.log("dataaaaa", selRoleData);
-    console.log("rols arry", this.allRoles);
-    
+  
     this.selectedApp  = selRoleData.applicationIdname;
-       
+     
     this.modalRef = this.modalService.show(template)
   }
 
 
   selectedpermdata(selPermData, index, template){
     this.permdata = selPermData;
-    console.log("selroledata", selPermData)
+
     this.selectedApp = selPermData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
   selectedCoupondata(selCouponData, index, template){
-    console.log("selected coupon ",selCouponData)
+this.isupdatecouponclicked=false;
+       this.couponid=selCouponData.id
+       this.couponduration=selCouponData.duration
+       this.coupondurationInMonths=selCouponData.durationInMonths,
+       this.couponname=selCouponData.name
+       this.couponpercentOff=selCouponData.percentOff
+       this.couponamountOff=selCouponData.amountOff
+       this.couponmaxRedemptions=selCouponData.maxRedemptions
+
     this.coupondata=selCouponData;
-    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-M-DThh:mm")
+    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-MM-DD")
+ 
     this.modalRef = this.modalService.show(template)
     if(selCouponData.amountOff != ' - ' && selCouponData.percentOff == ' - '){
       this.isPercentage=false;
@@ -945,8 +1064,6 @@ console.log("my pdate data",this.updateSecretedata)
     for (var i = 0; i < this.countryInfo.length; i++) {
       if (this.countryInfo[i].CountryName == countryValue) {
         this.phnCountryCode = this.countryInfo[i].CountryCode
-        console.log("countryCode", this.countryInfo[i].CountryCode);
-
         this.stateInfo = this.countryInfo[i].States;
       }
     }
@@ -1006,7 +1123,7 @@ console.log("my pdate data",this.updateSecretedata)
     }
     alertsdeletedata(data,index){
       this.selectedalertdet=index
-      console.log("index",index)
+
   }
   updateselecttedalertdata(data,index,template){ 
     
@@ -1023,12 +1140,10 @@ console.log("my pdate data",this.updateSecretedata)
      this.updatetext_to=data.text_to
      this.updateIncident=data.incident_type
      this.updatetemp = data.email_template
-
-    console.log("alertslistactivitiesdata",this.updatetext_to)
     let channelsplit=data.channel.split(',')
-    console.log("channel",channelsplit)
+   
     channelsplit.forEach(channelname => {
-      console.log("channel name",channelname)
+     
       if(channelname&&channelname=='Notification')
       {
         this.isPushNotificationcheckBoxValue=true;
@@ -1075,7 +1190,7 @@ console.log("my pdate data",this.updateSecretedata)
   modifyalert(alertslistactivitiesdata){
     this.useremail=localStorage.getItem('userName');
     let alertconfiguration=''
-    console.log("sms",this.isSMScheckBoxValue)
+   
       if(this.isPushNotificationcheckBoxValue==true)
       {
         alertconfiguration+='Notification'
@@ -1109,7 +1224,7 @@ console.log("my pdate data",this.updateSecretedata)
       {
         this.updateIncident=null
       }
-      console.log("Alert activities",this.alertsactivities)
+    
       var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
     
         this.alertmodifybody = {
@@ -1124,7 +1239,7 @@ console.log("my pdate data",this.updateSecretedata)
           "email_template":this.updatetemp
           
       }
-      console.log("alertmodifybody",this.alertmodifybody)
+     
         this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
           this.notifier.show({
             type: "success",
@@ -1255,7 +1370,7 @@ console.log("my pdate data",this.updateSecretedata)
     onChangeCardType(cardNumber) {
       var creditCardType = require("credit-card-type"); 
       this.cards = creditCardType(cardNumber);
-      console.log(this.cards[0].type);
+     
     }
     
     addNewCard(){
@@ -1274,9 +1389,17 @@ console.log("my pdate data",this.updateSecretedata)
             type: "error",
             message: "Please enter valid card details"
           });
-        } else {
+        }
+        if(this.paymentToken.message==="Card already exists"){
+          this.notifier.show({
+            type: "error",
+            message: "Card already exists."
+          });
+          this.modalRef.hide();
+        } 
+        else {
           
-        console.log("paytoken",this.paymentToken.message)
+      
       this.profileservice.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
           // console.log('res',res);
           this.getAllPaymentmodes();
@@ -1398,15 +1521,14 @@ cancelVaultconfig(){
        let x = stringToSplit.split("@");
              this.domain = x[1];
             var inviteeList = [];
-            console.log("inviteeId", inviteeId)
+           
             if((inviteeId == undefined || inviteeId == null) && this.selectedFile == undefined){
               this.emailRequired = true;
               return
             }
             if(this.upload_excel == null && inviteeId !== undefined){
              inviteeList = inviteeId.split(",");
-             console.log("came to upload", inviteeList);
-             
+          
              for(var i = 0; i<inviteeList.length; i++){
       
               //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
@@ -1425,13 +1547,11 @@ cancelVaultconfig(){
       // console.log("fksdjflkasd", inviteeList);
       
              }  
-      
-      console.log(this.selectedroles)
-      console.log("inviteid",inviteeId)
+   
       const payload = new FormData();
 
       if(this.selectedFile==undefined){
-        console.log("Form email selected");
+     
        // const payload = new FormData();
         //payload.append('inviterMailId', userId);
         payload.append('inviteeMailId', inviteeId);
@@ -1440,7 +1560,7 @@ cancelVaultconfig(){
       }
       else
       {
-        console.log("Upload option selected");
+      
         this.emailRequired = false;
         //payload.append('inviterMailId', userId);
         this.myappName="2.0"
@@ -1462,11 +1582,22 @@ cancelVaultconfig(){
     })
     this.inviteAllRoles = '';
   
-  }else if(invres.allowedUsers){
+  }
+  if(invres.message == "No user allowed for the product"){
+    Swal.fire({
+      title: 'Warning',
+      text: "No subscriptions found for the product!",
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+    this.inviteAllRoles = '';
+  
+  }
+  else if(invres.allowedUsers){
     payload.append('allowedUserCount', invres.allowedUsers)
     this.profileservice.inviteUser(userId,payload).subscribe(res=>{
       this.data=res
-      console.log(this.data.body)
       if(this.data.body.message == "Invite Mail sent successfully"){
       Swal.fire({
         title: 'Success',
@@ -1799,7 +1930,7 @@ form.resetForm();
 
 }
 deleteUserYes(user,index){
-  console.log("userrrrrr", user);
+ 
   this.selectedIndex = '';
   this.profileservice.deleteSelectedUser(user).subscribe(resp =>{
 
@@ -1870,7 +2001,7 @@ couponDelYes(coupon,index){
    this.allRoles = resp.sort(function(obj1, obj2) {
       return obj1.id - obj2.id;
   });
-   console.log("All roles",this.allRoles)
+
    this.allRoles.forEach(elementRoles => {
        
    this.listOfroles.push(elementRoles.name)
@@ -1880,8 +2011,7 @@ couponDelYes(coupon,index){
    }else {
      this.profileservice.getAllRoles(2).subscribe(resp => {
             this.allRoles = resp,
-            console.log("resp is",resp)
-      
+          
             this.allRoles.forEach(elementRoles => {
                   
             this.listOfroles.push(elementRoles.name)
@@ -1924,8 +2054,7 @@ couponDelYes(coupon,index){
         
         this.profileservice.getAllPermissions().subscribe(data => {
           this.permissionsList = data;
-          console.log("perm list===",this.permissionsList)
-          
+       
         })
       }
 
@@ -1942,13 +2071,11 @@ couponDelYes(coupon,index){
         this.searchUser = '';
         this.selectedRolesArry = [];
         let arr = [];
-        console.log("selectedApp", this.selectedApp);
-        
+      
         this.status = this.userStatus;
 
         arr = this.testRolesList;
-        console.log("arrr", arr);
-        
+       
         for(var i = 0; i< arr.length; i++){
           for(var j = 0; j<this.allRoles.length; j++){
             if(arr[i] == this.allRoles[j].name){
@@ -2009,7 +2136,7 @@ couponDelYes(coupon,index){
           "permissionId":  this.permidlist
        
        }
-       console.log("rolesbody", rolesbody)
+   
        this.profileservice.modifyRole(rolesbody).subscribe(modifyresp => {
         this.modalRef.hide();
         this.getRoles();
@@ -2037,7 +2164,7 @@ couponDelYes(coupon,index){
         "appliationId":{
         "id":this.selectedApp}
       }
-      console.log("permbody", permbody)
+  
       this.profileservice.modifyPermission(permbody).subscribe(permmodifyresp => {
        this.modalRef.hide();
        this.getAllPermissions();
@@ -2050,23 +2177,26 @@ couponDelYes(coupon,index){
    }
 
     modifycoupon(couponData){
-      
-      console.log("coupon data",couponData)
+      this.isupdatecouponclicked=true;
+ // this.close_modal();
+
       if(this.isPercentage){
+        couponData.percentOff = this.couponpercentOff
         couponData.amountOff = null
       }else if(this.isAmount){
         couponData.percentOff = null
+        couponData.amountOff = this.couponamountOff
       }
       let modifycouponinput = {
         "currency": "usd",
-         "couponid":couponData.id,
-        "duration": couponData.duration,
-        "durationInMonth":couponData.durationInMonths,
-        "name": couponData.name,
+         "couponid":this.couponid,
+        "duration":this.couponduration,
+        "durationInMonth":this.coupondurationInMonths,
+        "name": this.couponname,
         "percent_off": couponData.percentOff,
         "amount_off":couponData.amountOff,
         "redeem_by": moment(this.redeemdate, "YYYY-M-DTH:mm").valueOf()/1000,
-        "redmee_times": couponData.maxRedemptions
+        "redmee_times": this.couponmaxRedemptions
       }
       
 this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
@@ -2076,6 +2206,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     type: "success",
     message: "Coupon updated successfully!!"
   });
+ 
 })
 
     }
@@ -2091,7 +2222,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
    },
       "permissionId": this.selectedpermidlist
    }
-   console.log("create role", addRoleBody)
+
    this.profileservice.createRole(addRoleBody).subscribe(modifyresp => {
      this.roleresp=modifyresp;
     this.modalRef.hide();
@@ -2134,7 +2265,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         "id":this.selectedApplication
          }
         }
-      console.log("Create permission ",addpermission);
+    
       this.profileservice.createPermission(addpermission).subscribe(createpermresp => {
         this.modalRef.hide();
         this.getAllPermissions();
@@ -2156,7 +2287,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.isAmount=true;
         this.isPercentage=false;
       }
-      console.log("value is",value)
+    
   
     }
     onSelected(value){
@@ -2171,10 +2302,9 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     }
    
     createNewCoupon(){
-      console.log("date time", this.datetime)
-      this.datetime = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
-      console.log("timestamp ",this.datetime)
-      this.couponDetails={
+     
+      this.datetimeinput = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
+       this.couponDetails={
         couponNamename:this.couponNamename,
         couponIdId:this.couponIdId,
         durationTime:this.durationTime,
@@ -2199,7 +2329,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         "name": this.couponNamename,
         "percent_off": this.percentageOffTot,
         "amount_off":this.amountOff,
-        "redeem_by": this.datetime/1000,
+        "redeem_by": (this.datetimeinput/1000)+86399,
         "redmee_times": this.redeemTimeslimit
       }
     //   let input= {"currency":"usd",
@@ -2226,7 +2356,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     saveConfig(form:NgForm) {
       this.tenantId=localStorage.getItem('tenantName');
       this.useremail=localStorage.getItem('userName');
-        console.log("tenant : "+this.tenantId);
+     
 
       let alertconfiguration=''
       if(this.isPushNotificationcheckBoxValue==true)
@@ -2263,9 +2393,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.incidentselected=null
       }
      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
-     console.log(notificationby)
-     console.log(this.smsselected)
-      this.alertsbody ={
+           this.alertsbody ={
           "activity_names" : this.alertsactivities,
           "app_name": this.applicationames,
           "channel": notificationby,
@@ -2277,12 +2405,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
           "email_template": this.emailtemplate
         }
     
-    
-        console.log(this.alertsbody)
-      
-
-console.log("alertbody",this.alertsbody)
-           this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
+               this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
             this.notifier.show({
               type: "success",
               message: "Alert saved successfully"
@@ -2315,8 +2438,7 @@ console.log("alertbody",this.alertsbody)
   this.alertuserroles=localStorage.getItem('userRole');
    this.profileservice.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => {
       this.alertslistactivitiesdata = alertresponse
-      console.log("All Activities",this.alertslistactivitiesdata)
-    });
+         });
   }
 
       saveClick(item,e){
@@ -2341,8 +2463,7 @@ console.log("alertbody",this.alertsbody)
       successCallback(data) {
        // console.log("data",JSON.parse(data))
        this.activitieslist = data
-       console.log("activitieslist",this.activitieslist)
-        data.forEach(element => {
+              data.forEach(element => {
           if(element.userSelected)
           this.selectValue.push(element.notification_id)      
         });
@@ -2352,7 +2473,7 @@ console.log("alertbody",this.alertsbody)
         this.modulesList=[];
         this.profileservice.getmodulesbyProduct(pro).subscribe(data => 
           {
-            console.log("my prodsssss",data)
+           
             data.forEach(element => {
 
               this.modulesList.push(element.module)
@@ -2431,7 +2552,7 @@ console.log("alertbody",this.alertsbody)
         this.selectedvaultconfig = index;
       }
       vaultconfigDelYes(data,index){
-        console.log("got data is -----",data)
+      
         var input={
           "id":data.id,
           "field": data.field,
@@ -2451,7 +2572,7 @@ console.log("alertbody",this.alertsbody)
          if(data1.message === "Deleted Successfully"){
           this.notifier.show({
             type: "success",
-            message: "Vault configuration deleted"            
+            message: "Vault configuration deleted!"            
           })
           this.getListOfVaultconfigs();
           }else {
@@ -2536,7 +2657,7 @@ console.log("alertbody",this.alertsbody)
       changeActivity()
       {
         //this.modifyactivities=this.activitieslist
-        console.log("Activities fjdbfdsfbd",this.activitieslist);
+      
       }
       onblur(){
         this.ispublicMail = false;
@@ -2545,7 +2666,7 @@ console.log("alertbody",this.alertsbody)
 
 
       deleteNotification(data,index){
-        console.log(data)
+       
         this.profileservice.deleteNotification(data).subscribe(resp=>{
           // console.log(resp)
           this.getAllNotifications();
@@ -2636,7 +2757,7 @@ console.log("alertbody",this.alertsbody)
         $("#product").prop('disabled', true);
         this.invitemultirole=true;
         this.selectedFile=<File>event.target.files[0]
-        console.log(this.selectedFile.name)
+      
       // $("#excel").val(this.selectedFile.name)
        $("#excel").append(this.selectedFile.name);
       }
@@ -2649,7 +2770,7 @@ console.log("alertbody",this.alertsbody)
        this.notificationbody ={
           "tenantId":this.tenantId
        }
-       console.log("notification id",id)
+      
        if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
         this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
           this.notificationreadlist = data
@@ -2657,7 +2778,7 @@ console.log("alertbody",this.alertsbody)
          //document.getElementById('msg_'+id).style.color="grey"
          //document.getElementById('date_'+id).style.color="grey"
          //document.getElementById(id).style.cursor="none"
-          console.log(this.notificationreadlist)
+         
         })
        
       }
@@ -2670,7 +2791,7 @@ console.log("alertbody",this.alertsbody)
        this.notificationbody ={
           "tenantId":this.tenantId
        }
-       console.log("notification id",id)
+    
        let notificationid=id;
        if(this.superadminnotificationList.find(ntf=>ntf.id==notificationid).status!='read'){
         this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
@@ -2679,7 +2800,7 @@ console.log("alertbody",this.alertsbody)
          //document.getElementById('msg_'+id).style.color="grey"
          //document.getElementById('date_'+id).style.color="grey"
          //document.getElementById(id).style.cursor="none"
-          console.log(this.notificationreadlist)
+    
         })
        
       }
@@ -2689,14 +2810,14 @@ console.log("alertbody",this.alertsbody)
       {
         this.profileservice.getEmailTemplates().subscribe(data => {
           this.emailtemplateslist=data
-          console.log("email template",this.emailtemplateslist)
+        
         })
       }
       getListOfVaultconfigs(){
         this.profileservice.getVaultConfigurations(this.tenantId).subscribe(data =>
           {
             this.vaulConfigureList=data
-            console.log("vault",this.vaulConfigureList)
+           
           })
 
       }
@@ -2863,7 +2984,7 @@ console.log("alertbody",this.alertsbody)
           "emailEnabled":this.formTwoFactor.isEmailcheckForOTP,
           "smsEnabled": this.formTwoFactor.isSMScheckForOTP,
         }
-        console.log("bodyyy", twoFactorAuthBody)
+    
       this.profileservice.twoFactorConfig(twoFactorAuthBody, tentName).subscribe(res => {
       // this.pswdmodel = {};
       this.getTwoFactroConfigurations()
@@ -2926,8 +3047,7 @@ console.log("alertbody",this.alertsbody)
         "categoryName": this.deptName
       }
       this.profileservice.createCategory(body).subscribe(resp => {
-        console.log("create category===", resp)
-        this.modalRef.hide();
+               this.modalRef.hide();
         this.getAllCategories();
         if(resp.message === "Successfully created the category"){
           this.notifier.show({
@@ -2953,7 +3073,7 @@ console.log("alertbody",this.alertsbody)
         "categoryName": this.categoryname
       }
       this.profileservice.updateCategory(catbody).subscribe(resp => {
-        console.log("modify category===", resp)
+        
         this.modalRef.hide();
         this.getAllCategories();
         if(resp.message === "Successfully updated the category"){
@@ -2979,7 +3099,7 @@ console.log("alertbody",this.alertsbody)
         "categoryId": data.categoryId,
         "categoryName": data.categoryName
       }
-      console.log("delbody===",delbody)
+     
        this.profileservice.deleteCategory(delbody).subscribe(resp => {
          this.getAllCategories();
          if(resp.message==="Successfully deleted the category"){

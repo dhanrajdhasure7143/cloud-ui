@@ -29,7 +29,7 @@ export class NewpasswordComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
      
       let token = params['token']
-      console.log(token);
+
       this.newpasswordServ.resetPassword({token}).subscribe(res => {this.onSuccessOfVerifyToken(res),err=>{
         this.router.navigate['/user']
           }});
@@ -67,10 +67,7 @@ export class NewpasswordComponent implements OnInit {
       
       this.newpasswordServ.newPassword({user: this.userData}).subscribe(res => {this.onSuccessOfResetPassword(res),err=>{
         this.router.navigate['/user']
-        console.log('res ...', res);
-        
-   
-        console.log('test ...');
+      
         }});
     });
    

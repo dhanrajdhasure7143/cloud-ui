@@ -70,18 +70,18 @@ export class PlatformComponent implements OnInit {
             this.freetrailAvailed=data;
             if(this.freetrailAvailed.Expirerin!=null){
               this.remainingDays=this.freetrailAvailed.Expirerin;
-              console.log("muy daataaaaaaaaaa",this.remainingDays)
+            
             }
             else{
               this.remainingDays=null;
             }
             if(prod.subscribed==true&&this.remainingDays==null){
               this.showexpiryinfo=false;
-              console.log("free trial 2.0 completed")
+            
   
             }
             else if(prod.subscribed==true&&this.remainingDays>=1){
-              console.log("remaining days",this.remainingDays)
+
               this.showexpiryinfo=true;
             }
             else if(prod.subscribed==false){
@@ -104,16 +104,16 @@ export class PlatformComponent implements OnInit {
             }
             if(prod.subscribed==true&&this.remainingDaysezflow==null){
               this.showexpiryinfoezflow=false;
-              console.log("free trial ezflow completed")
+            
   
             }
             else if(prod.subscribed==true&&this.remainingDaysezflow>=1){
-              console.log("remaining days",this.remainingDaysezflow)
+             
               this.showexpiryinfoezflow=true;
             }
             else if(prod.subscribed==false){
               this.showexpiryinfoezflow=false;
-              console.log("u need to subscribe ezf;pow")
+             
             }
           }) 
            
@@ -131,16 +131,16 @@ export class PlatformComponent implements OnInit {
             }
             if(prod.subscribed==true&&this.remainingDaysezbot==null){
               this.showexpiryinfoezbot=false;
-              console.log("free trial ezbot completed")
+             
   
             }
             else if(prod.subscribed==true&&this.remainingDaysezbot>=1){
-              console.log("remaining days",this.remainingDaysezbot)
+            
               this.showexpiryinfoezbot=true;
             }
             else if(prod.subscribed==false){
               this.showexpiryinfoezbot=false;
-              console.log("u need to subscribe ezbot")
+             
             }
           }) 
         
@@ -161,8 +161,7 @@ export class PlatformComponent implements OnInit {
       // }
         
   })
-  console.log("visibletest",this.visibletest)
-}
+ }
 
 
   loopTrackBy(index, term){
@@ -170,7 +169,6 @@ export class PlatformComponent implements OnInit {
   }
 
   selecteddata(selectedData,index){
-    console.log("selectedData",selectedData)
     this.isenable=false;
     this.selectedIndex=index;
     this.selectedId=selectedData.id;

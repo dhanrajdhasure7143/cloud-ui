@@ -98,25 +98,50 @@ export class LoginComponent implements OnInit {
     
   }
   generateOTP(){
-    console.log("OTP method");
-    
+ 
     this.isOTP = true;
 
     this.authenticationService.generateOTP(this.f.username.value).subscribe(data => {
 
-      //swwet alert
+      this.profileService.getTwoFactroConfig(this.f.username.value).subscribe(res=>{
+
+        //swwet alert
+        if(res.emailEnabled == true){
+          Swal.fire({
+            title: 'Success!',
+            text: `OTP has been sent to your registered Email.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+             
+        }
+        if(res.smsEnabled == true){
+          Swal.fire({
+            title: 'Success!',
+            text: `OTP has been sent to your registered Mobile Number.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+        }
+        if(res.emailEnabled == true && res.smsEnabled == true){
       Swal.fire({
         title: 'Success!',
-        text: `OTP has been sent to your registred Email and Mobile number.`,
+        text: `OTP has been sent to your registered Email and Mobile number.`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    }
           },error => {
+            this.error = "Failed to generate One Time Password.";
+            this.loading = false;
+      });
+      
 
           
-      this.error = "Failed to generate One Time Password.";
-      this.loading = false;
+      
     },
     
   
@@ -128,7 +153,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("otp data", this.f.otpNum);
+  
     
     localStorage.clear();
     this.submitted = true;
@@ -207,7 +232,6 @@ export class LoginComponent implements OnInit {
       this.authenticate();
     },
     error => {
-      console.log("my error",error)
       if(error.error.status=='LOCKED'){
         this.error = "Account Locked !! Please try after 3 hrs.";
       }
@@ -289,7 +313,7 @@ export class LoginComponent implements OnInit {
   authenticate() {
     this.profileService.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
-      console.log("user role is",this.userRole)
+     
       localStorage.setItem('userRole',this.userRole);
      if(this.userRole.includes('SuperAdmin')){
       this.router.navigate(['/superadmin']);
@@ -324,7 +348,7 @@ this.router.navigate(['/createaccount'])
   }
   onKeydown(event){
     var emailpattern= new RegExp("^\S*[@]\S*[.]\S*$");
-    console.log("keyDown-Event", this.f.username.value);
+  
     var str = true;
     if(str){
       

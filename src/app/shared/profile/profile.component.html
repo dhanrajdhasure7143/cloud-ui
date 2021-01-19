@@ -117,7 +117,6 @@
                                                     <label for="city">City</label>
                                                   <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
                                                   <select class="form-control botmbordr" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
-                                                    <option *ngIf="cityInfo == ''" value="-1">City</option>
                                                     <option  [value]="undefined" disabled hidden>City</option>
                                                     <option  [value]="null" disabled hidden>Select City</option>
                                                     <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
@@ -173,10 +172,10 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                      <tab *ngIf="this.userRole.includes('Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
-                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchsub" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                     <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                   </form>
                             </div>
@@ -194,7 +193,7 @@
                                   <th scope="col" class="types2">Action</th>
                                 </tr>
                               </thead>
-                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | paginate: {id:'sub_page', itemsPerPage:4 , currentPage: subtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | paginate: {id:'sub_page', itemsPerPage:4 , currentPage: subtemp } | FilterPipe: searchsub ;let i=index;trackBy:loopTrackBy;">
                                 <tr  >
                                   <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
                                   <td>{{sdata.name}}</td>
@@ -203,7 +202,7 @@
                                   <td >${{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
                                   <td>{{sdata.noOfUsers}}</td>
                                   <td>{{sdata.status}}</td>
-                                  <td  class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                  <td class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
                                     <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
                                       <div class="container-fluid deletefrm">
                                     <h5 class="pull-left">Confirmation</h5>
@@ -222,16 +221,17 @@
                                 </tr>
                               </tbody>
                             </table>
-                            <div  class="alertspagination">
+                            <div *ngIf="(tableData | filter:searchsub).length==0" class=""><h4>No records found</h4></div>
+                            <div *ngIf="(tableData | filter:searchsub).length" class="alertspagination">
                               <pagination-controls id="sub_page" maxSize="8" (pageChange)="subtemp = $event"></pagination-controls>
                               </div>
                     </div>
                   </tab>
 
-                  <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Payment History" (selectTab)=onselectInvoiceTab()>
+                  <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
-                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchpayment" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                         <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                       </form>
                                 </div>
@@ -250,7 +250,7 @@
                                     </tr>
                                   </thead>
                                   <tbody >
-                                    <tr *ngFor="let invdata of invoicedata | paginate: {id:'ph_page', itemsPerPage:4 , currentPage: phtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;">
+                                    <tr *ngFor="let invdata of invoicedata | paginate: {id:'ph_page', itemsPerPage:4 , currentPage: phtemp } | FilterPipe: searchpayment ;let i=index;trackBy:loopTrackBy;">
                                       <td>{{invdata.invoiceNumber}}</td>
                                       <td>{{invdata.subscriptionId}}</td>
                                       <td>${{invdata.amount}}.00 </td>
@@ -262,16 +262,17 @@
                                     </tr>
                                   </tbody>
                                 </table>
-                                <div  class="alertspagination">
+                                <div *ngIf="(invoicedata | filter:searchpayment).length==0" class=""><h4>No records found</h4></div>
+                                <div *ngIf="(invoicedata | filter:searchpayment).length" class="alertspagination">
                                   <pagination-controls id="ph_page" maxSize="8" (pageChange)="phtemp = $event"></pagination-controls>
                                   </div>
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
+                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
-                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvalue" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchmode" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                         <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                                       </form>
                                 </div>
@@ -289,7 +290,7 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr *ngFor="let cardData of paymentMode | paginate: {id:'pm_page', itemsPerPage:2 , currentPage: pmtemp } | FilterPipe: searchvalue ;let i=index;trackBy:loopTrackBy;" >
+                                    <tr *ngFor="let cardData of paymentMode | paginate: {id:'pm_page', itemsPerPage:2 , currentPage: pmtemp } | FilterPipe: searchmode ;let i=index;trackBy:loopTrackBy;" >
                                       <td>{{cardData.cardBrand|titlecase}}</td>
                                       <td class="cardtable">XXXX-XXXX-XXXX-{{cardData.cardLast4}} 
                                         <!-- <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td> -->
@@ -335,7 +336,8 @@
                                     </tr>
                                   </tbody>
                                 </table>
-                                <div  class="alertspagination">
+                                <div *ngIf="(paymentMode | filter:searchmode).length==0" class=""><h4>No records found</h4></div>
+                                <div *ngIf="(paymentMode | filter:searchmode).length" class="alertspagination">
                                   <pagination-controls id="pm_page" maxSize="8" (pageChange)="pmtemp = $event"></pagination-controls>
                                   </div>
                         </div>
@@ -475,10 +477,10 @@
                 <div class="container" *ngIf="isAlerts">
                   <div  class="">
                     <tabset id="staticTabs" #staticTabs>
-                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Alerts" id="tab1">
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_Alerts_Full" heading="Alerts" id="tab1">
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
-                                <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchalert" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
                                 <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                               </form>
                             </div>
@@ -503,7 +505,7 @@
                             </tr>
                           </thead>
                           <tbody >
-                            <tr *ngFor="let data of alertslistactivitiesdata  | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchUser; trackBy:loopTrackBy; let l=index">
+                            <tr *ngFor="let data of alertslistactivitiesdata  | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchalert; trackBy:loopTrackBy; let l=index">
                               <td style="text-align:center">{{data.app_name}}</td>
                               <td style="text-align:center">{{data.type}}</td>
                               <td style="text-align:center">{{data.activity_name}}</td>
@@ -536,14 +538,15 @@
 
                           </tbody>
                         </table>
-                        <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found'" class="alertspagination">
+                        <div *ngIf="(alertslistactivitiesdata | filter:searchalert).length==0" class=""><h4>No records found</h4></div>
+                        <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found' && (alertslistactivitiesdata | filter:searchalert).length" class="alertspagination">
                         <pagination-controls id="alert_page" maxSize="8" (pageChange)="p = $event"></pagination-controls>
                         </div>
-                    
+                        
                 </div>
                       </div>
                     </tab>
-                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Email Templates" >
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_EmailTempt_Full" heading="Email Templates" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
                             <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchtemplate" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -595,7 +598,8 @@
     
                               </tbody>
                             </table>
-                             <div *ngIf="emailtemplateslist!=0" class="alertspagination">
+                            <div *ngIf="emailtemplateslist!=0 && (emailtemplateslist | filter:searchtemplate).length==0" class=""><h4>No records found</h4></div>
+                             <div *ngIf="emailtemplateslist!=0 && (emailtemplateslist | filter:searchtemplate).length " class="alertspagination">
                             <pagination-controls id="email_template_page" maxSize="8" (pageChange)="emailtemp = $event"></pagination-controls>
                             </div> 
                         
@@ -603,7 +607,7 @@
                           </div>
                     </tab>
                     <!--vault configure tab-->
-                    <tab  *ngIf="this.userRole.includes('Admin')" heading="Security Vault" >
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.confuguration_SecureVault_Full" heading="Security Vault" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
                             <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvault" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -657,6 +661,7 @@
     
                               </tbody>
                             </table>
+                            <div *ngIf="vaulConfigureList!=0 && (vaulConfigureList | filter:searchvault).length==0" class=""><h4>No records found</h4></div>
                             <div *ngIf="vaulConfigureList!=0" class="alertspagination">
                             <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
                             </div>
@@ -665,7 +670,7 @@
                           </div>
                     </tab>
 
-                    <tab *ngIf = "true" heading = "Two Factor Authentication">
+                    <tab *ngIf="this.userRole.includes('Admin') || this.configuration_TwoFactor_Full" heading = "Two Factor Authentication">
                         <div class = "col-md-12 twoFactor factor">
                         <form #f="ngForm" (ngSubmit)="twoFactorAuthConfig(f)">
                          
@@ -721,7 +726,7 @@
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
                             <tabset id="staticTabs" #staticTabs>
-                              <tab  *ngIf="this.userRole.includes('Admin') || this.userManagementEnabled" heading="Users" id="tab1">
+                              <tab  *ngIf="this.userRole.includes('Admin') || this.userManagement_Users_Full" heading="Users" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -805,7 +810,7 @@
                                       </div>
                             </div>
                       </tab>
-                      <tab *ngIf="this.userRole.includes('Admin') || this.userManagementEnabled" heading="Departments">
+                      <tab *ngIf="this.userRole.includes('Admin') || this.userManagement_Depart_Full" heading="Departments">
                           <div class="search-One">
                               <form class="form-inline d-flex  md-form form-sm">
                                   <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchDept" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -830,7 +835,7 @@
                                             <td>{{category.categoryId}}</td>
                                             <td>{{category.categoryName}}</td>
                                             <td>{{category.createdBy}}</td>
-                                            <td>{{category.createdAt}}</td>
+                                            <td>{{category.createdAt | date}} {{category.createdAt.split("T")[1].split(".")[0]}}</td>
                                             <td>
                                               <div>
                                               <button class="subsc edit-Btn" (click)="viewDept(category, updateDepttemp)" ><img src="assets/images/eyeIcon.svg" alt=""></button>
@@ -854,9 +859,9 @@
                                           
                                     </tbody>
                                   </table>
-                                  <!-- <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div> -->
-                                  <div class="deptpagination">
-                                    <pagination-controls id="dept_page" maxSize="3" (pageChange)="dp = $event"></pagination-controls>
+                                   <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div> 
+                                  <div *ngIf="(categories | filter:searchDept).length" class="deptpagination">
+                                    <pagination-controls id="dept_page" maxSize="8" (pageChange)="dp = $event"></pagination-controls>
                                     </div>
                             </div>
                           </tab>
@@ -899,8 +904,8 @@
                                                     <span class="hideRole" *ngIf="isOpened == role.id" (click)="hideroleslist(j)">Hide</span>
                                                     </div>
                                                 </td>
-                                                <td>{{role.audit.created_at | date:'medium'}}</td>
-                                                <td>{{role.audit.modified_at | date:'medium' }}</td>
+                                                <td>{{role.audit.created_at | date}} {{role.audit.created_at.split("T")[1].split(".")[0]}}</td>
+                                                <td>{{role.audit.modified_at | date}} {{role.audit.modified_at.split("T")[1].split(".")[0]}}</td>
                                                 <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
                                                     <span  (click)="selectedroledata(role,j,rolestemplate)">
                                                     <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -920,7 +925,7 @@
                                                 </td>
                                                
                                                </tr>
-                                            </tbody>
+                                            </tbody>  
                                           </table>
                                           <div *ngIf="(allRoles | filter:searchRole).length==0" class=""><h4>No records found</h4></div>
                                           <div class="permissionpagination">
@@ -956,8 +961,8 @@
                                                 <tr *ngFor="let permission of permissionsList | FilterPipe:searchPermission | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp }  trackBy:loopTrackBy; let p= index">
                                                   <td>{{permission.permissionName}}</td>
                                                   <td>{{permission.description}}</td>
-                                                  <td>{{permission.audit.created_at | date:'medium'}}</td>
-                                                  <td>{{permission.audit.modified_at | date:'medium'}}</td>
+                                                  <td>{{permission.audit.created_at | date}} {{permission.audit.created_at.split("T")[1].split(".")[0]}}</td>
+                                                  <td>{{permission.audit.modified_at | date}} {{permission.audit.modified_at.split("T")[1].split(".")[0]}}</td>
                                                   <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
                                                       <span  (click)="selectedpermdata(permission,p,permtemplate)">
                                                       <img src="assets/images/eyeIcon.svg" alt=""> </span>
@@ -992,16 +997,17 @@
             </div>
 
 
-<div class="container coupons" *ngIf="isCoupon">
+<div class="container" *ngIf="isCoupon">
   <div  class="">
       <tabset >
             <tab heading="Coupon">
       <div class="search-One">
           <form class="form-inline d-flex  md-form form-sm">
-              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchCoupon" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
               <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
             </form>
           </div>
+          <div class="row">
       <div class="container coupons">
         
           <button *ngIf="this.userRole == 'SuperAdmin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
@@ -1024,14 +1030,14 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 1, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let j= index">
+                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchCoupon; trackBy:loopTrackBy; let j= index">
                           <td style="text-align:center">{{coupon.id}}</td>
                           <td style="text-align:center">{{coupon.name}}</td>
                           
                           <td style="text-align:center">{{coupon.amountOff}}</td>
                           <td style="text-align:center">{{coupon.percentOff}}</td>
                           <td style="text-align:center">{{coupon.maxRedemptions}}</td>
-                          <td style="text-align:center">{{availableRedeemptions}}</td>
+                          <td style="text-align:center">{{coupon.availableRedeemptions}}</td>
                           <td style="text-align:center">{{coupon.redeemBy*1000 | date:'medium'  }}</td>
                           <td style="text-align:center">{{coupon.created*1000 | date:'medium'}}</td>
                           
@@ -1057,9 +1063,11 @@
                          </tr>
                       </tbody>
                     </table>
-                    <div class="couponpagination">
+                    <div *ngIf="(allCoupons | filter:searchCoupon).length==0" class=""><h4>No records found</h4></div>
+                    <div *ngIf="(allCoupons | filter:searchCoupon).length" class="couponpagination">
                       <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
                       </div>
+      </div>
       </div>
       </tab>
     
@@ -1073,7 +1081,7 @@
             <tab heading="Security Vault">
       <div class="search-One">
           <form class="form-inline d-flex  md-form form-sm">
-              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvaultmng" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
               <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
                      
             </form>
@@ -1092,9 +1100,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchUser; trackBy:loopTrackBy; let t= index">
+              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchvaultmng; trackBy:loopTrackBy; let t= index">
                 <td style="text-align:center">{{keys.keyname}}</td>
-                <td style="text-align:center">{{keys.data.metadata.created_time |   date:'medium'}}</td>
+                <td style="text-align:center">{{keys.convertedTime |   date}} {{keys.convertedTime.split("T")[1].split(".")[0]}}</td>
                 <td style="text-align:center">{{keys.data.metadata.version}}</td>
                 <td style="text-align:center">
                 <span  (click)="viewSecreteData(keys,t,datatemplate)">
@@ -1119,7 +1127,8 @@
                </tr>
             </tbody>
           </table>
-                    <div class="couponpagination">
+          <div *ngIf="(allKeys | filter:searchvaultmng).length==0" class=""><h4>No records found</h4></div>
+                    <div *ngIf="(allKeys | filter:searchvaultmng).length" class="couponpagination">
                       <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
                       </div>
       </div>
@@ -1369,7 +1378,7 @@
               <div class="col-md-12">
                 <div class="form-group form-buttons pull-right buttonsblock">
                   <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
-                  <button class="btn btn-primary change_plan" (click)="infoModelSubmit()">Change Plan</button>
+                  <button [disabled] = "myAccount_Subsription_Read" class="btn btn-primary change_plan" (click)="infoModelSubmit()">Change Plan</button>
               </div>
             </div>
         <div class="clearfix">
@@ -1547,7 +1556,7 @@
                                                       <label for="configalerts">User(s)</label>
                                                       <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updateMail" required>
                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
-                                                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                                                         <option *ngFor="let user of usersalertsdata"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
                                                       </select>                                     
                     </div>
                   </div>
@@ -1558,9 +1567,9 @@
                     <input type="text" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
                     required text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" /> -->
                     <label for="configalerts">User(s)</label>
-                                                      <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updatetext_to" required>
+                                                      <select name="updatesms"  #updatesms="ngModel" class="form-control botmbordr"  [(ngModel)]="updatetext_to" required>
                                                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
-                                                         <option *ngFor="let user of userManagement"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
+                                                         <option *ngFor="let user of usersalertsdata"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
                                                       </select>   
                     <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
                                                         class='fa fa-info-circle errspan'>
@@ -1679,7 +1688,7 @@
                       <select name="product" class="form-control"  [(ngModel)]="emailselected" required>
                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
                         <option [value]="null" disabled hidden>Select Registered Email</option>
-                         <option *ngFor="let user of userManagement"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                         <option *ngFor="let user of usersalertsdata"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
                       </select>    
                   </div>
                 </div>
@@ -1705,7 +1714,7 @@
                       <select name="sms" class="form-control"  [(ngModel)]="smsselected" required>
                         <option [value]="undefined" disabled hidden>Select Registered Email</option>
                         <option [value]="null" disabled hidden>Select Registered Email</option>
-                         <option *ngFor="let user of userManagement"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
+                         <option *ngFor="let user of usersalertsdata"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
                       </select>    
                   <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
                                                       class='fa fa-info-circle errspan'>
@@ -2027,7 +2036,7 @@
                     <div class="modal-body">
                       <div class="col-md-12 infocheck">
                         <label for="subscriptionid">User ID </label>
-                        <input type="text" [disabled]=true name="useriD" #useriD="ngModel" class="form-control botmbordr" [(ngModel)]="roleListdata.userId"/>     
+                        <input type="text" [disabled]=true name="useriD" #useriD="ngModel" class="form-control botmbordr" [(ngModel)]="testuserid"/>     
                                   </div>
                       <div class="col-md-12 infocheck">
                         <label for="product">Product </label>
@@ -2291,7 +2300,7 @@
                              
                 <div *ngIf="isPercentage" >
                   
-                  <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                  <input type="number" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Name is required </span>  -->
@@ -2299,7 +2308,7 @@
             
                 <div *ngIf="isAmount" >
                 
-                  <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                  <input type="number" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Ammount is required </span>  -->
@@ -2326,14 +2335,14 @@
             <div >
                 <label for="red">Maximum Redemptions</label>
    
-              <input type="text" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+              <input type="number" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
               <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
               <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
               class='fa fa-info-circle errspan'> Limit is required </span> 
             </div>
             <div >
               <label for="daytime">Expires By </label><br>
-              <input class="calexp" type="datetime-local" id="daytime" name="daytime" [(ngModel)]="datetime">
+              <input class="calexp" type="date" id="daytime" name="daytime" [min]="mindate" [(ngModel)]="datetime">
             </div>
             
             <!-- <div class="col-md-12">
@@ -2384,7 +2393,7 @@
                   <ng-template #modifyCoupon >
                    
                      
-                      
+                    <form autocomplete="off" #couponmodform="ngForm" (ngSubmit)="modifycoupon(coupondata)" >
                             <div class="modal-header">
                                 <h4 class="modal-title">Modify Coupon</h4>
                                 <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -2395,11 +2404,11 @@
                             <div class="col-md-12 infocheck" style="margin-left: -3%;">
       
                              <label for="coupon">Coupon Name </label>
-                              <input type="text"  name="coupon" #coupon="ngModel" class="form-control botmbordr" [(ngModel)]="coupondata.name"/>     
+                              <input type="text"  name="coupon" #coupon="ngModel" class="form-control botmbordr" [(ngModel)]="couponname"/>     
                                         </div>
                             <div class="col-md-12 infocheck" style="margin-left: -3%;">
                               <label for="couponName">Coupon ID  </label>
-                              <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="coupondata.id"/>     
+                              <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="couponid"/>     
            
                               </div>
                               <label class="radio-inline">Coupon Type</label><br>
@@ -2407,47 +2416,47 @@
                               <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' [checked]="coupondata.amountOff != ' - '"/>&nbsp;<span>Amount Off</span> <br>
                                            
                               <div *ngIf="isPercentage" >
-                                 <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="coupondata.percentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                                 <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                               </div>
                           
                               <div *ngIf="isAmount" >
-                                <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="coupondata.amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                                <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                               </div>
                               
                             <div>
                                 <label for="duration">Coupon Valid</label>
-                                              <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="coupondata.duration" (change)='onSelected($event.target.value)' required>
+                                              <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="couponduration" (change)='onSelected($event.target.value)' required>
                                                   <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
                                                 <option value="forever" >Forever</option>
                                                 <option value="once">Once</option>
                                                 <option value="repeating">Repeating</option>
                                                       
                                               </select>
-                                <div *ngIf="coupondata.duration==='repeating'">
-                                  <input type="text" name="months"  maxlength="30" #months [(ngModel)]="coupondata.durationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" required/>
+                                <div *ngIf="couponduration==='repeating'">
+                                  <input type="text" name="months"  maxlength="30" #months [(ngModel)]="coupondurationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" required/>
                
                                 </div>
                               </div>
                            <div >
-                              <label for="red">Maximum Redemptions</label>
-                            <input type="text" name="red"  maxlength="30" #red [(ngModel)]="coupondata.maxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+                              <label for="number">Maximum Redemptions</label>
+                            <input type="text" name="red"  maxlength="30" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
                             class='fa fa-info-circle errspan'> Limit is required </span> 
                           </div>
                           <div >
                             <label for="daytime">Expires By </label><br>
-                            <input class="calexp" type="datetime-local" id="daytime" name="daytime" [(ngModel)]="redeemdate">
+                            <input class="calexp" type="date" id="daytime" name="daytime" [(ngModel)]="redeemdate">
                           </div>
                                                
                                        
                             <div class="col-md-12 submitbtn">
-                              <button class="btn btn-secondary cancel_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
-                              <button class="btn btn-primary updatecouponmbtn" (click)="modifycoupon(coupondata)" [disabled]='isupdatecouponclicked'>Update</button>
+                              <button class="btn btn-secondary cancel_btn" type="button" (click)="close_modal()"><div class="anim"></div> Cancel</button>
+                              <button class="btn btn-primary updatecouponmbtn" [disabled]="!couponmodform.dirty" (click)="modifycoupon(coupondata)" >Update</button>
                             </div>
                          </div>
                       
-                     
+                    </form>
                     </ng-template>
 <!-- this is vault managment -->
              
