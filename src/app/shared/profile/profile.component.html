@@ -2064,6 +2064,13 @@
                             <option value="Inactive">Inactive</option>
                         </select>
                           </div>
+                          <div class="col-md-12">
+                            <label for="depart">Department</label>
+                            <select name="dept" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="department1" required>
+                              <!-- <option [value]="undefined" disabled hidden>Department</option> -->
+                              <option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;'>{{categories[c].categoryName}}</option>
+                            </select>
+                          </div>
                           <br>
                         </div>
                       

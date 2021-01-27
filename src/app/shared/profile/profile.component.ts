@@ -151,6 +151,7 @@ export class ProfileComponent implements OnInit {
    allKeys : any = [];
    inviteAllRoles: any;
    public addRolePermissionsList: any;
+   department1:any;
  
   
   /**alerts */
@@ -937,6 +938,7 @@ this.profileservice.applications().subscribe(resp =>
     this.testRolesList = this.roleListdata.roleIdname;
   
     this.selectedApp  = selRoleData.applicationIdname;
+    this.department1 = this.roleListdata.department;
      
     this.modalRef = this.modalService.show(template)
   }
@@ -2089,7 +2091,8 @@ couponDelYes(coupon,index){
        "appId":this.allRoles[0].appliationId.id,
        "appName":resp.applicationIdname,
        "rolesList":this.selectedRolesArry,
-       "status": this.status
+       "status": this.status,
+       "department":this.department1
        }
        
        this.profileservice.modifyUserRole(body).subscribe(resp => {
@@ -2098,7 +2101,7 @@ couponDelYes(coupon,index){
         this.getAllUsersList();
         Swal.fire({ 
           title: 'Success',
-          text: `Role has been updated successfully !!`,
+          text: `Updated successfully !!`,
           type: 'success',
           showCancelButton: false,
           allowOutsideClick: true
