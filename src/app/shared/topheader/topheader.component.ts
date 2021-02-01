@@ -46,6 +46,11 @@ export class TopheaderComponent implements OnInit {
   @ViewChild("toogleBtn") toogleBtn;
   logintype: string;
   isvaultMangment: boolean;
+  customUserRole: any;
+  userManagementEnabled: boolean = false;
+  inviteUserEnabled: boolean = false;
+  configurationEnabled: boolean = false;
+
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, 
                                                private route: Router,
                                                private router: ActivatedRoute, 
@@ -83,7 +88,7 @@ public myname:any[]
  }
   ngOnInit() {
     if(this.decodedInput == 'myAccount'){
-      console.log("entered into myAccount", this.decodedInput);
+   
       
       
       this.accountSlideup()
@@ -103,6 +108,22 @@ public myname:any[]
       this.userRole=role.message;
      
     })   
+    this.profileService.getCustomUserRole(2).subscribe(role=>{
+
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('UserManagement_Users_Full') || element.permissionName.includes('UserManagement_Roles_Full') || element.permissionName.includes('UserManagement_Departments_Full')){
+          this.userManagementEnabled = true;
+        }else if(element.permissionName.includes('InviteUser_Full')){
+         this.inviteUserEnabled = true;
+        }else if(element.permissionName.includes('Configuration_Alerts_Full') || element.permissionName.includes('Configuration_EmailTemplates_Full') || element.permissionName.includes('Configuration_SecureVault_Full') || element.permissionName.includes('Configuration_TwoFactor_Full')){
+         this.configurationEnabled = true;
+        }
+
+      });
+     
+    })
+
    
     
     
@@ -121,7 +142,7 @@ public myname:any[]
         
         setTimeout(() => {
           this.spinner.hide();
-        }, 700);
+        }, 5000);
   }
 
 
@@ -143,12 +164,10 @@ public myname:any[]
     localStorage.clear();
     sessionStorage.clear();
     
-    console.log('came to logout', this.logintype)
-
     if(this.logintype == 'Azure'){
       
       window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
-
+      this.route.navigate(['/']);
     }else{
       this.route.navigate(['/']);
  }
@@ -251,7 +270,8 @@ public myname:any[]
   }
 
   profileName(){
-    console.log("came to profile icon");
+ 
+    
     
     this.firstname=localStorage.getItem('firstName');
       this.lastname=localStorage.getItem('lastName');
@@ -262,7 +282,7 @@ public myname:any[]
   }
 
   getImage() {
-    console.log("inside image")
+    
       const userid=localStorage.getItem('ProfileuserId');
           this.profileService.getUserDetails(userid).subscribe(res => {
                 this.retrieveResonse = res;
@@ -301,7 +321,7 @@ public myname:any[]
           this.profileService.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
             this.notificationList = data
             this.notificationscount=this.notificationList
-            console.log(this.notificationscount)
+          
             if(this.notificationscount==undefined||this.notificationscount==null)
             {
               this.notificationscount=0;

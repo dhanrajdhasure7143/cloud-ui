@@ -1,0 +1,265 @@
+<div class="backgr">
+  <div class="container-fluid">
+    <br>
+    <div class="row" >
+      <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
+        <div class="example-card form-inline" >
+          <div class="count-text form-group">
+            <span class="icon"><img  src="assets/images/customer.svg"></span>
+            &nbsp;&nbsp;&nbsp;
+          </div> 
+            Customers
+            <div class="count-text form-group ">{{tenantcount.length}}</div>
+          </div>
+    </div>
+        <!-- <div *ngIf="tenantcount!=0" class=" col-md-2 text-center">
+            <div class="divbox divbox0"><span class="text-white">
+              Tenants<br>
+             {{tenantcount.length}}
+            </span></div>
+        </div> -->
+        <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
+          <div class="example-card form-inline" >
+            <div class="count-text form-group">
+              <span class="icon"><img  src="assets/images/subscription.svg"></span>
+              &nbsp;&nbsp;&nbsp;
+            </div> 
+             Subscriptions
+              <div class="count-text form-group ">{{subscriptiontotolcount}}</div>
+            </div>
+      </div>
+        <!-- <div  class=" col-md-2 text-center">
+          <div  class="divbox divbox1"><span class="text-white">
+            Subscriptions<br>
+           {{subscriptiontotolcount}}
+          </span></div>
+      </div> -->
+
+      <div *ngIf="couponscount!=undefined" class=" col-md-3 form-inline">
+        <div class="example-card form-inline" >
+          <div class="count-text form-group">
+            <span class="icon"><img  src="assets/images/coupon.svg"></span>
+            &nbsp;&nbsp;&nbsp;
+          </div> 
+            Coupons
+            <div class="count-text form-group ">{{couponscount.length}}</div>
+          </div>
+    </div>
+  
+      <!-- <div  class=" col-md-2 text-center">
+        <div *ngIf="couponscount!=0" class="divbox divbox2"><span class="text-white">
+          Coupons<br>
+          {{couponscount.length}}
+        </span></div>
+    </div> -->
+    <div *ngIf="vaulttotalcount!=undefined" class=" col-md-3 form-inline">
+      <div class="example-card form-inline" >
+        <div class="count-text form-group">
+          <span class="icon"><img  src="assets/images/Vault_secrets.svg"></span>
+          &nbsp;&nbsp;&nbsp;
+        </div> 
+          Vault Secrets
+          <div class="count-text form-group ">{{vaulttotalcount.length}}</div>
+        </div>
+  </div>
+
+    <!-- <div  class=" col-md-2 text-center">
+      <div *ngIf="vaulttotalcount!=0" class="divbox divbox3"><span class="text-white">
+        Vault Secrets<br>
+  {{vaulttotalcount.length}}</span></div>
+  </div> -->
+
+  
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div  class="col-md-5  text-center">
+          <div id="Rolesbarchart">
+            <h5><b>Product - Roles & Permissions</b></h5>
+            <div *ngIf="rolesgraph==false && rolesandproducts!=undefined" #containerRef class="verticalbarchart"><br><br>
+           <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#34568b', '#cd212a','#4b5335', '#660033', '#9999ff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="rolesandproducts" [gradient]="false" [xAxis]="true"
+          [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel1"
+          [yAxisLabel]="yaxislabel1" (select)="getPermissions($event)">
+         </ngx-charts-bar-vertical>
+       </div>
+       <div id="productnotfound" *ngIf="rolesandproducts==undefined" class="box_shadw34">
+        <div id="nodatafound" >
+        <h3>No Data Available</h3>
+      </div>
+      </div>
+      </div>
+       <div id="Permissionbarchart">
+       <h5><b>Permission</b></h5>
+       <div *ngIf="rolesgraph==true" #permissioncontainer class="verticalbarchart"> 
+        <button type="button"  class="btn btn-primary back_btn" (click)="onClickBack()">Back</button><br><br>
+        <ngx-charts-bar-vertical [view]="[permissioncontainer.offsetWidth, 400]" [scheme] ="{domain: ['#fa7a35', '#79d2a6', '#ff9900', '#9c4722','#d9ce52', '#006b54']}" [results]="dsss" [gradient]="false" [xAxis]="true"
+        [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel2"
+        [yAxisLabel]="yaxislabel2" [noBarWhenZero]="true">
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
+        </div>
+
+
+        <div  class="col-md-5  text-center">
+          <div id="productsbarchart">
+            <h5><b>Subscriptions - Plans & Tenants</b></h5>
+            <div *ngIf="products!=0" #productcontainer class="verticalbarchart"><br><br>
+           <ngx-charts-bar-vertical [view]="[productcontainer.offsetWidth, 400]" [scheme] ="{domain: ['#ffd24d', '#009999', '#999966', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="products" [gradient]="false" [xAxis]="true"
+          [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel3"
+          [yAxisLabel]="yaxislabel3"  (select)="onSelectProduct($event)">
+         </ngx-charts-bar-vertical>
+       </div>
+       <div id="productnotfound" *ngIf="products==0" class="box_shadw34">
+        <div id="nodatafound" >
+        <h3>No Data Available</h3>
+      </div>
+      </div>
+      
+    </div>
+       <div id="subscriptionsbarchart">
+       <h5><b>Plans</b></h5>
+       <div *ngIf="plansdata!=0" #planscontainer class="verticalbarchart"> 
+        <button type="button"  class="btn btn-primary back_btn" (click)="onClickSubscriptionBack()">Back</button><br><br>
+        <ngx-charts-bar-vertical [view]="[planscontainer.offsetWidth, 400]" [scheme] ="{domain: ['#d17aa7', '#ff3333', '#66ccff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="plansdata" [gradient]="false" [xAxis]="true"
+        [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel4"
+        [yAxisLabel]="yaxislabel4" (select)="onSelectSubscriptionplan($event)">
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
+  <div id="tenantsubscription">
+    <div *ngIf="tabledata!=0" class="box_shadw1 table-box">
+      <div class="text-center table1-heading">Tenant Level Subscriptions
+        <button type="button"  class="btn btn-primary back_btn" (click)="onTenantLevelBack()">Back</button>
+      </div>
+      <table class="table table-hover table-bordered text-center table-striped">
+          <thead>
+              <tr>
+                  <th class="text-center">Tenant Name</th>
+                  <th class="text-center">Admin</th>
+                  <th class="text-center">Subscribed On</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let data of tabledata">
+                  <td>{{data.tenantName?data.tenantName:'-'}}</td>
+                  <td>{{data.name?data.name:'-'}}</td>
+                  <td>{{data.subscribedOn| date:'medium'}}</td>
+              </tr>
+          </tbody>
+      </table>
+      </div>
+  </div>
+  
+<!-- <div *ngIf="plansdata==[]" class="col-md-5  text-center">
+  <h5><b>Plans</b></h5>
+  <div id="nodatafound" class="box_shadw34">
+  <h3>No Data Available</h3>
+</div>
+</div>
+<div *ngIf="tabledata==[]" class="col-md-5  text-center">
+  <h5><b>Tenant Level Subscriptions</b></h5>
+  <div id="nodatafound" class="box_shadw34">
+  <h3>No Data Available</h3>
+</div>
+</div> -->
+        </div>
+      
+  
+        <!-- <div *ngIf="alertsCountBasedOnType==0" class="col-md-5  text-center">
+  
+          <h5><b>Configured Alerts - Success vs Failure</b></h5>
+          <div id="piechart2" class="box_shadw34">
+            <h1>No Data Found</h1>
+          </div>
+      </div> -->
+  
+        <div class="col-md-1"></div>
+  
+    </div>
+    <br><br>
+    <div class="col-md-12 btm-line"></div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div *ngIf="vaultkeycount!=0" class="col-md-5  text-center">
+
+          <h5><b>Vault - Secret Name vs Key Count</b></h5>
+          <div id="secretvscount" #containerRef class="secretvscount"><br><br><br>
+          <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#9bb7d4', '#cc6600', '#cc00cc', '#00a170','#ffff99', '#999966']}" [results]="vaultkeycount" [gradient]="false" [xAxis]="true"
+          [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel6"
+          [yAxisLabel]="yaxislabel6">
+         </ngx-charts-bar-vertical>
+        </div>
+      </div>
+        <div *ngIf="vaultkeycount==0" class="col-md-5  text-center">
+          <h5><b>Vault - Secret Name vs Key Count</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+          <h3>No Data Available</h3>
+        </div>
+      </div>
+       
+      <div  class="col-md-5  text-center">
+        <h5><b>Coupons</b></h5>
+        <div *ngIf="coupons!=0" id="piechart1" #containerRef class="box_shadw34"><br>
+           <ngx-charts-pie-chart
+          [view]="[containerRef.offsetWidth, 300]"
+          [scheme]="{domain: ['#ff3300', '#cc0066','#339933']}"
+          [results]="coupons"
+          [gradient]="true"
+          [legend]="true"
+          [legendPosition]="'right'"
+          [labels]="true"
+          [doughnut]="true"
+          [legendTitle]="''"
+          [arcWidth]="0.50"
+          [maxLabelLength]="20">
+        </ngx-charts-pie-chart> 
+        </div>
+        <div *ngIf="coupons==0"  class="box_shadw34">
+          <div id="nodatafound"> 
+            <h3>No Data Available</h3>
+            </div>
+      </div> 
+    </div>
+  
+        
+        <div class="col-md-1"></div>
+  
+    </div>
+    <br> <br>
+    <div class="col-md-12 btm-line"></div>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div *ngIf="tenantvsuser!=0" class="col-md-5  text-center">
+           <h5 class="teus"><b>Customers Vs Users</b></h5>
+           <div id="tenantvsuser" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;" ><br>
+            <ngx-charts-bar-vertical [view]="[1300, 600]" [scheme] ="{domain: ['#926aa6', '#efe1ce', '#e0b589', '#660033','#f7786b', '#034f84','#98ddde','#dd4132','#99ff33', '#cc6600', '#cc00cc']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
+            [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel5"
+             [yAxisLabel]="yaxislabel5" [barPadding]="8">
+           </ngx-charts-bar-vertical> 
+             <!-- <ngx-charts-bar-vertical [view]="[1500, 400]" [scheme] ="{domain: ['#99ff33', '#cc6600', '#cc00cc', '#660033','#ffff99', '#999966']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
+             [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel5"
+             [yAxisLabel]="yaxislabel5" [rotateXAxisTicks]="true" [maxXAxisTickLength]="16">
+            </ngx-charts-bar-vertical> -->
+
+
+
+          </div>
+
+         
+  
+      </div>
+      <div *ngIf="tenantvsuser==0" class="col-md-5 text-center">
+        <h5><b>Customers Vs Users</b></h5>
+        <div id="nodatafound"   class="box_shadw34"> 
+          <h3>No Data Available</h3>
+        </div>
+    </div>
+       
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+  </div>

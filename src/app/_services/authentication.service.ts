@@ -86,4 +86,8 @@ export class AuthenticationService {
          
       return this.http.get('/api/login/beta/validateOTP?userId='+username+"&otp="+otp,{responseType:'json'});
     }
+    getToken(userName: any): Observable<any>{
+      return this.http.post<any>('/api/login/beta/token', userName,httpOptions)
+
+    }
 }

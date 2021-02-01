@@ -98,30 +98,31 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   .cc-number1
   {
-    width:27%
+    width:27%;
+    margin-left: -1px;
   }
   .cc-number2
   {
     width:27%;
     margin-top: -32px;
-    margin-left: 65px;
+    margin-left: 60px;
   }
   .cc-number3
   {
     width:27%;
     margin-top : -32px;
-    margin-left :131px;
+    margin-left : 124px;
   }
   .cc-number4{
-    width:27%;
+    width:42%;
     margin-top : -32px;
-    margin-left : 196px;
+    margin-left : 188px;
   }
 
 .card{
    width: 12%;
   position: absolute;
   top: 28px;
-  right: -56px;
+  left: 295px;
 }
   

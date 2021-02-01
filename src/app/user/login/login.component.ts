@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
   public userRole:any = [];
   public show:boolean=true;
   public isOTP:boolean = false;
-  public twoFactorAuthenticationEnabled:boolean = true;
+  public twoFactorAuthenticationEnabled:boolean = false;
+  public twoFactorAuthConButton:boolean = true;
   public enteredOTP:boolean = false;
   public otp:any;
 
@@ -63,30 +64,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
-    console.log("status",this.twoFactorAuthenticationEnabled);
-    
-if(this.twoFactorAuthenticationEnabled){
-  console.log("came to if loop");
-  
+    //this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
   this.particles.getParticles();
+
+    
+// if(!this.twoFactorAuthConButton){
+  
   this.loginForm = this.formBuilder.group({
     username: [this.get('username') ? this.get('username') : '', Validators.required],
     password: [this.get('password') ? this.get('password') : '', Validators.required],
-    otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required],
+    
     rememberme: [false]
   });
 
-}else{
+// }else{
     
-  this.particles.getParticles();
-    this.loginForm = this.formBuilder.group({
-      username: [this.get('username') ? this.get('username') : '', Validators.required],
-      password: [this.get('password') ? this.get('password') : '', Validators.required],
-     // otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required, Validators.maxLength(5)],
-      rememberme: [false]
-    });
-  }
+    // this.loginForm = this.formBuilder.group({
+    //   username: [this.get('username') ? this.get('username') : '', Validators.required],
+    //   password: [this.get('password') ? this.get('password') : '', Validators.required],
+    //  // otpNum: [this.get('otpNum') ? this.get('otpNum') : '', Validators.required, Validators.maxLength(5)],
+    //   rememberme: [false]
+    // });
+  //}
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     // this.checkbox.nativeElement.onchange = () => {
@@ -99,25 +98,50 @@ if(this.twoFactorAuthenticationEnabled){
     
   }
   generateOTP(){
-    console.log("OTP method");
-    
+ 
     this.isOTP = true;
 
     this.authenticationService.generateOTP(this.f.username.value).subscribe(data => {
 
-      //swwet alert
+      this.profileService.getTwoFactroConfig(this.f.username.value).subscribe(res=>{
+
+        //swwet alert
+        if(res.emailEnabled == true){
+          Swal.fire({
+            title: 'Success!',
+            text: `OTP has been sent to your registered Email.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+             
+        }
+        if(res.smsEnabled == true){
+          Swal.fire({
+            title: 'Success!',
+            text: `OTP has been sent to your registered Mobile Number.`,
+            type: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+        }
+        if(res.emailEnabled == true && res.smsEnabled == true){
       Swal.fire({
         title: 'Success!',
-        text: `OTP has been sent to your registred Email and Mobile number.`,
+        text: `OTP has been sent to your registered Email and Mobile number.`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    }
           },error => {
+            this.error = "Failed to generate One Time Password.";
+            this.loading = false;
+      });
+      
 
           
-      this.error = "Failed to generate One Time Password.";
-      this.loading = false;
+      
     },
     
   
@@ -129,7 +153,7 @@ if(this.twoFactorAuthenticationEnabled){
   }
 
   onSubmit() {
-    console.log("otp data", this.f.otpNum);
+  
     
     localStorage.clear();
     this.submitted = true;
@@ -145,7 +169,7 @@ if(this.twoFactorAuthenticationEnabled){
 
     this.loading = true;
     //if two factor authentication is enabled 
-    if(this.twoFactorAuthenticationEnabled){
+    if(!this.twoFactorAuthConButton){
       
       this.authenticationService.validateOTP(this.f.username.value, this.f.otpNum.value).subscribe(data => {
 
@@ -174,17 +198,16 @@ if(this.twoFactorAuthenticationEnabled){
   this.authenticationService
   .login(this.f.username.value, this.f.password.value)
   .pipe(first())
-  .subscribe(
-    
-    data => {
+  .subscribe(data => {
+     
       if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
 
         this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
-        // Swal.fire({
-        //   type: 'error',
-        //   title:"Error!",
-        //   text: "Your account is temporarily locked for 3 hours."
-        // });
+        Swal.fire({
+          type: 'error',
+          title:"Error",
+          text: "Your account is temporarily locked for 3 hours!!"
+        });
          return
       }
       
@@ -196,7 +219,6 @@ if(this.twoFactorAuthenticationEnabled){
         }
 
       }
-      console.log(this.f);
       
       this.loading = false;
       this.session.startWatching(); 
@@ -207,13 +229,16 @@ if(this.twoFactorAuthenticationEnabled){
       this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
 
 
-
       this.authenticate();
     },
     error => {
-
-      
-      this.error = "Email or Password is invalid.";
+      if(error.error.status=='LOCKED'){
+        this.error = "Account Locked !! Please try after 3 hrs.";
+      }
+      else{
+        this.error = "Email or Password is invalid.";
+      }
+    
       this.loading = false;
     },
     
@@ -221,7 +246,6 @@ if(this.twoFactorAuthenticationEnabled){
 
  }
   checkSuccessCallback(data:any){
-    console.log('data',data);
     
     this.sharedData.setLoggedinUserData(data);
     // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
@@ -289,7 +313,7 @@ if(this.twoFactorAuthenticationEnabled){
   authenticate() {
     this.profileService.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
-      console.log("user role is",this.userRole)
+     
       localStorage.setItem('userRole',this.userRole);
      if(this.userRole.includes('SuperAdmin')){
       this.router.navigate(['/superadmin']);
@@ -322,6 +346,44 @@ this.router.navigate(['/createaccount'])
   toggleOTP(){
     this.show = !this.show;
   }
+  onKeydown(event){
+    var emailpattern= new RegExp("^\S*[@]\S*[.]\S*$");
+  
+    var str = true;
+    if(str){
+      
 
+      
+      
+    }
+    
+  
+    
+
+  }
+ 
+  onEmailChange(){
+    this.isOTP=false;
+    this.twoFactorAuthConButton = true;
+    
+    if(this.f.username.valid){
+    this.profileService.getTwoFactroConfig(this.f.username.value).subscribe(res=>{
+      if(!res.message){
+        if(res.twoFactorEnabled == true){
+          this.loginForm.addControl('otpNum', this.formBuilder.control('',[Validators.required]))
+
+          this.twoFactorAuthConButton = false;
+        }else{
+          this.twoFactorAuthConButton = true;
+          this.loginForm.removeControl('otpNum')
+          
+        }
+      } else{
+        this.twoFactorAuthConButton = true;
+        this.loginForm.removeControl('otpNum')
+      }       
+    });
+  }
+  }
       
 }

@@ -190,8 +190,11 @@ background-repeat: repeat !important;
   border: 1px solid #D6DDF2;
   height: 32px !important;
   font-size: 13px;
+ 
 }
-
+.myaccount .form-control {
+   padding:0 !important;
+}
 .btn-cancel {
   background: #eef0f8 !important;
 }
@@ -501,7 +504,7 @@ notifier-notification{
   left: calc(100% - 350px) !important;
   height: 60px !important;
   margin-bottom: 40px !important;
-  width: 300px !important;
+  width: 340px !important;
 
 }
 footer{

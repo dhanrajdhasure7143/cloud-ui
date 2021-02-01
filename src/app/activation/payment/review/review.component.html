@@ -64,16 +64,16 @@
               </div>
               <div class="period">
                 <p>Billing Period : {{selected_plans.term}}</p>
-                <p>Plan Amount :{{selected_plans.amount}}</p>
-                <p>No.of Users: {{noOfusers}}</p>
-                <p *ngIf='isapplied'>Coupon applied : {{couponAmount}}</p>
-                <p>Tax({{taxPercentage}}%): {{taxamount}}</p>
+                <p>Plan Amount : ${{selected_plans.amount}}</p>
+                <p>No. of Users : {{noOfusers}}</p>
+                <p *ngIf='isapplied'>Discount : ${{couponAmount}}</p>
+                <p>Tax({{taxPercentage}}%) : ${{taxamount}}</p>
               </div>
             </div>
 
             <div class="plandetails">
               <hr>
-                 <h5 class="plandetails"> Total Payable : $ {{totalPay}} </h5>
+                 <h5 class="plandetails"> Total Payable : ${{totalPay}} </h5>
             <hr>
                 </div>
           </div>

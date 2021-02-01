@@ -34,7 +34,7 @@ export class ChooseplanComponent implements OnInit {
   ngOnInit() {
   this.getAllPlanes();
 this.sharedDataService.getFreetieravailed().subscribe(data=>{this.isfreetrail=data})
-this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
+this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId")).subscribe(data=>{
    this.freetrailAvailed=data;
   if(this.freetrailAvailed.Expirerin!=null){
     this.remainingDays=this.freetrailAvailed.Expirerin;
@@ -49,7 +49,8 @@ this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
   getAllPlanes(){
     this.productId=localStorage.getItem("selectedproductId");
     this.tenantId=localStorage.getItem('tenantName');
-    if(this.productId === null){this.productId = '2.0'}
+    if(this.productId === null)
+    {this.productId = localStorage.getItem("selectedproductId")}
         this.productlistservice.getProductPlanes(this.productId,this.tenantId).subscribe(data=> {this.plansList =data
       // this.plansList=null;
            if(this.plansList == undefined || this.plansList == null){
@@ -92,29 +93,31 @@ this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
 
   }
   selectedPlan(planData){
+    
+    localStorage.setItem('selectedplan',planData.nickName);
+   
     if(planData.nickName =="Free Tier"){
       let freeplanData={
         "ip": "1.2.3.4",
-        "meta": {"orderable":true,"visible":true,"plan_id":"freetrial_t1m"},
-        "planId": "2.0freetrial_t1m"
+        "meta": {"orderable":true,"visible":true,"plan_id":planData.id},
+        "planId": planData.id
       }
 
       this.productlistservice.activateFreeTire(freeplanData).subscribe(data=>{
         Swal.fire({
           title: 'Success',
-          text: 'Your Free Trail has been started successfully for 2.0 product',
+          text: 'Your Free Trail has been started successfully for '+localStorage.getItem("selectedproductId")+' product',
           type: 'success',
           showCancelButton: false,
           allowOutsideClick: true
         }) 
         this.productlistservice.getNewAccessToken().subscribe(resp=>{
           this.newAccessToken=resp
-          console.log("token",resp)
+       
           localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
         })
         this.profileService.getUserRole(2).subscribe(res=>{
           this.userRole=res.message;
-          console.log("user role is",this.userRole)
           localStorage.setItem('userRole',this.userRole);
         })
         this.router.navigate(['/activation/platform'])
@@ -133,7 +136,7 @@ this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
     
       //alert("Free Tier");
     }else{
-    localStorage.setItem('selectedplan',planData.nickName);
+ //   localStorage.setItem('selectedplan',planData.nickName);
     this.router.navigate(['/activation/payment/details']);
     }
   }
@@ -147,7 +150,7 @@ this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
       "organisation":localStorage.getItem('company'),
          "tenantId":localStorage.getItem('tenantName'),
          "country":localStorage.getItem('country'),
-         "productName": "2.0"
+         "productName": localStorage.getItem("selectedproductId")
     }
     this.productlistservice.contactUs(userdata).subscribe(res=>{
       Swal.fire({

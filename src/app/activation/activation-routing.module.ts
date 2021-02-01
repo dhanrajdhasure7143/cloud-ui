@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlandetailsComponent } from './plandetails/plandetails.component';
 import { UsermanagementComponent } from './usermanagement/usermanagement.component';
 import { AlertsComponent } from './alerts/alerts.component';
+import { MetricsComponent } from './metrics/metrics.component';
 
 const routes: Routes = [{
   path: '',
@@ -25,6 +26,9 @@ const routes: Routes = [{
   }, {
     path: 'usermanagement',
     component: UsermanagementComponent
+  }, {
+    path: 'metrics',
+    component: MetricsComponent
   }
 ]
 }];

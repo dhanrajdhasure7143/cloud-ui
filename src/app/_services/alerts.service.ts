@@ -15,8 +15,7 @@ export class AlertsService {
   public tenantId:any = localStorage.getItem('company')
 
   alertsConfig(data:any): Observable<any> {
-    console.log(data);
-       return this.http.get<any>(`/api/v1/notificationservice/application/`+data,data);
+          return this.http.get<any>(`/api/v1/notificationservice/application/`+data,data);
 }
 saveConfig(data:any): Observable<any>{
   return this.http.post<any>(`/api/v1/notificationservice/scheduleActivity`,data, httpOptions);
