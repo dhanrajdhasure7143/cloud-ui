@@ -961,7 +961,7 @@ this.isupdatecouponclicked=false;
        this.couponmaxRedemptions=selCouponData.maxRedemptions
 
     this.coupondata=selCouponData;
-    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-MM-DD")
+    this.redeemdate = moment(selCouponData.expiresBy).format("YYYY-MM-DD")
  
     this.modalRef = this.modalService.show(template)
     if(selCouponData.amountOff != ' - ' && selCouponData.percentOff == ' - '){
