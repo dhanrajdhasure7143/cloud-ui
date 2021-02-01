@@ -32,8 +32,8 @@ export const AppConfig: AiotalAppConfig = {
   socialLoginRedirectURL: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
   isSecurityManagerEnabled : false,
   isTwoFactorAuthenticationEnabled: false,
-  rpaendpoint:"http://rpaqa.epsoftinc.in",
-  piendpoint:"http://piqa.epsoftinc.in"
+  rpaendpoint:"https://eiapdemoapi.epsoftinc.com:96/wfrpa",
+  piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel"
 
 };
 
