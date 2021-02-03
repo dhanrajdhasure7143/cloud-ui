@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { User } from './../../_models/user';
 import { FormControl, FormGroup, Validators, NgForm, FormBuilder } from '@angular/forms';
@@ -17,6 +17,8 @@ import moment from 'moment';
 import { Observable } from 'rxjs';
 import { log } from 'console';
 import * as $ from 'jquery';
+import { TabsetComponent } from 'ngx-bootstrap';
+
 
 
 @Component({
@@ -33,6 +35,8 @@ export class ProfileComponent implements OnInit {
   @Input() public isCoupon: boolean;
   @Input() public isnotification: boolean;
   @Input() public isvaultMangment:boolean;
+  // @ViewChild('staticTabs') staticTabs: TabsetComponent;
+  @ViewChild('staticTabs') staticTabs: TabsetComponent;
   public model: User;
   public yearList:any;
   config = {
@@ -46,10 +50,14 @@ export class ProfileComponent implements OnInit {
   public isdefault:boolean=false;
   public searchvalue: any;
   public searchUser: any;
+  public searchCoupon: any;
   public emailId: any[];
   public sentFromOne: any;
-  public tableData: any[];
+  public tableData: any=[];
   public formOne: any = {};
+  public formTwoFactor: any = {};
+  // public isEmailcheckForOTP: any;
+  // public isSMScheckForOTP: any;
   countryInfo: any[] = [];
   public secretes: any[] = [{
     id: 1,
@@ -65,6 +73,7 @@ export class ProfileComponent implements OnInit {
   public departments: any;
   public password: any;
   public userManagement: any=[];
+  public userManagementalerts: any=[];
   public userManagementresponse:any=[];
   public show: boolean = true;
   public eyeshow: boolean = true;
@@ -75,13 +84,14 @@ export class ProfileComponent implements OnInit {
   public selectedIndex: any;
   public deletCardIndex: number;
   public defaultcard: number = 0;
+  modifyprod:any;
   modalRef: BsModalRef;
   public stopcheckbox: any;
   public pricecheckbox: any;
   public plancheckbox: any;
   public feedbackbox: any;
-  public paymentMode: any;
-  public invoicedata: any[];
+  public paymentMode: any=[];
+  public invoicedata: any=[];
   public notificationList: any;
   public dataid: any;
   public userId: any;
@@ -97,6 +107,7 @@ export class ProfileComponent implements OnInit {
   selectedroles: any = [];
   department: any;
   userDepartment: any;
+  updateConfigData:any;
   listOfUserApplications: any = [];
   userManagementRole :any=[];
   userManagementApps :any=[];
@@ -133,18 +144,22 @@ export class ProfileComponent implements OnInit {
   durationInMonths: any;
   percentageOffTot: any;
   data: any;
-  allCoupons: any;
+  allCoupons: any=[];
   mod: any;
   coupondata: any;
   testArry: any = [];
    allKeys : any = [];
+   inviteAllRoles: any;
+   public addRolePermissionsList: any;
  
   
   /**alerts */
   isEmailcheckBoxValue:any;
   isPushNotificationcheckBoxValue:any;
   isSMScheckBoxValue:any;
+  isIncidentcheckBoxValue:any;
   activitieslist:any = [];
+  modulesList:any=[];
   selectValue:any = [];
   isChecked:any = [];
   result: void;
@@ -161,6 +176,7 @@ export class ProfileComponent implements OnInit {
   selectedtype:any;
   emailselected:any;
   smsselected:any;
+  incidentselected:any;
   pushNotifications:any;
   pushEmailNotificationsTo:any;
   pushsmsNotificationsTo:any;
@@ -174,16 +190,23 @@ export class ProfileComponent implements OnInit {
   rp=0;
   pp=0;
   em=0;
+  sn=0;
+  emailtemp=0;
+  subtemp=0;
+  phtemp=0;
+  pmtemp=0;
   alertuserroles:any=[];
  public alertslistactivitiesdata:any=[];
  public updateUserRolesList:any=[];
   applicationames: any;
   notificationbody: { tenantId: string; };
   updatetext_to: any;
+  updateIncident: any;
   updateApplication: any;
   updateType: any;
   updateActivities: any;
   updateMail: any;
+  updatetemp:any;
   selectedalertdet:any;
   selectedRolesArry: any = [];
   permName: any;
@@ -216,19 +239,18 @@ export class ProfileComponent implements OnInit {
   invitemultirole:boolean=false;
   currentUserId: any;
   datetime: any;
+  datetimeinput:any;
+  prevdate:any;
   redeemdate: any;
   public notificationreadlist:any;
   cards: any;
   templates: any=[];
-  emailtemplateslist: any;
+  emailtemplateslist: any=[];
+  emailtemplate: any;
+  vaulConfigureList:any=[];
   viewdata: any;
   secreteDetails: { secreteKey: any; key: any; };
-   public secretes1: any[] = [{
-    id: 1,
-    key: '',
-    value: ''
-    
-  }];
+   public secretes1: any[] = [];
   public mydata = {
   };
   public updatesecreteobj={};
@@ -245,7 +267,76 @@ export class ProfileComponent implements OnInit {
   mailbody: any;
   templatedata: any;
   selectedtempdet: any;
-
+  isadd: boolean=false;
+  addpressed: boolean=false;
+  modules: any;
+  modtempcreated: any;
+  modtempbody: any;
+  modtempid: any;
+  modtempname: any;
+  modtempsub: any;
+  modtemptenant: any;
+  searchtemplate:any;
+  configprods: any=[];
+  selectedproduct: any;
+  mypages: any=[];
+  selectedmodule: any;
+  myfields: any=[];
+  seleftedFeild: any;
+  selectedPage: any;
+  selectedFeild: any;
+  selectedvaultconfig: string;
+  modprod: any;
+  modmodule: any;
+  modpage: any;
+  modfield: any;
+  modconfigId: any;
+  isupdatecouponclicked: boolean=false;
+  emailvalue: any;
+  enableTwoFactorConfig: boolean;
+  selectedsecret: any;
+  modvaultId: any;
+  searchDept:any;
+  categories:any=[];
+  deptName:any;
+  dept:any;
+  categoryname:any;
+  emailRequired: boolean = false;
+  tot: any=[];
+  superadminnotificationList: any;
+  customUserRole: any;
+  userManagementEnabled: boolean = false;
+  myAccountFull: boolean = false;
+  myAccount_PaymentHistory_All: boolean = false;
+  myAccount_PaymentMode_All: boolean = false;
+  myAccount_Subsription_Update: boolean = false;
+  myAccount_Subsription_Delete: boolean = false;
+  myAccount_Subsription_All: boolean = false;
+  couponid: any;
+  couponduration: any;
+  coupondurationInMonths: any;
+  couponname: any;
+  couponpercentOff: any;
+  couponamountOff: any;
+  couponmaxRedemptions: any;
+  mindate: any;
+  public usersalertsdata: any=[];
+  userManagement_Users_Full: boolean = false;
+  userManagement_Roles_Full: boolean = false;
+  userManagement_Depart_Full: boolean = false;
+  configuration_Alerts_Full: boolean = false;
+  configuration_EmailTempt_Full: boolean = false;
+  confuguration_SecureVault_Full: boolean = false;
+  configuration_TwoFactor_Full: boolean = false;
+  searchsub: string;
+  searchpayment: string;
+  searchmode: string;
+  searchalert: string;
+  searchvault: string;
+  searchRole: string;
+  searchPermission: string;
+  searchvaultmng: string;
+  testuserid: any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -260,20 +351,68 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.profileservice.getCustomUserRole(2).subscribe(role=>{
+
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('UserManagement_All')){
+          this.userManagementEnabled = true;
+        }else if(element.permissionName.includes('MyAccount_All')){
+          this.myAccountFull = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_All')){
+          this.myAccount_Subsription_All = true;
+        }else if(element.permissionName.includes('MyAccount_PaymentMode_Full')){
+          this.myAccount_PaymentMode_All = true;
+        }else if(element.permissionName.includes('MyAccount_PaymentHistory_Full')){
+          this.myAccount_PaymentHistory_All = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_Update')){
+          this.myAccount_Subsription_Update = true;
+        }else if(element.permissionName.includes('MyAccount_Subscription_Delete')){
+          this.myAccount_Subsription_Delete = true;
+        }else if(element.permissionName.includes('UserManagement_Users_Full')){
+         this.userManagement_Users_Full = true;
+        }else if(element.permissionName.includes('UserManagement_Roles_Full')){
+        this.userManagement_Roles_Full = true;
+        }else if(element.permissionName.includes('UserManagement_Departments_Full')){
+         this.userManagement_Depart_Full = true;
+        }else if(element.permissionName.includes('Configuration_Alerts_Full')){
+        this.configuration_Alerts_Full = true;
+        }else if(element.permissionName.includes('Configuration_EmailTemplates_Full')){
+        this.configuration_EmailTempt_Full = true;
+        }else if(element.permissionName.includes('Configuration_SecureVault_Full')){
+        this.confuguration_SecureVault_Full = true;
+        }else if(element.permissionName.includes('Configuration_TwoFactor_Full')){
+        this.configuration_TwoFactor_Full = true;
+        }
+                 
+      });
+     
+    })
+
+   this.mindate= moment().format("YYYY-MM-DD");
+
     this.selectedIndex = '';
     this.getAllPaymentmodes();
     this.getAllProducts();
     this.getAllKeys();
+    this.emailvalue = "false";
+    //this.formTwoFactor.enableTwoFactor = false;
+    this.formTwoFactor.isEmailcheckForOTP = true;
+    this.formTwoFactor.isSMScheckForOTP = false;
+    this.getTwoFactroConfigurations();
+    //this.formTwoFactor.company = "Epsoft";
   //   this.applications = [
   //     {id: 2, name: "2.0"},
   //     {id: 3, name: "ezflow"}
   // ];
+  this.getAllSuperAdminNotifications();
   this.getListOfEmailTemplates();
     this.getAllPermissions();
+    this.getListOfVaultconfigs();
     this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {
-      console.log("user applications are",resp)
+     
       this.apps = resp,
              this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
@@ -282,8 +421,8 @@ export class ProfileComponent implements OnInit {
       this.tenantId=localStorage.getItem('tenantName');
       
 this.getAllUsersList();
+this.getAlertUsersList();
 
-console.log("local",localStorage.getItem('userRole'))
 this.getRoles();
 this.getListofCoupons();
     // this.profileservice.getAllRoles(2).subscribe(resp => {
@@ -302,13 +441,14 @@ this.getListofCoupons();
     })
     this.countryInfo = countries.Countries;
     this.useremail=localStorage.getItem('userName');
+    
   
 
 /**alerts */
 this.profileservice.applications().subscribe(resp => 
   {
     this.application = resp,
-    console.log("list of names",resp);
+   
   this.application.forEach(element => {
     this.listOfNames.push(element)
     this.listOfId.push(element.app_id)
@@ -322,7 +462,7 @@ this.profileservice.applications().subscribe(resp =>
     this.currentUserId = localStorage.getItem("ProfileuserId");
     this.userManagement = [];
     this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-      console.log("responseeeeee", resp);
+     
         this.userManagementresponse = resp
            this.userManagementresponse.forEach(elementuser => {
              this.roleArray = [];
@@ -335,25 +475,75 @@ this.profileservice.applications().subscribe(resp =>
              });;
              
           elementuser.userId['roleIdname']=this.roleArray;
+          elementuser.userId['created_at']=elementuser.created_at;
+          elementuser.userId['department']=elementuser.userId.department;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
-          }else{
+          }else if(elementuser.userId.enabled == 'false'){
             elementuser.userId['Status'] = 'Inactive'
+          }else{
+            elementuser.userId['Status'] = 'Not Registered'
           }
-          if(this.currentUserId != elementuser.userId.userId)
+         // if(this.currentUserId != elementuser.userId.userId)
           this.userManagement.push(elementuser.userId);
-         
+          // this.userManagement.sort(function(a,b){
+          //   // Turn your strings into dates, and then subtract them
+          //   // to get a value that is either negative, positive, or zero.
+          //   return b.created_at - a.created_at;
+          // });
           
         });
         
-        console.log("userManagementttttttttt", this.userManagement);
     });
 
   }
+
+  getAlertUsersList(){
+    this.currentUserId = localStorage.getItem("ProfileuserId");
+    this.userManagementalerts = [];
+    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
+      
+        this.userManagementresponse = resp
+           this.userManagementresponse.forEach(elementuser => {
+             this.roleArray = [];
+             elementuser.userId['applicationIdname']=elementuser.applicationId.name;
+             this.rolesArryList = elementuser.rolesEntityList;
+            
+             this.rolesArryList.forEach(element => {
+               this.roleArray.push(element.name);
+               
+             });;
+             
+          elementuser.userId['roleIdname']=this.roleArray;
+          elementuser.userId['created_at']=elementuser.created_at;
+          elementuser.userId['department']=elementuser.userId.department;
+          if(elementuser.userId.enabled == 'true'){
+            elementuser.userId['Status'] = 'Active'
+          }else if(elementuser.userId.enabled == 'false'){
+            elementuser.userId['Status'] = 'Inactive'
+          }else{
+            elementuser.userId['Status'] = 'Not Registered'
+          }
+         // if(this.currentUserId != elementuser.userId.userId)
+          this.userManagementalerts.push(elementuser.userId);
+          
+          this.usersalertsdata=this.userManagementalerts.filter(item=>item.firstName!=null && item.lastName!=null);
+          // this.userManagement.sort(function(a,b){
+          //   // Turn your strings into dates, and then subtract them
+          //   // to get a value that is either negative, positive, or zero.
+          //   return b.created_at - a.created_at;
+          // });
+          
+        });
+        
+    });
+  }
   getListofCoupons() {
+    this.prevdate = new Date().getFullYear() + "-" +  new Date().getMonth()+1 + "-" + new Date().getDate() + "T" + "08:30"
     this.profileservice.listofCuopons().subscribe(resp=>{this.allCoupons=resp
       this.allCoupons.forEach(element => {
-        this.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
+       element.availableRedeemptions=element.maxRedemptions-element.timesRedeemed;
+       
         if(element.amountOff!=null)
         {
           element.percentOff=' - '
@@ -367,7 +557,7 @@ this.profileservice.applications().subscribe(resp =>
         }
         
       });
-    console.log("doupns are",this.allCoupons)})
+  })
  
   }
   getAllKeys(){
@@ -378,16 +568,16 @@ this.profileservice.applications().subscribe(resp =>
       );
     
   }
-  viewSecreteData(template,keys){
-    
-    this.viewdata=keys;
-    console.log("viewing data is",this.viewdata.data.data)
+  viewSecreteData(keys,i,template){
+   
+        this.viewdata=keys;
+ 
     this.versiondata=this.viewdata.data.metadata.version;
     this.updateSecretedata=this.viewdata
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
     // this.myvalue=Object.values(this.updateSecretedata.data.data)
     
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
 
   }
   
@@ -397,73 +587,83 @@ this.profileservice.applications().subscribe(resp =>
   
   addSecretupdate(){
     //this.secretes=[];
+    this.isadd=true;
+    this.addpressed=true;
     this.secretes1.push({
       id: this.secretes1.length + 1,
       key: '',
       value: ''
       
     });
-    console.log("oooodsdsddddddo",this.secretes1)
+   
+    
+  }
+  //update secrete
+  updateSecreteData(updateSecretedata){
+   
     this.secretes1.forEach(element => {
       this.updatesecreteobj[element.key] = element.value
       
 });  
-//this.secretes1=[];
-console.log("my pdate data",this.updateSecretedata)
+
+
     //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
-    console.log("my pdate data 2222",this.updatesecreteobj)
+   
     this.finalObj=Object.assign(this.updatesecreteobj,this.updateSecretedata.data.data)
-    console.log("finallll",this.finalObj)
+   
     this.input1={
       "options": {
         "cas": this.versiondata
       },
       "data": this.finalObj
     }
-  }
-  //update secrete
-  updateSecreteData(updateSecretedata){
-    console.log("to update",updateSecretedata)
-   
-
-    this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
-    console.log("in updatessssssssss",this.input1)
-   
-   
-    this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
+     // this.updatesecreteobj[this.viewdata] = this.updateSecretedata.data.data
+    
+        this.profileservice.creatSecret(this.input1,updateSecretedata.keyname).subscribe(resp=>{this.data=resp
       this.getAllKeys();
       this.modalRef.hide();
         this.notifier.show({
           type: "success",
-          message: "updated Succesfully!"
+          message: "Updated Succesfully!"
         });
+        this.secretes1=[];
       });
+
    this.mykeys= Object.keys(this.updateSecretedata.data.data)
    this.myvalue=Object.values(this.updateSecretedata.data.data)
    // updatesecreteobj[key] = this.updateSecretedata.data.data
-    console.log("updatesec",Object.values(this.updateSecretedata.data.data))
+   
 
   }
   close_modal(){
-    this.modalRef.hide();}
+    this.modalRef.hide();
+  }
   getAllPaymentmodes() {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
-       console.log("paymentmode",response)
+     
        this.paymentMode = response 
         let result = this.paymentMode.filter(obj => {
          return obj.defaultSource === true
         })
+        localStorage.setItem('cardId',result[0].id)
        localStorage.setItem('cardExpMonth',result[0].cardExpMonth)
        localStorage.setItem('cardExpYear',result[0].cardExpYear)
         localStorage.setItem('cardholdername',result[0].name)
        localStorage.setItem('cardLast4',result[0].cardLast4)
-        console.log(result)
-        console.log(this.paymentMode)
+      
         });
   }
-
+   getAllCategories(){
+    this.profileservice.getCategories().subscribe(resp => {
+      this.categories = resp.data
+    })
+   }
   ngOnChanges() {
+   
+    if(this.isusers){
+      this.getAllCategories();
+    }
     if(this.isInvite){
       this.emailId=[];
       this.selectedroles=[];
@@ -473,9 +673,9 @@ console.log("my pdate data",this.updateSecretedata)
       
     }
    
-    if (this.isMyaccount == true) {
+    if (this.isMyaccount) {
       this.userDetails();
-
+     
     }
     this.getAllNotifications();
 
@@ -496,22 +696,49 @@ console.log("my pdate data",this.updateSecretedata)
       this.notificationList = data
     })
   }
+  getAllSuperAdminNotifications(){
+    this.profileservice.getSuperadminNotifications().subscribe(data => {
+      this.superadminnotificationList = data
+    })
+  }
   userDetails() {
     this.useremail = localStorage.getItem("userName");
     this.profileservice.getUserDetails(this.useremail).subscribe(data => {this.formOne = data     
       this.getAllDepartments()
       this. getAllStates();
       this.gatAllCities();
-
+      this.isRefresh = !this.isRefresh;
+      for (var i = 0; i < this.countryInfo.length; i++) {
+        if (this.countryInfo[i].CountryName == this.formOne.country) {
+          this.phnCountryCode = this.countryInfo[i].CountryCode
+        
+        }
+      }
     })
+   
   }
   loopTrackBy(index, term) {
     return index;
   }
   slideDown() {
-    console.log("inside slidedown")
+    this.searchCoupon = '';
+    this.searchsub='';
+    this.searchpayment='';
+    this.searchmode='';
+    this.searchalert='';
+    this.searchtemplate='';
+    this.searchvault='';
+    this.searchRole='';
+    this.searchPermission='';
+    this.searchUser='';
+    this.searchDept='';
+    this.searchvaultmng='';
+    this.isSameDomain=false;
+    this.userDetails();
+    this.inviteAllRoles = '';
+    
     this.invite_product="";
-    console.log(this.invite_product)
+   
      //this.closeDeleteForm = false;
      this.selectedIndex = '';
      this.selectedalertdet = ''
@@ -530,6 +757,7 @@ console.log("my pdate data",this.updateSecretedata)
      this.dataid = '';
      document.getElementById("foot").classList.add("slide-down");
      document.getElementById("foot").classList.remove("slide-up");
+     this.staticTabs.tabs[0].active = true;
   }
 
  
@@ -580,25 +808,18 @@ console.log("my pdate data",this.updateSecretedata)
   //   localStorage.setItem('formOne',JSON.stringify(this.formOne));
   // }
 
-  selecteddata(data, index, template) {
+  selecteddata(data, index) {
     document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
     this.subscribeddata = data;
-    this.modalRef = this.modalService.show(template)
+   
     this.selectedIndex = index;
   }
 
   
 
-  unsubscribeYes(index) {
-    this.modalRef.hide();
-    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {
-      this.getAllSubscrptions();
-      this.notifier.show({
-        type: "success",
-        message: "Subscription cancelled successfully!"
-      });
-    }, err => {
-    });
+  unsubscribeYes(index,template) {
+    this.modalRef = this.modalService.show(template)
+   
     
     document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
 
@@ -622,37 +843,27 @@ console.log("my pdate data",this.updateSecretedata)
     // this.closeFlag = true;
     // this.deletCardIndex = index;
     // document.getElementsByClassName("deletconfm")[index].classList.add("isdeletcard")
-    Swal.fire({
-      title: 'Confirmation',
-      // text: `Updated failed, Please try again.`,
-      html: '<h4> Do you want to delete the selected card?</h4> ',
-      type: 'warning',
-      showCancelButton: true,
-      allowOutsideClick: true,
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: 'Confirmation',
+    //   // text: `Updated failed, Please try again.`,
+    //   html: '<h4> Do you want to delete the selected card?</h4> ',
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   allowOutsideClick: true,
+    // }).then((result) => {
+    //   if (result.value) {
         this.profileservice.deletePaymentMode(data.id).subscribe(data => { this.delData = data
           this.getAllPaymentmodes();
-          Swal.fire({
-            title: 'Success!',
-            text: `Card deleted successfully.`,
-            type: 'success',
-            showCancelButton: false,
-            allowOutsideClick: true
-          }) 
-        },err=>{
-          Swal.fire({
-            title: 'Error!',
-            text: `Please try again.`,
-            type: 'error',
-            showCancelButton: false,
-            allowOutsideClick: true
-          })
-
+          this.notifier.show({
+            type: "success",
+            message: "Card deleted successfully"
+          });
+          document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
         })
-        this.getAllPaymentmodes();
-      }
-    })
+        // this.getAllPaymentmodes();
+        
+      // }
+    // })
   }
 
   // deletCard(data, index) {
@@ -691,10 +902,11 @@ console.log("my pdate data",this.updateSecretedata)
 
   subscriptiondata(data, index, template) {
     this.subscribeddata = data;
+    this.modalRef = this.modalService.show(template)
     if(this.subscribeddata.subscriptionId==null||this.subscribeddata.subscriptionId==undefined){
       this.subscribeddata.subscriptionId="--"
     }
-    this.modalRef = this.modalService.show(template)
+    
   }
 
   alertsdata(data,index,template)
@@ -712,7 +924,6 @@ console.log("my pdate data",this.updateSecretedata)
        
       this.permidlist.push(elementperm.id)
       });
-      console.log("selroledata", selRoleData)
     this.selectedApp = selRoleData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
@@ -722,27 +933,34 @@ console.log("my pdate data",this.updateSecretedata)
     // this.testArry = ['Admin', 'user', 'RPA Admin'];
     this.permidlist = [];
     this.roleListdata = selRoleData;
+    this.testuserid=this.roleListdata.userId;
     this.testRolesList = this.roleListdata.roleIdname;
-
-    console.log("dataaaaa", selRoleData);
-    console.log("rols arry", this.allRoles);
-    
+  
     this.selectedApp  = selRoleData.applicationIdname;
-       
+     
     this.modalRef = this.modalService.show(template)
   }
 
 
   selectedpermdata(selPermData, index, template){
     this.permdata = selPermData;
-    console.log("selroledata", selPermData)
+
     this.selectedApp = selPermData.appliationId.name;
     this.modalRef = this.modalService.show(template)
   }
   selectedCoupondata(selCouponData, index, template){
-    console.log("selected coupon ",selCouponData)
+this.isupdatecouponclicked=false;
+       this.couponid=selCouponData.id
+       this.couponduration=selCouponData.duration
+       this.coupondurationInMonths=selCouponData.durationInMonths,
+       this.couponname=selCouponData.name
+       this.couponpercentOff=selCouponData.percentOff
+       this.couponamountOff=selCouponData.amountOff
+       this.couponmaxRedemptions=selCouponData.maxRedemptions
+
     this.coupondata=selCouponData;
-    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-M-DThh:mm")
+    this.redeemdate = moment(selCouponData.redeemBy*1000).format("YYYY-MM-DD")
+ 
     this.modalRef = this.modalService.show(template)
     if(selCouponData.amountOff != ' - ' && selCouponData.percentOff == ' - '){
       this.isPercentage=false;
@@ -795,6 +1013,13 @@ console.log("my pdate data",this.updateSecretedata)
   }
 
   getAllSubscrptions() {
+   
+      this.profileservice.listofinvoices().subscribe(response => { this.invoicedata = response.data 
+     this.invoicedata.forEach(element => {
+      this.tot.push(element.amount)
+     });
+       });
+   
     this.profileservice.listofsubscriptions().subscribe(response => { 
       this.tableData = response 
       this.tableData.forEach(element => {
@@ -839,8 +1064,6 @@ console.log("my pdate data",this.updateSecretedata)
     for (var i = 0; i < this.countryInfo.length; i++) {
       if (this.countryInfo[i].CountryName == countryValue) {
         this.phnCountryCode = this.countryInfo[i].CountryCode
-        console.log("countryCode", this.countryInfo[i].CountryCode);
-
         this.stateInfo = this.countryInfo[i].States;
       }
     }
@@ -885,14 +1108,22 @@ console.log("my pdate data",this.updateSecretedata)
       this.isPushNotificationcheckBoxValue=true
       this.isEmailcheckBoxValue=false
       this.isSMScheckBoxValue=false
+      this.isIncidentcheckBoxValue=false
+      this.activitieslist=[];
       this.modalRef = this.modalService.show(template,this.config)
     }
+    addVault(template){
+      this.mypages=[];
+      this.modulesList=[];
+     this.myfields=[];
+      this.modalRef = this.modalService.show(template,this.config)
+    } 
     addTemplate(template){
       this.modalRef = this.modalService.show(template,this.config)
     }
     alertsdeletedata(data,index){
       this.selectedalertdet=index
-      console.log("index",index)
+
   }
   updateselecttedalertdata(data,index,template){ 
     
@@ -907,12 +1138,12 @@ console.log("my pdate data",this.updateSecretedata)
      this.updateActivities=data.activity_name
      this.updateMail=data.mail_to
      this.updatetext_to=data.text_to
-
-    console.log("alertslistactivitiesdata",this.updatetext_to)
+     this.updateIncident=data.incident_type
+     this.updatetemp = data.email_template
     let channelsplit=data.channel.split(',')
-    console.log("channel",channelsplit)
+   
     channelsplit.forEach(channelname => {
-      console.log("channel name",channelname)
+     
       if(channelname&&channelname=='Notification')
       {
         this.isPushNotificationcheckBoxValue=true;
@@ -933,6 +1164,14 @@ console.log("my pdate data",this.updateSecretedata)
       {
         this.isSMScheckBoxValue=true;
       }
+      if(channelname&&channelname==' Incident')
+      {
+        this.isIncidentcheckBoxValue=true;
+      }
+      if(channelname&&channelname=='Incident')
+      {
+        this.isIncidentcheckBoxValue=true;
+      }
     });
     
     this.modalRef = this.modalService.show(template)
@@ -949,9 +1188,9 @@ console.log("my pdate data",this.updateSecretedata)
     this.modalRef.hide();
   }
   modifyalert(alertslistactivitiesdata){
-    
+    this.useremail=localStorage.getItem('userName');
     let alertconfiguration=''
-    console.log("sms",this.isSMScheckBoxValue)
+   
       if(this.isPushNotificationcheckBoxValue==true)
       {
         alertconfiguration+='Notification'
@@ -968,6 +1207,11 @@ console.log("my pdate data",this.updateSecretedata)
         alertconfiguration+='SMS'
         alertconfiguration+=', '
       }
+      if(this.isIncidentcheckBoxValue==true)
+      {
+        alertconfiguration+='Incident'
+        alertconfiguration+=', '
+      }
       if(this.isEmailcheckBoxValue==false)
       {
         this.updateMail=null
@@ -976,23 +1220,30 @@ console.log("my pdate data",this.updateSecretedata)
       {
         this.updatetext_to=null
       }
-      console.log("Alert activities",this.alertsactivities)
-      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
-    this.useremail=localStorage.getItem('userName');
-        this.alertmodifybody = {
-          "activity_name": this.updateActivities,
-          "app_name": this.updateApplication,
-          "channel": notificationby,
-          "id": alertslistactivitiesdata.id,
-          "mail_to": this.updateMail,
-          "text_to": this.updatetext_to,
-          "type": this.updateType
+      if(this.isIncidentcheckBoxValue==false)
+      {
+        this.updateIncident=null
       }
-      console.log("alertmodifybody",this.alertmodifybody)
-        this.profileservice.modifyAlert(this.alertmodifybody).subscribe(resp=>{
+    
+      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
+    
+        this.alertmodifybody = {
+          "id": alertslistactivitiesdata.id,
+          "app_name": this.updateApplication,
+          "type": this.updateType,
+          "activity_name": this.updateActivities,
+          "channel": notificationby,
+          "mail_to":  this.updateMail,
+          "text_to": this.updatetext_to,
+          "incident_type": this.updateIncident,
+          "email_template":this.updatetemp
+          
+      }
+     
+        this.profileservice.modifyAlert(this.alertmodifybody,this.useremail).subscribe(resp=>{
           this.notifier.show({
             type: "success",
-            message: "Alert Updated successfully!"
+            message: "Alert updated successfully"
           });
         this.modalRef.hide();
         this.getAllAlertsActivities();
@@ -1000,7 +1251,7 @@ console.log("my pdate data",this.updateSecretedata)
           }, err => {
             this.notifier.show({
               type: "error",
-              message: "Please try again!"
+              message: "Failed to update alert"
             });
           });
     }
@@ -1013,7 +1264,7 @@ console.log("my pdate data",this.updateSecretedata)
           // this.notifier.notify(type,message,data);
           this.notifier.show({
             type: "success",
-            message: "Alert deleted successfully!"
+            message: "Alert deleted successfully"
           });
           this.selectedalertdet= " ";
         //   Swal.fire({
@@ -1029,9 +1280,27 @@ console.log("my pdate data",this.updateSecretedata)
           });
          this.getAllAlertsActivities();
     }
-    subscriptionCancelModalSubmit()
+    subscriptionCancelModalSubmit(template)
   {
-    this.unsubscribeYes(this.selectedIndex);
+    this.profileservice.cancelSubscription(this.subscribeddata).subscribe(data => {
+      this.getAllSubscrptions();
+      this.modalRef.hide();
+      this.router.navigate(['/activation/payment/chooseplan']);
+         if(data==null){
+      this.notifier.show({
+        type: "success",
+        message: "Subscription cancelled successfully!"
+      });
+    }
+    else if(data.message=='Cancellation Abrupted!!'){
+      this.notifier.show({
+        type: "error",
+        message: "Subscription cancelled in progress!"
+      });
+    }
+    }, err => {
+    });
+   // this.unsubscribeYes(this.selectedIndex,template);
   }
   changePlanCancel()
   {
@@ -1047,6 +1316,9 @@ console.log("my pdate data",this.updateSecretedata)
 
     addrole(template){
       this.modalRef = this.modalService.show(template,this.config)
+    }
+    adddept(template){
+      this.modalRef = this.modalService.show(template, this.config)
     }
     addpermission(template){
       this.modalRef = this.modalService.show(template,this.config)
@@ -1076,6 +1348,7 @@ console.log("my pdate data",this.updateSecretedata)
       this.roleDescription = "";
       this.selectedpermidlist = [];
       this.selectedApplication = "";
+      this.addRolePermissionsList = '';
     }
     cancelAddPermission(){
       this.modalRef.hide();
@@ -1097,7 +1370,7 @@ console.log("my pdate data",this.updateSecretedata)
     onChangeCardType(cardNumber) {
       var creditCardType = require("credit-card-type"); 
       this.cards = creditCardType(cardNumber);
-      console.log(this.cards[0].type);
+     
     }
     
     addNewCard(){
@@ -1110,24 +1383,62 @@ console.log("my pdate data",this.updateSecretedata)
         }
 
       this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
-          this.paymentToken=res
-        
-      this.profileservice.addNewCard(this.paymentToken,this.isdefault).subscribe(res=>{
+        this.paymentToken=res
+        if(this.paymentToken.errorMessage==="Failed to generate payment token"){
+          this.notifier.show({
+            type: "error",
+            message: "Please enter valid card details"
+          });
+        }
+        if(this.paymentToken.message==="Card already exists"){
+          this.notifier.show({
+            type: "error",
+            message: "Card already exists."
+          });
+          this.modalRef.hide();
+        } 
+        else {
+          
+      
+      this.profileservice.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
           // console.log('res',res);
           this.getAllPaymentmodes();
           this.modalRef.hide();
+          if(res===null){
+            this.notifier.show({
+              type: "success",
+              message: "Card added successfully!"
+            });
+          }
+          if(res.errorMessage==="Failed to create payment method"){
+            this.notifier.show({
+              type: "error",
+              message: "Failed to add card."
+            });
+          }
+         
       this.cardModel={}
       })
-      })
+    }
+      }),err=>{
+        this.notifier.show({
+          type: "error",
+          message: "Please enter valid card details"
+        });
+      }
   
       // this.profileservice.addNewCard(token).subscribe(res=>{})
       // api call
-      
+      this.cardModel={}
     }
 /**alert */
 cancelAlert(){
   this.modalRef.hide();
   this.alertModel={}
+}
+cancelVaultconfig(){
+  this.modalRef.hide();
+ 
 }
     setAsDefaultCard(selectedCardData){
       const cardId=selectedCardData.id
@@ -1184,6 +1495,8 @@ cancelAlert(){
  }
  myemailFunction()
  {
+   this.isSameDomain = false;
+   this.emailRequired = false;
   $("#excel").empty();
   this.selectedFile=null;
   $("#email").on("input", function(){
@@ -1203,35 +1516,42 @@ cancelAlert(){
 });
  }
     inviteUser(userId,inviteeId,form){
-      // let stringToSplit = localStorage.getItem("userName");
-      // let x = stringToSplit.split("@");
-      //       this.domain = x[1];
-      // console.log(x);
-      //       var inviteeList = [];
-      //       inviteeList = inviteeId.split(",");
+      this.isSameDomain = false;
+       let stringToSplit = localStorage.getItem("userName");
+       let x = stringToSplit.split("@");
+             this.domain = x[1];
+            var inviteeList = [];
+           
+            if((inviteeId == undefined || inviteeId == null) && this.selectedFile == undefined){
+              this.emailRequired = true;
+              return
+            }
+            if(this.upload_excel == null && inviteeId !== undefined){
+             inviteeList = inviteeId.split(",");
+          
+             for(var i = 0; i<inviteeList.length; i++){
+      
+              //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
+              //         inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
+              //        this.ispublicMail=true;
+              //        return
+                
+                     if(!(inviteeList[i].endsWith(this.domain))){
+                     
+                    this.isSameDomain = true;
+                     return
+                    }
+                      
+             
+            }
       // console.log("fksdjflkasd", inviteeList);
       
-      //       for(var i = 0; i<inviteeList.length; i++){
-      
-      //         if(inviteeList[i].endsWith('@gmail.com') ||inviteeList[i].endsWith('@yahoo.com') || 
-      //         inviteeList[i].endsWith('@hotmail.com') || inviteeList[i].endsWith('@rediffmail.com')){
-      //        this.ispublicMail=true;
-      //        return
-        
-      //      }else if(!(inviteeList[i].endsWith(this.domain))){
-             
-      //       this.isSameDomain = true;
-      //       return
-      //      }
-              
-      //       }  
-      
-      console.log(this.selectedroles)
-      console.log("inviteid",inviteeId)
+             }  
+   
       const payload = new FormData();
 
       if(this.selectedFile==undefined){
-        console.log("Form email selected");
+     
        // const payload = new FormData();
         //payload.append('inviterMailId', userId);
         payload.append('inviteeMailId', inviteeId);
@@ -1240,8 +1560,8 @@ cancelAlert(){
       }
       else
       {
-        console.log("Upload option selected");
-        
+      
+        this.emailRequired = false;
         //payload.append('inviterMailId', userId);
         this.myappName="2.0"
         payload.append('file', this.selectedFile, this.selectedFile.name);
@@ -1254,25 +1574,40 @@ cancelAlert(){
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
     if(invres.message == "Exceeded max users count"){
     Swal.fire({
-      title: 'Message!',
-      text: "Users max limit exceeded",
+      title: 'Warning',
+      text: "Users max limit exceeded!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
+    this.inviteAllRoles = '';
   
-  }else if(invres.message == "User Invite is valid"){
+  }
+  if(invres.message == "No user allowed for the product"){
+    Swal.fire({
+      title: 'Warning',
+      text: "No subscriptions found for the product!",
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+    this.inviteAllRoles = '';
+  
+  }
+  else if(invres.allowedUsers){
+    payload.append('allowedUserCount', invres.allowedUsers)
     this.profileservice.inviteUser(userId,payload).subscribe(res=>{
       this.data=res
-      console.log(this.data.body)
       if(this.data.body.message == "Invite Mail sent successfully"){
       Swal.fire({
-        title: 'Success!',
-        text: "Invite mail sent successfully.",
+        title: 'Success',
+        text: "Invite mail sent successfully!",
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1284,12 +1619,14 @@ cancelAlert(){
     }
       else if(this.data.body.errorMessage == "Failed to read content of the upload file"){
         Swal.fire({
-          title: 'Error!',
+          title: 'Error',
           text:this.data.body.errorMessage,
           type: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
+    this.inviteAllRoles = '';
+
         this.upload_excel=""
         this.selectedFile=null
         this.myappName=""
@@ -1298,14 +1635,16 @@ cancelAlert(){
         $("#email").prop('disabled', false);
         $("#product").prop('disabled', false);
         this.invitemultirole=false;
-    }else if(this.data.body.errorMessage == "Uploaded file is empty"){
+    }else if(this.data.body.errorMessage == "Uploaded file is empty/incorrect. Please verify the data entered in file"){
         Swal.fire({
-          title: 'Error!',
+          title: 'Error',
           text:this.data.body.errorMessage,
           type: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
+    this.inviteAllRoles = '';
+
         this.upload_excel=""
         this.selectedFile=null
         this.myappName=""
@@ -1317,12 +1656,14 @@ cancelAlert(){
     }
     else if(this.data.body.errorMessage == "Uploaded file is not supported"){
       Swal.fire({
-        title: 'Error!',
+        title: 'Error',
         text:this.data.body.errorMessage,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1332,14 +1673,16 @@ cancelAlert(){
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
     }
-    else if(this.data.body.message == "Inviter not present"){
+    else if(this.data.body.errorMessage == "Inviter not present"){
       Swal.fire({
-        title: 'Error!',
-        text:this.data.body.message,
+        title: 'Error',
+        text:this.data.body.errorMessage,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1348,14 +1691,16 @@ cancelAlert(){
       $("#email").prop('disabled', false);
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
-    }else if(this.data.body.message == "Inviter tenant not present"){
+    }else if(this.data.body.errorMessage == "Inviter tenant not present"){
       Swal.fire({
-        title: 'Warning!',
-        text: this.data.body.message,
+        title: 'Warning',
+        text: this.data.body.errorMessage,
         type: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1366,12 +1711,14 @@ cancelAlert(){
       this.invitemultirole=false;
     }else if(this.data.body.message === "Invitee already exists"){
       Swal.fire({
-        title: 'Warning!',
+        title: 'Warning',
         text: this.data.body.message,
         type: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1381,14 +1728,55 @@ cancelAlert(){
       $("#email").prop('disabled', false);
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
-    }else{
+    }else if(this.data.body.message === "You are trying to invite invalid Domain/Product. Please verify the file and re upload with valid data."){
       Swal.fire({
-        title: 'Error!',
+        title: 'Warning',
+        text: "You are trying to invite invalid Domain/Product!",
+        type: 'warning',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+    this.inviteAllRoles = '';
+
+      this.upload_excel=""
+      this.myappName=""
+      this.selectedFile=null
+      this.myappName=""
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }else if(this.data.body.message === "Only few users are invited, please upgrade plan to invite others"){
+      Swal.fire({
+        title: 'Warning',
+        text: this.data.body.message,
+        type: 'warning',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+    this.inviteAllRoles = '';
+
+      this.upload_excel=""
+      this.myappName=""
+      this.selectedFile=null
+      this.myappName=""
+      $("#excel").empty();
+      $('.upload').prop('disabled', false);
+      $("#email").prop('disabled', false);
+      $("#product").prop('disabled', false);
+      this.invitemultirole=false;
+    }
+    else{
+      Swal.fire({
+        title: 'Error',
         text: this.data.body.message,
         type: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1407,6 +1795,8 @@ cancelAlert(){
         showCancelButton: false,
         allowOutsideClick: true
       })
+    this.inviteAllRoles = '';
+
       this.upload_excel=""
       this.myappName=""
       this.selectedFile=null
@@ -1418,12 +1808,14 @@ cancelAlert(){
     })
   }else{
     Swal.fire({
-      title: 'Sorry!',
+      title: 'Error',
       text: "Inivation not sent due to technical issue.",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
+    this.inviteAllRoles = '';
+
     this.upload_excel=""
     this.myappName=""
     this.selectedFile=null
@@ -1442,6 +1834,8 @@ cancelAlert(){
       showCancelButton: false,
       allowOutsideClick: true
     })
+    this.inviteAllRoles = '';
+
     this.upload_excel=""
     this.myappName=""
       this.selectedFile=null
@@ -1473,7 +1867,7 @@ cancelAlert(){
  
     }
 //create secrets
-createNewSecret(){
+createNewSecret(form:NgForm){
              
             this.secretes.forEach(element => {
                     this.mydata[element.key] = element.value
@@ -1496,7 +1890,7 @@ createNewSecret(){
     });
       
         });
-
+form.resetForm();
    
 }
  
@@ -1523,8 +1917,8 @@ createNewSecret(){
           this.profileservice.deleteRole(role).subscribe(response => {
           this.getRoles();
           Swal.fire({
-            title: 'Success!',
-            text: `Role deleted successfully.`,
+            title: 'Success',
+            text: `Role deleted successfully!`,
             type: 'success',
             showCancelButton: false,
             allowOutsideClick: true
@@ -1536,14 +1930,14 @@ createNewSecret(){
 
 }
 deleteUserYes(user,index){
-  console.log("userrrrrr", user);
+ 
   this.selectedIndex = '';
   this.profileservice.deleteSelectedUser(user).subscribe(resp =>{
 
-    
+    this.getAllUsersList();
 
     Swal.fire({
-      title: 'Success!',
+      title: 'Success',
       text: resp.message,
       type: 'success',
       showCancelButton: false,
@@ -1551,7 +1945,7 @@ deleteUserYes(user,index){
     })
 
 
-  
+    
 
   }, err =>{
 
@@ -1565,7 +1959,6 @@ deleteUserYes(user,index){
 
 
   })
-  this.getAllUsersList();
   
 
 
@@ -1589,14 +1982,10 @@ permDelYes(permission,index){
 couponDelYes(coupon,index){
   this.profileservice.deleteCoupon(coupon).subscribe(resp=>{
     this.getListofCoupons();
-    console.log("deleted coupon")
-    Swal.fire({
-      title: 'Success',
-      text: `Coupon deleted successfully!`,
-      type: 'success',
-      showCancelButton: false,
-      allowOutsideClick: true
-    }) 
+      this.notifier.show({
+      type: "success",
+      message: "Coupon deleted successfully!!"
+    });
     
 
   },err => {
@@ -1612,7 +2001,7 @@ couponDelYes(coupon,index){
    this.allRoles = resp.sort(function(obj1, obj2) {
       return obj1.id - obj2.id;
   });
-   console.log("All roles",this.allRoles)
+
    this.allRoles.forEach(elementRoles => {
        
    this.listOfroles.push(elementRoles.name)
@@ -1622,8 +2011,7 @@ couponDelYes(coupon,index){
    }else {
      this.profileservice.getAllRoles(2).subscribe(resp => {
             this.allRoles = resp,
-            console.log("resp is",resp)
-      
+          
             this.allRoles.forEach(elementRoles => {
                   
             this.listOfroles.push(elementRoles.name)
@@ -1634,6 +2022,10 @@ couponDelYes(coupon,index){
        }
       }
         roledel(data,index){
+              document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+             }
+             paymodedel(data,index){
+              this.selectedIndex = index;
               document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
              }
              userDel(data,index){
@@ -1662,14 +2054,13 @@ couponDelYes(coupon,index){
         
         this.profileservice.getAllPermissions().subscribe(data => {
           this.permissionsList = data;
-          console.log("perm list===",this.permissionsList)
-          
+       
         })
       }
 
       permissionsByapp(id){
         this.profileservice.getPermissionsByAppID(id).subscribe(data => {
-          this.permissionsList = data;
+          this.addRolePermissionsList = data;
          
 
           
@@ -1677,15 +2068,14 @@ couponDelYes(coupon,index){
       }
 
       modifyUserRole(resp){
+        this.searchUser = '';
         this.selectedRolesArry = [];
         let arr = [];
-        console.log("selectedApp", this.selectedApp);
-        
+      
         this.status = this.userStatus;
 
         arr = this.testRolesList;
-        console.log("arrr", arr);
-        
+       
         for(var i = 0; i< arr.length; i++){
           for(var j = 0; j<this.allRoles.length; j++){
             if(arr[i] == this.allRoles[j].name){
@@ -1746,13 +2136,13 @@ couponDelYes(coupon,index){
           "permissionId":  this.permidlist
        
        }
-       console.log("rolesbody", rolesbody)
+   
        this.profileservice.modifyRole(rolesbody).subscribe(modifyresp => {
         this.modalRef.hide();
         this.getRoles();
         Swal.fire({
-          title: 'Success!',
-          text: `Role updated successfully.`,
+          title: 'Success',
+          text: `Role updated successfully!`,
           type: 'success',
           showCancelButton: false,
           allowOutsideClick: true
@@ -1774,7 +2164,7 @@ couponDelYes(coupon,index){
         "appliationId":{
         "id":this.selectedApp}
       }
-      console.log("permbody", permbody)
+  
       this.profileservice.modifyPermission(permbody).subscribe(permmodifyresp => {
        this.modalRef.hide();
        this.getAllPermissions();
@@ -1787,39 +2177,41 @@ couponDelYes(coupon,index){
    }
 
     modifycoupon(couponData){
-      console.log("coupon data",couponData)
+      this.isupdatecouponclicked=true;
+ // this.close_modal();
+
       if(this.isPercentage){
+        couponData.percentOff = this.couponpercentOff
         couponData.amountOff = null
       }else if(this.isAmount){
         couponData.percentOff = null
+        couponData.amountOff = this.couponamountOff
       }
       let modifycouponinput = {
         "currency": "usd",
-         "couponid":couponData.id,
-        "duration": couponData.duration,
-        "durationInMonth":couponData.durationInMonths,
-        "name": couponData.name,
+         "couponid":this.couponid,
+        "duration":this.couponduration,
+        "durationInMonth":this.coupondurationInMonths,
+        "name": this.couponname,
         "percent_off": couponData.percentOff,
         "amount_off":couponData.amountOff,
         "redeem_by": moment(this.redeemdate, "YYYY-M-DTH:mm").valueOf()/1000,
-        "redmee_times": couponData.maxRedemptions
+        "redmee_times": this.couponmaxRedemptions
       }
       
 this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
   this.modalRef.hide();
   this.getListofCoupons();
-  Swal.fire({
-    title: 'Success!',
-    text: `Coupon updated successfully.`,
-    type: 'success',
-    showCancelButton: false,
-    allowOutsideClick: true
-  }) 
+  this.notifier.show({
+    type: "success",
+    message: "Coupon updated successfully!!"
+  });
+ 
 })
 
     }
     createNewRole(){
-      
+
       let addRoleBody = {  
       "name":this.roleName,
       "description":this.roleDescription,
@@ -1830,15 +2222,15 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
    },
       "permissionId": this.selectedpermidlist
    }
-   console.log("create role", addRoleBody)
+
    this.profileservice.createRole(addRoleBody).subscribe(modifyresp => {
      this.roleresp=modifyresp;
     this.modalRef.hide();
     this.getRoles();
     if(this.roleresp.message!='Role already exists'){
       Swal.fire({
-        title: 'Success!',
-        text: `Role created successfully.`,
+        title: 'Success',
+        text: `Role created successfully!`,
         type: 'success',
         showCancelButton: false,
         allowOutsideClick: true
@@ -1847,8 +2239,8 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     else
     {
       Swal.fire({
-        title: 'Role already Exists',
-        text: `Role already exists.`,
+        title: 'Error',
+        text: `Role already exists!`,
         type: 'info',
         showCancelButton: false,
         allowOutsideClick: true
@@ -1873,7 +2265,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         "id":this.selectedApplication
          }
         }
-      console.log("Create permission ",addpermission);
+    
       this.profileservice.createPermission(addpermission).subscribe(createpermresp => {
         this.modalRef.hide();
         this.getAllPermissions();
@@ -1895,7 +2287,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.isAmount=true;
         this.isPercentage=false;
       }
-      console.log("value is",value)
+    
   
     }
     onSelected(value){
@@ -1910,10 +2302,9 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     }
    
     createNewCoupon(){
-      console.log("date time", this.datetime)
-      this.datetime = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
-      console.log("timestamp ",this.datetime)
-      this.couponDetails={
+     
+      this.datetimeinput = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
+       this.couponDetails={
         couponNamename:this.couponNamename,
         couponIdId:this.couponIdId,
         durationTime:this.durationTime,
@@ -1938,7 +2329,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         "name": this.couponNamename,
         "percent_off": this.percentageOffTot,
         "amount_off":this.amountOff,
-        "redeem_by": this.datetime/1000,
+        "redeem_by": (this.datetimeinput/1000)+86399,
         "redmee_times": this.redeemTimeslimit
       }
     //   let input= {"currency":"usd",
@@ -1954,18 +2345,18 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.modalRef.hide();
         this.notifier.show({
           type: "success",
-          message: "created successfully!"
+          message: "created coupon successfully!!"
         });
            this.getListofCoupons();
             });
             
-        console.log('resp is',this.data)
+      
     }
     /** alerts */
-    saveConfig() {
+    saveConfig(form:NgForm) {
       this.tenantId=localStorage.getItem('tenantName');
       this.useremail=localStorage.getItem('userName');
-        console.log("tenant : "+this.tenantId);
+     
 
       let alertconfiguration=''
       if(this.isPushNotificationcheckBoxValue==true)
@@ -1984,6 +2375,11 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         alertconfiguration+='SMS'
         alertconfiguration+=', '
       }
+      if(this.isIncidentcheckBoxValue==true)
+      {
+        alertconfiguration+='Incident'
+        alertconfiguration+=', '
+      }
       if(this.isEmailcheckBoxValue==false)
       {
         this.emailselected=null
@@ -1992,48 +2388,48 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       {
         this.smsselected=null
       }
+      if(this.isIncidentcheckBoxValue==false)
+      {
+        this.incidentselected=null
+      }
      var notificationby = alertconfiguration.substring(0, alertconfiguration.length-2);
-     console.log(notificationby)
-     console.log(this.smsselected)
-      this.alertsbody ={
-        "app_name": this.applicationames,
-        "type":this.selectedtype ,
-         "activity_names":this.alertsactivities,
-       "channel":notificationby,
-         "mail_to":  this.emailselected,
-         "text_to":  this.smsselected,
-         "created_by":  this.useremail ,
-         "tenant_id":  this.tenantId
-
-    }
+           this.alertsbody ={
+          "activity_names" : this.alertsactivities,
+          "app_name": this.applicationames,
+          "channel": notificationby,
+          "incident_type": this.incidentselected,
+          "mail_to": this.emailselected,
+          "tenant_id": this.tenantId,
+          "text_to": this.smsselected,
+          "type": this.selectedtype,
+          "email_template": this.emailtemplate
+        }
     
-        console.log(this.alertsbody)
-      
-
-console.log("alertbody",this.alertsbody)
-           this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
+               this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
             this.notifier.show({
               type: "success",
-              message: "Saved successfully!"
+              message: "Alert saved successfully"
             });
-            this.alertsapplication="";
-      this.alertsactivities=[];
-      this.selectedtype="";
-      this.isEmailcheckBoxValue=false;
-      this.isSMScheckBoxValue=false;
-      this.isPushNotificationcheckBoxValue=false;
-      this.smsselected="";
-      this.emailselected="";
-          this.modalRef.hide();
-          this.getAllAlertsActivities();
+      //       this.alertsapplication="";
+      // this.alertsactivities=[];
+      // this.selectedtype="";
+      // this.isEmailcheckBoxValue=false;
+      // this.isSMScheckBoxValue=false;
+      // this.isPushNotificationcheckBoxValue=false;
+      // this.isIncidentcheckBoxValue=false;
+      // this.smsselected="";
+      // this.emailselected="";
+      // this.incidentselected="";
+           this.modalRef.hide();
+           this.getAllAlertsActivities();
          //  this.configurealertform.reset();
             }, err => {
               this.notifier.show({
                 type: "error",
-                message: "Please try again!"
+                message: "Failed to save alert"
               });
             });
-
+            form.resetForm();
       }
 
       getAllAlertsActivities() {
@@ -2042,8 +2438,7 @@ console.log("alertbody",this.alertsbody)
   this.alertuserroles=localStorage.getItem('userRole');
    this.profileservice.listofactivities(this.tenantId,this.alertuserroles).subscribe(alertresponse => {
       this.alertslistactivitiesdata = alertresponse
-      console.log("All Activities",this.alertslistactivitiesdata)
-    });
+         });
   }
 
       saveClick(item,e){
@@ -2051,6 +2446,7 @@ console.log("alertbody",this.alertsbody)
       }
       onChange(product){
      // console.log("application",this.application)
+    
        this.profileservice.alertsConfig(product).subscribe(res => this.successCallback(res))
         this.application.forEach(element => {
           if(element.id==product){
@@ -2060,20 +2456,208 @@ console.log("alertbody",this.alertsbody)
           }
           
         });
+      
+
+   
       }
       successCallback(data) {
        // console.log("data",JSON.parse(data))
        this.activitieslist = data
-       console.log("activitieslist",this.activitieslist)
-        data.forEach(element => {
+              data.forEach(element => {
           if(element.userSelected)
           this.selectValue.push(element.notification_id)      
         });
       }
+      onChangeprod(pro){
+        this.selectedproduct=pro;
+        this.modulesList=[];
+        this.profileservice.getmodulesbyProduct(pro).subscribe(data => 
+          {
+           
+            data.forEach(element => {
+
+              this.modulesList.push(element.module)
+            });
+           
+            
+          })
+   
+      }
+      changeModule(module){
+        this.selectedmodule=module;
+      
+        var input={
+             "module": module,
+             "product": this.selectedproduct
+         
+        }
+        this.profileservice.getpagesfromModule(input).subscribe(resp =>{
+          this.mypages=[];
+          resp.forEach(element => {
+            this.mypages.push(element.page)
+            
+          });
+       
+        })
+
+      }
+      changePage(page){
+        this.selectedPage=page;
+        
+        var input={
+          "module": this.selectedmodule,
+          "page":page,
+          "product": this.selectedproduct
+      
+     }
+     this.profileservice.getFieldsfromPage(input).subscribe(resp=>{
+      this.myfields=[];
+       resp.forEach(element => {
+         this.myfields.push(element.field)
+         
+       });
+     })
+    
+      }
+      chanageFeild(feild){
+        this.selectedFeild=feild;
+      }
+      saveVaultConfig(form:NgForm){
+        let firstname=localStorage.getItem("firstName");
+        let lastname=localStorage.getItem("lastName");
+        let created_by=firstname+" "+lastname
+        var input={
+          "createdBy": created_by,
+          "field": this.selectedFeild,
+          "module": this.selectedmodule,
+          "page": this.selectedPage,
+          "product": this.selectedproduct,
+          "tenantId": this.tenantId
+        }
+        this.profileservice.saveVaultConfig(input).subscribe(resp=>{
+          this.modalRef.hide();
+          this.getListOfVaultconfigs();
+          this.notifier.show({
+            type: "success",
+            message: "Vault Configured successfully!"
+          });
+          },err=>{
+            this.getListOfVaultconfigs();
+          });
+          form.resetForm();
+       
+      }
+      vaultconfigdelete(data,index){
+        document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+        this.selectedvaultconfig = index;
+      }
+      vaultconfigDelYes(data,index){
+      
+        var input={
+          "id":data.id,
+          "field": data.field,
+          "module": data.module,
+          "page": data.page,
+          "product": data.product,
+          "tenantId": this.tenantId
+        }
+        this.selectedvaultconfig=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+       // this.modalRef.hide();
+     
+
+        this.profileservice.deleteVaultConfig(input).subscribe(data1 => {
+         
+        
+         if(data1.message === "Deleted Successfully"){
+          this.notifier.show({
+            type: "success",
+            message: "Vault configuration deleted!"            
+          })
+          this.getListOfVaultconfigs();
+          }else {
+           this.notifier.show({
+              message: `Failed to delete vault configuration`,
+              type: 'error'
+            }) 
+          }
+        })
+      }
+      vaultconfigdelno(index){
+        this.selectedvaultconfig=" ";
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+        }
+        updateVaultconfig(form:NgForm){
+          let firstname=localStorage.getItem("firstName");
+          let lastname=localStorage.getItem("lastName");
+          let modified_by=firstname+" "+lastname
+          var input={
+            "id": this.modvaultId,
+            "tenantId": this.tenantId,
+            "product": this.modprod,
+            "module": this.modmodule,
+            "page": this.modpage,
+            "field": this.modfield,
+            "modifiedBy": modified_by
+          }
+          this.profileservice.updateVaultConfig(input).subscribe(resp =>{
+            this.modalRef.hide();
+          this.getListOfVaultconfigs();
+          this.notifier.show({
+            type: "success",
+            message: "Vault updated successfully"
+          });
+          },err=>{
+            this.getListOfVaultconfigs();
+          });
+          form.resetForm();
+
+        
+        }
+        secretdelete(data,index){
+         
+       // document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+          this.selectedsecret = index;
+        }
+          secretDelYes(data,data2,index){
+    
+        
+            this.selectedsecret=" ";
+            let versionsList=data2.data.metadata.version;
+          const s=  Array.from({length: versionsList}, (_, i) => i + 1)
+          let input={
+              "versions":s
+            }
+          
+      
+         this.profileservice.deleteSecret(input,data).subscribe(resp=>{
+          this.getAllKeys();
+          if(resp.message === "secret deleted"){
+           
+              this.notifier.show({
+                type: "success",
+                message: "Vault Secret deleted successfully."            
+              })
+           this.getAllKeys();
+              }else {
+               this.notifier.show({
+                  message: `Failed to delete vault Secret.`,
+                  type: 'error'
+                }) 
+              }
+         })
+              
+           }
+
+
+          secretdelno(index){
+            this.selectedsecret=" ";
+            document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+            }
       changeActivity()
       {
         //this.modifyactivities=this.activitieslist
-        console.log("Activities fjdbfdsfbd",this.activitieslist);
+      
       }
       onblur(){
         this.ispublicMail = false;
@@ -2082,7 +2666,7 @@ console.log("alertbody",this.alertsbody)
 
 
       deleteNotification(data,index){
-        console.log(data)
+       
         this.profileservice.deleteNotification(data).subscribe(resp=>{
           // console.log(resp)
           this.getAllNotifications();
@@ -2090,12 +2674,28 @@ console.log("alertbody",this.alertsbody)
             type: "success",
             message: "Notification deleted successfully!"
           });
+          this.dataid = '';
           },err=>{
             this.getAllNotifications();
           });
          this.getAllNotifications();
     }
 
+    deletesuperadminnotification(data){
+      this.profileservice.deletesuperadminNotifications(data).subscribe(resp=>{
+        // console.log(resp)
+        this.getAllSuperAdminNotifications();
+        this.notifier.show({
+          type: "success",
+          message: "Notification deleted successfully!"
+        });
+        this.dataid = '';
+        this.getAllSuperAdminNotifications();
+        },err=>{
+          this.getAllSuperAdminNotifications();
+        });
+       this.getAllSuperAdminNotifications();
+    }
 
    
       passwordChange(form:NgForm){
@@ -2141,17 +2741,25 @@ console.log("alertbody",this.alertsbody)
           // });
           
         });
+        this.profileservice.fetchAllProds().subscribe(myresp=>{
+          
+          myresp.forEach(element => {
+            this.configprods.push(element.product)
+
+          });
+        })
       }
       onFileSelected(event)
       {
+        this.emailRequired = false;
         $("#excel").empty();
         $("#email").prop('disabled', true);
         $("#product").prop('disabled', true);
         this.invitemultirole=true;
         this.selectedFile=<File>event.target.files[0]
-        console.log(this.selectedFile.name)
+      
       // $("#excel").val(this.selectedFile.name)
-       $("#excel").append('('+this.selectedFile.name+')');
+       $("#excel").append(this.selectedFile.name);
       }
 
       notificationclick(id)
@@ -2162,7 +2770,7 @@ console.log("alertbody",this.alertsbody)
        this.notificationbody ={
           "tenantId":this.tenantId
        }
-       console.log("notification id",id)
+      
        if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
         this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
           this.notificationreadlist = data
@@ -2170,7 +2778,29 @@ console.log("alertbody",this.alertsbody)
          //document.getElementById('msg_'+id).style.color="grey"
          //document.getElementById('date_'+id).style.color="grey"
          //document.getElementById(id).style.cursor="none"
-          console.log(this.notificationreadlist)
+         
+        })
+       
+      }
+      }
+      notificationsuperadminclick(id)
+      {
+        let userId =  localStorage.getItem("userName")
+        this.tenantId=localStorage.getItem('tenantName');
+        this.role=localStorage.getItem('userRole')
+       this.notificationbody ={
+          "tenantId":this.tenantId
+       }
+    
+       let notificationid=id;
+       if(this.superadminnotificationList.find(ntf=>ntf.id==notificationid).status!='read'){
+        this.profileservice.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
+          this.notificationreadlist = data
+          this.superadminnotificationList.find(ntf=>ntf.id==notificationid).status='read'
+         //document.getElementById('msg_'+id).style.color="grey"
+         //document.getElementById('date_'+id).style.color="grey"
+         //document.getElementById(id).style.cursor="none"
+    
         })
        
       }
@@ -2180,10 +2810,17 @@ console.log("alertbody",this.alertsbody)
       {
         this.profileservice.getEmailTemplates().subscribe(data => {
           this.emailtemplateslist=data
-          console.log(this.emailtemplateslist)
+        
         })
       }
+      getListOfVaultconfigs(){
+        this.profileservice.getVaultConfigurations(this.tenantId).subscribe(data =>
+          {
+            this.vaulConfigureList=data
+           
+          })
 
+      }
       savetemplate(form:NgForm)
       {
         let templateip = {
@@ -2199,12 +2836,12 @@ console.log("alertbody",this.alertsbody)
          if(data.message === "Email template saved successfully"){
           this.notifier.show({
             type: "success",
-            message: "Template saved successfully."            
+            message: "Template saved successfully"            
           })
            
           }else {
            this.notifier.show({
-              message: `Failed to save template.`,
+              message: `Failed to save template`,
               type: 'error'
             }) 
           }
@@ -2215,8 +2852,57 @@ console.log("alertbody",this.alertsbody)
       selectedtemplate(data, index, template) {
     
         this.templatedata = data;
+        this.modtempcreated=data.createdBy;
+        this.modtempbody=data.templateBody;
+        this.modtempid=data.templateId;
+        this.modtempname=data.templateName;
+        this.modtempsub=data.templateSubject;
+        this.modtemptenant=data.tenantId;
         this.modalRef = this.modalService.show(template)
        
+      }
+      selectedVaultConfig(data,i,template){
+        this.onChangeprod(data.product);
+        
+        var input={
+          "module": data.module,
+          "product": data.product
+      
+     }
+     this.profileservice.getpagesfromModule(input).subscribe(resp =>{
+      this.mypages=[];
+      
+       resp.forEach(element => {
+         this.mypages.push(element.page)
+         
+       });
+    
+     })
+     var input1={
+      "module": data.module,
+      "page":data.page,
+      "product": data.product
+  
+ }
+ this.profileservice.getFieldsfromPage(input1).subscribe(resp=>{
+  this.myfields=[];
+   resp.forEach(element => {
+     this.myfields.push(element.field)
+     
+   });
+ })
+
+       
+        this.templatedata = data;
+        this.modvaultId=data.id;
+        this.modprod=data.product;
+        this.modmodule=data.module;
+        this.modpage=data.page;
+        this.modfield=data.field;
+        this.modconfigId=data.id;
+        this.modalRef = this.modalService.show(template)
+       
+
       }
       emailtempdelete(data,index){
         document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
@@ -2236,12 +2922,12 @@ console.log("alertbody",this.alertsbody)
          if(data.message === "Template deleted successfully"){
           this.notifier.show({
             type: "success",
-            message: "Template deleted successfully."            
+            message: "Template deleted successfully"            
           })
            
           }else {
            this.notifier.show({
-              message: `Failed to delete template.`,
+              message: `Failed to delete template`,
               type: 'error'
             }) 
           }
@@ -2251,20 +2937,31 @@ console.log("alertbody",this.alertsbody)
       cancelEmail(){
         this.modalRef.hide();
       }
+      cancelUpdateVaultConfig(){
+        this.modalRef.hide();
+      }
 
       updateemailtemplate(){
-         this.profileservice.modifyTemplate(this.templatedata).subscribe(data => {
+        let modtempip={
+          "createdBy": this.modtempcreated,
+          "templateBody": this.modtempbody,
+          "templateId": this.modtempid,
+          "templateName": this.modtempname,
+          "templateSubject": this.modtempsub,
+          "tenantId": this.modtemptenant
+        }
+         this.profileservice.modifyTemplate(modtempip).subscribe(data => {
           this.getListOfEmailTemplates();
           this.modalRef.hide();
          if(data.message === "Template updated successfully"){
           this.notifier.show({
             type: "success",
-            message: "Template updated successfully."            
+            message: "Template updated successfully"            
           })
            
           }else {
            this.notifier.show({
-              message: `Failed to save template.`,
+              message: `Failed to update template`,
               type: 'error'
             }) 
           }
@@ -2273,4 +2970,157 @@ console.log("alertbody",this.alertsbody)
       }
       
       
-   }
+      twoFactorAuthConfig(form:NgForm){
+        var tentName = localStorage.getItem('tenantName');
+        
+    //this.formTwoFactor.company = "Epsoft";
+    if(this.emailvalue == 'true'){
+      this.enableTwoFactorConfig = true;
+    }else if(this.emailvalue == 'false'){
+      this.enableTwoFactorConfig = false;
+    }
+        let twoFactorAuthBody = {
+          "twoFactorEnabled": this.enableTwoFactorConfig ,
+          "emailEnabled":this.formTwoFactor.isEmailcheckForOTP,
+          "smsEnabled": this.formTwoFactor.isSMScheckForOTP,
+        }
+    
+      this.profileservice.twoFactorConfig(twoFactorAuthBody, tentName).subscribe(res => {
+      // this.pswdmodel = {};
+      this.getTwoFactroConfigurations()
+      if(res.errorCode){
+        this.notifier.show({
+          type: "error",
+          message: res.errorMessage,
+          id: "123"
+        });
+      }else{
+        this.notifier.show({
+          type: "success",
+          message: "Configuration Updated successfully",
+          id: "123"
+        });
+      }
+      }, err => {
+        // console
+        this.notifier.show({
+          type: "error",
+          message: "Failed To Update Two Factor Authentication Configurations!",
+          id: "124"
+        });})
+      form.resetForm();
+      }
+      
+      getTwoFactroConfigurations(){
+        
+      let userId = localStorage.getItem("userName");
+      this.profileservice.getTwoFactroConfig(userId).subscribe(res=>{
+
+        if(!res.message){
+          if(res.twoFactorEnabled == true){
+            this.emailvalue = "true";
+          }else{
+            this.emailvalue = "false";
+          }
+        //  this.formTwoFactor.enableTwoFactor = res.twoFactorEnabled;
+          this.formTwoFactor.isEmailcheckForOTP = res.emailEnabled;
+          this.formTwoFactor.isSMScheckForOTP = res.smsEnabled;
+        }        
+      });
+    }
+    onEmailChange(){
+      this.isSameDomain = false;
+      this.emailRequired = false;
+    }
+    onselectincident(){
+      this.incidentselected=undefined;
+    }
+    onselectsms(){
+      this.smsselected=undefined;
+    }
+    onselectemail(){
+      this.emailtemplate=undefined;
+      this.emailselected=undefined;
+    }
+    createNewDept(){
+      let body = {
+        "categoryName": this.deptName
+      }
+      this.profileservice.createCategory(body).subscribe(resp => {
+               this.modalRef.hide();
+        this.getAllCategories();
+        if(resp.message === "Successfully created the category"){
+          this.notifier.show({
+            type: "success",
+            message: "Department created successfully!"
+          });
+        }else {
+          this.notifier.show({
+            type: "error",
+            message: "Failed to create department",
+          });
+        }
+      })
+    }
+    viewDept(category, template){
+      this.categoryname=category.categoryName;
+      this.dept=category;
+      this.modalRef = this.modalService.show(template)
+    }
+    modifydept(){
+      let catbody = {
+        "categoryId": this.dept.categoryId,
+        "categoryName": this.categoryname
+      }
+      this.profileservice.updateCategory(catbody).subscribe(resp => {
+        
+        this.modalRef.hide();
+        this.getAllCategories();
+        if(resp.message === "Successfully updated the category"){
+          this.notifier.show({
+            type: "success",
+            message: "Department modified successfully!"
+          });
+        }else {
+          this.notifier.show({
+            type: "error",
+            message: "Failed to modify department",
+          });
+        }
+      })
+    }
+    depdel(data,index){
+      this.selectedIndex = index;
+      document.getElementsByClassName("deletconfm")[index].classList.add("isdelet")
+
+     }
+     deletedepYes(data,index){
+       let delbody={
+        "categoryId": data.categoryId,
+        "categoryName": data.categoryName
+      }
+     
+       this.profileservice.deleteCategory(delbody).subscribe(resp => {
+         this.getAllCategories();
+         if(resp.message==="Successfully deleted the category"){
+          this.notifier.show({
+            type: "success",
+            message: "Department deleted successfully!"
+          });
+         }else{
+          this.notifier.show({
+            type: "error",
+            message: "Failed to delete department",
+          });
+         }
+        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+       })
+     }
+     cancelAddDept(){
+       this.modalRef.hide();
+     }
+    onInviteProduct(event){
+
+      this.inviteAllRoles = this.allRoles;
+    }
+     }

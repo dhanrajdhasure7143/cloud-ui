@@ -9,6 +9,7 @@ import  countries  from './../../assets/jsons/countries.json';
 import { Particles } from '../_models/particlesjs';
 import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-firstlogin',
@@ -21,7 +22,7 @@ export class FirstloginComponent implements OnInit {
   decodedToken: any = {};
   selectedItems: any[] = [];
   dropdownSettings: any = {};
-  departments:any;
+  departments:any[]=[];
   phnCountry: any;
   itemsShowLimit = 1;
   stateInfo: any[] = [];
@@ -35,7 +36,9 @@ export class FirstloginComponent implements OnInit {
   isCompanydisabled:boolean=false;
   selectedFile: any;
   data: any;
+  domain: any;
   isInput: boolean = false;
+  categories:any[] = [];
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -105,13 +108,13 @@ export class FirstloginComponent implements OnInit {
     this.isInput = !this.isInput;
     // this.model.country = this.countryInfo[countryValue].CountryName;
     // this.stateInfo=this.countryInfo["India"].States;
-    console.log('CountryName',countryValue);
+ 
     
     
     for(var i=0; i< this.countryInfo.length; i++){
       if(this.countryInfo[i].CountryName == countryValue ){
         this.phnCountry = this.countryInfo[i].CountryCode
-        console.log("countryCode", this.countryInfo[i].CountryCode);
+       
         
         this.stateInfo=this.countryInfo[i].States; 
       }
@@ -154,7 +157,16 @@ export class FirstloginComponent implements OnInit {
       }else if(response.company!=null){
         this.isCompanydisabled = true;
         this.model.company = response.company;
-        
+        let x = this.decodedToken.split("@");
+            this.domain = x[1];
+        this.service.getAllCategories(this.domain).subscribe(response=> {
+          this.departments = response.data;  
+          this.departments.forEach(element => {
+            this.categories.push(element.categoryName)
+            
+          });  
+         
+        })
       }
     }
      
@@ -162,6 +174,16 @@ export class FirstloginComponent implements OnInit {
     onSuccessOfConfirmToken(response: any){
       this.isCompanydisabled = true;
       this.model.company = response.company;
+      let x = this.decodedToken.split("@");
+      this.domain = x[1];
+  this.service.getAllCategories(this.domain).subscribe(response=> {
+    this.departments = response.data;  
+    this.departments.forEach(element => {
+      this.categories.push(element.categoryName)
+      
+    });  
+    
+  })
      if(response.message === 'Invalid User Invite' || response.message === 'User Invitation  Already Confirmed'){
       this.router.navigate(['/user']);
      }
@@ -178,7 +200,7 @@ export class FirstloginComponent implements OnInit {
     //localStorage.setItem('company',userDetails.company);
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
-    //userDetails.department = this.model.department[0];
+    userDetails.department = this.model.department;
    const payload = new FormData();
    payload.append('userId', userDetails.userId);
    payload.append('firstName', userDetails.firstName);
@@ -191,6 +213,7 @@ export class FirstloginComponent implements OnInit {
    payload.append('state', userDetails.state);
    payload.append('city', userDetails.city);
    payload.append('zipcode', userDetails.zipcode);
+   payload.append('department', userDetails.department);
    if(this.selectedFile!=undefined){
    payload.append('profilePic', this.selectedFile, this.selectedFile.name);
   }
@@ -258,7 +281,8 @@ export class FirstloginComponent implements OnInit {
   toggle() {
     this.show = !this.show;
   }
-  resetForm() {
+  resetForm(form:NgForm) {
+    form.resetForm();
     this.model = new User();
     $("#image").val('')
     this.selectedFile=null;
@@ -279,7 +303,6 @@ export class FirstloginComponent implements OnInit {
     onFileSelected(event)
     {
       this.selectedFile=<File>event.target.files[0]
-      console.log(this.selectedFile.name)
-     $("#image").val(this.selectedFile.name)
+      $("#image").val(this.selectedFile.name)
     }
 }

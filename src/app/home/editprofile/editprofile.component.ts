@@ -61,7 +61,7 @@ export class EditprofileComponent implements OnInit {
       country : new FormControl(localStorage.getItem("country"), Validators.required),
       phoneNumber:new FormControl(localStorage.getItem("phoneNumber"), Validators.required),
     })
-    console.log("editdata",this.form);
+    
     
     // var orginalData=[];
     // this.form.forEach(function (value){
@@ -90,7 +90,7 @@ export class EditprofileComponent implements OnInit {
     }
     
     // this.form.reset() // reset form to empty
-    console.log('form------', this.userDetails[0]);
+   
     this.service.updateUser(this.userDetails[0]).subscribe(data => {this.checkSuccessCallback(data)
       // console.log('dat',res)
       // sessionStorage.clear();
@@ -107,7 +107,7 @@ export class EditprofileComponent implements OnInit {
         }
       });
     }, err => {
-      console.log('error', err)
+  
       // Swal.fire({
       //   title: 'Error !!',
       //   type: 'error',
@@ -120,8 +120,7 @@ export class EditprofileComponent implements OnInit {
   }
   checkSuccessCallback(data:any){
     this.sharedData.setLoggedinUserData(this.userDetails[0].firstName);
-    
-    console.log("checkSuccessCallback--------login component", this.userDetails[0]);
+  
     localStorage.setItem('firstName',this.userDetails[0].firstName);
     localStorage.setItem('lastName',this.userDetails[0].lastName);
     localStorage.setItem('userName',this.userDetails[0].userId);
@@ -142,17 +141,16 @@ export class EditprofileComponent implements OnInit {
     this.form.country = this.countryInfo[countryValue].CountryName;
     
     this.stateInfo=this.countryInfo[countryValue].States;
-    console.log("country name======", this.countryInfo[countryValue].CountryName)
+    
     //this.cityInfo=this.stateInfo[0].Cities;
-    console.log(this.cityInfo);
+  
   }
   onChangeState(stateValue) {
     this.cityInfo=this.stateInfo[stateValue].Cities;
-    console.log(this.stateInfo[stateValue].Cities);
+  
   }
   onKeydown(event){
-    console.log(event.key);
-    
+  
     let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","ArrowUp","ArrowDown"]
     let temp =numArray.includes(event.key); //gives true or false
    if(!temp){
@@ -162,7 +160,7 @@ export class EditprofileComponent implements OnInit {
 onChangeDepartment(selectedvalue) {
   this.addDepartment = false
   this.service.getAllDepartments().subscribe(response=> {
-    console.log(response);
+  
     this.departments = response;
   })
   if(selectedvalue == "others"){

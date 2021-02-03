@@ -1,0 +1,463 @@
+<div class="backgr">
+  <div class="container-fluid">
+    <br>
+    <div class="row" >
+      <div *ngIf="userManagementresponse!=undefined" class=" col-md-3 form-inline">
+        <div class="example-card form-inline" >
+          <div class="count-text form-group">
+            <span class="icon"><i class="fa fa-users text-primary" aria-hidden="true"></i></span>
+            &nbsp;&nbsp;&nbsp;
+          </div> 
+            Users
+            <div class="count-text form-group ">{{userManagementresponse.length}}</div>
+          </div>
+    </div>
+
+        <!-- <div *ngIf="userManagementresponse!=undefined" class=" col-md-2 text-center">
+            <div class="divbox divbox0"><span class="text-white">
+              Users<br>
+              {{userManagementresponse.length}}
+            </span></div>
+        </div> -->
+        <div *ngIf="departments!=undefined" class=" col-md-3 form-inline">
+          <div class="example-card form-inline" >
+            <div class="count-text form-group">
+              <span class="icon"><img  src="assets/images/department.svg"></span>
+              &nbsp;&nbsp;&nbsp;
+            </div> 
+              Departments
+              <div class="count-text form-group pull-right">{{departments.length}}</div>
+            </div>
+      </div>
+  
+        <!-- <div *ngIf="departments!=undefined" class=" col-md-2 text-center">
+          <div class="divbox divbox1"><span class="text-white">
+            Departments<br>
+            {{departments.length}}
+          </span></div>
+      </div> -->
+      <div *ngIf="emailtemplateslist!=undefined" class=" col-md-3 form-inline">
+        <div class="example-card form-inline" >
+          <div class="email-text form-group">
+            <span class="icon"><i class="fa fa-envelope text-primary" aria-hidden="true"></i></span>
+            &nbsp;&nbsp;&nbsp;
+          </div> 
+            Email Templates
+            <div class="count-text form-group pull-right">{{emailtemplateslist.length}}</div>
+          </div>
+    </div>
+  
+      <!-- <div *ngIf="emailtemplateslist!=undefined" class=" col-md-2 text-center">
+        <div class="divbox divbox2"><span class="text-white">
+          Email Templates<br>
+          {{emailtemplateslist.length}}
+        </span></div>
+    </div> -->
+    <div  class=" col-md-3 form-inline">
+      <div class="example-card form-inline" >
+        <div class="product-text form-group">
+          <span class="icon"><img  src="assets/images/Subscribed_products.svg"></span>
+          &nbsp;&nbsp;&nbsp;
+        </div> 
+          Subscriptions
+          <div class="count-text form-group pull-right">{{count}}</div>
+        </div>
+  </div><br> <br> <br>
+
+    <!-- <div  class=" col-md-2 text-center">
+      <div class="divbox divbox3"><span class="text-white">
+       Subscribed Products<br>
+  {{count}}</span></div>
+  </div> -->
+</div>
+<br><br>
+<div class="row"> 
+  <div *ngIf="processnames!=undefined" class=" col-md-3 form-inline">
+    <div class="example-card form-inline" >
+      <div class="count-text form-group">
+        <span class="icon"><i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
+        &nbsp;&nbsp;&nbsp;
+      </div>
+        Processes
+        <div class="count-text form-group pull-right">{{processnames.length}}</div>
+      </div>
+</div>
+
+  
+  <!-- <div  class=" col-md-2 text-center">
+    <div *ngIf="processnames!=undefined" class="divbox divbox4"><span class="text-white">
+      Processes<br>
+      {{processnames.length}}</span></div>
+  </div> -->
+  <div *ngIf="botnames!=undefined" class=" col-md-3 form-inline">
+    <div class="example-card form-inline" >
+      <div class="count-text form-group">
+        <span class="icon"><img  src="assets/images/android-logo.svg"></span>
+        &nbsp;&nbsp;&nbsp;
+      </div>
+       Bots
+        <div class="count-text form-group pull-right">{{botnames.length}}</div>
+      </div>
+</div>
+
+  <!-- <div  class=" col-md-2 text-center">
+    <div *ngIf="botnames!=undefined" class="divbox divbox5"><span class="text-white">
+      Bots<br>
+      {{botnames.length}}</span></div>
+  </div> -->
+  
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div *ngIf="registeredvsinvited!=0" class="col-md-5  text-center">
+            <h5><b>Users - Registered vs Invited</b></h5>
+            <div id="piechart1"  #containerRef class="box_shadw34"><br>
+            <ngx-charts-pie-chart
+            [view]="[containerRef.offsetWidth, 300]"
+    [scheme]="{domain: ['#34568b', '#dd4124']}"
+    [results]="registeredvsinvited"
+    [gradient]="true"
+    [legend]="true"
+    [legendTitle]="''"
+    [legendPosition]="'right'"
+    [labels]="true"
+    [doughnut]="false"
+    >
+  </ngx-charts-pie-chart>
+       </div>
+        </div>
+  
+        <div *ngIf="registeredvsinvited==0" class="col-md-5  text-center">
+          <h5><b>Users - Registered vs Invited</b></h5>
+          <div id="nodatafound"   class="box_shadw34"> 
+            <h3>No Data Available</h3>
+     </div>
+      </div>
+  
+  
+  
+        <div *ngIf="alertsCountBasedOnType!=0" class="col-md-5  text-center">
+  
+            <h5><b>Configured Alerts - Success vs Failure</b></h5>
+            <div id="piechart2" #containerRef class="box_shadw34"><br>
+               <ngx-charts-pie-chart
+              [view]="[containerRef.offsetWidth, 300]"
+              [scheme]="{domain: ['#00cc99', '#cc66ff']}"
+              [results]="alertsCountBasedOnType"
+              [gradient]="true"
+              [legend]="true"
+              [legendPosition]="'right'"
+              [labels]="true"
+              [doughnut]="true"
+              [legendTitle]="''"
+              [arcWidth]="0.50">
+            </ngx-charts-pie-chart> 
+            </div>
+        </div>
+  
+        <div *ngIf="alertsCountBasedOnType==0" class="col-md-5  text-center">
+          <h5><b>Configured Alerts - Success vs Failure</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+  
+        <div class="col-md-1"></div>
+  
+    </div>
+    <br><br>
+    <div class="col-md-12 btm-line"></div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+  
+        <div *ngIf="uservsrole!=0" class="col-md-5 text-center">
+            <h5><b>User vs Role</b></h5>
+            <div id="uservsrolechart" #containerRef class="uservsrolechart"><br><br>
+            <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme" [results]="uservsrole" [gradient]="gradient" [xAxis]="showXAxis"
+            [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+           </ngx-charts-bar-vertical>
+          </div>
+        </div>
+  
+        <div *ngIf="uservsrole==0" class="col-md-5 text-center">
+          <h5><b>User vs Role</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+       
+        <div *ngIf="activityvsalert!=0" class="col-md-5  text-center">
+            <h5><b>Activity vs Alert</b></h5>
+            <div id="activityvsalert" #containerRef class="activityvsalert"><br><br>
+  <ngx-charts-bar-vertical-stacked
+  [view]="[containerRef.offsetWidth, 400]"
+        [results]="activityvsalert"
+        [scheme] ="colorScheme2"
+        [gradient]="gradient2"
+        [xAxis]="showXAxis2"
+        [yAxis]="showYAxis2"
+        [legend]="showLegend2"
+        [legendTitle]="''"
+        [showXAxisLabel]="showXAxisLabel2"
+        [showYAxisLabel]="showYAxisLabel2"
+        [xAxisLabel]="xAxisLabel2"
+        [yAxisLabel]="yAxisLabel2">
+  </ngx-charts-bar-vertical-stacked>
+  </div>
+        </div>
+  
+        <div *ngIf="activityvsalert==0" class="col-md-5  text-center">
+          <h5><b>Activity vs Alert</b></h5>
+          <div id="nodatafound" class="activityvsalert">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+  
+        <div class="col-md-1"></div>
+  
+    </div>
+    <br> <br>
+    <div class="col-md-12 btm-line"></div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div *ngIf="cards!=0" class="col-md-5  text-center">
+  
+          <h5><b>Visa vs Mastercard</b></h5>
+          <div id="piechart3" #containerRef class="box_shadw34"><br>
+            <ngx-charts-pie-chart
+            [view]="[containerRef.offsetWidth, 300]"
+            [scheme]="{domain: ['#66ccff', '#ff4d88']}"
+            [results]="cards"
+            [gradient]="true"
+            [legend]="true"
+            [legendTitle]="''"
+            [legendPosition]="'right'"
+            [labels]="true"
+            [doughnut]="true"
+            [arcWidth]="0.50">
+          </ngx-charts-pie-chart>
+          </div>
+  
+      </div>
+      <div *ngIf="cards==0" class="col-md-5  text-center">
+  
+        <h5><b>Visa vs Mastercard</b></h5>
+        <div id="nodatafound" class="box_shadw34">
+          <h3>No Data Available</h3>
+        </div>
+  
+    </div>
+        <div *ngIf="vaultkeycount!=0" class="col-md-5  text-center">
+  
+            <h5><b>Vault - Secret Name vs Key Count</b></h5>
+            <div id="secretvscount" #containerRef class="secretvscount"><br><br>
+            <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme1" [results]="vaultkeycount" [gradient]="gradient1" [xAxis]="showXAxis1"
+            [yAxis]="showYAxis1" [legend]="showLegend1" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel1" [showYAxisLabel]="showYAxisLabel1" [xAxisLabel]="xAxisLabel1"
+            [yAxisLabel]="yAxisLabel1">
+           </ngx-charts-bar-vertical>
+          </div>
+        </div>
+  
+        <div *ngIf="vaultkeycount==0" class="col-md-5  text-center">
+  
+          <h5><b>Vault - Secret Name vs Key Count</b></h5>
+          <div id="nodatafound" class="box_shadw34">
+            <h3>No Data Available</h3>
+          </div>
+      </div>
+       
+      <div class="col-md-4"></div>
+    </div>
+<br><br><br>
+     <div class="row">
+      <div class="col-md-1"></div>
+      <div *ngIf="alerttransction!=0" class="col-md-8  text-center">
+
+        <h5 class="teus"><b>Alert Transactions</b></h5>
+        <div  id="alerttransaction"><br><br>
+          <div class="dots">
+            <button (click)="click()" class="btn">
+              <i class="fa fa-ellipsis-v" aria-hidden="true" ></i>
+              </button>
+          </div>
+          <div class="dropdown">
+            
+            <div class="dropdown-content" id="drop">
+                <button class="btn" (click)="openDialog(bydate)">
+                  <span><i id="date" class="fa fa-filter text-primary" aria-hidden="true"></i> By Date</span>
+                </button>
+              <button  class="btn" (click)="openDialog(bymonth)">
+                <span><i id="month" class="fa fa-filter text-primary" aria-hidden="true"></i> By Month</span>
+              </button>
+              <button  class="btn" (click)="openDialog(byyear)">
+                <span><i id="year" class="fa fa-filter text-primary" aria-hidden="true"></i> By Year</span>
+              </button>
+            </div>
+          </div>
+        <canvas  id="linechart" style="width:100% !important ;height:300px !important;"></canvas> 
+        </div>
+       
+    </div>
+
+  
+    
+    <div *ngIf="alerttransction==0" class="col-md-8  text-center">
+      <h5><b>Alert Transactions</b></h5>
+      <div id="nodatafound"   class="box_shadw34"> 
+        <h3>No Data Available</h3>
+ </div>
+  </div>
+  <ng-template #bydate >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+    
+      <form (ngSubmit)="submitbydate(bydate)" #bydate="ngForm">
+        <div class="form-group">
+        <label for="from">From Date</label>
+        <input class="form-control" [(ngModel)]="from_date" type="date" id="from" name="from">
+        </div>
+        <div class="form-group">
+          <label for="to">To Date</label>
+          <input class="form-control" [(ngModel)]="to_date" type="date" id="to" name="to">
+          </div>
+      
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right ">        
+          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
+          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
+    
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+
+    
+
+    </div>
+  </ng-template>
+
+  <ng-template #bymonth >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+    
+      <form (ngSubmit)="submitbymonth(bymonth)" #bymonth="ngForm">
+        <div class="form-group">
+        <label for="from">Select year</label>
+        <select name="product" class="form-control"  [(ngModel)]="from_year" required>
+          <option [value]="undefined" disabled hidden>Select year</option>
+          <option [value]="null" disabled hidden>Select year</option>
+           <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+    </select>  
+        </div>
+        <div class="form-group">
+          <label for="to">Select From Month</label>
+          <!-- <input class="form-control" [(ngModel)]="from_month" type="month" id="from" name="from"> -->
+          <select name="product" class="form-control"  [(ngModel)]="from_month" required>
+            <option [value]="undefined" disabled hidden>Select From Month</option>
+            <option [value]="null" disabled hidden>Select From Month</option>
+             <option *ngFor="let month of months" [value]="month">{{month}}</option>
+      </select>
+          </div>
+
+          <div class="form-group">
+            <label for="to">Select To Month</label>
+            <!-- <input class="form-control" [(ngModel)]="to_month" type="month" id="to" name="to"> -->
+            <select name="product" class="form-control"  [(ngModel)]="to_month" required>
+              <option [value]="undefined" disabled hidden>Select To Month</option>
+              <option [value]="null" disabled hidden>Select To Month</option>
+               <option *ngFor="let month of months | Slicedate : from_month" [value]="month">{{month}}</option>
+        </select>
+            </div>
+      
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right ">        
+          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
+          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+
+    
+
+    </div>
+  </ng-template>
+
+  <ng-template #byyear >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Filter</h4>
+      <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+    
+      <form (ngSubmit)="submitbyyear(byyear)" #byyear="ngForm">
+        <div class="form-group">
+        <label for="from">Select from year</label>
+        <select name="fromyear" class="form-control" #fromyear="ngModel" [(ngModel)]="yearmodel.fromyear_graph" required>
+          <option [value]="undefined" disabled hidden>Select From year</option>
+          <option [value]="null" disabled hidden>Select From year</option>
+           <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+    </select>  
+        </div>
+        <div class="form-group">
+          <label for="to">Select to year</label>
+          <!-- <input class="form-control" [(ngModel)]="from_month" type="month" id="from" name="from"> -->
+          <select name="toyear" class="form-control" #toyear="ngModel" [(ngModel)]="yearmodel.to_yeargraph" required>
+            <option [value]="undefined" disabled hidden>Select To year</option>
+            <option [value]="null" disabled hidden>Select To year</option>
+            <option *ngFor="let year of years"  [value]="year">{{year}}</option>
+      </select>
+          </div>
+
+        
+      
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right ">        
+          <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelFilter()"><div class="anim"></div> Cancel</button>
+          <button  class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Filter</button>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+
+    
+
+    </div>
+  </ng-template>
+  </div> 
+  </div>
+  </div>

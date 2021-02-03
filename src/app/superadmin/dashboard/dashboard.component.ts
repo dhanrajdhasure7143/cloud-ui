@@ -20,12 +20,12 @@ export class DashboardComponent implements OnInit {
        },800);
        setTimeout(() => {
          this.spinner.hide();
-     }, 7500);
+     }, 1800);
   }
   getSuperAdminData(){
     this.spinner.show();
     this.firstloginservice.getSuperAdminData().subscribe(res=>{this.plans=res
-      console.log('resr',res);
+
       
     })
   }

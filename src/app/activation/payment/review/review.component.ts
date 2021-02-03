@@ -95,12 +95,9 @@ public paymentToken:any;
     this.route.params.subscribe(data=>{this.cardData=data
 
       this.cardDetails=JSON.parse(Base64.decode(this.cardData.id));
-      console.log("this.cardDetails.token",this.cardDetails);
-
-          this.cardnumber=this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X')+this.cardDetails.cardnumbertotal.slice(-4);
+               this.cardnumber=this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X')+this.cardDetails.cardnumbertotal.slice(-4);
           // this.cardNumberdigts=this.cardnumber.toString().split('').slice(12).join('');
           this.cardNumberdigts=this.cardnumber.match(new RegExp('.{1,4}', 'g')).join('-')
-            console.log("this.cardDetails",this.cardData);
           this.cvvnumber=this.cardDetails.cvvNumber.replace(new RegExp("[0-9]", "g"), "X")
         });
   }
@@ -108,12 +105,7 @@ public paymentToken:any;
     this.isdiable=!this.isagree;
   }
   buyProductPlan(template){
-     console.log('planslist', this.selected_plans);
-     console.log("this.cardDetails",this.cardDetails);
-     this.spinner.show();
-    setTimeout(() => {
-        },200);
-    
+   
     const cardValue={
       "name":this.cardDetails.cardHoldername,
       "number":this.cardDetails.cardnumbertotal,
@@ -137,21 +129,37 @@ public paymentToken:any;
                 "visible":true,
                 "product_id":"2.0"}
                 }
+            
+    
     this.productlistservice.getPaymentToken(cardValue).subscribe(res=>{
+      this.spinner.show();
       this.paymentToken=res
-      console.log('token',this.paymentToken);
-      setTimeout(() => {
+      if(this.paymentToken.message == 'Failed To Generate Payment Token'){
+       
+        Swal.fire({
+          title: 'Error',
+          text: `Invalid Card Details!!`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: false
+          
+        })
         this.spinner.hide();
-      }, 2200);
-   
-      this.productlistservice.subscribePlan(this.paymentToken,plandetails).subscribe(data=>{this.subscriptionDetails=data
-       this.finalAmount=this.subscriptionDetails.amountPaid;
+      }
+      else{
+     
+    this.productlistservice.subscribePlan(this.paymentToken.message,plandetails).subscribe(data=>{this.subscriptionDetails=data
+      this.spinner.hide();
+     this.finalAmount=this.subscriptionDetails.amountPaid;
 this.sharedDataService.setFreetrialavailed(false);
-       this.modalRef = this.modalService.show(template,this.config);
-             })
-   
+     this.modalRef = this.modalService.show(template,this.config);
+           })
+      }
+
+      
     })
 
+  
     // const paymentToken='tok_1GezwJGxwuSV2qOkUhBazB4K'
     // const plandetails={ "ip": "1.2.3.4", 
     //           "items": [ { "planId":"IAP_t1m"} 
@@ -169,7 +177,33 @@ this.sharedDataService.setFreetrialavailed(false);
     this.iscoupon=true;
   }
   applyCoupon(couponcode){
-    this.profileService.validateCoupon(couponcode,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
+    
+   
+    const cardValue={
+      "name":this.cardDetails.cardHoldername,
+      "number":this.cardDetails.cardnumbertotal,
+      "exp_month":this.cardDetails.cardmonth,
+      "exp_year":this.cardDetails.cardyear,
+      "cvc":this.cardDetails.cvvNumber
+    }
+     
+    this.productlistservice.getPaymentToken(cardValue).subscribe(res=>{
+    
+      this.paymentToken=res
+      if(this.paymentToken.message == 'Failed To Generate Payment Token'){
+       
+        Swal.fire({
+          title: 'Error',
+          text: `Invalid Card Details!!`,
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: false
+          
+        })
+      
+      }
+      else{
+            this.profileService.validateCoupon(couponcode,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
       this.validateCoupondata=resp;
       this.isapplied=true;
         this.totalPay=this.validateCoupondata.TotalPaybleAmount;
@@ -181,12 +215,11 @@ this.sharedDataService.setFreetrialavailed(false);
         else{
           this.couponAmount=this.validateCoupondata.percentageOff;
         }
-        
-        
+                
         this.promo=couponcode;
         Swal.fire({
           title: 'Successful',
-          text: `Coupon applied successfully...`,
+          text: `Coupon applied successfully!!`,
           type: 'success',
           showCancelButton: false,
           allowOutsideClick: false
@@ -198,8 +231,8 @@ this.sharedDataService.setFreetrialavailed(false);
 
         this.promo=null;
         Swal.fire({
-          title: 'Invalid',
-          text: `Invalid Coupon Code...`,
+          title: 'Error',
+          text: `Invalid Coupon Code!!`,
           type: 'error',
           showCancelButton: false,
           allowOutsideClick: false
@@ -208,10 +241,9 @@ this.sharedDataService.setFreetrialavailed(false);
       }
 
     })
-   
-   
-    console.log("coupn code is",couponcode)
-
+  }
+})
+  
   }
   privacyPolicy(template){
     this.modalRef = this.modalService.show(template,this.config);
@@ -220,12 +252,12 @@ this.sharedDataService.setFreetrialavailed(false);
     this.modalRef.hide();
     this.productlistservice.getNewAccessToken().subscribe(resp=>{
       this.newAccessToken=resp
-      console.log("token",resp)
+   
       localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
     })
     this.profileService.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
-      console.log("user role is",this.userRole)
+    
       localStorage.setItem('userRole',this.userRole);
     })
     this.router.navigate(['/activation'])

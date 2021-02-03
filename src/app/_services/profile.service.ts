@@ -18,7 +18,7 @@ export class ProfileService {
       return this.http.post<any>('/notificationservice/api/v1/listNotifications?roles='+role+'&userId='+userId,notificationbody,httpOptions);
   }
   cancelSubscription( data) : Observable<any>{
-    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel='+true,null);
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel='+true,{responseType:'json'});
   }
  
   listofsubscriptions() : Observable<any> {
@@ -37,7 +37,10 @@ export class ProfileService {
     return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
   }
   getDepartments():Observable<any>{
-    return this.http.get<any>('/api/user/departments')
+    return this.http.get<any>('/processintelligence/v1/processgraph/categories')
+  }
+  getCategories():Observable<any>{
+    return this.http.get<any>('processintelligence/v1/processgraph/categories', {responseType:"json"})
   }
   getAllRoles(appId):Observable<any>{
     return this.http.get<any>('/authorizationservice/api/v1/application/'+appId+'/roles')
@@ -135,8 +138,8 @@ saveConfig(data:any): Observable<any>{
 listofactivities(tenantId,userrole):Observable<any>{
    return this.http.get<any>('/notificationservice/api/v1/listalerts?roles='+userrole+'&tenantId='+tenantId ,httpOptions);  
  }
- modifyAlert(alertmodifybody):Observable<any>{
-  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert',alertmodifybody,httpOptions)
+ modifyAlert(alertmodifybody,useremail):Observable<any>{
+  return this.http.post<any[]>('/notificationservice/api/v1/modifyalert?userId='+useremail,alertmodifybody,httpOptions)
 }
 deleteAlert(alertId):Observable<any>{
   return this.http.delete<any>('/notificationservice/api/v1/deleteAlert?alertId='+alertId,{responseType:"json"})
@@ -162,6 +165,9 @@ getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
 creatSecret( data,path) : Observable<any>{
   return this.http.post<any>('/api/vault/create-secret?secreteName='+path,data,httpOptions);
 }
+deleteSecret( data,path) : Observable<any>{
+  return this.http.post<any>('/api/vault/delete-secrete?secreteName='+path,data,httpOptions);
+}
 getAllSecretKeys(): Observable<any> {
   return this.http.get<any>('/api/vault/get-all-secretekeys');
 }
@@ -177,4 +183,115 @@ deleteTemplate(temp:any): Observable<any>{
 modifyTemplate(template:any): Observable<any>{
   return this.http.post<any>('/mailService/modifyTemplate', template,httpOptions)
 }
+getprocessnames(): Observable<any>{
+  return this.http.get("/rpa-service/process-name");
+  }
+  getAllActiveBots(): Observable<any>{
+     return this.http.get("/rpa-service/get-bots")
+  }
+  getCardsCount(): Observable<any>{
+     return this.http.get("/subscriptionservice/v1/orders/getCardsCount")
+  }
+  getSubscribedProductsCount(): Observable<any>{
+   return this.http.get("/subscriptionservice/v1/orders/getSubscribedProductsCount")
+  }
+  getUserRoleMetrics(tenantId): Observable<any>{
+     return this.http.get("/api/user/getUserRoleMetrics/"+tenantId+"")
+  }
+  getVaultKeysCount(tenantId): Observable<any>{
+       return this.http.get("/api/vault/get-keyscount/"+tenantId+"")
+   }
+  getAlertsActivityKPI(){
+   return this.http.get("/alertConfigurationService/api/v1/AlertsActivityKPI")
+  }
+  getalertsCountBasedOnType(){
+  return this.http.get("/alertConfigurationService/api/v1/alertsCountBasedOnType")
+  }
+  getUsersMetrics(tenantId){
+    return this.http.get("/api/user/getUsersMetrics/"+tenantId+"")
+  }
+getVaultConfigurations(tenantId): Observable<any> {
+  return this.http.get<any>('/api/vault/config/getInfo/'+tenantId);
+}
+
+updateVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/update',data,httpOptions);
+}
+ fetchAllProds(): Observable<any> {
+  return this.http.get<any>('/api/vault/config/fetchAllProducts');
+}
+
+getmodulesbyProduct(prod): Observable<any> {
+  return this.http.get<any>('/api/vault/config/fetchModulesBy/'+prod);
+}
+
+getpagesfromModule( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/fetchAllPages',data,httpOptions);
+}
+getFieldsfromPage( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/fetchAllFields',data,httpOptions);
+}
+saveVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/save',data,httpOptions);
+}
+
+deleteVaultConfig( data) : Observable<any>{
+  return this.http.post<any>('/api/vault/config/delete',data,httpOptions);
+}
+getTenantCount(): Observable<any> {
+  return this.http.get<any>('/api/tenant/tenants');
+}
+getTenantvsUser(): Observable<any> {
+  return this.http.get<any>('/api/user/tenantAndUsers');
+}
+getvaultkeycount(): Observable<any> {
+  return this.http.get<any>('/api/vault/get-keyscount');
+}
+getsubscriptionAndProducts(): Observable<any> {
+  return this.http.get<any>('/subscriptionservice/v1/subscriptions/subscriptionAndProducts');
+}
+getSubscriptionsdetails(): Observable<any> {
+  return this.http.get<any>('/subscriptionservice/v1/subscriptions/subscriptionPlans');
+}
+twoFactorConfig(twoFactorAuthBody:any, tenantId): Observable<any>{
+  return this.http.post<any>('/api/user/twoFactorAuthConfig/'+tenantId, twoFactorAuthBody,httpOptions)
+}
+getTwoFactroConfig(userId:any): Observable<any>{
+  return this.http.get<any>('/api/user/getTwoFactorAuthConfig/'+userId)
+}
+getCouponsCountKpi(): Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/orders/getKpiCouponsData?limit=0')
+}
+getRolesAndPermissionKpi(): Observable<any>{
+  return this.http.get<any>('/api/user/roleAndPermission')
+}
+getalerttransactions(tenantid): Observable<any>{
+  return this.http.get<any>('/alertConfigurationService/api/v1/allAlerts/'+tenantid)
+}
+createCategory(body:any): Observable<any>{
+  return this.http.post<any>('/processintelligence/v1/processgraph/categories', body,httpOptions)
+}
+updateCategory(data:any): Observable<any>{
+  return this.http.put<any>('/processintelligence/v1/processgraph/categories', data,httpOptions)
+}
+deleteCategory(data):Observable<any>{
+  const httpOps = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+          }),
+    body: data
+  }
+  return this.http.delete<any>('/processintelligence/v1/processgraph/categories',httpOps)
+   
+}
+getSuperadminNotifications(): Observable<any>{
+  return this.http.get<any>('/subscriptionservice/v1/subscriptions/listNotifications');
+}
+deletesuperadminNotifications(notificationid):Observable<any>{
+  return this.http.delete<any>('/subscriptionservice/v1/subscriptions/deleteNotification?notificationId='+notificationid,{responseType:"json"})
+}
+getCustomUserRole(appID):Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/user/role/'+appID,httpOptions)
+}
+
 }

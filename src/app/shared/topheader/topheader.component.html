@@ -19,11 +19,11 @@
         <div>     
         <div  id="myDropdown" class="dropdown-content">
                <p (click)="accountSlideup()"><img  src="assets/images/account.svg"><span>My Account</span></p>
-                  <p *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
-                  <p *ngIf="this.userRole.includes('Admin')" (click)="alertsSlideup()"><img  src="assets/images/config_alerts.svg"><span>Configuration</span></p>
-                  <p *ngIf="this.userRole.includes('Admin')" (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
+               <p *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin') || this.userManagementEnabled" (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
+                  <p *ngIf="this.userRole.includes('Admin') || configurationEnabled" (click)="alertsSlideup()"><img  src="assets/images/config_alerts.svg"><span>Configuration</span></p>
+                  <p *ngIf="this.userRole.includes('Admin') || inviteUserEnabled" (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
                   <p *ngIf="this.userRole.includes('SuperAdmin')"  (click)="couponSlideup()"><img  src="assets/images/inviteuser.svg"><span>Create Coupon</span></p>
-                  <p *ngIf="this.userRole.includes('Admin')"  (click)="vaultManagement()"><img  src="assets/images/Vault.svg"><span>Vault Management</span></p>
+                  <p *ngIf="this.userRole.includes('SuperAdmin')"  (click)="vaultManagement()"><img  src="assets/images/Vault.svg"><span>Vault Management</span></p>
                   <p (click)="logout()"><img src="assets/images/Sign_Out.svg"><span>Signout</span></p>
               </div> 
         </div>
