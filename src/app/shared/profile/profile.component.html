@@ -297,7 +297,7 @@
                                         <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span> 
                                       <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
                                       <td>{{cardData.name}}</td>
-                                      <td>{{cardData.created | date:'medium'}}</td>
+                                      <td>{{cardData.createdAt | date}} {{cardData.createdAt.split("T")[1].split(".")[0]}}</td>
                                       <td >
                                         <!-- <button aria-hidden="true" *ngIf='!cardData.defaultSource' class="btn btn-danger remov_btn"  (click)="deletCard(cardData,i)">Remove -->
                                           <!-- <img src="assets/images/unsubscribe.svg" alt=""> -->
@@ -1038,8 +1038,8 @@
                           <td style="text-align:center">{{coupon.percentOff}}</td>
                           <td style="text-align:center">{{coupon.maxRedemptions}}</td>
                           <td style="text-align:center">{{coupon.availableRedeemptions}}</td>
-                          <td style="text-align:center">{{coupon.redeemBy*1000 | date:'medium'  }}</td>
-                          <td style="text-align:center">{{coupon.created*1000 | date:'medium'}}</td>
+                          <td style="text-align:center">{{coupon.expiresBy | date}} {{coupon.expiresBy.split("T")[1].split(".")[0]}}</td>
+                          <td style="text-align:center">{{coupon.createdAt | date}} {{coupon.createdAt.split("T")[1].split(".")[0]}}</td>
                           
                           
                           <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
@@ -2063,6 +2063,13 @@
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                         </select>
+                          </div>
+                          <div class="col-md-12">
+                            <label for="depart">Department</label>
+                            <select name="dept" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="department1" required>
+                              <!-- <option [value]="undefined" disabled hidden>Department</option> -->
+                              <option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;'>{{categories[c].categoryName}}</option>
+                            </select>
                           </div>
                           <br>
                         </div>
