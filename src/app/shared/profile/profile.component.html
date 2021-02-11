@@ -1146,7 +1146,6 @@
       <span aria-hidden="true">&times;</span>
     </button> -->
   </div>
-
 <div class="modal-body">
 
   <div  class="col-md-12 confirmationmsg">
@@ -1200,7 +1199,7 @@
                 <div class="col-md-12">
                   <div class="form-group form-buttons pull-right buttonsblock">
                     <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
-                    <button class="btn btn-primary change_plan" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
+                    <button [disabled]="updatecheck(updateSecretedata)" class="btn btn-primary change_plan" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
                 </div>
               </div>
           <div class="clearfix">
@@ -1508,16 +1507,7 @@
                   <option [value]="alertslistactivitiesdata.app_name">{{alertslistactivitiesdata.app_name}}</option>
               </select>
               </div>
-              <div class="col-md-12 ">
-                <label for="product">Type : </label>
-                <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
-                <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="updateType" required>
-                  <option  [value]="undefined" disabled hidden>Select Type</option>
-                  <option  [value]="null" disabled hidden>Select Type</option>
-                  <option value="Success">Success</option>
-                  <option value="Failure">Failure</option>
-              </select>
-                </div>
+              <br>
                 <div class="col-md-12 ">
                   <label for="planid">Activity : </label>
                   <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
@@ -1528,6 +1518,17 @@
                 </select> 
                   </div>
                     <br>
+                    <div class="col-md-12 ">
+                      <label for="product">Type : </label>
+                      <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
+                      <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="updateType" required>
+                        <option  [value]="undefined" disabled hidden>Select Type</option>
+                        <option  [value]="null" disabled hidden>Select Type</option>
+                        <option value="Success">Success</option>
+                        <option value="Failure">Failure</option>
+                    </select>
+                      </div>
+                      <br>
                   <div class="col-md-12 ">
                     <label for="status">Channel : </label><br>
                     <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
@@ -2277,7 +2278,7 @@
 
 
                 <ng-template #createcoupon >
-                  <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon()" >
+                  <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon(couponform)" >
                   <div class="modal-header">
                     <h4 class="modal-title" id="modal-basic-title" >Create Coupon</h4>
                     <!-- <button type="button" class="close" aria-label="Close" (click)="cancelCreateCopon()">
@@ -2307,7 +2308,7 @@
                              
                 <div *ngIf="isPercentage" >
                   
-                  <input type="number" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                  <input type="number" name="percentageOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;"  [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Name is required </span>  -->
@@ -2315,7 +2316,7 @@
             
                 <div *ngIf="isAmount" >
                 
-                  <input type="number" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                  <input type="number" name="amountOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;"  [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Ammount is required </span>  -->
@@ -2342,7 +2343,7 @@
             <div >
                 <label for="red">Maximum Redemptions</label>
    
-              <input type="number" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+              <input type="number" name="red"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
               <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
               <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
               class='fa fa-info-circle errspan'> Limit is required </span> 
@@ -2423,11 +2424,11 @@
                               <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' [checked]="coupondata.amountOff != ' - '"/>&nbsp;<span>Amount Off</span> <br>
                                            
                               <div *ngIf="isPercentage" >
-                                 <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                                 <input type="number" name="percentageOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                               </div>
                           
                               <div *ngIf="isAmount" >
-                                <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                                <input type="number" name="amountOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                               </div>
                               
                             <div>
@@ -2446,7 +2447,7 @@
                               </div>
                            <div >
                               <label for="number">Maximum Redemptions</label>
-                            <input type="text" name="red"  maxlength="30" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+                            <input type="number" name="red" (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
                             class='fa fa-info-circle errspan'> Limit is required </span> 

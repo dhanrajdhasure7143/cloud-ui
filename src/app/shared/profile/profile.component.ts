@@ -458,6 +458,15 @@ this.profileservice.applications().subscribe(resp =>
     
 
   }
+  onKeydowncoupon(event){
+    
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+    let temp =numArray.includes(event.key); //gives true or false
+   if(!temp){
+    event.preventDefault();
+   } 
+  }
+
   getAllUsersList(){
 
     this.currentUserId = localStorage.getItem("ProfileuserId");
@@ -599,6 +608,23 @@ this.profileservice.applications().subscribe(resp =>
    
     
   }
+
+  updatecheck(updateSecretedata){
+    let flag=0;
+    this.secretes1.forEach(element => {
+     if(element.key=="" || element.value == ""){
+      flag=1;
+     }
+     
+});  
+if(flag==1){
+return true;
+}
+else{
+  return false;
+}
+  }
+
   //update secrete
   updateSecreteData(updateSecretedata){
    
@@ -638,6 +664,7 @@ this.profileservice.applications().subscribe(resp =>
   }
   close_modal(){
     this.modalRef.hide();
+    this.secretes1=[]
   }
   getAllPaymentmodes() {
 
@@ -1574,10 +1601,12 @@ cancelVaultconfig(){
   
     
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-    if(invres.message == "Exceeded max users count"){
+     console.log(invres.message)
+   
+  if(invres.message == "No user allowed for the product"){
     Swal.fire({
       title: 'Warning',
-      text: "Users max limit exceeded!",
+      text: "No subscriptions found for the product!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
@@ -1585,10 +1614,10 @@ cancelVaultconfig(){
     this.inviteAllRoles = '';
   
   }
-  if(invres.message == "No user allowed for the product"){
+  if(invres.message == "Exceeded max users count"){
     Swal.fire({
       title: 'Warning',
-      text: "No subscriptions found for the product!",
+      text: "Users max limit exceeded!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
@@ -1808,25 +1837,26 @@ cancelVaultconfig(){
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
     })
-  }else{
-    Swal.fire({
-      title: 'Error',
-      text: "Inivation not sent due to technical issue.",
-      type: 'error',
-      showCancelButton: false,
-      allowOutsideClick: true
-    })
-    this.inviteAllRoles = '';
+   }
+  //else{
+  //   Swal.fire({
+  //     title: 'Error',
+  //     text: "Inivation not sent due to technical issue.",
+  //     type: 'error',
+  //     showCancelButton: false,
+  //     allowOutsideClick: true
+  //   })
+  //   this.inviteAllRoles = '';
 
-    this.upload_excel=""
-    this.myappName=""
-    this.selectedFile=null
-    $("#excel").empty();
-    $('.upload').prop('disabled', false);
-    $("#email").prop('disabled', false);
-    $("#product").prop('disabled', false);
-    this.invitemultirole=false;
-  }
+  //   this.upload_excel=""
+  //   this.myappName=""
+  //   this.selectedFile=null
+  //   $("#excel").empty();
+  //   $('.upload').prop('disabled', false);
+  //   $("#email").prop('disabled', false);
+  //   $("#product").prop('disabled', false);
+  //   this.invitemultirole=false;
+  // }
   },err=>{
 
     Swal.fire({
@@ -2304,7 +2334,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
   //     }
     }
    
-    createNewCoupon(){
+    createNewCoupon(form:NgForm){
      
       this.datetimeinput = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
        this.couponDetails={
@@ -2353,7 +2383,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
            this.getListofCoupons();
             });
             
-      
+            form.resetForm();
     }
     /** alerts */
     saveConfig(form:NgForm) {
@@ -2409,10 +2439,14 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         }
     
                this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
+                if(res!=0){
             this.notifier.show({
               type: "success",
               message: "Alert saved successfully"
             });
+            this.modalRef.hide();
+            this.getAllAlertsActivities();
+          }
       //       this.alertsapplication="";
       // this.alertsactivities=[];
       // this.selectedtype="";
@@ -2423,8 +2457,15 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       // this.smsselected="";
       // this.emailselected="";
       // this.incidentselected="";
-           this.modalRef.hide();
-           this.getAllAlertsActivities();
+       
+           if(res==0){
+            this.notifier.show({
+              type: "error",
+              message: "Alert already configured."
+            });
+            this.modalRef.hide();
+            this.getAllAlertsActivities();
+           }
          //  this.configurealertform.reset();
             }, err => {
               this.notifier.show({
