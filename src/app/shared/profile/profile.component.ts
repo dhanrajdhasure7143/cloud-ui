@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { log } from 'console';
 import * as $ from 'jquery';
 import { TabsetComponent } from 'ngx-bootstrap';
+import { resolveComponentResources } from '@angular/core/src/metadata/resource_loading';
 
 
 
@@ -586,7 +587,7 @@ this.profileservice.applications().subscribe(resp =>
     this.updateSecretedata=this.viewdata
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
     // this.myvalue=Object.values(this.updateSecretedata.data.data)
-    
+    console.log("keys===", this.viewdata.data.data)
     this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
 
   }
@@ -1368,8 +1369,24 @@ this.isupdatecouponclicked=false;
         
       });
     }
-    removeSecrete(i : number){
-      this.secretes.splice(i, 1);
+    removeSecrete(mykey,i:number){
+      console.log("my key===", mykey)
+      let arr = [];  
+      Object.keys(mykey).map(function(key){  
+       arr.push({[key]:mykey[key]})  
+      return arr;  
+      });  
+       arr.splice(i,1)
+      console.log("arr====",arr)
+      let object = {}
+      arr.forEach(element => {
+        object = Object.assign(object, element); 
+      });
+       this.viewdata.data.data=object;
+      console.log(object);  
+
+    //  delete this.viewdata.data.data.mykey
+      // this.secretes.splice(i, 1);
     }
     cancelAddRole(){
       this.modalRef.hide();
@@ -2201,10 +2218,17 @@ couponDelYes(coupon,index){
       this.profileservice.modifyPermission(permbody).subscribe(permmodifyresp => {
        this.modalRef.hide();
        this.getAllPermissions();
+       if(permmodifyresp.message==="Permission already exist with given name"){
+        this.notifier.show({
+          type: "error",
+          message: "Permission already exists with given name!"
+        });
+       }else{
        this.notifier.show({
         type: "success",
         message: "Updated successfully!"
       });
+    }
      })
      
    }
@@ -2302,10 +2326,17 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       this.profileservice.createPermission(addpermission).subscribe(createpermresp => {
         this.modalRef.hide();
         this.getAllPermissions();
+        if(createpermresp.message==="Permission already exist with given name"){
+          this.notifier.show({
+            type: "error",
+            message: "Permission already exists with given name!"
+          });
+        }else{
         this.notifier.show({
           type: "success",
           message: "Saved successfully!"
         });
+      }
       })
       this.permName = "";
       this.permissionDescription = "";
@@ -2376,10 +2407,17 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
    
       this.profileservice.createCoupon(inputamount).subscribe(resp=>{this.data=resp
         this.modalRef.hide();
+        if(resp.message==="Coupon Code already exists"){
+          this.notifier.show({
+            type: "error",
+            message: "Please try again with another Coupon ID"
+          });
+        }else{
         this.notifier.show({
           type: "success",
           message: "created coupon successfully!!"
         });
+      }
            this.getListofCoupons();
             });
             
@@ -3098,6 +3136,11 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
             type: "success",
             message: "Department created successfully!"
           });
+        }else if(resp.message === "Category already exists"){
+          this.notifier.show({
+            type: "error",
+            message: "Department already exists",
+          });
         }else {
           this.notifier.show({
             type: "error",
@@ -3125,10 +3168,15 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
             type: "success",
             message: "Department modified successfully!"
           });
+        }else if(resp.message==="Category already exists"){
+          this.notifier.show({
+            type: "error",
+            message: "Department already exists with given name!",
+          });
         }else {
           this.notifier.show({
             type: "error",
-            message: "Failed to modify department",
+            message: "Failed to modify department!",
           });
         }
       })

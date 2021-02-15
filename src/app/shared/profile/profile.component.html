@@ -1155,7 +1155,7 @@
                              <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder" class="form-control" [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td class="text-center">
                            
-                                <span  (click)="removeSecrete(i)"> 
+                                <span  (click)="removeSecrete(viewdata.data.data,i)"> 
                                   <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 </td>
                                 <td  class="text-center" *ngIf="secretes1.length==0">
