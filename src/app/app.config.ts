@@ -22,9 +22,9 @@ export interface AiotalAppConfig {
 export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
   apiendpoint: 'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
-  tokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/idm',
+  tokenendpoint: 'https://eiapbetaapi.epsoftinc.gcp/idm',
   proxyTokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/securitymgr/Idm',
-  authorizationendpoint: 'https://eiapdemoapi.epsoftinc.com:96/authservices',
+  authorizationendpoint: 'https://eiapbetaapi.epsoftinc.gcp/authservices',
   socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
   notificationsendpoint: 'https://eiapdemoapi.epsoftinc.com:96/alerts',
   Subscriptionendpoint:'https://eiapdemoapi.epsoftinc.com:96/subscriptions',
