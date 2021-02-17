@@ -328,6 +328,27 @@ getListOfEmailTemplates()
           document.getElementById("drop").style.display='none';
           form.resetForm();
         }
+
+        resetbottransactions()
+  {
+    let to=new Date();
+      let from=new Date();
+      from.setDate(to.getDate()-30);
+      let dates:any=this.dateranges(from,to)
+      let labels:any=[];
+      let success:any=[];
+      let failed:any=[];
+      let stopped:any=[];
+      let total:any=[];
+      dates.forEach(date=>{
+        labels.push(moment(date).format("D-MM-YYYY"));
+        success.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.botStatus=='Success')).length))
+        failed.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && alert.botStatus=='Failure')).length))
+        total.push((this.alerttransction.filter(alert=>(moment(alert.audit.created_at).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+      });
+      this.linechart(labels,success,failed,total)
+
+  }
         
       getAlertTransactions(){
         this.tenantId=localStorage.getItem('tenantName');
