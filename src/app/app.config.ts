@@ -21,19 +21,19 @@ export interface AiotalAppConfig {
 
 export const AppConfig: AiotalAppConfig = {
   portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
-  apiendpoint: 'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
+  apiendpoint: 'https://eiapbetaapi.epsoftinc.com/aiotalplatform',
   tokenendpoint: 'https://idmbeta.epsoftinc.com',
   proxyTokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/securitymgr/Idm',
-  authorizationendpoint: 'https://eiapbetaapi.epsoftinc.gcp/authservices',
+  authorizationendpoint: 'https://eiapbetaapi.epsoftinc.com/authservices',
   socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
-  notificationsendpoint: 'https://eiapdemoapi.epsoftinc.com:96/alerts',
-  Subscriptionendpoint:'https://eiapdemoapi.epsoftinc.com:96/subscriptions',
-  productendpoint: 'https://eiapdemo.epsoftinc.com:86',
+  notificationsendpoint: 'https://eiapbetaapi.epsoftinc.com/alerts',
+  Subscriptionendpoint:'https://eiapbetaapi.epsoftinc.com/subscriptions',
+  productendpoint: 'https://eiapbeta.epsoftinc.com',
   socialLoginRedirectURL: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
   isSecurityManagerEnabled : false,
   isTwoFactorAuthenticationEnabled: false,
-  rpaendpoint:"https://eiapdemoapi.epsoftinc.com:96/wfrpa",
-  piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel"
+  rpaendpoint:"https://eiapbetaapi.epsoftinc.com/wfrpa",
+  piendpoint:"https://eiapbetaapi.epsoftinc.com/prcintel"
 
 };
 
