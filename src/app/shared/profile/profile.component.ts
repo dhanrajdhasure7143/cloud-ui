@@ -352,6 +352,11 @@ export class ProfileComponent implements OnInit {
  
   ) { }
 
+  ngOnDestroy(){
+    this.modalRef.hide();
+    Swal.close();
+    
+  }
   ngOnInit() {
     this.profileservice.getCustomUserRole(2).subscribe(role=>{
 
