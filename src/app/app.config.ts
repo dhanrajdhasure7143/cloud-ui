@@ -30,7 +30,7 @@ export const AppConfig: AiotalAppConfig = {
   Subscriptionendpoint:'https://eiapbetaapi.epsoftinc.com/subscriptions',
   productendpoint: 'https://eiapbeta.epsoftinc.com',
   socialLoginRedirectURL: 'https://eiapcloudbeta.epsoftinc.com/#/user',
-  isSecurityManagerEnabled : false,
+  isSecurityManagerEnabled : true,
   isTwoFactorAuthenticationEnabled: false,
   rpaendpoint:"https://eiapbetaapi.epsoftinc.com/wfrpa",
   piendpoint:"https://eiapbetaapi.epsoftinc.com/prcintel"
