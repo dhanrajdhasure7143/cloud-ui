@@ -1405,21 +1405,25 @@ this.isupdatecouponclicked=false;
       this.profileservice.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
           // console.log('res',res);
           this.getAllPaymentmodes();
-          this.modalRef.hide();
           if(res===null){
             this.notifier.show({
               type: "success",
               message: "Card added successfully!"
             });
+            this.modalRef.hide();
+            this.cardModel={}
+
+
           }
           if(res.errorMessage==="Failed to create payment method"){
             this.notifier.show({
               type: "error",
               message: "Failed to add card."
             });
+            this.modalRef.hide();
+            this.cardModel={}
           }
-         
-      this.cardModel={}
+
       })
     }
       }),err=>{
@@ -1431,7 +1435,7 @@ this.isupdatecouponclicked=false;
   
       // this.profileservice.addNewCard(token).subscribe(res=>{})
       // api call
-      this.cardModel={}
+     // this.cardModel={}
     }
 /**alert */
 cancelAlert(){
