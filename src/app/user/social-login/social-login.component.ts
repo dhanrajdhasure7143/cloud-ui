@@ -56,6 +56,7 @@ export class SocialLoginComponent implements OnInit {
  this.authorize();
 
   });
+  this.appService.socialLoginValidateToken(userId);
   //localStorage.setItem('currentUser',JSON.stringify({"token":"hiiiiiiiiiii"}))
   //this.router.navigate(['/activation']);
 }
@@ -91,6 +92,8 @@ authorize() {
     this.loading = false;
   })
 }
+
+
 
 }
 
