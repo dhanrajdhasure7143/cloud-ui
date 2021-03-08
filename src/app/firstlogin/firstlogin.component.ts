@@ -10,6 +10,7 @@ import { Particles } from '../_models/particlesjs';
 import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
+import { mergeMapTo } from 'rxjs/operators';
 
 @Component({
   selector: 'app-firstlogin',
@@ -39,6 +40,7 @@ export class FirstloginComponent implements OnInit {
   domain: any;
   isInput: boolean = false;
   categories:any[] = [];
+  userEmail:any;
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -49,6 +51,7 @@ export class FirstloginComponent implements OnInit {
       
       var token=params['token']
       this.decodedToken = Base64.decode(token)
+      this.userEmail = Base64.decode(token);
       // console.log("decoded token = "+this.decodedToken);
      this.service.verifyToken(token).subscribe(response=>{this.onSuccessOfVerifyToken(response),err=>{
       
@@ -59,7 +62,8 @@ export class FirstloginComponent implements OnInit {
     }else{
       var inviteId = params['inviteId']
       var userId = params['userId']
-      this.decodedToken = Base64.decode(userId)
+      this.decodedToken = Base64.decode(userId);
+      this.userEmail = Base64.decode(userId);
       this.service.verifyInvitee(inviteId).subscribe(response =>{this.onSuccessOfConfirmToken(response),err=>{
         this.router.navigate['/user']
       }})
@@ -283,9 +287,14 @@ export class FirstloginComponent implements OnInit {
   }
   resetForm(form:NgForm) {
     form.resetForm();
+    var me = this;
     this.model = new User();
+    setTimeout(() => {
+      me.decodedToken = me.userEmail;
+    }, 100);
     $("#image").val('')
     this.selectedFile=null;
+
   }
     loopTrackBy(index, term){
     return index;
