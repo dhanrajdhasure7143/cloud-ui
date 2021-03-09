@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Particles } from '../../_models/particlesjs';
 import { LoginService } from '../_services/login.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-creataccount',
@@ -18,8 +19,10 @@ export class CreataccountComponent implements OnInit {
   public isresenddisable:boolean;
   public count:number=0;
   public ispublicMail:boolean=false;
+  modalRef: BsModalRef;
     constructor(private particles :Particles,
-                private loginservice:LoginService) { }
+                private loginservice:LoginService,
+                private modalService: BsModalService) { }
 
   ngOnInit() {
     this.particles.getParticles();
@@ -57,5 +60,11 @@ export class CreataccountComponent implements OnInit {
     if(this.count== 2){
       this.isresenddisable=true;
     }
+  }
+  termsConditionsOpen(template){
+    this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
+  }
+  privacyOpen(template){
+    this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
   }
 }

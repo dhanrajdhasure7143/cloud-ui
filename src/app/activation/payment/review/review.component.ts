@@ -246,7 +246,7 @@ this.sharedDataService.setFreetrialavailed(false);
   
   }
   privacyPolicy(template){
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
   }
   close_modal(){
     this.modalRef.hide();
