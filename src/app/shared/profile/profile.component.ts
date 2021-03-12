@@ -14,7 +14,7 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 import {yearslist } from './../../../assets/jsons/yearlist.json';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import moment from 'moment';
-import { Observable } from 'rxjs';
+import { ObjectUnsubscribedError, Observable } from 'rxjs';
 import { log } from 'console';
 import * as $ from 'jquery';
 import { TabsetComponent } from 'ngx-bootstrap';
@@ -340,6 +340,8 @@ export class ProfileComponent implements OnInit {
   searchvaultmng: string;
   testuserid: any;
   private spacialSymbolEncryption:string = '->^<-';
+  secretarray: any=[];
+
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -572,9 +574,20 @@ this.profileservice.applications().subscribe(resp =>
     
   }
   viewSecreteData(keys,i,template){
-   
+  
+   let secret=[]
+  // this.secretarray
         this.viewdata=keys;
+        for (const [key, value] of Object.entries(this.viewdata.data.data)) {
+          
+          let obj={}
+          obj[`key`]=`${key}`
+          obj[`value`]=`${value}`
+          secret.push(obj)
+          
+        }
  
+ this.secretarray=secret
     this.versiondata=this.viewdata.data.metadata.version;
     this.updateSecretedata=this.viewdata
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
@@ -604,16 +617,21 @@ this.profileservice.applications().subscribe(resp =>
   //update secrete
   updateSecreteData(updateSecretedata){
    
+   let obj={}
     this.secretes1.forEach(element => {
       this.updatesecreteobj[element.key] = element.value
       
 });  
 
+for (let i = 0; i < this.secretarray.length; i++) {
+ 
+  obj[this.secretarray[i].key]=this.secretarray[i].value
+}
 
     //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
    
-    this.finalObj=Object.assign(this.updatesecreteobj,this.updateSecretedata.data.data)
-   
+    this.finalObj=Object.assign(this.updatesecreteobj,obj)
+  
     this.input1={
       "options": {
         "cas": this.versiondata
@@ -976,7 +994,9 @@ this.isupdatecouponclicked=false;
     }
 
   }
-  infoModelSubmit() {
+  infoModelSubmit(data) {
+    console.log("data",data)
+    localStorage.setItem("selectedproductId",data.name)
     this.modalRef.hide();
     this.slideDown();
     this.router.navigate(['/activation/payment/chooseplan']);
@@ -2312,7 +2332,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
   //     }
     }
    
-    createNewCoupon(){
+    createNewCoupon(form:NgForm){
      
       this.datetimeinput = moment(this.datetime, "YYYY-M-DTH:mm").valueOf()
        this.couponDetails={
@@ -2361,7 +2381,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
            this.getListofCoupons();
             });
             
-      
+          //  form.resetForm();
     }
     /** alerts */
     saveConfig(form:NgForm) {
@@ -3053,7 +3073,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       this.emailtemplate=undefined;
       this.emailselected=undefined;
     }
-    createNewDept(){
+    createNewDept(form:NgForm){
       let body = {
         "categoryName": this.deptName
       }
@@ -3072,6 +3092,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
           });
         }
       })
+      form.resetForm();
     }
     viewDept(category, template){
       this.categoryname=category.categoryName;
@@ -3118,13 +3139,14 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
             type: "success",
             message: "Department deleted successfully!"
           });
+          this.selectedIndex= " ";
          }else{
           this.notifier.show({
             type: "error",
             message: "Failed to delete department",
           });
          }
-        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+      //  document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
        })
      }
      cancelAddDept(){
@@ -3134,4 +3156,14 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
 
       this.inviteAllRoles = this.allRoles;
     }
+
+    onKeydowncoupon(event){
+    
+      let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+      let temp =numArray.includes(event.key); //gives true or false
+     if(!temp){
+      event.preventDefault();
+     } 
+    }
+  
      }
