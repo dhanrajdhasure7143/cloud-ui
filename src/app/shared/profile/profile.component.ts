@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { log } from 'console';
 import * as $ from 'jquery';
 import { TabsetComponent } from 'ngx-bootstrap';
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 
 
@@ -338,7 +339,7 @@ export class ProfileComponent implements OnInit {
   searchPermission: string;
   searchvaultmng: string;
   testuserid: any;
-
+  private spacialSymbolEncryption:string = '->^<-';
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -347,7 +348,8 @@ export class ProfileComponent implements OnInit {
     private profileservice: ProfileService,
     private notifier: NotifierService,
     private router: Router,
-    private productlistservice:ProductlistService
+    private productlistservice:ProductlistService,
+    private cryptoService:CryptoService
  
   ) { }
 
@@ -786,7 +788,8 @@ this.profileservice.applications().subscribe(resp =>
 
       this.formOne.department = this.otherdepartment;
     }
-    this.firstloginservice.updateUser(this.formOne).subscribe(data => {
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.formOne));
+    this.firstloginservice.updateUser(encrypt).subscribe(data => {
     this.notifier.show({
       type: "success",
       message: "Updated successfully!",
@@ -1383,8 +1386,9 @@ this.isupdatecouponclicked=false;
           "exp_year":this.cardModel.cardyear,
           "cvc":this.cardModel.cvvNumber
         }
+        let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.cardDetails));
 
-      this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
+      this.productlistservice.getPaymentToken(encrypt).subscribe(res=>{
         this.paymentToken=res
         if(this.paymentToken.errorMessage==="Failed to generate payment token"){
           this.notifier.show({

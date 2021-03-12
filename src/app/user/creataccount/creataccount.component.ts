@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { Particles } from '../../_models/particlesjs';
 import { LoginService } from '../_services/login.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 @Component({
   selector: 'app-creataccount',
@@ -19,10 +20,12 @@ export class CreataccountComponent implements OnInit {
   public isresenddisable:boolean;
   public count:number=0;
   public ispublicMail:boolean=false;
+  private spacialSymbolEncryption:string = '->^<-';
   modalRef: BsModalRef;
     constructor(private particles :Particles,
                 private loginservice:LoginService,
-                private modalService: BsModalService) { }
+                private modalService: BsModalService,
+                private cryptoService: CryptoService) { }
 
   ngOnInit() {
     this.particles.getParticles();
@@ -39,7 +42,8 @@ export class CreataccountComponent implements OnInit {
      return
 
    }
-    this.loginservice.sentVerificationMail(this.userId).subscribe(res=>{
+   let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(this.userId);
+    this.loginservice.sentVerificationMail(encrypt).subscribe(res=>{
        this.isresend=true;
     },error=>{
       this.error='User Already Exists'
@@ -47,7 +51,8 @@ export class CreataccountComponent implements OnInit {
       );
   }
   resendVerificationMail(){
-    this.loginservice.resendVerificationMail(this.userId).subscribe(res=>{
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(this.userId);
+    this.loginservice.resendVerificationMail(encrypt).subscribe(res=>{
       Swal.fire({
         title: 'Success',
         text: `Account activation email resent successfully !!`,

@@ -11,6 +11,7 @@ import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
 import { mergeMapTo } from 'rxjs/operators';
+import { CryptoService } from '../_services/crypto.service';
 
 @Component({
   selector: 'app-firstlogin',
@@ -41,11 +42,13 @@ export class FirstloginComponent implements OnInit {
   isInput: boolean = false;
   categories:any[] = [];
   userEmail:any;
+  private spacialSymbolEncryption:string = '->^<-';
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
-              private particles :Particles,) {
+              private particles :Particles,
+              private cryptoService :CryptoService ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
       
@@ -222,7 +225,9 @@ export class FirstloginComponent implements OnInit {
    payload.append('profilePic', this.selectedFile, this.selectedFile.name);
   }
 
-    this.service.registerUser(payload).subscribe(res => {
+  let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(payload));
+    
+    this.service.registerUser(encrypt).subscribe(res => {
       this.data=res
       sessionStorage.clear();
       localStorage.clear();
