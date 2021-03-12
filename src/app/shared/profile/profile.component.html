@@ -1153,7 +1153,10 @@
     <table class="vault-table">
       <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
       <th>Secret Data</th>
-                             <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder" class="form-control" [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
+                             <tr *ngFor="let mykey  of secretarray ;let i=index ; trackBy:loopTrackBy;">
+                               <td><input type="text" name="keyholder" class="form-control" [(ngModel)]="mykey.key"></td>
+                             <td> : </td>
+                              <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td class="text-center">
                            
                                 <span  (click)="removeSecrete(i)"> 
@@ -1378,7 +1381,7 @@
               <div class="col-md-12">
                 <div class="form-group form-buttons pull-right buttonsblock">
                   <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
-                  <button [disabled] = "myAccount_Subsription_Read" class="btn btn-primary change_plan" (click)="infoModelSubmit()">Change Plan</button>
+                  <button [disabled] = "myAccount_Subsription_Read" class="btn btn-primary change_plan" (click)="infoModelSubmit(subscribeddata)">Change Plan</button>
               </div>
             </div>
         <div class="clearfix">
@@ -2277,7 +2280,7 @@
 
 
                 <ng-template #createcoupon >
-                  <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon()" >
+                  <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon(couponform)" >
                   <div class="modal-header">
                     <h4 class="modal-title" id="modal-basic-title" >Create Coupon</h4>
                     <!-- <button type="button" class="close" aria-label="Close" (click)="cancelCreateCopon()">
@@ -2307,7 +2310,7 @@
                              
                 <div *ngIf="isPercentage" >
                   
-                  <input type="number" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                  <input type="number" name="percentageOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;"  [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Name is required </span>  -->
@@ -2315,7 +2318,7 @@
             
                 <div *ngIf="isAmount" >
                 
-                  <input type="number" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                  <input type="number" name="amountOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;"  [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                   <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                   <!-- <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
                   class='fa fa-info-circle errspan'> Coupon Ammount is required </span>  -->
@@ -2342,7 +2345,7 @@
             <div >
                 <label for="red">Maximum Redemptions</label>
    
-              <input type="number" name="red"  maxlength="30" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+              <input type="number" name="red"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
               <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
               <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
               class='fa fa-info-circle errspan'> Limit is required </span> 
@@ -2423,11 +2426,11 @@
                               <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' [checked]="coupondata.amountOff != ' - '"/>&nbsp;<span>Amount Off</span> <br>
                                            
                               <div *ngIf="isPercentage" >
-                                 <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                                 <input type="text" name="percentageOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                               </div>
                           
                               <div *ngIf="isAmount" >
-                                <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                                <input type="text" name="amountOff" (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                               </div>
                               
                             <div>
@@ -2446,7 +2449,7 @@
                               </div>
                            <div >
                               <label for="number">Maximum Redemptions</label>
-                            <input type="text" name="red"  maxlength="30" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+                            <input type="text" name="red"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
                             class='fa fa-info-circle errspan'> Limit is required </span> 
@@ -2539,7 +2542,7 @@
   </ng-template>
 
   <ng-template #createDept>
-    <form autocomplete="off" #adddept="ngForm" (ngSubmit)="createNewDept()" class="card_form">
+    <form autocomplete="off" #adddept="ngForm" (ngSubmit)="createNewDept(adddept)" class="card_form">
             <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Add Department</h4>
                 <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddDept()">
