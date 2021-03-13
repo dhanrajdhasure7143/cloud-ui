@@ -807,7 +807,8 @@ for (let i = 0; i < this.secretarray.length; i++) {
       this.formOne.department = this.otherdepartment;
     }
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.formOne));
-    this.firstloginservice.updateUser(encrypt).subscribe(data => {
+    let reqObj = {"enc": encrypt};
+    this.firstloginservice.updateUser(reqObj).subscribe(data => {
     this.notifier.show({
       type: "success",
       message: "Updated successfully!",
@@ -1407,8 +1408,8 @@ this.isupdatecouponclicked=false;
           "cvc":this.cardModel.cvvNumber
         }
         let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.cardDetails));
-
-      this.productlistservice.getPaymentToken(encrypt).subscribe(res=>{
+        let reqObj = {"enc": encrypt};
+      this.productlistservice.getPaymentToken(reqObj).subscribe(res=>{
         this.paymentToken=res
         if(this.paymentToken.errorMessage==="Failed to generate payment token"){
           this.notifier.show({

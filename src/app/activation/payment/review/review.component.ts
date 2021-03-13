@@ -133,8 +133,9 @@ public paymentToken:any;
                 "product_id":"2.0"}
                 }
             
-    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(cardValue)
-    this.productlistservice.getPaymentToken(encrypt).subscribe(res=>{
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue))
+    let reqObj = {"enc": encrypt};
+    this.productlistservice.getPaymentToken(reqObj).subscribe(res=>{
       this.spinner.show();
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){
@@ -190,8 +191,9 @@ this.sharedDataService.setFreetrialavailed(false);
       "cvc":this.cardDetails.cvvNumber
     }
      
-    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(cardValue)
-    this.productlistservice.getPaymentToken(encrypt).subscribe(res=>{
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue));
+    let reqObj = {"enc": encrypt};
+    this.productlistservice.getPaymentToken(reqObj).subscribe(res=>{
     
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){

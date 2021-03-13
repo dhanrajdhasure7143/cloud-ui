@@ -44,7 +44,7 @@ export class FirstloginService {
     return this.http.get<any>(`/cloud-ui/src/assets/jsons/countries.json`);  
   }
 // test
-  updateUser(user: string): Observable<any> {
+  updateUser(user: any): Observable<any> {
     return this.http.post<any>(`/api/user/updateUserDetails`, user);
 
   }

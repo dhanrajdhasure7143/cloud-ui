@@ -63,9 +63,10 @@ export class AppService {
    }
   
   if(isSecurityManagerEnabled){url = `/Idm/accessToken`;}
+  //headers = { 'content-type': 'application/json, text/plan'}
   let reqObj = { 'userId' : username, 'password' : password }
   let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(reqObj));
-    return this.http.post<any>(url, encrypt, {headers})
+    return this.http.post<any>(url, {"enc":encrypt}, {headers})
         .pipe(map(user => {
 
             if(isSecurityManagerEnabled){

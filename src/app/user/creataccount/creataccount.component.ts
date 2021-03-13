@@ -42,7 +42,7 @@ export class CreataccountComponent implements OnInit {
      return
 
    }
-   let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(this.userId);
+   let encrypt = this.cryptoService.encrypt(this.userId);
     this.loginservice.sentVerificationMail(encrypt).subscribe(res=>{
        this.isresend=true;
     },error=>{
@@ -51,7 +51,7 @@ export class CreataccountComponent implements OnInit {
       );
   }
   resendVerificationMail(){
-    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(this.userId);
+    let encrypt = this.cryptoService.encrypt(this.userId);
     this.loginservice.resendVerificationMail(encrypt).subscribe(res=>{
       Swal.fire({
         title: 'Success',
