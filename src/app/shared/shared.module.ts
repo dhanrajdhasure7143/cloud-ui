@@ -76,7 +76,7 @@ import { NewstepselectionComponent } from './newstepselection/newstepselection.c
     Ng2SearchPipeModule
   ],
   providers: [NotifierService],
-  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent,NewstepselectionComponent],
+  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent,NewstepselectionComponent,TermsconditionsComponent,PrivacypolicyComponent],
   entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent,FooterComponent]
 })
 export class SharedModule { }
