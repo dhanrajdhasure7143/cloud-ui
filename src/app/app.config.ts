@@ -35,5 +35,23 @@ export const AppConfig: AiotalAppConfig = {
   rpaendpoint:"https://eiapbeta.epsoftinc.com/wfrpa",
   piendpoint:"https://eiapbeta.epsoftinc.com/prcintel"
 
+
+  // QA Urls
+  // portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
+  // apiendpoint: 'http://apqa.epsoftinc.in',
+  // tokenendpoint: 'http://idmqa.epsoftinc.in',
+  // proxyTokenendpoint: 'http://10.11.0.108:3001',
+  // authorizationendpoint: 'http://authqa.epsoftinc.in',
+  // socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
+  // notificationsendpoint: 'http://alertsqa.epsoftinc.in',
+  // Subscriptionendpoint:'http://subscriptionqa.epsoftinc.in',
+  // productendpoint: 'http://eiapqa.epsoftinc.in',
+  // socialLoginRedirectURL: 'http://eiapcloudqa.epsoftinc.in/#/user',
+  // rpaendpoint:"http://rpaqa.epsoftinc.in",
+  // piendpoint:"http://piqa.epsoftinc.in",
+  // isTwoFactorAuthenticationEnabled: false,
+  // isSecurityManagerEnabled : true
+
+
 };
 

@@ -11,6 +11,7 @@ import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
 import { mergeMapTo } from 'rxjs/operators';
+import { CryptoService } from '../_services/crypto.service';
 
 @Component({
   selector: 'app-firstlogin',
@@ -41,11 +42,13 @@ export class FirstloginComponent implements OnInit {
   isInput: boolean = false;
   categories:any[] = [];
   userEmail:any;
+  private spacialSymbolEncryption:string = '->^<-';
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
-              private particles :Particles,) {
+              private particles :Particles,
+              private cryptoService :CryptoService ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
       
@@ -205,23 +208,42 @@ export class FirstloginComponent implements OnInit {
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
     userDetails.department = this.model.department;
-   const payload = new FormData();
-   payload.append('userId', userDetails.userId);
-   payload.append('firstName', userDetails.firstName);
-   payload.append('lastName', userDetails.lastName);
-   payload.append('password', userDetails.password);
-   payload.append('phoneNumber', userDetails.phoneNumber);
-   payload.append('country', userDetails.country);
-   payload.append('designation', userDetails.designation);
-   payload.append('company', userDetails.company);
-   payload.append('state', userDetails.state);
-   payload.append('city', userDetails.city);
-   payload.append('zipcode', userDetails.zipcode);
-   payload.append('department', userDetails.department);
+   var payload = new FormData();
+  //  payload.append('userId', userDetails.userId);
+  //  payload.append('firstName', userDetails.firstName);
+  //  payload.append('lastName', userDetails.lastName);
+  //  payload.append('password', userDetails.password);
+  //  payload.append('phoneNumber', userDetails.phoneNumber);
+  //  payload.append('country', userDetails.country);
+  //  payload.append('designation', userDetails.designation);
+  //  payload.append('company', userDetails.company);
+  //  payload.append('state', userDetails.state);
+  //  payload.append('city', userDetails.city);
+  //  payload.append('zipcode', userDetails.zipcode);
+  //  payload.append('department', userDetails.department);
    if(this.selectedFile!=undefined){
    payload.append('profilePic', this.selectedFile, this.selectedFile.name);
   }
-
+  var reqObj = {}
+  reqObj = {
+    'userId': userDetails.userId,
+    'firstName': userDetails.firstName,
+    'lastName': userDetails.lastName,
+    'password': userDetails.password,
+    'phoneNumber': userDetails.phoneNumber,
+    'country': userDetails.country,
+    'designation': userDetails.designation,
+    'company': userDetails.company,
+    'state': userDetails.state,
+    'city': userDetails.city,
+    'zipcode': userDetails.zipcode,
+    'department': userDetails.department
+  }
+  // if(this.selectedFile!=undefined){
+  //   reqObj['profilePic'] = payload;
+  //   reqObj['profilePicName'] = this.selectedFile.name;
+  // }
+  payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
     this.service.registerUser(payload).subscribe(res => {
       this.data=res
       sessionStorage.clear();

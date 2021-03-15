@@ -10,6 +10,7 @@ import { APP_CONFIG } from './../app.config';
 import { Inject } from '@angular/core';
 import { IpServiceService } from './ip-service.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { CryptoService } from './crypto.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,16 @@ export class AppService {
   public _userActionOccured: Subject<void> = new Subject(); 
   public ipAddress:string; 
   public deviceInfo = null;
+  private spacialSymbolEncryption:string = '->^<-';
   agent: string;
 
-  constructor(private http: HttpClient, private router: Router, private content: ContentfulService, @Inject(APP_CONFIG) private config, private ip:IpServiceService, private deviceService: DeviceDetectorService) {
+  constructor(private http: HttpClient, 
+    private router: Router, 
+    private content: ContentfulService, 
+    @Inject(APP_CONFIG) private config, 
+    private ip:IpServiceService, 
+    private deviceService: DeviceDetectorService,
+    private cryptoService: CryptoService) {
    this.getIP();
   }
 
@@ -55,8 +63,10 @@ export class AppService {
    }
   
   if(isSecurityManagerEnabled){url = `/Idm/accessToken`;}
-
-    return this.http.post<any>(url, { 'userId' : username, 'password' : password }, {headers})
+  //headers = { 'content-type': 'application/json, text/plan'}
+  let reqObj = { 'userId' : username, 'password' : password }
+  let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(reqObj));
+    return this.http.post<any>(url, {"enc":encrypt}, {headers})
         .pipe(map(user => {
 
             if(isSecurityManagerEnabled){
