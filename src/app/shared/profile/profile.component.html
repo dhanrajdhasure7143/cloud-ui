@@ -1159,7 +1159,7 @@
                               <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td class="text-center">
                            
-                                <span  (click)="removeSecrete(i)"> 
+                                <span  (click)="removeSecretesId(i)"> 
                                   <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 </td>
                                 <td  class="text-center" *ngIf="secretes1.length==0">
@@ -1169,7 +1169,7 @@
                               </td>
                               
                             </tr>
-                           <div  class="text-center" *ngIf="isadd" >
+                           <!-- <div  class="text-center" *ngIf="isadd" >
                             <tr *ngFor="let secret1 of secretes1; let i = index;">
                              
                               <td>
@@ -1181,7 +1181,7 @@
                               
                               
                           <input type="text"  [(ngModel)]="secret1.value"
-                          name="value_{{secret1.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;"><!----> 
+                          name="value_{{secret1.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;"> 
             
                              </td>
                             <td *ngIf="addpressed">
@@ -1191,7 +1191,7 @@
                             </td>
                             
                             </tr>
-                           </div>
+                           </div> -->
                            </table>
                     </div>
  

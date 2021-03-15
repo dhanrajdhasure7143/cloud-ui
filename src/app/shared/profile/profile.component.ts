@@ -578,9 +578,11 @@ this.profileservice.applications().subscribe(resp =>
    let secret=[]
   // this.secretarray
         this.viewdata=keys;
+        let idCount=0
         for (const [key, value] of Object.entries(this.viewdata.data.data)) {
           
           let obj={}
+          obj[`id`]=idCount++
           obj[`key`]=`${key}`
           obj[`value`]=`${value}`
           secret.push(obj)
@@ -605,32 +607,32 @@ this.profileservice.applications().subscribe(resp =>
     //this.secretes=[];
     this.isadd=true;
     this.addpressed=true;
-    this.secretes1.push({
-      id: this.secretes1.length + 1,
+    this.secretarray.push({
+      id: this.secretarray.length + 1,
       key: '',
       value: ''
-      
-    });
-   
-    
+    }); 
+  }
+
+  removeSecretesId(i : number){
+    this.secretarray.splice(i, 1);
   }
   //update secrete
   updateSecreteData(updateSecretedata){
-   
    let obj={}
-    this.secretes1.forEach(element => {
-      this.updatesecreteobj[element.key] = element.value
-      
-});  
+  //  console.log(this.secretarray);
+    // this.secretes1.forEach(element => {
+    //   this.updatesecreteobj[element.key] = element.value
+    //   });
 
-for (let i = 0; i < this.secretarray.length; i++) {
- 
-  obj[this.secretarray[i].key]=this.secretarray[i].value
-}
-
+  for (let i = 0; i < this.secretarray.length; i++) {
+    obj[this.secretarray[i].key]=this.secretarray[i].value
+  }
+  
     //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
    
-    this.finalObj=Object.assign(this.updatesecreteobj,obj)
+    // this.finalObj=Object.assign(this.updatesecreteobj,obj)
+    this.finalObj=obj;
   
     this.input1={
       "options": {
