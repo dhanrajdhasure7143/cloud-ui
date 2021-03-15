@@ -9,13 +9,10 @@ export class CryptoService {
   keyBase64 = ')>epsftcloudplatforml23s#434'
 
   encrypt(plainText) {
-    // const key = CryptoJS.enc.Utf8.parse(this.keyBase64);
-    // console.log(key);
-    // const encrypted = CryptoJS.AES.encrypt(plainText, key, {
-    //   mode: CryptoJS.mode.ECB,
-    // });
-    // return encrypted.toString();
-//DWIzFkO22qfVMgx2fIsxOXnwz10pRuZfFJBvf4RS3eY=     1234567890123456
+/*below function gennerates the AES key using the CBC and PCKS5 Padding, 
+the Key is generated based from the UTF format that is generated, 
+this Gives the Flexibility of high security using 256 bit Encryption of AES. Also uses Crypto JS library */
+
     var keyUtf8 = CryptoJS.enc.Utf8.parse('1234567890123456');
     var ivUtf8 = CryptoJS.enc.Utf8.parse('1234567890123456');
     var ciphertext = CryptoJS.AES.encrypt(plainText, keyUtf8,{
@@ -25,18 +22,12 @@ export class CryptoService {
   };
 
   decrypt(decryptMessage) {
-    console.log(decryptMessage)
     var keyUtf8 = CryptoJS.enc.Utf8.parse('1234567890123456');
     var ivUtf8 = CryptoJS.enc.Utf8.parse('1234567890123456');
     var decrypt = CryptoJS.AES.decrypt(decryptMessage, keyUtf8,{
       iv: ivUtf8
     });     
    return CryptoJS.enc.Utf8.stringify(decrypt).toString();  
-    // const key = CryptoJS.enc.Utf8.parse(this.keyBase64);
-    // const decrypted = CryptoJS.AES.decrypt(decryptMessage, key, {
-    //   mode: CryptoJS.mode.ECB
-    // });
-    // return decrypted.toString(CryptoJS.enc.Utf8);
   }
 
 }
