@@ -135,7 +135,7 @@ public paymentToken:any;
             
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue))
     let reqObj = {"enc": encrypt};
-    this.productlistservice.getPaymentToken(reqObj).subscribe(res=>{
+    this.productlistservice.getSubscriptionPaymentToken(reqObj).subscribe(res=>{
       this.spinner.show();
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){
@@ -193,7 +193,7 @@ this.sharedDataService.setFreetrialavailed(false);
      
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue));
     let reqObj = {"enc": encrypt};
-    this.productlistservice.getPaymentToken(reqObj).subscribe(res=>{
+    this.productlistservice.getSubscriptionPaymentToken(reqObj).subscribe(res=>{
     
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){

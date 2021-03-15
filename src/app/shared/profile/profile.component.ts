@@ -1411,7 +1411,7 @@ this.isupdatecouponclicked=false;
         }
         let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.cardDetails));
         let reqObj = {"enc": encrypt};
-      this.productlistservice.getPaymentToken(reqObj).subscribe(res=>{
+      this.productlistservice.getMyAccountPaymentToken(reqObj).subscribe(res=>{
         this.paymentToken=res
         if(this.paymentToken.errorMessage==="Failed to generate payment token"){
           this.notifier.show({
