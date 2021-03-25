@@ -11,11 +11,12 @@ import { CompareValidatorDirective } from './shared/compare-validator.directive'
 import { SocialLoginComponent } from './social-login/social-login.component';
 import { Particles } from '../_models/particlesjs';
 import { CreataccountComponent } from './creataccount/creataccount.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent],
+  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent, ChangepasswordComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
