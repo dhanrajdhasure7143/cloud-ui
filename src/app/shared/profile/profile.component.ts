@@ -2875,7 +2875,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
            
           }else {
            this.notifier.show({
-              message: `Failed to save template`,
+              message: `Template name already exists`,
               type: 'error'
             }) 
           }

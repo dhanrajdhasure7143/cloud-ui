@@ -443,7 +443,7 @@
                     </select>  -->
                    
                           </div>
-                          <button  class="btn btn-primary invite-button" [disabled] ="isSameDomain || emailRequired"  type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
+                          <button  class="btn btn-primary invite-button" [disabled] ="isSameDomain || emailRequired || inviteuser.invalid"  type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
                         </form>
               </div>
 
