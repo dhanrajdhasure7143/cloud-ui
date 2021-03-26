@@ -169,6 +169,28 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     //if two factor authentication is enabled 
+    if(this.loginForm.valid){ 
+      this.loginService.checkpasswordexpiry(this.f.username.value).subscribe(data=>{
+        let res = data;
+        if(data.isError == "true"){
+          console.log("SWAL");
+          Swal.fire({
+            width: '400px',
+            text: data.message, 
+            type: 'error',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Okay'
+          }).then((result) => {
+            
+            if (result.value) {
+              localStorage.setItem('Passwordvalidite', this.f.username.value); 
+              this.router.navigateByUrl("/changepassword"); 
+            }
+          });
+        }
+        else{
     if(!this.twoFactorAuthConButton){
       
       this.authenticationService.validateOTP(this.f.username.value, this.f.otpNum.value).subscribe(data => {
@@ -190,9 +212,12 @@ export class LoginComponent implements OnInit {
     }else{
       this.authenticationMeothod();
     }
-      //
-       
+      // 
   }
+  
+});  
+} 
+}
 
  authenticationMeothod(){
   this.authenticationService

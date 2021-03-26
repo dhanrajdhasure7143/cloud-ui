@@ -383,7 +383,10 @@
                             <span *ngIf="confpassword.errors['compare'] && !confpassword.errors['required']" class='fa fa-info-circle errspan'> Password confirm do not match</span>
                         </span>  
                     </div>
- 
+                    <div class="col-md-6">
+                      <div *ngIf="passwordvalidatemsg" class='fa fa-exclamation-triangle errspan errspan1'> {{passwordvalidatemsg}}</div>
+                    </div>
+
                       <div class="col-md-12 submitbtn">
                         <button [disabled]="f.invalid" class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
                       </div>

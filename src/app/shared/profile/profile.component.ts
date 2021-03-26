@@ -339,7 +339,7 @@ export class ProfileComponent implements OnInit {
   searchPermission: string;
   searchvaultmng: string;
   testuserid: any;
-
+  public passwordvalidatemsg : any;
 
   //dropdownSettings:IDropdownSettings;
   constructor(private sharedData: SharedDataService,
@@ -2794,19 +2794,24 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         }
       this.profileservice.changePassword(pswdbody).subscribe(res => {
       // this.pswdmodel = {};
-        this.notifier.show({
-          type: "success",
-          message: "Password Updated successfully!",
-          id: "123"
-        });
-      }, err => {
-        // console
-        this.notifier.show({
-          type: "error",
-          message: "Please check your current password!",
-          id: "124"
-        });})
-      form.resetForm();
+        let responce = res;
+        console.log(res.errorMessage);
+   
+        if(res.errorMessage==undefined){
+          Swal.fire({
+            width: "400px",
+            position: 'center',
+            type: "success",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 2000
+          })
+          form.resetForm();
+          this.slideDown();
+          }else{
+            this.passwordvalidatemsg = res.errorMessage;
+          }
+      });
       }
 
       curreyetoggle() {
