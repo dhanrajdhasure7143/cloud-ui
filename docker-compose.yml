@@ -1,23 +1,12 @@
-version: '3.8'
+version: '3.7'
 
 networks:
   eps_net:
-    external: true
-    name: docker_epsinternal
-  eps_host:
-    external: true
-    name: host
-
-services:
   cloud-ui:
     image: nexus.epsoftinc.in/cloud-ui:${DOCKER_TAG}
     deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - node.labels.role.eiap.apps == 1  
+      mode: global
     networks:
       - eps_net
     ports:
-      - '80'
+      - '9090:80'
