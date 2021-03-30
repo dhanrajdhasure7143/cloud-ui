@@ -4,6 +4,7 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-chooseplan',
   templateUrl: './chooseplan.component.html',
@@ -27,8 +28,10 @@ export class ChooseplanComponent implements OnInit {
   freetrailAvailed: any;
   remainingDays: any;
   isfreetrail: any;
+  modalRef: BsModalRef;
   constructor(private productlistservice:ProductlistService, private router: Router,
-    private profileService: ProfileService,private sharedDataService:SharedDataService
+    private profileService: ProfileService,private sharedDataService:SharedDataService,
+    private modalService: BsModalService
     ) { }
  
   ngOnInit() {
@@ -174,6 +177,13 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
 
   loopTrackBy(index, term){
     return index;
+  }
+
+  termsConditionsOpen(template){
+    this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
+  }
+  privacyOpen(template){
+    this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
   }
   }
 

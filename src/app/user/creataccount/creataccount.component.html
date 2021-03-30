@@ -6,9 +6,10 @@
             </div>
           <div class="col-md-3"></div>
             <div class="col-md-4">
-                    <div class="brand"  style="
-                    margin-left: -1%;
-                ">
+              <div class="col-sm-12 status-bar">
+                <newstepselection class="register_account"></newstepselection>
+              </div>
+                    <div class="brand"  style="margin-left: -1%;">
                             <img src="assets/images/logo_img.png">
                         </div>
                         <!-- <h3>Start free tier</h3> -->
@@ -29,7 +30,9 @@
                             
                           </div>
                           <div class="col-md-12" class="agreecheckbox">
-                                <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()"><span>   I agree with <a [routerLink]="['/terms']" target="_blank" class='terms_condtion'>Terms & Conditions</a> <a [routerLink]="['/privacy']" target="_blank">Privacy Policy</a></span>
+                                <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()">
+                                <span>   I agree with <a (click)='termsConditionsOpen(template)' class='terms_condtion'>Terms & Conditions</a> 
+                                  <a (click)='privacyOpen(privacyTemplate)'>Privacy Policy</a></span>
                               </div>
                           <div class="form-group col-sm-12">
                               <button class="hoverable button btn btn-primary creataccnt-btn" [disabled]='isdisable'>Create Account</button>
@@ -53,4 +56,28 @@
             </div>
         </div>
     </div>
+
+    <ng-template #template>
+      <div class="modal-header">
+        <h3 class="modal-title pull-left"><strong>Terms and Conditions</strong></h3>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <app-termsconditions></app-termsconditions>
+          </div>
+    </ng-template>
+
+    <ng-template #privacyTemplate>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left"><strong>ONLINE PRIVACY POLICY AGREEMENT</strong></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-privacypolicy></app-privacypolicy>
+      </div>
+    </ng-template>
     

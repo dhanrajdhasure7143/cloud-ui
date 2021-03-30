@@ -1,5 +1,7 @@
-./package-lock.json
-/node_modules
-/dist
-/aiotal-win32-x64
-/aiotal-win32-x64-installers
+package-lock.json
+.gradle/
+dist/
+node_modules/
+build/
+aiotal-win32-x64/
+aiotal-win32-x64-installers/

@@ -523,3 +523,13 @@ footer .powredby_text{
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: bold;
 }
+
+.register_account .register_account .step_circle,
+.email_verified .email_verified .step_circle{
+  background-color: #2ab4d4 !important;
+  border: 1px solid #2ab4d4 !important;
+}
+.register_account .register_account .step_circle span,
+.email_verified .email_verified .step_circle span{
+  color: white !important;
+}

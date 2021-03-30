@@ -23,8 +23,11 @@ export class ProductlistService {
   subscribePlan(token,planData){
     return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData)
   }
-  getPaymentToken(cardData){
-    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken',cardData,{responseType:'json'})
+  getMyAccountPaymentToken(cardData){
+    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=myaccount',cardData,{responseType:'json'})
+  }
+  getSubscriptionPaymentToken(cardData){
+    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=subs',cardData,{responseType:'json'})
   }
   getNewAccessToken(): Observable<any[]>
   {
