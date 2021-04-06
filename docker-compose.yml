@@ -1,7 +1,14 @@
-version: '3.7'
+version: '3.8'
 
 networks:
   eps_net:
+    external: true
+    name: docker_epsinternal
+  eps_host:
+    external: true
+    name: host
+
+services:
   cloud-ui:
     image: nexus.epsoftinc.in/cloud-ui:${DOCKER_TAG}
     deploy:
