@@ -3,7 +3,7 @@ version: '3.7'
 networks:
   eps_net:
     external: true
-    name: docker_epsinternal
+     name: docker_epsinternal
   eps_host:
     external: true
     name: host
