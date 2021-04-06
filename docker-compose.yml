@@ -2,7 +2,6 @@ version: '3.7'
 
 networks:
   eps_net:
-services:  
   cloud-ui:
     image: nexus.epsoftinc.in/cloud-ui:${DOCKER_TAG}
     deploy:
