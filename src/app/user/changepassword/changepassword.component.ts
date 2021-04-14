@@ -69,8 +69,17 @@ export class ChangepasswordComponent implements OnInit {
               text: res.errorMessage,
              });
           }
-      });
-  }
+        }, err =>{
+            Swal.fire({
+              title: 'Error',
+              text: `Password cannot be same as your last 5 passwords!!`,
+              type: 'error',
+              showCancelButton: false,
+              allowOutsideClick: true
+            });
+          });
+      
+        }
   toggle() {
     this.show = !this.show;
   }
