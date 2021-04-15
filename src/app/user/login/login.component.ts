@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   public twoFactorAuthConButton:boolean = true;
   public enteredOTP:boolean = false;
   public otp:any;
+  public errormsg: any;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -224,7 +225,7 @@ export class LoginComponent implements OnInit {
   .login(this.f.username.value, this.f.password.value)
   .pipe(first())
   .subscribe(data => {
-     
+     this.errormsg=data;
       if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
 
         this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
@@ -253,16 +254,26 @@ export class LoginComponent implements OnInit {
       // user details based on userId
       this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
 
-
+     
       this.authenticate();
     },
     error => {
+      
+      if(this.errormsg==undefined){
+      this.error = "Invalid Credentials. Please try again !!";
+      }
       if(error.error.status=='LOCKED'){
-        this.error = "Account Locked !! Please try after 3 hrs.";
-      }
-      else{
-        this.error = "Email or Password is invalid.";
-      }
+         this.error = "Account Locked !! Please try after 3 hrs.";
+       }
+      // if(error.error.status=='LOCKED'){
+      //   this.error = "Account Locked !! Please try after 3 hrs.";
+      // }
+      // if(error.resp_data.statusCode=='UNAUTHORIZED'){
+      //   this.error = "Invalid Credentials. Please try again !!";
+      // }
+      // else{
+      //   this.error = "Email or Password is invalid.";
+      // }
     
       this.loading = false;
     },

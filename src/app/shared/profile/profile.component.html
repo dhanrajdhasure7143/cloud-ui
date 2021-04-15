@@ -351,10 +351,10 @@
                           <label for="password">Current Password </label>
                           <img src="assets/images/registration/Lock.svg" class="lockicon">
                           <span (click)="curreyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(eyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
-                        <input [type]="(eyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="password" #password="ngModel" [(ngModel)]="pswdmodel.currentPassword" placeholder="Enter Current Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" maxlength="20" required/>
+                        <input [type]="(eyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="password" #password="ngModel" [(ngModel)]="pswdmodel.currentPassword" placeholder="Enter Current Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" maxlength="20" required/>
                         <span *ngIf="((password.invalid && f.submitted) || (password.errors && password.touched) )">
                           <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
-                          <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
+                          <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number</span>
                         </span>
                         
                         <!-- <input type="password" name="password" #password="ngModel" placeholder = "Enter Current Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.currentPassword"/> -->
@@ -364,12 +364,12 @@
                           <label for="newpassword">New Password </label>
                           <img src="assets/images/registration/Lock.svg" class="lockicon1">
                           <span (click)="neweyetoggle()" class="input-group-add eyeicon1"> <i class="fa fa-eye" [ngClass]="(neweyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
-                          <input [type]="(neweyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="newpassword" ngModel #newpassword="ngModel" placeholder="Enter New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" maxlength="20" required/>
+                          <input [type]="(neweyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="newpassword" ngModel #newpassword="ngModel" placeholder="Enter New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" maxlength="20" required/>
                           <!-- <div class="fa fa-info-circle errspan" *ngIf="password.invalid && (password.dirty || password.touched)"> Password is required
                           </div> -->
                           <span *ngIf="((newpassword.invalid && f.submitted) || (newpassword.errors && newpassword.touched) )">
                               <span class='fa fa-info-circle errspan' *ngIf="newpassword.errors.required"> Password is required</span>
-                              <span class='fa fa-info-circle errspan' *ngIf="newpassword.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
+                              <span class='fa fa-info-circle errspan' *ngIf="newpassword.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number</span>
                             </span>
                       </div>
 
@@ -386,7 +386,7 @@
                     <div class="col-md-6">
                       <div *ngIf="passwordvalidatemsg" class='fa fa-exclamation-triangle errspan errspan1'> {{passwordvalidatemsg}}</div>
                     </div>
-
+ 
                       <div class="col-md-12 submitbtn">
                         <button [disabled]="f.invalid" class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
                       </div>
@@ -446,7 +446,7 @@
                     </select>  -->
                    
                           </div>
-                          <button  class="btn btn-primary invite-button" [disabled] ="isSameDomain || emailRequired"  type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
+                          <button  class="btn btn-primary invite-button" [disabled] ="isSameDomain || emailRequired || inviteuser.invalid"  type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
                         </form>
               </div>
 
@@ -1149,16 +1149,20 @@
       <span aria-hidden="true">&times;</span>
     </button> -->
   </div>
+
 <div class="modal-body">
 
   <div  class="col-md-12 confirmationmsg">
     <table class="vault-table">
       <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
       <th>Secret Data</th>
-                             <tr *ngFor="let mykey  of viewdata.data.data | keyvalue;let i=index ; trackBy:loopTrackBy;"><td><input type="text" name="keyholder" class="form-control" [(ngModel)]="mykey.key"></td> <td> : </td> <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
+                             <tr *ngFor="let mykey  of secretarray ;let i=index ; trackBy:loopTrackBy;">
+                               <td><input type="text" name="keyholder" class="form-control" [(ngModel)]="mykey.key"></td>
+                             <td> : </td>
+                              <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
                             <td class="text-center">
                            
-                                <span  (click)="removeSecrete(viewdata.data.data,i)"> 
+                                <span  (click)="removeSecretesId(i)"> 
                                   <img src="assets/images/unsubscribe.svg" alt=""></span>
                                 </td>
                                 <td  class="text-center" *ngIf="secretes1.length==0">
@@ -1168,7 +1172,7 @@
                               </td>
                               
                             </tr>
-                           <div  class="text-center" *ngIf="isadd" >
+                           <!-- <div  class="text-center" *ngIf="isadd" >
                             <tr *ngFor="let secret1 of secretes1; let i = index;">
                              
                               <td>
@@ -1180,7 +1184,7 @@
                               
                               
                           <input type="text"  [(ngModel)]="secret1.value"
-                          name="value_{{secret1.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;"><!----> 
+                          name="value_{{secret1.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;"> 
             
                              </td>
                             <td *ngIf="addpressed">
@@ -1190,7 +1194,7 @@
                             </td>
                             
                             </tr>
-                           </div>
+                           </div> -->
                            </table>
                     </div>
  
@@ -1380,7 +1384,7 @@
               <div class="col-md-12">
                 <div class="form-group form-buttons pull-right buttonsblock">
                   <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
-                  <button [disabled] = "myAccount_Subsription_Read" class="btn btn-primary change_plan" (click)="infoModelSubmit()">Change Plan</button>
+                  <button [disabled] = "myAccount_Subsription_Read" class="btn btn-primary change_plan" (click)="infoModelSubmit(subscribeddata)">Change Plan</button>
               </div>
             </div>
         <div class="clearfix">
@@ -1510,7 +1514,26 @@
                   <option [value]="alertslistactivitiesdata.app_name">{{alertslistactivitiesdata.app_name}}</option>
               </select>
               </div>
-              <br>
+              <div class="col-md-12 ">
+                <label for="planid">Activity : </label>
+                  <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
+                   <select name="activity_name1" #activity_name1="ngModel" class="form-control botmbordr" [(ngModel)]="updateActivities" required>
+                    <option  [value]="undefined" disabled hidden>Select Activities</option>
+                    <!-- <option  [value]="null" disabled hidden>Select Activities</option> -->
+                     <option *ngFor="let each of activitieslist" [value]="each.activity">{{each.activity}}</option>
+                </select> 
+                  </div>
+                    <br>
+                    <div class="col-md-12 ">
+                <label for="product">Type : </label>
+                <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
+                <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="updateType" required>
+                  <option  [value]="undefined" disabled hidden>Select Type</option>
+                  <option  [value]="null" disabled hidden>Select Type</option>
+                  <option value="Success">Success</option>
+                  <option value="Failure">Failure</option>
+              </select>
+                </div>
                 <div class="col-md-12 ">
                   <label for="planid">Activity : </label>
                   <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
@@ -1521,17 +1544,6 @@
                 </select> 
                   </div>
                     <br>
-                    <div class="col-md-12 ">
-                      <label for="product">Type : </label>
-                      <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
-                      <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="updateType" required>
-                        <option  [value]="undefined" disabled hidden>Select Type</option>
-                        <option  [value]="null" disabled hidden>Select Type</option>
-                        <option value="Success">Success</option>
-                        <option value="Failure">Failure</option>
-                    </select>
-                      </div>
-                      <br>
                   <div class="col-md-12 ">
                     <label for="status">Channel : </label><br>
                     <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
@@ -2427,11 +2439,11 @@
                               <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' [checked]="coupondata.amountOff != ' - '"/>&nbsp;<span>Amount Off</span> <br>
                                            
                               <div *ngIf="isPercentage" >
-                                 <input type="number" name="percentageOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                                 <input type="text" name="percentageOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
                               </div>
                           
                               <div *ngIf="isAmount" >
-                                <input type="number" name="amountOff"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                                <input type="text" name="amountOff" (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
                               </div>
                               
                             <div>
@@ -2450,7 +2462,7 @@
                               </div>
                            <div >
                               <label for="number">Maximum Redemptions</label>
-                            <input type="number" name="red" (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+                            <input type="text" name="red"  (keydown)="onKeydowncoupon($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
                             <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                             <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
                             class='fa fa-info-circle errspan'> Limit is required </span> 
@@ -2543,7 +2555,7 @@
   </ng-template>
 
   <ng-template #createDept>
-    <form autocomplete="off" #adddept="ngForm" (ngSubmit)="createNewDept()" class="card_form">
+    <form autocomplete="off" #adddept="ngForm" (ngSubmit)="createNewDept(adddept)" class="card_form">
             <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title" >Add Department</h4>
                 <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddDept()">

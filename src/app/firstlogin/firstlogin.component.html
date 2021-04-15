@@ -10,9 +10,11 @@
             <img class="login-bg" src="assets/images/loginimage.png">
       </div>
       <div class="col-sm-6">
-          <div class="brand"  style="
-          margin-left: 2%;
-      ">
+
+        <div class="col-sm-12 status-bar">
+          <newstepselection class="register_account email_verified"></newstepselection>
+        </div>
+          <div class="brand"  style="margin-left: 2%;">
               <img src="assets/images/logo_img.png">
               <p class="wel_acc">Welcome! Finish setting up your account</p>
           </div>
@@ -44,10 +46,10 @@
             <img src="assets/images/registration/Lock.svg" class="icon">
             <span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
             <input [type]="(show==true) ? 'password' : 'text'" id="password" name="password" #password="ngModel" class="form-control"
-              [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})" required>
+              [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" required>
             <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
               <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
-              <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span>
+              <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number</span>
             </span>
           </div>
 

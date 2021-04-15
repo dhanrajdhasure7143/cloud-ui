@@ -11,16 +11,18 @@ import { CompareValidatorDirective } from './shared/compare-validator.directive'
 import { SocialLoginComponent } from './social-login/social-login.component';
 import { Particles } from '../_models/particlesjs';
 import { CreataccountComponent } from './creataccount/creataccount.component';
-import { ChangepasswordComponent } from './changepassword/changepassword.component';
+import { ModalModule } from 'ngx-bootstrap';
+import { SharedModule } from '../shared/shared.module';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent, ChangepasswordComponent],
+  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule,ModalModule,
+    SharedModule
   ],
   entryComponents: [NewpasswordComponent],
   exports: [LoginComponent],

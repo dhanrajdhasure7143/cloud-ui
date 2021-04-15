@@ -9,6 +9,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 @Component({
   selector: 'app-review',
@@ -53,13 +54,15 @@ public paymentToken:any;
   newAccessToken: any[];
   userRole: any;
   freeactive: boolean=true;
+  private spacialSymbolEncryption:string = '->^<-';
   constructor( private productlistservice:ProductlistService,
                 private route:ActivatedRoute,
                 private  router:Router,
                 private modalService: BsModalService,
                 private profileService: ProfileService,
                 private spinner:NgxSpinnerService,
-                private sharedDataService:SharedDataService) { }
+                private sharedDataService:SharedDataService,
+                private cryptoService: CryptoService) { }
 
   ngOnInit() {
     this.EnteredCarddetails();
@@ -130,8 +133,9 @@ public paymentToken:any;
                 "product_id":"2.0"}
                 }
             
-    
-    this.productlistservice.getPaymentToken(cardValue).subscribe(res=>{
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue))
+    let reqObj = {"enc": encrypt};
+    this.productlistservice.getSubscriptionPaymentToken(reqObj).subscribe(res=>{
       this.spinner.show();
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){
@@ -187,7 +191,9 @@ this.sharedDataService.setFreetrialavailed(false);
       "cvc":this.cardDetails.cvvNumber
     }
      
-    this.productlistservice.getPaymentToken(cardValue).subscribe(res=>{
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue));
+    let reqObj = {"enc": encrypt};
+    this.productlistservice.getSubscriptionPaymentToken(reqObj).subscribe(res=>{
     
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){
@@ -246,7 +252,7 @@ this.sharedDataService.setFreetrialavailed(false);
   
   }
   privacyPolicy(template){
-    this.modalRef = this.modalService.show(template,this.config);
+    this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
   }
   close_modal(){
     this.modalRef.hide();
