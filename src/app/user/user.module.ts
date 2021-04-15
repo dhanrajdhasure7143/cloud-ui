@@ -13,11 +13,11 @@ import { Particles } from '../_models/particlesjs';
 import { CreataccountComponent } from './creataccount/creataccount.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { SharedModule } from '../shared/shared.module';
-
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent],
+  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent,ChangepasswordComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
