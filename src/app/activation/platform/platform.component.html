@@ -9,7 +9,7 @@
       <tab heading="Products" id="tab1">
         <div class="row" id="products">
       <div class="welcm_heading col-md-12"> 
-        <div class="row"><h1 >Welcome to EPSoft</h1><span>  ( Intelligent Automation Platform )</span></div>
+        <div class="row"><h1 >Welcome to EZFlow</h1><span>  ( Intelligent Automation Platform )</span></div>
         <div class="row"><h4 id="sbtl">Select below service to Activate or Upgrade</h4></div>
       </div>
           <div class="col-md-2 dataCardBox" *ngFor="let eachData of visibletest;let i=index;trackBy:loopTrackBy">
@@ -21,7 +21,7 @@
                     <p *ngIf="!eachData.subscribed">Activate Free Tier
                     </p> </div> 
                     <div>
-                      <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='2.0'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
+                      <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='EZFlow'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
                       <p class="expiryInfo" *ngIf="this.showexpiryinfoezflow&&eachData.subscribed&&eachData.id=='ezflow'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezflow}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
                       <p class="expiryInfo" *ngIf="this.showexpiryinfoezbot&&eachData.subscribed&&eachData.id=='ezbot'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezbot}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
            
@@ -49,7 +49,7 @@
   <div class="container">
     <div class="row">
   <div class="welcm_heading col-md-12"> 
-    <div class="row"><h1 >Welcome to EPSoft</h1><span>  ( Intelligent Automation Platform )</span></div>
+    <div class="row"><h1 >Welcome to EZFlow</h1><span>  ( Intelligent Automation Platform )</span></div>
     <div class="row"><h4 id="sbtl">Select below service to Activate or Upgrade</h4></div>
   </div>
       <div class="col-md-2 dataCardBox" *ngFor="let eachData of visibletest;let i=index;trackBy:loopTrackBy">
@@ -62,7 +62,7 @@
                 </p> </div> 
                 <div>
                 
-                  <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='2.0'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
+                  <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='EZFlow'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
                   <p class="expiryInfo" *ngIf="this.showexpiryinfoezflow&&eachData.subscribed&&eachData.id=='ezflow'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezflow}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
                   <p class="expiryInfo" *ngIf="this.showexpiryinfoezbot&&eachData.subscribed&&eachData.id=='ezbot'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezbot}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" ></p>
             </div>

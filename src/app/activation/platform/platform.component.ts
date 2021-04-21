@@ -63,9 +63,9 @@ export class PlatformComponent implements OnInit {
                   });
     this.productslist.forEach(prod => {
         // if(!prod.freetrailAvailed){}
-         if(prod.id === "2.0"){
-           prod.img = "assets/images/2.0.svg"
-           this.productlistservice.getFreeTierInfo('2.0').subscribe(data=>{
+         if(prod.id === "EZFlow"){
+           prod.img = "assets/images/ezflow.svg"
+           this.productlistservice.getFreeTierInfo('prod_JIbrakvwG1IT1l').subscribe(data=>{
              
             this.freetrailAvailed=data;
             if(this.freetrailAvailed.Expirerin!=null){

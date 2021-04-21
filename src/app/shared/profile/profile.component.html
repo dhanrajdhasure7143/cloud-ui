@@ -383,6 +383,9 @@
                             <span *ngIf="confpassword.errors['compare'] && !confpassword.errors['required']" class='fa fa-info-circle errspan'> Password confirm do not match</span>
                         </span>  
                     </div>
+                    <div class="col-md-6">
+                      <div *ngIf="passwordvalidatemsg" class='fa fa-exclamation-triangle errspan errspan1'> {{passwordvalidatemsg}}</div>
+                    </div>
  
                       <div class="col-md-12 submitbtn">
                         <button [disabled]="f.invalid" class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
@@ -1203,7 +1206,7 @@
                 <div class="col-md-12">
                   <div class="form-group form-buttons pull-right buttonsblock">
                     <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
-                    <button class="btn btn-primary change_plan" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
+                    <button [disabled]="updatecheck(updateSecretedata)" class="btn btn-primary change_plan" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
                 </div>
               </div>
           <div class="clearfix">
@@ -1512,6 +1515,16 @@
               </select>
               </div>
               <div class="col-md-12 ">
+                <label for="planid">Activity : </label>
+                  <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
+                   <select name="activity_name1" #activity_name1="ngModel" class="form-control botmbordr" [(ngModel)]="updateActivities" required>
+                    <option  [value]="undefined" disabled hidden>Select Activities</option>
+                    <!-- <option  [value]="null" disabled hidden>Select Activities</option> -->
+                     <option *ngFor="let each of activitieslist" [value]="each.activity">{{each.activity}}</option>
+                </select> 
+                  </div>
+                    <br>
+                    <div class="col-md-12 ">
                 <label for="product">Type : </label>
                 <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
                 <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="updateType" required>
