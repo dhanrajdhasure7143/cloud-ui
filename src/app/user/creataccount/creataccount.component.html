@@ -17,7 +17,7 @@
                       <div class="form-group inner-addon left-addon">
                             <img src="assets/images/registration/mail.svg" class="icon">
                             <input type="text" name="email" #email="ngModel" class="form-control emailInput" [(ngModel)]="emailId"
-                              pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Enter Email" 
+                              pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Enter Email" (keypress)="inputlettersEmail($event)" 
                               [ngClass]="{ 'is-invalid': ((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) }" />
                             <span *ngIf="((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) "
                               class='fa fa-info-circle errspan'>

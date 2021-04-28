@@ -42,6 +42,9 @@ export class FirstloginComponent implements OnInit {
   isInput: boolean = false;
   categories:any[] = [];
   userEmail:any;
+  profileimage:any;
+  showErr:any;
+  base64textString:any;
   private spacialSymbolEncryption:string = '->^<-';
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
@@ -221,9 +224,12 @@ export class FirstloginComponent implements OnInit {
   //  payload.append('city', userDetails.city);
   //  payload.append('zipcode', userDetails.zipcode);
   //  payload.append('department', userDetails.department);
-   if(this.selectedFile!=undefined){
-   payload.append('profilePic', this.selectedFile, this.selectedFile.name);
-  }
+
+  //  if(this.selectedFile!=undefined){
+  //   var test=this.cryptoService.encrypt(JSON.stringify(this.selectedFile))
+  //   console.log(test);
+  //  payload.append('profilePic', test, this.selectedFile.name);
+  // }
   var reqObj = {}
   reqObj = {
     'userId': userDetails.userId,
@@ -237,13 +243,24 @@ export class FirstloginComponent implements OnInit {
     'state': userDetails.state,
     'city': userDetails.city,
     'zipcode': userDetails.zipcode,
-    'department': userDetails.department
+    'department': userDetails.department,
+    'profile_image':this.base64textString
   }
   // if(this.selectedFile!=undefined){
   //   reqObj['profilePic'] = payload;
   //   reqObj['profilePicName'] = this.selectedFile.name;
   // }
+
+
+
   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+  // for (var key in payload) {
+  //   console.log(key, payload[key]);  
+  // }
+
+  // new Response(payload).text().then(console.log)
+
+  
     this.service.registerUser(payload).subscribe(res => {
       this.data=res
       sessionStorage.clear();
@@ -331,9 +348,19 @@ export class FirstloginComponent implements OnInit {
     }
     }
 
-    onFileSelected(event)
-    {
+    onFileSelected(event){
       this.selectedFile=<File>event.target.files[0]
       $("#image").val(this.selectedFile.name)
+      this.getBase64pic(this.selectedFile)
+    }
+    getBase64pic(file) {
+      var reader = new FileReader();
+      reader.onload = this._handleReaderLoadedpic.bind(this);
+      reader.readAsBinaryString(file);
+    }
+    
+    _handleReaderLoadedpic(readerEvt) {
+      var binaryString = readerEvt.target.result;
+      this.base64textString = btoa(binaryString);
     }
 }

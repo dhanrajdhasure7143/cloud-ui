@@ -91,9 +91,9 @@
                 <div class="form-group col-sm-6">
                   <label for="phoneNumber">Phone</label>
                   <div>
-                   <input style="width: 100%" type="text" #phoneNumber formControlName="phoneNumber" (keydown)="onKeydown($event)"  id="phoneNumber" class="form-control"
-                      (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
-                      (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" onKeyPress="if(this.value.length==15) return false;" required>
+                    <input style="width: 100%" type="text" #phoneNumber formControlName="phoneNumber" (keydown)="onKeydown($event)"  id="phoneNumber" class="form-control" 
+                    onKeyPress="if(this.value.length==15) return false;" required>
+                    <!-- (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" -->
                       <span *ngIf="((form.get('phoneNumber').invalid && form.submitted)|| (form.get('phoneNumber').errors && form.get('phoneNumber').touched))"
                          class='fa fa-info-circle errspan'> Phone Number is required </span>
                   </div>

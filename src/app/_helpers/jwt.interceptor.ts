@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Base64 } from 'js-base64';
+import { CryptoService } from '../_services/crypto.service';
+
 
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
+    constructor(private crypto:CryptoService){}
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         // console.log("i cam to jwt", currentUser);
@@ -17,13 +20,15 @@ export class JwtInterceptor implements HttpInterceptor {
             if(localStorage.getItem('ipAddress'))
              ipAddress = localStorage.getItem('ipAddress');
              var timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+             var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));             
+
             request = request.clone({
                 headers: request.headers,
-                setHeaders: {
-                    // userName: localStorage.getItem('userName'),
+                setHeaders: {                    
                     Authorization: `Bearer ${currentUser.accessToken}`,
                     'ip-address': ipAddress,
-                    'timezone':timezone
+                    'timezone':timezone,
+                    'authKey':userId
                     // 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
                     // 'Access-Control-Allow-Origin': '*',
                     // 'Access-Control-Allow-Credentials': 'true',
