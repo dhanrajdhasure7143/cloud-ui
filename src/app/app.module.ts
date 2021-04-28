@@ -21,6 +21,8 @@ import { BsModalService } from 'ngx-bootstrap';
 import { SuperadminModule } from './superadmin/superadmin.module';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { UserIdleModule } from 'angular-user-idle';
+import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
@@ -45,8 +47,9 @@ export const contentfulConfig: ContentfulConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    ValidateComponent  
-   
+    ValidateComponent,
+    BadgatewayPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

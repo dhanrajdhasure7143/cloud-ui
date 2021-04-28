@@ -42,7 +42,7 @@
                 </div>
                 <div class='col-sm-12 apply-coupon'>
                     <p *ngIf='!iscoupon' (click)='haveCoupon()'>Have a coupon ?</p>
-                 <span *ngIf='iscoupon' class="row"><input type="text" name='coupon' #coupon='ngModel' [(ngModel)]='couponcode' placeholder="Enter Coupon Code" class='col-sm-6 form-control coupon-input' required>
+                 <span *ngIf='iscoupon' class="row"><input type="text" name='coupon' #coupon='ngModel' [(ngModel)]='couponcode' placeholder="Enter Coupon Code" class='col-sm-6 form-control coupon-input' (keypress)="lettersAndNumbers($event)" required>
                       <button class='btn hoverable applybtn' (click)='applyCoupon(couponcode)' [disabled] = "coupon.invalid || isapplied">Apply</button></span>
                       <div style="overflow-wrap: break-word;" class="errordiv col-md-6">
                           <span *ngIf="success" class="alert-success text-center coupon_alertsuccess">{{success}}</span>
