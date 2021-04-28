@@ -121,7 +121,7 @@ export class ProfileComponent implements OnInit {
   public otherdepartment: any;
   stateInfo: any[] = [];
   cityInfo: any[] = [];
-  allRoles: any;
+  allRoles: any[]=[];
   listOfpermissions: any = [];
   permissionList: any = [];
   tenantId: string;
@@ -3187,6 +3187,14 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
     
     lettersAndNumbers(event): boolean {
       var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+    }
+    lettersAndNumbers1(event): boolean {
+      var regex = new RegExp("^[0-9a-zA-Z\s\r\n., ]+$");
       var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         if (!regex.test(key)) {
           event.preventDefault();

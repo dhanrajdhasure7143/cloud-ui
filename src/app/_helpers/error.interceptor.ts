@@ -64,8 +64,8 @@ export class ErrorInterceptor implements HttpInterceptor {
       localStorage.clear();
       me.router.navigate(['/badgateway']);
    } else if (err.status === 403)  {
-    localStorage.clear();
-    me.router.navigate(['/user']);
+    // localStorage.clear();
+    // me.router.navigate(['/user']);
       
    } else if(err.status === 405) {
     Swal.fire({
