@@ -55,8 +55,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         confirmButtonText: 'Ok'
       }).then((result) => {
         console.log("on confirm")
-        localStorage.clear();
-        me.router.navigate(['user']);
+        setTimeout(() => {
+          localStorage.clear();
+          me.router.navigate(['']);
+        }, 3000);
+        
       })
     }
      
@@ -78,7 +81,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ok'
     }).then((result) => {
-      me.router.navigate(['user']);
+      me.router.navigate(['']);
       localStorage.clear();
       
     })

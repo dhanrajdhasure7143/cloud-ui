@@ -21,7 +21,7 @@ const routes: Routes = [{
 {
   path: 'user',
   loadChildren: './user/user.module#UserModule',
-  // canActivate: [LoginGuard]
+  canActivate: [LoginGuard]
 }, 
 {
   path:'superadmin',
@@ -48,10 +48,10 @@ const routes: Routes = [{
   redirectTo: 'user',
   pathMatch: 'full'
 },
-{
-  path: '**',
-  component: ErrorPageComponent
-}
+// {
+//   path: '**',
+//   component: ErrorPageComponent
+// }
 ];
 
 const config: ExtraOptions = {
