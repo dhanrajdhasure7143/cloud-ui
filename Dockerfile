@@ -7,7 +7,7 @@
 #RUN npm run build
 
 ### STAGE 2: Run ###
-FROM nginx:1.16.0-alpine
+FROM nginx:1.20.0-alpine
 #COPY --from=build /app/dist/aiotal /usr/share/nginx/html
 COPY dist/aiotal /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
