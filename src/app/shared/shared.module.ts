@@ -33,6 +33,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { CompareValidatorDirective } from './comparepsw-validator.directive';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NewstepselectionComponent } from './newstepselection/newstepselection.component';
 
 
 
@@ -56,9 +57,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
       FooterComponent,
       TermsconditionsComponent,
       PrivacypolicyComponent,
-      CompareValidatorDirective
-      
-      
+      CompareValidatorDirective,
+      NewstepselectionComponent
       ],
   imports: [
     CommonModule,
@@ -76,7 +76,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     Ng2SearchPipeModule
   ],
   providers: [NotifierService],
-  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent],
+  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent,NewstepselectionComponent,TermsconditionsComponent,PrivacypolicyComponent],
   entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent,FooterComponent]
 })
 export class SharedModule { }

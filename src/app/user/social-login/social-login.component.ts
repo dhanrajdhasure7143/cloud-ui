@@ -53,6 +53,7 @@ export class SocialLoginComponent implements OnInit {
       //        CookieStore.set('token', user.resp_data.accessToken, {});
  // this.router.navigate(['/activation']);
  this.authenticationService.userDetails(this.email).subscribe(data => this.checkSuccessCallback(data));
+ this.appService.socialLoginValidateToken(userId);
  this.authorize();
 
   });
@@ -91,6 +92,8 @@ authorize() {
     this.loading = false;
   })
 }
+
+
 
 }
 

@@ -5,4 +5,3 @@ node("slave02") {
     load("vars/appPipeline.groovy").build()
   }
 }
-

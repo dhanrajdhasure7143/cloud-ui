@@ -717,6 +717,7 @@ button.btn.btn-primary.invite-button {
   position: absolute;
   top: 6px;
   right: 4px;
+  z-index: 10;
 }
 
 
@@ -785,4 +786,10 @@ button.btn.btn-primary.invite-button {
     }
     .deptpagination{
         margin-left: 60%;
+    }
+    .errspan1{
+        font-size:15px;
+    }
+    .card-input{
+        padding-right: 36px;
     }

@@ -14,11 +14,11 @@ import { ProductlistService } from 'src/app/_services/productlist.service';
 import {yearslist } from './../../../assets/jsons/yearlist.json';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import moment from 'moment';
-import { Observable } from 'rxjs';
+import { ObjectUnsubscribedError, Observable } from 'rxjs';
 import { log } from 'console';
 import * as $ from 'jquery';
 import { TabsetComponent } from 'ngx-bootstrap';
-import { resolveComponentResources } from '@angular/core/src/metadata/resource_loading';
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 
 
@@ -121,7 +121,7 @@ export class ProfileComponent implements OnInit {
   public otherdepartment: any;
   stateInfo: any[] = [];
   cityInfo: any[] = [];
-  allRoles: any;
+  allRoles: any[]=[];
   listOfpermissions: any = [];
   permissionList: any = [];
   tenantId: string;
@@ -339,6 +339,9 @@ export class ProfileComponent implements OnInit {
   searchPermission: string;
   searchvaultmng: string;
   testuserid: any;
+  private spacialSymbolEncryption:string = '->^<-';
+  secretarray: any=[];
+  cardType:any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -348,15 +351,11 @@ export class ProfileComponent implements OnInit {
     private profileservice: ProfileService,
     private notifier: NotifierService,
     private router: Router,
-    private productlistservice:ProductlistService
+    private productlistservice:ProductlistService,
+    private cryptoService:CryptoService
  
   ) { }
 
-  ngOnDestroy(){
-    this.modalRef.hide();
-    Swal.close();
-    
-  }
   ngOnInit() {
     this.profileservice.getCustomUserRole(2).subscribe(role=>{
 
@@ -464,15 +463,6 @@ this.profileservice.applications().subscribe(resp =>
     
 
   }
-  onKeydowncoupon(event){
-    
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   } 
-  }
-
   getAllUsersList(){
 
     this.currentUserId = localStorage.getItem("ProfileuserId");
@@ -585,14 +575,27 @@ this.profileservice.applications().subscribe(resp =>
     
   }
   viewSecreteData(keys,i,template){
-   
+  
+   let secret=[]
+  // this.secretarray
         this.viewdata=keys;
+        let idCount=0
+        for (const [key, value] of Object.entries(this.viewdata.data.data)) {
+          
+          let obj={}
+          obj[`id`]=idCount++
+          obj[`key`]=`${key}`
+          obj[`value`]=`${value}`
+          secret.push(obj)
+          
+        }
  
+ this.secretarray=secret
     this.versiondata=this.viewdata.data.metadata.version;
     this.updateSecretedata=this.viewdata
     // this.mykeys= Object.keys(this.updateSecretedata.data.data)
     // this.myvalue=Object.values(this.updateSecretedata.data.data)
-    console.log("keys===", this.viewdata.data.data)
+    
     this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
 
   }
@@ -605,45 +608,33 @@ this.profileservice.applications().subscribe(resp =>
     //this.secretes=[];
     this.isadd=true;
     this.addpressed=true;
-    this.secretes1.push({
-      id: this.secretes1.length + 1,
+    this.secretarray.push({
+      id: this.secretarray.length + 1,
       key: '',
       value: ''
-      
-    });
-   
-    
+    }); 
   }
 
-  updatecheck(updateSecretedata){
-    let flag=0;
-    this.secretes1.forEach(element => {
-     if(element.key=="" || element.value == ""){
-      flag=1;
-     }
-     
-});  
-if(flag==1){
-return true;
-}
-else{
-  return false;
-}
+  removeSecretesId(i : number){
+    this.secretarray.splice(i, 1);
   }
-
   //update secrete
   updateSecreteData(updateSecretedata){
-   
-    this.secretes1.forEach(element => {
-      this.updatesecreteobj[element.key] = element.value
-      
-});  
+   let obj={}
+  //  console.log(this.secretarray);
+    // this.secretes1.forEach(element => {
+    //   this.updatesecreteobj[element.key] = element.value
+    //   });
 
-
+  for (let i = 0; i < this.secretarray.length; i++) {
+    obj[this.secretarray[i].key]=this.secretarray[i].value
+  }
+  
     //this.updatesecreteobj[this.updateSecretedata] = this.updateSecretedata.data.data
    
-    this.finalObj=Object.assign(this.updatesecreteobj,this.updateSecretedata.data.data)
-   
+    // this.finalObj=Object.assign(this.updatesecreteobj,obj)
+    this.finalObj=obj;
+  
     this.input1={
       "options": {
         "cas": this.versiondata
@@ -670,7 +661,6 @@ else{
   }
   close_modal(){
     this.modalRef.hide();
-    this.secretes1=[]
   }
   getAllPaymentmodes() {
 
@@ -819,7 +809,9 @@ else{
 
       this.formOne.department = this.otherdepartment;
     }
-    this.firstloginservice.updateUser(this.formOne).subscribe(data => {
+    let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.formOne));
+    let reqObj = {"enc": encrypt};
+    this.firstloginservice.updateUser(reqObj).subscribe(data => {
     this.notifier.show({
       type: "success",
       message: "Updated successfully!",
@@ -1006,7 +998,9 @@ this.isupdatecouponclicked=false;
     }
 
   }
-  infoModelSubmit() {
+  infoModelSubmit(data) {
+    console.log("data",data)
+    localStorage.setItem("selectedproductId",data.name)
     this.modalRef.hide();
     this.slideDown();
     this.router.navigate(['/activation/payment/chooseplan']);
@@ -1374,24 +1368,8 @@ this.isupdatecouponclicked=false;
         
       });
     }
-    removeSecrete(mykey,i:number){
-      console.log("my key===", mykey)
-      let arr = [];  
-      Object.keys(mykey).map(function(key){  
-       arr.push({[key]:mykey[key]})  
-      return arr;  
-      });  
-       arr.splice(i,1)
-      console.log("arr====",arr)
-      let object = {}
-      arr.forEach(element => {
-        object = Object.assign(object, element); 
-      });
-       this.viewdata.data.data=object;
-      console.log(object);  
-
-    //  delete this.viewdata.data.data.mykey
-      // this.secretes.splice(i, 1);
+    removeSecrete(i : number){
+      this.secretes.splice(i, 1);
     }
     cancelAddRole(){
       this.modalRef.hide();
@@ -1421,7 +1399,9 @@ this.isupdatecouponclicked=false;
     onChangeCardType(cardNumber) {
       var creditCardType = require("credit-card-type"); 
       this.cards = creditCardType(cardNumber);
-     
+     if(this.cards.length=1){
+      this.cardType=this.cards[0].type;
+     }
     }
     
     addNewCard(){
@@ -1432,8 +1412,9 @@ this.isupdatecouponclicked=false;
           "exp_year":this.cardModel.cardyear,
           "cvc":this.cardModel.cvvNumber
         }
-
-      this.productlistservice.getPaymentToken(this.cardDetails).subscribe(res=>{
+        let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.cardDetails));
+        let reqObj = {"enc": encrypt};
+      this.productlistservice.getMyAccountPaymentToken(reqObj).subscribe(res=>{
         this.paymentToken=res
         if(this.paymentToken.errorMessage==="Failed to generate payment token"){
           this.notifier.show({
@@ -1454,21 +1435,25 @@ this.isupdatecouponclicked=false;
       this.profileservice.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
           // console.log('res',res);
           this.getAllPaymentmodes();
-          this.modalRef.hide();
           if(res===null){
             this.notifier.show({
               type: "success",
               message: "Card added successfully!"
             });
+            this.modalRef.hide();
+            this.cardModel={}
+
+
           }
           if(res.errorMessage==="Failed to create payment method"){
             this.notifier.show({
               type: "error",
               message: "Failed to add card."
             });
+            this.modalRef.hide();
+            this.cardModel={}
           }
-         
-      this.cardModel={}
+
       })
     }
       }),err=>{
@@ -1480,7 +1465,7 @@ this.isupdatecouponclicked=false;
   
       // this.profileservice.addNewCard(token).subscribe(res=>{})
       // api call
-      this.cardModel={}
+     // this.cardModel={}
     }
 /**alert */
 cancelAlert(){
@@ -1623,9 +1608,7 @@ cancelVaultconfig(){
   
     
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-     console.log(invres.message)
-   
-  if(invres.message == "No user allowed for the product"){
+    if(invres.message == "No user allowed for the product"){
     Swal.fire({
       title: 'Warning',
       text: "No subscriptions found for the product!",
@@ -1636,10 +1619,10 @@ cancelVaultconfig(){
     this.inviteAllRoles = '';
   
   }
-  if(invres.message == "Exceeded max users count"){
+  if(invres.message == "No user allowed for the product"){
     Swal.fire({
       title: 'Warning',
-      text: "Users max limit exceeded!",
+      text: "No subscriptions found for the product!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
@@ -1859,26 +1842,25 @@ cancelVaultconfig(){
       $("#product").prop('disabled', false);
       this.invitemultirole=false;
     })
-   }
-  //else{
-  //   Swal.fire({
-  //     title: 'Error',
-  //     text: "Inivation not sent due to technical issue.",
-  //     type: 'error',
-  //     showCancelButton: false,
-  //     allowOutsideClick: true
-  //   })
-  //   this.inviteAllRoles = '';
+  }else{
+    Swal.fire({
+      title: 'Error',
+      text: "Inivation not sent due to technical issue.",
+      type: 'error',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+    this.inviteAllRoles = '';
 
-  //   this.upload_excel=""
-  //   this.myappName=""
-  //   this.selectedFile=null
-  //   $("#excel").empty();
-  //   $('.upload').prop('disabled', false);
-  //   $("#email").prop('disabled', false);
-  //   $("#product").prop('disabled', false);
-  //   this.invitemultirole=false;
-  // }
+    this.upload_excel=""
+    this.myappName=""
+    this.selectedFile=null
+    $("#excel").empty();
+    $('.upload').prop('disabled', false);
+    $("#email").prop('disabled', false);
+    $("#product").prop('disabled', false);
+    this.invitemultirole=false;
+  }
   },err=>{
 
     Swal.fire({
@@ -2233,7 +2215,7 @@ couponDelYes(coupon,index){
         type: "success",
         message: "Updated successfully!"
       });
-    }
+      }
      })
      
    }
@@ -2331,17 +2313,10 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       this.profileservice.createPermission(addpermission).subscribe(createpermresp => {
         this.modalRef.hide();
         this.getAllPermissions();
-        if(createpermresp.message==="Permission already exist with given name"){
-          this.notifier.show({
-            type: "error",
-            message: "Permission already exists with given name!"
-          });
-        }else{
         this.notifier.show({
           type: "success",
           message: "Saved successfully!"
         });
-      }
       })
       this.permName = "";
       this.permissionDescription = "";
@@ -2421,12 +2396,12 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         this.notifier.show({
           type: "success",
           message: "created coupon successfully!!"
-        });
-      }
+        });}
            this.getListofCoupons();
             });
+
             
-            form.resetForm();
+          //  form.resetForm();
     }
     /** alerts */
     saveConfig(form:NgForm) {
@@ -2482,14 +2457,10 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         }
     
                this.profileservice.saveConfig(this.alertsbody).subscribe(res =>  {
-                if(res!=0){
             this.notifier.show({
               type: "success",
               message: "Alert saved successfully"
             });
-            this.modalRef.hide();
-            this.getAllAlertsActivities();
-          }
       //       this.alertsapplication="";
       // this.alertsactivities=[];
       // this.selectedtype="";
@@ -2500,15 +2471,8 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       // this.smsselected="";
       // this.emailselected="";
       // this.incidentselected="";
-       
-           if(res==0){
-            this.notifier.show({
-              type: "error",
-              message: "Alert already configured."
-            });
-            this.modalRef.hide();
-            this.getAllAlertsActivities();
-           }
+           this.modalRef.hide();
+           this.getAllAlertsActivities();
          //  this.configurealertform.reset();
             }, err => {
               this.notifier.show({
@@ -2928,7 +2892,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
            
           }else {
            this.notifier.show({
-              message: `Failed to save template`,
+              message: `Template name already exists`,
               type: 'error'
             }) 
           }
@@ -3129,7 +3093,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       this.emailtemplate=undefined;
       this.emailselected=undefined;
     }
-    createNewDept(){
+    createNewDept(form:NgForm){
       let body = {
         "categoryName": this.deptName
       }
@@ -3141,11 +3105,6 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
             type: "success",
             message: "Department created successfully!"
           });
-        }else if(resp.message === "Category already exists"){
-          this.notifier.show({
-            type: "error",
-            message: "Department already exists",
-          });
         }else {
           this.notifier.show({
             type: "error",
@@ -3153,6 +3112,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
           });
         }
       })
+      form.resetForm();
     }
     viewDept(category, template){
       this.categoryname=category.categoryName;
@@ -3173,15 +3133,10 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
             type: "success",
             message: "Department modified successfully!"
           });
-        }else if(resp.message==="Category already exists"){
-          this.notifier.show({
-            type: "error",
-            message: "Department already exists with given name!",
-          });
         }else {
           this.notifier.show({
             type: "error",
-            message: "Failed to modify department!",
+            message: "Failed to modify department",
           });
         }
       })
@@ -3204,13 +3159,14 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
             type: "success",
             message: "Department deleted successfully!"
           });
+          this.selectedIndex= " ";
          }else{
           this.notifier.show({
             type: "error",
             message: "Failed to delete department",
           });
          }
-        document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
+      //  document.getElementsByClassName("deletconfm")[index].classList.remove("isdelet")
        })
      }
      cancelAddDept(){
@@ -3220,4 +3176,37 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
 
       this.inviteAllRoles = this.allRoles;
     }
-     }
+    
+    inputNumberOnly(event){
+      let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+      let temp =numArray.includes(event.key); //gives true or false
+     if(!temp){
+      event.preventDefault();
+     } 
+    }
+    
+    lettersAndNumbers(event): boolean {
+      var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+    }
+    lettersAndNumbers1(event): boolean {
+      var regex = new RegExp("^[0-9a-zA-Z\s\r\n., ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+    }
+    inputlettersEmail(event): boolean {
+      var regex = new RegExp("^[a-zA-Z0-9.,@_- ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+    }
+}

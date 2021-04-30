@@ -6,10 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: NavigateComponent,
-    children: [{
-      path: '',
-      loadChildren: './../shared/topheader/topheader.module#TopheaderModule'
-    }]
+    // children: [{
+    //   path: '',
+    //   loadChildren: './../shared/topheader/topheader.module#TopheaderModule'
+    // }]
     
   }];
 

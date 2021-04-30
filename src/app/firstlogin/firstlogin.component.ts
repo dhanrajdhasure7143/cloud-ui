@@ -10,6 +10,8 @@ import { Particles } from '../_models/particlesjs';
 import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
+import { mergeMapTo } from 'rxjs/operators';
+import { CryptoService } from '../_services/crypto.service';
 
 @Component({
   selector: 'app-firstlogin',
@@ -39,16 +41,23 @@ export class FirstloginComponent implements OnInit {
   domain: any;
   isInput: boolean = false;
   categories:any[] = [];
+  userEmail:any;
+  profileimage:any;
+  showErr:any;
+  base64textString:any;
+  private spacialSymbolEncryption:string = '->^<-';
  
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
-              private particles :Particles,) {
+              private particles :Particles,
+              private cryptoService :CryptoService ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
       
       var token=params['token']
       this.decodedToken = Base64.decode(token)
+      this.userEmail = Base64.decode(token);
       // console.log("decoded token = "+this.decodedToken);
      this.service.verifyToken(token).subscribe(response=>{this.onSuccessOfVerifyToken(response),err=>{
       
@@ -59,7 +68,8 @@ export class FirstloginComponent implements OnInit {
     }else{
       var inviteId = params['inviteId']
       var userId = params['userId']
-      this.decodedToken = Base64.decode(userId)
+      this.decodedToken = Base64.decode(userId);
+      this.userEmail = Base64.decode(userId);
       this.service.verifyInvitee(inviteId).subscribe(response =>{this.onSuccessOfConfirmToken(response),err=>{
         this.router.navigate['/user']
       }})
@@ -201,23 +211,56 @@ export class FirstloginComponent implements OnInit {
    // userDetails.country = this.model.country[;
     userDetails.userId = this.decodedToken;
     userDetails.department = this.model.department;
-   const payload = new FormData();
-   payload.append('userId', userDetails.userId);
-   payload.append('firstName', userDetails.firstName);
-   payload.append('lastName', userDetails.lastName);
-   payload.append('password', userDetails.password);
-   payload.append('phoneNumber', userDetails.phoneNumber);
-   payload.append('country', userDetails.country);
-   payload.append('designation', userDetails.designation);
-   payload.append('company', userDetails.company);
-   payload.append('state', userDetails.state);
-   payload.append('city', userDetails.city);
-   payload.append('zipcode', userDetails.zipcode);
-   payload.append('department', userDetails.department);
-   if(this.selectedFile!=undefined){
-   payload.append('profilePic', this.selectedFile, this.selectedFile.name);
-  }
+   var payload = new FormData();
+  //  payload.append('userId', userDetails.userId);
+  //  payload.append('firstName', userDetails.firstName);
+  //  payload.append('lastName', userDetails.lastName);
+  //  payload.append('password', userDetails.password);
+  //  payload.append('phoneNumber', userDetails.phoneNumber);
+  //  payload.append('country', userDetails.country);
+  //  payload.append('designation', userDetails.designation);
+  //  payload.append('company', userDetails.company);
+  //  payload.append('state', userDetails.state);
+  //  payload.append('city', userDetails.city);
+  //  payload.append('zipcode', userDetails.zipcode);
+  //  payload.append('department', userDetails.department);
 
+  //  if(this.selectedFile!=undefined){
+  //   var test=this.cryptoService.encrypt(JSON.stringify(this.selectedFile))
+  //   console.log(test);
+  //  payload.append('profilePic', test, this.selectedFile.name);
+  // }
+  var reqObj = {}
+  reqObj = {
+    'userId': userDetails.userId,
+    'firstName': userDetails.firstName,
+    'lastName': userDetails.lastName,
+    'password': userDetails.password,
+    'phoneNumber': userDetails.phoneNumber,
+    'country': userDetails.country,
+    'designation': userDetails.designation,
+    'company': userDetails.company,
+    'state': userDetails.state,
+    'city': userDetails.city,
+    'zipcode': userDetails.zipcode,
+    'department': userDetails.department,
+    'profile_image':this.base64textString
+  }
+  // if(this.selectedFile!=undefined){
+  //   reqObj['profilePic'] = payload;
+  //   reqObj['profilePicName'] = this.selectedFile.name;
+  // }
+
+
+
+  payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+  // for (var key in payload) {
+  //   console.log(key, payload[key]);  
+  // }
+
+  // new Response(payload).text().then(console.log)
+
+  
     this.service.registerUser(payload).subscribe(res => {
       this.data=res
       sessionStorage.clear();
@@ -283,9 +326,14 @@ export class FirstloginComponent implements OnInit {
   }
   resetForm(form:NgForm) {
     form.resetForm();
+    var me = this;
     this.model = new User();
+    setTimeout(() => {
+      me.decodedToken = me.userEmail;
+    }, 100);
     $("#image").val('')
     this.selectedFile=null;
+
   }
     loopTrackBy(index, term){
     return index;
@@ -300,9 +348,19 @@ export class FirstloginComponent implements OnInit {
     }
     }
 
-    onFileSelected(event)
-    {
+    onFileSelected(event){
       this.selectedFile=<File>event.target.files[0]
       $("#image").val(this.selectedFile.name)
+      this.getBase64pic(this.selectedFile)
+    }
+    getBase64pic(file) {
+      var reader = new FileReader();
+      reader.onload = this._handleReaderLoadedpic.bind(this);
+      reader.readAsBinaryString(file);
+    }
+    
+    _handleReaderLoadedpic(readerEvt) {
+      var binaryString = readerEvt.target.result;
+      this.base64textString = btoa(binaryString);
     }
 }
