@@ -1605,10 +1605,10 @@ cancelVaultconfig(){
   
     
    this.profileservice.restrictUserInvite(this.myappName).subscribe(invres=>{
-    if(invres.message == "Exceeded max users count"){
+    if(invres.message == "No user allowed for the product"){
     Swal.fire({
       title: 'Warning',
-      text: "Users max limit exceeded!",
+      text: "No subscriptions found for the product!",
       type: 'error',
       showCancelButton: false,
       allowOutsideClick: true
@@ -2202,10 +2202,17 @@ couponDelYes(coupon,index){
       this.profileservice.modifyPermission(permbody).subscribe(permmodifyresp => {
        this.modalRef.hide();
        this.getAllPermissions();
+       if(permmodifyresp.message==="Permission already exist with given name"){
+        this.notifier.show({
+          type: "error",
+          message: "Permission already exists with given name!"
+        });
+       }else{
        this.notifier.show({
         type: "success",
         message: "Updated successfully!"
       });
+      }
      })
      
    }
@@ -2377,12 +2384,19 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
    
       this.profileservice.createCoupon(inputamount).subscribe(resp=>{this.data=resp
         this.modalRef.hide();
+        if(resp.message==="Coupon Code already exists"){
+          this.notifier.show({
+            type: "error",
+            message: "Please try again with another Coupon ID"
+          });
+        }else{
         this.notifier.show({
           type: "success",
           message: "created coupon successfully!!"
-        });
+        });}
            this.getListofCoupons();
             });
+
             
           //  form.resetForm();
     }

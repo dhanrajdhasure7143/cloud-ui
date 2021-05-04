@@ -6,6 +6,8 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { NewpasswordComponent } from './newpassword/newpassword.component';
 import { SocialLoginComponent } from './social-login/social-login.component';
 import { CreataccountComponent } from './creataccount/creataccount.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
+import { RedirectsignoutComponent } from './redirectsignout/redirectsignout.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,6 +31,14 @@ const routes: Routes = [{
   {
     path: 'createaccount',
     component: CreataccountComponent
+  },
+  {
+    path: 'changepassword',
+    component: ChangepasswordComponent
+  },
+  {
+    path: 'signout',
+    component: RedirectsignoutComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }
