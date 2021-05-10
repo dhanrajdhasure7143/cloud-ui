@@ -44,7 +44,7 @@ export class LoginService {
     return this.httpclient.post<any>('/api/user/resendVerificationMail?userId='+emailId,httpOptionsOne);
   }
   checkpasswordexpiry(Data):Observable<any>{
-    return this.httpclient.get<any>('/api/user/passwordExpairy?userId='+Data);
+    return this.httpclient.get<any>('/api/user/passwordExpiry?userId='+Data);
   }
 
 }
