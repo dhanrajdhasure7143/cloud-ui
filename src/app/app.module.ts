@@ -23,6 +23,8 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { UserIdleModule } from 'angular-user-idle';
 import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
@@ -64,7 +66,8 @@ export const contentfulConfig: ContentfulConfig = {
     //BotGridModule,
     Ng4LoadingSpinnerModule.forRoot(),
     DeviceDetectorModule,
-    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740})
+    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740}),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
