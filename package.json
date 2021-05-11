@@ -53,7 +53,7 @@
     "jquery": "^3.6.0",
     "js-base64": "^2.5.1",
     "jsplumb": "^2.8.6",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "ng-bootstrap": "^1.6.3",
     "ng-multiselect-dropdown": "^0.2.3",
     "ng2-charts": "~2.2.3",
