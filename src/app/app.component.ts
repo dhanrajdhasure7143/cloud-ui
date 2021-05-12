@@ -1,9 +1,12 @@
-import { Component, HostListener, Inject } from '@angular/core';
+import { ApplicationRef, Component, HostListener, Inject } from '@angular/core';
 import { ContentfulConfig } from './contentful/models/contentful-config';
 import { ContentfulConfigService } from './contentful/services/contentful-config.service';
 import { UserIdleService } from 'angular-user-idle';
 import { AuthenticationService } from './_services';
 import { ProductlistService } from './_services/productlist.service';
+import { SwUpdate } from '@angular/service-worker';
+import { interval } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -47,7 +50,11 @@ export class AppComponent {
   newAccessToken: any[];
 
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, private userIdle: UserIdleService,
-   private authservice: AuthenticationService, private productservice: ProductlistService) { }
+   private authservice: AuthenticationService, private productservice: ProductlistService, 
+   private update:SwUpdate,private appRef: ApplicationRef,private toastr: ToastrService) {
+    // this.updateClient();
+    // this.checkUpdate();
+    }
 
   @HostListener('click') onClick() {
     if (this.sharedconfig.events.bsDropdown) {
@@ -56,7 +63,12 @@ export class AppComponent {
     this.sharedconfig.events.bsDropdown = null;
   }
   ngOnInit() {
-    
+    addEventListener("offline",(e)=>{
+      this.toastr.error('Please check your internet connection');
+    });
+    addEventListener("online",(e)=>{
+      this.toastr.success('You are now online');
+    })
     //Start watching for user inactivity.
     this.userIdle.startWatching();
     this.userIdle.ping$.subscribe(() => {
@@ -89,5 +101,34 @@ export class AppComponent {
  
   restart() {
     this.userIdle.resetTimer();
+  }
+  updateClient() {
+    if (!this.update.isEnabled) {
+      console.log('Not Enabled');
+      return;
+    }
+    this.update.available.subscribe((event) => {
+      console.log(`current`, event.current, `available `, event.available);
+      if (confirm('update available for the app please conform')) {
+        this.update.activateUpdate().then(() => location.reload());
+      }
+    });
+
+    this.update.activated.subscribe((event) => {
+      console.log(`current`, event.previous, `available `, event.current);
+    });
+  }
+
+  checkUpdate() {
+    this.appRef.isStable.subscribe((isStable) => {
+      if (isStable) {
+        const timeInterval = interval(8 * 60 * 60 * 1000);
+        timeInterval.subscribe(() => {
+          
+          this.update.checkForUpdate().then(() => console.log('checked'));
+          console.log('update checked');
+        });
+      }
+    });
   }
 }

@@ -14,6 +14,9 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   if (window['ngRef']) {
     window['ngRef'].destroy();
   }
+  if ('serviceWorker' in navigator && environment.production) {
+    navigator.serviceWorker.register('/ngsw-worker.js');
+  }
   window['ngRef'] = ref;
 
   // Otherwise, log the boot error
