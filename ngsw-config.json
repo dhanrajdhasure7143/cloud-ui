@@ -9,8 +9,11 @@
           "/favicon.ico",
           "/index.html",
           "/manifest.webmanifest",
+          "/assets/jsons/.json",
           "/*.css",
-          "/*.js"
+          "/*.js",
+          "/assets/**",
+          "/*-es5*.js"
         ]
       }
     }, {
