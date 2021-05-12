@@ -6,7 +6,7 @@ import { AuthenticationService } from './_services';
 import { ProductlistService } from './_services/productlist.service';
 import { SwUpdate } from '@angular/service-worker';
 import { interval } from 'rxjs';
-import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -51,9 +51,9 @@ export class AppComponent {
 
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig, private userIdle: UserIdleService,
    private authservice: AuthenticationService, private productservice: ProductlistService, 
-   private update:SwUpdate,private appRef: ApplicationRef) {
-    this.updateClient();
-    this.checkUpdate();
+   private update:SwUpdate,private appRef: ApplicationRef,private toastr: ToastrService) {
+    // this.updateClient();
+    // this.checkUpdate();
     }
 
   @HostListener('click') onClick() {
@@ -64,19 +64,10 @@ export class AppComponent {
   }
   ngOnInit() {
     addEventListener("offline",(e)=>{
-      Swal.fire({
-        title: 'Warning',
-        text: "Please check your internet connection!",
-        type: 'info'
-      })
+      this.toastr.error('Please check your internet connection');
     });
     addEventListener("online",(e)=>{
-      Swal.fire({
-        title: 'Info',
-        text: "you are now online!",
-        type: 'info'
-      })
-      
+      this.toastr.success('You are now online');
     })
     //Start watching for user inactivity.
     this.userIdle.startWatching();
@@ -112,8 +103,6 @@ export class AppComponent {
     this.userIdle.resetTimer();
   }
   updateClient() {
-    console.log(this.update);
-    
     if (!this.update.isEnabled) {
       console.log('Not Enabled');
       return;
