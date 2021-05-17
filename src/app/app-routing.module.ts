@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { AuthGuard, LoginGuard } from './_guards';
 import { ValidateComponent } from './validate/validate.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
 
 const routes: Routes = [{
   path: 'activation',
@@ -24,6 +26,13 @@ const routes: Routes = [{
 {
   path:'superadmin',
   loadChildren:'./superadmin/superadmin.module#SuperadminModule',
+},{
+  path: '404',
+  component: ErrorPageComponent
+},
+{
+  path: 'badgateway',
+  component: BadgatewayPageComponent
 },
 // {
 //   path: 'pages',
@@ -39,6 +48,10 @@ const routes: Routes = [{
   redirectTo: 'user',
   pathMatch: 'full'
 },
+// {
+//   path: '**',
+//   component: ErrorPageComponent
+// }
 ];
 
 const config: ExtraOptions = {

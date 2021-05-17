@@ -7,6 +7,7 @@ import { Particles } from 'src/app/_models/particlesjs';
 import Swal from 'sweetalert2';
 import { APP_CONFIG } from 'src/app/app.config';
 import { ProfileService } from 'src/app/_services/profile.service';
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class PlatformComponent implements OnInit {
     public userService: UserService,
     private profileservice: ProfileService,
     private particles :Particles,
+    private crypto:CryptoService,
     @Inject(APP_CONFIG) private config,
 ) { }
   ngOnInit() {
@@ -186,7 +188,9 @@ export class PlatformComponent implements OnInit {
     var lastName=localStorage.getItem('lastName');
     var ProfileuserId=localStorage.getItem('ProfileuserId');
     var tenantName=localStorage.getItem('tenantName');
-    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName
+    var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
+    var useridBase64 = btoa(userId);
+    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,

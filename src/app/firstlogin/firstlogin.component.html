@@ -113,7 +113,7 @@
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/State.svg" class="icon">
               <select class="form-control" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
-                <option *ngIf="stateInfo == ''" value="-1">State</option>
+                <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
                 <option  [value]="undefined" disabled hidden>State</option>
                 <option  [value]="null" disabled hidden>State</option>
                 <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
@@ -125,7 +125,7 @@
             <div class=" col-md-6 form-group inner-addon left-addon">
               <img src="assets/images/registration/town.svg" class="icon">
               <select class="form-control" name='city' #city='ngModel' [(ngModel)]='model.city' required>
-                <option *ngIf="cityInfo == ''" value="-1">City</option>
+                <!-- <option *ngIf="cityInfo == ''" value="-1">City</option> -->
                 <option  [value]="undefined" disabled hidden>City</option>
                 <option  [value]="null" disabled hidden>City</option>
                 <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
@@ -165,7 +165,7 @@
                   <span>
                   <div class="fileUpload btn btn-primary">
                   <span>Choose File</span>
-                 <input id="uploadBtn" type="file" class="upload" (change)="onFileSelected($event)" />
+                 <input id="uploadBtn" type="file" class="upload" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg" />
                  
                 </div>
               </span>
