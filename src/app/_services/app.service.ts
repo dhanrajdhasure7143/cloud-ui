@@ -55,8 +55,8 @@ export class AppService {
 
   if(isSecurityManagerEnabled){
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    if(this.ipAddress == undefined)
-     this.ipAddress = '192.168.0.1';
+    // if(this.ipAddress == undefined)
+    //  this.ipAddress = '192.168.0.1';
     headers = { 'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type' : 'W',
   'browser': browser}
     localStorage.setItem('ipAddress', this.ipAddress);
