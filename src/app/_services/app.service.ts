@@ -32,7 +32,7 @@ export class AppService {
     private ip:IpServiceService, 
     private deviceService: DeviceDetectorService,
     private cryptoService: CryptoService) {
-   this.getIP();
+  //  this.getIP();
   }
 
   getIP()
@@ -47,7 +47,7 @@ export class AppService {
   
 
   login(username: string, password: string) {
-
+    this.getIP();
   let headers = {};
   let url = `/api/login/beta/accessToken`;
   const browser=this.getBrowserName();
