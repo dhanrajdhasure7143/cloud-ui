@@ -190,7 +190,8 @@ export class PlatformComponent implements OnInit {
     var tenantName=localStorage.getItem('tenantName');
     var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
     var useridBase64 = btoa(userId);
-    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64
+    var userIp=btoa(localStorage.getItem('ipAddress'));
+    window.location.href=this.config.productendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,

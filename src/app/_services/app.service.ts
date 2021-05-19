@@ -32,7 +32,7 @@ export class AppService {
     private ip:IpServiceService, 
     private deviceService: DeviceDetectorService,
     private cryptoService: CryptoService) {
-   this.getIP();
+  //  this.getIP();
   }
 
   getIP()
@@ -41,13 +41,14 @@ export class AppService {
 
         var obj = JSON.parse(JSON.stringify(res));
         this.ipAddress = obj.ip;
+        localStorage.setItem('ipAddress', this.ipAddress);
       });
      
    }
   
 
   login(username: string, password: string) {
-
+    this.getIP();
   let headers = {};
   let url = `/api/login/beta/accessToken`;
   const browser=this.getBrowserName();
@@ -55,11 +56,11 @@ export class AppService {
 
   if(isSecurityManagerEnabled){
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    // if(this.ipAddress == undefined)
-    //  this.ipAddress = '192.168.0.1';
+    if(this.ipAddress == undefined)
+     this.ipAddress = '0.0.0.1';
     headers = { 'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type' : 'W',
   'browser': browser}
-    localStorage.setItem('ipAddress', this.ipAddress);
+    // localStorage.setItem('ipAddress', this.ipAddress);
    }
   
   if(isSecurityManagerEnabled){url = `/Idm/accessToken`;}
