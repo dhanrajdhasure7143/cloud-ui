@@ -26,6 +26,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
+import { SessionoutComponent } from './sessionout/sessionout.component';
 
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
@@ -52,7 +53,8 @@ export const contentfulConfig: ContentfulConfig = {
     AppComponent,
     ValidateComponent,
     BadgatewayPageComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    SessionoutComponent
   ],
   imports: [
     BrowserModule,

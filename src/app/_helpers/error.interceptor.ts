@@ -44,23 +44,24 @@ export class ErrorInterceptor implements HttpInterceptor {
       console.log(err);
     if (reqUrl.url.indexOf('/api/login/beta/accessToken') < 0 && err.message.indexOf('oauth') < 0 && err.status === 401) {
      if(err.error.errorMessage){
-      Swal.fire({
-        title: 'Error',
-        text: "Session expired, Please login again.",
-        type: 'error',
-        showCancelButton: false,
-        allowOutsideClick: false,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok'
-      }).then((result) => {
-        console.log("on confirm")
-        setTimeout(() => {
+      // Swal.fire({
+      //   title: 'Error',
+      //   text: "Session expired, Please login again.",
+      //   type: 'error',
+      //   showCancelButton: false,
+      //   allowOutsideClick: false,
+      //   confirmButtonColor: '#3085d6',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Ok'
+      // }).then((result) => {
+        // console.log("on confirm")
+        // setTimeout(() => {
           localStorage.clear();
-          me.router.navigate(['']);
-        }, 3000);
+          sessionStorage.clear();
+          me.router.navigate(['/timeout']);
+        // }, 3000);
         
-      })
+      // })
     }
      
    } else if (err.status === 502 || err.status === 503 || err.status === 504)  {

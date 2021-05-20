@@ -4,6 +4,7 @@ import { AuthGuard, LoginGuard } from './_guards';
 import { ValidateComponent } from './validate/validate.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
+import { SessionoutComponent } from './sessionout/sessionout.component';
 
 const routes: Routes = [{
   path: 'activation',
@@ -33,6 +34,9 @@ const routes: Routes = [{
 {
   path: 'badgateway',
   component: BadgatewayPageComponent
+},{
+  path:'timeout',
+  component:SessionoutComponent
 },
 // {
 //   path: 'pages',
