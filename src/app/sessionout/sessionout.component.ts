@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SessionoutComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    localStorage.clear();
+    sessionStorage.clear();
+   }
 
   ngOnInit() {
   }
