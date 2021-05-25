@@ -21,6 +21,8 @@ export class LoginGuard implements CanActivate {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser) {
       this.appService.loggedIn.next(true);
+    } else {
+      this.appService.loggedIn.next(false);
     }
     return this.authService.isLoggedIn
       .pipe(

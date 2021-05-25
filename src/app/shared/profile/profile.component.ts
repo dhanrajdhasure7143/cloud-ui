@@ -121,7 +121,7 @@ export class ProfileComponent implements OnInit {
   public otherdepartment: any;
   stateInfo: any[] = [];
   cityInfo: any[] = [];
-  allRoles: any;
+  allRoles: any[]=[];
   listOfpermissions: any = [];
   permissionList: any = [];
   tenantId: string;
@@ -341,6 +341,7 @@ export class ProfileComponent implements OnInit {
   testuserid: any;
   private spacialSymbolEncryption:string = '->^<-';
   secretarray: any=[];
+  cardType:any;
 
 
   //dropdownSettings:IDropdownSettings;
@@ -1398,7 +1399,9 @@ this.isupdatecouponclicked=false;
     onChangeCardType(cardNumber) {
       var creditCardType = require("credit-card-type"); 
       this.cards = creditCardType(cardNumber);
-     
+     if(this.cards.length=1){
+      this.cardType=this.cards[0].type;
+     }
     }
     
     addNewCard(){
@@ -3173,14 +3176,37 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
 
       this.inviteAllRoles = this.allRoles;
     }
-
-    onKeydowncoupon(event){
     
+    inputNumberOnly(event){
       let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
       let temp =numArray.includes(event.key); //gives true or false
      if(!temp){
       event.preventDefault();
      } 
     }
-  
-     }
+    
+    lettersAndNumbers(event): boolean {
+      var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+    }
+    lettersAndNumbers1(event): boolean {
+      var regex = new RegExp("^[0-9a-zA-Z\s\r\n., ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+    }
+    inputlettersEmail(event): boolean {
+      var regex = new RegExp("^[a-zA-Z0-9.,@_- ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+          event.preventDefault();
+          return false;
+        }
+    }
+}

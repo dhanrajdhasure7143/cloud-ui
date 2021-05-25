@@ -21,6 +21,11 @@ import { BsModalService } from 'ngx-bootstrap';
 import { SuperadminModule } from './superadmin/superadmin.module';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { UserIdleModule } from 'angular-user-idle';
+import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { ToastrModule } from 'ngx-toastr';
 
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
@@ -45,8 +50,9 @@ export const contentfulConfig: ContentfulConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    ValidateComponent  
-   
+    ValidateComponent,
+    BadgatewayPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +67,10 @@ export const contentfulConfig: ContentfulConfig = {
     //BotGridModule,
     Ng4LoadingSpinnerModule.forRoot(),
     DeviceDetectorModule,
-    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740})
+    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740}),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
+      positionClass: 'toast-top-full-width',maxOpened:1,autoDismiss:true}), // ToastrModule added
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

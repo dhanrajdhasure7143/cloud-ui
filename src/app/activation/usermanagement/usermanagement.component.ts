@@ -26,7 +26,7 @@ export class UsermanagementComponent implements OnInit {
     public defaultColDef;
     private dataArray: any[] = [];
     public recordsSize = 15;
-    private frameworkComponents;
+    public frameworkComponents;
     public rolesList: any = [];
     selectedRowUserId: void;
     modifyModel: any = {};

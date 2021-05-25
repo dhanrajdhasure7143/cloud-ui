@@ -19,6 +19,7 @@ export class NewpasswordComponent implements OnInit {
   userData: any = {};
   public show:boolean=true;
   public confmshow:boolean=true;
+  error:any;
   constructor(private router: Router, 
               private route: ActivatedRoute, 
               private newpasswordServ: NewpasswordService,
