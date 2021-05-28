@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   public enteredOTP:boolean = false;
   public otp:any;
   public errormsg: any;
+  public hide:any = "true";
 
   constructor(
     @Inject(APP_CONFIG) private config,

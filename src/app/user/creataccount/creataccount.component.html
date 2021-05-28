@@ -1,83 +1,97 @@
 <div class="container-fluid">
-        <div class="row">
-            <div id="particles-js"></div>
-            <div class="col-sm-4">
-                <img class="login-bg" src="assets/images/loginimage.png">
-            </div>
-          <div class="col-md-3"></div>
-            <div class="col-md-4">
-              <div class="col-sm-12 status-bar">
-                <newstepselection class="register_account"></newstepselection>
-              </div>
-                    <div class="brand"  style="margin-left: -1%;">
-                            <img src="assets/images/logo_img.png">
-                        </div>
-                        <!-- <h3>Start free tier</h3> -->
-                <form *ngIf='!isresend' autocomplete="off" #creataccount="ngForm" (ngSubmit)="!creataccount.invalid && creat_account()">
-                      <div class="form-group inner-addon left-addon">
-                            <img src="assets/images/registration/mail.svg" class="icon">
-                            <input type="text" name="email" #email="ngModel" class="form-control emailInput" [(ngModel)]="emailId"
-                              pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Enter Email" (keypress)="inputlettersEmail($event)" 
-                              [ngClass]="{ 'is-invalid': ((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) }" />
-                            <span *ngIf="((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) "
-                              class='fa fa-info-circle errspan'>
-                              <span *ngIf="email.errors.required"> Email is required</span>
-                              <span *ngIf="email.errors.pattern"> Enter valid Email</span>
-                           </span>
-                           
-                            
-                            <span *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only Business Email is Allowed</span>
-                            
-                          </div>
-                          <div class="col-md-12" class="agreecheckbox">
-                                <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()">
-                                <span>   I agree with <a (click)='termsConditionsOpen(template)' class='terms_condtion'>Terms & Conditions</a> 
-                                  <a (click)='privacyOpen(privacyTemplate)'>Privacy Policy</a></span>
-                              </div>
-                          <div class="form-group col-sm-12">
-                              <button class="hoverable button btn btn-primary creataccnt-btn" [disabled]='isdisable'>Create Account</button>
-                          </div>
-                          <div class="form-group col-sm-12">
-                                <a [routerLink]="['/']" class="haveaccount">Already have an account ?</a>
-                              </div>
-                <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
-                    <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
-                    </div>
-                </form>
-                <div *ngIf='isresend' class='confirmationmail'>
-                    <h4>Thanks for choosing EZFlow </h4>
-                    <p>We have sent activation email to <b>{{userId}}</b></p>
-                    <p>Please check your inbox and follow the link to complete your registration.</p>
-                    <p>If you have any questions, please <a href="https://www.epsoftinc.com/contact-us/" target="_blank">Contact Us</a>.</p>
-                    <p>Do not see email in your inbox?</p>
-                    <button class="hoverable button btn btn-primary resend-btn" [disabled]='isresenddisable' (click)='resendVerificationMail()'>Resend</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <ng-template #template>
-      <div class="modal-header">
-        <h3 class="modal-title pull-left"><strong>Terms and Conditions</strong></h3>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <div class="row">
+      <div id="particles-js"></div>
+      <div class="col-sm-4">
+          <img class="login-bg" src="assets/images/loginimage.png">
       </div>
-      <div class="modal-body">
-          <app-termsconditions></app-termsconditions>
-          </div>
-    </ng-template>
-
-    <ng-template #privacyTemplate>
-      <div class="modal-header">
-        <h4 class="modal-title pull-left"><strong>ONLINE PRIVACY POLICY AGREEMENT</strong></h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <app-privacypolicy></app-privacypolicy>
-      </div>
-    </ng-template>
+    <div class="col-md-3"></div>
     
+      <div class="col-md-4">
+       
+        <mat-card class="card_styles1">
+          &nbsp;
+          <div class="brand1"  style="padding-left:85px !important;">
+            <img style="width:215px !important" src="assets/images/EZFlow.png">
+        </div>
+        &nbsp;
+        <div class="col-sm-12 status-bar1" style="padding-left:55px !important">
+          <newstepselection class="register_account"></newstepselection>
+        </div>
+                  <!-- <h3>Start free tier</h3> -->
+          <form *ngIf='!isresend' autocomplete="off" #creataccount="ngForm" (ngSubmit)="!creataccount.invalid && creat_account()">
+                <div class="form-group"><!-- inner-addon left-addon-->
+                      <!--<img src="assets/images/registration/mail.svg" class="icon">-->
+                      <mat-form-field appearance="outline" style="padding:0px 35px !important;">
+                        <mat-label>Email</mat-label>
+                      <input type="text" matInput name="email" #email="ngModel" [(ngModel)]="emailId"
+                        pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Enter Email" (keypress)="inputlettersEmail($event)" 
+                        [ngClass]="{ 'is-invalid': ((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) }" />
+                      </mat-form-field>
+                      <span  style="padding:0px 35px !important;" *ngIf="((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) "
+                        class='fa fa-info-circle errspan'>
+                        <span *ngIf="email.errors.required"> Email is required</span>
+                        <span *ngIf="email.errors.pattern"> Enter valid Email</span>
+                     </span>
+                     
+                      
+                      <span style="padding:0px 35px !important;" *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only Business Email is Allowed</span>
+                      
+                    </div>
+                    <div class="col-md-12" class="agreecheckbox" style="padding:0px 35px !important;">
+                          <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()">
+                          <span>   I agree with <a (click)='termsConditionsOpen(template)' class='terms_condtion'>Terms & Conditions</a> 
+                            <a (click)='privacyOpen(privacyTemplate)'>Privacy Policy</a></span>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <button class="hoverable button btn btn-primary creataccnt-btn" [disabled]='isdisable'>Create Account</button>
+                    </div>
+                
+                    <div class="form-group col-sm-12" style="padding:0px 88px !important;">
+                     
+                      <label class = "have_acc">Already have an account&#63;</label>
+                      <a [routerLink]="['/']" class="haveaccount">Sign In</a>
+                    </div>
+          <div style="overflow-wrap: break-word;" class="errordiv col-md-12" style="padding:0px 48px !important;margin-left:30px;">
+              <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
+              </div>
+          </form>
+          <div *ngIf='isresend' class='confirmationmail'>
+            <div class="isresendclass">
+              <h4>Thanks for choosing EZFlow </h4>
+              <p>We have sent activation email to <b>{{userId}}</b></p>
+              <p>Please check your inbox and follow the link to complete your registration.</p>
+              <p>If you have any questions, please <a href="https://www.epsoftinc.com/contact-us/" target="_blank">Contact Us</a>.</p>
+              <p>Do not see email in your inbox?</p>
+              <button class="hoverable button btn btn-primary resend-btn" [disabled]='isresenddisable' (click)='resendVerificationMail()'>Resend</button>
+            </div>
+            </div>
+        </mat-card>
+        &nbsp;
+        &nbsp;
+      </div>          
+  </div>      
+</div>
+
+<ng-template #template>
+<div class="modal-header">
+  <h3 class="modal-title pull-left"><strong>Terms and Conditions</strong></h3>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <app-termsconditions></app-termsconditions>
+    </div>
+</ng-template>
+
+<ng-template #privacyTemplate>
+<div class="modal-header">
+  <h4 class="modal-title pull-left"><strong>ONLINE PRIVACY POLICY AGREEMENT</strong></h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <app-privacypolicy></app-privacypolicy>
+</div>
+</ng-template>
