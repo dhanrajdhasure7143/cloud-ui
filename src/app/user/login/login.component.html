@@ -48,9 +48,9 @@
                       [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required/>-->
                       <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
                         <mat-label>Password</mat-label>
-                        <input [type]="hide ? 'text' : 'password'" matInput formControlName="password" #password minlength="8"  placeholder="Enter Password"
+                        <input [type]="hide ?  'password': 'text'" matInput formControlName="password" #password minlength="8"  placeholder="Enter Password"
                         [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
-                        <mat-icon style="color: slategray" matSuffix (click)="hide = !hide">{{hide ?  'visibility': 'visibility_off' }}</mat-icon>
+                        <mat-icon style="color: slategray;cursor:pointer" matSuffix (click)="hide = !hide">{{hide ?  'visibility_off' : 'visibility' }}</mat-icon>
                        
                       </mat-form-field>
                       <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">

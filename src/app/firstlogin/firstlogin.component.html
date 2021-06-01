@@ -71,7 +71,7 @@
             <!--<span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>-->
             <input [type]="hide ? 'text' : 'password'" id="password" name="password" #password="ngModel" matInput
               [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" required>
-              <mat-icon matSuffix (click)="hide = !hide">{{hide ?  'visibility':'visibility_off'}}</mat-icon>
+              <mat-icon style="cursor:pointer" matSuffix (click)="hide = !hide">{{hide ?  'visibility':'visibility_off'}}</mat-icon>
             </mat-form-field>
             <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
               <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
