@@ -1534,15 +1534,6 @@
                   <option value="Failure">Failure</option>
               </select>
                 </div>
-                <div class="col-md-12 ">
-                  <label for="planid">Activity : </label>
-                  <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
-                   <select name="activity_name1" #activity_name1="ngModel" class="form-control botmbordr" [(ngModel)]="updateActivities" required>
-                    <option  [value]="undefined" disabled hidden>Select Activities</option>
-                    <!-- <option  [value]="null" disabled hidden>Select Activities</option> -->
-                     <option *ngFor="let each of activitieslist" [value]="each.activity">{{each.activity}}</option>
-                </select> 
-                  </div>
                     <br>
                   <div class="col-md-12 ">
                     <label for="status">Channel : </label><br>

@@ -1,5 +1,3 @@
-
- 
 <div class="container-fluid">
   <div class="">
     <tabset *ngIf="this.userRole.includes('Admin')">
@@ -27,27 +25,27 @@
            
                 </div>
               </div>
-          </div>
-
+            </div>
+          
     <div class="col-md-12"></div>
     <div class="col-md-4"></div>
-      <div class="col-md-2" >
+      <div class="text-center" >
         <button [disabled]="!this.userRole.includes('Admin')" class="btn btn-primary" id="launch_btn" (click)="upgradePlan()" *ngIf="this.selectedIdValue"  >Upgrade</button>
-        <button class="btn btn-primary" *ngIf="!this.selectedIdValue" [disabled]="isenable" (click)="upgradePlan()" id="launch_btn" >Subscribe</button>
+        <button class="btn btn-primary" *ngIf="!this.selectedIdValue" [disabled]="isenable" (click)="upgradePlan()" id="launch_btn" >Subscribe</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button  [disabled]="!this.selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
       </div>
-      <div class="col-md-2" style="padding: 0px;
+      <!-- <div class="col-md-2" style="padding: 0px;
       margin-left: -100px;" >
-                  <button  [disabled]="!this.selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
          
-        </div>
+        </div> -->
       </div>
 </tab>
 </tabset>
 
 
 <div *ngIf="!this.userRole.includes('Admin')">
-  <div class="container">
-    <div class="row">
+  <div class="container-fluid">
+    <div class="row" id="products">
   <div class="welcm_heading col-md-12"> 
     <div class="row"><h1 >Welcome to EZFlow</h1><span>  ( Intelligent Automation Platform )</span></div>
     <div class="row"><h4 id="sbtl">Select below service to Activate or Upgrade</h4></div>
@@ -71,15 +69,15 @@
 
 <div class="col-md-12"></div>
 <div class="col-md-4"></div>
-  <div class="col-md-2" >
+  <div class="text-center" >
     <button [disabled]="!this.userRole.includes('Admin')" class="btn btn-primary" id="launch_btn" (click)="upgradePlan()" *ngIf="this.selectedIdValue"  >Upgrade</button>
-    <button class="btn btn-primary" *ngIf="!this.selectedIdValue" [disabled]="isenable" (click)="upgradePlan()" id="launch_btn" >Subscribe</button>
+    <button class="btn btn-primary" *ngIf="!this.selectedIdValue" [disabled]="isenable" (click)="upgradePlan()" id="launch_btn" >Subscribe</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button  [disabled]="!this.selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
   </div>
-  <div class="col-md-2" style="padding: 0px;
+  <!-- <div class="col-md-2" style="padding: 0px;
   margin-left: -50px;" >
-              <button  [disabled]="!this.selectedIdValue" class="btn btn-primary" (click)="navigateProduct(eachData)" id="launch_btn" >Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
      
-    </div>
+    </div> -->
 </div>
 
 </div>
