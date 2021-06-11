@@ -25,7 +25,7 @@
               <div class="picture-container">
                 <div class="picture">
                     <img [src]="imgsrc" class="picture-src" id="wizardPicturePreview" title="">
-                    <input type="file" id="wizard-picture" class="picture-src" (change)="onFileSelected($event)">
+                    <input type="file" id="wizard-picture" class="picture-src" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg">
                     
                 </div>
                 <!--h6 class=""><i class="fa fa-camera" aria-hidden="true"></i></h6> -->
@@ -119,10 +119,10 @@
                 <!-- <img src="assets/images/registration/department.svg" class="icon"> -->
                 <mat-form-field appearance="outline">
                   <mat-label>Department</mat-label>
-                <mat-select matNativeControl (selectionChange)="onChangeDepartment($event.target.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
+                <mat-select matNativeControl (selectionChange)="onChangeDepartment(model.department)" name='department' #department="ngModel" [(ngModel)]="model.department"
                 required>
                   <mat-option [value]="undefined" disabled hidden>Department</mat-option>
-                  <mat-option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;'>{{categories[c]}}</mat-option>
+                  <mat-option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;' [value]="categories[c]">{{categories[c]}}</mat-option>
                   <!-- <option value="others">Others</option> -->
                 </mat-select>
                 </mat-form-field>
@@ -192,21 +192,21 @@
                 class='fa fa-info-circle errspan'> Zip Code is required </span>
             </div>
 
-            <div *ngIf ="isInput"class="col-sm-6" style="margin: -20px -30px 10px 8px;"><!-- inner-addon left-addon-->
+            <div *ngIf ="isInput"class="col-sm-6 ph-number" style="margin: -20px -30px 10px 8px;"><!-- inner-addon left-addon-->
               <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
               <mat-form-field appearance="outline">
                 <mat-label>Phone Number</mat-label>
-                <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required > <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
+                <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" required > <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
               </mat-form-field>
                    <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
                   <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
                   class='fa fa-info-circle errspan'> Phone Number is required </span>
                 </div>
-                <div *ngIf="!isInput" class="col-sm-6" style="margin: -20px -30px 10px 8px;">
+                <div *ngIf="!isInput" class="col-sm-6 ph-number" style="margin: -20px -30px 10px 8px;">
                   <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
                   <mat-form-field appearance="outline">
                     <mat-label>Phone Number</mat-label>
-                  <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required> <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
+                  <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" required> <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
                   </mat-form-field>
                        <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
                       <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"

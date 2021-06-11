@@ -47,6 +47,7 @@ export class FirstloginComponent implements OnInit {
   base64textString:any;
   private spacialSymbolEncryption:string = '->^<-';
   public imgsrc:string = './../../assets/images/user-upload.png';
+  public company_name:any='';
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
@@ -120,22 +121,21 @@ export class FirstloginComponent implements OnInit {
     // this.model.country = this.countryInfo[countryValue].CountryName;
     // this.stateInfo=this.countryInfo["India"].States;
  
-    
-    
+    this.stateInfo=[];
     for(var i=0; i< this.countryInfo.length; i++){
       if(this.countryInfo[i].CountryName == countryValue ){
         this.phnCountry = this.countryInfo[i].CountryCode
-       
-        
         this.stateInfo=this.countryInfo[i].States; 
       }
     }
-  
-   
+  this.cityInfo=[];
+  this.model.state="1";
+  this.model.city="1";
   }
 
   onChangeState(stateValue) {
     console.log(stateValue);
+    this.cityInfo=[];
     // this.model.state =this.stateInfo[stateValue].StateName
     // console.log("state : " + this.model.state);
     // this.cityInfo=this.stateInfo[stateValue].Cities;
@@ -144,6 +144,7 @@ export class FirstloginComponent implements OnInit {
         this.cityInfo=this.stateInfo[i].Cities; 
       }
     }
+    this.model.city="1"
   }
   
   // onChangeCity(cityValue){
@@ -169,6 +170,7 @@ export class FirstloginComponent implements OnInit {
       }else if(response.company!=null){
         this.isCompanydisabled = true;
         this.model.company = response.company;
+        this.company_name=response.company
         let x = this.decodedToken.split("@");
             this.domain = x[1];
         this.service.getAllCategories(this.domain).subscribe(response=> {
@@ -204,7 +206,7 @@ export class FirstloginComponent implements OnInit {
     }
   onSubmit() {
     this.submitflag=true;
-    console.log(this.model);
+    // console.log(this.model);
     if(this.model.department=="others"){
       this.model.department=this.otherDepartment;
           }
@@ -331,6 +333,9 @@ export class FirstloginComponent implements OnInit {
     this.model = new User();
     setTimeout(() => {
       me.decodedToken = me.userEmail;
+        if(this.company_name){
+          this.model.company=this.company_name
+        }
     }, 100);
     $("#image").val('')
     this.selectedFile=null;
