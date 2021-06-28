@@ -12,8 +12,10 @@ export interface AiotalAppConfig {
   notificationsendpoint: String;
   Subscriptionendpoint:String;
   productendpoint: String;
+  newproductendpoint: String;
   socialLoginRedirectURL: String;
   isSecurityManagerEnabled : boolean;
+  isNewDesignEnabled : boolean;
   isTwoFactorAuthenticationEnabled : boolean;
   rpaendpoint:String;
   piendpoint:String;
@@ -48,12 +50,13 @@ export const AppConfig: AiotalAppConfig = {
    notificationsendpoint: 'http://alertsdev.epsoftinc.in',
    Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
    productendpoint: 'http://eiapdev.epsoftinc.in',
+   newproductendpoint: 'http://eiapdevnew.epsoftinc.in',
    socialLoginRedirectURL: 'http://eiapclouddev.epsoftinc.in/#/user',
    rpaendpoint:"http://rpadev.epsoftinc.in",
    piendpoint:"http://pidev.epsoftinc.in",
    isTwoFactorAuthenticationEnabled: false,
-   isSecurityManagerEnabled : true
-
+   isSecurityManagerEnabled : true,
+   isNewDesignEnabled : true
 
 };
 
