@@ -47,7 +47,7 @@ export const AppConfig: AiotalAppConfig = {
    socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
    notificationsendpoint: 'http://alertsqa.epsoftinc.in',
    Subscriptionendpoint:'http://subscriptionqa.epsoftinc.in',
-   productendpoint: 'http://eiapqa.epsoftinc.in',
+   productendpoint: 'http://eiapqanew.epsoftinc.in',
    socialLoginRedirectURL: 'http://eiapcloudqa.epsoftinc.in/#/user',
    rpaendpoint:"http://rpaqa.epsoftinc.in",
    piendpoint:"http://piqa.epsoftinc.in",
