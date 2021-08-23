@@ -1,0 +1,96 @@
+/* home component styles - Starts*/
+.dataCard{
+  border:1px solid rgb(218, 210, 210);
+  padding:19px  2px;
+  text-align:center;
+  cursor: pointer;
+  height: 220px;
+}
+.welcm_heading{
+  margin-top: 70px;
+}
+
+.welcm_heading span{
+  font-size: 15px;
+  padding-top: 17px;
+  padding-left: 10px;
+}
+
+.dataCardBox{
+  float: left;
+
+}
+
+#launch_btn{
+  background-color: #0061cf;
+  padding:5px 20px;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-left: -30px;
+}
+
+#updrade-btn{
+  margin-top: 20px;
+  border: none;
+  color:#0061cf;
+  border-bottom: 2px solid #0061cf;
+  background: none;
+  padding:5px 10px;
+  border-radius: 0px;
+}
+
+#sbtl{
+  color:#006ed5;
+  //float:left;
+  margin-top: 10px;
+ 
+}
+
+#subheading{
+  color:#006ed5;
+  padding: 13px 10px 0px 10px;
+  font-size: 14px;
+}
+.activeModule{
+  text-decoration: none;
+  background-color: #006ed5;
+}
+.activeModule #subheading{
+  color:white;
+}
+.activeModule  img{
+  filter: invert(1) sepia(1) hue-rotate(200deg) saturate(-1) brightness(2);
+}
+
+.activeModule  .expiryInfoclock, .activeModule .infoicon{
+  filter: invert(1) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
+}
+
+.activeModule .expiryInfo{
+  color :white;
+}
+
+.expiryInfoclock, .infoicon{
+  height:13px;
+  width:12px;
+}
+
+.expiryInfo{
+  font-size: 9px;
+}
+
+#particles-js {
+  position: relative;
+  width: 35%;
+  margin-left: 58%;
+  height: 620px;
+  float:right;
+  margin-top: -620px;
+  background-color: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+div#products {
+ margin-left: 105px;
+}

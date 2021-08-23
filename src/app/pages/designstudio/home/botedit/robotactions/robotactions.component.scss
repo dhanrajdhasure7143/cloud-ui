@@ -1,0 +1,120 @@
+.row {
+  margin: 0px;
+}
+
+.footer {
+  background: white;
+  border: 1px solid #eee;
+  width: calc(100% - 566px);
+  position: relative;
+  left: 281px;
+  height: 32px;
+  align-items: center;
+
+}
+
+.footer ul li.footer_buttons {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  display: inline-block;
+  margin: 0px !important;
+  height: auto !important;
+  padding: 0px 10px !important;
+  font-size: 14px;
+  vertical-align: super;
+  min-width: 100px;
+}
+
+.footer ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.footer svg.feather {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+label.footer_icon-labels {
+  margin: 0px;
+  vertical-align: middle;
+}
+
+
+button.btn-footer {
+  background: none;
+  border: none;
+  /* min-width: 92px; */
+  font-size: 14px;
+  text-align: right;
+  margin: 0px 15px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.customClass {
+  max-width: 274px;
+  left: 60px !important;
+  box-shadow: 0px -2px 10px rgba(0,0,0,0.2);
+    border: 0px solid transparent;
+}
+
+.customClass .popover-arrow.arrow {
+  left: 50px !important;
+}
+
+.customClass .popover-content.popover-body {
+  padding: 10px 2px;
+}
+
+
+.mod_info {
+  border-bottom: 1px solid #cecece;
+  padding: 5px 0px;
+}
+
+label.mod_day {
+  margin: 0px;
+  font-weight: 600;
+}
+
+label.mod_time {
+  margin: 0px;
+  color: #768fa7;
+  text-align: right;
+
+}
+
+label.mod_name {
+  color: #768fa7;
+  margin: 0px;
+}
+
+
+
+.pop_footer button.btn.btn-full {
+  min-width: 90px !important;
+  height: auto;
+  font-size: 16px;
+  padding: 4px;
+}
+
+.col-12.pop_footer {
+  padding: 10px 0px 5px;
+}
+
+.footer_buttons {
+  width: 100%;
+}
+
+.show_labels {
+  display: inline;
+  font-size: 14px;
+  vertical-align: middle;
+  color: #000;
+}
+
+.show_labels input[type=checkbox] {
+  vertical-align: middle;
+}

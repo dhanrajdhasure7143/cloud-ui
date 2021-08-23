@@ -1,0 +1,98 @@
+body{
+  font-family: 'Roboto', sans-serif;
+
+}
+.logo {
+color: white;
+background: #006DD5;
+position: fixed;
+left: 0px;
+z-index: 10;
+width: 60px;
+height: 60px;
+font-size: 16px;
+/* padding: 22px 4px; */
+text-align: center;
+display: inline-grid;
+align-items: center;
+  /* box-shadow: 0px 2px 4px #006dd6; */
+}
+
+.sidenav {
+  height: calc(100% - 60px);
+  width: 60px;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:#3F4D67;
+  overflow-x: hidden;
+  padding-top: 0px;
+  margin-top: 60px;
+}
+
+.sidenav a {
+  padding: 0px;
+  text-align: center;
+  text-decoration: none;
+  // font-size: 24px;
+  color: #ffffff;
+  display: block;
+  line-height: 48px;
+
+}
+
+.sidenav a:hover {
+  background: #333F54;
+}
+
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.side-icon{
+    fill: #ffffff;
+}
+
+.lower {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+.sidenav svg.feather {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+}
+
+
+.side_drp {
+  position: fixed;
+  top: 0px !important;
+  left: 60px !important;
+  height: 100vh;
+  width: 336px;
+  box-shadow: 2px 2px 3px #BCBCBC;
+  border: 1px solid #DADADA;
+  margin: 0px;
+  border-radius: 0px;
+  padding: 40px 0px;
+}
+
+button.btn.btn-side {
+  color: white;
+  width: 100%;
+  border-radius: 0px;
+  height: 48px;
+  cursor: pointer;
+  background: #3f4d67;
+}
+
+button.btn.btn-side:hover {
+  background: #333F54;
+}

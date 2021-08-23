@@ -1,0 +1,50 @@
+<form name="createBot" #createBot="ngForm" (ngSubmit)="createBot.form.valid && createWorkflow()" autocomplete="off"
+  novalidate>
+  <div class="modal-body">
+    <div class="col-12 no-padding">
+      <div class="row">
+        <div class="col-12 no-padding">
+            <div class="form-group">
+        
+                <!-- <input class="form-control" #Project="ngModel" type="radio" [(ngModel)]="model.Type" id="Project" name="Type"
+                  value="Project" checked=""> -->
+                  <label class="label--radio"><input type="radio" #Project="ngModel" [(ngModel)]="model.Type" class="radio form-control" id="Project" name="Type" value="Project" checked=""></label>
+                  <label for="Project">Robot</label>
+              </div>
+              
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name"> Name </label>
+        <input type="text" name="name" #name="ngModel" [(ngModel)]="model.Name" class="form-control" placeholder="Name"
+          required />
+        <span *ngIf="((name.invalid && createBot.submitted) || (name.errors && name.touched) ) "
+          class="fa fa-info-circle errspan">
+          Name is required
+        </span>
+      </div>
+      <!-- <div class="form-group" *ngIf="model.Type != 'Workflow'">
+        <label for="lineofbusiness">Line of business</label>
+        <ng-multiselect-dropdown name="lineofbusiness" #lineofbusiness [placeholder]="'Select'" [data]="lineOfBusiness"
+          [disabled]="disabled" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+        </ng-multiselect-dropdown>
+      </div> -->
+      <!-- <div class="form-group">
+        <label for="desc">Description</label>
+        <textarea name="desc" #desc id="desc" #desc="ngModel" [(ngModel)]="model.Description"
+          class="form-control"></textarea>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="col-12 text-center">
+      <div class="row">
+        <div class="form-group form-buttons text-center">
+          <button class="btn btn-full btn-cancel">Cancel</button>
+          <button type="submit" class="btn btn-full btn-submit">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

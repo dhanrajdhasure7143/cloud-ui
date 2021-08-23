@@ -1,0 +1,2617 @@
+<notifier-container></notifier-container>
+
+<div id="foot">
+
+    <div  class="slider_heading">
+        <div class="cros">
+            <span (click)="slideDown()"><img class="" src="assets/images/crossclose.svg"></span>
+        </div>
+    </div>               
+                <div class="container" *ngIf="isMyaccount">
+                    <!-- <div class="row"> -->
+
+                      
+                    <tabset id="staticTabs" #staticTabs>
+                        <tab heading="Account Details" id="tab1">
+                        <div class="myaccount">
+                            <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
+                                <div class="row">
+                                  <div class="form-group col-sm-3">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" #email="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.userId"
+                                                pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
+                                  
+                                  </div>
+                                  <!-- <div class="form-group col-sm-3">
+                                    <label for="passwd">Password</label>
+                                    <span class=" input-group" style="margin-left:0px">
+                                    <input  
+                                          [type]="(show==true) ? 'password' : 'text'" 
+                                          name="passwd" 
+                                          #passwd="ngModel" 
+                                          class="form-control botmbordr" 
+                                          [(ngModel)]="formOne.password"
+                                          placeholder="Password"                
+                                          minlength="10"
+                                          autocomplete="new-password"
+                                          required />
+                                          <span (click)="toggle()" class="input-group-add pwd-class"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span> 
+                                        </span>
+                                          <span *ngIf="((passwd.errors && updateUser.submitted) || (passwd.errors && passwd.touched) || (passwd.errors && passwd.minlength)) " class='fa fa-info-circle errspan'>
+                                          <span *ngIf="passwd.errors.required">Password is required</span>-->
+                                          <!-- <span *ngIf="passwd.errors.pattern">Password must be 8-20 characters and have at least one uppercase latter, one lowercase letter, one special character and one number</span> -->
+                                     <!--</span>
+                                  </div> -->
+                                    <div class="form-group col-sm-3">
+                                        <label for="firstName">First Name</label>
+                                        <input type="text" name="firstName" #firstName="ngModel" class="form-control botmbordr" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required/>
+                                    <span *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )" 
+                                        class='fa fa-info-circle errspan'>
+                                    First Name is required </span>
+                                        </div>
+                              
+                                          <div class="form-group col-sm-3">
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" name="lastName" #lastName="ngModel" class="form-control botmbordr" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly />
+                                                <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )" 
+                                                class='fa fa-info-circle errspan'> Last Name is required </span>
+                                            </div>
+                                          <div class="form-group col-sm-3">
+                                            <label for="jobTitle">Job Title</label>
+                                            <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control botmbordr" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly/>
+                                            <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )" 
+                                            class='fa fa-info-circle errspan'>Job Title is required </span>
+                                        </div>
+                                       
+                                        <div class="form-group col-sm-3">
+                                          <label for="company">Company</label>
+                                          <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly />
+                                          <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
+                                          class='fa fa-info-circle errspan'> Company is required </span> 
+                                        
+                                        </div>
+                          
+                                         <!-- <div class=" form-group col-md-3 ">
+                                          <label for="Department">Department</label>
+                                          <select id="department" class="form-control botmbordr" name='department' (change)="onChangeDepartment(formOne.department)" #department="ngModel" [(ngModel)]="formOne.department" required>
+                                            <option  [selected]=true >Select</option>
+                                            <option  [value]="undefined" disabled hidden>Department</option>
+                                            <option *ngFor="let departmen of departments;let i=index;trackBy:loopTrackBy;" [value]='departments[i]'>{{departments[i]|titlecase}}</option>
+                                            <option value='Others'>Others</option>
+                                          </select>
+                                          <span *ngIf="((department.invalid && updateUser.submitted)|| (department.errors && department.touched))"
+                                                    class='fa fa-info-circle errspan'> Department is required </span>
+                                        </div> -->
+                                        
+                                        <!-- <div class="form-group col-sm-3" *ngIf="addDepartment">
+                                            <label for="Department">Other Department</label>
+                                            <input type="text" name="otherDepartment" #otherDepartment="ngModel" maxlength="25" (keypress)="lettersOnly($event)" class="form-control botmbordr" [(ngModel)]="otherdepartment" placeholder="Department Name" maxlength="25" required alphabetOnly />
+                                            <span *ngIf="((otherDepartment.invalid && updateUser.submitted) || (otherDepartment.errors && otherDepartment.touched) )" 
+                                            class='fa fa-info-circle errspan'> Department Name is required </span> 
+                                          </div> -->
+                                          <div class="form-group col-sm-3">
+                                                <label for="country">Country</label>
+                                                <select id="country" name='country' class="form-control botmbordr" (change)='onChangeCountry(formOne.country)' #country="ngModel" [(ngModel)]="formOne.country" required>
+                                                        <!-- <option hidden disabled [ngValue]="undefined" [selected]=true>Country</option> -->
+                                                        <option  [value]="undefined" disabled hidden>Country</option>
+                                                        <option  [value]="null" disabled hidden>Select Country</option>
+                                                        <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
+                                                  </select>
+                                                  <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
+                                                    class='fa fa-info-circle errspan'> Country is required </span>
+                                              </div>
+                                              <div class="form-group col-sm-3">
+                                                  <label for="state">State</label>
+                                                  <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
+                                                  <select class="form-control botmbordr" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
+                                                    <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+                                                    <option  [value]="undefined" disabled hidden>State</option>
+                                                    <option  [value]="null" disabled hidden>Select State</option>
+                                                    <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
+                                                  </select>
+                                                  <span *ngIf="((state.invalid && updateUser.submitted)|| (state.errors && state.touched))"
+                                                    class='fa fa-info-circle errspan'> State is required </span>
+                                                </div>
+                                    
+                                                <div class="form-group col-sm-3">
+                                                    <label for="city">City</label>
+                                                  <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
+                                                  <select class="form-control botmbordr" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
+                                                    <option  [value]="undefined" disabled hidden>City</option>
+                                                    <option  [value]="null" disabled hidden>Select City</option>
+                                                    <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
+                                                  </select>
+                                                  <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
+                                                    class='fa fa-info-circle errspan'> City is required </span>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label for="zipCode">Zip Code</label>
+                                                    <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
+                                                    <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control botmbordr" [(ngModel)]="formOne.zipcode"
+                                                       onKeyPress="if(this.value.length==6) return false;" placeholder="Enter Zip Code" required>
+                                                    <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
+                                                      class='fa fa-info-circle errspan'> Zip Code is required </span>
+                                                  </div>
+
+                                             
+                                                             
+                                          <div *ngIf ="!isRefresh" class="form-group col-sm-3">
+                                            <label for="phoneumber">Phone</label>
+                                                  <div>
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:60px;" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
+                                            <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
+                                            class='fa fa-info-circle errspan'> Phone Number is required </span>
+                                                </div>
+                                                </div> 
+                                                      
+                                          <div *ngIf ="isRefresh" class="form-group col-sm-3">
+                                            <label for="phoneumber">Phone</label>
+                                                  <div>
+                                                    <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:60px;" class="form-control botmbordr phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
+                                            <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
+                                            class='fa fa-info-circle errspan'> Phone Number is required </span>
+                                                </div>
+                                                </div> 
+
+                                                <!-- <div class="form-group col-sm-3">
+                                                  <label for="phoneNumber">Phone</label>
+                                                  <input type="number" name="phoneNumber" #phoneNumber="ngModel" minlength="8" class="form-control botmbordr numberInput" [(ngModel)]="formOne.phoneNumber" placeholder="Enter Phone Number" maxlength="25" required 
+                                                  [ngClass]="{ 'is-invalid': ((phoneNumber.invalid && updateUser.submitted) || (phoneNumber.errors && phoneNumber.touched) ) }" />
+                                                  <span *ngIf="((phoneNumber.invalid && updateUser.submitted) || (phoneNumber.errors && phoneNumber.touched) )" 
+                                                  class='fa fa-info-circle errspan'>Phone Number is required </span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                </div> -->
+                                    <div class="col-md-12 submitbtn">
+                                        <button type="submit" class="btn btn-primary pull-right updtpswd1"  [disabled] = "updateUser.invalid">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                      </tab>
+                        
+                      <tab *ngIf="this.userRole.includes('Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                        <div class="search-One">
+                            <form class="form-inline d-flex  md-form form-sm">
+                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchsub" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                    <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                  </form>
+                            </div>
+                    <div class="subscrption_id">
+                            <table class="table table-borderless col-md-12 table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="types2" style="text-align:center">Subscription Id</th>
+                                  <th scope="col" class="types2">Product</th>
+                                  <th scope="col" class="types2">Plan</th>
+                                  <!-- <th scope="col" class="types2">Total Amount</th> -->
+                                  <th scope="col" class="types2">Base Amount</th>
+                                  <th scope="col" class="types2">No.of Users</th>
+                                  <th scope="col" class="types2">Status</th>
+                                  <th scope="col" class="types2">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody class="col-md-10" *ngFor= "let sdata of tableData | paginate: {id:'sub_page', itemsPerPage:4 , currentPage: subtemp } | FilterPipe: searchsub ;let i=index;trackBy:loopTrackBy;">
+                                <tr  >
+                                  <td style="text-align:center">{{sdata.subscriptionId?sdata.subscriptionId:'-'}}</td>
+                                  <td>{{sdata.name}}</td>
+                                  <td>{{sdata.planEntity.nickName}}</td>
+                                  <!-- <td >{{1000}}</td> -->
+                                  <td >${{sdata.planEntity.amount?sdata.planEntity.amount:'0'}}</td>
+                                  <td>{{sdata.noOfUsers}}</td>
+                                  <td>{{sdata.status}}</td>
+                                  <td class="deleticon"><span  (click)="subscriptiondata(sdata,i,detailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span><button class="subsc"  [disabled]="sdata.planEntity.nickName==='Free Tier' || sdata.status!='Active'"  (click)="selecteddata(sdata,i)" > <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                    <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                    <h5 class="pull-left">Confirmation</h5>
+                                    <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
+                                    <button class="pull-left confm" (click)="unsubscribeYes(i,template)">Yes</button>
+                                    <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
+                                    </div>
+                                    </div>
+                                  </td>
+                                  <!-- <td class = "deleticon">
+                                    <button class="btn btn-primary" *ngIf = "sdata.status != 'Active'" (click)="reactivatesubscription(sdata)">Reactivate</button>
+                                  </td> -->
+                                </tr>
+                              </tbody>
+                            </table>
+                            <div *ngIf="(tableData | filter:searchsub).length==0" class=""><h4>No records found</h4></div>
+                            <div *ngIf="(tableData | filter:searchsub).length" class="alertspagination">
+                              <pagination-controls id="sub_page" maxSize="8" (pageChange)="subtemp = $event"></pagination-controls>
+                              </div>
+                    </div>
+                  </tab>
+
+                  <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
+                            <div class="search-One">
+                                <form class="form-inline d-flex  md-form form-sm">
+                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchpayment" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                        <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                      </form>
+                                </div>
+                        <div class="container invoice_id">
+                                <table class="table table-borderless table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col" class="types">Invoice Number</th>
+                                      <th scope="col" class="types">Subscription ID</th>
+                                      <th scope="col" class="types">Amount</th>
+                                      <th scope="col" class="types">Paid On</th>
+                                      <!-- <th scope="col" class="types">Refund</th> -->
+                                      <th scope="col" class="types">Next Due</th>
+                                      <th scope="col" class="types3">Status</th>
+                                      <th scope="col" class="types">Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody >
+                                    <tr *ngFor="let invdata of invoicedata | paginate: {id:'ph_page', itemsPerPage:4 , currentPage: phtemp } | FilterPipe: searchpayment ;let i=index;trackBy:loopTrackBy;">
+                                      <td>{{invdata.invoiceNumber}}</td>
+                                      <td>{{invdata.subscriptionId}}</td>
+                                      <td>${{invdata.amount}}.00 </td>
+                                      <td>{{invdata.createDate | date:'MM/dd/yyyy'}}</td>
+                                      <!-- <td>{{invdata.refund || "NA"}}</td> -->
+                                        <td>{{getinvoiceDate(invdata.createDate) |date:'MM/dd/yyyy'}}</td>
+                                        <td>{{invdata.status|titlecase}}</td>
+                                      <td><span  (click) = "invoicedownload(invdata)"><img class="download" src="assets/images/download_icon.svg"></span></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <div *ngIf="(invoicedata | filter:searchpayment).length==0" class=""><h4>No records found</h4></div>
+                                <div *ngIf="(invoicedata | filter:searchpayment).length" class="alertspagination">
+                                  <pagination-controls id="ph_page" maxSize="8" (pageChange)="phtemp = $event"></pagination-controls>
+                                  </div>
+                        </div>
+                      </tab>
+                        
+                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
+                            <div class="search-One">
+                                <form class="form-inline d-flex  md-form form-sm">
+                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchmode" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                        <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                      </form>
+                                </div>
+                        <div class="container paymode">
+                          <button class='btn btn-primary pull-right addCard' (click)='addPaymentCards(addCard)'>Add Card</button>
+                                <table class="table table-borderless table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col" class="cardtype">Card Type</th>
+                                      <th scope="col" class="cardtype1">Card Number</th>
+                                      <th scope="col" class="cardtype">Expiration Date</th>
+                                      <th scope="col" class="cardtype">Created By</th>
+                                      <th scope="col" class="cardtype">Created Date</th>
+                                      <th scope="col" class="cardtype">Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let cardData of paymentMode | paginate: {id:'pm_page', itemsPerPage:2 , currentPage: pmtemp } | FilterPipe: searchmode ;let i=index;trackBy:loopTrackBy;" >
+                                      <td>{{cardData.cardBrand|titlecase}}</td>
+                                      <td class="cardtable">XXXX-XXXX-XXXX-{{cardData.cardLast4}} 
+                                        <!-- <span [ngClass]="defaultcard == i?'isdefaultCard':''" (click)="defaultcardselect(cardData,i)" class="cardbox">{{cardData.defaultSource}}</span></td> -->
+                                        <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span> 
+                                      <td>{{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</td>
+                                      <td>{{cardData.name}}</td>
+                                      <td>{{cardData.createdAt | date}} {{cardData.createdAt.split("T")[1].split(".")[0]}}</td>
+                                      <td >
+                                        <!-- <button aria-hidden="true" *ngIf='!cardData.defaultSource' class="btn btn-danger remov_btn"  (click)="deletCard(cardData,i)">Remove -->
+                                          <!-- <img src="assets/images/unsubscribe.svg" alt=""> -->
+                                        <!-- </button>  -->
+                                        <!-- <button *ngIf='!cardData.defaultSource' class='btn btn-primary setDefault_btn' (click)='setAsDefaultCard(cardData)'>Set Default</button> -->
+                                        <button  class="subsc" style="padding:0" [disabled]="cardData.defaultSource === true" (click)='setAsDefaultCard(cardData)'><img src="assets/images/Default_Card.svg" alt="" style="max-width: 60%;"> </button>
+                                        <button class="subsc" [disabled]="cardData.defaultSource === true" (click)="paymodedel(cardData,i)"> <img src="assets/images/unsubscribe.svg" alt=""></button>
+                                        <!-- <span  (click)="paymodedel(cardData,i)"> 
+                                          <img src="assets/images/unsubscribe.svg" alt=""></span> -->
+                                        <div id="myid" [ngClass]="selectedIndex === i?'isdelet':''" class="deletconfm">
+                                          <div class="container-fluid deletefrm">
+                                        <h5 class="pull-left">Confirmation</h5>
+                                        <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(i)">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        <p class="pull-left">Are you sure you want to cancel the Subscription ?</p>
+                                        <button class="pull-left confm" (click)="deletCard(cardData,i)">Yes</button>
+                                        <button class="confm pull-left" (click)="unsubscribeNo(i)">No</button>
+                                        </div>
+                                        </div>
+                                        <!-- <span aria-hidden="true" class="cross_delet"  (click)="deletCard(cardData,i)">&times;</span>
+                                        
+                                        <div id="delete-card"  *ngIf="closeFlag" [ngClass]="deletCardIndex == i?'isdeletcard':''" class="deletconfm">
+                                            <div class="container-fluid deletefrm">
+                                          <h5 class="pull-left">Confirmation</h5>
+                                                                 <button type="button" class="close " aria-label="Close" (click)="cancelDeleteCard(i)">
+                                             <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          <p class="pull-left">Are you sure you want to remove the card?</p>
+                                          <button class="pull-left confm" (click)="confrmDeleteCard(cardData)">Yes</button>
+                                          <button class="confm pull-left" (click)="cancelDeleteCard(i)">No</button>
+                                          </div>
+                                          </div> -->
+
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <div *ngIf="(paymentMode | filter:searchmode).length==0" class=""><h4>No records found</h4></div>
+                                <div *ngIf="(paymentMode | filter:searchmode).length" class="alertspagination">
+                                  <pagination-controls id="pm_page" maxSize="8" (pageChange)="pmtemp = $event"></pagination-controls>
+                                  </div>
+                        </div>
+                      </tab>
+
+                      <tab *ngIf = "true" heading = "Change Password">
+                        <div class = "col-md-12 chngpswd pswd">
+                        <form #f="ngForm" (ngSubmit)="passwordChange(f)">
+                         
+                          <div class = "form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="password">Current Password </label>
+                          <img src="assets/images/registration/Lock.svg" class="lockicon">
+                          <span (click)="curreyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(eyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                        <input [type]="(eyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="password" #password="ngModel" [(ngModel)]="pswdmodel.currentPassword" placeholder="Enter Current Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" maxlength="20" required/>
+                        <span *ngIf="((password.invalid && f.submitted) || (password.errors && password.touched) )">
+                          <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
+                          <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number</span>
+                        </span>
+                        
+                        <!-- <input type="password" name="password" #password="ngModel" placeholder = "Enter Current Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.currentPassword"/> -->
+                        </div>
+
+                        <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="newpassword">New Password </label>
+                          <img src="assets/images/registration/Lock.svg" class="lockicon1">
+                          <span (click)="neweyetoggle()" class="input-group-add eyeicon1"> <i class="fa fa-eye" [ngClass]="(neweyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                          <input [type]="(neweyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="newpassword" ngModel #newpassword="ngModel" placeholder="Enter New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" maxlength="20" required/>
+                          <!-- <div class="fa fa-info-circle errspan" *ngIf="password.invalid && (password.dirty || password.touched)"> Password is required
+                          </div> -->
+                          <span *ngIf="((newpassword.invalid && f.submitted) || (newpassword.errors && newpassword.touched) )">
+                              <span class='fa fa-info-circle errspan' *ngIf="newpassword.errors.required"> Password is required</span>
+                              <span class='fa fa-info-circle errspan' *ngIf="newpassword.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number</span>
+                            </span>
+                      </div>
+
+                      <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                        <label for="confpassword">Confirm Password </label>
+                        <img src="assets/images/registration/Lock.svg" class="lockicon">
+                        <span (click)="confeyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(confeyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                        <input [type]="(confeyeshow==true) ? 'password' : 'text'"  class="form-control botmbordr" name="confpassword" [(ngModel)]="pswdmodel.confirmPassword"ngModel #confpassword="ngModel" placeholder="Confirm Password" required compare="newpassword" />
+                        <span *ngIf="confpassword.touched && confpassword.errors">
+                            <span *ngIf="confpassword.errors['required']" class='fa fa-info-circle errspan'> Password confirm is required</span>
+                            <span *ngIf="confpassword.errors['compare'] && !confpassword.errors['required']" class='fa fa-info-circle errspan'> Password confirm do not match</span>
+                        </span>  
+                    </div>
+                    <div class="col-md-6">
+                      <div *ngIf="passwordvalidatemsg" class='fa fa-exclamation-triangle errspan errspan1'> {{passwordvalidatemsg}}</div>
+                    </div>
+ 
+                      <div class="col-md-12 submitbtn">
+                        <button [disabled]="f.invalid" class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
+                      </div>
+                    </form>
+                  </div>
+                      </tab>
+                      </tabset>
+        </div>
+
+
+        <div class="container" *ngIf="isInvite">
+          <div class="row">
+              <div  class="col-md-12">
+                      <h4 class="invite">Invite User</h4>
+              </div>
+              <div class="col-md-4 invteform">
+                <form autocomplete="off" #inviteuser="ngForm" id="inviteform" class="inviterow">
+                    <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" name='email' id="email" #email="ngModel" (change)="onEmailChange()" class="form-control botmbordr"  [(ngModel)]="inviteremailId"
+                             (keyup)="myemailFunction()" 
+                              pattern="^\S*[@]\S*[.]\S*$"  email placeholder="Enter Emails Separated By Comma(,)" (keypress)="inputlettersEmail($event)"/>
+                              <span *ngIf="((email.invalid && inviteuser.submitted)|| (email.errors && email.touched))"> 
+                                <span class='fa fa-info-circle errspan' *ngIf="email.errors.required"> Email is required</span>
+                                <span class='fa fa-info-circle errspan' *ngIf="email.errors.pattern"> Enter valid email address</span>
+                              </span>
+                              <span class='fa fa-info-circle errspan' *ngIf="emailRequired"> Email is required</span>
+                                <!-- <span  class='fa fa-info-circle errspan' *ngIf="email.errors.pattern">Enter valid email address</span> -->
+                                <!-- <span *ngIf='ispublicMail' class='fa fa-info-circle errspan'>&nbsp;Only Business Email is allowed</span>-->
+                                <span *ngIf="isSameDomain" class='fa fa-info-circle errspan'>&nbsp;Sorry...! You Are Allowed to Invite {{domain}} Users Only</span> 
+                          </div>
+
+                    <div class="form-group">
+                  <label for="application">Product</label>
+        <select name="invite_product" #inviteproduct="ngModel"  (change)="onInviteProduct($event)" id="product" class="form-control botmbordr" (change)="onChangeApp($event.target.value)" [(ngModel)]="invite_product" required>
+          <option [value]="" disabled selected>Select Product</option>
+          <option  [value]="undefined" disabled hidden>Select Product</option>
+          <option  [value]="null" disabled hidden>Select Product</option>
+
+          <option *ngFor="let application of listOfUserApplications"  [value]="application">{{application}}</option>
+          </select>
+                    </div>
+                    
+                    
+                    <div class="form-group ng_btm_border" id="multipleinviteroles">
+                      <label for="role">Roles</label>
+                       <ng-select name = "multiroles" [multiple]="true" id="multiroles" [disabled]="invitemultirole"
+                       placeholder="Select Roles"
+                       [items] =  "inviteAllRoles"
+                       [(ngModel)]="selectedroles"
+                       bindValue = "id"
+                       bindLabel = "name" required>
+                       </ng-select>  
+                        <!-- <select name = "multiroles" class="form-control botmbordr"  required>
+                        <option value="" disabled selected>Select Roles</option>
+                         <option *ngFor="let each of allRoles" >{{each.name}}</option>
+                    </select>  -->
+                   
+                          </div>
+                          <button  class="btn btn-primary invite-button" [disabled] ="isSameDomain || emailRequired || inviteuser.invalid"  type="submit" (click)='inviteUser(this.useremail,inviteremailId,inviteuser)'>Invite</button>
+                        </form>
+              </div>
+
+              </div>
+              <div class="upload-container">
+                <div class="upload-excel">
+                  <div>
+                    <span>(OR)</span>
+                  </div>
+                  <div class="fileUpload btn ">
+                  <span class="bulk"><b>Bulk Upload</b></span><br>
+                  <span class="downloadbulk">
+                    <b><a href="assets/Sample Bulk Template.xlsx" download>
+                      <u style="color:black">Download Sample Template</u></a></b>
+            </span>
+                 <input id="uploadBtn" type="file" class="upload" name="uploadexcel" #uploadexcel="ngModel" [(ngModel)]="upload_excel"
+                 (change)="onFileSelected($event)" />
+              </div>
+          </div>
+          <div class="uploaded-excel">
+            <div id="excel"></div>
+            <!-- <div *ngIf='upload_excel'> 
+              <button class="close" type="button">x</button>
+               </div> -->
+            </div>
+</div>
+
+  </div>
+
+               
+                <div class="container" *ngIf="isAlerts">
+                  <div  class="">
+                    <tabset id="staticTabs" #staticTabs>
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_Alerts_Full" heading="Alerts" id="tab1">
+                        <div class="search-One">
+                            <form class="form-inline d-flex  md-form form-sm">
+                                <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchalert" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                              </form>
+                            </div>
+                  
+                  <div class="row">
+                     
+                      <div class="container configalerts">
+                        <button class='btn btn-primary pull-right createAlert'  (click)='addAlert(configAlerts)'>Create Alert</button>
+                        <table class="table table-borderless table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col" class="alerttype" style="text-align:center">Product</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Type</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Activity</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Channel</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Mail</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Mobile</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Incident System</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Created At</th>
+                             <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
+                             <th scope="col" class="alerttype">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody >
+                            <tr *ngFor="let data of alertslistactivitiesdata  | paginate: {id:'alert_page', itemsPerPage: 5, currentPage: p } | FilterPipe:searchalert; trackBy:loopTrackBy; let l=index">
+                              <td style="text-align:center">{{data.app_name}}</td>
+                              <td style="text-align:center">{{data.type}}</td>
+                              <td style="text-align:center">{{data.activity_name}}</td>
+                              <td style="text-align:center">{{data.channel}}</td>
+                              <td style="text-align:center">{{data.mail_to?data.mail_to:'-'}}</td>
+                              <td style="text-align:center">{{data.text_to?data.text_to:'-'}}</td>
+                              <td style="text-align:center">{{data.incident_type?data.incident_type:'-'}}</td>
+                              <td style="text-align:center">{{data.audit.created_at | date}} {{data.audit.created_at.split("T")[1].split(".")[0]}}</td>
+                              <td style="text-align:center">{{data.audit.modified_at | date}} {{data.audit.modified_at.split("T")[1].split(".")[0]}}</td>
+                              <td  class="deleticon"><span  (click)="updateselecttedalertdata(data,l,alertdetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                <span  (click)="alertsdeletedata(data.id,l)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                <div id="myid" [ngClass]="selectedalertdet === l?'isdelet':''" class="deletconfm">
+                                  <div class="container-fluid deletefrm">
+                                      <h5 class="pull-left">Confirmation</h5>
+                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribealertNo(l)">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                      <p class="pull-left">Are you sure you want to delete the alert ?</p>
+                                       <button class="pull-left confm" (click)="alertDelYes(data.id,l)">Yes</button>
+                                       <button class="confm pull-left" (click)="unsubscribealertNo(l)">No</button>
+                                  </div>
+                              </div>
+                              </td>
+                            </tr>
+                            <tr *ngIf="alertslistactivitiesdata.errorMessage=='No records found' ">
+                              
+                                <div class="norecords"><h4>No records found</h4></div>
+                             
+                              </tr>
+
+                          </tbody>
+                        </table>
+                        <div *ngIf="(alertslistactivitiesdata | filter:searchalert).length==0" class=""><h4>No records found</h4></div>
+                        <div *ngIf="alertslistactivitiesdata.errorMessage!='No records found' && (alertslistactivitiesdata | filter:searchalert).length" class="alertspagination">
+                        <pagination-controls id="alert_page" maxSize="8" (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                        
+                </div>
+                      </div>
+                    </tab>
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_EmailTempt_Full" heading="Email Templates" >
+                      <div class="search-One">
+                        <form class="form-inline d-flex  md-form form-sm">
+                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchtemplate" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                            <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                          </form>
+                        </div>
+                        <div class="row">
+                     
+                          <div class="container configalerts">
+                            <button class='btn btn-primary pull-right createAlert'  (click)='addTemplate(configEmail)'>Create Template</button>
+                            <table class="table table-borderless table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="alerttype" style="text-align:center">Name</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Subject</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Body</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Created At</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
+                                 <th scope="col" class="alerttype">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody >
+                                <tr *ngFor="let data of emailtemplateslist  | paginate: {id:'email_template_page', itemsPerPage: 2, currentPage: emailtemp } | FilterPipe: searchtemplate ; let t=index">
+                                  <td style="text-align:center">{{data.templateName}}</td>
+                                  <td style="text-align:center">{{data.templateSubject}}</td>
+                                  <td style="text-align:center">{{data.templateBody}}</td>
+                                  <td style="text-align:center">{{data.audit.created_at | date}} {{data.audit.created_at.split("T")[1].split(".")[0]}} </td>
+                                  <td style="text-align:center">{{data.audit.modified_at | date}} {{data.audit.modified_at.split("T")[1].split(".")[0]}}</td>
+                                  <td  class="deleticon"><span  (click)="selectedtemplate(data,t,emaildetailstemplate)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                    <span  (click)="emailtempdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                    <div id="myid" [ngClass]="selectedtempdet === t?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                          <h5 class="pull-left">Confirmation</h5>
+                                          <button type="button" class="close " aria-label="Close" (click)="tempdelno(t)">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          <p class="pull-left">Are you sure you want to delete the template ?</p>
+                                           <button class="pull-left confm" (click)="tempDelYes(data,t)">Yes</button>
+                                           <button class="confm pull-left" (click)="tempdelno(t)">No</button>
+                                      </div>
+                                  </div>
+                                  </td>
+                                </tr>
+                                <tr *ngIf="emailtemplateslist==0">
+                                  
+                                    <div class="norecords"><h4>No records found</h4></div>
+                                 
+                                  </tr>
+    
+                              </tbody>
+                            </table>
+                            <div *ngIf="emailtemplateslist!=0 && (emailtemplateslist | filter:searchtemplate).length==0" class=""><h4>No records found</h4></div>
+                             <div *ngIf="emailtemplateslist!=0 && (emailtemplateslist | filter:searchtemplate).length " class="alertspagination">
+                            <pagination-controls id="email_template_page" maxSize="8" (pageChange)="emailtemp = $event"></pagination-controls>
+                            </div> 
+                        
+                    </div>
+                          </div>
+                    </tab>
+                    <!--vault configure tab-->
+                    <tab  *ngIf="this.userRole.includes('Admin') || this.confuguration_SecureVault_Full" heading="Security Vault" >
+                      <div class="search-One">
+                        <form class="form-inline d-flex  md-form form-sm">
+                            <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvault" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                            <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                          </form>
+                        </div>
+                        <div class="row">
+                     
+                          <div class="container configalerts">
+                            <button class='btn btn-primary pull-right createAlert'  (click)='addVault(vaultconfiguration)'>Configure Vault</button>
+                            <table class="table table-borderless table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="alerttype" style="text-align:center">Product</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Module</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Page</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Field</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Created At</th>
+                                 <th scope="col" class="alerttype" style="text-align:center">Modified At</th>
+                                 <th scope="col" class="alerttype">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody >
+                                <tr *ngFor="let data of vaulConfigureList | paginate: {id:'email_page', itemsPerPage: 5, currentPage: em } | FilterPipe:searchvault; trackBy:loopTrackBy; let t=index">
+                                  <td style="text-align:center">{{data.product}}</td>
+                                  <td style="text-align:center">{{data.module}}</td>
+                                  <td style="text-align:center">{{data.page}}</td>
+                                  <td style="text-align:center">{{data.field}}</td>
+                                  <td style="text-align:center">{{data.audit.created_at | date}} {{data.audit.created_at.split("T")[1].split(".")[0]}}</td>
+                                  <td style="text-align:center">{{data.audit.modified_at | date}} {{data.audit.modified_at.split("T")[1].split(".")[0]}}</td>
+                                  <td  class="deleticon"><span  (click)="selectedVaultConfig(data,t,configvault)"><img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                    <span  (click)="vaultconfigdelete(data.id,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                    <div id="myid" [ngClass]="selectedvaultconfig === t?'isdelet':''" class="deletconfm">
+                                      <div class="container-fluid deletefrm">
+                                          <h5 class="pull-left">Confirmation</h5>
+                                          <button type="button" class="close " aria-label="Close" (click)="vaultconfigdelno(t)">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          <p class="pull-left">Are you sure you want to delete the vault configuration ?</p>
+                                           <button class="pull-left confm" (click)="vaultconfigDelYes(data,t)">Yes</button>
+                                           <button class="confm pull-left" (click)="vaultconfigdelno(t)">No</button>
+                                      </div>
+                                  </div>
+                                  </td>
+                                </tr>
+                                <tr *ngIf="vaulConfigureList==0 ">
+                                  
+                                    <div class="norecords"><h4>No records found</h4></div>
+                                 
+                                  </tr>
+    
+                              </tbody>
+                            </table>
+                            <div *ngIf="vaulConfigureList!=0 && (vaulConfigureList | filter:searchvault).length==0" class=""><h4>No records found</h4></div>
+                            <div *ngIf="vaulConfigureList!=0" class="alertspagination">
+                            <pagination-controls id="email_page" maxSize="8" (pageChange)="em = $event"></pagination-controls>
+                            </div>
+                        
+                    </div>
+                          </div>
+                    </tab>
+
+                    <tab *ngIf="this.userRole.includes('Admin') || this.configuration_TwoFactor_Full" heading = "Two Factor Authentication">
+                        <div class = "col-md-12 twoFactor factor">
+                        <form #f="ngForm" (ngSubmit)="twoFactorAuthConfig(f)">
+                         
+                          <!-- <div class = "form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="company">Company</label>
+                          
+                          
+                            <input type="text" name="company" #company="ngModel" class="form-control botmbordr" [(ngModel)]="formTwoFactor.company"
+                                       required email placeholder="Send from ex: Epsoft" disabled/>
+                          
+                          
+                        </div> -->
+
+                        <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                          <label for="enableTwoFactor">Enable :</label>
+                          <select name="enableTwoFactor" class="twofactor" #enableTwoFactor="ngModel" class="form-control bottwofactor" [(ngModel)]="emailvalue" required>
+                            <option  [value]="undefined" disabled hidden>Select Type</option>
+                            <option  [value]="null" disabled hidden>Select Type</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                          
+                      </div>
+                      <br>
+
+                      <div class="form-group col-md-4 inner-addon left-addon right-addon">
+                        <label for="status">OTP Send To : </label><br>
+                        <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
+                        Email  <input type="checkbox"  name="emailcheck"   [(ngModel)]="formTwoFactor.isEmailcheckForOTP"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                        SMS  <input type="checkbox"  name="smscheck"   [(ngModel)]="formTwoFactor.isSMScheckForOTP"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                       
+                       
+                      </div>
+                    
+ 
+                      <div class="col-md-12 submitbtn">
+                        <button class="btn btn-primary updTwoFactor" type="submit">Update</button>
+                      </div>
+                    </form>
+                  </div>
+                      </tab>
+
+                  
+
+
+                   
+                  </tabset>
+                  </div>
+
+                
+                </div>
+
+                <div class="container users" *ngIf="isusers">
+                        <div  class="">
+                            <tabset id="staticTabs" #staticTabs>
+                              <tab  *ngIf="this.userRole.includes('Admin') || this.userManagement_Users_Full" heading="Users" id="tab1">
+                                <div class="search-One">
+                                    <form class="form-inline d-flex  md-form form-sm">
+                                        <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                        <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                      </form>
+                                    </div>
+                            <div class="container usermanagement">
+                                    <table class="table table-borderless col-md-12 table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col" class="">Name</th>
+                                          <th scope="col" class="emailCs">Email</th>
+                                          <!-- <th scope="col" class="types1">LName</th> -->
+                                          <th scope="col" class="">Designation</th>
+                                          <th scope="col" class="">Department</th>
+                                          <!-- <th scope="col" class="types">Department</th> -->
+                                          <th scope="col" class="">Product</th>
+                                          <th scope="col" class="roleCs">Roles</th>
+                                          <th scope="col" class="">Created At</th>
+                                          <!-- <th scope="col" class="types1">Modified At</th> -->
+                                          <th scope="col" class="">Status</th>
+                                          <th scope="col" class="action-btns">Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody class="col-md-12">
+                                        <tr *ngFor="let userdata of userManagement | filter:searchUser | paginate: {id:'user_data', itemsPerPage: 2, currentPage: userTemp };  trackBy:loopTrackBy; let m= index">
+                                          <td>{{userdata.firstName}} {{userdata.lastName}}</td>
+                                          <td class="emailCs">{{userdata.userId}}</td>
+                                          <!-- <td>{{userdata.lastName}}</td> -->
+                                          <td>{{userdata.designation}}</td>
+                                            <td>{{userdata.department}}</td>
+                                            <!-- <td>{{userdata.department}}</td> -->
+                                            <td >{{userdata.applicationIdname}}</td>
+                                            <td class="">{{userdata.roleIdname}}</td>
+                                            <td class="">{{userdata.created_at | date}} {{userdata.created_at.split("T")[1].split(".")[0]}}</td>
+                                            <!-- <td class="types">{{userdata.modified_at | date:'medium'}}</td> -->
+                                            <td>{{userdata.Status}}</td>
+
+                                            <td class="">
+                                              <!-- <span  (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)">
+                                              <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                               <span  (click)="userDel(userdata.userId,m)">
+                                                
+
+                                               <img src="assets/images/unsubscribe.svg" alt=""></span> -->
+                                               <div>
+                                               <button class="subsc edit-Btn"  
+                                                    [disabled]="userdata.userId == currentUserId"  
+                                             (click)="updateSelectedUserRole(userdata, m, updateRoleTemplate)" ><img src="assets/images/eyeIcon.svg" alt=""></button>
+                                            </div>  
+                                             <!-- <span  (click)="userDel(userdata.userId,m)">
+                                                
+
+                                               <img src="assets/images/unsubscribe.svg" alt=""></span> -->
+                                               <div>
+
+                                               <button class="subsc"  
+                                               [disabled]="userdata.userId == currentUserId"  
+                                        (click)="userDel(userdata.userId,m)" ><img src="assets/images/unsubscribe.svg" alt=""></button>
+
+                                      </div>
+                                               <div id="myid" [ngClass]="selectedIndex === m?'isdelet':''" class="deletconfm">
+                                                  <div class="container-fluid deletefrm">
+                                                      <h5 class="pull-left">Confirmation</h5>
+                                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(m)">
+                                                      <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                      <p class="pull-left">Are you sure you want to delete the User ?</p>
+                                                       <button class="pull-left confm" (click)="deleteUserYes(userdata.userId,m)">Yes</button>
+                                                       <button class="confm pull-left" (click)="unsubscribeNo(m)">No</button>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                        </tr>
+                  
+                                      </tbody>
+                                    </table>
+                                    <div *ngIf="(userManagement | filter:searchUser).length==0" class=""><h4>No records found</h4></div>
+                                    <div *ngIf="(userManagement | filter:searchUser).length" class="userManagementpagination">
+                                      <pagination-controls id="user_data" maxSize="8" (pageChange)="userTemp= $event"></pagination-controls>
+                                      </div>
+                            </div>
+                      </tab>
+                      <tab *ngIf="this.userRole.includes('Admin') || this.userManagement_Depart_Full" heading="Departments">
+                          <div class="search-One">
+                              <form class="form-inline d-flex  md-form form-sm">
+                                  <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchDept" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                  <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                </form>
+                              </div>
+                            <div class="container department">
+                              <button *ngIf="this.userRole.includes('Admin')" class='btn btn-primary pull-right addCard' (click)='adddept(createDept)'>Add Department</button>
+
+                            <table class="table table-borderless table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col" class="types">ID</th>
+                                        <th scope="col" class="types">Department</th>
+                                        <th scope="col" class="types">Created By</th>
+                                        <th scope="col" class="types">Created At</th>
+                                        <th *ngIf="this.userRole.includes('Admin')" scope="col" class="types">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let category of categories  | FilterPipe:searchDept | paginate: {id:'dept_page', itemsPerPage: 2, currentPage: dp }; trackBy:loopTrackBy; let d=index">
+                                            <td>{{category.categoryId}}</td>
+                                            <td>{{category.categoryName}}</td>
+                                            <td>{{category.createdBy}}</td>
+                                            <td>{{category.createdAt | date}} {{category.createdAt.split("T")[1].split(".")[0]}}</td>
+                                            <td>
+                                              <div>
+                                              <button class="subsc edit-Btn" (click)="viewDept(category, updateDepttemp)" ><img src="assets/images/eyeIcon.svg" alt=""></button>
+                                              </div>
+                                              <div>
+                                                <button class="subsc" (click)="depdel(category,d)" ><img src="assets/images/unsubscribe.svg" alt=""></button>
+                                              </div>
+                                                <div id="myid" [ngClass]="selectedIndex === d?'isdelet':''" class="deletconfm">
+                                                   <div class="container-fluid deletefrm">
+                                                       <h5 class="pull-left">Confirmation</h5>
+                                                       <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(d)">
+                                                       <span aria-hidden="true">&times;</span>
+                                                       </button>
+                                                       <p class="pull-left">Are you sure you want to delete the department ?</p>
+                                                        <button class="pull-left confm" (click)="deletedepYes(category,d)">Yes</button>
+                                                        <button class="confm pull-left" (click)="unsubscribeNo(d)">No</button>
+                                                   </div>
+                                               </div>
+                                          </td>
+                                        </tr>
+                                          
+                                    </tbody>
+                                  </table>
+                                   <div *ngIf="(categories | filter:searchDept).length==0" class=""><h4>No records found</h4></div> 
+                                  <div *ngIf="(categories | filter:searchDept).length" class="deptpagination">
+                                    <pagination-controls id="dept_page" maxSize="8" (pageChange)="dp = $event"></pagination-controls>
+                                    </div>
+                            </div>
+                          </tab>
+
+                         <tab *ngIf="true" heading="Roles">
+                            <div class="search-One">
+                                <form class="form-inline d-flex  md-form form-sm">
+                                    <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchRole" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                    <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                  </form>
+                                </div>
+                            <div class="container role">
+                              
+                                <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add Role</button>
+                                    <table class="table table-borderless table-hover">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col" class="types">Product</th>
+                                                <th scope="col" class="types">Role</th>
+                                                <th scope="col" class="types">Description</th>
+                                                <th scope="col" class="types">Permissions</th>
+                                                <th scope="col" class="types">Created At</th>
+                                                <th scope="col" class="types">Modified At</th>
+                                                <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr *ngFor="let role of allRoles | FilterPipe:searchRole | paginate: {id:'roles_page', itemsPerPage: 2, currentPage: rp }  trackBy:loopTrackBy; let j= index">
+                                                <td>{{role.appliationId.name}}</td>
+                                                <td>{{role.name}}</td>
+                                                <td>{{role.description}}</td>
+                                                
+                                                <td >
+                                                  <div > 
+                                                    <div *ngFor="let perm of role.permission;let k=index">
+                                                    <div><span *ngIf="isOpened!=role.id&&k<2">{{perm.permissionName|titlecase}}</span></div>
+                                                    <span *ngIf="isOpened==role.id">{{perm.permissionName|titlecase}}</span>
+                                                    </div>
+                                                    <span class="loadRole" *ngIf="isOpened !=role.id&&role.permission.length>=3" (click)="myFunction(role)" >Load more</span>
+                                                    <span class="hideRole" *ngIf="isOpened == role.id" (click)="hideroleslist(j)">Hide</span>
+                                                    </div>
+                                                </td>
+                                                <td>{{role.audit.created_at | date}} {{role.audit.created_at.split("T")[1].split(".")[0]}}</td>
+                                                <td>{{role.audit.modified_at | date}} {{role.audit.modified_at.split("T")[1].split(".")[0]}}</td>
+                                                <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
+                                                    <span  (click)="selectedroledata(role,j,rolestemplate)">
+                                                    <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                                    <span  (click)="roledel(role.id,j)"> 
+                                                    <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                                    <div id="myid" [ngClass]="selectedIndex === j?'isdelet':''" class="deletconfm">
+                                                        <div class="container-fluid deletefrm">
+                                                            <h5 class="pull-left">Confirmation</h5>
+                                                            <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <p class="pull-left">Are you sure you want to delete the role ?</p>
+                                                             <button class="pull-left confm" (click)="roleDelYes(role.id,j)">Yes</button>
+                                                             <button class="confm pull-left" (click)="unsubscribeNo(j)">No</button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                               
+                                               </tr>
+                                            </tbody>  
+                                          </table>
+                                          <div *ngIf="(allRoles | filter:searchRole).length==0" class=""><h4>No records found</h4></div>
+                                          <div class="permissionpagination">
+                                            <pagination-controls id="roles_page" maxSize="8" (pageChange)="rp = $event"></pagination-controls>
+                                            </div>
+                            </div>
+                            </tab>
+
+
+
+                            <tab *ngIf="this.userRole.includes('SuperAdmin')" heading="Permissions">
+                              <div class="search-One">
+                                  <form class="form-inline d-flex  md-form form-sm">
+                                      <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchPermission" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+                                      <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                                    </form>
+                                  </div>
+                              <div class="container role">
+                                
+                                  <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add Permission</button>
+                                      <table class="table table-borderless table-hover">
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col" class="types">Permission</th>
+                                                  <th scope="col" class="types">Description</th>
+                                                  <th scope="col" class="types">Created At</th>
+                                                  <th scope="col" class="types">Modified At</th>
+                                                  <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
+                                                </tr>
+                                              </thead>
+                                              
+                                              <tbody>
+                                                <tr *ngFor="let permission of permissionsList | FilterPipe:searchPermission | paginate: {id:'permission_page', itemsPerPage: 3, currentPage: pp }  trackBy:loopTrackBy; let p= index">
+                                                  <td>{{permission.permissionName}}</td>
+                                                  <td>{{permission.description}}</td>
+                                                  <td>{{permission.audit.created_at | date}} {{permission.audit.created_at.split("T")[1].split(".")[0]}}</td>
+                                                  <td>{{permission.audit.modified_at | date}} {{permission.audit.modified_at.split("T")[1].split(".")[0]}}</td>
+                                                  <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
+                                                      <span  (click)="selectedpermdata(permission,p,permtemplate)">
+                                                      <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                                                      <span  (click)="permdel(permission.id,p)"> 
+                                                      <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                                      <div id="myid" [ngClass]="selectedIndex === p?'isdelet':''" class="deletconfm">
+                                                          <div class="container-fluid deletefrm">
+                                                              <h5 class="pull-left">Confirmation</h5>
+                                                              <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(p)">
+                                                              <span aria-hidden="true">&times;</span>
+                                                              </button>
+                                                              <p class="pull-left">Are you sure you want to delete the permission ?</p>
+                                                               <button class="pull-left confm" (click)="permDelYes(permission.id,p)">Yes</button>
+                                                               <button class="confm pull-left" (click)="unsubscribeNo(p)">No</button>
+                                                          </div>
+                                                      </div>
+                                                 
+                                                 </tr>
+                                              </tbody>
+                                            </table>
+                                            <div *ngIf="(permissionsList | filter:searchPermission).length==0" class=""><h4>No records found</h4></div>
+                                            <div class="permissionpagination">
+                                              <pagination-controls id="permission_page" maxSize="8" (pageChange)="pp = $event"></pagination-controls>
+                                              </div>
+                              </div>
+                              </tab>
+
+
+
+                                                  </tabset>
+                </div>
+            </div>
+
+
+<div class="container" *ngIf="isCoupon">
+  <div  class="">
+      <tabset >
+            <tab heading="Coupon">
+      <div class="search-One">
+          <form class="form-inline d-flex  md-form form-sm">
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchCoupon" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+            </form>
+          </div>
+          <div class="row">
+      <div class="container coupons">
+        
+          <button *ngIf="this.userRole == 'SuperAdmin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
+              <table class="table table-borderless table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="types" style="text-align:center">Coupon ID</th>
+                          <th scope="col" class="types" style="text-align:center">Coupon Name</th>
+                          
+                          <th scope="col" class="types" style="text-align:center">Amount Off</th>
+                          <th scope="col" class="types" style="text-align:center">Percentage Off</th>
+                          <th scope="col" class="types" style="text-align:center">No. of Redemptions
+                                                     </th>
+                          <th scope="col" class="types" style="text-align:center">Available Redemptions</th>
+                          <th scope="col" class="types" style="text-align:center">Expires By</th>
+                         
+                          <th scope="col" class="types" style="text-align:center">Created At</th>
+                         
+                          <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let coupon of allCoupons | paginate: { id:'coupon_page',itemsPerPage: 2, currentPage: cpp } | FilterPipe:searchCoupon; trackBy:loopTrackBy; let j= index">
+                          <td style="text-align:center">{{coupon.id}}</td>
+                          <td style="text-align:center">{{coupon.name}}</td>
+                          
+                          <td style="text-align:center">{{coupon.amountOff}}</td>
+                          <td style="text-align:center">{{coupon.percentOff}}</td>
+                          <td style="text-align:center">{{coupon.maxRedemptions}}</td>
+                          <td style="text-align:center">{{coupon.availableRedeemptions}}</td>
+                          <td style="text-align:center">{{coupon.expiresBy | date}} {{coupon.expiresBy.split("T")[1].split(".")[0]}}</td>
+                          <td style="text-align:center">{{coupon.createdAt | date}} {{coupon.createdAt.split("T")[1].split(".")[0]}}</td>
+                          
+                          
+                          <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
+                            <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
+                              <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                              <span  (click)="couponDel(coupon.id,j)"> 
+                              <img src="assets/images/unsubscribe.svg" alt=""></span>
+                             </div>
+                              <div id="myid" [ngClass]="selectedIndex === j?'isdelet':''" class="deletconfm">
+                                  <div class="container-fluid deletefrm">
+                                      <h5 class="pull-left">Confirmation</h5>
+                                      <button type="button" class="close " aria-label="Close" (click)="unsubscribeNo(j)">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                      <p class="pull-left">Are you sure you want to delete this coupon ?</p>
+                                       <button class="pull-left confm" (click)="couponDelYes(coupon.id,j)">Yes</button>
+                                       <button class="confm pull-left" (click)="unsubscribeNo(j)">No</button>
+                                  </div>
+                              </div>
+                         
+                         </tr>
+                      </tbody>
+                    </table>
+                    <div *ngIf="(allCoupons | filter:searchCoupon).length==0" class=""><h4>No records found</h4></div>
+                    <div *ngIf="(allCoupons | filter:searchCoupon).length" class="couponpagination">
+                      <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
+                      </div>
+      </div>
+      </div>
+      </tab>
+    
+    </tabset>
+</div>
+</div>
+<!--vault management creation-->
+<div  *ngIf="isvaultMangment" class="container">
+  <div  class="">
+      <tabset >
+            <tab heading="Security Vault">
+      <div class="search-One">
+          <form class="form-inline d-flex  md-form form-sm">
+              <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvaultmng" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
+              <i class="fa fa-fw fa-search usersearch" aria-hidden="true"></i>
+                     
+            </form>
+          </div>
+      <div class="container vaultcss" >
+        
+          <button  class='btn btn-primary pull-right addCard' (click)='createSecret(createsecret)'>Create Secret</button>
+          <table class="table table-borderless table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="types" style="text-align:center">Secret Key</th>
+                <th scope="col" class="types" style="text-align:center">Created At</th>
+                <th scope="col" class="types" style="text-align:center">Version</th>
+                <th scope="col" class="types" style="text-align:center">Actions</th>
+               
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let keys of allKeys | paginate: { id:'coupon_page',itemsPerPage: 3, currentPage: cpp } | FilterPipe:searchvaultmng; trackBy:loopTrackBy; let t= index">
+                <td style="text-align:center">{{keys.keyname}}</td>
+                <td style="text-align:center">{{keys.convertedTime |   date}} {{keys.convertedTime.split("T")[1].split(".")[0]}}</td>
+                <td style="text-align:center">{{keys.data.metadata.version}}</td>
+                <td style="text-align:center">
+                <span  (click)="viewSecreteData(keys,t,datatemplate)">
+                  <img src="assets/images/eyeIcon.svg" alt=""> </span>
+                  <span  (click)="secretdelete(keys.keyname,t)"> <img src="assets/images/unsubscribe.svg" alt=""></span>
+                  <div id="myid" [ngClass]="selectedsecret === t?'isdelet':''" class="deletconfm">
+                    <div class="container-fluid deletefrm">
+                        <h5 class="pull-left">Confirmation</h5>
+                        <button type="button" class="close " aria-label="Close" (click)="secretdelno(t)">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p class="pull-left">Are you sure you want to delete the secret ?</p>
+                         <button class="pull-left confm" (click)="secretDelYes(keys.keyname,keys,t)">Yes</button>
+                         <button class="confm pull-left" (click)="secretdelno(t)">No</button>
+                    </div>
+                </div>
+                </td>
+               
+              
+                  
+               
+               </tr>
+            </tbody>
+          </table>
+          <div *ngIf="(allKeys | filter:searchvaultmng).length==0" class=""><h4>No records found</h4></div>
+                    <div *ngIf="(allKeys | filter:searchvaultmng).length" class="couponpagination">
+                      <pagination-controls id="coupon_page" maxSize="8" (pageChange)="cpp = $event"></pagination-controls>
+                      </div>
+      </div>
+      </tab>
+    
+    </tabset>
+</div>
+</div>
+<!--show secret template-->
+<ng-template #datatemplate >
+  
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Modify Secret</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+
+<div class="modal-body">
+
+  <div  class="col-md-12 confirmationmsg">
+    <table class="vault-table">
+      <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
+      <th>Secret Data</th>
+                             <tr *ngFor="let mykey  of secretarray ;let i=index ; trackBy:loopTrackBy;">
+                               <td><input type="text" name="keyholder" class="form-control" [(ngModel)]="mykey.key"></td>
+                             <td> : </td>
+                              <td >  <input type="text"  class="form-control" name="valueholder"  [(ngModel)]="mykey.value" ></td>
+                            <td class="text-center">
+                           
+                                <span  (click)="removeSecretesId(i)"> 
+                                  <img src="assets/images/unsubscribe.svg" alt=""></span>
+                                </td>
+                                <td  class="text-center" *ngIf="secretes1.length==0">
+                             
+                                  <span  (click)="addSecretupdate()"> 
+                                    <img src="assets/images/Add.svg" alt=""></span>
+                              </td>
+                              
+                            </tr>
+                           <!-- <div  class="text-center" *ngIf="isadd" >
+                            <tr *ngFor="let secret1 of secretes1; let i = index;">
+                             
+                              <td>
+                          <input type="text"  [(ngModel)]="secret1.key"
+                                name="key_{{secret1.id}}"  placeholder="key">
+                                                        </td>
+                              <td *ngIf="addpressed" >:</td>
+                            <td *ngIf="addpressed">
+                              
+                              
+                          <input type="text"  [(ngModel)]="secret1.value"
+                          name="value_{{secret1.id}}"   placeholder="value" data-test-textarea="" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal;"> 
+            
+                             </td>
+                            <td *ngIf="addpressed">
+                             
+                                <span  (click)="addSecretupdatenew()"> 
+                                  <img src="assets/images/Add.svg" alt=""></span>
+                            </td>
+                            
+                            </tr>
+                           </div> -->
+                           </table>
+                    </div>
+ 
+          </div>
+
+          <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+                <div class="col-md-12">
+                  <div class="form-group form-buttons pull-right buttonsblock">
+                    <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="close_modal()"><div class="anim"></div> Cancel</button>
+                    <button [disabled]="updatecheck(updateSecretedata)" class="btn btn-primary change_plan" (click)="updateSecreteData(updateSecretedata,secret1)">Update</button>
+                </div>
+              </div>
+          <div class="clearfix">
+          </div>
+          </div>
+          </div>
+          </div>
+    </ng-template>
+
+
+
+
+            <div *ngIf="isnotification" class="container">
+              <div class="row">
+                <div class="col-md-12">
+                    <h4 class="noticationheading">Notifications</h4>
+                </div>
+                <div class="notificatnmsgs col-md-12">
+                  <table *ngIf="this.userRole.includes('Admin')" class="table table-borderless table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col" style="width:60%;">Notification Message</th>
+                        <th scope="col" style="width:300px;">Date</th>
+                        <!-- <th scope="col" style="width:200px;">Time</th> -->
+                        <th scope="col" style="width:200px !important;">Action</th> 
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="notificationList.errorMessage==undefined ">
+                      <tr [id]="'ntf_'+messageList.id" [ngClass]="messageList.status == 'read'?'isRead':'unread'"     *ngFor="let messageList of notificationList | paginate: {id:'notification_page', itemsPerPage: 2, currentPage: c }; let i = index; trackBy:loopTrackBy;">
+                        <td [id]="'msg_'+messageList.id" (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.notificationAuditId[0].contentType}}</td>
+                        <td [id]="'date_'+messageList.id" (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.createdAt | date}} {{messageList.createdAt.split("T")[1].split(".")[0]}}</td>
+                        <!-- <td>{{messageList.createdAt | date:"HH:mm:ss"}}</td> -->
+                        <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
+                          <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
+                              <div class="container-fluid deletefrm">
+                            <h5 class="pull-left">Confirmation</h5>
+                            <button type="button" class="close ">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            <p class="pull-left">Are you sure you want to delete the notification ?</p>
+                            <button class="pull-left confm" aria-label="Close" (click)="deleteNotification(messageList.id)">Yes</button>
+                            <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
+                            </div>
+                            </div>
+                          </td>
+
+                      </tr>
+                    </tbody>
+                    <tbody  *ngIf="notificationList.errorMessage=='No records found' " >
+                      <div class="ntfnorecords"><h4>No records found</h4></div>
+                    </tbody>
+                  </table>
+                  <div  *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
+                    <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
+                    </div>
+                    <table *ngIf="this.userRole.includes('SuperAdmin')" class="table table-borderless table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col" style="width:60%;">Notification Message</th>
+                          <th scope="col" style="width:300px;">Date</th>
+                          <th scope="col" style="width:200px !important;">Action</th> 
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="superadminnotificationList.errorMessage==undefined ">
+                        <tr [id]="'ntf_'+messageList.id" [ngClass]="messageList.status == 'read'?'isRead':'unread'"   *ngFor="let messageList of superadminnotificationList | paginate: {id:'superadmin_notification_page', itemsPerPage: 2, currentPage: sn}; let i = index; trackBy:loopTrackBy;">
+                          <td [id]="'msg_'+messageList.id" (click)="notificationsuperadminclick(messageList.id)" style="cursor: pointer;">{{messageList.notificationmessage}}</td>
+                          <td  [id]="'date_'+messageList.id" (click)="notificationsuperadminclick(messageList.id)" style="cursor: pointer;">{{messageList.created_at | date}} {{messageList.created_at.split("T")[1].split(".")[0]}} </td>
+                          <td class=""><span aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;</span>
+                            <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
+                                <div class="container-fluid deletefrm">
+                              <h5 class="pull-left">Confirmation</h5>
+                              <button type="button" class="close ">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              <p class="pull-left">Are you sure you want to delete the notification ?</p>
+                              <button class="pull-left confm" aria-label="Close" (click)="deletesuperadminnotification(messageList.id)">Yes</button>
+                              <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
+                              </div>
+                              </div>
+                            </td>
+
+                        </tr>
+                      </tbody>
+                        <tbody  *ngIf="superadminnotificationList.errorMessage=='No records found' " >
+                          <div class="ntfnorecords"><h4>No records found</h4></div>
+                        </tbody>
+                    </table>
+                    <div *ngIf="this.userRole.includes('SuperAdmin')">
+                      <div *ngIf="superadminnotificationList.errorMessage!='No records found'" class="superadminnotificationpagination">
+                        <pagination-controls id="superadmin_notification_page" maxSize="8" (pageChange)="sn = $event"></pagination-controls>
+                        </div>
+                      </div>
+                            
+                </div>
+            </div>
+          </div>
+
+    </div>
+
+    <ng-template #template >
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" >We are sorry to see you go</h4>
+        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        
+        <div class="col-md-12 subheadin">
+          <p>If you have a moment, please let us know why you want to unsubscribe:</p>
+        </div>
+        <div class="col-md-12 infocheck">
+          <input type="checkbox" [(ngModel)]="stopcheckbox" ><span>I stopped using this account</span>
+        </div>
+        <div class="col-md-12 infocheck">
+            <input type="checkbox" [(ngModel)]="pricecheckbox"> <span>Price of the plan is high</span>
+          </div>
+          <div class="col-md-12 infocheck">
+              <input type="checkbox" [(ngModel)]="plancheckbox"> <span>Subscribed another plan</span>
+            </div>
+        <div class="col-md-12" class="textfield">
+          <p>If other reason (please explain below).</p>
+          <textarea name="feedback" [(ngModel)]="feedbackbox"></textarea>
+        </div>
+          </div>
+        
+    <div class="modal-footer">
+      <div class="">
+        <div class="col-12">
+          <div class="form-group form-buttons pull-right buttonsblock">
+            <button class="btn btn-secondary cancel_feedbackbtn" type="reset" (click)="CancelSubform()"><div class="anim"></div> Cancel</button>
+            <button class="btn btn-primary submit_feedbackbtn" (click)="subscriptionCancelModalSubmit()">Submit</button>
+          </div>
+    <div class="clearfix">
+    </div>
+    </div>
+    </div>
+    </div>
+        </ng-template>
+        <ng-template #detailstemplate >
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title" >Subscription Details</h4>
+            <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>
+          <form autocomplete="off" #updatesubscription="ngForm">
+          <div class="modal-body">
+            
+          <div class="col-md-12 ">
+            <label for="subscriptionid">Subscription ID </label>
+            <input type="text" [disabled]=true name="subscriptionid" #subscriptionid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.subscriptionId"/>    
+          </div>
+          <div class="col-md-12 ">
+            <label for="product">Product </label>
+                    <input type="text" [disabled]=true name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.name"/> 
+            </div>
+            <div class="col-md-12 ">
+              <label for="planid">Plan ID </label>
+                      <input type="text" [disabled]=true name="planid" #planid="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.planId"/>
+              </div>
+              <div class="col-md-12 ">
+                <label for="billingaccount">Billing Account </label>
+                <input type="text" [disabled]=true name="billingaccount" #billingaccount="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.billingService.billingAccount"/>
+                </div>
+               <div class="col-md-12 ">
+                <label for="status">Status </label>
+                <input type="text" [disabled]=true name="status" #status="ngModel" class="form-control botmbordr" [(ngModel)]="subscribeddata.status"/>     
+                 </div>
+              </div>
+            
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+              <div class="col-md-12">
+                <div class="form-group form-buttons pull-right buttonsblock">
+                  <button class="btn btn-secondary cancel_sub_btn" type="reset" (click)="changePlanCancel()"><div class="anim"></div> Cancel</button>
+                  <button [disabled] = "myAccount_Subsription_Read" class="btn btn-primary change_plan" (click)="infoModelSubmit(subscribeddata)">Change Plan</button>
+              </div>
+            </div>
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+          </ng-template>
+          <ng-template #addCard >
+            <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="addNewCard(addpaymentmode)" class="card_form">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title" >Add Card</h4>
+                         <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>  -->
+                      </div>
+            
+                    <div class="modal-body">
+                        <div class="">
+                        <div class="col-12 row">        
+                          <div class="form-group col-sm-8">
+                                <label for="cardHolder">Cardholder Name</label>
+                                <input type="text" name="cardHolder" #cardHolder="ngModel" [(ngModel)]="cardModel.cardHoldername" class="form-control payment-input" id="cardHolder" (keypress)="lettersOnly($event)" placeholder="Cardholder Name" required/>
+                                <span *ngIf="((cardHolder.invalid && addpaymentmode.submitted) || (cardHolder.errors && cardHolder.touched) )" 
+                                class='fa fa-info-circle errspan'> Cardholder Name is required </span>
+                    </div>
+                    
+                    <div class="form-group col-sm-8">
+                            <label for="cardNumber">Card Number</label>
+                            <div class="input-group ">
+                              <input type="text" class="cc-number form-control payment-input card-input" (keypress)="inputNumberOnly($event)" minlength="16"   maxlength="16" required name="cardNumber" #cardNumber="ngModel" 
+                                [(ngModel)]="cardModel.cardNumber" id="cardNumber" placeholder="Card Number" (keyup)='onChangeCardType(cardModel.cardNumber)' required/>
+                              <div class="input-group-append">
+                                <span *ngIf= "cards && cardType =='visa' && cardNumber.value >= 4">
+                                  <img class="card" src="assets/images/CardLogo/visa.png"></span>
+                                <span *ngIf= "cards && cardType =='mastercard' && cardNumber.value >= 4">
+                                  <img class="card" src="assets/images/CardLogo/master.png"></span>
+                                </div>
+                              </div>
+                            <span *ngIf="((cardNumber.invalid && addpaymentmode.submitted) || (cardNumber.errors && cardNumber.touched) )" 
+                            class='fa fa-info-circle errspan'> Card Number is required</span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                            <label for="cvv">CVV</label>
+                            <input type="password" class="form-control payment-input" (keypress)="inputNumberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" 
+                            [(ngModel)]="cardModel.cvvNumber" id="cvv" placeholder="CVV" required/>
+                          <span *ngIf="((cvv.invalid && addpaymentmode.submitted) || (cvv.errors && cvv.touched) )" 
+                          class='fa fa-info-circle errspan'> CVV required</span>
+                    </div>
+                    <div class="form-group col-sm-6 state_input">
+                            <label for="month">Month (MM)</label>
+                            <select id="month" name="month" class="form-control payment-input" #month="ngModel"  [(ngModel)]="cardModel.cardmonth" required>
+                                <option  [value]="undefined" disabled hidden>Select Month</option>
+                              <option value="01">01</option>
+                              <option value="02">02</option>
+                              <option value="03">03</option>
+                              <option value="04">04</option>
+                              <option value="05">05</option>
+                              <option value="06">06</option>
+                              <option value="07">07</option>
+                              <option value="08">08</option>
+                              <option value="09">09</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                            </select>
+                            <span *ngIf="((month.invalid && addpaymentmode.submitted) || (month.errors && month.touched) )" 
+                              class='fa fa-info-circle errspan'> Month required</span>
+                    </div>
+                    <div class="form-group col-sm-6 state_input">
+                            <label for="year">Year (YYYY)</label>
+                            <select id="year" class="form-control payment-input" name="year" #year="ngModel" [(ngModel)]="cardModel.cardyear" required >
+                              <option  [value]="undefined" disabled hidden>Select Year</option>
+                              <option *ngFor="let obj of yearList" [ngValue]="obj.value">{{obj.year}}</option>
+                            </select>
+                            <span *ngIf="((year.invalid && addpaymentmode.submitted) || (year.errors && year.touched) )" 
+                                class='fa fa-info-circle errspan'> Year required</span>
+                    </div>
+                    <div class='form-group set_default'>
+                      <input type="checkbox" class=""  #setdefault='ngModel' [(ngModel)]='isdefault' name="isdefault" > <span> Set As Default</span>
+                  </div>
+                  </div>
+                </div>
+                </div>
+            
+                <div class="modal-footer">
+                    <div class="">
+                      <div class="col-12">
+                  <div class="form-group form-buttons pull-right buttonsblock">        
+                     <button class="btn btn-secondary cancel_btn" type="button"  aria-label="Close" (click)="cancelAddCard()"><div class="anim"></div> Cancel</button>
+                      <button class="btn btn-primary updatepermbtn" [disabled] = "addpaymentmode.invalid" type="submit"><div class="anim"></div> Save</button>
+                  </div>
+                  
+                  <div class="clearfix">
+                  
+                  </div>
+                  
+                  </div>
+                  </div>
+                  </div>
+                </form>
+            </ng-template>
+
+           <!-- two factor authentication template -->
+ 
+           
+
+            <!--alerts-->
+            <ng-template #alertdetailstemplate >
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" >Modify Alert</h4>
+                    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()"> 
+                    <span aria-hidden="true">&times;</span>
+                  </button>-->
+             
+              </div>
+              <form autocomplete="off" #updatealert="ngForm">
+              <div class="modal-body">
+                
+              <div class="col-md-12 ">
+                <label for="subscriptionid">Product : </label>
+                <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+                <select name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="updateApplication" required>
+                  <option  [value]="undefined" disabled hidden>Select Type</option>
+                  <option  [value]="null" disabled hidden>Select Type</option>
+                  <option [value]="alertslistactivitiesdata.app_name">{{alertslistactivitiesdata.app_name}}</option>
+              </select>
+              </div>
+              <div class="col-md-12 ">
+                <label for="planid">Activity : </label>
+                  <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
+                   <select name="activity_name1" #activity_name1="ngModel" class="form-control botmbordr" [(ngModel)]="updateActivities" required>
+                    <option  [value]="undefined" disabled hidden>Select Activities</option>
+                    <!-- <option  [value]="null" disabled hidden>Select Activities</option> -->
+                     <option *ngFor="let each of activitieslist" [value]="each.activity">{{each.activity}}</option>
+                </select> 
+                  </div>
+                    <br>
+                    <div class="col-md-12 ">
+                <label for="product">Type : </label>
+                <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
+                <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="updateType" required>
+                  <option  [value]="undefined" disabled hidden>Select Type</option>
+                  <option  [value]="null" disabled hidden>Select Type</option>
+                  <option value="Success">Success</option>
+                  <option value="Failure">Failure</option>
+              </select>
+                </div>
+                <div class="col-md-12 ">
+                  <label for="planid">Activity : </label>
+                  <!-- <input type="text"  name="activity_name" #activity_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.activity_name"/>      -->
+                   <select name="activity_name1" #activity_name1="ngModel" class="form-control botmbordr" [(ngModel)]="updateActivities" required>
+                    <option  [value]="undefined" disabled hidden>Select Activities</option>
+                    <!-- <option  [value]="null" disabled hidden>Select Activities</option> -->
+                     <option *ngFor="let each of activitieslist" [value]="each.activity">{{each.activity}}</option>
+                </select> 
+                  </div>
+                    <br>
+                  <div class="col-md-12 ">
+                    <label for="status">Channel : </label><br>
+                    <!-- <input type="text" [disabled]=true name="channel" #channel="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.channel"/>      -->
+                    Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Incident <input type="checkbox"  name="incidentcheck"   [(ngModel)]="isIncidentcheckBoxValue"/>
+                    </div>
+                   <br>
+                    <div class="col-md-12">
+                      <div *ngIf=isEmailcheckBoxValue>
+                       <!--<label for="configalerts">Mail To</label>
+                      <input type="text" name="mail_to1" maxlength="50" #mail_to1="ngModel" class="form-control botmbordr" [(ngModel)]="updateMail" #email="ngModel"
+                      required mail_to1  placeholder="Enter Email" pattern="^\S*[@]\S*[.]\S*$"/>
+                      <span *ngIf="((mail_to1.invalid && configAlerts.submitted) || (mail_to1.errors && mail_to1.touched) ) "
+                                                        class='fa fa-info-circle errspan'>
+                                                        <span *ngIf="mail_to1.errors.required"> Email is required</span>
+                                                        <span *ngIf="mail_to1.errors.pattern"> Enter valid email address</span>
+                                                      </span> -->
+                                                      <label for="configalerts">Email Template</label>
+                                                      <select name="product" class="form-control"  [(ngModel)]="updatetemp" required>
+                                                             <option [value]="undefined" disabled hidden>Select Email Template</option>
+                                                             <option [value]="null" disabled hidden>Select Email Template</option>
+                                                              <option *ngFor="let template of emailtemplateslist"  [value]="template.templateName">{{template.templateName}}</option>
+                                                       </select> 
+                                                      <label for="configalerts">User(s)</label>
+                                                      <select name="updateemail"  #updateemail="ngModel" class="form-control botmbordr"  [(ngModel)]="updateMail" required>
+                                                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                                                         <option *ngFor="let user of usersalertsdata"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                                                      </select>                                     
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-12">
+                    <div *ngIf=isSMScheckBoxValue>
+                    <!-- <label for="configalerts">Text To</label>
+                    <input type="text" maxlength="15" name="text_to1" #text_to1="ngModel"  class="form-control botmbordr" [(ngModel)]="updatetext_to" 
+                    required text_to1 placeholder="Enter Mobile Number ex:+91-9999999999" /> -->
+                    <label for="configalerts">User(s)</label>
+                                                      <select name="updatesms"  #updatesms="ngModel" class="form-control botmbordr"  [(ngModel)]="updatetext_to" required>
+                                                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                                                         <option *ngFor="let user of usersalertsdata"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
+                                                      </select>   
+                    <!-- <span *ngIf="((text_to1.invalid && configAlerts.submitted) || (text_to1.errors && text_to1.touched) ) "
+                                                        class='fa fa-info-circle errspan'>
+                                                        <span *ngIf="text_to1.errors.required"> Mobile number is required</span>
+                                                        <span *ngIf="text_to1.errors.pattern"> Enter valid mobile number</span>
+                                                      </span> -->
+
+                                                      
+                  </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div *ngIf=isIncidentcheckBoxValue>
+                      <label for="configalerts">Incident System</label>
+                      <select name="incident" #incident="ngModel" class="form-control botmbordr"  [(ngModel)]="updateIncident" required>
+                        <option  [value]="undefined" disabled hidden>Select Incident System</option>
+                        <option value="EZDesk" >EZDesk</option>
+                            <option value="EZSupport">EZSupport</option>
+                            <option value="ServiceNow" >ServiceNow</option>
+                       </select>
+                    </div>
+                  </div>
+                   <br><br>
+            
+  
+                  </div>
+                
+            <div class="modal-footer">
+              <div class="">
+                <div class="col-12">
+                  <div class="col-md-12">
+                    <div class="form-group form-buttons pull-right buttonsblock">
+                    <button class="btn btn-secondary cancel_modify_btn" type="reset" (click)="updateAlertCancel()"><div class="anim"></div> Cancel</button>
+                    <button [disabled]="updatealert.invalid || showErr"  class="btn btn-primary update_alert" (click)="modifyalert(alertslistactivitiesdata)">Update</button>
+                  </div>
+                </div>
+            <div class="clearfix">
+            </div>
+            </div>
+            </div>
+            </div>
+          </form>
+              </ng-template>
+
+              <!-- create two factor authentication -->
+
+              
+
+
+              
+            <ng-template #configAlerts >
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" >Create Alert</h4>
+                 <!-- <button type="reset" class="close" aria-label="Close" (click)="cancelAlert()">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+              </div>
+              <form autocomplete="off" id="configurealert" name="configurealert" (ngSubmit)="saveConfig(configurealert)" #configurealert="ngForm" >
+              <div class="modal-body">
+                
+                
+            <div class="form-group">
+              <label for="application">Product</label>
+              <select name="product" class="form-control" (change)="onChange($event.target.value)" [(ngModel)]="alertsapplication" required>
+                <option [value]="undefined" disabled hidden>Select Product</option>
+                <option [value]="null" disabled hidden>Select Product</option>
+                <option *ngFor="let product of application"  [value]="product.id">{{product.displayName}}</option>
+                </select>
+            </div>
+            <div class="infocheck">
+              <label for="activity">Activity</label>
+              <ng-select [multiple]="true" name="activity" placeholder="Select Activities" [items] ="activitieslist" (change)="changeActivity()"
+              bindValue = "activity"
+              bindLabel = "activity"
+              [(ngModel)]="alertsactivities" required>
+              
+              <!-- <ng-option *ngFor="let item of activitieslist" [value]="item.id">{{ item.activity }}</ng-option> -->
+              </ng-select>
+            </div>
+          <br>
+            <div class="form-group">
+                    <label for="configalerts">Type</label>
+                    <select class="form-control" name="configuretype" [(ngModel)]="selectedtype" required>
+                        <option  [value]="undefined" disabled hidden>Select Type</option>
+                        <option  [value]="null" disabled hidden>Select Type</option>
+                        <option value="Success">Success</option>
+                        <option value="Failure">Failure</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="configalerts">Channel</label><br>
+                    Push Notifications <input type="checkbox"  name="pushcheck"  [(ngModel)]="isPushNotificationcheckBoxValue"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Email <input type="checkbox"  name="emailcheck"   [(ngModel)]="isEmailcheckBoxValue" (change)="onselectemail()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   SMS <input type="checkbox"  name="smscheck"   [(ngModel)]="isSMScheckBoxValue" (change)="onselectsms()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Incident <input type="checkbox"  name="incidentcheck"   [(ngModel)]="isIncidentcheckBoxValue" (change)="onselectincident()"/>
+                  </div>
+
+                  <div class="form-group">
+                    <div *ngIf=isEmailcheckBoxValue>
+                    <!-- <label for="configalerts">Mail To</label>
+                    <input type="text" name="email" maxlength="50" class="form-control" [(ngModel)]="emailselected" #email="ngModel" 
+                    pattern="^\S*[@]\S*[.]\S*$" required email  placeholder="Enter Email" required/>
+                    <span *ngIf="((email.invalid && configAlerts.submitted) || (email.errors && email.touched) ) "
+                                                      class='fa fa-info-circle errspan'>
+                                                      <span *ngIf="email.errors.required"> Email is required</span>
+                                                      <span *ngIf="email.errors.pattern"> Enter valid email address</span>
+                                                    </span> -->
+                                                   
+                  
+                  <label for="configalerts">Email Template</label>
+                     <select name="product" class="form-control"  [(ngModel)]="emailtemplate" required>
+                            <option [value]="undefined" disabled hidden>Select Email Template</option>
+                            <option [value]="null" disabled hidden>Select Email Template</option>
+                             <option *ngFor="let template of emailtemplateslist"  [value]="template.templateName">{{template.templateName}}</option>
+                      </select>  
+                  <label for="configalerts">User(s)</label>
+                      <select name="product" class="form-control"  [(ngModel)]="emailselected" required>
+                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                        <option [value]="null" disabled hidden>Select Registered Email</option>
+                         <option *ngFor="let user of usersalertsdata"  [value]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                      </select>    
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div *ngIf=isIncidentcheckBoxValue>
+                    <label for="configalerts">Incident System</label>
+                     <select name="incident" class="form-control"  [(ngModel)]="incidentselected" required>
+                            <option [value]="undefined" disabled hidden>Select Incident System</option>
+                            <option value="EZDesk" >EZDesk</option>
+                            <option value="EZSupport">EZSupport</option>
+                            <option value="ServiceNow" >ServiceNow</option>
+                             <!-- <option *ngFor="let template of emailtemplateslist"  [value]="template.templateId">{{template.templateName}}</option> -->
+                      </select> 
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <div *ngIf=isSMScheckBoxValue>
+                  <!-- <label for="configalerts">Text To</label>
+                  <input type="text" name="mobile" maxlength="15" class="form-control" [(ngModel)]="smsselected" #mobile="ngModel" 
+                  required mobile placeholder="Enter Mobile Number ex:+91-9999999999"  /> -->
+                  <label for="configalerts">User(s)</label>
+                      <select name="sms" class="form-control"  [(ngModel)]="smsselected" required>
+                        <option [value]="undefined" disabled hidden>Select Registered Email</option>
+                        <option [value]="null" disabled hidden>Select Registered Email</option>
+                         <option *ngFor="let user of usersalertsdata"  [value]="user.phoneNumber">{{user.firstName}} {{user.lastName}}</option>
+                      </select>    
+                  <!-- <span *ngIf="((mobile.invalid && configAlerts.submitted) || (mobile.errors && mobile.touched) ) "
+                                                      class='fa fa-info-circle errspan'>
+                                                      <span *ngIf="mobile.errors.required"> Mobile number is required</span>
+                                                      <span *ngIf="mobile.errors.pattern"> Enter valid mobile number</span>
+                                                    </span> -->
+                </div>
+              </div>
+
+                  </div>
+                
+            <div class="modal-footer">
+              <div class="">
+                <div class="col-12">
+            <div class="form-group form-buttons pull-right buttonsblock">        
+                <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+                <button [disabled]="configurealert.invalid || showErr" class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Save</button>
+            </div>
+            
+            <div class="clearfix">
+            </div>
+            </div>
+            </div>
+            </div>
+          </form>
+           </ng-template>
+
+           <ng-template #configEmail >
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title" >Create Template</h4>
+              <!-- <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+                <span aria-hidden="true">&times;</span>
+              </button> -->
+            </div>
+            <form autocomplete="off" id="configureemail" name="configureemail" #configureemail="ngForm">
+            <div class="modal-body">
+              
+              
+          <div class="form-group">
+            <label for="application">Template Name</label>
+            <input type="text"  name="role" #role="ngModel" class="form-control botmbordr" placeholder="Enter Template Name " maxlength="50" [(ngModel)]="templateName" (keypress)="lettersAndNumbers($event)" required/> 
+          </div>
+          <div class="infocheck">
+            <label for="activity">Subject</label>
+            <input type="text"  name="subject" #subject="ngModel" class="form-control botmbordr" placeholder="Enter Subject" maxlength="50" [(ngModel)]="mailsubject" (keypress)="lettersAndNumbers($event)" required/> 
+          </div>
+          <div class="textbody">
+                  <label for="body">Body</label><br>
+                  <textarea rows="7" name="body" placeholder="Enter Body" [(ngModel)]="mailbody" (keypress)="lettersAndNumbers1($event)" required></textarea>
+                </div>
+         
+
+                </div>
+              
+          <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+          <div class="form-group form-buttons pull-right emailsblock">        
+              <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelAlert()"><div class="anim"></div> Cancel</button>
+              <button [disabled]="configureemail.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="savetemplate(configureemail)"><div class="anim" ></div> Save</button>
+          </div>
+          
+          <div class="clearfix">
+          </div>
+          </div>
+          </div>
+          </div>
+        </form>
+         </ng-template>
+
+         <ng-template #emaildetailstemplate >
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title" >Modify Template</h4>
+            <button type="button" class="close" aria-label="Close" (click)="cancelEmail()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form autocomplete="off" id="configureemailupdate" name="configureemailupdate" #configureemailupdate="ngForm">
+          <div class="modal-body">
+            
+            
+        <div class="form-group">
+          <label for="application">Template Name</label>
+          <input type="text"  name="tempname" #role="ngModel" class="form-control botmbordr" placeholder="Enter Template Name" maxlength="50" [(ngModel)]="modtempname" (keypress)="lettersOnly($event)" required/> 
+        </div>
+        <div class="infocheck">
+          <label for="activity">Subject</label>
+          <input type="text"  name="subject" #subject="ngModel" class="form-control botmbordr" placeholder="Enter Subject" maxlength="50" [(ngModel)]="modtempsub" required/> 
+        </div>
+        <div class="textbody">
+                <label for="body">Body</label><br>
+                <textarea rows="7" name="body" placeholder="Enter Body" [(ngModel)]="modtempbody" required></textarea>
+              </div>
+       
+
+              </div>
+            
+        <div class="modal-footer">
+          <div class="">
+            <div class="col-12">
+        <div class="form-group form-buttons pull-right emailsblock">        
+            <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelEmail()"><div class="anim"></div> Cancel</button>
+            <button [disabled]="configureemailupdate.invalid" class="btn btn-primary btn_alert_save"  type="submit" (click)="updateemailtemplate()"><div class="anim" ></div> Update</button>
+        </div>
+        
+        <div class="clearfix">
+        </div>
+        </div>
+        </div>
+        </div>
+      </form>
+       </ng-template>
+<!-- Vault config-->
+
+<ng-template #configvault >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Modify Vault Configuration</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancelUpdateVaultConfig()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form autocomplete="off" id="configurevault" name="configurevault" (ngSubmit)="updateVaultconfig(configurevault)" #configurevault="ngForm">
+  <div class="modal-body">
+    
+    
+<div class="form-group">
+  <label for="subscriptionid">Product : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="prodname"  class="form-control botmbordr" [(ngModel)]='modprod' (change)="onChangeprod($event.target.value)"  required>
+    <option  [value]="undefined" disabled hidden>Select Type</option>
+    <option  [value]="null" disabled hidden>Select Type</option>
+    <option *ngFor="let product of configprods"  [value]="product">{{modprod}}</option>
+</select>
+</div>
+<div class="form-group">
+  <label for="module">Module : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" [(ngModel)]="modmodule"  #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="modulename"  class="form-control botmbordr"   [(ngModel)]="modmodule" (change)='changeModule($event.target.value)' required>
+    <!-- <option  [value]="undefined" disabled hidden>Select Type</option>
+    <option  [value]="null" disabled hidden>Select Type</option> -->
+    <option *ngFor="let module of modulesList" [value]="modmodule">{{modmodule}}</option>
+</select>
+</div>
+
+<div class="form-group">
+  <label for="page">Pages : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="pagename"  class="form-control botmbordr"  [(ngModel)]="modpage" (change)='changePage($event.target.value)' required>
+    <option  [value]="undefined" disabled hidden>Select Module</option> 
+   <option  [value]="null" disabled hidden>Select Module</option>
+    <option *ngFor="let page of mypages" [value]="page">{{page}}</option>
+</select>
+</div>
+<div class="form-group">
+  <label for="page">Fields : </label>
+  <!-- <input type="text" [disabled]=true  name="app_name" #app_name="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.app_name"/>      -->
+  <select name="fieldname" class="form-control botmbordr"  [(ngModel)]="modfield" (change)='chanageFeild($event.target.value)'  required>
+    <option  [value]="undefined" disabled hidden>Select Field</option>
+    <option  [value]="null" disabled hidden>Select Field</option>
+    <option *ngFor="let feild of myfields"   [value]="feild">{{feild}}</option>
+</select>
+</div>
+
+
+      </div>
+    
+<div class="modal-footer">
+  <div class="">
+    <div class="col-12">
+<div class="form-group form-buttons pull-right buttonsblock">        
+    <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelUpdateVaultConfig()"><div class="anim"></div> Cancel</button>
+    <button class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Update</button>
+</div>
+
+<div class="clearfix">
+</div>
+</div>
+</div>
+</div>
+</form>
+</ng-template>
+<!--
+  creat vault config
+-->
+<ng-template #vaultconfiguration >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Configure Vault</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelVaultconfig()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <form autocomplete="off" id="vaultconfig" name="vaultconfig" #vaultconfig="ngForm"  (ngSubmit)="saveVaultConfig(vaultconfig)">
+  <div class="modal-body">
+    
+    
+<div class="form-group">
+  <label for="application">Product</label>
+  <select name="product" class="form-control" (change)="onChangeprod($event.target.value)" [(ngModel)]="product" required>
+    <option [value]="undefined" disabled hidden>Select Product</option>
+    <option [value]="null" disabled hidden>Select Product</option>
+    <option *ngFor="let product of configprods"  [value]="product">{{product}}</option>
+    </select>
+</div>
+<div class="infocheck">
+  <label for="modules">Module</label>
+  <select class="form-control"  name="modules"   (change)="changeModule($event.target.value)" [(ngModel)]="module" required>
+  <option [value]="undefined" disabled hidden>Select Module</option>
+  <option [value]="null" disabled hidden>Select Module</option>
+  <option *ngFor="let module of modulesList"  [value]="module">{{module}}</option>
+  </select>
+</div>
+<br>
+<div class="form-group">
+        <label for="page">Page</label>
+        <select class="form-control" name="page" (change)="changePage($event.target.value)" [(ngModel)]="page" required>
+            <option  [value]="undefined" disabled hidden >Select page</option>
+            <option [value]="null" disabled hidden>Select page</option>
+            <option  *ngFor="let page of mypages"  [value]="page"  >{{page}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="feild">Field</label>
+        <select class="form-control" name="feild"  (change)="chanageFeild($event.target.value)" [(ngModel)]="feild" required>
+            <option  [value]="undefined" disabled hidden >Select field</option>
+            <option [value]="null" disabled hidden>Select field</option>
+            <option  *ngFor="let feild of myfields"  [value]="feild"  >{{feild}}</option>
+        </select>
+      </div>
+      </div>
+    
+<div class="modal-footer">
+  <div class="">
+    <div class="col-12">
+<div class="form-group form-buttons pull-right buttonsblock">        
+    <button class="btn btn-secondary cancel_alert_btn" type="reset" (click)="cancelVaultconfig()"><div class="anim"></div> Cancel</button>
+    <button  [disabled]="vaultconfig.invalid" class="btn btn-primary btn_alert_save"  type="submit" ><div class="anim" ></div> Save</button>
+</div>
+
+<div class="clearfix">
+</div>
+</div>
+</div>
+</div>
+</form>
+</ng-template>
+<!--end creation of vault config-->
+<!-- Vault config end-->
+            <ng-template #rolestemplate >
+
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" >Modify Role</h4>
+                <!-- <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+              </div>
+    
+            <div class="modal-body">
+                      <div class="col-md-12 infocheck ">
+
+                       <label for="role">Role</label>
+                        <input type="text"  name="role" maxlength="50" #role="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.name" (keypress)="lettersAndNumbers($event)" required/>     
+                        <span *ngIf="((role.invalid) || (role.errors && role.touched) )" 
+                        class='fa fa-info-circle errspan'> Role is required </span> <br>   
+                      </div>
+                      <div class="col-md-12 infocheck">
+                        <label for="roledescriptionOne">Description</label>
+                        <input type="text"  name="roledescriptionOne" maxlength="50" #roledescriptionOne="ngModel" class="form-control botmbordr" [(ngModel)]="roledata.description" (keypress)="lettersAndNumbers($event)" required/>     
+                        <span *ngIf="((roledescriptionOne.invalid) || (roledescriptionOne.errors && roledescriptionOne.touched) )" 
+                        class='fa fa-info-circle errspan'> Description is required </span> <br> 
+                        </div>
+                        <div class="col-md-12 infocheck">
+                          <label for="application">Product</label>
+                          <ng-select [multiple]="false" [(ngModel)]="selectedApp" required>
+                            <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option>
+                          </ng-select>
+                         
+                         
+                          <!-- <select class="form-control botmbordr" [(ngModel)]="roledata.appliationId" (change)="selected()">
+                            <option *ngFor="let item of applications" [ngValue]="item">{{item.name}}</option>
+                        </select>      -->
+       
+                          </div>
+
+
+                          <div class="col-md-12 ">
+                            <label>Permissions</label>
+                            <div class="infocheck scrollpermissions">
+
+                              <ng-select [multiple]="true" [(ngModel)]="permidlist" placeholder = "Select Permissions" required>
+                                <ng-option *ngFor="let permi of permissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
+                              </ng-select>
+                           
+                 
+                </div>
+                           
+                            </div>
+                                         
+                                 
+                      <div class="col-md-12 submitbtn">
+                        <button class="btn btn-secondary cancel_btn" type="reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
+                        <button class="btn btn-primary updaterolebtn" (click)="modifyrole(roledata)">Update</button>
+                      </div>
+                   </div>
+              </ng-template>
+
+              <ng-template #updateRoleTemplate >
+                
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title" >Update User Roles</h4>
+                          <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updateAlertCancel()"> 
+                          <span aria-hidden="true">&times;</span>
+                        </button>-->
+                        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                          <span aria-hidden="true">&times;</span>
+                        </button> -->
+                   
+                    </div>
+                    <form autocomplete="off" #updateUserRole="ngForm">
+                    <div class="modal-body">
+                      <div class="col-md-12 infocheck">
+                        <label for="subscriptionid">User ID </label>
+                        <input type="text" [disabled]=true name="useriD" #useriD="ngModel" class="form-control botmbordr" [(ngModel)]="testuserid"/>     
+                                  </div>
+                      <div class="col-md-12 infocheck">
+                        <label for="product">Product </label>
+                        <input type="text" [disabled]=true name="product" #product="ngModel" class="form-control botmbordr" [(ngModel)]="selectedApp"/>     
+     
+                        </div>
+
+                        
+                       
+                    
+                        <div class="col-md-12 infocheck">
+                          <label for="role"> Role </label>
+                          <ng-select name = "multiroles" [multiple]="true" [items] =  "allRoles" [(ngModel)] = "testRolesList"
+                           bindValue = "name"
+                           bindLabel = "name" required>
+                           </ng-select>         
+                        </div>
+                        <div class="col-md-12 ">
+                          <label for="product">Status</label>
+                          <!-- <input type="text"  name="type" #type="ngModel" class="form-control botmbordr" [(ngModel)]="alertslistactivitiesdata.type"/>      -->
+                          <select name="type1" #type1="ngModel" class="form-control botmbordr" [(ngModel)]="userStatus" required>
+                            <option  [value]="undefined" disabled hidden>Select Type</option>
+                            <option  [value]="null" disabled hidden>Select Type</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                          </div>
+                          <div class="col-md-12">
+                            <label for="depart">Department</label>
+                            <select name="dept" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="department1" required>
+                              <!-- <option [value]="undefined" disabled hidden>Department</option> -->
+                              <option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;'>{{categories[c].categoryName}}</option>
+                            </select>
+                          </div>
+                          <br>
+                        </div>
+                      
+                  <div class="modal-footer">
+                    <div class="">
+                      <div class="col-12">
+                        <div class="col-md-12">
+                          <div class="form-group form-buttons pull-right buttonsblock">
+                           <button class="btn btn-secondary cancel_btn" type = "reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
+                          <button [disabled]="updateUserRole.invalid || showErr" class="btn btn-primary clearbtn" (click)="modifyUserRole(roleListdata)">Update</button>
+                        </div>
+                      </div>
+                  <div class="clearfix">
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                </form>
+                </ng-template>
+
+              <ng-template #createRole >
+                <form autocomplete="off" #addrole="ngForm" (ngSubmit)="createNewRole()" class="card_form">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title" >Add Role</h4>
+                            <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddRole()">
+                              <span aria-hidden="true">&times;</span>
+                            </button> -->
+                          </div>
+                
+                        <div class="modal-body">
+                            <div class="">
+                            <div class="col-12 row">        
+                              <div class="col-md-12 infocheck">
+
+                                <label for="role">Role</label>
+                                 <input type="text"  name="role" #role="ngModel" placeholder="Enter Role Name" class="form-control botmbordr" maxlength="50" [(ngModel)]="roleName" (keypress)="lettersAndNumbers($event)" required/>     
+                                           </div>
+                               <div class="col-md-12 infocheck">
+                                 <label for="roledescription">Description </label>
+                                 <input type="text"  name="roledescription" #roledescription="ngModel" placeholder="Enter Description" maxlength="150" class="form-control botmbordr" [(ngModel)]="roleDescription" (keypress)="lettersAndNumbers($event)" required/>     
+              
+                                 </div>
+                                 <div class="col-md-12 infocheck">
+                                   <label for="application">Product</label>
+                                   <ng-select name = "applicationn" [multiple]="false" 
+                                   [items] =  "applications"
+                                   [(ngModel)]="selectedApplication"
+                                   placeholder = "Select Product "
+                                   bindValue = "id"
+                                   bindLabel = "name"
+                                   (change) = "permissionsByapp(selectedApplication)" placeholder="Select Product" required>
+                                  
+                                     <!-- <ng-option *ngFor="let item of applications" [value]="item.id">{{item.name}}</ng-option> -->
+                                   </ng-select>
+         
+                                  
+                                   <!-- <select class="form-control botmbordr" [(ngModel)]="roledata.appliationId" (change)="selected()">
+                                     <option *ngFor="let item of applications" [ngValue]="item">{{item.name}}</option>
+                                 </select>      -->
+                
+                                   </div>
+                                   <div class="col-md-12 ">
+                                     <label>Permissions</label>
+                                     <div class="infocheck">
+         
+                                       <ng-select name = "permiss"[multiple]="true" [(ngModel)]="selectedpermidlist" placeholder = "Select Permissions" required>
+                                         <ng-option *ngFor="let permi of addRolePermissionsList" [value]="permi.id">{{permi.permissionName}}</ng-option>
+                                       </ng-select>
+                                    
+                          
+                         </div>
+                                    
+                                     </div>
+                                                  
+                      </div>
+                    </div>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <div class="">
+                          <div class="col-12">
+                      <div class="form-group form-buttons pull-right buttonsblock">        
+                          <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddRole()"><div class="anim"></div> Cancel</button> 
+                          <button [disabled]="addrole.invalid " class="btn btn-primary clearbtn"  type="submit"><div class="anim"></div> Save</button>
+                      </div>
+                      
+                      <div class="clearfix">
+                      
+                      </div>
+                      
+                      </div>
+                      </div>
+                      </div>
+                    </form>
+                </ng-template>
+
+
+                <ng-template #createPermission >
+                  <form autocomplete="off" #addpaymentmode="ngForm" (ngSubmit)="createNewPermission()" class="card_form">
+                          <div class="modal-header">
+                              <h4 class="modal-title" id="modal-basic-title" >Add Permission</h4>
+                              <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddPermission()">
+                                <span aria-hidden="true">&times;</span>
+                              </button> -->
+                            </div>
+                  
+                          <div class="modal-body">
+                              <div class="">
+                              <div class="col-12 row">        
+                                <div class="col-md-12 infocheck">
+                                 
+                                    <label for="application">Product </label>
+                                    <ng-select name = "applicationn" [multiple]="false" 
+                                    [items] =  "applications"
+                                    [(ngModel)]="selectedApplication"
+                                    placeholder = "Select Product "
+                                    bindValue = "id"
+                                    bindLabel = "name" required>
+                                   
+                                    </ng-select>
+                 
+                                    </div>
+                                    <div class="col-md-12 infocheck">
+                                  <label for="permission">Permission </label>
+                                   <input type="text"  name="permission" maxlength="50" placeholder="Enter Permission Name" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permName" (keypress)="lettersAndNumbers($event)" required/>     
+                                    
+                                  </div>
+                                 <div class="col-md-12 infocheck">
+                                   <label for="permdescription">Description </label>
+                                   <input type="text"  maxlength="50" name="permdescription" placeholder="Enter Description" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permissionDescription" (keypress)="lettersAndNumbers($event)" required/>     
+                                   
+                                   </div>
+                                   
+                                                
+                        </div>
+                      </div>
+                      </div>
+                  
+                      <div class="modal-footer">
+                          <div class="">
+                            <div class="col-12">
+                        <div class="form-group form-buttons pull-right buttonsblock">        
+                             <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddPermission()"><div class="anim"></div> Cancel</button>
+                            <button class="btn btn-primary clearbtn" [disabled]="addpaymentmode.invalid " type="submit"><div class="anim"></div> Save</button>
+                        </div>
+                        
+                        <!-- <div class="clearfix">
+                        </div> -->
+                        </div>
+                        </div>
+                        </div>
+                      </form>
+                  </ng-template>
+
+
+
+                  <ng-template #permtemplate >
+
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title" >Modify Permission</h4>
+                      <!-- <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                      </button> -->
+                    </div>
+          
+                  <div class="modal-body">
+                       <div class="col-md-12 infocheck pull-right">
+                              <label for="application">Product </label>
+                              <ng-select [multiple]="false" 
+                              [items] =  "applications"
+                              [(ngModel)]="selectedApp"
+                              bindValue = "name"
+                              bindLabel = "name" required> 
+                              </ng-select>
+    
+                             
+                              <!-- <select class="form-control botmbordr" [(ngModel)]="roledata.appliationId" (change)="selected()">
+                                <option *ngFor="let item of applications" [ngValue]="item">{{item.name}}</option>
+                            </select>      -->
+           
+                              </div>
+                            <div class="col-md-12 infocheck">
+      
+                             <label for="permission">Permission </label>
+                              <input type="text"  name="permission" maxlength="50" #permission="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.permissionName" (keypress)="lettersAndNumbers($event)" required/>     
+                              <span *ngIf="((permission.invalid) || (permission.errors && permission.touched) )" 
+                        class='fa fa-info-circle errspan'> Permission is required </span> <br>   
+                            </div>
+                            <div class="col-md-12 infocheck">
+                              <label for="permdescription">Description </label>
+                              <input type="text"  name="permdescription" maxlength="50" #permdescription="ngModel" class="form-control botmbordr" [(ngModel)]="permdata.description" (keypress)="lettersAndNumbers($event)" required/>     
+                              <span *ngIf="((permdescription.invalid) || (permdescription.errors && permdescription.touched) )" 
+                        class='fa fa-info-circle errspan'> Description is required </span> <br>
+                              </div>
+                              
+                                      
+                                       
+                            <div class="col-md-12 submitbtn">
+                              <button class="btn btn-secondary cancel_btn" type="reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
+                              <button class="btn btn-primary updatepermbtn" (click)="modifyperm(permdata)">Update</button>
+                            </div>
+                          </div>
+                    </ng-template>
+
+
+                <ng-template #createcoupon >
+                  <form autocomplete="off" #couponform="ngForm" (ngSubmit)="createNewCoupon(couponform)" >
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title" >Create Coupon</h4>
+                    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelCreateCopon()">
+                      <span aria-hidden="true">&times;</span>
+                    </button> -->
+                  </div>
+                  <div class="modal-body">
+                    <div class="">
+                      <div class="col-12 row">        
+                        <div class="col-md-12 infocheck">
+                         
+                            <label for="couponName">Coupon Name</label>
+                            <input type="text" name="couponName" #couponName="ngModel" maxlength="30" [(ngModel)]="couponNamename" class="form-control payment-input" id="couponName" placeholder="Enter Coupon Name" (keypress)="lettersAndNumbers($event)" required/>
+                            <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                            <!-- <span *ngIf="((couponName.invalid && couponform.submitted) || (couponName.errors && couponName.touched) )" 
+                            class='fa fa-info-circle errspan'> Coupon Name is required </span> <br> -->
+                         
+                         
+                            <label for="couponId">Coupon ID</label>
+                            <input type="text" class="cc-number form-control payment-input"  minlength="5" maxlength="10" required name="couponId" #couponId="ngModel" [(ngModel)]="couponIdId" placeholder="Enter Coupon ID" (keypress)="lettersAndNumbers($event)" required/>
+                            <!-- <span *ngIf="((couponId.invalid && couponform.submitted) || (couponId.errors && couponId.touched) )" 
+                            class='fa fa-info-circle errspan'> Coupon ID is required</span> <br> -->
+                            
+                                <label class="radio-inline">Coupon Type</label><br>
+                <input type="radio" class="payment-input" required name="couponType"  (change)='onChangeRadio($event.target.value)' value='percentageOff' />&nbsp;<span>Percentage Off</span><br>
+                <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' />&nbsp;<span>Amount Off</span> <br>
+                             
+                <div *ngIf="isPercentage" >
+                  
+                  <input type="number" name="percentageOff"  (keydown)="inputNumberOnly($event)"  onKeyPress="if(this.value.length==3) return false;"  [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                  <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                  <!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
+                  class='fa fa-info-circle errspan'> Coupon Name is required </span>  -->
+                </div>
+            
+                <div *ngIf="isAmount" >
+                
+                  <input type="number" name="amountOff"  (keydown)="inputNumberOnly($event)"  onKeyPress="if(this.value.length==3) return false;"  [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                  <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                  <!-- <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
+                  class='fa fa-info-circle errspan'> Coupon Ammount is required </span>  -->
+                </div>
+                
+              <div>
+                  <label for="duration">Coupon Valid</label>
+                                <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" (change)='onSelected($event.target.value)' required>
+                                    <option  [value]="undefined" disabled hidden>Selet Coupon Validity</option>
+                                  <option value="forever" >Forever</option>
+                                  <option value="once">Once</option>
+                                  <option value="repeating">Repeating</option>
+                                        
+                                </select>
+                  <div *ngIf="durationTime==='repeating'">
+                    <input type="text" name="months"  maxlength="30" (keypress)="inputNumberOnly($event)" #months [(ngModel)]="durationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" required/>
+ 
+                  </div>
+                </div>
+                <!-- <label for="couponRedeem" >Redeemption Limits</label><br>
+           
+    <input type="checkbox" class="payment-input" required name="couponRedeem"(change)='onSelected($event.target.value)' value='redeemTimes' />&nbsp;Limit the total number of times  customers can redeem this coupon  <br>
+              -->
+            <div >
+                <label for="red">Maximum Redemptions</label>
+   
+              <input type="number" name="red"  (keydown)="inputNumberOnly($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="redeemTimeslimit" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+              <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+              <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
+              class='fa fa-info-circle errspan'> Limit is required </span> 
+            </div>
+            <div >
+              <label for="daytime">Expires By </label><br>
+              <input class="calexp" type="date" id="daytime" name="daytime" [min]="mindate" [(ngModel)]="datetime">
+            </div>
+            
+            <!-- <div class="col-md-12">
+            <input type="checkbox" class="payment-input" required name="couponRedeem"  (change)='onSelected($event.target.value)' value='redeemBy' />&nbsp;<span>Limit the date range when customers can redeem this coupon</span><br>
+            <div *ngIf="isReedemBy" class="form-group col-sm-10">
+            <label for="redeemby">Redeem By</label>
+            <input type="text" name="redeemby"  maxlength="30" [(ngModel)]="redeemby" class="form-control payment-input"  placeholder="Enter percentage %" required/>
+            [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+            <!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
+            class='fa fa-info-circle errspan'> Coupon Name is required </span>  
+            </div>
+            
+            <div *ngIf="isReedemTimes" class="form-group col-sm-10">
+            <label for="redeemtimes">Redeem Times</label>
+            <input type="text" name="redeemtimes"  maxlength="30" [(ngModel)]="redeemtimes" class="form-control payment-input"  placeholder="Enter Fixed amount" required/>
+            [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+            <!-- <span *ngIf="((redeemtimes.invalid && couponform.submitted) || (redeemtimes.errors && redeemtimes.touched) )" 
+            class='fa fa-info-circle errspan'> Coupon Name is required </span>  
+            </div> -->
+                            
+            
+            <!-- <div class="col-12 row">
+              <div class="col-md-12 infocheck"> -->
+                              
+              <!-- </div>
+                                   </div> -->
+                                 </div>
+                              </div>
+                           </div>
+                  </div>
+                              <div class="modal-footer">
+                                <div class="">
+                                  <div class="col-12">
+                              <div class="form-group form-buttons pull-right  buttonsblock">        
+                                 <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelCreateCopon()"><div class="anim"></div> Cancel</button>
+                                  <button class="btn btn-primary clearbtn" [disabled] = "couponform.invalid" type="submit"><div class="anim"></div> Create</button>
+                              </div>
+                              
+                              <!-- <div class="clearfix">
+                              
+                              </div> -->
+                              
+                              </div>
+                              </div>
+                              </div>
+                        </form>
+                  </ng-template>
+                  <ng-template #modifyCoupon >
+                   
+                     
+                    <form autocomplete="off" #couponmodform="ngForm" (ngSubmit)="modifycoupon(coupondata)" >
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modify Coupon</h4>
+                                <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                  <span aria-hidden="true">&times;</span>
+                                </button> -->
+                            </div >
+                            <div class="modal-body">
+                            <div class="col-md-12 infocheck" style="margin-left: -3%;">
+      
+                             <label for="coupon">Coupon Name </label>
+                              <input type="text"  name="coupon" #coupon="ngModel" class="form-control botmbordr" (keypress)="lettersAndNumbers($event)" [(ngModel)]="couponname"/>     
+                                        </div>
+                            <div class="col-md-12 infocheck" style="margin-left: -3%;">
+                              <label for="couponName">Coupon ID  </label>
+                              <input type="text"  name="couponName" #couponName="ngModel" class="form-control botmbordr"[disabled]="true" [(ngModel)]="couponid" (keypress)="lettersAndNumbers($event)"/>     
+           
+                              </div>
+                              <label class="radio-inline">Coupon Type</label><br>
+                              <input type="radio" class="payment-input" required name="couponType"  (change)='onChangeRadio($event.target.value)' value='percentageOff' [checked]="coupondata.percentOff != ' - '"/>&nbsp;<span>Percentage Off</span><br>
+                              <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' [checked]="coupondata.amountOff != ' - '"/>&nbsp;<span>Amount Off</span> <br>
+                                           
+                              <div *ngIf="isPercentage" >
+                                 <input type="text" name="percentageOff"  (keydown)="inputNumberOnly($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponpercentOff" class="form-control payment-input"  placeholder="Enter Percentage" required/>
+                              </div>
+                          
+                              <div *ngIf="isAmount" >
+                                <input type="text" name="amountOff" (keydown)="inputNumberOnly($event)"  onKeyPress="if(this.value.length==3) return false;" [(ngModel)]="couponamountOff" class="form-control payment-input"  placeholder="Enter Amount" required/>
+                              </div>
+                              
+                            <div>
+                                <label for="duration">Coupon Valid</label>
+                                              <select id="duration" name="duration" class="cc-number form-control payment-input" #duration="ngModel"  [(ngModel)]="couponduration" (change)='onSelected($event.target.value)' required>
+                                                  <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
+                                                <option value="forever" >Forever</option>
+                                                <option value="once">Once</option>
+                                                <option value="repeating">Repeating</option>
+                                                      
+                                              </select>
+                                <div *ngIf="couponduration==='repeating'">
+                                  <input type="text" name="months"  maxlength="30" #months [(ngModel)]="coupondurationInMonths" class="form-control payment-input"  placeholder="Enter duration in months" (keypress)="inputNumberOnly($event)" required/>
+               
+                                </div>
+                              </div>
+                           <div >
+                              <label for="number">Maximum Redemptions</label>
+                            <input type="text" name="red" (keydown)="inputNumberOnly($event)"  onKeyPress="if(this.value.length==3) return false;" #red [(ngModel)]="couponmaxRedemptions" class="form-control payment-input"  placeholder="Enter coupon limit" required/>
+                            <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                            <span *ngIf="((red.invalid && couponform.submitted) || (red.errors && red.touched) )" 
+                            class='fa fa-info-circle errspan'> Limit is required </span> 
+                          </div>
+                          <div >
+                            <label for="daytime">Expires By </label><br>
+                            <input class="calexp" type="date" id="daytime" name="daytime" [(ngModel)]="redeemdate">
+                          </div>
+                                               
+                                       
+                            <div class="col-md-12 submitbtn">
+                              <button class="btn btn-secondary cancel_btn" type="button" (click)="close_modal()"><div class="anim"></div> Cancel</button>
+                              <button class="btn btn-primary updatecouponmbtn" [disabled]="!couponmodform.dirty" (click)="modifycoupon(coupondata)" >Update</button>
+                            </div>
+                         </div>
+                      
+                    </form>
+                    </ng-template>
+<!-- this is vault managment -->
+             
+
+             
+
+<ng-template #createsecret >
+  <form autocomplete="off" #vaultform="ngForm" (ngSubmit)="createNewSecret(vaultform)" >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" >Create Secret</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddSecrete()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    <div class="">
+      <div class="col-12 row">        
+        <div class="col-md-12 infocheck">
+         
+            <label >Secret Key</label>
+            <input type="text" required class="form-control payment-input"name="secretkey1"  [(ngModel)]="secretkeyname" maxlength="15" placeholder="Enter Secret Key" required/>
+            
+              <label>Version Data</label>
+              
+            <table class="sub-confirmation">
+            <tr  *ngFor="let secret of secretes; let i = index;" class="form-section">
+             
+                  <td >
+                    <input required type="text"  [(ngModel)]="secret.key"
+                    name="key_{{secret.id}}"  placeholder="key">
+                  </td>
+                
+                  <td >
+                  
+              <input required type="text"  [(ngModel)]="secret.value"
+              name="value_{{secret.id}}"   placeholder="value"><!----> 
+
+                </td>
+                 
+                <td>
+                  <span  (click)="addSecret()"style="padding: 0px;
+                  margin-left: 0px;"> 
+                    <img src="assets/images/Add.svg" alt=""></span>
+                  </td>
+                  <td>
+                  <span  (click)="removeSecrete(i)" style="padding: 0px;
+                  margin-left: -7px;"> 
+                    <img src="assets/images/unsubscribe.svg" alt=""></span>
+                  </td>
+                 
+                              
+               
+              </tr>                           
+            </table>
+                 </div>
+              </div>
+           </div>
+  </div>
+              <div class="modal-footer">
+                <div class="">
+                  <div class="col-12">
+              <div class="form-group form-buttons pull-right  buttonsblock">        
+                <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddSecrete()"><div class="anim"></div> Cancel</button>
+                  <button class="btn btn-primary clearbtn" [disabled]="vaultform.invalid || showErr"   type="submit"><div class="anim"></div> Create</button>
+              </div>
+              
+
+              
+              </div>
+              </div>
+              </div>
+        </form>
+  </ng-template>
+
+  <ng-template #createDept>
+    <form autocomplete="off" #adddept="ngForm" (ngSubmit)="createNewDept(adddept)" class="card_form">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" >Add Department</h4>
+                <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddDept()">
+                  <span aria-hidden="true">&times;</span>
+                </button> -->
+              </div>
+    
+            <div class="modal-body">
+                <div class="">
+                <div class="col-12 row">        
+                  <div class="col-md-12 infocheck">
+                       <label for="application">Department </label>
+                      <input type="text"  name="dept" maxlength="20" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="deptName" (keypress)="lettersOnly($event)" required/>     
+                  </div>
+          </div>
+        </div>
+        </div>
+    
+        <div class="modal-footer">
+            <div class="">
+              <div class="col-12">
+          <div class="form-group form-buttons pull-right buttonsblock">        
+              <button class="btn btn-secondary cancel_btn" type="reset" (click)="cancelAddDept()"><div class="anim"></div> Cancel</button>
+              <button class="btn btn-primary clearbtn" [disabled]="adddept.invalid " type="submit"><div class="anim"></div> Save</button>
+          </div>
+          
+          </div>
+          </div>
+          </div>
+        </form>
+    </ng-template>
+
+    <ng-template #updateDepttemp >
+
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" >Modify Department</h4>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+
+    <div class="modal-body">
+         <div class="col-md-12 infocheck pull-right">
+                <label for="application">Department </label>
+                <input type="text" name="dept" maxlength="20" #dept="ngModel" class="form-control botmbordr" [(ngModel)]="categoryname"(keypress)="lettersOnly($event)" required/>     
+         </div>
+         
+    </div>
+    <div class="modal-footer">
+      <div class="col-md-12 submitbtn">
+        <div class="pull-right">
+          <button class="btn btn-secondary cancel_btn" type="reset" (click)="modalRef.hide()"><div class="anim"></div> Cancel</button>
+          <button class="btn btn-primary updatepermbtn" (click)="modifydept()">Update</button>
+        </div>
+      </div>
+    </div>
+      </ng-template>
+
+

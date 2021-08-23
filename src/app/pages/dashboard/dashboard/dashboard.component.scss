@@ -1,0 +1,170 @@
+.logo {
+  color: white;
+  background: #006dd6;
+  position: fixed;
+  z-index: 10;
+  width: 90px;
+  font-size: 20px;
+  padding: 22px 4px;
+  left: 0px;
+  /* box-shadow: 0px 2px 4px #006dd6; */
+}
+
+// layout
+
+.row.dashbaord {
+  padding: 18px;
+  height: 100%;
+  margin: 0px;
+  background: #F5F6FA;
+  overflow: auto;
+}
+
+.card_main {
+  background: white;
+  padding: 5px;
+  border-radius: 3px;
+  box-shadow: 0px 3px 6px #eee;
+  height: 100%;
+
+}
+// .leftt_cards .card_main {
+//   height: 42vh;
+//   }
+
+.lower_cards {
+  height: calc(50vh - 60px) !important;
+}
+
+.row.lower_cards_row {
+  height: 100%;
+}
+
+// .card_body {height: 280px;
+//   }
+
+.col-12.upper_cards {
+  margin-bottom: 20px;
+  height: calc(50vh - 60px) !important;
+}
+
+.card_header.row {
+  margin: 0px;
+  height: 40px;
+  align-items: center;
+  border-bottom: 1px solid #bbb;
+}
+.right_cards .card_body {
+    height: calc(100vh - 176px) !important;
+}
+.card_body {
+  height: calc(100% - 40px);
+}
+
+label.from, label.to {
+  margin: 0px 8px;
+}
+
+select.custom_select {
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url(/assets/down.png) no-repeat !important;
+  background-size: 10px !important;
+  background-position: 100% !important;
+  min-width: 80px;
+  background-color: white !important;
+}
+
+.t-right select.custom_select {
+  display: inline-block;
+  width: auto;
+}
+
+
+
+
+// end of layout
+
+
+.chart {
+  height: 100%;
+}
+
+.t-right{
+  text-align: right;
+}
+
+.chart_height{
+  height: 100%;
+}
+
+
+// profile
+.profile {
+  height: 100%;
+  padding: 0px 25px;
+}
+
+.row.profile_img {
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+img.img_pro {
+  width: 64px;
+  height: 64px;
+  border: 1px solid #B1B1B1;
+  border-radius: 50%;
+  padding: 2px;
+  object-fit: fill;
+}
+
+label.name_pro {
+  display: block;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 28px;
+  margin: 0px;
+  line-height: 36px;
+}
+
+
+label.design_pro {
+  display: block;
+  text-align: center;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #7990A8;
+}
+
+.edit_button {
+  text-align: center;
+  margin-top: 36px;
+}
+
+hr.profile_hr {
+  border-color: #EEEEEE;
+  margin: 20px 0px;
+}
+
+.profile_info_head, .profile_info_body {
+  margin: 0px;
+  font-size: 18px;
+}
+
+.profile_info_body.email{
+  color:#0F98FF;
+}
+
+.profile_info_main {
+  margin: 20px 0px;
+
+}
+
+// end of profile
+
+
+// end of entire left panel
+

@@ -1,0 +1,116 @@
+
+.login-bg{
+  width: 700px;
+}
+.userinput, .otpinput, .pswinput{
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  height: 40px !important;
+  border-radius: 0px !important;
+}
+img.buuton-icons {
+  width: 22px;
+  margin: 0px 5px;
+  vertical-align: top;
+}
+
+.btn-buttons {
+  background: white;
+  border: 1px solid #333;
+  padding: 7px;
+  margin: 0px 5px;
+  min-width: 120px;
+  border-radius: 3px;
+  font-size:14px;
+}
+
+
+.inner-addon { 
+  position: relative; 
+}
+/* style icon */
+.inner-addon .userIcon ,.inner-addon .pswIcon, .inner-addon .otpIcon{
+position: absolute;
+padding: 10px;
+pointer-events: none;
+width: 40px;
+}
+.left-addon input  { padding-left:  40px; }
+.right-addon input { padding-right: 20px; }
+
+.inner-addon .pwd-class, .inner-addon .otp-class{
+  position: absolute;
+  padding: 10px;
+  z-index: 1000;
+  margin-left: 250px !important;
+  width: 40px;
+}
+.brand{
+  margin-top: 150px;
+}
+.brand{
+  margin-bottom: 20px;
+}
+.brand img{
+  width: 180px;
+}
+.login-btn{
+  margin-left: 45%;
+  width: 120px !important;
+  border-radius: 20px;
+  font-size: 14px;
+  height: 35px;
+}
+.signupbtn{
+  width: 120px !important;
+  border-radius: 20px;
+  font-size: 14px;
+  height: 35px;
+  background-color: white;
+  border: 1px solid #0061cf;
+  color: #0061cf;
+}
+.signupbtn:hover{
+  background-color: #0061cf;
+  color: white;
+}
+.errordiv{
+  margin-top: 10px;
+}
+.signup{
+  margin-top: 20px;
+}
+.for_pass{
+  color: #0061cf !important;
+}
+
+.pwd-class, .otp-class{
+  width: 20px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: #0061cf;
+  cursor: pointer;
+}
+.have_acc{
+  font-size: 16px;
+}
+#particles-js {
+  position: absolute;
+  z-index: 0;
+  width: 50%;
+  height: 620px;
+  background-color: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.register-btn{
+  margin-left: 40%;
+  width: 120px !important;
+  border-radius: 20px;
+  font-size: 14px;
+  height: 35px;
+}
+.have_account{
+  margin-left: 35%;
+}

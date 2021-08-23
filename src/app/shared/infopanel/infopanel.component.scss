@@ -1,0 +1,32 @@
+topheader bot-infopanel .side_drp {
+  position: fixed;
+  top: 60px !important;
+  left: calc(100vw - 336px) !important;
+  // left:60px !important;
+  height: calc(100vh - 60px);
+  width: 336px;
+  box-shadow: 2px 2px 4px #bcbcbc;
+  border: 1px solid #dadada;
+  margin: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  overflow: auto;
+}
+
+
+.side_drp {
+  position: fixed;
+  top: 60px !important;
+  // left: calc(100vw - 336px) !important;
+  left:60px !important;
+  height: calc(100vh - 60px);
+  width: 336px;
+  box-shadow: 2px 2px 4px #bcbcbc;
+  border: 1px solid #dadada;
+  margin: 0px;
+  border-radius: 0px;
+  padding: 0px;
+  overflow: auto;
+}
+
+

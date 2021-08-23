@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140">
+  <g id="Group_500" data-name="Group 500" transform="translate(-475 -430)">
+    <g id="Ellipse_19" data-name="Ellipse 19" transform="translate(475 430)" fill="#fff" stroke="#006dd5" stroke-width="2">
+      <circle cx="70" cy="70" r="70" stroke="none"/>
+      <circle cx="70" cy="70" r="69" fill="none"/>
+    </g>
+    <text id="EZBot" transform="translate(510 511)" fill="#001c47" font-size="25" font-family="Roboto-Light, Roboto" font-weight="300"><tspan x="0" y="0">EZ</tspan><tspan y="0" font-family="Roboto-Bold, Roboto" font-weight="700">Bot</tspan></text>
+    <text id="_" data-name="®" transform="translate(580 500)" fill="#001c47" font-size="16" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="0" y="0">®</tspan></text>
+  </g>
+</svg>

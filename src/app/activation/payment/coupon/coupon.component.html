@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+      <div>
+                <h5 id="paymnt-subheding">Create Coupon</h5>
+       
+    </div>
+          <form autocomplete="off" #couponform="ngForm" (ngSubmit)="CreateCoupon()" class="col-md-12 row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+              <div class="form-group col-sm-10">
+                <label for="couponName">Coupon Name</label>
+                <input type="text" name="couponName" #couponName="ngModel" maxlength="30" [(ngModel)]="couponNamename" class="form-control payment-input" id="couponName" placeholder="Enter Coupon Name" required/>
+                <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                <span *ngIf="((couponName.invalid && couponform.submitted) || (couponName.errors && couponName.touched) )" 
+                class='fa fa-info-circle errspan'> Coupon Name is required </span> 
+              </div>
+             
+                  <div class="form-group col-sm-10">
+                    <label class="radio-inline">Type</label><br>
+    <input type="radio" class="payment-input" required name="couponType"  (change)='onChangeRadio($event.target.value)' value='percentageOff' />&nbsp;<span>Percentage Off</span><br>
+    <input type="radio" class="payment-input" required name="couponType"(change)='onChangeRadio($event.target.value)' value='amountOff' />&nbsp;Amount Off  
+                 
+    <div *ngIf="isPercentage" class="form-group col-sm-10">
+      <label for="percentageOff">Percentage OFF</label>
+      <input type="text" name="percentageOff"  maxlength="30" [(ngModel)]="percentageOffTot" class="form-control payment-input"  placeholder="Enter percentage %" required/>
+      <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+      <!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
+      class='fa fa-info-circle errspan'> Coupon Name is required </span>  -->
+    </div>
+
+    <div *ngIf="isAmount" class="form-group col-sm-10">
+      <label for="amountOff">Amount OFF</label>
+      <input type="text" name="amountOff"  maxlength="30" [(ngModel)]="amountOff" class="form-control payment-input"  placeholder="Enter Fixed amount" required/>
+      <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+      <span *ngIf="((amountOff.invalid && couponform.submitted) || (amountOff.errors && amountOff.touched) )" 
+      class='fa fa-info-circle errspan'> Coupon Name is required </span> 
+    </div>
+  </div>
+  <!-- <div class="col-md-12">
+    <label >Redeemption Limits</label><br>
+<input type="checkbox" class="payment-input" required name="couponRedeem"  (change)='onSelected($event.target.value)' value='redeemBy' />&nbsp;<span>Limit the date range when customers can redeem this coupon</span><br>
+<input type="checkbox" class="payment-input" required name="couponRedeem"(change)='onSelected($event.target.value)' value='redeemTimes' />&nbsp;Limit the total number of times  customers can redeem this coupon  
+ 
+<div *ngIf="isReedemBy" class="form-group col-sm-10">
+<label for="redeemby">Redeem By</label>
+<input type="text" name="redeemby"  maxlength="30" [(ngModel)]="redeemby" class="form-control payment-input"  placeholder="Enter percentage %" required/>
+[ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+<!-- <span *ngIf="(( couponform.submitted) || (percentageOff.errors && percentageOff.touched) )" 
+class='fa fa-info-circle errspan'> Coupon Name is required </span>  
+</div>
+
+<div *ngIf="isReedemTimes" class="form-group col-sm-10">
+<label for="redeemtimes">Redeem Times</label>
+<input type="text" name="redeemtimes"  maxlength="30" [(ngModel)]="redeemtimes" class="form-control payment-input"  placeholder="Enter Fixed amount" required/>
+[ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+<!-- <span *ngIf="((redeemtimes.invalid && couponform.submitted) || (redeemtimes.errors && redeemtimes.touched) )" 
+class='fa fa-info-circle errspan'> Coupon Name is required </span>  
+</div> -->
+                
+        </div>
+        
+
+        <div class="col-md-4">
+              <div class="row">
+              <div class="form-group col-sm-8">
+                <label for="couponId">Coupon ID</label>
+                <input type="text" class="cc-number form-control payment-input"  minlength="5" maxlength="10" required name="couponId" #couponId="ngModel" [(ngModel)]="couponIdId" placeholder="Enter Coupon Id" required/>
+                <span *ngIf="((couponId.invalid && couponform.submitted) || (couponId.errors && couponId.touched) )" 
+                class='fa fa-info-circle errspan'> Coupon Id is required</span> 
+                                </div>
+                                
+                  <div class="form-group col-sm-6">
+                    <label for="duration">Coupon Type</label>
+                    <select id="duration" name="duration" class="form-control payment-input" #duration="ngModel"  [(ngModel)]="durationTime" required>
+                        <!-- <option  [value]="undefined" disabled hidden>Select Month</option> -->
+                      <option value="forever">Forever</option>
+                      <option value="once">Once</option>
+                            
+                    </select>
+                  </div>
+                  
+                <div class="col-sm-12 btn-continue">
+                  <button class="btn btn-submit pull-right " type="submit"  >Create</button>
+                </div>
+                     
+          
+            </div>
+                  </div>       
+            </form>
+

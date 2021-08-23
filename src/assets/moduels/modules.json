@@ -1,0 +1,9 @@
+[
+    {
+        "path": "bot-grid",
+        "location": "./assets/moduels/bot-grid.umd.js",
+        "moduleName": "BotGridModule",
+        "description": "Table",
+        "registered": true
+    }
+]

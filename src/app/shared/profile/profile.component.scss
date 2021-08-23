@@ -1,0 +1,795 @@
+
+#foot {
+    border-top: 1px solid #999999;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: 300px;
+    display: flex;
+    right: 0;
+    left: 0;
+    bottom:-300px;
+    background: white;
+}
+.numberInput::-webkit-outer-spin-button,
+.numberInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.slide-up{
+    bottom: 0px !important;
+    transition: 1s;
+}
+
+.slide-down{
+    bottom: -300px !important;
+    transition: 0.5s;
+}
+
+.types{
+    color:gray;
+    width:10%;
+}
+.types1{
+    color:gray;
+    width:15%;
+
+}
+.types2{
+    color:gray;
+    width:15%;
+}
+.types3{
+    color:gray;
+    width:7%;
+}
+.slider_heading{
+    background-color: #f4f4f4;
+    height: 43px;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.heading_types{
+    border: none !important;
+    background: none !important;
+    padding: 15px 15px;
+    color: gray;
+    font-weight: bold;
+    
+}
+.vaultcss
+{
+    overflow: scroll;
+    height: 230px;
+}
+
+.cross_closeOne{
+    font-size: 30px;
+    color: gray;
+}
+
+.update_btn{
+    float: right;
+    border-radius: 20px;
+    color: #f4f4f4;
+    background-color: #0062cf !important;
+    margin-top: 20px;
+    // margin-right: 10px;
+    width: 100px;
+    padding: 0px;
+}
+
+.search-One{
+    width:200px;
+    float: right;
+    margin-top: -40px;
+    margin-right:0px; 
+}
+.cros{
+    width:10px;
+    float: right;
+    padding-right: 50px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.searchOne{
+    background: none;
+    border: none;
+    border-radius: 0px !important;
+    border-bottom: 1px solid gray;
+    color: black;
+}
+.usersearch{
+    color: black;
+}
+.download{
+    height: 25px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.cross_delet{
+    // font-size: 30px;
+    color: red;
+    cursor: pointer;
+}
+.textA{
+    overflow: hidden !important;
+    min-height: 80px !important;
+}
+
+.invite{
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    float:left;
+    margin-left: 46%;
+}
+.invteform{
+      // margin-left: 33.33%;
+      margin-top: 8px;
+      /* margin-right: -414px; */
+      margin-left: 209px;
+      width:150%;
+}
+.couponpagination
+{
+    margin-left: 52%;
+}
+.inviterow
+{
+    overflow: auto !important;
+    height: 230px;
+    display: block;
+}
+.createAlert
+{
+     // background-color: #26c9EE;
+     color: #f4f4f4;
+     // border: #26c9EE;
+     border-radius: 20px;
+     margin-top: 3px;
+     margin-right: 5px;
+     // position: absolute;
+     // right: 20px;
+}
+.configalerts,.coupons
+{
+    overflow: scroll;
+    height: 230px;
+}
+.alertspagination
+ {
+    margin-left: 52%;
+}
+.permissionpagination
+{
+    margin-left: 52%;
+}
+.notificationpagination
+{
+    margin-left:43%;
+}
+.superadminnotificationpagination
+{
+    margin-left:43%;
+}
+.alert
+{
+    text-align: center;
+    font-weight: bold;
+    bottom: 5px;
+    margin-bottom: -3px;
+    float: left;
+    margin-left: 420px; 
+}
+.alertform
+{
+    margin-left: 20.33%;
+    margin-bottom: 70px;
+}
+.alerttype{
+    color:gray;
+    width:6%;
+}
+.norecords
+{
+    position: absolute;
+    top: px;
+    bottom: 90px;
+    /* right: 20px; */
+    padding-left: 440px;
+    // padding-right: 20px;
+}
+.ntfnorecords
+{
+    position: absolute;
+    top: 95px;
+    padding-left: 440px;
+}
+.submitbtn-cancelsub
+{
+    margin-right: 170px;
+}
+.tableborder{
+    border-collapse: separate;
+    border:solid 1px black !important;
+    border-radius: 20px !important;
+    text-align: center;
+    width:80px;
+}
+
+th,td{
+    padding: 5px;
+}
+
+.users table { border-collapse: separate; }
+
+.active, .btnOne:hover {
+    // background-color: blue !important;
+   // color: white;
+    height:50px !important;
+  }
+
+  .userbtnOne:hover {
+    background-color: blue !important;
+    color: white;
+    height:50px !important;
+  }
+
+.botmbordr{
+    border-left: 0px  !important;
+    border-top: 0px;
+    border-right: 0px;
+    border-radius: 0px;
+}
+
+.phonenumber{
+    width:130% !important;
+}
+
+.pwd-class{
+    width: 20px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    color: black;
+    cursor: pointer;
+}
+.input-group{
+  z-index: 0;
+}
+.role, .department, .usermanagement, .subscrption_id, .invoice_id, .paymode{
+    overflow: scroll;
+    height: 230px;
+}
+// .scrollpermissions ng-select{ 
+//     overflow:scroll;
+//     height:60px;
+// }
+// .scrollpermissions ::-webkit-scrollbar{
+//     width:5px !important;
+//     height: 0px !important;
+// }
+
+::-webkit-scrollbar{
+    width:0px !important;
+    height: 0px !important;
+
+}
+.info-table-row-edit{
+    padding-left:0
+}
+.info-table-row-edit-value{
+    display: flex;
+    align-items: center;
+    margin-left: 50%;
+    margin-top: -9%;
+}
+.info-table-row-edit-icons{
+    padding: 5%;
+    margin-left: 90%;
+    margin-top: -12%;
+}
+
+.set_default{
+    margin-left : 15px
+}
+
+.updatecouponmbtn,.updaterolebtn,.updatepermbtn{
+    border-radius: 20px;
+    height: 30px;
+    width: 100px;
+    border: 0px;
+    padding:0px;
+    margin-left: 26px;
+}
+.clearbtn{
+    border-radius: 20px;
+    height: 30px;
+    width: 100px;
+    border: 0px;
+    padding:0px;
+    
+  }
+  .change_plan
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
+  }
+  .cancel_sub_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .cancel_modify_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .cancel_feedbackbtn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  
+  .submit_feedbackbtn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
+  }
+  .update_alert
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .cancel_alert_btn
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 100px;
+  }
+  .btn_alert_save
+  {
+    border-radius: 20px;
+    height: 30px;
+    line-height: 5px;
+    width: 120px;
+  }
+.cardtype{
+    color:gray;
+}
+.cardtype1{
+    color:gray;
+    width: 25%;
+}
+.cardbox{
+    border: 1px solid gray;
+    padding: 2px 6px;
+    cursor: pointer;
+    width:150px !important;
+}
+.isdefaultCard{
+    border: 1px solid green !important;
+    color: green !important;
+    width:150px !important;
+
+}
+.deleticon{
+    cursor: pointer;
+    width:200px;
+}
+.deleticon span{
+    padding: 2px 3px;
+}
+#myid{
+    width:170px;
+    height:120px;
+    border:1px solid gray;
+    display: none;
+    background-color: gray;
+    // cursor:none;
+}
+
+.isdelet{
+    display: block !important;
+    position: relative;
+    color: white !important;
+    z-index: 1000;
+    // cursor:none;
+}
+// .deletconfm{}
+
+.deletconfm h5{
+    font-size: 13px;
+}
+.deletconfm p{
+    font-size: 10px;
+}
+.deletconfm .confm{
+    border: none;
+    background: white;
+    width:30px;
+    height: 20px;
+    font-size: 10px;
+    margin-left: 25px;
+    border-radius: 10px;
+}
+
+.deletefrm{
+    margin-top: 5px;
+}
+
+.modal{
+    display: flex !important;
+    left: 65%;
+    width: 31%;
+    height: 430px;
+    size: initial;
+    background-color:white; 
+    top: 20%
+}
+.infocheck span{
+ margin-left: 10px; 
+ font-size: 13px;  
+}
+.subheadin{
+    margin-top: 10px;
+    font-size: 14px;
+}
+.textfield{
+ margin-left: 30px;  
+ margin-top: 20px;
+}
+.textfield p{
+    font-size: 12px;
+}
+.textfield textarea{
+    width:300px;
+    height:100px;
+}
+.submitbtn{
+    margin-left: 40%;
+    margin-top: 10px;
+}
+.deletcard{
+    padding-left: 20px;
+}
+
+#delete-card{
+    width:170px;
+    height:120px;
+    border:1px solid gray;
+    display: none;
+    background-color: gray;
+}
+.isdeletcard{
+    display: block !important;
+    position: relative;
+    color: white !important;
+    z-index: 1;
+}
+label{
+    color: black;
+}
+.noticationheading{
+    font-weight: bold;
+    margin-top: 8px ;
+    float:left;
+}
+.notificatnmsgs{
+    margin-top: 5px;
+}
+.updat_btndiv{
+    margin-left: auto !important;
+}
+  .default_btn{
+    font-size: 12px;
+    height: 25px;
+    width: 60px;
+    padding: 0px;
+    border-radius: 20px;
+    cursor: initial;
+    background: green;
+    color: white;
+  }
+
+  .loadRole, .hideRole{
+    text-decoration-line: underline;
+    color: #0062cf;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+    }
+
+    .addCard{
+        // background-color: #26c9EE;
+        color: #f4f4f4;
+        // border: #26c9EE;
+        border-radius: 20px;
+        margin-top: 20px;
+        // position: absolute;
+        // right: 20px;
+    }
+
+    .btn-save, .cancel_btn{
+        border-radius: 20px;
+    height: 30px;
+    width: 100px;
+    border: 0px;
+    padding:0px;
+      }
+      .buttonsblock button{
+       margin-right: 20px;
+      }
+      .emailsblock button{
+          margin-right: 13px;
+      }
+      .setDefault_btn{
+        margin-left: 5px;
+      }
+
+     
+      .remov_btn ,.setDefault_btn{
+        font-size: 10px;
+        height: 25px;
+        width: 60px;
+        padding: 0px;
+        border-radius: 20px;
+      }
+.subsc
+{
+    background: none !important;
+    border: none !important;
+}
+.inner-addon { 
+    position: relative; 
+  }
+  .inner-addon .lockicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+  width: 40px;
+  margin-top: 20px;
+  margin-left:-110px;
+//   float: left !important;
+ 
+  }
+  .inner-addon .lockicon1 {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    width: 40px;
+    margin-top: 20px;
+    margin-left:-90px;
+  //   float: left !important;
+   
+    }
+  .left-addon input  { padding-left:  50px; }
+  .left-addon select  { padding-left:  50px; }
+  .right-addon input { padding-right: 20px; }
+  
+  .right-addon .eyeicon{
+    position: absolute;
+    padding: 10px;
+    z-index: 1000;
+    margin-left: 50% !important;
+    width: 40px;
+    color: #0061cf !important;
+    margin-top: 20px;
+    // margin-right:60px
+  }
+  .right-addon .eyeicon1{
+    position: absolute;
+    padding: 10px;
+    z-index: 1000;
+    margin-left: 55% !important;
+    width: 40px;
+    color: #0061cf !important;
+    margin-top: 20px;
+    // margin-right:60px
+  }
+
+  .chngpswd{
+    margin-top: 20px;
+    margin-left: 350px;
+  }
+  .updtpswd{
+    color: #f4f4f4;
+    border-radius: 20px;
+    margin-top: -45px;
+    margin-right: 800px;
+  }
+  .updtpswd1{
+    color: #f4f4f4;
+    border-radius: 20px;
+    margin-top: -45px;
+    margin-right: 450px;
+  }
+  .pswd form {
+      overflow-y: scroll !important;
+    //   max-height : 180px !important;
+      display: block;
+
+  }
+  .pswd ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+  
+  .scrolltable table {
+      overflow-y:scroll !important;
+      max-height : 200px !important;
+      display: block;
+
+  }
+
+  .scrolltable ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+
+button.btn.btn-primary.invite-button {
+    color: #f4f4f4;
+    width: 144px;
+    font-weight: bold;
+    border: #26c9EE;
+    border-radius: 33px;
+    margin-top: -5px !important;
+    margin-left: 109px;
+}
+.upload-container {
+    padding: 20px;
+    margin-top: -165px;
+}
+ 
+.upload-excel {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    margin-left: 603px;
+} 
+.uploaded-excel {
+    width: 50%;
+    float: left;
+    padding: 20px;
+   margin-left: 854px;
+    margin-top: -134px;
+} 
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 4px;
+    left: 54px;
+    bottom: 42px;
+    width: 38%;
+    border-radius: 23px;
+    line-height: 18px;
+  }
+  .fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .bulk
+  {
+      color: #33adff;
+      font-size: 29px;
+  }
+  .downloadbulk
+  {
+    font-size: 12px;
+  }
+  .calexp{
+    border-color: beige;
+  }
+  .isRead
+  {
+      color: grey;
+  }
+
+.card{    
+  width: 10%;
+  position: absolute;
+  top: 6px;
+  right: 4px;
+  z-index: 10;
+}
+
+
+  .textbody textarea{
+      border-color:slategray;
+      width:100%;
+     
+  }
+  .vault-table{
+    width: 100% !important;
+}
+.twoFactor{
+    margin-top: 20px;
+    margin-left: 350px;
+  }
+  .updTwoFactor{
+    color: #f4f4f4;
+    border-radius: 20px;
+   // margin-top: -45px;
+   margin-left: -246px;
+    margin-right: 800px;
+  }
+  .factor form {
+      overflow-y: scroll !important;
+    //   max-height : 180px !important;
+      display: block;
+
+  }
+  .factor ::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+
+}
+.bottwofactor{
+    border-left: 5px  !important;
+    border-top: 0px;
+    border-right: 5px;
+    border-radius: 0px;
+    width: 60% !important;
+    padding-left: 0px !important;
+    margin-top: -27px;
+    margin-left: 51px;
+}
+    .typesss{
+        
+    color:gray;
+    width:20% !important;
+    }
+    .emailCs{
+        width: 100px !important;
+        word-wrap: break-word;
+    }
+    .roleCs{
+        width: 130px !important;
+
+    }
+    .edit-Btn{
+        float: left;
+    }
+    .action-btns{
+        width: 140px;
+    }
+    .userManagementpagination
+    {
+     margin-left: 55%;
+    }
+    .deptpagination{
+        margin-left: 60%;
+    }
+    .errspan1{
+        font-size:15px;
+    }
+    .card-input{
+        padding-right: 36px;
+    }

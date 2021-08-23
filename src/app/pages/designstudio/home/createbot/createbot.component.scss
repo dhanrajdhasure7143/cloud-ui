@@ -1,0 +1,111 @@
+.create_wf {
+    left: -25px !important;
+    min-width: 356px !important;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    border: 0px solid transparent;
+}
+
+.create_wf .popover-arrow.arrow {
+    left: 300px !important;
+}
+
+.create_wf .popover-content.popover-body {
+    padding: 5px 0px;
+}
+
+.create_wf label {
+    margin: 0px;
+    color: #7990A8;
+    font-size: 14px;
+}
+
+.multiselect-dropdown {
+    height: 38px;
+    padding:  0rem;
+   font-size: 1rem !important;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #fff;
+}
+
+.create_wf button.btn.btn-full {
+    min-width: 120px;
+    font-size: 16px;
+    padding: 6px 12px !important;
+    height: auto;
+}
+
+.create_wf .form-group.form-buttons.text-center {
+    margin: auto;
+}
+
+.create_wf .modal-body {
+    padding: 5px 20px 0px;
+}
+
+.create_wf .modal-footer {
+    border-top: 0px !important;
+    padding: 5px 20px 10px;
+}
+
+.multiselect-dropdown .dropdown-btn {
+    border: 1px solid #D6DDF2 !important;
+}
+
+// radio button
+
+.label--radio {
+  position: relative;
+  font-family: Arial, sans-serif;
+  line-height: 135%;
+  cursor: pointer;
+  margin: 0px 8px 0px 0px !important;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.radio {
+  position: relative;
+  margin: 0 1rem 0 0;
+  cursor: pointer;
+  height: 18px;
+}
+.radio:before {
+  -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+  -moz-transition: -moz-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+  transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+  -webkit-transform: scale(0, 0);
+  -moz-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  -o-transform: scale(0, 0);
+  transform: scale(0, 0);
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  background: #006dd5;
+  border-radius: 50%;
+}
+.radio:checked:before {
+  -webkit-transform: scale(1, 1);
+  -moz-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  -o-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+.radio:after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 2px solid #006dd588;
+  border-radius: 50%;
+}
+
+//end of radio button

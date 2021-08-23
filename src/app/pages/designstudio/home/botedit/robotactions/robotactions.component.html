@@ -1,0 +1,79 @@
+<ng-template #content >
+  <div class="row" *ngFor="let log of logs">
+    <div class="mod_info col-12">
+      <div class="row">
+        <div class="col-4 ">
+          <label class="mod_name">{{log.rid}}</label>
+        </div>
+        <div class="col-4">
+          <label class="mod_time"> {{log.robotname}}</label>
+        </div> 
+        <div class="col-4">
+          <label class="mod_name">{{log.versionid}}</label>
+        </div>
+        <div class="col-12 ">
+          <label class="mod_day ">{{log.CreateDatetime}}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="mod_info col-12">
+        <div class="row">
+          <div class="col-6 no-padding-right">
+            <label class="mod_day ">Today</label>
+          </div>
+          <div class="col-6 no-padding-left">
+            <label class="mod_time">10 : 30 :10 pm</label>
+          </div>
+          <div class="col-12">
+            <label class="mod_name">Srikanth Pothina</label>
+          </div>
+        </div>
+      </div> -->
+<!-- footer bot -->
+      <!-- <div class="col-12 pop_footer">
+        <div class="row">
+          <div class="col-6 text-center">
+            <button class="btn btn-full btn-cancel">Close</button>
+          </div>
+          <div class="col-6 text-center">
+              <button class="btn btn-full btn-submit">Restore</button>
+            </div>
+        </div> 
+      </div> -->
+      </div> 
+
+</ng-template>
+<div class="footer row text-right">
+  <!-- <ul>
+      <li class="footer_buttons"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><label class="footer_icon-labels">History</label></li>
+      <li class="footer_buttons"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-code"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><label class="footer_icon-labels">Debug</label></li>
+      <li class="footer_buttons"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg><label class="footer_icon-labels">Build</label></li>
+    </ul> -->
+  <div class="footer_buttons">
+      <div class="show_labels"><input type="checkbox" (change)="showLables($event)" [(ngModel)]="displayLabels"> Show Labels</div>
+    <button class="btn-footer" (click)="getVersionsofRobot()" containerClass="customClass" [popover]="content" ><svg xmlns="http://www.w3.org/2000/svg"
+        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>Versions</button>
+    <button class="btn-footer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="feather feather-code">
+        <polyline points="16 18 22 12 16 6"></polyline>
+        <polyline points="8 6 2 12 8 18"></polyline>
+      </svg>Debug</button>
+    <button class="btn-footer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="feather feather-play">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>Execute</button>
+      <button class="btn-footer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="feather feather-clock">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>Log</button>
+  </div>
+</div>

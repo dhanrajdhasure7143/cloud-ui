@@ -1,0 +1,23 @@
+<div class="right_panel">
+  <div class="row action_prop">
+    <div class="col-12">
+      <label class="action_prop_label">{{title || 'Action Properties'}} </label>
+    </div>
+  </div>
+  <div class="action_prop_body">
+    <div class="action_image" *ngIf="!node">
+      <img src="assets/action.svg">
+      <!-- <label class="action_text_main">You don't have any workflows</label> -->
+      <label class="action_text_sub">Double Click on the action element to set their properties.</label>
+    </div>
+    <div class="action_image" *ngIf="noProp">
+        <label class="action_text_sub"> No propeties found for selcted element.</label>
+    </div>
+    <div>
+        <ng-template dynamic-comp-host></ng-template>
+    </div>
+  </div>
+  <div class="action_prop_footer text-center" *ngIf="node && !noProp">
+    <button class="btn btn-full btn-submit">Validate</button>
+  </div>
+</div>
