@@ -21,21 +21,38 @@ export interface AiotalAppConfig {
 
 export const AppConfig: AiotalAppConfig = {
   
-   // demo
+   // prod
    portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
-   apiendpoint: 'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
-   tokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/idm',
-   proxyTokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/securitymgr',
-   authorizationendpoint: 'https://eiapdemoapi.epsoftinc.com:96/authservices',
+   apiendpoint: 'https://ezflow.epsoftinc.com/aiotalplatform',
+   tokenendpoint: 'https://ezflow.idm.epsoftinc.com',
+   proxyTokenendpoint: 'https://ezflow.epsoftinc.com/securitymgr',
+   authorizationendpoint: 'https://ezflow.epsoftinc.com/authservices',
    socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
-   notificationsendpoint: 'https://eiapdemoapi.epsoftinc.com:96/alerts',
-   Subscriptionendpoint:'https://eiapdemoapi.epsoftinc.com:96/subscriptions',
-   productendpoint: 'https://eiapdemo.epsoftinc.com:86',
-   socialLoginRedirectURL: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
+   notificationsendpoint: 'https://ezflow.epsoftinc.com/alerts',
+   Subscriptionendpoint:'https://ezflow.epsoftinc.com/subscriptions',
+   productendpoint: 'https://ezflow.iap.epsoftinc.com',
+   socialLoginRedirectURL: 'https://ezflow.epsoftinc.com/#/user',
    isSecurityManagerEnabled : false,
    isTwoFactorAuthenticationEnabled: false,
-   rpaendpoint:"https://eiapdemoapi.epsoftinc.com:96/wfrpa",
-   piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel"
+   rpaendpoint:"https://ezflow.epsoftinc.com/wfrpa",
+   piendpoint:"https://ezflow.epsoftinc.com/prcintel"
+  
+   // demo
+   //portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
+   //apiendpoint: 'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
+   //tokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/idm',
+   //proxyTokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/securitymgr',
+   //authorizationendpoint: 'https://eiapdemoapi.epsoftinc.com:96/authservices',
+   //socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
+   //notificationsendpoint: 'https://eiapdemoapi.epsoftinc.com:96/alerts',
+   //Subscriptionendpoint:'https://eiapdemoapi.epsoftinc.com:96/subscriptions',
+   //productendpoint: 'https://eiapdemo.epsoftinc.com:86',
+   //socialLoginRedirectURL: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
+   //isSecurityManagerEnabled : false,
+   //isTwoFactorAuthenticationEnabled: false,
+   //rpaendpoint:"https://eiapdemoapi.epsoftinc.com:96/wfrpa",
+   //piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel"
+  
   // cloud
   //portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
   //apiendpoint: 'https://eiapbeta.epsoftinc.com/aiotalplatform',
