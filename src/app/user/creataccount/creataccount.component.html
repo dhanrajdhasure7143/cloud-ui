@@ -24,18 +24,22 @@
                       <p style="padding:0px 35px">Please share your details, we will contact you shortly</p>
                       <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>First Name</mat-label>
-                      <input type="text" matInput name="fname" 
-                        placeholder="Enter First Name"/>
+                      <input type="text" matInput name="fname" #fname="ngModel" [(ngModel)]="firstname" 
+                        placeholder="Enter First Name" (keypress)="lettersOnly($event)" required/>
                       </mat-form-field>
-                      <!-- <span  style="padding:0px 35px !important;" 
+                      <span  style="padding:0px 35px !important;" *ngIf="((fname.invalid && creataccount.submitted) || (fname.errors && fname.touched) ) "
                         class='fa fa-info-circle errspan'>
-                        <span *ngIf="fname.errors.required"> First Name is required</span>
-                      </span> -->
+                        <span *ngIf="fname.errors.required">First Name is required</span>
+                     </span>
                        <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>Last Name</mat-label>
-                      <input type="text" matInput name="lname" 
-                        placeholder="Enter Last Name"/>
+                      <input type="text" matInput name="lname" #lname="ngModel" [(ngModel)]="lastname"
+                        placeholder="Enter Last Name" (keypress)="lettersOnly($event)" required/>
                       </mat-form-field>
+                      <span  style="padding:0px 35px !important;" *ngIf="((lname.invalid && creataccount.submitted) || (lname.errors && lname.touched) ) "
+                      class='fa fa-info-circle errspan'>
+                      <span *ngIf="lname.errors.required">Last Name is required</span>
+                   </span>
                       <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>Email</mat-label>
                       <input type="text" matInput name="email" #email="ngModel" [(ngModel)]="emailId"
@@ -49,12 +53,13 @@
                      </span>
                       <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>Phone Number</mat-label>
-                      <input type="text" matInput name="phoneNumber" 
-                        placeholder="Enter Phone Number" (keypress)="inputlettersEmail($event)" onKeyPress="if(this.value.length==10) return false;"/>
+                      <input type="text" matInput name="pNumber" #pNumber="ngModel" [(ngModel)]="phoneNumber"
+                        placeholder="Enter Phone Number" (keydown)="inputNumberOnly($event)" onKeyPress="if(this.value.length==10) return false;" required/>
                       </mat-form-field>
-                      
-                      <span style="padding:0px 35px !important;" *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only Business Email is Allowed</span>
-                      
+                  <span style="padding:0px 35px !important;" *ngIf="((pNumber.invalid && creataccount.submitted)|| (pNumber.errors && pNumber.touched))"
+                  class='fa fa-info-circle errspan'> 
+                  <span *ngIf="lname.errors.required">Phone Number is required </span>
+                  </span>
                     </div>
                     <div class="col-md-12" class="agreecheckbox" style="padding:0px 35px !important;">
                           <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()">
