@@ -12,6 +12,7 @@ import { CryptoService } from 'src/app/_services/crypto.service';
 })
 export class CreataccountComponent implements OnInit {
   public  emailId:any;
+  public fname:any;
   public isresend:boolean;
   public isagree:boolean;
   public isdisable:boolean=true;

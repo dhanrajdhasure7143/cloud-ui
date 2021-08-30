@@ -79,7 +79,20 @@ export class PlatformComponent implements OnInit {
             }
             if(prod.subscribed==true&&this.remainingDays==null){
               this.showexpiryinfo=false;
-            
+              var token=JSON.parse(localStorage.getItem('currentUser'));
+    var encryptToken=btoa(token.accessToken)
+    var encryptrefreshToken=btoa(token.refreshToken);
+    var firstName=localStorage.getItem('firstName');
+    var lastName=localStorage.getItem('lastName');
+    var ProfileuserId=localStorage.getItem('ProfileuserId');
+    var tenantName=localStorage.getItem('tenantName');
+    var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
+    var useridBase64 = btoa(userId);
+    var userIp=btoa(localStorage.getItem('ipAddress'));
+    var productURL = this.config.productendpoint;
+    if(this.config.isNewDesignEnabled)
+      productURL = this.config.newproductendpoint;
+    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp 
   
             }
             else if(prod.subscribed==true&&this.remainingDays>=1){
@@ -88,6 +101,23 @@ export class PlatformComponent implements OnInit {
             }
             else if(prod.subscribed==false){
               this.showexpiryinfo=false;
+           
+            }
+            else if(prod.subscribed==true){
+              var token=JSON.parse(localStorage.getItem('currentUser'));
+    var encryptToken=btoa(token.accessToken)
+    var encryptrefreshToken=btoa(token.refreshToken);
+    var firstName=localStorage.getItem('firstName');
+    var lastName=localStorage.getItem('lastName');
+    var ProfileuserId=localStorage.getItem('ProfileuserId');
+    var tenantName=localStorage.getItem('tenantName');
+    var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
+    var useridBase64 = btoa(userId);
+    var userIp=btoa(localStorage.getItem('ipAddress'));
+    var productURL = this.config.productendpoint;
+    if(this.config.isNewDesignEnabled)
+      productURL = this.config.newproductendpoint;
+    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
            
             }
           }) 

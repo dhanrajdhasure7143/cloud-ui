@@ -21,6 +21,21 @@
           <form *ngIf='!isresend' autocomplete="off" #creataccount="ngForm" (ngSubmit)="!creataccount.invalid && creat_account()">
                 <div class="form-group"><!-- inner-addon left-addon-->
                       <!--<img src="assets/images/registration/mail.svg" class="icon">-->
+                      <p style="padding:0px 35px">Please share your details, we will contact you shortly</p>
+                      <mat-form-field appearance="outline" style="padding:0px 35px !important;">
+                        <mat-label>First Name</mat-label>
+                      <input type="text" matInput name="fname" 
+                        placeholder="Enter First Name"/>
+                      </mat-form-field>
+                      <!-- <span  style="padding:0px 35px !important;" 
+                        class='fa fa-info-circle errspan'>
+                        <span *ngIf="fname.errors.required"> First Name is required</span>
+                      </span> -->
+                       <mat-form-field appearance="outline" style="padding:0px 35px !important;">
+                        <mat-label>Last Name</mat-label>
+                      <input type="text" matInput name="lname" 
+                        placeholder="Enter Last Name"/>
+                      </mat-form-field>
                       <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>Email</mat-label>
                       <input type="text" matInput name="email" #email="ngModel" [(ngModel)]="emailId"
@@ -32,7 +47,11 @@
                         <span *ngIf="email.errors.required"> Email is required</span>
                         <span *ngIf="email.errors.pattern"> Enter valid Email</span>
                      </span>
-                     
+                      <mat-form-field appearance="outline" style="padding:0px 35px !important;">
+                        <mat-label>Phone Number</mat-label>
+                      <input type="text" matInput name="phoneNumber" 
+                        placeholder="Enter Phone Number" (keypress)="inputlettersEmail($event)" onKeyPress="if(this.value.length==10) return false;"/>
+                      </mat-form-field>
                       
                       <span style="padding:0px 35px !important;" *ngIf="ispublicMail" class='fa fa-info-circle errspan'>&nbsp;Only Business Email is Allowed</span>
                       
@@ -43,7 +62,7 @@
                             <a (click)='privacyOpen(privacyTemplate)'>Privacy Policy</a></span>
                     </div>
                     <div class="form-group col-sm-12">
-                        <button class="hoverable button btn btn-primary creataccnt-btn" [disabled]='isdisable'>Create Account</button>
+                        <button class="hoverable button btn btn-primary creataccnt-btn" [disabled]='isdisable'>Submit</button>
                     </div>
                 
                     <div class="form-group col-sm-12" style="padding:0px 88px !important;">
@@ -58,11 +77,16 @@
           <div *ngIf='isresend' class='confirmationmail'>
             <div class="isresendclass">
               <h4>Thanks for choosing EZFlow </h4>
-              <p>We have sent activation email to <b>{{userId}}</b></p>
+              <!-- Commenting below code to bypass the actual registration process in cloud -->
+              <p>Our team will contact you soon to help you with the registration process.</p>
+              <p>If you have any questions, please <a href="https://www.epsoftinc.com/contact-us/" target="_blank">Contact Us</a>.</p>
+              <button class="hoverable button btn btn-primary resend-btn" [routerLink]="['/']" >Sign In</button>
+              
+              <!-- <p>We have sent activation email to <b>{{userId}}</b></p>
               <p>Please check your inbox and follow the link to complete your registration.</p>
               <p>If you have any questions, please <a href="https://www.epsoftinc.com/contact-us/" target="_blank">Contact Us</a>.</p>
               <p>Do not see email in your inbox?</p>
-              <button class="hoverable button btn btn-primary resend-btn" [disabled]='isresenddisable' (click)='resendVerificationMail()'>Resend</button>
+              <button class="hoverable button btn btn-primary resend-btn" [disabled]='isresenddisable' (click)='resendVerificationMail()'>Resend</button> -->
             </div>
             </div>
         </mat-card>

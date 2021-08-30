@@ -11,6 +11,8 @@ import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { Particles } from '../../_models/particlesjs';
 import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
+import { CryptoService } from 'src/app/_services/crypto.service';
+//import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +49,9 @@ export class LoginComponent implements OnInit {
     private sharedData: SharedDataService,
     public userService: UserService,
     private particles :Particles,
-    private profileService:ProfileService
+    private profileService:ProfileService,
+    private crypto:CryptoService
+    //private cookieService:CookieService,
     
   ) {
     this.session.stopWatching();
@@ -65,6 +69,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  document.cookie = "old_ux=false";
 
     //this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
   this.particles.getParticles();
@@ -356,7 +362,23 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/superadmin']);
       
      }else{
-      this.router.navigate(['/activation']);
+      //this.router.navigate(['/activation']);
+    var token=JSON.parse(localStorage.getItem('currentUser'));
+    var encryptToken=btoa(token.accessToken)
+    var encryptrefreshToken=btoa(token.refreshToken);
+    var firstName=localStorage.getItem('firstName');
+    var lastName=localStorage.getItem('lastName');
+    var ProfileuserId=localStorage.getItem('ProfileuserId');
+    var tenantName=localStorage.getItem('tenantName');
+    var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
+    var useridBase64 = btoa(userId);
+    var userIp=btoa(localStorage.getItem('ipAddress'));
+    var productURL = this.config.productendpoint;
+    if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
+      productURL = this.config.newproductendpoint;
+
+    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
+     
      }
     },error => {
       this.error = "Please complete your registration process";
@@ -398,7 +420,23 @@ this.router.navigate(['/createaccount'])
     
 
   }
- 
+
+getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
   onEmailChange(){
     this.isOTP=false;
     this.twoFactorAuthConButton = true;
