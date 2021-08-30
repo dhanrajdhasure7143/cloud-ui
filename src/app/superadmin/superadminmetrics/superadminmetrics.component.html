@@ -2,74 +2,54 @@
   <div class="container-fluid">
     <br>
     <div class="row" >
-      <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
-        <div class="example-card form-inline" >
-          <div class="count-text form-group">
-            <span class="icon"><img  src="assets/images/customer.svg"></span>
-            &nbsp;&nbsp;&nbsp;
-          </div> 
-            Customers
-            <div class="count-text form-group ">{{tenantcount.length}}</div>
-          </div>
-    </div>
-        <!-- <div *ngIf="tenantcount!=0" class=" col-md-2 text-center">
-            <div class="divbox divbox0"><span class="text-white">
-              Tenants<br>
-             {{tenantcount.length}}
-            </span></div>
-        </div> -->
-        <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
-          <div class="example-card form-inline" >
-            <div class="count-text form-group">
-              <span class="icon"><img  src="assets/images/subscription.svg"></span>
-              &nbsp;&nbsp;&nbsp;
-            </div> 
-             Subscriptions
-              <div class="count-text form-group ">{{subscriptiontotolcount}}</div>
-            </div>
-      </div>
-        <!-- <div  class=" col-md-2 text-center">
-          <div  class="divbox divbox1"><span class="text-white">
-            Subscriptions<br>
-           {{subscriptiontotolcount}}
-          </span></div>
-      </div> -->
-
-      <div *ngIf="couponscount!=undefined" class=" col-md-3 form-inline">
-        <div class="example-card form-inline" >
-          <div class="count-text form-group">
-            <span class="icon"><img  src="assets/images/coupon.svg"></span>
-            &nbsp;&nbsp;&nbsp;
-          </div> 
-            Coupons
-            <div class="count-text form-group ">{{couponscount.length}}</div>
-          </div>
-    </div>
-  
-      <!-- <div  class=" col-md-2 text-center">
-        <div *ngIf="couponscount!=0" class="divbox divbox2"><span class="text-white">
-          Coupons<br>
-          {{couponscount.length}}
-        </span></div>
-    </div> -->
-    <div *ngIf="vaulttotalcount!=undefined" class=" col-md-3 form-inline">
-      <div class="example-card form-inline" >
+      
+    <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
+      <div class="example-card form-inline card-count" >
         <div class="count-text form-group">
-          <span class="icon"><img  src="assets/images/Vault_secrets.svg"></span>
-          &nbsp;&nbsp;&nbsp;
-        </div> 
-          Vault Secrets
-          <div class="count-text form-group ">{{vaulttotalcount.length}}</div>
+          <span class="icon"><img  src="assets/images/customer.svg"></span>
+            &nbsp;&nbsp;&nbsp;
+        </div>
+          <div class="count-text form-group">Customers</div>
+            <div class="count-text form-group pull-right">{{tenantcount.length}}</div>
         </div>
   </div>
+       
+      <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
+        <div class="example-card form-inline card-count" >
+          <div class="count-text form-group">
+            <span class="icon"><img  src="assets/images/subscription.svg"></span>
+              &nbsp;&nbsp;&nbsp;
+          </div>
+            <div class="count-text form-group">Subscriptions</div>
+              <div class="count-text form-group pull-right">{{subscriptiontotolcount}}</div>
+          </div>
+    </div>
+       
 
-    <!-- <div  class=" col-md-2 text-center">
-      <div *ngIf="vaulttotalcount!=0" class="divbox divbox3"><span class="text-white">
-        Vault Secrets<br>
-  {{vaulttotalcount.length}}</span></div>
-  </div> -->
-
+    <div *ngIf="couponscount!=undefined" class=" col-md-3 form-inline">
+      <div class="example-card form-inline card-count" >
+        <div class="count-text form-group">
+          <span class="icon"><img  src="assets/images/coupon.svg"></span>
+            &nbsp;&nbsp;&nbsp;
+        </div>
+          <div class="count-text form-group">Coupons</div>
+            <div class="count-text form-group pull-right">{{couponscount.length}}</div>
+        </div>
+  </div>
   
+     
+
+  <div *ngIf="vaulttotalcount!=undefined" class=" col-md-3 form-inline">
+    <div class="example-card form-inline card-count" >
+      <div class="count-text form-group">
+        <span class="icon"><img  src="assets/images/Vault_secrets.svg"></span>
+          &nbsp;&nbsp;&nbsp;
+      </div>
+        <div class="count-text form-group">Vault Secrets</div>
+          <div class="count-text form-group pull-right">{{vaulttotalcount.length}}</div>
+      </div>
+</div>
+
     </div>
     <br><br>
     <div class="row">
