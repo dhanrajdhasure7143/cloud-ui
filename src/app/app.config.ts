@@ -12,6 +12,7 @@ export interface AiotalAppConfig {
   notificationsendpoint: String;
   Subscriptionendpoint:String;
   productendpoint: String;
+  newproductendpoint: String;
   socialLoginRedirectURL: String;
   isSecurityManagerEnabled : boolean;
   isTwoFactorAuthenticationEnabled : boolean;
@@ -47,7 +48,8 @@ export const AppConfig: AiotalAppConfig = {
    socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
    notificationsendpoint: 'http://alertsqa.epsoftinc.in',
    Subscriptionendpoint:'http://subscriptionqa.epsoftinc.in',
-   productendpoint: 'http://eiapqanew.epsoftinc.in',
+   productendpoint: 'http://eiapqa.epsoftinc.in',
+   newproductendpoint: 'http://eiapqanew.epsoftinc.in',
    socialLoginRedirectURL: 'http://eiapcloudqa.epsoftinc.in/#/user',
    rpaendpoint:"http://rpaqa.epsoftinc.in",
    piendpoint:"http://piqa.epsoftinc.in",
