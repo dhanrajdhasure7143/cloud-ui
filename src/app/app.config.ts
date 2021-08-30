@@ -18,6 +18,7 @@ export interface AiotalAppConfig {
   isTwoFactorAuthenticationEnabled : boolean;
   rpaendpoint:String;
   piendpoint:String;
+  isNewDesignEnabled : boolean;
 }
 
 export const AppConfig: AiotalAppConfig = {
@@ -54,7 +55,8 @@ export const AppConfig: AiotalAppConfig = {
    rpaendpoint:"http://rpaqa.epsoftinc.in",
    piendpoint:"http://piqa.epsoftinc.in",
    isTwoFactorAuthenticationEnabled: false,
-   isSecurityManagerEnabled : true
+   isSecurityManagerEnabled : true,
+   isNewDesignEnabled : true
    
 };
 
