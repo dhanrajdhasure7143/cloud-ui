@@ -249,7 +249,7 @@ th,td{
 }
 
 .phonenumber{
-    width:130% !important;
+    width:100% !important;
 }
 
 .pwd-class{
@@ -792,4 +792,8 @@ button.btn.btn-primary.invite-button {
     }
     .card-input{
         padding-right: 36px;
+    }
+
+    .iti__flag-container{
+        padding-left: 0px !important;
     }

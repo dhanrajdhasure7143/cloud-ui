@@ -17,6 +17,8 @@ export interface AiotalAppConfig {
   isTwoFactorAuthenticationEnabled : boolean;
   rpaendpoint:String;
   piendpoint:String;
+  newproductendpoint: String;
+  isNewDesignEnabled : boolean; 
 }
 
 export const AppConfig: AiotalAppConfig = {
@@ -35,7 +37,10 @@ export const AppConfig: AiotalAppConfig = {
    isSecurityManagerEnabled : false,
    isTwoFactorAuthenticationEnabled: false,
    rpaendpoint:"https://eiapdemoapi.epsoftinc.com:96/wfrpa",
-   piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel"
+   piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel",
+   newproductendpoint: 'http://eiapdemonew.epsoftinc.in',
+   isNewDesignEnabled : true
+
   // cloud
   //portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
   //apiendpoint: 'https://eiapbeta.epsoftinc.com/aiotalplatform',

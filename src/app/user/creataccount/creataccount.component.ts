@@ -12,6 +12,9 @@ import { CryptoService } from 'src/app/_services/crypto.service';
 })
 export class CreataccountComponent implements OnInit {
   public  emailId:any;
+  public firstname:any;
+  public lastname:any;
+  public phoneNumber:any;
   public isresend:boolean;
   public isagree:boolean;
   public isdisable:boolean=true;
@@ -80,4 +83,22 @@ export class CreataccountComponent implements OnInit {
         return false;
       }
   }
+
+  lettersOnly(event): boolean {
+ 
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+    }
+    }
+
+    inputNumberOnly(event){
+      let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+      let temp =numArray.includes(event.key); //gives true or false
+     if(!temp){
+      event.preventDefault();
+     } 
+    }
 }

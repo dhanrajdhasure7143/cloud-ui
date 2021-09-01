@@ -15,6 +15,7 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 @import '~ngx-toastr/toastr-bs4-alert';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 // @import '~ngx-toastr/toastr-bs4-alert';
 
@@ -543,4 +544,15 @@ footer .powredby_text{
 .register_account .register_account .step_circle span,
 .email_verified .email_verified .step_circle span{
   color: white !important;
+}
+
+.ph-number .iti--allow-dropdown .iti__flag-container, .iti--separate-dial-code .iti__flag-container {
+  left: -14px !important;
+}
+
+.ph-number .mat-form-field-label-wrapper {
+  margin-left: 30px !important;
+}
+.ph-number .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
+  padding-left: 30px !important;
 }

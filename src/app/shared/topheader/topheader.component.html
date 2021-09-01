@@ -2,29 +2,34 @@
   <div class="row">
 <nav class=" navbar-light naveOne col-md-12">
   <a class="navbar-brand col-md-4" href="#" class="aiotal">
-    <img class="titleimage" src="assets/images/logo_img.png" alt="epsoft"> </a>
+    <img class="titleimage" src="assets/images/EZFlow.png" alt="epsoft"> </a>
   <ul  class="nav navTwo col-md-8">
     <li class="col-md-10"></li>
       <li class=" nav-item col-md-1 notificationBell">
-          <img class="notification-icon" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt=" ">
+          <img class="notification-icon" style="padding-left:26px;" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt=" ">
           <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:68px; top:10px;">
             <span>{{notificationscount}}</span> 
            </div>
         </li>
-    <li class=" nav-item col-md-1">
+    <li class="text-center">
       <!-- <img class="icon_middle pull-right" src="assets/images/pro1.png" alt="profile image"> -->
       <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
        <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
         <span #toogleBtn (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="Drop Down"></span>      
         <div>     
         <div  id="myDropdown" class="dropdown-content">
-               <p (click)="accountSlideup()"><img  src="assets/images/account.svg"><span>My Account</span></p>
-               <p *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin') || this.userManagementEnabled" (click)="usermanagementslideUp()"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
-                  <p *ngIf="this.userRole.includes('Admin') || configurationEnabled" (click)="alertsSlideup()"><img  src="assets/images/config_alerts.svg"><span>Configuration</span></p>
-                  <p *ngIf="this.userRole.includes('Admin') || inviteUserEnabled" (click)="inviteSlideup()"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
-                  <p *ngIf="this.userRole.includes('SuperAdmin')"  (click)="couponSlideup()"><img  src="assets/images/inviteuser.svg"><span>Create Coupon</span></p>
-                  <p *ngIf="this.userRole.includes('SuperAdmin')"  (click)="vaultManagement()"><img  src="assets/images/Vault.svg"><span>Vault Management</span></p>
-                  <p (click)="logout()"><img src="assets/images/Sign_Out.svg"><span>Signout</span></p>
+               <p (click)="accountSlideup()"  style="text-align: left;"><img  src="assets/images/account.svg"><span>My Account</span></p>
+               <p *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin') || this.userManagementEnabled" (click)="usermanagementslideUp()"
+                style="text-align: left;"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
+                  <p *ngIf="this.userRole.includes('Admin') || configurationEnabled" (click)="alertsSlideup()"
+                  style="text-align: left;"><img  src="assets/images/config_alerts.svg"><span>Configuration</span></p>
+                  <p *ngIf="this.userRole.includes('Admin') || inviteUserEnabled" (click)="inviteSlideup()"
+                  style="text-align: left;"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
+                  <p *ngIf="this.userRole.includes('SuperAdmin')"  (click)="couponSlideup()"
+                  style="text-align: left;"><img  src="assets/images/inviteuser.svg"><span>Create Coupon</span></p>
+                  <p *ngIf="this.userRole.includes('SuperAdmin')"  (click)="vaultManagement()"
+                  style="text-align: left;"><img  src="assets/images/Vault.svg"><span>Vault Management</span></p>
+                  <p (click)="logout()"  style="text-align: left;"><img src="assets/images/Sign_Out.svg" ><span>Signout</span></p>
               </div> 
         </div>
           </li>
