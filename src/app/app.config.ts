@@ -38,7 +38,7 @@ export const AppConfig: AiotalAppConfig = {
    isTwoFactorAuthenticationEnabled: false,
    rpaendpoint:"https://eiapdemoapi.epsoftinc.com:96/wfrpa",
    piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel",
-   newproductendpoint: 'http://eiapdemonew.epsoftinc.in',
+   newproductendpoint: 'https://eiapdemonew.epsoftinc.com:86',
    isNewDesignEnabled : true
 
   // cloud
