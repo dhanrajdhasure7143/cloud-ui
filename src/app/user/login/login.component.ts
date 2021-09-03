@@ -262,7 +262,9 @@ export class LoginComponent implements OnInit {
       this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
 
      
-      this.authenticate();
+      setTimeout(() => {
+        this.authenticate();
+      }, 5000);
     },
     error => {
       
