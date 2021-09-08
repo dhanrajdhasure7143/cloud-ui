@@ -1,4 +1,3 @@
-
 .login-bg{
   width: 700px;
 }
@@ -10,8 +9,8 @@
   border-radius: 0px !important;
 }
 img.buuton-icons {
-  width: 22px;
-  margin: 0px 5px;
+  width: 18px;
+  margin: 9px 5px;
   vertical-align: top;
 }
 
@@ -29,6 +28,22 @@ img.buuton-icons {
 .inner-addon { 
   position: relative; 
 }
+
+h6 {
+  width: 80%; 
+  text-align: center; 
+  border-bottom: 1px solid rgb(204, 204, 204); 
+  line-height: 0.1em;
+  margin: 10px 20px 10px 43px; 
+  
+} 
+
+h6 span { 
+   background:#fff; 
+   padding:0 10px; 
+   padding: 10px 0px 10px 0;
+}
+
 /* style icon */
 .inner-addon .userIcon ,.inner-addon .pswIcon, .inner-addon .otpIcon{
 position: absolute;
@@ -46,21 +61,20 @@ width: 40px;
   margin-left: 250px !important;
   width: 40px;
 }
+
 .brand{
-  margin-top: 150px;
-}
-.brand{
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 .brand img{
-  width: 180px;
+  width: 230px;
 }
 .login-btn{
-  margin-left: 45%;
-  width: 120px !important;
-  border-radius: 20px;
+  /*margin-left: 45%;*/
+  margin-left:0%;
+  width: 130px !important;
+  border-radius: 6px;
   font-size: 14px;
-  height: 35px;
+  height: 40px;
 }
 .signupbtn{
   width: 120px !important;
@@ -81,8 +95,16 @@ width: 40px;
 .signup{
   margin-top: 20px;
 }
+
 .for_pass{
   color: #0061cf !important;
+  text-decoration: none;
+}
+
+.for_pass:hover{
+  /*font-size: 16.5px;*/
+  font-weight: 420;
+  padding:5px;
 }
 
 .pwd-class, .otp-class{
@@ -93,7 +115,8 @@ width: 40px;
   cursor: pointer;
 }
 .have_acc{
-  font-size: 16px;
+  font-size: 15px;
+  color: #8b8a8a;
 }
 #particles-js {
   position: absolute;
@@ -113,4 +136,157 @@ width: 40px;
 }
 .have_account{
   margin-left: 35%;
+}
+
+.card_sty{
+    top: 40%;
+    position: absolute;
+    transform: translate(-15%, -30%);
+     box-shadow: #5784e999 0px 1px 6px;
+}
+/*
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  position: inherit;
+  width: 320px;
+  height: 62px;
+}*/
+
+:host ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0em !important;
+}
+
+.form-control{
+  height: 33px !important;
+}
+
+h6 {
+  width: 100%; 
+  text-align: center; 
+  border-bottom: 1px solid rgb(204, 204, 204); 
+  line-height: 0.1em;
+  margin: 10px 0 20px; 
+  
+} 
+
+h6 span { 
+   background:#fff; 
+   padding:0 10px; 
+   padding: 10px 0px 10px 0;
+}
+
+.btn_style{
+  padding-right: 25px;
+  padding-left: 20px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.signup_styles{
+  font-weight: 420 !important;
+  font-size: 14px !important;
+}
+
+:host ::ng-deep input.mat-input-element {
+  margin-top: 0.8000em !important;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  width: 313px !important;
+}
+
+.btn_style{
+  padding-right: 25px;
+  padding-left: 20px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.btn_style a{
+  text-decoration: none !important;
+}
+
+.signup_styles{
+  font-weight: 420 !important;
+  font-size: 14px !important;
+}
+
+.imgstyle{
+  height:200px;
+}
+
+.profile-pic-div{
+  padding: 0px;
+    margin: 0px;
+    text-align: center;
+    vertical-align: middle;
+    height: 109px;
+    width: 108px;
+  position: absolute;
+  top:50%;
+  left:40%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid grey;
+}
+
+#photo{
+  height:110px;
+  width: 110px;
+}
+
+#file{
+  display:none;
+}
+
+#uploadBtn{
+    position: absolute;
+    left: 13%;
+    top: 65%;
+    background: rgba(0, 0, 0, 0.7);
+    color:wheat;
+    display:none;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+.profile-pic-div:hover{
+  #uploadBtn{
+  display:block;
+}
+}
+
+.hide{
+  display:none;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 8px 0px;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+   margin: 5px 0px !important;
+   padding-bottom: 0em;
+   padding-top: 0em;
+   padding-top: 0.5em;
+}
+
+:host ::ng-deep .mat-form-field-infix{
+  border-top: .4375em solid transparent;
+}
+
+:host ::ng-deep .mat-form-field{
+  margin: 0px 0px 0px 0px !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0em 0 0.5em 0;
+}
+
+:host ::ng-deep .mat-form-field-prefix, .mat-form-field-suffix {
+  top: 0.70em !important;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  border-top: 1em solid transparent;
 }

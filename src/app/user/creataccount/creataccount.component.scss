@@ -1,3 +1,13 @@
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+.mat-form-control{
+  height: 33px !important;
+}
 
 .login-bg{
     width: 700px;
@@ -21,14 +31,14 @@
   width: 40px;
   }
   .left-addon input  { padding-left:  40px; }
-  
-  .brand{
+  /*
+  .brand1{
     margin-top:80px;
+  }*/
+  .brand1{
+    margin-bottom: 00px;
   }
-  .brand{
-    margin-bottom: 20px;
-  }
-  .brand img{
+  .brand1 img{
     width: 180px;
   }
 
@@ -38,22 +48,28 @@
   .haveaccount{
     color: #0061cf !important;
     margin-top: 20px;
-    margin-left:-3%;
+    margin-left: 2%;
     font-size: 15px;
   }
   .creataccnt-btn{
-    margin-left: 44%;
+    /*margin-left: 44%;
     width: 130px !important;
     border-radius: 20px;
     font-size: 14px;
     height: 35px;
-    margin-top: 20px;
+    margin-top: 20px;*/
+    width:340px !important;
+    font-size: 14px;
+    height:40px;
+    margin-top:20px;
+    margin-left:18px;
   }
   .resend-btn{
     width: 120px !important;
-    border-radius: 20px;
+    border-radius: 6px;
     font-size: 14px;
-    height: 35px;
+    height: 40px;
+    transform: translate(260px, -5px);
   }
  
   #particles-js {
@@ -84,14 +100,49 @@
     font-size: 14px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
+
+ 
+  .isresendclass{
+    margin-left: 27px;
+  }
+
   .errordiv{
     width: 80%;
   }
   .bottom_line{
     text-decoration-line: underline;
   }
-  .status-bar{
-    margin-top: 40px;
+  .status-bar1{
+    /*margin-top: 40px;*/
     margin-left: -10px;
   }
-  
+.card_styles1{
+  top:12%;
+  box-shadow: #5784e999 0px 1px 6px;
+}  
+
+:host ::ng-deep .mat-form-field-infix {
+  width: 310px !important;
+}
+
+
+:host ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0.0em;
+}
+.have_acc{
+  font-size: 15px;
+  color: #343B41;
+  font-weight: 400;
+}
+:host .form-group {
+  margin-bottom: 25px;
+}
+
+:host ::ng-deep .step_main .step_sub .step_circle{
+  width: 35px !important;
+  height: 35px !important;
+}
+
+:host ::ng-deep .step_main .step_sub{
+  padding: 0px 0px !important;
+}

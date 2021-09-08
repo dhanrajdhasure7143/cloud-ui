@@ -1,4 +1,22 @@
+.card-count{
+  width: 87% !important;
+  background-color:white;
+  padding-top:20px;
+  padding-bottom:20px;
+  border-radius:10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
 
+  .count-text {
+    color: black;
+    font-weight: 500;
+    font-size: 19px;
+    margin-left: 25px;
+  }
+  
+  .example-card {
+    padding: 6px;
+  }
 
 .divbox{
   /* border: 1px solid #f8f8f8; */
@@ -73,12 +91,7 @@ h5.teus {
   margin-left: 477px;
   width: 26%;
 }
-.count-text {
-  color: black;
-  font-weight: 500;
-  font-size: 16px;
-  margin-left: 46px;
-}
+
 .email-text{
   color: black;
   font-weight: 500;
@@ -91,21 +104,13 @@ h5.teus {
   font-size: 16px;
   margin-left: 10px;
 }
-.example-card {
-  width: 82% !important;
-    background-color: white;
-    /* padding-top: 20px; */
-    height: 62px;
-    /* padding-bottom: 20px; */
-    border-radius: 10px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
+
 .icon{
   font-size:18px;
-  padding:12px;
+  padding:10px;
   border-radius:50px;
   background-color:#ccd9ff;
-}
+  }
 .department
 {
   color: black;

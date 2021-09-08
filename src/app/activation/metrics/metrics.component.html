@@ -1,110 +1,81 @@
 <div class="backgr">
   <div class="container-fluid">
     <br>
-    <div class="row" >
-      <div *ngIf="userManagementresponse!=undefined" class=" col-md-3 form-inline">
-        <div class="example-card form-inline" >
-          <div class="count-text form-group">
-            <span class="icon"><i class="fa fa-users text-primary" aria-hidden="true"></i></span>
-            &nbsp;&nbsp;&nbsp;
-          </div> 
-            Users
-            <div class="count-text form-group ">{{userManagementresponse.length}}</div>
-          </div>
-    </div>
+<div class="row">
 
-        <!-- <div *ngIf="userManagementresponse!=undefined" class=" col-md-2 text-center">
-            <div class="divbox divbox0"><span class="text-white">
-              Users<br>
-              {{userManagementresponse.length}}
-            </span></div>
-        </div> -->
-        <div *ngIf="departments!=undefined" class=" col-md-3 form-inline">
-          <div class="example-card form-inline" >
-            <div class="count-text form-group">
-              <span class="icon"><img  src="assets/images/department.svg"></span>
-              &nbsp;&nbsp;&nbsp;
-            </div> 
-              Departments
-              <div class="count-text form-group pull-right">{{departments.length}}</div>
-            </div>
-      </div>
-  
-        <!-- <div *ngIf="departments!=undefined" class=" col-md-2 text-center">
-          <div class="divbox divbox1"><span class="text-white">
-            Departments<br>
-            {{departments.length}}
-          </span></div>
-      </div> -->
-      <div *ngIf="emailtemplateslist!=undefined" class=" col-md-3 form-inline">
-        <div class="example-card form-inline" >
-          <div class="email-text form-group">
-            <span class="icon"><i class="fa fa-envelope text-primary" aria-hidden="true"></i></span>
+  <div *ngIf="userManagementresponse!=undefined" class=" col-md-3 form-inline">
+      <div class="example-card form-inline card-count" >
+        <div class="count-text form-group">
+          <span class="icon"><i class="fa fa-users text-primary" aria-hidden="true"></i></span>
             &nbsp;&nbsp;&nbsp;
-          </div> 
-            Email Templates
-            <div class="count-text form-group pull-right">{{emailtemplateslist.length}}</div>
-          </div>
-    </div>
-  
-      <!-- <div *ngIf="emailtemplateslist!=undefined" class=" col-md-2 text-center">
-        <div class="divbox divbox2"><span class="text-white">
-          Email Templates<br>
-          {{emailtemplateslist.length}}
-        </span></div>
-    </div> -->
-    <div  class=" col-md-3 form-inline">
-      <div class="example-card form-inline" >
-        <div class="product-text form-group">
-          <span class="icon"><img  src="assets/images/Subscribed_products.svg"></span>
-          &nbsp;&nbsp;&nbsp;
-        </div> 
-          Subscriptions
-          <div class="count-text form-group pull-right">{{count}}</div>
         </div>
-  </div><br> <br> <br>
+          <div class="count-text form-group">Users</div>
+            <div class="count-text form-group pull-right">{{userManagementresponse.length}}</div>
+        </div>
+  </div>
 
-    <!-- <div  class=" col-md-2 text-center">
-      <div class="divbox divbox3"><span class="text-white">
-       Subscribed Products<br>
-  {{count}}</span></div>
-  </div> -->
+  <div *ngIf="departments!=undefined" class=" col-md-3 form-inline">
+    <div class="example-card form-inline  card-count">
+      <div class="count-text form-group">
+        <span class="icon"><img  src="assets/images/department.svg"></span>
+          &nbsp;&nbsp;&nbsp;
+      </div>
+        <div class="count-text form-group">Departments</div>
+        <div class="count-text form-group pull-right">{{departments.length}}</div>
+    </div>
+</div>
+
+<div *ngIf="emailtemplateslist!=undefined" class=" col-md-3 form-inline">
+    <div class="example-card form-inline  card-count">
+      <div class="count-text form-group">
+        <span class="icon"><i class="fa fa-envelope text-primary" aria-hidden="true"></i></span>
+          &nbsp;&nbsp;&nbsp;
+      </div>
+        <div class="count-text form-group">Email Templates</div>
+        <div class="count-text form-group pull-right">{{emailtemplateslist.length}}</div>
+    </div>
+</div>
+<div  class=" col-md-3 form-inline">
+    <div class="example-card form-inline  card-count" >
+      <div class="count-text form-group">
+        <span class="icon"><img  src="assets/images/Subscribed_products.svg"></span>
+          &nbsp;&nbsp;&nbsp;
+      </div>
+        <div class="count-text form-group">Subscriptions</div>
+        <div class="count-text form-group pull-right">{{count}}</div>
+    </div>
+</div>
+    
+
+
 </div>
 <br><br>
 <div class="row"> 
-  <div *ngIf="processnames!=undefined" class=" col-md-3 form-inline">
-    <div class="example-card form-inline" >
-      <div class="count-text form-group">
-        <span class="icon"><i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
-        &nbsp;&nbsp;&nbsp;
-      </div>
-        Processes
-        <div class="count-text form-group pull-right">{{processnames.length}}</div>
-      </div>
-</div>
-
   
-  <!-- <div  class=" col-md-2 text-center">
-    <div *ngIf="processnames!=undefined" class="divbox divbox4"><span class="text-white">
-      Processes<br>
-      {{processnames.length}}</span></div>
-  </div> -->
-  <div *ngIf="botnames!=undefined" class=" col-md-3 form-inline">
-    <div class="example-card form-inline" >
-      <div class="count-text form-group">
-        <span class="icon"><img  src="assets/images/android-logo.svg"></span>
+
+<div *ngIf="processnames!=undefined" class=" col-md-3 form-inline">
+  <div class="example-card form-inline  card-count" >
+    <div class="count-text form-group">
+      <span class="icon"><i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
         &nbsp;&nbsp;&nbsp;
-      </div>
-       Bots
-        <div class="count-text form-group pull-right">{{botnames.length}}</div>
-      </div>
+    </div>
+      <div class="count-text form-group">Processes</div>
+      <div class="count-text form-group pull-right">{{processnames.length}}</div>
+  </div>
+</div>
+  
+
+<div *ngIf="botnames!=undefined" class=" col-md-3 form-inline">
+  <div class="example-card form-inline  card-count" >
+    <div class="count-text form-group">
+      <span class="icon"><img  src="assets/images/android-logo.svg"></span>
+        &nbsp;&nbsp;&nbsp;
+    </div>
+      <div class="count-text form-group">Bots</div>
+      <div class="count-text form-group pull-right">{{botnames.length}}</div>
+  </div>
 </div>
 
-  <!-- <div  class=" col-md-2 text-center">
-    <div *ngIf="botnames!=undefined" class="divbox divbox5"><span class="text-white">
-      Bots<br>
-      {{botnames.length}}</span></div>
-  </div> -->
   
     </div>
     <br><br>
