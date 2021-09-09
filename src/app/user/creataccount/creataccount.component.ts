@@ -4,6 +4,7 @@ import { Particles } from '../../_models/particlesjs';
 import { LoginService } from '../_services/login.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CryptoService } from 'src/app/_services/crypto.service';
+import { User } from 'src/app/_models';
 
 @Component({
   selector: 'app-creataccount',
@@ -24,11 +25,13 @@ export class CreataccountComponent implements OnInit {
   public count:number=0;
   public ispublicMail:boolean=false;
   private spacialSymbolEncryption:string = '->^<-';
+  private user: User;
   modalRef: BsModalRef;
     constructor(private particles :Particles,
                 private loginservice:LoginService,
                 private modalService: BsModalService,
-                private cryptoService: CryptoService) { }
+                private cryptoService: CryptoService
+                ) { }
 
   ngOnInit() {
     this.particles.getParticles();
@@ -37,6 +40,7 @@ export class CreataccountComponent implements OnInit {
     this.isdisable=!this.isagree;
   }
   creat_account(){
+    this.user = new User();
    this.userId=this.emailId
   //  this.isresend=true;
    if(this.userId.endsWith('@gmail.com') || this.userId.endsWith('@yahoo.com') || 
@@ -46,7 +50,12 @@ export class CreataccountComponent implements OnInit {
 
    }
    let encrypt = this.cryptoService.encrypt(this.userId);
-    this.loginservice.sentVerificationMail(encrypt).subscribe(res=>{
+   this.user.userId = encrypt;
+   this.user.firstName = this.firstname;
+   this.user.lastName = this.lastname
+   this.user.phoneNumber = this.phoneNumber
+   console.log(this.user);
+    this.loginservice.sentVerificationMail(this.user).subscribe(res=>{
        this.isresend=true;
     },error=>{
       this.error='User Already Exists'
