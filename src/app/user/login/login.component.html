@@ -1,18 +1,16 @@
 <div class="container-fluid">
   <div class="row">
       <div id="particles-js"></div>
-      <div class="col-sm-4">
-          <img class="login-bg" src="assets/images/loginimage.png">
-      </div>
-    <div class="col-md-4">
+     <!-- <div class="col-md-4">
+          <img class="login-bg" src="assets/images/loginimage.png"> 
+      </div> -->
+    <div class="loginblock">
         <!--<div class="profile-pic-div">
           <img src="assets/images/pic_male.jpg" id="photo" class="imgstyle">
            <input type="file" id="file">
            <label for="file" id="uploadBtn" (click)="loadImage($event)">Chosse Photo</label>
         </div>-->
-    </div>
-      <div class="col-md-3">
-        <mat-card class="card_sty">
+		 <mat-card class="card_sty">
           &nbsp;
           <div class="brand">
             &nbsp;
@@ -131,14 +129,17 @@
             </div>
           </form>
           <div style="padding-top: 20px;padding-left: 80px;">
-              <label class = "have_acc">Don't have an account &#63;</label>
-              <a (click)="requestDemo()" class="signup_styles  text-primary"> Register</a>
+              <label class = "have_acc">Don't have an account&#63;</label>
+              <a (click)="requestDemo()" class="signup_styles  text-primary"> Sign Up</a>
 
           </div>
           &nbsp;
         </mat-card>
+    </div>
+      <!-- <div class="col-md-4">
+       
         
-      </div>
+      </div> -->
   </div>
 
 </div>
