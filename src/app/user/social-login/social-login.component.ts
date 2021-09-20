@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { AuthenticationService, AppService } from 'src/app/_services';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { CookieStore } from 'src/app/_services/cookie.store';
 import { ProfileService } from 'src/app/_services/profile.service';
+import { CryptoService } from 'src/app/_services/crypto.service';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-social-login',
@@ -22,7 +24,9 @@ export class SocialLoginComponent implements OnInit {
               private authenticationService: AuthenticationService, 
               private appService: AppService, 
               private profileService: ProfileService,
-              private sharedData: SharedDataService) { }
+              private sharedData: SharedDataService,
+              private crypto:CryptoService,
+    @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
      localStorage.clear();
@@ -85,7 +89,21 @@ authorize() {
     this.router.navigate(['/superadmin']);
     
    }else{
-    this.router.navigate(['/activation']);
+    //this.router.navigate(['/activation']);
+     var token=JSON.parse(localStorage.getItem('currentUser'));
+    var encryptToken=btoa(token.accessToken)
+    var encryptrefreshToken=btoa(token.refreshToken);
+    var firstName=localStorage.getItem('firstName');
+    var lastName=localStorage.getItem('lastName');
+    var ProfileuserId=localStorage.getItem('ProfileuserId');
+    var tenantName=localStorage.getItem('tenantName');
+    var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
+    var useridBase64 = btoa(userId);
+    var userIp=btoa(localStorage.getItem('ipAddress'));
+    var productURL = this.config.productendpoint;
+    if(this.config.isNewDesignEnabled)
+      productURL = this.config.newproductendpoint;
+    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
    }
   },error => {
     this.error = "Please complete your registration process";
