@@ -43,7 +43,7 @@ export const AppConfig: AiotalAppConfig = {
   // QA Urls
    portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
    apiendpoint: 'http://apdev.epsoftinc.in',
-   tokenendpoint: 'https://idmdev.epsoftinc.in',
+   tokenendpoint: 'http://idmdev.epsoftinc.in',
    proxyTokenendpoint: 'http://10.11.0.107:3001',
    authorizationendpoint: 'http://authdev.epsoftinc.in',
    socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
