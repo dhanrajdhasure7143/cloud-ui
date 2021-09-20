@@ -55,7 +55,7 @@ export const AppConfig: AiotalAppConfig = {
    rpaendpoint:"http://rpadev.epsoftinc.in",
    piendpoint:"http://pidev.epsoftinc.in",
    isTwoFactorAuthenticationEnabled: false,
-   isSecurityManagerEnabled : true,
+   isSecurityManagerEnabled : false,
    isNewDesignEnabled : true
 
 };
