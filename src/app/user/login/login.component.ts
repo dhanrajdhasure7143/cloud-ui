@@ -262,7 +262,10 @@ export class LoginComponent implements OnInit {
       this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
 
      
-      this.authenticate();
+      setTimeout(() => {
+        this.authenticate();
+       },2000);
+      
     },
     error => {
       
@@ -377,11 +380,12 @@ export class LoginComponent implements OnInit {
     if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
       productURL = this.config.newproductendpoint;
 
+
     window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
      
      }
     },error => {
-      this.error = "Please complete your registration process";
+      //this.error = "Please complete your registration process";
       this.loading = false;
     })
     // this.router.navigate(['/activation']);
