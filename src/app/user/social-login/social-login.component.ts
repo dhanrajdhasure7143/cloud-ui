@@ -106,7 +106,7 @@ authorize() {
     window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
    }
   },error => {
-    this.error = "Please complete your registration process";
+    //this.error = "Please complete your registration process";
     this.loading = false;
   })
 }
