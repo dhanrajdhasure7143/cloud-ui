@@ -89,7 +89,7 @@ export class NewpasswordComponent implements OnInit {
       }else {
         Swal.fire({
           type: 'error',
-          title: res.message,
+          title: res.errorMessage,
          });
         //this.router.navigate(['/user']);
       }
