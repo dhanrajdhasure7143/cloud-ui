@@ -12,7 +12,6 @@ import { Particles } from '../../_models/particlesjs';
 import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
-import {NgxSpinnerService} from 'ngx-spinner'
 //import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -51,8 +50,7 @@ export class LoginComponent implements OnInit {
     public userService: UserService,
     private particles :Particles,
     private profileService:ProfileService,
-    private crypto:CryptoService,
-    private spinner:NgxSpinnerService
+    private crypto:CryptoService
     //private cookieService:CookieService,
     
   ) {
@@ -180,10 +178,8 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     //if two factor authentication is enabled 
     if(this.loginForm.valid){ 
-      this.spinner.show();
       this.loginService.checkpasswordexpiry(this.f.username.value).subscribe(data=>{
         let res = data;
-        this.spinner.hide();
         if(data.isError == "true"){
           console.log("SWAL");
           Swal.fire({
@@ -204,9 +200,9 @@ export class LoginComponent implements OnInit {
         }
         else{
     if(!this.twoFactorAuthConButton){
-      this.spinner.show();
+      
       this.authenticationService.validateOTP(this.f.username.value, this.f.otpNum.value).subscribe(data => {
-      this.spinner.hide();
+
         this.authenticationMeothod();
   
       },error => {
