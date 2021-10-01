@@ -58,7 +58,11 @@ export class SocialLoginComponent implements OnInit {
  // this.router.navigate(['/activation']);
  this.authenticationService.userDetails(this.email).subscribe(data => this.checkSuccessCallback(data));
  this.appService.socialLoginValidateToken(userId);
- this.authorize();
+ 
+
+ setTimeout(() => {
+    this.authorize();
+      }, 5000);
 
   });
   //localStorage.setItem('currentUser',JSON.stringify({"token":"hiiiiiiiiiii"}))
