@@ -13,6 +13,7 @@ export class RedirectsignoutComponent{
     localStorage.clear();
     sessionStorage.clear();
     this.appser.logout();
+    this.spinner.hide();
     this.route.navigate(['/user']);
   }
   ngOnInit() {

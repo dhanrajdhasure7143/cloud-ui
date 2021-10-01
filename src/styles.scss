@@ -556,3 +556,15 @@ footer .powredby_text{
 .ph-number .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
   padding-left: 30px !important;
 }
+
+
+
+.ezflow-loader{
+  height: 60px;
+  background: white !important;
+  padding: 1px;
+  border-radius: 50%;
+  position : relative;
+  transform: translateY(-70%);
+  margin-top:-100px
+}
