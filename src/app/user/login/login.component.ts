@@ -12,6 +12,7 @@ import { Particles } from '../../_models/particlesjs';
 import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 //import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
   public enteredOTP:boolean = false;
   public otp:any;
   public errormsg: any;
-  public hide:any = "true";
+  public hide:any = true;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -50,7 +51,8 @@ export class LoginComponent implements OnInit {
     public userService: UserService,
     private particles :Particles,
     private profileService:ProfileService,
-    private crypto:CryptoService
+    private crypto:CryptoService,
+    private spinner:NgxSpinnerService
     //private cookieService:CookieService,
     
   ) {
@@ -206,8 +208,8 @@ export class LoginComponent implements OnInit {
         this.authenticationMeothod();
   
       },error => {
-  
-            
+        
+        this.spinner.hide()
         this.error = "Invalid OTP. Please check and try again.";
         this.loading = false;
         return
@@ -228,6 +230,7 @@ export class LoginComponent implements OnInit {
 }
 
  authenticationMeothod(){
+   this.spinner.show();
   this.authenticationService
   .login(this.f.username.value, this.f.password.value)
   .pipe(first())
@@ -263,12 +266,15 @@ export class LoginComponent implements OnInit {
 
      
       setTimeout(() => {
+        
+        this.spinner.hide();
         this.authenticate();
        },2000);
       
     },
     error => {
       
+     this.spinner.hide();
       if(this.errormsg==undefined){
       this.error = "Invalid Credentials. Please try again !!";
       }
@@ -357,6 +363,7 @@ export class LoginComponent implements OnInit {
   //   this.router.navigate(['/activation']);
   // }
   authenticate() {
+    this.spinner.show();
     this.profileService.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
      
@@ -378,11 +385,10 @@ export class LoginComponent implements OnInit {
     var userIp=btoa(localStorage.getItem('ipAddress'));
     var productURL = this.config.productendpoint;
     if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
-      productURL = this.config.newproductendpoint;
-
-
-    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
-     
+        productURL = this.config.newproductendpoint;
+        this.spinner.hide();
+        window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
+        //window.location.href="http://localhost:4000"+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
      }
     },error => {
       //this.error = "Please complete your registration process";
