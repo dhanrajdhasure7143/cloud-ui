@@ -10,7 +10,7 @@ networks:
 
 services:
   cloud-ui:
-    image: nexus.epsoftinc.in/cloud-ui:${DOCKER_TAG}
+    image: ${DOCKER_REGISTRY_URL}/cloud-ui:${DOCKER_TAG}
     deploy:
       mode: global
     networks:
