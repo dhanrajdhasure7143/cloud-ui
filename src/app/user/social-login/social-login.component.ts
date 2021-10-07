@@ -58,7 +58,11 @@ export class SocialLoginComponent implements OnInit {
  // this.router.navigate(['/activation']);
  this.authenticationService.userDetails(this.email).subscribe(data => this.checkSuccessCallback(data));
  this.appService.socialLoginValidateToken(userId);
- this.authorize();
+ 
+
+ setTimeout(() => {
+    this.authorize();
+      }, 5000);
 
   });
   //localStorage.setItem('currentUser',JSON.stringify({"token":"hiiiiiiiiiii"}))
@@ -106,7 +110,7 @@ authorize() {
     window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
    }
   },error => {
-    this.error = "Please complete your registration process";
+    //this.error = "Please complete your registration process";
     this.loading = false;
   })
 }
