@@ -18,6 +18,8 @@ export class SocialLoginComponent implements OnInit {
   userRole: any = [];
   error = '';
   loading = false;
+  invalidUser: boolean = false;
+  validUser: boolean = false;
   constructor(private router: Router, 
               private route: ActivatedRoute, 
               // private acsnapshot: ActivatedRouteSnapshot,
@@ -51,15 +53,22 @@ export class SocialLoginComponent implements OnInit {
    }
   this.appService.socialLogin(userId).subscribe(user => {
     
-    
+    if((user['errorMessage']=== "Failed to generate access and refresh token") && (user['errorCode']===4008)){
+      console.log("userr", user)
+      this.invalidUser = true;
+      return;
+    }
     //localStorage.setItem('currentUser',JSON.stringify({"token":data}))
     //localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
       //        CookieStore.set('token', user.resp_data.accessToken, {});
  // this.router.navigate(['/activation']);
+ 
  this.authenticationService.userDetails(this.email).subscribe(data => this.checkSuccessCallback(data));
  this.appService.socialLoginValidateToken(userId);
  this.authorize();
 
+  }, error=> {
+    
   });
   //localStorage.setItem('currentUser',JSON.stringify({"token":"hiiiiiiiiiii"}))
   //this.router.navigate(['/activation']);
@@ -88,6 +97,11 @@ authorize() {
    if(this.userRole.includes('SuperAdmin')){
     this.router.navigate(['/superadmin']);
     
+   }else if(this.userRole.includes('User')){
+     this.validUser = true;
+     return;
+
+    // need to write logic to navigate Access rquest page
    }else{
     //this.router.navigate(['/activation']);
      var token=JSON.parse(localStorage.getItem('currentUser'));
@@ -110,8 +124,16 @@ authorize() {
     this.loading = false;
   })
 }
-
-
-
+myFunction() {   
+               
+  document.getElementById("myDropdown").classList.toggle("show");
+  // document.getElementById("notificationBar").classList.remove('notificationBarshow');
+}
+logout() {
+  localStorage.clear();
+  sessionStorage.clear();
+    window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
+    this.router.navigate(['/']);
+}
 }
 
