@@ -25,20 +25,20 @@ export const AppConfig: AiotalAppConfig = {
   
    // demo
    portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
-   apiendpoint: 'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
-   tokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/idm',
-   proxyTokenendpoint: 'https://eiapdemoapi.epsoftinc.com:96/securitymgr',
-   authorizationendpoint: 'https://eiapdemoapi.epsoftinc.com:96/authservices',
+   apiendpoint: 'https://ezflow.demo@epsoftinc.com/aiotalplatform',
+   tokenendpoint: 'https://ezidm.demo@epsoftinc.com',
+   proxyTokenendpoint: 'https://ezflow.demo@epsoftinc.com/securitymgr',
+   authorizationendpoint: 'https://ezflow.demo@epsoftinc.com/authservices',
    socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
-   notificationsendpoint: 'https://eiapdemoapi.epsoftinc.com:96/alerts',
-   Subscriptionendpoint:'https://eiapdemoapi.epsoftinc.com:96/subscriptions',
-   productendpoint: 'https://eiapdemo.epsoftinc.com:86',
-   socialLoginRedirectURL: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
+   notificationsendpoint: 'https://ezflow.demo@epsoftinc.com/alerts',
+   Subscriptionendpoint:'https://ezflow.demo@epsoftinc.com/subscriptions',
+   productendpoint: 'https://eziap.demo@epsoftinc.com',
+   socialLoginRedirectURL: 'https://ezflow.demo@epsoftinc.com/#/user',
    isSecurityManagerEnabled : false,
    isTwoFactorAuthenticationEnabled: false,
-   rpaendpoint:"https://eiapdemoapi.epsoftinc.com:96/wfrpa",
-   piendpoint:"https://eiapdemoapi.epsoftinc.com:96/prcintel",
-   newproductendpoint: 'https://eiapdemonew.epsoftinc.com:86',
+   rpaendpoint:"https://ezflow.demo@epsoftinc.com/wfrpa",
+   piendpoint:"https://ezflow.demo@epsoftinc.com/prcintel",
+   newproductendpoint: 'https://eziap.demo@epsoftinc.com',
    isNewDesignEnabled : true
 
   // cloud
