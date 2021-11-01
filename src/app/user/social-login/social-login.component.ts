@@ -6,6 +6,7 @@ import { CookieStore } from 'src/app/_services/cookie.store';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { APP_CONFIG } from 'src/app/app.config';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-social-login',
@@ -29,9 +30,11 @@ export class SocialLoginComponent implements OnInit {
               private profileService: ProfileService,
               private sharedData: SharedDataService,
               private crypto:CryptoService,
+              private spinner:NgxSpinnerService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
+    
      localStorage.clear();
      this.route.queryParams.subscribe(params => {
       this.email = params['email']
@@ -49,6 +52,7 @@ export class SocialLoginComponent implements OnInit {
  
 // }
  authenticate(userId) {
+  this.spinner.show();
    let userName = {
      "userId" : userId
    }
@@ -65,12 +69,13 @@ export class SocialLoginComponent implements OnInit {
  // this.router.navigate(['/activation']);
  
  this.authenticationService.userDetails(this.email).subscribe(data => this.checkSuccessCallback(data));
-//  setTimeout(() => {
-//   this.spinner.hide();
-//   this.authenticate();
-//  },2000);
  this.appService.socialLoginValidateToken(userId);
- this.authorize();
+ setTimeout(() => {
+  this.spinner.hide();
+  this.authorize();
+ },2000);
+ 
+ 
 
   }, error=> {
     
