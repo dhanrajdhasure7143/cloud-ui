@@ -20,6 +20,7 @@ export class SocialLoginComponent implements OnInit {
   loading = false;
   invalidUser: boolean = false;
   validUser: boolean = false;
+  usr_data: any;
   constructor(private router: Router, 
               private route: ActivatedRoute, 
               // private acsnapshot: ActivatedRouteSnapshot,
@@ -64,21 +65,23 @@ export class SocialLoginComponent implements OnInit {
  // this.router.navigate(['/activation']);
  
  this.authenticationService.userDetails(this.email).subscribe(data => this.checkSuccessCallback(data));
+//  setTimeout(() => {
+//   this.spinner.hide();
+//   this.authenticate();
+//  },2000);
  this.appService.socialLoginValidateToken(userId);
  this.authorize();
 
   }, error=> {
     
   });
-  //localStorage.setItem('currentUser',JSON.stringify({"token":"hiiiiiiiiiii"}))
-  //this.router.navigate(['/activation']);
 }
  
 checkSuccessCallback(data:any){
   
   this.sharedData.setLoggedinUserData(data);
  // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
-
+    this.usr_data = data;
   localStorage.setItem('firstName',data.firstName);
   localStorage.setItem('lastName',data.lastName);
   localStorage.setItem('userName',data.userId);
@@ -107,10 +110,10 @@ authorize() {
      var token=JSON.parse(localStorage.getItem('currentUser'));
     var encryptToken=btoa(token.accessToken)
     var encryptrefreshToken=btoa(token.refreshToken);
-    var firstName=localStorage.getItem('firstName');
-    var lastName=localStorage.getItem('lastName');
-    var ProfileuserId=localStorage.getItem('ProfileuserId');
-    var tenantName=localStorage.getItem('tenantName');
+    var firstName=this.usr_data.firstName; //localStorage.getItem('firstName');
+    var lastName=this.usr_data.lastName; //localStorage.getItem('lastName');
+    var ProfileuserId=this.email; //localStorage.getItem('ProfileuserId');
+    var tenantName=this.usr_data.tenantID;//localStorage.getItem('tenantName');
     var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
