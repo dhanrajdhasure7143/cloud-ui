@@ -47,4 +47,132 @@ img.buuton-icons {
     position: relative;
     left: 35%;
   }
+  .naveOne{
+    width: 100%;
+    height:80px;
+    margin-top: 5px;
+  }
+  .navTwo{
+    float:right;
+  }
+  
+  .titleimage{
+    height:54px;
+    width: 213px;
+  }
+  .aiotal{
+    margin-left: 20px;
+    float:left;
+  }
+   .notification-icon{
+     margin-top: 10px;
+      margin-left: -10px;
+      cursor: pointer;
+   }
+  
+   .res-circle {
+    width: 63px;
+      border-radius: 100%;
+      text-align: center;
+      height: 60px;
+      font-size: 25px;
+      background: #0091ea;
+      line-height: 59px;
+      // margin-left: -44%;
+      font-weight: bold;
+      padding: 4px 3px;
+    //position: static;
+  }
+  /* Credits - https://spin.atomicobject.com/2015/07/14/css-responsive-square/ */
+  .res-circle:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+  .dropbtn {
+    cursor: pointer;
+    display: block;
+    // margin-left: 7px; 
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    font-size: 13px;
+    width: 150px;
+    z-index: 1;
+    border:1px solid #0062cf;
+    color: #0062cf;
+    margin-left:-90px;
+    cursor: pointer;
+  }
+  
+  // .dropdown-content img{
+  // color: #0062cf;
+  // padding-left: 10px;
+  // height: 20px;
+  // padding-top: 5px;
+  // }
+  // .dropdown-content span{
+  //   padding-left: 10px;
+  //   padding-top: 5px;
+  //   }
+  .show {display: block;
+    background-color: white;} 
+  .slide-up{
+    bottom: 0px !important;
+    transition: 1s;
+  }
+  .slide-down
+  {
+    bottom: -300px !important;
+    transition: 0.5s;
+  }
+  
+  .dashboard a:hover{
+    font-weight: bold !important;
+    font-size: 20px;
+    color: #0062cf
+  }
+  .dropdown-content img, .dropdown-content i{
+  color: #0062cf !important;
+  padding-left: 10px;
+  height: 20px;
+  padding-top: 5px;
+  }
+  .dropdown-content i{
+    font-size: 19px;
+  }
+  .dropdown-content span{
+    padding-left: 10px;
+    padding-top: 3px;
+    }
+    .dropdown-content span:hover{
+      font-weight: bold;
+    }
+    
+    .center-alig{
+      margin-top: 145px;
+      }
+      
+      #Polygon-1 , #Polygon-2 , #Polygon-3 , #Polygon-4 , #Polygon-4, #Polygon-5 {
+      animation: float 1s infinite ease-in-out alternate;
+      }
+      #Polygon-2 {
+      animation-delay: .2s; 
+      }
+      #Polygon-3 {
+      animation-delay: .4s; 
+      }
+      #Polygon-4 {
+      animation-delay: .6s; 
+      }
+      #Polygon-5 {
+      animation-delay: .8s; 
+      }
+      
+      @keyframes float {
+      100% {
+      transform: translateY(20px);
+      }
+      }
   
