@@ -38,7 +38,7 @@ export class LoginService {
   }
 
   sentVerificationMail(emailId): Observable<any>{
-    return this.httpclient.post<any>('/api/user/registration', emailId, { observe: 'response' });
+    return this.httpclient.post<any>('/api/user/registration-old?userId='+emailId, httpOptionsOne);
   }
   resendVerificationMail(emailId): Observable<any>{
     return this.httpclient.post<any>('/api/user/resendVerificationMail?userId='+emailId,httpOptionsOne);

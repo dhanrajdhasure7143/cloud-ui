@@ -22,7 +22,7 @@
                 <div class="form-group"><!-- inner-addon left-addon-->
                       <!--<img src="assets/images/registration/mail.svg" class="icon">-->
                       <p style="padding:0px 35px">Please share your details, we will contact you shortly</p>
-                      <mat-form-field appearance="outline" style="padding:0px 35px !important;">
+                      <!-- <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>First Name</mat-label>
                       <input type="text" matInput name="fname" #fname="ngModel" [(ngModel)]="firstname" 
                         placeholder="Enter First Name" (keypress)="lettersOnly($event)" required/>
@@ -39,7 +39,7 @@
                       <span  style="padding:0px 35px !important;" *ngIf="((lname.invalid && creataccount.submitted) || (lname.errors && lname.touched) ) "
                       class='fa fa-info-circle errspan'>
                       <span *ngIf="lname.errors.required">Last Name is required</span>
-                   </span>
+                   </span> -->
                       <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>Email</mat-label>
                       <input type="text" matInput name="email" #email="ngModel" [(ngModel)]="emailId"
@@ -51,7 +51,7 @@
                         <span *ngIf="email.errors.required"> Email is required</span>
                         <span *ngIf="email.errors.pattern"> Enter valid Email</span>
                      </span>
-                      <mat-form-field appearance="outline" style="padding:0px 35px !important;">
+                      <!-- <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>Phone Number</mat-label>
                       <input type="text" matInput name="pNumber" #pNumber="ngModel" [(ngModel)]="phoneNumber"
                         placeholder="Enter Phone Number" (keydown)="inputNumberOnly($event)" onKeyPress="if(this.value.length==10) return false;" required/>
@@ -59,7 +59,7 @@
                   <span style="padding:0px 35px !important;" *ngIf="((pNumber.invalid && creataccount.submitted)|| (pNumber.errors && pNumber.touched))"
                   class='fa fa-info-circle errspan'> 
                   <span *ngIf="lname.errors.required">Phone Number is required </span>
-                  </span>
+                  </span> -->
                     </div>
                     <div class="col-md-12" class="agreecheckbox" style="padding:0px 35px !important;">
                           <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()">
