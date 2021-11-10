@@ -51,11 +51,11 @@ export class CreataccountComponent implements OnInit {
    }
    let encrypt = this.cryptoService.encrypt(this.userId);
    this.user.userId = encrypt;
-   this.user.firstName = this.firstname;
-   this.user.lastName = this.lastname
-   this.user.phoneNumber = this.phoneNumber
+  //  this.user.firstName = this.firstname;
+  //  this.user.lastName = this.lastname
+  //  this.user.phoneNumber = this.phoneNumber
    console.log(this.user);
-    this.loginservice.sentVerificationMail(this.user).subscribe(res=>{
+    this.loginservice.sentVerificationMail(this.user.userId).subscribe(res=>{
        this.isresend=true;
     },error=>{
       this.error='User Already Exists'
