@@ -107,7 +107,7 @@
                 <mat-select matNativeControl (selectionChange)="onChangeDepartment($event.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
                 required>
                   <mat-option [value]="undefined" disabled hidden>Department</mat-option>
-                  <mat-option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;' [value]="departments[i]">{{departments[i]}}</mat-option>
+                  <mat-option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;' [value]="department.departmentId">{{department.departmentName}}</mat-option>
                   <!-- <option value="others">Others</option> -->
                 </mat-select>
                 </mat-form-field>
@@ -122,7 +122,7 @@
                 <mat-select matNativeControl (selectionChange)="onChangeDepartment(model.department)" name='department' #department="ngModel" [(ngModel)]="model.department"
                 required>
                   <mat-option [value]="undefined" disabled hidden>Department</mat-option>
-                  <mat-option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;' [value]="categories[c]">{{categories[c]}}</mat-option>
+                  <mat-option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;' [value]="category.categoryId">{{category.categoryName}}</mat-option>
                   <!-- <option value="others">Others</option> -->
                 </mat-select>
                 </mat-form-field>
