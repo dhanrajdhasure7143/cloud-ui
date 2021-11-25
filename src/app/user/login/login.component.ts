@@ -447,6 +447,9 @@ getCookie(cname) {
   return "";
 }
 
+onKeydownfeilds(event){
+  this.error=""
+}
   onEmailChange(){
     this.isOTP=false;
     this.twoFactorAuthConButton = true;
