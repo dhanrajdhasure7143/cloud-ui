@@ -176,7 +176,7 @@ export class FirstloginComponent implements OnInit {
         this.service.getAllCategories(this.domain).subscribe(response=> {
           this.departments = response.data;  
           this.departments.forEach(element => {
-            this.categories.push(element.categoryName)
+            this.categories.push(element)
             
           });  
          
