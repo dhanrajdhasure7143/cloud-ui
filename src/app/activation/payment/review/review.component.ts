@@ -78,12 +78,13 @@ public paymentToken:any;
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
-        this.profileService.validateCoupon(null,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
+        // -- commenting to bypass coupon
+        /*this.profileService.validateCoupon(null,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
           this.validateCoupondata=resp;
         this.totalPay=this.validateCoupondata.TotalPaybleAmount,
         this.noOfusers=this.cardDetails.customerCount
       this.taxPercentage=this.validateCoupondata.TaxPercentage
-    this.taxamount=this.validateCoupondata.TaxAmount})
+    this.taxamount=this.validateCoupondata.TaxAmount})*/
         if(this.selected_plans.term =="12month"){
           this.selected_plans.term= 'Annual'
         }else{

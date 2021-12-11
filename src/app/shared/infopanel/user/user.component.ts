@@ -146,7 +146,7 @@ export class UserComponent implements OnInit {
     
   }
   userRole(data) {
-    if (data.message === 'Admin') {
+    if (data.message === 'System Admin') {
       this.userService.getSelectedRole(this.appSelectedId).subscribe(data => this.successRoles(data));
 
       // this.appSelectedId = element.appId
