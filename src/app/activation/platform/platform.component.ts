@@ -231,9 +231,7 @@ export class PlatformComponent implements OnInit {
     var productURL = this.config.productendpoint;
     if(this.config.isNewDesignEnabled)
       productURL = this.config.newproductendpoint;
-      if(this.getCookie("new_reg_flow")=="true"){
-    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
-    }
+      window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,

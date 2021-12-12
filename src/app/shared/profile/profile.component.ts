@@ -2032,7 +2032,7 @@ couponDelYes(coupon,index){
 
 
   getRoles(){
-  if(localStorage.getItem('userRole').includes('SuperAdmin')){
+  if(localStorage.getItem('userRole')!=null && localStorage.getItem('userRole').includes('SuperAdmin')){
    this.profileservice.getAllRolesForSuperAdmin().subscribe(resp => {
    this.allRoles = resp.sort(function(obj1, obj2) {
       return obj1.id - obj2.id;

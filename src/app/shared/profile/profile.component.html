@@ -172,7 +172,7 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('System System Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                      <tab *ngIf="this.userRole.includes('System Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
                                     <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchsub" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -228,7 +228,7 @@
                     </div>
                   </tab>
 
-                  <tab *ngIf="this.userRole.includes('System System Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
+                  <tab *ngIf="this.userRole.includes('System Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchpayment" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -269,7 +269,7 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('System System Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
+                      <tab *ngIf="this.userRole.includes('System Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchmode" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
