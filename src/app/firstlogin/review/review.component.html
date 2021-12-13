@@ -1,0 +1,196 @@
+<!-- <stepselection class="order_review"></stepselection> -->
+<div class="container review_layout">
+  <div class="">
+    <!-- <div id="particles-js"></div> -->
+   
+    <div class="row">
+      <mat-card class="mat3-card">
+
+        <div class="brand">
+          <img src="assets/images/EZFlow_horizontal_full_color.png">
+        </div>
+        <div class="col-md-11 review-heading">
+          <h4 id="" class="plan_label ">Features will be enabled based on the selected plan</h4>
+          <h5 id="paymnt-subheding">Review your order to proceed payment</h5>
+          <p class="pay_titles" style="margin-left:7%;width:100%">Card Details<button class="btn"
+              (click)="editCardDetails()" title="Edit card"><img src="assets/images/editCard.svg" alt=""></button>
+          </p>
+        </div>
+        <!-- <form  autocomplete="off" class="col-md-12 row carddetail"> -->
+        <div class="col-md-10 carddetail row">
+
+          <div class="col-md-2"></div>
+
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <label for="cardHolder">Cardholder Name</label>
+              <h6>{{cardDetails.cardHoldername}}</h6>
+            </div>
+
+            <div class="month col-md-12">
+              <label for="month">Month (MM)</label>
+              <h6>{{cardDetails.cardmonth}}</h6>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-sm-8">
+                <label for="cardNumber">Card Number </label>
+                <h6>{{cardNumberdigts}}</h6>
+              </div>
+              <div class="col-sm-4">
+                <label for="cvv">CVV</label>
+                <h6>{{cvvnumber}}</h6>
+              </div>
+              <div class="col-sm-12">
+                <label for="year">Year (YYYY)</label>
+                <h6>{{cardDetails.cardyear}}</h6>
+              </div>
+              <div class='col-sm-12 apply-coupon'>
+                <p *ngIf='!iscoupon' (click)='haveCoupon()'>Have a coupon ?</p>
+                <span *ngIf='iscoupon' class="row"><input type="text" name='coupon' #coupon='ngModel'
+                    [(ngModel)]='couponcode' placeholder="Enter Coupon Code" class='col-sm-6 form-control coupon-input'
+                    (keypress)="lettersAndNumbers($event)" required>
+                  <button class='btn hoverable applybtn' (click)='applyCoupon(couponcode)'
+                    [disabled]="coupon.invalid || isapplied">Apply</button></span>
+                <div style="overflow-wrap: break-word;" class="errordiv col-md-6">
+                  <span *ngIf="success" class="alert-success text-center coupon_alertsuccess">{{success}}</span>
+                </div>
+                <div style="overflow-wrap: break-word;" class="errordiv col-md-6 couponerror">
+                  <span *ngIf="error" class="alert-danger text-center coupon_alert">{{error}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-2"></div> -->
+          <div class="col-md-3 plan_detail_box">
+            <div class=" ">
+              <h5 class="select_label">Subscription Details</h5>
+              <div class=" ">
+                <div class=" ">
+                  <h6 class="plan_label">Plan <span class="plan"> {{planselected}}</span> </h6>
+                </div>
+                <div class="period">
+                  <p>Billing Period : {{planterm}}</p>
+                  <p>Plan Amount : ${{planamount}}</p>
+                  <!-- <p *ngIf='isapplied'>Discount : ${{couponAmount}}</p>
+                  <p>Tax({{taxPercentage}}%) : ${{taxamount}}</p> -->
+                </div>
+              </div>
+
+              <!-- <div class="plandetails">
+                <hr>
+                <h5 class="plandetails"> Total Payable : ${{totalPay}} </h5>
+                <hr>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-10" class="agreecheckbox">
+            <input type="checkbox" name="checkbox" [(ngModel)]="isagree" (change)="onchangechekbox()"><span> I agree
+              with the terms of service and the <a class="policy" (click)='privacyPolicy(privacyTemplate)'> Privacy
+                Policy</a></span>
+          </div>
+          <div class="col-md-3"></div>
+
+         
+         
+        </div>
+        <!-- </form> -->
+        <!-- <div class="pull-right">
+          <button class="btn buybtn"  (click)="buyProductPlan(template); clicked = true;"
+            [disabled]="isdiable || clicked">Buy Now</button>
+        </div> -->
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-6"></div>
+              <div class="col-sm-6">
+                <button class="btn buybtn"  (click)="buyProductPlan(); clicked = true;"
+                [disabled]="isdiable || clicked">Buy Now</button>
+                </div>
+                <div class="col-md-3" style="display: block;height: 13px" ></div>
+          </div>
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Subscription Confirmation</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="cancelAddCard()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+
+  <div class="modal-body">
+
+    <div class="col-md-12 confirmationmsg" style="text-align:left;">
+      <table class="sub-confirmation">
+        <tr>
+          <td>Product</td>
+          <td> :  </td>
+          <td>{{productId}} </td>
+        </tr>
+        <tr>
+          <td>Plan</td>
+          <td> :  </td>
+          <td>{{selected_plans.nickName}}</td>
+        </tr>
+        <tr>
+          <td>Order Id</td>
+          <td> :</td>
+          <td>{{subscriptionDetails.id}} </td>
+        </tr>
+        <tr>
+          <td>Subscription Id</td>
+          <td> :</td>
+          <td>{{subscriptionDetails.subscriptionId[0]}}</td>
+        </tr>
+        <!-- <tr>
+          <td>Amount Paid</td>
+          <td> :{{totalPay}}</td>
+          <td></td>
+        </tr> -->
+        <tr>
+          <td>Period</td>
+          <td> :</td>
+          <td> {{selected_plans.term}}</td>
+        </tr>
+      </table>
+      <!-- <p>Product <span>: {{productId}}</span></p>
+              <p>Plan <span>: {{selected_plans.nickName}} </span></p>
+              <p>Order Id <span>: {{subscriptionDetails.id}}</span></p>
+              <p>Subscription Id <span>: {{subscriptionDetails.subscriptionId[0]}}</span></p>
+              <p>Amount paid <span>: $ {{totalPay}}</span></p>
+              <p>Period <span>: {{selected_plans.term}}</span></p> -->
+    </div>
+
+    <div class="col-md-12 confirmationmsg">
+      <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
+    </div>
+  </div>
+
+</ng-template>
+
+
+<ng-template #privacyTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><strong>ONLINE PRIVACY POLICY AGREEMENT</strong></h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-privacypolicy></app-privacypolicy>
+  </div>
+</ng-template>
+
+
+<ngx-spinner bdColor="#bebcbc66" type="">
+  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader"/> 
+</ngx-spinner>

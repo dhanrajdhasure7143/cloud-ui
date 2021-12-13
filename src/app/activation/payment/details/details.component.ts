@@ -136,7 +136,7 @@ this.allpaymentsList=resp
     this.productId=localStorage.getItem("selectedproductId"),
     this.plantype=localStorage.getItem("selectedplan")
     this.tenantID=localStorage.getItem("tenantName");
-    this.productlistservice.getProductPlanes(this.productId,this.tenantID).subscribe(data=> {this.plansList =data
+    this.productlistservice.getProductPlanes(this.productId,this.tenantID,localStorage.getItem('accessToken')).subscribe(data=> {this.plansList =data
       
       if(this.plansList.length > 1){
         this.plansList=this.plansList.reverse();
