@@ -54,7 +54,7 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
     this.tenantId=localStorage.getItem('tenantName');
     if(this.productId === null)
     {this.productId = localStorage.getItem("selectedproductId")}
-        this.productlistservice.getProductPlanes(this.productId,this.tenantId).subscribe(data=> {this.plansList =data
+        this.productlistservice.getProductPlanes(this.productId,this.tenantId,localStorage.getItem('accessToken')).subscribe(data=> {this.plansList =data
       // this.plansList=null;
            if(this.plansList == undefined || this.plansList == null){
         this.error='Sorry for inconvenience we will get back to you shortly'

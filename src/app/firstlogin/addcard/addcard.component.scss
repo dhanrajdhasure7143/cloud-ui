@@ -3,7 +3,7 @@
 }
 .brand img{
   width: 220px;
-  
+  margin-left:28px;
 }
 .brand{
   margin-top: 0px;
@@ -76,7 +76,7 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 15px;
   color: #0061cf !important;
   margin-top: 5px;
-  
+  padding-left:15px !important;
 }
 .buttns{
   margin-top: 5px;
@@ -181,7 +181,7 @@ input[type="number"]::-webkit-outer-spin-button {
    padding-top: 0.5em; 
 }
 
-.mat1-card{
+.mat2-card{
  // padding: 0px;
   margin-top: 20px;
   width:85% !important;
@@ -249,28 +249,151 @@ input[type="number"]::-webkit-outer-spin-button {
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
-.container.user_layout{
-width:812px;
-position: absolute;
-top: 9%;
-left: 13%;
-margin: -61px 0 0 -7px;
-height: auto;
+
+
+#paymnt-subheding{
+  margin-top:10px;
+  color: #006ed5;
 }
-.row.brand-header {
-  display: flex;
-  align-items: center;
-}
-.user_layout mat-card.mat1-card.mat-card, .brand-form .mat-form-field  {  
-  width: 100% !important;
-}
-.col-md-12.slt-plan, .buttns {
+.planheading{
   margin-top: 20px;
 }
-label#example-radio-group-label {
-  font-size: 15px !important;
-  font-weight: 500;
+
+.pay_titles{
+  margin-left: 21%;
+  margin-top: 15px;
+  font-weight: bold;
 }
-.slt-plan mat-radio-button label {
+
+.processes{
+  font-size: 10px !important;
+  font-weight: bold;
+}
+// .plandetails img{
+//  height:15px;
+//  width:15px;
+//  padding-right: 5px;
+// }
+
+.select_label {
   font-size: 14px;
+  color: #999;
+}
+
+.select_label img{
+  padding-right: 3px;
+  height:18px;
+  width:18px;
+}
+
+.plan_label {
+  font-size: 14px;
+  margin-top:20px;
+  font-weight: bold;
+}
+
+.plan_label span{
+  border: 1px solid #006ed5;
+  border-radius: 50%;
+  padding: 3px 5px;
+  color : #006ed5;
+  font-weight: bold;
+
+}
+
+.payment-input{
+  border-left: 0px;
+  border-top: 0px;
+  border-right: 0px;
+  border-radius: 0px;
+}
+
+.btn-continue{
+ // margin-top: 73px;
+  left: 200px;
+}
+
+.btn-back{
+  border: 0px;
+  background: none;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+.backBtn{
+  margin-left: 45%;
+}
+.select_label .fa-check-circle{
+  color: green;
+  padding:5px;
+}
+.processes .fa-check-circle{
+  padding:5px;
+  font-size: 13px
+  }
+  .processes .fa-times-circle{
+    padding:5px;
+    color:rgb(255, 0, 0);
+    font-size: 13px
+  }
+  .processes label {
+    position: absolute;
+    right: 0px;
+    top: -10px;
+    font-size: 8px;
+    color: rgb(116, 110, 110);
+  }
+  .processes span {
+    position: relative;
+  }
+  .processes{
+    margin-bottom: 7px;
+  }
+  .cc-number1
+  {
+    width: 63%;
+    margin-left: 0px;
+  }
+  .cc-number2
+  {
+    width: 63%;
+    margin-top: -32px;
+    margin-left: 58px;
+  }
+  .cc-number3
+  {
+    width: 62%;
+    margin-top: -32px;
+    margin-left: 116px;
+  }
+  .cc-number4{
+    width: 62%;
+    margin-top: -32px;
+    margin-left: 174px;
+  }
+
+.card{
+  width: 20%;
+  position: absolute;
+  top: 32px;
+  left: 247px;
+}
+.container.card_layout{
+  width:772px;
+  position: absolute;
+  top: 9%;
+  left: 15%;
+  margin: -17px 0 0 -7px;
+  height: auto;
+  }
+  .card_layout mat-card.mat2-card.mat-card, .card-form  {
+    width: 100% !important;
+  }
+  form.add-form {
+    width: 85% !important;
+    margin-left: 39px;
+}
+.col-md-4.plan_detail_box {
+  left: 91px;
 }

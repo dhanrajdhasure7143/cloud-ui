@@ -1,0 +1,193 @@
+<!-- <topheader class="first_login_header">
+
+
+</topheader> -->
+
+<div class="container card_layout">
+  <div class="">
+      <!-- <div id="particles-js"></div> -->
+    
+    <div class="row">
+      <mat-card class="mat2-card">
+        <div class="row">
+            
+          <div class="col-md-12">         
+            <div class="brand">
+                <img src="assets/images/EZFlow_horizontal_full_color.png">
+                <h4 class="planheading" style="margin-left:4%;">You have been opted for <b>{{planselected}}</b> plan</h4>
+                <!-- <h5 class="planheading" *ngIf="planselected=='Free Tier'" style="margin-left:5%">Free Tier has 30 days expiry which will be auto-upgraded to Professional</h5> -->
+                <h5 id="paymnt-subheding" style="margin-left:4%">Complete the below card details step to review your order</h5>
+            </div>
+            <!-- <div class="col-sm-12 status-bar">
+              <newstepselection class="register_account email_verified"></newstepselection>
+            </div> -->
+          </div>
+       
+        </div>          
+        <div class="card-form">
+          <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="paymentfromSubmit()" class="col-md-12 row">
+        
+            <div class="col-md-5">
+                  <div class="form-group col-sm-10">
+                    <label for="cardHolder">Cardholder Name</label>
+                    <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
+                    <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                    <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
+                    class='fa fa-info-circle errspan'> Cardholder Name is required </span> 
+                  </div>
+    
+                      <div class="form-group col-sm-10">
+                        <label for="month">Month (MM)</label>
+                        <select id="month" [disabled]="expmonth" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
+                          <option  [value]="undefined" disabled hidden>Select Month</option>
+                          <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
+                          <!-- <option value="01">01</option>
+                          <option value="02">02</option>
+                          <option value="03">03</option>
+                          <option value="04">04</option>
+                          <option value="05">05</option>
+                          <option value="06">06</option>
+                          <option value="07">07</option>
+                          <option value="08">08</option>
+                          <option value="09">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option> -->
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-10">
+                        <label for="cvv">CVV</label>
+                        <input type="password" class="form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
+                      <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
+                      class='fa fa-info-circle errspan'> CVV is required</span>                
+                    </div>
+                      <div class="col-sm-4"></div>
+            </div>
+    
+            <div class="col-md-3">
+                  <div class="row">
+    
+                      <!-- <div class="form-group col-sm-10">
+                          <label for="cardNumber">Card number</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="cardNumber" placeholder="">
+                            <div class="input-group-append">
+                              <span class="input-group-text text-muted">
+                                <i class="fa fa-cc-visa"></i>
+                                <i class="fa fa-cc-amex"></i>   
+                                <i class="fa fa-cc-mastercard"></i> 
+                              </span>
+                            </div>
+                          </div>
+                        </div> -->
+    
+                  <div class="form-group col-sm-8">
+                    <label for="cardNumber">Card Number</label>
+                    
+                    <!-- <input  type="text" [disabled]="number" class="cc-number4 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/> -->
+                    <!-- <span *ngIf="((cardNumber.invalid && paymentform.submitted) || (cardNumber.errors && cardNumber.touched) )" 
+                    class='fa fa-info-circle errspan'> Card Number is required</span>  -->
+                    <!-- <div>
+                      <input  type="text" class="cc-number1 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
+                    (change)='onChangeCardType(cardnumber1)' required/>
+                    <input  type="text" class="cc-number2 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
+                    <input  type="text" class="cc-number3 form-control payment-input" (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
+                      <select name="cardNumber" id="cardNumber" class="cc-number4 form-control payment-input" (change)="onChangeCard($event.target.value)" [(ngModel)]="cardid" >
+                        <option [value]="undefined" disabled hidden>Select Card</option>
+                        <option [value]="null" disabled hidden>Select Card</option>
+                        <option *ngFor="let pay of paymentMode" [value]="pay.id">{{pay.cardLast4}}</option>
+                        </select>
+                        <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png"></span>
+                        <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png"></span>  
+                      </div> -->
+                      <div >
+                        <input  type="text" class="cc-number1 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
+                    (change)='onChangeCardType(cardnumber1)' required/>
+                    <input  type="text" class="cc-number2 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
+                    <input  type="text" class="cc-number3 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
+                        <input  type="text"  class="cc-number4 form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="3"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/>
+                        <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png"></span>
+                        <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png"></span>  
+                      </div>
+                    
+                  </div>
+                  <div class="form-group col-sm-10">
+                    <label for="year">Year (YYYY)</label>
+                    <select id="year" [disabled]="expyear" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
+                      <option  [value]="undefined" disabled hidden>Select Year</option>
+                      <option *ngFor="let obj of yearList; let i=index" [value]="2019+(i+1)">{{2019+(i+1)}}</option>
+                      <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
+                      </select>
+                  </div>
+                              
+                    <!-- <div *ngIf='isStandard' class="form-group col-sm-10 state_input card_form">
+                      <label for="customerCount">No of Users</label>
+                      <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
+                          <option  [value]="undefined" disabled hidden>Select Users</option>
+                        <option value="10" >10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                        <option value="90">90</option>
+                        <option value="100">100</option>
+                      </select>
+                    </div>
+                    <div *ngIf='!isStandard' class="form-group col-sm-10 state_input card_form">
+                        <label for="customerCount">No of Users</label>
+                        <select id="customerCount" name="customerCount" class="form-control payment-input" #custCount="ngModel" [(ngModel)]="customerCount" required>
+                            <option  [value]="undefined" disabled hidden>Select Users</option>
+                            <option *ngFor='let count of userscount; let c = index' [value]="25*(c+4)" >{{25*(c+4)}}</option>
+                        </select>
+                      </div> -->
+                      
+                </div>
+              </div>
+              
+                <!-- <div class="col-md-1"></div> -->
+              <div class="col-md-4 plan_detail_box">
+                  <div class=" ">
+                    <h4 class="select_label"><i class="fa fa-check-circle" aria-hidden="true"></i>Selected Plan Details</h4>
+                    <div class=" ">
+                      <div class=" ">
+                        <h6 class="plan_label">Plan <span> {{planselected}}</span></h6>
+                      </div>
+                    </div>
+    
+                    
+        
+                    <div class="plandetails">
+                        <p class="processes" *ngFor='let value of selected_plans.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i>
+                          <span>{{planselected}}
+                            <label *ngIf="value.limited">Limited</label></span>
+                        </p>
+                          <!-- <p><img src="/assets/images/selectcircle.svg">Process Intelligence</p>
+                          <p><img src="/assets/images/selectcircle.svg">Business Process Studio</p>
+                          <p><img src="/assets/images/selectcircle.svg">Service Orchestration</p>
+                          <p><img src="/assets/images/selectcircle.svg">Artificial Intelligence</p>
+                          <p><img src="/assets/images/selectcircle.svg">Live Support</p> -->
+                          <h6 style="font-weight:600">$ {{planamount}} <span  style="font-size: 11px;font-weight: 500">/ user per {{selected_plans.term}}</span></h6>
+                    </div>
+                  </div>
+                </div>    
+                <div class="col-sm-8 btn-continue">
+                  <button class="btn btn-submit pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Continue</button>
+                </div>
+                </form>
+                
+      </div>
+      <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- <button class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</button> -->
+              </div>
+        </div>
+      </div>
+    </mat-card>
+    </div>
+  </div>
+</div>
+<!-- </common-body> -->

@@ -74,12 +74,12 @@ public paymentToken:any;
     this.productId=localStorage.getItem("selectedproductId"),
     this.plantype=localStorage.getItem("selectedplan")
     this.tenantID=localStorage.getItem("tenantName");
-    this.productlistservice.getProductPlanes(this.productId,this.tenantID).subscribe(data=> {this.plansList =data
+    this.productlistservice.getProductPlanes(this.productId,this.tenantID,localStorage.getItem('accessToken')).subscribe(data=> {this.plansList =data
     this.plansList.forEach(obj => {
       if(obj.nickName == this.plantype){
         this.selected_plans=obj
         // -- commenting to bypass coupon
-        this.profileService.validateCoupon(null,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
+        this.profileService.validateCoupon(null,this.selected_plans.amount,this.cardDetails.customerCount ,JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp=>{
           this.validateCoupondata=resp;
         this.totalPay=this.validateCoupondata.TotalPaybleAmount,
         this.noOfusers=this.cardDetails.customerCount
@@ -136,7 +136,7 @@ public paymentToken:any;
             
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue))
     let reqObj = {"enc": encrypt};
-    this.productlistservice.getSubscriptionPaymentToken(reqObj).subscribe(res=>{
+    this.productlistservice.getSubscriptionPaymentToken(reqObj,localStorage.getItem('accessToken')).subscribe(res=>{
       this.spinner.show();
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){
@@ -153,7 +153,7 @@ public paymentToken:any;
       }
       else{
      
-    this.productlistservice.subscribePlan(this.paymentToken.message,plandetails).subscribe(data=>{this.subscriptionDetails=data
+    this.productlistservice.subscribePlan(this.paymentToken.message,plandetails,localStorage.getItem('accessToken')).subscribe(data=>{this.subscriptionDetails=data
       this.spinner.hide();
      this.finalAmount=this.subscriptionDetails.amountPaid;
 this.sharedDataService.setFreetrialavailed(false);
@@ -194,7 +194,7 @@ this.sharedDataService.setFreetrialavailed(false);
      
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue));
     let reqObj = {"enc": encrypt};
-    this.productlistservice.getSubscriptionPaymentToken(reqObj).subscribe(res=>{
+    this.productlistservice.getSubscriptionPaymentToken(reqObj,localStorage.getItem('accessToken')).subscribe(res=>{
     
       this.paymentToken=res
       if(this.paymentToken.message == 'Failed To Generate Payment Token'){
@@ -210,7 +210,7 @@ this.sharedDataService.setFreetrialavailed(false);
       
       }
       else{
-            this.profileService.validateCoupon(couponcode,this.selected_plans.amount,this.cardDetails.customerCount).subscribe(resp=>{
+            this.profileService.validateCoupon(couponcode,this.selected_plans.amount,this.cardDetails.customerCount, JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp=>{
       this.validateCoupondata=resp;
       this.isapplied=true;
         this.totalPay=this.validateCoupondata.TotalPaybleAmount;
