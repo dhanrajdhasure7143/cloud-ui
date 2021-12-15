@@ -95,7 +95,7 @@ export class AddcardComponent implements OnInit {
     this.planselected = localStorage.getItem('selectedplan')
     if(this.planselected=='Standard'){
       this.planselected="Free Tier"
-      this.planamount="100"
+      this.planamount="0"
     }
     if(this.planselected=='Professional'){
       this.planamount="500"
