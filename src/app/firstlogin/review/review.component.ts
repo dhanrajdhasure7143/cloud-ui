@@ -444,6 +444,7 @@ export class ReviewComponent implements OnInit {
                   this.productlistservice.getProductPlanes(this.productId, this.tenantID, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
                     this.plansList = data
                     this.plansList.forEach(obj => {
+                      if(obj.active==true || obj.active=='true'){
                       if (obj.nickName == this.plantype) {
                         this.selected_plans = obj
                         this.profileService.validateCoupon(null, this.selected_plans.amount, this.cardDetails.customerCount, JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp => {
@@ -453,13 +454,14 @@ export class ReviewComponent implements OnInit {
                           this.taxPercentage = this.validateCoupondata.TaxPercentage
                           this.taxamount = this.validateCoupondata.TaxAmount
                         })
-                        if (this.selected_plans.term == "12month") {
+                        if (this.selected_plans.term == "1year") {
                           this.selected_plans.term = 'Annual'
                         } else {
                           this.selected_plans.term = 'One Month'
                         }
                         this.name = this.selected_plans.nickName;
                       }
+                     }
                     });
 
                     const cardValue = {
