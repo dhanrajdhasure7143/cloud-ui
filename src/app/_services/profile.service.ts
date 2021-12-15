@@ -94,8 +94,12 @@ deleteSelectedUser(userId):Observable<any>{
 modifyCoupon(modifycouponinput):Observable<any>{
   return this.http.post<any>('/subscriptionservice/v1/orders/updateCoupon',modifycouponinput,httpOptions)
 }
-validateCoupon(promo,planAmount,quantity):Observable<any>{
-return this.http.get<any>('/subscriptionservice/v1/orders/validateCoupon/'+promo+'?planamount='+planAmount+'&quantity='+quantity)
+validateCoupon(promo,planAmount,quantity,accessToken):Observable<any>{
+  let headers = new HttpHeaders({
+    "Content-Type":"application/json",
+    "Authorization": `Bearer ${accessToken}`
+    });
+return this.http.get<any>('/subscriptionservice/v1/orders/validateCoupon/'+promo+'?planamount='+planAmount+'&quantity='+quantity,{headers:  headers, responseType:'json'})
 }
 
  deleteCoupon(couponId):Observable<any>{

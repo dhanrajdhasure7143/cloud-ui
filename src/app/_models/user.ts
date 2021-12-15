@@ -14,4 +14,5 @@ export class User {
     state:string;
     city:string;
     zipcode:string;
+    plans:string;
 }

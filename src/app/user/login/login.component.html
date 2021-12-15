@@ -27,7 +27,7 @@
                   <!--<img src="assets/images/username_icon.png" class="userIcon">-->
                   <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
                     <mat-label>Email</mat-label>
-                  <input type="text" matInput formControlName="username" (change)="onEmailChange()"  placeholder="Enter Email" 
+                  <input type="text" matInput formControlName="username" (change)="onEmailChange()" (keydown)="onKeydownfeilds($event)" placeholder="Enter Email" 
                   pattern="^\S*[@]\S*[.]\S*$"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                   <!--<div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                     <div *ngIf="f.username.errors.pattern">Enter valid email address</div>
@@ -49,7 +49,7 @@
                       [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required/>-->
                       <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
                         <mat-label>Password</mat-label>
-                        <input [type]="hide ?  'password': 'text'" matInput formControlName="password" #password minlength="8"  placeholder="Enter Password"
+                        <input [type]="hide ?  'password': 'text'" matInput formControlName="password" #password minlength="8"  placeholder="Enter Password" (keydown)="onKeydownfeilds($event)"
                         [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
                         <button class="password-btn ml-auto" matSuffix *ngIf="hide==true" (click)="hide = false">
                           <img src='../../../assets/images/eye-show.svg' />

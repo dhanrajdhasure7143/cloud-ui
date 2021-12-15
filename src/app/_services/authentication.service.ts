@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'timezone':'Asia/Calcutta'
         })
 };
 @Injectable({ providedIn: 'root' })
@@ -76,7 +78,7 @@ export class AuthenticationService {
     }
     userDetails(username: string) {
          
-      return this.http.get('/api/user/details?userId='+username,{responseType:'json'});
+      return this.http.get('/api/user/details?userId='+username,httpOptions);
     }
     generateOTP(username: string) {
          

@@ -665,7 +665,7 @@ this.profileservice.applications().subscribe(resp =>
   getAllPaymentmodes() {
 
     this.profileservice.listofPaymentModes().subscribe(response => {
-     
+     if(response.message==undefined){
        this.paymentMode = response 
         let result = this.paymentMode.filter(obj => {
          return obj.defaultSource === true
@@ -675,7 +675,7 @@ this.profileservice.applications().subscribe(resp =>
        localStorage.setItem('cardExpYear',result[0].cardExpYear)
         localStorage.setItem('cardholdername',result[0].name)
        localStorage.setItem('cardLast4',result[0].cardLast4)
-      
+      }
         });
   }
    getAllCategories(){
@@ -2032,7 +2032,7 @@ couponDelYes(coupon,index){
 
 
   getRoles(){
-  if(localStorage.getItem('userRole').includes('SuperAdmin')){
+  if(localStorage.getItem('userRole')!=null && localStorage.getItem('userRole').includes('SuperAdmin')){
    this.profileservice.getAllRolesForSuperAdmin().subscribe(resp => {
    this.allRoles = resp.sort(function(obj1, obj2) {
       return obj1.id - obj2.id;
