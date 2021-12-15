@@ -73,6 +73,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
   document.cookie = "old_ux=false";
+  if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
+    document.cookie = "new_reg_flow=true";
+  }
 
     //this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
   this.particles.getParticles();
@@ -387,14 +390,16 @@ export class LoginComponent implements OnInit {
     if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
         productURL = this.config.newproductendpoint;
         this.spinner.hide();
+        if(this.getCookie("new_reg_flow")=="true"){
         window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
+        }
         //window.location.href="http://localhost:4000"+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
      }
     },error => {
       //this.error = "Please complete your registration process";
       this.loading = false;
     })
-    // this.router.navigate(['/activation']);
+     this.router.navigate(['/activation']);
   }
 
   requestDemo() {
@@ -447,6 +452,9 @@ getCookie(cname) {
   return "";
 }
 
+onKeydownfeilds(event){
+  this.error=""
+}
   onEmailChange(){
     this.isOTP=false;
     this.twoFactorAuthConButton = true;

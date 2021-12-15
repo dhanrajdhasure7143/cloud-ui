@@ -58,7 +58,7 @@
         <li><a href="" [routerLink]="['/activation/alerts']">Configure alerts</a></li>
 
         
-    <div  [hidden] = "!admin">
+    <div  [hidden] = "!'System Admin'">
       <li (click)="toggle()" class="nav-item dropdown">
       <div mdbWavesEffect class=" dropdown-toggle" mdbWavesEffect>User Management</div><span class="caret"></span></li>
         <div class="subheader">
@@ -73,7 +73,7 @@
         <li><a href="">Billing</a></li>
    </ul>
    </div>
-    <div [hidden] = "!admin">
+    <div [hidden] = "!'System Admin'">
       <hr class="profile_hr">
         <div class="account_sub">
       <ul class="account_sub_ul">
