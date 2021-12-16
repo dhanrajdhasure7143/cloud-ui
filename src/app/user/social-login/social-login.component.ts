@@ -103,7 +103,7 @@ authorize() {
   this.profileService.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
      localStorage.setItem('userRole',this.userRole);
-   if(this.userRole.includes('SuperAdmin')){
+   if(this.userRole.includes('Platform Admin')){
     this.router.navigate(['/superadmin']);
     
    }else if(this.userRole.includes('User')){
