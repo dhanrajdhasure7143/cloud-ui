@@ -138,7 +138,7 @@ export class ReviewComponent implements OnInit {
       this.cardData = data
 
       this.cardDetails = JSON.parse(Base64.decode(this.cardData.id));
-      this.cardnumber = this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X') + this.cardDetails.cardnumbertotal.slice(-4);
+      this.cardnumber = this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X') + this.cardDetails.cardnumbertotal.slice(-3);
       // this.cardNumberdigts=this.cardnumber.toString().split('').slice(12).join('');
       this.cardNumberdigts = this.cardnumber.match(new RegExp('.{1,4}', 'g')).join('-')
       this.cvvnumber = this.cardDetails.cvvNumber.replace(new RegExp("[0-9]", "g"), "X")
