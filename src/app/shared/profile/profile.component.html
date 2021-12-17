@@ -878,7 +878,7 @@
                                 </div>
                             <div class="container role">
                               
-                                <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add Role</button>
+                                <button *ngIf="this.userRole.includes('Tenant Admin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add Role</button>
                                     <table class="table table-borderless table-hover">
                                             <thead>
                                               <tr>
@@ -888,7 +888,7 @@
                                                 <th scope="col" class="types">Permissions</th>
                                                 <th scope="col" class="types">Created At</th>
                                                 <th scope="col" class="types">Modified At</th>
-                                                <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
+                                                <th *ngIf="this.userRole.includes('Platform Admin')" scope="col" class="types">Action</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -909,7 +909,7 @@
                                                 </td>
                                                 <td>{{role.audit.created_at | date}} {{role.audit.created_at.split("T")[1].split(".")[0]}}</td>
                                                 <td>{{role.audit.modified_at | date}} {{role.audit.modified_at.split("T")[1].split(".")[0]}}</td>
-                                                <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
+                                                <td *ngIf="this.userRole.includes('Platform Admin')" class="deleticon">
                                                     <span  (click)="selectedroledata(role,j,rolestemplate)">
                                                     <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                     <span  (click)="roledel(role.id,j)"> 
@@ -939,7 +939,7 @@
 
 
 
-                            <tab *ngIf="this.userRole.includes('SuperAdmin')" heading="Permissions">
+                            <tab *ngIf="this.userRole.includes('Platform Admin')" heading="Permissions">
                               <div class="search-One">
                                   <form class="form-inline d-flex  md-form form-sm">
                                       <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchPermission" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -948,7 +948,7 @@
                                   </div>
                               <div class="container role">
                                 
-                                  <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add Permission</button>
+                                  <button *ngIf="this.userRole.includes('Platform Admin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add Permission</button>
                                       <table class="table table-borderless table-hover">
                                               <thead>
                                                 <tr>
@@ -956,7 +956,7 @@
                                                   <th scope="col" class="types">Description</th>
                                                   <th scope="col" class="types">Created At</th>
                                                   <th scope="col" class="types">Modified At</th>
-                                                  <th *ngIf="this.userRole.includes('Super Admin')" scope="col" class="types">Action</th>
+                                                  <th *ngIf="this.userRole.includes('Platform Admin')" scope="col" class="types">Action</th>
                                                 </tr>
                                               </thead>
                                               
@@ -966,7 +966,7 @@
                                                   <td>{{permission.description}}</td>
                                                   <td>{{permission.audit.created_at | date}} {{permission.audit.created_at.split("T")[1].split(".")[0]}}</td>
                                                   <td>{{permission.audit.modified_at | date}} {{permission.audit.modified_at.split("T")[1].split(".")[0]}}</td>
-                                                  <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
+                                                  <td *ngIf="this.userRole.includes('Platform Admin')" class="deleticon">
                                                       <span  (click)="selectedpermdata(permission,p,permtemplate)">
                                                       <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                       <span  (click)="permdel(permission.id,p)"> 
@@ -1013,7 +1013,7 @@
           <div class="row">
       <div class="container coupons">
         
-          <button *ngIf="this.userRole == 'SuperAdmin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
+          <button *ngIf="this.userRole == 'Platform Admin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
               <table class="table table-borderless table-hover">
                       <thead>
                         <tr>
@@ -1029,7 +1029,7 @@
                          
                           <th scope="col" class="types" style="text-align:center">Created At</th>
                          
-                          <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
+                          <th *ngIf="this.userRole == 'Platform Admin'" scope="col" class="types">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1045,7 +1045,7 @@
                           <td style="text-align:center">{{coupon.createdAt | date}} {{coupon.createdAt.split("T")[1].split(".")[0]}}</td>
                           
                           
-                          <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
+                          <td *ngIf="this.userRole == 'Platform Admin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
                               <span  (click)="couponDel(coupon.id,j)"> 
@@ -1262,7 +1262,7 @@
                   <div  *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
                     <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
                     </div>
-                    <table *ngIf="this.userRole.includes('SuperAdmin')" class="table table-borderless table-hover">
+                    <table *ngIf="this.userRole.includes('Platform Admin')" class="table table-borderless table-hover">
                       <thead>
                         <tr>
                           <th scope="col" style="width:60%;">Notification Message</th>
@@ -1294,7 +1294,7 @@
                           <div class="ntfnorecords"><h4>No records found</h4></div>
                         </tbody>
                     </table>
-                    <div *ngIf="this.userRole.includes('SuperAdmin')">
+                    <div *ngIf="this.userRole.includes('Platform Admin')">
                       <div *ngIf="superadminnotificationList.errorMessage!='No records found'" class="superadminnotificationpagination">
                         <pagination-controls id="superadmin_notification_page" maxSize="8" (pageChange)="sn = $event"></pagination-controls>
                         </div>

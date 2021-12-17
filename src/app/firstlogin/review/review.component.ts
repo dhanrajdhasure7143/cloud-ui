@@ -98,10 +98,10 @@ export class ReviewComponent implements OnInit {
     if (this.planselected == 'Standard') {
       this.planselected = "Free Tier"
       this.planterm = "One Month"
-      this.planamount = "100"
+      this.planamount = "0"
     }
     if (this.planselected == 'Professional') {
-      this.planterm = "One Month"
+      this.planterm = "Annual"
       this.planamount = "500"
     }
     // this.getproductPlans();
