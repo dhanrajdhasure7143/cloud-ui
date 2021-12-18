@@ -193,31 +193,45 @@
             <mat-form-field appearance="outline">
               <mat-label>Zip Code</mat-label>
             <input type="text" matInput (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" [(ngModel)]="model.zipcode"
-               onKeyPress="if(this.value.length==10) return false;" minlength="5" placeholder="Zip Code" required>
+               onKeyPress="if(this.value.length==5) return false;" minlength="5" placeholder="Zip Code" 
+               pattern="^\d{5}$" required>
             </mat-form-field>
-            <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
+            <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched) && !(zipCode.errors.pattern))"
               class='fa fa-info-circle errspan'> Zip Code is required </span>
+              <span *ngIf="zipCode.errors  && zipCode.invalid">
+                <span *ngIf="zipCode.errors.pattern"  class="fa fa-info-circle errspan">Invalid Zip Code</span>
+              </span>
           </div>
 
           <div *ngIf ="isInput"class="col-sm-6 ph-number" ><!-- inner-addon left-addon-->
             <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
             <mat-form-field appearance="outline">
               <mat-label>Phone Number</mat-label>
-              <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" required > <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
+              <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" 
+              [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput 
+              [ng2TelInputOptions]="{initialCountry: phnCountry}"  pattern="^((\\+91-?)|0)?[0-9]{10}$" required > <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
             </mat-form-field>
                  <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
-                <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
+                <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched) && !(phoneNumber.errors.pattern))"
                 class='fa fa-info-circle errspan'> Phone Number is required </span>
+                <span *ngIf="phoneNumber.errors  && phoneNumber.invalid">
+                  <span *ngIf="phoneNumber.errors.pattern"  class="fa fa-info-circle errspan">Phone Number Should Be 10 digits</span>
+                </span>
               </div>
               <div *ngIf="!isInput" class="col-sm-6 ph-number">
                 <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
                 <mat-form-field appearance="outline">
                   <mat-label>Phone Number</mat-label>
-                <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" required> <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
+                <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" 
+                [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" 
+                pattern="^((\\+91-?)|0)?[0-9]{10}$" required> <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
                 </mat-form-field>
                      <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
-                    <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
+                    <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched) && !(phoneNumber.errors.pattern))"
                     class='fa fa-info-circle errspan'> Phone Number is required </span>
+                    <span *ngIf="phoneNumber.errors  && phoneNumber.invalid">
+                      <span *ngIf="phoneNumber.errors.pattern"  class="fa fa-info-circle errspan">Phone Number Should Be 10 digits</span>
+                    </span>
                   </div>
                
               <!--<div class="form-group col-sm-6 inner-addon left-addon photoupload">
