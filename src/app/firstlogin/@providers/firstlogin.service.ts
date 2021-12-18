@@ -58,4 +58,9 @@ export class FirstloginService {
     return this.http.get<any>('/subscriptionservice/v1/subscriptions/allTenants')
   }
 
+  organizationCheck(orgName: string): Observable<any> {
+    return this.http.get<any>(`/api/user/checkOrganizationExists?orgName=`+orgName);
+  }
+
+
 }

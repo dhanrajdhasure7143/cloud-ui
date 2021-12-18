@@ -96,11 +96,12 @@
             <!-- <img src="assets/images/registration/company.svg" class="icon"> -->
             <mat-form-field appearance="outline" color="primary">
               <mat-label>Organization Name</mat-label>
-            <input type="text" matInput [disabled]="isCompanydisabled" name="company" #company="ngModel" [(ngModel)]="model.company"
+            <input type="text" matInput [disabled]="isCompanydisabled" (keyup)="checkOrganizationName(model.company)" name="company" #company="ngModel" [(ngModel)]="model.company"
               maxlength="30" minlength="3" placeholder="Company" required>
             </mat-form-field>
             <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
               class='fa fa-info-circle errspan'> Company is required </span>
+              <span *ngIf="orgExsist" class='fa fa-info-circle errspan'> Organization Already Exsit</span>
           </div>
          
           <div *ngIf="!isCompanydisabled" class=" col-md-6"><!-- form-group inner-addon left-addon-->
@@ -252,7 +253,7 @@
            <div class="text-right">
             <button type="button" class="btn btn-primary" (click)="resetForm(firstloginform)" style='margin-right:27px;height:36px !important'>Clear all</button>
             <!-- <button type="submit" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr">Register</button> -->
-            <button  (click)="onClick()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr">Continue</button>
+            <button  (click)="onClick()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist">Continue</button>
           </div>
           </div>
         </div>  
