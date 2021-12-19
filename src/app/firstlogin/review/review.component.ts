@@ -19,6 +19,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { APP_CONFIG } from 'src/app/app.config';
+import { LoginService } from 'src/app/user/_services/login.service';
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
@@ -87,7 +88,7 @@ export class ReviewComponent implements OnInit {
     private ip: IpServiceService,
     private authenticationService: AuthenticationService,
     private deviceService: DeviceDetectorService,
-    private http: HttpClient,
+    private http: HttpClient,private loginservice:LoginService,
     private cryptoService: CryptoService,
     @Inject(APP_CONFIG) private appconfig) { }
 
@@ -404,13 +405,6 @@ export class ReviewComponent implements OnInit {
         })
       }
       else {
-        // Swal.fire({
-        //   title: 'Success',
-        //   text: `Registration completed successfully!`,
-        //   type: 'success',
-        //   showCancelButton: false,
-        //   allowOutsideClick: false
-        // }).then((result) => {
           this.spinner.show();
         //  if (result.value) {
             let res: any;
@@ -513,6 +507,32 @@ export class ReviewComponent implements OnInit {
                           showCancelButton: false,
                           allowOutsideClick: false
 
+                        }).then((result) => {
+                          if (result.value) {
+                            this.profileService.deleteSelectedUser(this.userDetails.userId).subscribe(resp =>{
+                              let encrypt = this.cryptoService.encrypt(this.userDetails.userId);
+                              let user = encrypt;
+                              this.loginservice.sentVerificationMail(user).subscribe(res=>{
+                                this.router.navigate(['/home/add-card', this.cardData]);
+                             },error=>{
+                               this.error='User Already Exists'
+                             }
+                             );
+                            }, err =>{
+                              Swal.fire({
+                                title: 'Error',
+                                text: `Please Register Again!!`,
+                                type: 'error',
+                                showCancelButton: false,
+                                allowOutsideClick: true
+                              }).then((result) => {
+                                if (result.value) {
+                                  this.router.navigate(['/']);
+                                  }
+                              })
+                            })
+                            
+                          }
                         })
                         this.spinner.hide();
                       }
@@ -521,9 +541,42 @@ export class ReviewComponent implements OnInit {
                         this.productlistservice.subscribePlan(this.paymentToken.message, plandetails, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
                           this.subscriptionDetails = data
                           this.spinner.hide();
-                          this.finalAmount = this.subscriptionDetails.amountPaid;
-                          this.sharedDataService.setFreetrialavailed(false);
-                          this.modalRef = this.modalService.show(this.template, this.config);
+                          if(this.subscriptionDetails.amountPaid==0 ||this.subscriptionDetails.amountPaid==50000){
+                            this.finalAmount = this.subscriptionDetails.amountPaid;
+                            this.sharedDataService.setFreetrialavailed(false);
+                            this.modalRef = this.modalService.show(this.template, this.config);
+                          }
+                         else {
+                            Swal.fire({
+                              title: 'Error',
+                              text: `Subscription creation failed please register again!!`,
+                              type: 'error',
+                              showCancelButton: false,
+                              allowOutsideClick: false
+                            }).then((result) => {
+                              if (result.value) {
+                                this.spinner.show();
+                                this.profileService.deleteSelectedUser(this.userDetails.userId).subscribe(resp =>{
+                                  this.spinner.hide();
+                                    this.router.navigate(['/']);
+                                   
+                                }, err =>{
+                                  Swal.fire({
+                                    title: 'Error',
+                                    text: `Please Register Again!!`,
+                                    type: 'error',
+                                    showCancelButton: false,
+                                    allowOutsideClick: true
+                                  }).then((result) => {
+                                    if (result.value) {
+                                    this.router.navigate(['/']);
+                                    }
+                                  })
+                                })
+                              }
+                            })
+                            
+                          }
                         })
                       }
 
