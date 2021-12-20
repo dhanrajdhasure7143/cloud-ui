@@ -47,7 +47,7 @@
                 <label for="year">Year (YYYY)</label>
                 <h6>{{cardDetails.cardyear}}</h6>
               </div>
-              <div class='col-sm-12 apply-coupon'>
+              <!-- <div class='col-sm-12 apply-coupon'>
                 <p *ngIf='!iscoupon' (click)='haveCoupon()'>Have a coupon ?</p>
                 <span *ngIf='iscoupon' class="row"><input type="text" name='coupon' #coupon='ngModel'
                     [(ngModel)]='couponcode' placeholder="Enter Coupon Code" class='col-sm-6 form-control coupon-input'
@@ -60,7 +60,7 @@
                 <div style="overflow-wrap: break-word;" class="errordiv col-md-6 couponerror">
                   <span *ngIf="error" class="alert-danger text-center coupon_alert">{{error}}</span>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -139,7 +139,8 @@
         <tr>
           <td>Plan</td>
           <td> :  </td>
-          <td>{{selected_plans.nickName}}</td>
+          <td *ngIf="selected_plans.nickName=='Standard'">Free Tier</td>
+          <td *ngIf="selected_plans.nickName=='Professional'">{{selected_plans.nickName}}</td>
         </tr>
         <tr>
           <td>Order Id</td>
