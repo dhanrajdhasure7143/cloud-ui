@@ -139,7 +139,7 @@ export class ReviewComponent implements OnInit {
       this.cardData = data
 
       this.cardDetails = JSON.parse(Base64.decode(this.cardData.id));
-      this.cardnumber = this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X') + this.cardDetails.cardnumbertotal.slice(-3);
+      this.cardnumber = this.cardDetails.cardnumbertotal.slice(0, 12).replace(/\d/g, 'X') + this.cardDetails.cardnumbertotal.slice(-4);
       // this.cardNumberdigts=this.cardnumber.toString().split('').slice(12).join('');
       this.cardNumberdigts = this.cardnumber.match(new RegExp('.{1,4}', 'g')).join('-')
       this.cvvnumber = this.cardDetails.cvvNumber.replace(new RegExp("[0-9]", "g"), "X")
@@ -404,6 +404,19 @@ export class ReviewComponent implements OnInit {
           allowOutsideClick: true
         })
       }
+      else if (this.data.body.errorMessage === 'User already registered') {
+        Swal.fire({
+          title: 'Error!',
+          text: "User already registered. Please try to login!!",
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['/']);
+            }
+        })
+      }
       else {
           this.spinner.show();
         //  if (result.value) {
@@ -549,7 +562,7 @@ export class ReviewComponent implements OnInit {
                          else {
                             Swal.fire({
                               title: 'Error',
-                              text: `Subscription creation failed please register again!!`,
+                              text: `Unable to register due to issue with the given card details. Please try again !!`,
                               type: 'error',
                               showCancelButton: false,
                               allowOutsideClick: false
