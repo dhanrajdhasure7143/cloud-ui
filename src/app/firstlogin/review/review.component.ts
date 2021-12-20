@@ -554,7 +554,7 @@ export class ReviewComponent implements OnInit {
                         this.productlistservice.subscribePlan(this.paymentToken.message, plandetails, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
                           this.subscriptionDetails = data
                           this.spinner.hide();
-                          if(this.subscriptionDetails.amountPaid==0 ||this.subscriptionDetails.amountPaid==50000){
+                          if(this.subscriptionDetails.message=="Subscription Completed Successfully!!"){
                             this.finalAmount = this.subscriptionDetails.amountPaid;
                             this.sharedDataService.setFreetrialavailed(false);
                             this.modalRef = this.modalService.show(this.template, this.config);
