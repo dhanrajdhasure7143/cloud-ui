@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { DeviceDetectorService } from "ngx-device-detector";
@@ -95,7 +96,7 @@ export class AddcardComponent implements OnInit {
     this.planselected = localStorage.getItem('selectedplan')
     if(this.planselected=='Standard'){
       this.planselected="Free Tier"
-      this.planamount="100"
+      this.planamount="0"
     }
     if(this.planselected=='Professional'){
       this.planamount="500"
@@ -209,7 +210,7 @@ export class AddcardComponent implements OnInit {
     }
     this.cardEncode=Base64.encode(JSON.stringify(this.cardDetails));
     this.card={id:this.cardEncode}
-
+   //console.log("carddetails",this.cardDetails)
     this.router.navigate(['/home/card-review',this.card]);
 
   }
@@ -328,14 +329,20 @@ export class AddcardComponent implements OnInit {
         this.cardid = this.cardDetails.id;
         this.cardmonth = this.cardDetails.cardmonth;
         this.cardnumber1 = this.cardDetails.cardnumbertotal.slice(0, 4);
-        this.cardnumber2 = this.cardDetails.cardnumbertotal.slice(0, 4);
-        this.cardnumber3 = this.cardDetails.cardnumbertotal.slice(0, 4);
+        this.cardnumber2 = this.cardDetails.cardnumbertotal.slice(4, 8);
+        this.cardnumber3 = this.cardDetails.cardnumbertotal.slice(8, 12);
         this.cardnumber4 = this.cardDetails.cardnumbertotal.substring(12, this.cardDetails.cardnumbertotal.length - 0);
         this.cardyear = this.cardDetails.cardyear;
         this.cvvNumber = this.cardDetails.cvvNumber;
         this.customerCount = this.cardDetails.customerCount;
       }
     });
+  }
+
+  resetForm(form:NgForm) {
+    form.resetForm();
+    this.cardmonth=undefined;
+    this.cardyear=undefined;
   }
 
   onChangeCardType(cardNumber) {

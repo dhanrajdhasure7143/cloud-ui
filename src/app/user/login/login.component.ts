@@ -371,7 +371,7 @@ export class LoginComponent implements OnInit {
       this.userRole=res.message;
      
       localStorage.setItem('userRole',this.userRole);
-     if(this.userRole.includes('SuperAdmin')){
+     if(this.userRole.includes('Platform Admin')){
       this.router.navigate(['/superadmin']);
       
      }else{

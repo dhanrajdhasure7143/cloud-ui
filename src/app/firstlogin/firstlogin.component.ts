@@ -59,6 +59,7 @@ export class FirstloginComponent implements OnInit {
   public ipAddress:string; 
   agent: string;
   public deviceInfo = null;
+  orgExsist:boolean;
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
@@ -433,4 +434,15 @@ export class FirstloginComponent implements OnInit {
         this.router.navigate(['/home/add-card']);
       }
     }
+
+  checkOrganizationName(value) {
+    this.service.organizationCheck(value).subscribe(res => {
+      if (res.message == "Organization Name already Exists") {
+        this.orgExsist = true;
+      } else {
+        this.orgExsist = false;
+      }
+    })
+  }
+  
 }
