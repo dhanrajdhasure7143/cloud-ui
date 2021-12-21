@@ -404,6 +404,19 @@ export class ReviewComponent implements OnInit {
           allowOutsideClick: true
         })
       }
+      else if (this.data.body.errorMessage === 'User already registered') {
+        Swal.fire({
+          title: 'Error!',
+          text: "User already registered. Please try to login!!",
+          type: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['/']);
+            }
+        })
+      }
       else {
           this.spinner.show();
         //  if (result.value) {
@@ -541,7 +554,7 @@ export class ReviewComponent implements OnInit {
                         this.productlistservice.subscribePlan(this.paymentToken.message, plandetails, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
                           this.subscriptionDetails = data
                           this.spinner.hide();
-                          if(this.subscriptionDetails.amountPaid==0 ||this.subscriptionDetails.amountPaid==50000){
+                          if(this.subscriptionDetails.message=="Subscription Completed Successfully!!"){
                             this.finalAmount = this.subscriptionDetails.amountPaid;
                             this.sharedDataService.setFreetrialavailed(false);
                             this.modalRef = this.modalService.show(this.template, this.config);
@@ -549,7 +562,7 @@ export class ReviewComponent implements OnInit {
                          else {
                             Swal.fire({
                               title: 'Error',
-                              text: `Subscription creation failed please register again!!`,
+                              text: `Unable to register due to issue with the given card details. Please try again !!`,
                               type: 'error',
                               showCancelButton: false,
                               allowOutsideClick: false
