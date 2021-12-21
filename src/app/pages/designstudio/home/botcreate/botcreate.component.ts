@@ -85,7 +85,7 @@ export class BotcreateComponent implements OnInit {
     };
     this.createSer.getAllRobots().subscribe(res => {
       if (res) {
-        console.log(res);
+      
         this.gridData = res;
       }
     });
@@ -114,10 +114,10 @@ export class BotcreateComponent implements OnInit {
           this.router.navigate([`/pages/designstudio//workflowedit`, `${btoa(JSON.stringify(tempModel))}`]);
         }
       }, err => {
-        console.log('error ,,,,, ' + err);
+      
       });
     } else {
-      console.log('error ,,,,, ');
+     
     }
   }
 

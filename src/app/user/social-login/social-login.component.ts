@@ -59,7 +59,7 @@ export class SocialLoginComponent implements OnInit {
   this.appService.socialLogin(userId).subscribe(user => {
     
     if((user['errorMessage']=== "Failed to generate access and refresh token") && (user['errorCode']===4008)){
-      console.log("userr", user)
+    
       this.invalidUser = true;
       this.spinner.hide();
       return;

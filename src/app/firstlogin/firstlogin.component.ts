@@ -125,7 +125,7 @@ export class FirstloginComponent implements OnInit {
   }
 
   onChangeDepartment(selectedvalue) {
-    console.log(selectedvalue);
+  
     if(selectedvalue == "others"){
       this.college = true
     }else{
@@ -150,7 +150,7 @@ export class FirstloginComponent implements OnInit {
   }
 
   onChangeState(stateValue) {
-    console.log(stateValue);
+  
     this.cityInfo=[];
     // this.model.state =this.stateInfo[stateValue].StateName
     // console.log("state : " + this.model.state);
@@ -379,9 +379,9 @@ export class FirstloginComponent implements OnInit {
         var reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
         reader.onload = (event:any)=>{
-          console.log("this.imgsrc",this.imgsrc);
+         
           this.imgsrc = event.target.result;
-          console.log(this.imgsrc);
+        
         }
       }
       
@@ -424,7 +424,7 @@ export class FirstloginComponent implements OnInit {
        var userId= this.cryptoService.encrypt(JSON.stringify(this.decodedToken));
        var useridBase64 = btoa(userId);
        var authkey=atob(useridBase64)
-       console.log(authkey)
+      
        localStorage.setItem("authkey",authkey)
       if(this.model.plans=='Enterprise'){
         window.location.href = "https://www.epsoftinc.com/"

@@ -186,7 +186,7 @@ export class LoginComponent implements OnInit {
       this.loginService.checkpasswordexpiry(this.f.username.value).subscribe(data=>{
         let res = data;
         if(data.isError == "true"){
-          console.log("SWAL");
+       
           Swal.fire({
             width: '400px',
             text: data.message, 

@@ -212,7 +212,7 @@ export class ToolsetComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   changeRobotName(robot) {
-    console.log(robot);
+  
     this.resetBotName();
     robot.nameChange = true;
     this.changingBotName = robot.Name;
@@ -253,7 +253,7 @@ export class ToolsetComponent implements OnInit, OnChanges, OnDestroy {
     this.robotModel.CreateBy = '';
     this.robotModel.Parent = robot.projectId;
     this.workflowSer.createRobot1(this.robotModel).subscribe(res=>{
-      console.log(res);
+    
       robot.rid = res;
       this.robotCreated.emit(robot);
     });
@@ -286,14 +286,14 @@ export class ToolsetComponent implements OnInit, OnChanges, OnDestroy {
     this.delebot.Type = 'Robot';
 
     if (robot.projectId === null || robot.rid === null){
-      console.log(`Project id and robot id's are manditory`);
+     
     }
 
     this.workflowSer.deleteRobot(this.delebot).subscribe(res => {
       this.robots = this.robots.filter((edge): boolean => (edge.rid !== robot.rid && edge.Name !== robot.Name));
     }, err => {
       this.robots = this.robots.filter((edge): boolean => (edge.rid !== robot.rid && edge.Name !== robot.Name));
-      console.log(robot);
+     
     });
   }
 

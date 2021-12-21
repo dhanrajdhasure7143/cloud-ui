@@ -999,7 +999,7 @@ this.isupdatecouponclicked=false;
 
   }
   infoModelSubmit(data) {
-    console.log("data",data)
+   
     localStorage.setItem("selectedproductId",data.name)
     this.modalRef.hide();
     this.slideDown();
