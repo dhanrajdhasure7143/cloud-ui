@@ -38,7 +38,7 @@ export class RouterService {
     }
 
     unRegisterRoute(path: string){
-        console.log("Unregister", path);
+       
         this.updateRouteConfig(this.router.config.filter(route => route.path !== path));
     }    
 

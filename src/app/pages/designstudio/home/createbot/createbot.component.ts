@@ -45,7 +45,7 @@ export class CreatebotComponent implements OnInit {
       { item_id: 6, item_text: 'e-Commerce' },
       { item_id: 7, item_text: 'IT Infrastructure' }
     ];
-    console.log(this.sample);
+    
     this.selectedItems = [{ item_id: 4, item_text: 'Pune' }, { item_id: 6, item_text: 'Navsari' }];
     this.dropdownSettings = {
       singleSelection: true,
@@ -60,10 +60,10 @@ export class CreatebotComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log('onItemSelect', item);
+  
   }
   onSelectAll(items: any) {
-    console.log('onSelectAll', items);
+  
   }
   toogleShowFilter() {
     this.ShowFilter = !this.ShowFilter;

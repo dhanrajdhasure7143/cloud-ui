@@ -31,17 +31,17 @@ export class RobotactionsComponent implements OnInit {
 
   getRobotLog(tablename,roleid){
   this.workflowEditService.getRobotLog(tablename, roleid).subscribe(res =>{ 
-    console.log(res)
+   
   });
   }
   executeRobot(data){
   this.workflowEditService.executeRobot(data).subscribe(res=>{
-  console.log(res);
+ 
   });
   }
   debug_Order(data){
     this.workflowEditService.debug_Order(data).subscribe(res =>{
-    console.log(res);
+   
   });
   }
 

@@ -34,7 +34,7 @@ export class CouponComponent implements OnInit {
       amountOff:this.amountOff
         }
     this.createCoupon()
-    console.log("form submitted")
+   
   }
   createCoupon() {
     let input={
@@ -59,7 +59,7 @@ export class CouponComponent implements OnInit {
          
           });
           
-      console.log('resp is',this.data)
+     
   }
   onChangeRadio(value){
     if(value=='percentageOff'){
@@ -70,7 +70,7 @@ export class CouponComponent implements OnInit {
       this.isAmount=true;
       this.isPercentage=false;
     }
-    console.log("value is",value)
+   
 
   }
   onSelected(value){

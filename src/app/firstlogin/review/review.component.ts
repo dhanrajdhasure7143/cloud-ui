@@ -355,7 +355,7 @@ export class ReviewComponent implements OnInit {
   onSubmit() {
     this.spinner.show();
     this.userDetails = JSON.parse(Base64.decode(localStorage.getItem('details')));
-    console.log(this.userDetails)
+  
 
     var payload = new FormData();
 
