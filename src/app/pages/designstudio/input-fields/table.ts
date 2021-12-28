@@ -71,11 +71,10 @@ export class TableComponent implements OnInit {
     }
 
     ngOnInit(){
-        console.log(this.field);
-        console.log(this.field.value.tables)
+      
         if(this.field.value && this.field.value.restCall)
         this.callFunction(this.field.value.restCall);
-          console.log(this.field);
+        
     }
 
     // ngAfterViewInit(){
@@ -87,6 +86,6 @@ export class TableComponent implements OnInit {
     }
 
     toggleSelection(data){
-        console.log(data); // temporary
+        // temporary
     }
   }

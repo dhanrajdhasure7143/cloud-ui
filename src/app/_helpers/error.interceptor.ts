@@ -41,7 +41,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     handleError(err, reqUrl?){
     var me = this;
-      console.log(err);
+    
     if (reqUrl.url.indexOf('/api/login/beta/accessToken') < 0 && err.message.indexOf('oauth') < 0 && err.status === 401) {
      if(err.error.errorMessage){
       // Swal.fire({

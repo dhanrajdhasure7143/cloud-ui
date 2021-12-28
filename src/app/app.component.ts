@@ -80,7 +80,7 @@ export class AppComponent {
       }
     });
     // Start watching when user idle is starting.
-    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    this.userIdle.onTimerStart().subscribe();
     
     // Start watch when time is up.
     this.userIdle.onTimeout().subscribe(() => this.authservice.logout());
@@ -104,18 +104,18 @@ export class AppComponent {
   }
   updateClient() {
     if (!this.update.isEnabled) {
-      console.log('Not Enabled');
+   
       return;
     }
     this.update.available.subscribe((event) => {
-      console.log(`current`, event.current, `available `, event.available);
+     
       if (confirm('update available for the app please conform')) {
         this.update.activateUpdate().then(() => location.reload());
       }
     });
 
     this.update.activated.subscribe((event) => {
-      console.log(`current`, event.previous, `available `, event.current);
+   
     });
   }
 
@@ -125,8 +125,8 @@ export class AppComponent {
         const timeInterval = interval(8 * 60 * 60 * 1000);
         timeInterval.subscribe(() => {
           
-          this.update.checkForUpdate().then(() => console.log('checked'));
-          console.log('update checked');
+          this.update.checkForUpdate().then(() => {});
+         
         });
       }
     });

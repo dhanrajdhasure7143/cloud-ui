@@ -92,7 +92,7 @@ export class AddcardComponent implements OnInit {
 
   ngOnInit() {
    // this.particles.getParticles();
-   console.log(localStorage.getItem('authkey'))
+ 
     this.planselected = localStorage.getItem('selectedplan')
     if(this.planselected=='Standard'){
       this.planselected="Free Tier"
