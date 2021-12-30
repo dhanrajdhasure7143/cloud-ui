@@ -242,6 +242,7 @@ export class LoginComponent implements OnInit {
       if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
 
         this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
+        this.spinner.hide()
         Swal.fire({
           type: 'error',
           title:"Error",
