@@ -1,11 +1,11 @@
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader"/> 
+  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader"/>
 </ngx-spinner>
 <div class="container-fluid">
   <div class="row">
       <div id="particles-js"></div>
      <!-- <div class="col-md-4">
-          <img class="login-bg" src="assets/images/loginimage.png"> 
+          <img class="login-bg" src="assets/images/loginimage.png">
       </div> -->
     <div class="loginblock">
         <!--<div class="profile-pic-div">
@@ -18,16 +18,16 @@
           <div class="brand">
             &nbsp;
               <img style="margin-left:45px;" src="assets/images/EZFlow.png">
-           
+
           </div>
           &nbsp;
           <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login_form">
-              
+
               <div class="form-group col-sm-12">
                   <!--<img src="assets/images/username_icon.png" class="userIcon">-->
                   <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
                     <mat-label>Email</mat-label>
-                  <input type="text" matInput formControlName="username" (change)="onEmailChange()" (keydown)="onKeydownfeilds($event)" placeholder="Enter Email" 
+                  <input type="text" matInput formControlName="username" (change)="onEmailChange()" (keydown)="onKeydownfeilds($event)" placeholder="Enter Email"
                   pattern="^\S*[@]\S*[.]\S*$"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required />
                   <!--<div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                     <div *ngIf="f.username.errors.pattern">Enter valid email address</div>
@@ -51,22 +51,22 @@
                         <mat-label>Password</mat-label>
                         <input [type]="hide ?  'password': 'text'" matInput formControlName="password" #password minlength="8"  placeholder="Enter Password" (keydown)="onKeydownfeilds($event)"
                         [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
-                        <button class="password-btn ml-auto" matSuffix *ngIf="hide==true" (click)="hide = false">
+                        <span class="password-btn ml-auto" matSuffix *ngIf="hide==true" (click)="hide = false">
                           <img src='../../../assets/images/eye-show.svg' />
-                        </button>
-                        <button class="password-btn ml-auto" matSuffix *ngIf="hide==false" (click)="hide = true">
+                        </span>
+                        <span class="password-btn ml-auto" matSuffix *ngIf="hide==false" (click)="hide = true">
                           <img src='../../../assets/images/eye-hide.svg' />
-                        </button>
+                        </span>
                       </mat-form-field>
-                  
-                      
+
+
                       <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
                         Password is Required!
                       </mat-error>
                       <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched">
                         Minimum 8 Characters Required!
                       </mat-error>
-                     
+
                       <!--<mat-error *ngIf="loginForm.get('password').hasError('maxlength')">
                         Maximum 50 Characters Required!
                       </mat-error>-->
@@ -77,19 +77,19 @@
 
                   <div *ngIf="isOTP" class="form-group col-md-12"><!-- inner-addon left-addon right-addon-->
                     <!--<img src="assets/images/password_icon.png" class="otpIcon">-->
-                 
+
                     <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
                       <mat-label>OTP</mat-label>
                     <input type="text" maxlength="6" name = "otp" id="otp" matInput formControlName="otpNum" class="form-control otpinput" placeholder="Enter OTP"
                       required/>
                     </mat-form-field>
-                    
+
                   </div>
 
                   <div class="form-group col-sm-12 text-right">
                       <a [routerLink]="['/user/forgotpassword']" class="for_pass">Forgot Password&#63;</a>
                     </div>
-              
+
               <div class="col-sm-12 row">
                 <div class="col-sm-6">
               <button [disabled]="loginForm.invalid"  class="btn btn-primary login-btn" style="
@@ -102,7 +102,7 @@
                          " (click)="generateOTP()" id="btnn">Generate OTP</button>
             </div>
           </div>
-         
+
           <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
               <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
             </div>
@@ -112,7 +112,7 @@
              <div style="padding-top:10px">
               <h6><span> or </span></h6>
             </div>
-              
+
             </div>
               <div class="col-md-6 text-center" style="
                               margin-right: -0%;
@@ -148,8 +148,8 @@
         </mat-card>
     </div>
       <!-- <div class="col-md-4">
-       
-        
+
+
       </div> -->
   </div>
 
