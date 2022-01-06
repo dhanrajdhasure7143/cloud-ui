@@ -49,10 +49,11 @@ export class PlatformComponent implements OnInit {
     @Inject(APP_CONFIG) private config,
 ) { }
   ngOnInit() {
+    
     this.particles.getParticles();
-    if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
-      document.cookie = "new_reg_flow=true";
-    }
+    // if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
+    //   document.cookie = "new_reg_flow=true";
+    // }
     this.tenantId=localStorage.getItem('tenantName')
     this.profileservice.getUserRole(2).subscribe(role => {
       this.userRole = role.message;
@@ -95,9 +96,9 @@ export class PlatformComponent implements OnInit {
     var productURL = this.config.productendpoint;
     if(this.config.isNewDesignEnabled)
       productURL = this.config.newproductendpoint;
-      if(this.getCookie("new_reg_flow")=="true"){
+     // if(this.getCookie("new_reg_flow")=="true"){
     window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp 
-    }
+    //}
   
             }
             else if(prod.subscribed==true&&this.remainingDays>=1){
@@ -122,9 +123,9 @@ export class PlatformComponent implements OnInit {
     var productURL = this.config.productendpoint;
     if(this.config.isNewDesignEnabled)
       productURL = this.config.newproductendpoint;
-      if(this.getCookie("new_reg_flow")=="true"){
+     // if(this.getCookie("new_reg_flow")=="true"){
     window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
-    }
+    //}
            
             }
           }) 
