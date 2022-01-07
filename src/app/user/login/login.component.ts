@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-  document.cookie = "old_ux=false";
+  //document.cookie = "old_ux=false";
   // if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
   //   document.cookie = "new_reg_flow=true";
   // }
@@ -388,7 +388,8 @@ export class LoginComponent implements OnInit {
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
     var productURL = this.config.productendpoint;
-    if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
+   // if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
+    if(this.config.isNewDesignEnabled)
         productURL = this.config.newproductendpoint;
         this.spinner.hide();
        // if(this.getCookie("new_reg_flow")=="true"){
@@ -400,7 +401,10 @@ export class LoginComponent implements OnInit {
       //this.error = "Please complete your registration process";
       this.loading = false;
     })
-     this.router.navigate(['/activation']);
+    setTimeout(() => {
+      this.router.navigate(['/activation']);
+        },1000);
+     
   }
 
   requestDemo() {
