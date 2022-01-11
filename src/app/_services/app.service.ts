@@ -155,6 +155,10 @@ export class AppService {
   getTokenForSocial(): Observable<any> {
     return this.http.get<any>(`/rest/api/logout`);
   }
+  updateUser(user: any): Observable<any> {
+    return this.http.post<any>(`/api/user/updateUserDetails`, user);
+
+  }
   invitefriends(inviterMailId, inviteeMailId,data){
  
     let url = '/api/user/inviteUsers?inviterMailId='+inviterMailId+'&inviteeMailId='+inviteeMailId;
