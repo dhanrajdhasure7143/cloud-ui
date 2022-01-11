@@ -8,6 +8,7 @@ import { SocialLoginComponent } from './social-login/social-login.component';
 import { CreataccountComponent } from './creataccount/creataccount.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { RedirectsignoutComponent } from './redirectsignout/redirectsignout.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 const routes: Routes = [{
   path: '',
@@ -39,6 +40,10 @@ const routes: Routes = [{
   {
     path: 'signout',
     component: RedirectsignoutComponent
+  },
+  {
+    path:'userinfo',
+    component:UserInfoComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }
