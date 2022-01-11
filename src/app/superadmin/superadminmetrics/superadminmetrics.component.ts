@@ -141,7 +141,7 @@ this.getCouponsCountKpi();
       "value":this.tenantplansubscription.filter(item=>item.plan=="Freetrial" && item.product==this.productname).length
       }
       ]
-    console.log(event);
+   
   } 
 
   onClickSubscriptionBack(){
@@ -156,7 +156,7 @@ this.getCouponsCountKpi();
     
       this.tabledata=this.tenantplansubscription.filter(item=>item.plan==this.planname && item.product==this.productname);
       
-    console.log(event);
+   
   } 
 
   onTenantLevelBack(){
@@ -232,7 +232,7 @@ getTenantvsUser(){
           })
         });
         this.rolesandproducts= this.rolesproduct; 
-        console.log("roles",this.rolesandproducts)
+     
         })
       }
 

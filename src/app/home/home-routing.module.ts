@@ -4,6 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { UserdetailsComponent } from './userdetails/userdetails.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+import { AddcardComponent } from '../firstlogin/addcard/addcard.component';
+import { ReviewComponent } from '../firstlogin/review/review.component';
 
 const routes: Routes = [{
   path: '',
@@ -21,8 +23,15 @@ const routes: Routes = [{
   },{
     path: 'roles-and-permissions',
     component: RolesAndPermissionsComponent
+  },
+  {
+    path: 'add-card',
+    component: AddcardComponent
+  },
+  {
+    path: 'card-review',
+    component: ReviewComponent
   }
-  
 
 
 ]

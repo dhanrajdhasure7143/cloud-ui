@@ -59,7 +59,7 @@ export class SocialLoginComponent implements OnInit {
   this.appService.socialLogin(userId).subscribe(user => {
     
     if((user['errorMessage']=== "Failed to generate access and refresh token") && (user['errorCode']===4008)){
-      console.log("userr", user)
+    
       this.invalidUser = true;
       this.spinner.hide();
       return;
@@ -103,7 +103,7 @@ authorize() {
   this.profileService.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
      localStorage.setItem('userRole',this.userRole);
-   if(this.userRole.includes('SuperAdmin')){
+   if(this.userRole.includes('Platform Admin')){
     this.router.navigate(['/superadmin']);
     
    }else if(this.userRole.includes('User')){

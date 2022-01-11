@@ -172,7 +172,7 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
+                      <tab *ngIf="this.userRole.includes('System Admin') || myAccount_Subsription_All || myAccount_Subsription_Read || myAccount_Subsription_Write || myAccount_Subsription_Update || myAccount_Subsription_Delete" heading="Subscriptions" (selectTab)=onselectSubscrptionTab()>
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
                                     <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchsub" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -228,7 +228,7 @@
                     </div>
                   </tab>
 
-                  <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
+                  <tab *ngIf="this.userRole.includes('System Admin') || this.myAccountFull || myAccount_PaymentHistory_All" heading="Payment History" (selectTab)=onselectInvoiceTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchpayment" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -269,7 +269,7 @@
                         </div>
                       </tab>
                         
-                      <tab *ngIf="this.userRole.includes('Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
+                      <tab *ngIf="this.userRole.includes('System Admin') || this.myAccountFull || myAccount_PaymentMode_All" heading="Payment Mode" (selectTab)=onselectPaymentModeTab()>
                             <div class="search-One">
                                 <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchmode" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -480,7 +480,7 @@
                 <div class="container" *ngIf="isAlerts">
                   <div  class="">
                     <tabset id="staticTabs" #staticTabs>
-                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_Alerts_Full" heading="Alerts" id="tab1">
+                    <tab  *ngIf="this.userRole.includes('System Admin') || this.configuration_Alerts_Full" heading="Alerts" id="tab1">
                         <div class="search-One">
                             <form class="form-inline d-flex  md-form form-sm">
                                 <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchalert" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -549,7 +549,7 @@
                 </div>
                       </div>
                     </tab>
-                    <tab  *ngIf="this.userRole.includes('Admin') || this.configuration_EmailTempt_Full" heading="Email Templates" >
+                    <tab  *ngIf="this.userRole.includes('System Admin') || this.configuration_EmailTempt_Full" heading="Email Templates" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
                             <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchtemplate" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -610,7 +610,7 @@
                           </div>
                     </tab>
                     <!--vault configure tab-->
-                    <tab  *ngIf="this.userRole.includes('Admin') || this.confuguration_SecureVault_Full" heading="Security Vault" >
+                    <tab  *ngIf="this.userRole.includes('System Admin') || this.confuguration_SecureVault_Full" heading="Security Vault" >
                       <div class="search-One">
                         <form class="form-inline d-flex  md-form form-sm">
                             <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchvault" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -673,7 +673,7 @@
                           </div>
                     </tab>
 
-                    <tab *ngIf="this.userRole.includes('Admin') || this.configuration_TwoFactor_Full" heading = "Two Factor Authentication">
+                    <tab *ngIf="this.userRole.includes('System Admin') || this.configuration_TwoFactor_Full" heading = "Two Factor Authentication">
                         <div class = "col-md-12 twoFactor factor">
                         <form #f="ngForm" (ngSubmit)="twoFactorAuthConfig(f)">
                          
@@ -729,7 +729,7 @@
                 <div class="container users" *ngIf="isusers">
                         <div  class="">
                             <tabset id="staticTabs" #staticTabs>
-                              <tab  *ngIf="this.userRole.includes('Admin') || this.userManagement_Users_Full" heading="Users" id="tab1">
+                              <tab  *ngIf="this.userRole.includes('System Admin') || this.userManagement_Users_Full" heading="Users" id="tab1">
                                 <div class="search-One">
                                     <form class="form-inline d-flex  md-form form-sm">
                                         <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchUser" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -813,7 +813,7 @@
                                       </div>
                             </div>
                       </tab>
-                      <tab *ngIf="this.userRole.includes('Admin') || this.userManagement_Depart_Full" heading="Departments">
+                      <tab *ngIf="this.userRole.includes('System Admin') || this.userManagement_Depart_Full" heading="Departments">
                           <div class="search-One">
                               <form class="form-inline d-flex  md-form form-sm">
                                   <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchDept" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -821,7 +821,7 @@
                                 </form>
                               </div>
                             <div class="container department">
-                              <button *ngIf="this.userRole.includes('Admin')" class='btn btn-primary pull-right addCard' (click)='adddept(createDept)'>Add Department</button>
+                              <button *ngIf="this.userRole.includes('System Admin')" class='btn btn-primary pull-right addCard' (click)='adddept(createDept)'>Add Department</button>
 
                             <table class="table table-borderless table-hover">
                                     <thead>
@@ -830,7 +830,7 @@
                                         <th scope="col" class="types">Department</th>
                                         <th scope="col" class="types">Created By</th>
                                         <th scope="col" class="types">Created At</th>
-                                        <th *ngIf="this.userRole.includes('Admin')" scope="col" class="types">Action</th>
+                                        <th *ngIf="this.userRole.includes('System Admin')" scope="col" class="types">Action</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -878,7 +878,7 @@
                                 </div>
                             <div class="container role">
                               
-                                <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add Role</button>
+                                <button *ngIf="this.userRole.includes('Platform Admin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add Role</button>
                                     <table class="table table-borderless table-hover">
                                             <thead>
                                               <tr>
@@ -888,7 +888,7 @@
                                                 <th scope="col" class="types">Permissions</th>
                                                 <th scope="col" class="types">Created At</th>
                                                 <th scope="col" class="types">Modified At</th>
-                                                <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
+                                                <th *ngIf="this.userRole.includes('PlatformAdmin')" scope="col" class="types">Action</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -909,7 +909,7 @@
                                                 </td>
                                                 <td>{{role.audit.created_at | date}} {{role.audit.created_at.split("T")[1].split(".")[0]}}</td>
                                                 <td>{{role.audit.modified_at | date}} {{role.audit.modified_at.split("T")[1].split(".")[0]}}</td>
-                                                <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
+                                                <td *ngIf="this.userRole.includes('Platform Admin')" class="deleticon">
                                                     <span  (click)="selectedroledata(role,j,rolestemplate)">
                                                     <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                     <span  (click)="roledel(role.id,j)"> 
@@ -939,7 +939,7 @@
 
 
 
-                            <tab *ngIf="this.userRole.includes('SuperAdmin')" heading="Permissions">
+                            <tab *ngIf="this.userRole.includes('Platform Admin')" heading="Permissions">
                               <div class="search-One">
                                   <form class="form-inline d-flex  md-form form-sm">
                                       <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="searchPermission" aria-label="Search" [ngModelOptions]="{standalone: true}"/>
@@ -948,7 +948,7 @@
                                   </div>
                               <div class="container role">
                                 
-                                  <button *ngIf="this.userRole.includes('SuperAdmin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add Permission</button>
+                                  <button *ngIf="this.userRole.includes('Platform Admin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add Permission</button>
                                       <table class="table table-borderless table-hover">
                                               <thead>
                                                 <tr>
@@ -956,7 +956,7 @@
                                                   <th scope="col" class="types">Description</th>
                                                   <th scope="col" class="types">Created At</th>
                                                   <th scope="col" class="types">Modified At</th>
-                                                  <th *ngIf="this.userRole.includes('SuperAdmin')" scope="col" class="types">Action</th>
+                                                  <th *ngIf="this.userRole.includes('Platform Admin')" scope="col" class="types">Action</th>
                                                 </tr>
                                               </thead>
                                               
@@ -966,7 +966,7 @@
                                                   <td>{{permission.description}}</td>
                                                   <td>{{permission.audit.created_at | date}} {{permission.audit.created_at.split("T")[1].split(".")[0]}}</td>
                                                   <td>{{permission.audit.modified_at | date}} {{permission.audit.modified_at.split("T")[1].split(".")[0]}}</td>
-                                                  <td *ngIf="this.userRole.includes('SuperAdmin')" class="deleticon">
+                                                  <td *ngIf="this.userRole.includes('Platform Admin')" class="deleticon">
                                                       <span  (click)="selectedpermdata(permission,p,permtemplate)">
                                                       <img src="assets/images/eyeIcon.svg" alt=""> </span>
                                                       <span  (click)="permdel(permission.id,p)"> 
@@ -1013,7 +1013,7 @@
           <div class="row">
       <div class="container coupons">
         
-          <button *ngIf="this.userRole == 'SuperAdmin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
+          <button *ngIf="this.userRole == 'Platform Admin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
               <table class="table table-borderless table-hover">
                       <thead>
                         <tr>
@@ -1029,7 +1029,7 @@
                          
                           <th scope="col" class="types" style="text-align:center">Created At</th>
                          
-                          <th *ngIf="this.userRole == 'SuperAdmin'" scope="col" class="types">Action</th>
+                          <th *ngIf="this.userRole == 'Platform Admin'" scope="col" class="types">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1045,7 +1045,7 @@
                           <td style="text-align:center">{{coupon.createdAt | date}} {{coupon.createdAt.split("T")[1].split(".")[0]}}</td>
                           
                           
-                          <td *ngIf="this.userRole == 'SuperAdmin'" class="deleticon">
+                          <td *ngIf="this.userRole == 'Platform Admin'" class="deleticon">
                             <div class="row"> <span  (click)="selectedCoupondata(coupon,j,modifyCoupon)">
                               <img src="assets/images/eyeIcon.svg" alt=""> </span>
                               <span  (click)="couponDel(coupon.id,j)"> 
@@ -1225,7 +1225,7 @@
                     <h4 class="noticationheading">Notifications</h4>
                 </div>
                 <div class="notificatnmsgs col-md-12">
-                  <table *ngIf="this.userRole.includes('Admin')" class="table table-borderless table-hover">
+                  <table *ngIf="this.userRole.includes('System Admin')" class="table table-borderless table-hover">
                     <thead>
                       <tr>
                         <th scope="col" style="width:60%;">Notification Message</th>
@@ -1262,7 +1262,7 @@
                   <div  *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
                     <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
                     </div>
-                    <table *ngIf="this.userRole.includes('SuperAdmin')" class="table table-borderless table-hover">
+                    <table *ngIf="this.userRole.includes('Platform Admin')" class="table table-borderless table-hover">
                       <thead>
                         <tr>
                           <th scope="col" style="width:60%;">Notification Message</th>
@@ -1294,7 +1294,7 @@
                           <div class="ntfnorecords"><h4>No records found</h4></div>
                         </tbody>
                     </table>
-                    <div *ngIf="this.userRole.includes('SuperAdmin')">
+                    <div *ngIf="this.userRole.includes('Platform Admin')">
                       <div *ngIf="superadminnotificationList.errorMessage!='No records found'" class="superadminnotificationpagination">
                         <pagination-controls id="superadmin_notification_page" maxSize="8" (pageChange)="sn = $event"></pagination-controls>
                         </div>
