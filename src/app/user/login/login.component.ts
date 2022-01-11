@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   public otp:any;
   public errormsg: any;
   public hide:any = true;
-
+  inactive:any;
   constructor(
     @Inject(APP_CONFIG) private config,
     private formBuilder: FormBuilder,
@@ -183,6 +183,10 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     //if two factor authentication is enabled 
     if(this.loginForm.valid){ 
+
+
+     
+    
       this.loginService.checkpasswordexpiry(this.f.username.value).subscribe(data=>{
         let res = data;
         if(data.isError == "true"){
@@ -208,7 +212,10 @@ export class LoginComponent implements OnInit {
       
       this.authenticationService.validateOTP(this.f.username.value, this.f.otpNum.value).subscribe(data => {
 
+       
         this.authenticationMeothod();
+       
+        
   
       },error => {
         
@@ -222,15 +229,23 @@ export class LoginComponent implements OnInit {
     
       );
 
-    }else{
+    }
+  
+  
+    else{
       this.authenticationMeothod();
     }
       // 
   }
   
 });  
+    }
+
+     
 } 
-}
+
+
+
 
  authenticationMeothod(){
    this.spinner.show();
@@ -313,7 +328,8 @@ export class LoginComponent implements OnInit {
     // localStorage.setItem('designation',data.designation);
      localStorage.setItem('country',data.country);
     // localStorage.setItem('department', data.department);
-
+    localStorage.setItem('enabled',data.enabled)
+    this.inactive=data.enabled
     //this.userService.getRole(data.company,data.userId).subscribe(data => this.getRoles(data));
   }
 
@@ -366,7 +382,9 @@ export class LoginComponent implements OnInit {
   //   this.router.navigate(['/activation']);
   // }
   authenticate() {
+    
     this.spinner.show();
+   
     this.profileService.getUserRole(2).subscribe(res=>{
       this.userRole=res.message;
      
@@ -374,7 +392,11 @@ export class LoginComponent implements OnInit {
      if(this.userRole.includes('Platform Admin')){
       this.router.navigate(['/superadmin']);
       
-     }else{
+     }
+     else if(this.inactive=="false"){
+      this.router.navigate(['user/userinfo'])
+     }
+     else{
       //this.router.navigate(['/activation']);
     var token=JSON.parse(localStorage.getItem('currentUser'));
     var encryptToken=btoa(token.accessToken)
@@ -393,13 +415,14 @@ export class LoginComponent implements OnInit {
         if(this.getCookie("new_reg_flow")=="true"){
         window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
         }
+       
         //window.location.href="http://localhost:4000"+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
      }
     },error => {
       //this.error = "Please complete your registration process";
       this.loading = false;
     })
-     this.router.navigate(['/activation']);
+   // this.router.navigate(['/activation']);
   }
 
   requestDemo() {

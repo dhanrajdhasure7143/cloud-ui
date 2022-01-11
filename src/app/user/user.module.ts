@@ -54,9 +54,10 @@ import {
   MatTreeModule,
 } from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent,ChangepasswordComponent,RedirectsignoutComponent],
+  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent,ChangepasswordComponent,RedirectsignoutComponent, UserInfoComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
