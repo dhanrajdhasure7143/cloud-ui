@@ -13,6 +13,10 @@ export class RedirectsignoutComponent {
   constructor(private route: Router, private appser: AppService, @Inject(APP_CONFIG) private config, private spinner: NgxSpinnerService) {
     this.spinner.show()
 
+  }
+  ngOnInit() {
+
+    
     //localStorage.clear();
     //sessionStorage.clear();
     // this.appser.logout();
@@ -20,14 +24,12 @@ export class RedirectsignoutComponent {
     this.spinner.hide();
     this.route.navigate(['/user']);
   }
-  ngOnInit() {
-
-  }
 
   ngDestroy() {
     this.spinner.hide();
   }
   logout() {
+  
     this.logintype = localStorage.getItem('loginType');
 
 
@@ -42,7 +44,7 @@ export class RedirectsignoutComponent {
       sessionStorage.clear();
     
     }
-
     this.appser.logout();
+    
   }
 }

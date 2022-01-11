@@ -781,7 +781,10 @@ this.profileservice.applications().subscribe(resp =>
      this.dataid = '';
      document.getElementById("foot").classList.add("slide-down");
      document.getElementById("foot").classList.remove("slide-up");
-     this.staticTabs.tabs[0].active = true;
+     if(this.staticTabs!=undefined){
+      this.staticTabs.tabs[0].active = true;
+     }
+     
   }
 
  
