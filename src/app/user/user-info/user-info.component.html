@@ -19,7 +19,7 @@
                       <!-- <img src="assets/images/registration/mail.svg" class="icon"> -->
                   <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
                       <mat-label>First Name</mat-label>
-                      <input type="text" formControlName="firstName" matInput placeholder="Enter First Name"maxlength="25"  alphabetOnly [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
+                      <input type="text" formControlName="firstName" minlength="3" matInput placeholder="Enter First Name"maxlength="25" (keypress)="lettersOnly($event)"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
                   </mat-form-field>
                     <!--<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                         <div *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">Email is required</div>
@@ -28,12 +28,15 @@
                     <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('firstName').hasError('required') && userForm.get('firstName').touched">
                       First Name is Required!
                     </mat-error>
+                    <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('firstName').hasError('minlength') && userForm.get('firstName').touched">
+                     Minimum 3 characters Required
+                    </mat-error>
                    
                 </div>
                 <div class="col-sm-12" style="margin:15px 0px !important;">
                   <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
                     <mat-label>Last Name</mat-label>
-                    <input type="text" formControlName="lastName" matInput placeholder="Enter Last Name"  maxlength="25"  alphabetOnly [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
+                    <input type="text" formControlName="lastName"  matInput placeholder="Enter Last Name"  maxlength="25" (keypress)="lettersOnly($event)"  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
                 </mat-form-field>
                 <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('lastName').hasError('required') && userForm.get('lastName').touched">
                   Last Name is Required!
