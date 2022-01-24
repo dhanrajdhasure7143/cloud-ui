@@ -149,6 +149,7 @@ export class ReviewComponent implements OnInit {
     this.isdiable = !this.isagree;
   }
   buyProductPlan() {
+    this.isdiable=true;
     this.onSubmit();
   }
   editCardDetails() {

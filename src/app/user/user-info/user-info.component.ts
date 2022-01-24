@@ -108,6 +108,17 @@ export class UserInfoComponent implements OnInit {
     });
 
   }
+  lettersOnly(event): boolean {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+      if ((event.target.selectionStart === 0 && event.code === 'Space')){
+        event.preventDefault();
+      }
+  }
   checkSuccessCallback(data:any){
     
     this.sharedData.setLoggedinUserData(data);

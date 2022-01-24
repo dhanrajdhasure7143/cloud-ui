@@ -46,6 +46,7 @@ export class CreataccountComponent implements OnInit {
    if(this.userId.endsWith('@gmail.com') || this.userId.endsWith('@yahoo.com') || 
    this.userId.endsWith('@hotmail.com') || this.userId.endsWith('@rediffmail.com')){
      this.ispublicMail=true;
+     this.error='Only Business Email is allowed';
      return
 
    }
