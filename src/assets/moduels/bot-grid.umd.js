@@ -143,7 +143,7 @@
                  * @param {?} i
                  * @return {?}
                  */function (x, i) { return i; }));
-                console.log(JSON.stringify(this.numbers));
+             
             };
         /**
          * @return {?}

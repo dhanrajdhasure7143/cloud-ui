@@ -17,17 +17,29 @@ export class ProductlistService {
   getAllProducts(): Observable<any[]> {
     return this.http.get<any[]>('/subscriptionservice/v1/products');
   }
-  getProductPlanes(productId,tenantID): Observable<any[]> {
-    return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/plans');
+  getProductPlanes(productId,tenantID,accessToken): Observable<any[]> {
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${accessToken}`
+    });
+    return this.http.get<any[]>('/subscriptionservice/v1/products/'+productId +'/plans',{headers:  headers, responseType:'json'});
   }
-  subscribePlan(token,planData){
-    return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData)
+  subscribePlan(token,planData,accessToken){
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${accessToken}`
+    });
+    return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData,{headers:  headers, responseType:'json'})
   }
   getMyAccountPaymentToken(cardData){
     return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=myaccount',cardData,{responseType:'json'})
   }
-  getSubscriptionPaymentToken(cardData){
-    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=subs',cardData,{responseType:'json'})
+  getSubscriptionPaymentToken(cardData,accessToken){
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${accessToken}`
+    });
+    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=subs',cardData,{headers:  headers, responseType:'json'})
   }
   getNewAccessToken(): Observable<any[]>
   {

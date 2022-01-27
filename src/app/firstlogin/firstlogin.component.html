@@ -3,243 +3,311 @@
 
 </topheader> -->
 
-  <div class="container-fluid user_layout">
+<div class="container user_layout">
+  <div class="">
+      <!-- <div id="particles-js"></div> -->
+    <!-- <div class="col-sm-2">
+    </div> -->
+   
     <div class="row">
-        <div id="particles-js"></div>
-      <div class="col-sm-5">
-            <img class="login-bg" src="assets/images/loginimage.png">
-      </div>
-      <div class="col-sm-7">
-        <mat-card class="mat1-card">
-          <div class="row">
-              
-            <div class="col-xs-12 col-sm-12 col-md-9">         
-              <div class="brand">
-                  <img src="assets/images/EZFlow_horizontal_full_color.png">
+      <mat-card class="mat1-card">
+        <div class="row brand-header">
+            
+          <div class="col-md-9">         
+            <div class="brand">
+                <img src="assets/images/EZFlow_horizontal_full_color.png">
+            </div>
+            <!-- <div class="col-sm-12 status-bar">
+              <newstepselection class="register_account email_verified"></newstepselection>
+            </div> -->
+          </div>
+          <div class="col-md-3">         
+            <div class="picture-container">
+              <div class="picture">
+                  <img [src]="imgsrc" class="picture-src" id="wizardPicturePreview" title="">
+                  <input type="file" id="wizard-picture" class="picture-src" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg">
+                  
               </div>
-              <div class="col-sm-12 status-bar">
-                <newstepselection class="register_account email_verified"></newstepselection>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-3">         
-              <div class="picture-container">
-                <div class="picture">
-                    <img [src]="imgsrc" class="picture-src" id="wizardPicturePreview" title="">
-                    <input type="file" id="wizard-picture" class="picture-src" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg">
-                    
-                </div>
-                <!--h6 class=""><i class="fa fa-camera" aria-hidden="true"></i></h6> -->
-            </div>
-            </div>
-          </div>          
-
-        <form autocomplete="off" #firstloginform="ngForm" (ngSubmit)="onSubmit()" class="col-sm-12">
-          <div class="row">
-            <div class="col-sm-6" style="margin: -20px -30px 10px 8px;padding-bottom: 8px !important;">
-              <!--<img src="assets/images/registration/user.svg" class="icon">-->
-              <mat-form-field appearance="outline" color="primary">
-                <mat-label>First Name</mat-label>
-              <input type="text" name="firstName" matInput #firstName="ngModel" [(ngModel)]="model.firstName" maxlength="20" minlength="3" placeholder="First Name" required (keypress)="lettersOnly($event)">
-              </mat-form-field>
-                <span *ngIf="((firstName.invalid && firstloginform.submitted)|| (firstName.errors && firstName.touched))"
-                class='fa fa-info-circle errspan'> First Name is required </span>
-            </div>
-
-            <div class="col-sm-6" style="margin: -20px -30px 10px 8px;padding-bottom: 8px !important;"> <!-- inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/user.svg" class="icon"> -->
-              <mat-form-field appearance="outline" color="primary">
-                <mat-label>Last Name</mat-label>
-              <input type="text" name="lastName" id="lastName" #lastName="ngModel" matInput
-                [(ngModel)]="model.lastName" maxlength="20" minlength="1" placeholder="Last Name" required (keypress)="lettersOnly($event)">
-              </mat-form-field>
-                <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
-                class='fa fa-info-circle errspan'> Last Name is required </span>
-            </div>
-            <div class="col-sm-6" style="margin: -20px -30px 10px 8px;padding-bottom: 8px !important;">
-              <!--<img src="assets/images/registration/mail.svg" class="icon">-->
-              <mat-form-field appearance="outline" color="primary">
-                <mat-label>Email</mat-label>
-              <input type="email" id="email" name='email' matInput #email="ngModel" [(ngModel)]="decodedToken" maxlength="30" placeholder="Email" required disabled>
-              </mat-form-field>
-              <span *ngIf="((email.invalid && firstloginform.submitted)|| (email.errors && email.touched))"
-                class='fa fa-info-circle errspan'> Email is required </span>
-            </div>
-          <div class="col-sm-6" style="margin: -20px -30px 10px 8px;padding-bottom: 8px !important;"><!-- inner-addon left-addon-->
-            <!-- <img src="assets/images/registration/Lock.svg" class="icon"> -->
-            <mat-form-field appearance="outline" color="primary" style="width:272px !important">
-              <mat-label>Password</mat-label>
-            <!--<span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>-->
-            <input [type]="hide ? 'text' : 'password'" id="password" name="password" #password="ngModel" matInput
-              [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" required>
-              <mat-icon style="cursor:pointer" matSuffix (click)="hide = !hide">{{hide ?  'visibility':'visibility_off'}}</mat-icon>
+              <!--h6 class=""><i class="fa fa-camera" aria-hidden="true"></i></h6> -->
+          </div>
+          </div>
+        </div>          
+<div class="brand-form">
+      <form autocomplete="off" #firstloginform="ngForm"  class="">
+        <div class="row">
+          <div class="col-sm-6 ">
+            <!--<img src="assets/images/registration/user.svg" class="icon">-->
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>First Name</mat-label>
+            <input type="text" name="firstName" matInput #firstName="ngModel" [(ngModel)]="model.firstName" maxlength="20" minlength="3" placeholder="First Name" required (keypress)="lettersOnly($event)">
             </mat-form-field>
-            <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
-              <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
-              <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number</span>
-            </span>
-          </div>
-
-            <div class="col-sm-6" style="margin: -20px -30px 10px 8px;"><!-- inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/bag.svg" class="icon"> -->
-              <mat-form-field appearance="outline" color="primary">
-                <mat-label>Job Title</mat-label>
-              <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" matInput
-                [(ngModel)]="model.designation" maxlength="20" minlength="3" placeholder="Job Title" required>
-              </mat-form-field>
-              <span *ngIf="((jobTitle.invalid && firstloginform.submitted)|| (jobTitle.errors && jobTitle.touched))"
-                class='fa fa-info-circle errspan'> Job Title is required </span>
-            </div>
-            
-            <div class="col-sm-6" style="margin: -20px -30px 10px 8px;"> <!-- inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/company.svg" class="icon"> -->
-              <mat-form-field appearance="outline" color="primary">
-                <mat-label>Organization Name</mat-label>
-              <input type="text" matInput [disabled]="isCompanydisabled" name="company" #company="ngModel" [(ngModel)]="model.company"
-                maxlength="30" minlength="3" placeholder="Company" required>
-              </mat-form-field>
-              <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
-                class='fa fa-info-circle errspan'> Company is required </span>
-            </div>
-            <div *ngIf="!isCompanydisabled" class=" col-md-6" style="margin: -20px -30px 10px 8px;"><!-- form-group inner-addon left-addon-->
-                <!-- <img src="assets/images/registration/department.svg" class="icon"> -->
-                <mat-form-field appearance="outline">
-                  <mat-label>Department</mat-label>
-                <mat-select matNativeControl (selectionChange)="onChangeDepartment($event.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
-                required>
-                  <mat-option [value]="undefined" disabled hidden>Department</mat-option>
-                  <mat-option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;' [value]="departments[i]">{{departments[i]}}</mat-option>
-                  <!-- <option value="others">Others</option> -->
-                </mat-select>
-                </mat-form-field>
-                <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
-                class='fa fa-info-circle errspan'> Department is required </span>
-              </div>
-
-              <div *ngIf="isCompanydisabled" class=" col-md-6" style="margin: -20px -30px 10px 8px;"><!-- form-group inner-addon left-addon-->
-                <!-- <img src="assets/images/registration/department.svg" class="icon"> -->
-                <mat-form-field appearance="outline">
-                  <mat-label>Department</mat-label>
-                <mat-select matNativeControl (selectionChange)="onChangeDepartment(model.department)" name='department' #department="ngModel" [(ngModel)]="model.department"
-                required>
-                  <mat-option [value]="undefined" disabled hidden>Department</mat-option>
-                  <mat-option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;' [value]="categories[c]">{{categories[c]}}</mat-option>
-                  <!-- <option value="others">Others</option> -->
-                </mat-select>
-                </mat-form-field>
-                <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
-                class='fa fa-info-circle errspan'> Department is required </span>
-              </div>
-              <!-- <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
-                  <img src="assets/images/registration/department.svg" class="icon">
-                <input type="text" class="form-control" name="other_department" #other_department="ngModel" [(ngModel)]='otherDepartment' maxlength="20" placeholder="Department" required>
-                <span *ngIf="((other_department.invalid && firstloginform.submitted)|| (other_department.errors && other_department.touched))"
-                class='fa fa-info-circle errspan'> Department is required </span>
-              </div> -->
-            <div class=" col-md-6" style="margin: -20px -30px 10px 8px;"><!-- form-group inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/Global.svg" class="icon"> -->
-              <mat-form-field appearance="outline">
-                <mat-label>Country/Region</mat-label>
-              <mat-select matNativeControl (selectionChange)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
-               <mat-option  [value]="undefined" disabled hidden>Country</mat-option>
-               <mat-option  [value]="null" disabled hidden>Country</mat-option>
-               <!-- <option hidden disabled [selected]=true>Country</option> -->
-                <mat-option *ngFor="let country of countryInfo; let i= index"  [value]="country.CountryName">{{country.CountryName}}
-                </mat-option>
-              </mat-select>
-              </mat-form-field>
-              <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
-                class='fa fa-info-circle errspan'> Country is required </span>
-            </div>
-
-            <div class=" col-md-6" style="margin: -20px -30px 10px 8px;">
-              <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
-              <mat-form-field appearance="outline">
-                <mat-label>State</mat-label>
-              <mat-select matNativeControl (selectionChange)="onChangeState($event.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
-                <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
-                <mat-option  [value]="undefined" disabled hidden>State</mat-option>
-                <mat-option  [value]="null" disabled hidden>State</mat-option>
-                <mat-option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</mat-option>
-              </mat-select>
-              </mat-form-field>
-              <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
-                class='fa fa-info-circle errspan'> State is required </span>
-            </div>
-
-            <div class=" col-md-6" style="margin: -20px -30px 10px 8px;"><!-- form-group inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
-              <mat-form-field appearance="outline">
-                <mat-label>City</mat-label>
-              <mat-select matNativeControl name='city' #city='ngModel' [(ngModel)]='model.city' required>
-                <!-- <option *ngIf="cityInfo == ''" value="-1">City</option> -->
-                <mat-option  [value]="undefined" disabled hidden>City</mat-option>
-                <mat-option  [value]="null" disabled hidden>City</mat-option>
-                <mat-option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</mat-option>
-              </mat-select>
-              </mat-form-field>
-              <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
-                class='fa fa-info-circle errspan'> City is required </span>
-            </div>
-
-            <div class="col-sm-6" style="margin: -20px -30px 10px 8px;">
-              <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
-              <mat-form-field appearance="outline">
-                <mat-label>Zip Code</mat-label>
-              <input type="text" matInput (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" [(ngModel)]="model.zipcode"
-                 onKeyPress="if(this.value.length==10) return false;" minlength="5" placeholder="Zip Code" required>
-              </mat-form-field>
-              <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched))"
-                class='fa fa-info-circle errspan'> Zip Code is required </span>
-            </div>
-
-            <div *ngIf ="isInput"class="col-sm-6 ph-number" style="margin: -20px -30px 10px 8px;"><!-- inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
-              <mat-form-field appearance="outline">
-                <mat-label>Phone Number</mat-label>
-                <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" required > <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
-              </mat-form-field>
-                   <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
-                  <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
-                  class='fa fa-info-circle errspan'> Phone Number is required </span>
-                </div>
-                <div *ngIf="!isInput" class="col-sm-6 ph-number" style="margin: -20px -30px 10px 8px;">
-                  <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
-                  <mat-form-field appearance="outline">
-                    <mat-label>Phone Number</mat-label>
-                  <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" required> <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
-                  </mat-form-field>
-                       <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
-                      <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched))"
-                      class='fa fa-info-circle errspan'> Phone Number is required </span>
-                    </div>
-
-                <!--<div class="form-group col-sm-6 inner-addon left-addon photoupload">
-                  <img src="assets/images/registration/ImageUpload.svg" class="imageuploadicon">
-                  <input  class="form-control col-sm-12" id="image" placeholder="Select image to upload"
-                  name='image' #image="ngModel" [(ngModel)]="profileimage" disabled/>
-                  <span style="color: black;"><b>Note : Max File Size 128kb </b></span>
-                  <span>
-                  <div class="fileUpload btn btn-primary">
-                  <span>Choose File</span>
-                 <input id="uploadBtn" type="file" class="upload" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg" />
-                 
-                </div>
+            <span class="fa fa-info-circle errspan"
+            *ngIf="(firstName.touched || firstloginform.submitted) && firstName.errors?.required">
+            Job Title is required 
+        </span>
+              <span class='fa fa-info-circle errspan' *ngIf="firstName.touched && firstName.errors?.minlength">
+                Minimum 3 characters required
               </span>
-              </div>-->
-                          <div class="buttns col-sm-12">
-              <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an account&#63;</a>
-            <!-- </div>
-            <div class="form-group col-sm-6 continue_btn pull-right"> -->
-             <div class='row' style="margin: 10px 55px !important;" class="text-right">
-              <button type="button" class="btn btn-primary" (click)="resetForm(firstloginform)" style='margin-right:27px;height:36px !important'>Clear all</button>
-              <button type="submit" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr">Register</button>
+          </div>
+
+          <div class="col-sm-6"> <!-- inner-addon left-addon-->
+            <!-- <img src="assets/images/registration/user.svg" class="icon"> -->
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>Last Name</mat-label>
+            <input type="text" name="lastName" id="lastName" #lastName="ngModel" matInput
+              [(ngModel)]="model.lastName" maxlength="20" minlength="1" placeholder="Last Name" required (keypress)="lettersOnly($event)">
+            </mat-form-field>
+              <span *ngIf="((lastName.invalid && firstloginform.submitted)|| (lastName.errors && lastName.touched))"
+              class='fa fa-info-circle errspan'> Last Name is required </span>
+          </div>
+
+       
+      
+          <div class="col-sm-6">
+            <!--<img src="assets/images/registration/mail.svg" class="icon">-->
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>Email</mat-label>
+            <input type="email" id="email" name='email' matInput #email="ngModel" [(ngModel)]="decodedToken" maxlength="30" placeholder="Email" required disabled>
+            </mat-form-field>
+            <span *ngIf="((email.invalid && firstloginform.submitted)|| (email.errors && email.touched))"
+              class='fa fa-info-circle errspan'> Email is required </span>
+          </div>
+        <div class="col-sm-6"><!-- inner-addon left-addon-->
+          <!-- <img src="assets/images/registration/Lock.svg" class="icon"> -->
+          <mat-form-field appearance="outline" color="primary" >
+            <mat-label>Password</mat-label>
+          <!--<span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>-->
+          <input [type]="hide ? 'text' : 'password'" id="password" name="password" #password="ngModel" matInput
+            [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" required>
+            <mat-icon style="cursor:pointer" matSuffix (click)="hide = !hide">{{hide ?  'visibility':'visibility_off'}}</mat-icon>
+          </mat-form-field>
+          <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
+            <span class='fa fa-info-circle errspan' *ngIf="password.errors.required"> Password is required</span>
+            <span class='fa fa-info-circle errspan' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number</span>
+          </span>
+        </div>
+               <div class="col-sm-6 "><!-- inner-addon left-addon-->
+            <!-- <img src="assets/images/registration/bag.svg" class="icon"> -->
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>Job Title</mat-label>
+            <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" matInput (input)="validate(jobTitle)" (keypress)="lettersOnly($event)"
+              [(ngModel)]="model.designation" maxlength="20" minlength="2" placeholder="Job Title" required>
+            </mat-form-field>
+            <!-- <span *ngIf="((jobTitle.invalid && firstloginform.submitted)|| (jobTitle.errors && jobTitle.touched))"
+              class='fa fa-info-circle errspan'> Job Title is required </span> -->
+              <span class="fa fa-info-circle errspan"
+              *ngIf="(jobTitle.touched || firstloginform.submitted) && jobTitle.errors?.required">
+              Job Title is required 
+          </span>
+          <span class='fa fa-info-circle errspan' *ngIf="jobTitle.touched && jobTitle.errors?.minlength">
+            Minimum 2 characters required
+          </span>
+          </div>
+          
+          <div class="col-sm-6 "> <!-- inner-addon left-addon-->
+            <!-- <img src="assets/images/registration/company.svg" class="icon"> -->
+            <mat-form-field appearance="outline" color="primary">
+              <mat-label>Organization Name</mat-label>
+            <input type="text" matInput [disabled]="isCompanydisabled" (keyup)="checkOrganizationName(model.company)" name="company" #company="ngModel" [(ngModel)]="model.company"
+              maxlength="30" minlength="3" placeholder="Company" required (keypress)="lettersOnly($event)">
+            </mat-form-field>
+            <!-- <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
+              class='fa fa-info-circle errspan'> Company is required 
+              
+            </span>
+            <span *ngIf="orgExsist" class='fa fa-info-circle errspan'> Organization Already Exsit</span>
+              <span *ngIf="company.errors?.minlength" class="fa fa-info-circle errspan">
+                Minimum 3 characters required
+              </span> -->
+              <!-- <span *ngIf="((company.invalid && firstloginform.submitted) || (company.errors && company.touched) )"> 
+                Company is required 
+                <span class='errspan required' *ngIf="company.errors.minlength"> Minimum 3 characters required</span>
+            </span> -->
+            <span class="fa fa-info-circle errspan"
+            *ngIf="(company.touched || firstloginform.submitted) && company.errors?.required">
+            Company is required 
+        </span>
+        <span class='fa fa-info-circle errspan' *ngIf="company.touched && company.errors?.minlength">
+          Minimum 3 characters required
+        </span>
+        <span *ngIf="orgExsist" class='fa fa-info-circle errspan'> Organization Already Exsit</span>
+          </div>
+          <div *ngIf="!isCompanydisabled" class=" col-md-6"><!-- form-group inner-addon left-addon-->
+              <!-- <img src="assets/images/registration/department.svg" class="icon"> -->
+              <mat-form-field appearance="outline">
+                <mat-label>Department</mat-label>
+              <mat-select matNativeControl (selectionChange)="onChangeDepartment($event.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
+              required>
+                <mat-option [value]="undefined" disabled hidden>Department</mat-option>
+                <mat-option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;' [value]="department.departmentId">{{department.departmentName}}</mat-option>
+                <!-- <option value="others">Others</option> -->
+              </mat-select>
+              </mat-form-field>
+              <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
+              class='fa fa-info-circle errspan'> Department is required </span>
             </div>
+
+            <div *ngIf="isCompanydisabled" class=" col-md-6"><!-- form-group inner-addon left-addon-->
+              <!-- <img src="assets/images/registration/department.svg" class="icon"> -->
+              <mat-form-field appearance="outline">
+                <mat-label>Department</mat-label>
+              <mat-select matNativeControl (selectionChange)="onChangeDepartment(model.department)" name='department' #department="ngModel" [(ngModel)]="model.department"
+              required>
+                <mat-option [value]="undefined" disabled hidden>Department</mat-option>
+                <mat-option *ngFor='let category of categories; let c=index;trackBy:loopTrackBy;' [value]="category.categoryId">{{category.categoryName}}</mat-option>
+                <!-- <option value="others">Others</option> -->
+              </mat-select>
+              </mat-form-field>
+              <span *ngIf="((department.invalid && firstloginform.submitted)|| (department.errors && department.touched))"
+              class='fa fa-info-circle errspan'> Department is required </span>
             </div>
             
+            <!-- <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
+                <img src="assets/images/registration/department.svg" class="icon">
+              <input type="text" class="form-control" name="other_department" #other_department="ngModel" [(ngModel)]='otherDepartment' maxlength="20" placeholder="Department" required>
+              <span *ngIf="((other_department.invalid && firstloginform.submitted)|| (other_department.errors && other_department.touched))"
+              class='fa fa-info-circle errspan'> Department is required </span>
+            </div> -->
+          <div class=" col-md-6"><!-- form-group inner-addon left-addon-->
+            <!-- <img src="assets/images/registration/Global.svg" class="icon"> -->
+            <mat-form-field appearance="outline">
+              <mat-label>Country/Region</mat-label>
+            <mat-select matNativeControl (selectionChange)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
+             <mat-option  [value]="undefined" disabled hidden>Country</mat-option>
+             <mat-option  [value]="null" disabled hidden>Country</mat-option>
+             <!-- <option hidden disabled [selected]=true>Country</option> -->
+              <mat-option *ngFor="let country of countryInfo; let i= index"  [value]="country.CountryName">{{country.CountryName}}
+              </mat-option>
+            </mat-select>
+            </mat-form-field>
+            <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
+              class='fa fa-info-circle errspan'> Country is required </span>
           </div>
-        </form>
-      </mat-card>
-      </div>
+          
+       
+          <div class=" col-md-6">
+            <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+            <mat-select matNativeControl (selectionChange)="onChangeState($event.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
+              <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+              <mat-option  [value]="undefined" disabled hidden>State</mat-option>
+              <mat-option  [value]="null" disabled hidden>State</mat-option>
+              <mat-option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+            <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
+              class='fa fa-info-circle errspan'> State is required </span>
+          </div>
+
+          <div class=" col-md-6"><!-- form-group inner-addon left-addon-->
+            <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+            <mat-select matNativeControl name='city' #city='ngModel' [(ngModel)]='model.city' required>
+              <!-- <option *ngIf="cityInfo == ''" value="-1">City</option> -->
+              <mat-option  [value]="undefined" disabled hidden>City</mat-option>
+              <mat-option  [value]="null" disabled hidden>City</mat-option>
+              <mat-option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+            <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
+              class='fa fa-info-circle errspan'> City is required </span>
+          </div>
+       
+       
+          <div class="col-sm-6">
+            <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
+            <mat-form-field appearance="outline">
+              <mat-label>Zip Code</mat-label>
+            <input type="text" matInput (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" [(ngModel)]="model.zipcode"
+               onKeyPress="if(this.value.length==5) return false;" minlength="5" placeholder="Zip Code" 
+               pattern="^\d{5}$" required>
+            </mat-form-field>
+            <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched) && !(zipCode.errors.pattern))"
+              class='fa fa-info-circle errspan'> Zip Code is required </span>
+              <span *ngIf="zipCode.errors  && zipCode.invalid">
+                <span *ngIf="zipCode.errors.pattern"  class="fa fa-info-circle errspan">Invalid Zip Code</span>
+              </span>
+          </div>
+
+          <div *ngIf ="isInput"class="col-sm-6 ph-number" ><!-- inner-addon left-addon-->
+            <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" 
+              [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput 
+              [ng2TelInputOptions]="{initialCountry: phnCountry}"  pattern="^((\\+91-?)|0)?[0-9]{10}$" required > <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
+            </mat-form-field>
+                 <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
+                <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched) && !(phoneNumber.errors.pattern))"
+                class='fa fa-info-circle errspan'> Phone Number is required </span>
+                <span *ngIf="phoneNumber.errors  && phoneNumber.invalid">
+                  <span *ngIf="phoneNumber.errors.pattern"  class="fa fa-info-circle errspan">Phone Number Should Be 10 digits</span>
+                </span>
+              </div>
+              <div *ngIf="!isInput" class="col-sm-6 ph-number">
+                <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone Number</mat-label>
+                <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" 
+                [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" 
+                pattern="^((\\+91-?)|0)?[0-9]{10}$" required> <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
+                </mat-form-field>
+                     <!-- (hasError)="hasError($event)" (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (ng2TelOutput)="getNumber($event)"  -->
+                    <span *ngIf="((phoneNumber.invalid && firstloginform.submitted)|| (phoneNumber.errors && phoneNumber.touched) && !(phoneNumber.errors.pattern))"
+                    class='fa fa-info-circle errspan'> Phone Number is required </span>
+                    <span *ngIf="phoneNumber.errors  && phoneNumber.invalid">
+                      <span *ngIf="phoneNumber.errors.pattern"  class="fa fa-info-circle errspan">Phone Number Should Be 10 digits</span>
+                    </span>
+                  </div>
+               
+              <!--<div class="form-group col-sm-6 inner-addon left-addon photoupload">
+                <img src="assets/images/registration/ImageUpload.svg" class="imageuploadicon">
+                <input  class="form-control col-sm-12" id="image" placeholder="Select image to upload"
+                name='image' #image="ngModel" [(ngModel)]="profileimage" disabled/>
+                <span style="color: black;"><b>Note : Max File Size 128kb </b></span>
+                <span>
+                <div class="fileUpload btn btn-primary">
+                <span>Choose File</span>
+               <input id="uploadBtn" type="file" class="upload" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg" />
+               
+              </div>
+            </span>
+            </div>-->
+            
+            <div class=" col-md-12 slt-plan">
+              <label id="example-radio-group-label">Select Plan</label><br>
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"  name='plans' #plans="ngModel" [(ngModel)]="model.plans">
+              <mat-radio-button value="Standard" >Free Tier</mat-radio-button>
+              <mat-radio-button value="Professional">Professional</mat-radio-button>
+              <mat-radio-button value="Enterprise">Enterprise</mat-radio-button>
+              <!-- <mat-radio-button class="example-radio-button" [checked]="selectedplan == 'Free Tier'" *ngFor="let selectedplan of allplans" [value]="selectedplan">
+                {{selectedplan}}
+              </mat-radio-button> -->
+            </mat-radio-group>
+              </div>
+             
+            <div class="buttns col-sm-12">
+            <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an account&#63;</a>
+          <!-- </div>
+          <div class="form-group col-sm-6 continue_btn pull-right"> -->
+           <div class="text-right">
+            <button type="button" class="btn btn-primary" (click)="resetForm(firstloginform)" style='margin-right:27px;height:36px !important'>Clear all</button>
+            <!-- <button type="submit" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr">Register</button> -->
+            <button  (click)="onClick()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist">Continue</button>
+          </div>
+          </div>
+        </div>  
+<!--             
+        <div *ngIf="epsoftwebsite">
+
+        </div>
+         -->
+      </form>
+    </div>
+    </mat-card>
     </div>
   </div>
+</div>
 <!-- </common-body> -->

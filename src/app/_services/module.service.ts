@@ -19,7 +19,7 @@ export class ModuleService {
   source = `http://${window.location.host}/`;
 
   constructor(private compiler: Compiler, private http: HttpClient) {
-      console.log(compiler);
+     
   }
 
   loadModules(): Observable<any> {
@@ -57,7 +57,7 @@ export class ModuleService {
 
     // now, import the new module
     return System.import(`${url}`).then((module) => {
-        console.log(module);
+      
         return this.compiler.compileModuleAndAllComponentsAsync(module[`${moduleInfo.moduleName}`]).then(compiled => {
             return module;
         });

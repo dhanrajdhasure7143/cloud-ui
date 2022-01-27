@@ -6,12 +6,14 @@ import { FirstloginService } from './@providers/firstlogin.service';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 import  countries  from './../../assets/jsons/countries.json';
-import { Particles } from '../_models/particlesjs';
 import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
 import { mergeMapTo } from 'rxjs/operators';
 import { CryptoService } from '../_services/crypto.service';
+import { ProductlistService } from '../_services/productlist.service';
+import { HttpClient } from '@angular/common/http';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-firstlogin',
@@ -48,10 +50,22 @@ export class FirstloginComponent implements OnInit {
   private spacialSymbolEncryption:string = '->^<-';
   public imgsrc:string = './../../assets/images/user-upload.png';
   public company_name:any='';
+  allplans: string[]  = [
+    'Free Tier',
+    'Professional',
+    'Enterprise'
+  ];
+  newAccessToken: any[];
+  public ipAddress:string; 
+  agent: string;
+  public deviceInfo = null;
+  orgExsist:boolean;
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
-              private particles :Particles,
+              private productservice: ProductlistService,
+              private http: HttpClient,
+              private deviceService: DeviceDetectorService,
               private cryptoService :CryptoService ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
@@ -83,7 +97,7 @@ export class FirstloginComponent implements OnInit {
   
     
     
-    this.particles.getParticles();
+  //  this.particles.getParticles();
     this.getCountries();
     this.getAllDepartments();
 
@@ -98,6 +112,9 @@ export class FirstloginComponent implements OnInit {
       allowSearchFilter: true,
       closeDropDownOnSelection: true
     };
+
+    this.model.plans="Standard"
+    
   }
   getCountries(){
     this.countryInfo = countries.Countries
@@ -109,7 +126,7 @@ export class FirstloginComponent implements OnInit {
   }
 
   onChangeDepartment(selectedvalue) {
-    console.log(selectedvalue);
+  
     if(selectedvalue == "others"){
       this.college = true
     }else{
@@ -134,7 +151,7 @@ export class FirstloginComponent implements OnInit {
   }
 
   onChangeState(stateValue) {
-    console.log(stateValue);
+  
     this.cityInfo=[];
     // this.model.state =this.stateInfo[stateValue].StateName
     // console.log("state : " + this.model.state);
@@ -176,7 +193,7 @@ export class FirstloginComponent implements OnInit {
         this.service.getAllCategories(this.domain).subscribe(response=> {
           this.departments = response.data;  
           this.departments.forEach(element => {
-            this.categories.push(element.categoryName)
+            this.categories.push(element)
             
           });  
          
@@ -204,6 +221,8 @@ export class FirstloginComponent implements OnInit {
      
 
     }
+
+
   onSubmit() {
     this.submitflag=true;
     // console.log(this.model);
@@ -255,7 +274,7 @@ export class FirstloginComponent implements OnInit {
   //   reqObj['profilePic'] = payload;
   //   reqObj['profilePicName'] = this.selectedFile.name;
   // }
-
+  
   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   // for (var key in payload) {
   //   console.log(key, payload[key]);  
@@ -297,6 +316,8 @@ export class FirstloginComponent implements OnInit {
         allowOutsideClick: false
       }).then((result) => {
         if (result.value) {
+
+          
           this.router.navigate(['/']);
         }
       });
@@ -345,23 +366,26 @@ export class FirstloginComponent implements OnInit {
     return index;
   }
   lettersOnly(event): boolean {
- 
+    debugger
     var regex = new RegExp("^[a-zA-Z ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-    if (!regex.test(key)) {
-    event.preventDefault();
-    return false;
-    }
-    }
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+      if ((event.target.selectionStart === 0 && event.code === 'Space')){
+        event.preventDefault();
+      }
+  }
 
     onFileSelected(event){
       if(event.target.files){
         var reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
         reader.onload = (event:any)=>{
-          console.log("this.imgsrc",this.imgsrc);
+         
           this.imgsrc = event.target.result;
-          console.log(this.imgsrc);
+        
         }
       }
       
@@ -379,4 +403,49 @@ export class FirstloginComponent implements OnInit {
       var binaryString = readerEvt.target.result;
       this.base64textString = btoa(binaryString);
     }
+
+    onClick(){
+      
+      var reqObj = {
+          'userId': this.decodedToken,
+          'firstName':this.model.firstName,
+          'lastName': this.model.lastName,
+          'password': this.model.password,
+          'phoneNumber':this.model.phoneNumber,
+          'country': this.model.country,
+          'designation': this.model.designation,
+          'company': this.model.company,
+          'state': this.model.state,
+          'city': this.model.city,
+          'zipcode': this.model.zipcode,
+          'department': this.model.department,
+          'profile_image':this.base64textString
+        }
+      const userDetails = Base64.encode(JSON.stringify(reqObj))
+      localStorage.setItem('details',userDetails);
+      
+       localStorage.setItem("selectedplan",this.model.plans)
+       var userId= this.cryptoService.encrypt(JSON.stringify(this.decodedToken));
+       var useridBase64 = btoa(userId);
+       var authkey=atob(useridBase64)
+      
+       localStorage.setItem("authkey",authkey)
+      if(this.model.plans=='Enterprise'){
+        window.location.href = "https://www.epsoftinc.com/"
+      }
+      else{
+        this.router.navigate(['/home/add-card']);
+      }
+    }
+
+  checkOrganizationName(value) {
+    this.service.organizationCheck(value).subscribe(res => {
+      if (res.message == "Organization Name already Exists") {
+        this.orgExsist = true;
+      } else {
+        this.orgExsist = false;
+      }
+    })
+  }
+  
 }

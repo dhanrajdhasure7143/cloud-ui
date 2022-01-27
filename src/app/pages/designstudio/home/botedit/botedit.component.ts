@@ -70,7 +70,7 @@ export class BoteditComponent implements OnInit, AfterViewInit, DoCheck {
 
   submitrobot(data) {
     this.workfloweditSer.submitrobot(data).subscribe(res => {
-      console.log(res);
+     
     });
   }
 

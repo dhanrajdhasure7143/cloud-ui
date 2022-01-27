@@ -56,12 +56,12 @@ export class CommonSourceComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.groups);
+  
   }
 
 
   formValidation(form) {
-    console.log(form);
+    
   }
 
   setNode(data) {

@@ -45,7 +45,7 @@ export class ChangepasswordComponent implements OnInit {
     }
     this.profileservice.changePassword(pswdbody).subscribe(res => {
       // this.pswdmodel = {};
-        console.log(res.errorMessage);
+      
    
         if(res.errorMessage == undefined){
           Swal.fire({

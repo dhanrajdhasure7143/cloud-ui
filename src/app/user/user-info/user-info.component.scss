@@ -1,0 +1,70 @@
+.login-bg{
+    width: 700px;
+  }
+  .emailInput{
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+    height: 40px !important;
+    border-radius: 0px !important;
+  }
+  
+  .inner-addon { 
+    position: relative; 
+  }
+  /* style icon */
+  .inner-addon .icon{
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+  width: 40px;
+  }
+  .left-addon input  { padding-left:  40px; }
+  /*
+  .brand{
+    margin-top: 150px;
+  }*/
+  .brand{
+    margin-bottom: 20px;
+  }
+  .brand img{
+    width: 180px;
+  }
+  
+  .errordiv{
+    margin-top: 10px;
+  }
+  .backlogin{
+    color: #0061cf !important;
+  }
+  .login-btn{
+    margin-left: 65%;
+    width: 120px !important;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 35px;
+  }
+  
+  #particles-js {
+    position: absolute;
+    z-index:0;
+    width: 50%;
+    height: 620px;
+    background-color: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .card_forgot
+  {
+    top: 30% !important;
+  }
+  
+  :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0.0em 0 !important;
+  }
+  
+  :host ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0.14375em !important;
+  }
+  
