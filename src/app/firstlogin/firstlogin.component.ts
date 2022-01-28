@@ -366,7 +366,7 @@ export class FirstloginComponent implements OnInit {
     return index;
   }
   lettersOnly(event): boolean {
-    debugger
+    
     var regex = new RegExp("^[a-zA-Z ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
       if (!regex.test(key)) {
