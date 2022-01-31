@@ -439,8 +439,9 @@ export class FirstloginComponent implements OnInit {
         window.location.href = "https://www.epsoftinc.com/"
       }
       else{
-        
-        this.router.navigate(['/home/add-card']);
+        Swal.fire("Success","Registered Successfully","success")
+        //this.router.navigate(['/home/add-card']);
+        this.router.navigate(['/']);
       }
     }
 
@@ -472,7 +473,18 @@ export class FirstloginComponent implements OnInit {
 
   validateOTP()
   {
-    let otp="";
-    // this.authenticationService.validateOTP(otp).subscribe(DATA)
+     this.authenticationService.validateOTP(this.userEmail,this.otp).subscribe((data:any)=>{
+      console.log(data)  
+      if(data.message=="OTP Verified Successfully")
+        {
+          this.onClick()
+        }else
+        {
+          Swal.fire("Error",data.message,"error")
+        }
+     }, err=>{
+       console.log(err)
+       Swal.fire("Error","Unable to register data","error")
+     })
   }
 }
