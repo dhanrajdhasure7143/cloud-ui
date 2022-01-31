@@ -14,6 +14,7 @@ import { CryptoService } from '../_services/crypto.service';
 import { ProductlistService } from '../_services/productlist.service';
 import { HttpClient } from '@angular/common/http';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { AuthenticationService } from '../_services';
 
 @Component({
   selector: 'app-firstlogin',
@@ -60,13 +61,17 @@ export class FirstloginComponent implements OnInit {
   agent: string;
   public deviceInfo = null;
   orgExsist:boolean;
+  otp:any="";
+  otpflag:Boolean=false;
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
               private productservice: ProductlistService,
               private http: HttpClient,
               private deviceService: DeviceDetectorService,
-              private cryptoService :CryptoService ) {
+              private cryptoService :CryptoService,
+              private authenticationService:AuthenticationService
+              ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
       
@@ -366,7 +371,7 @@ export class FirstloginComponent implements OnInit {
     return index;
   }
   lettersOnly(event): boolean {
-    debugger
+    
     var regex = new RegExp("^[a-zA-Z ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
       if (!regex.test(key)) {
@@ -405,7 +410,6 @@ export class FirstloginComponent implements OnInit {
     }
 
     onClick(){
-      
       var reqObj = {
           'userId': this.decodedToken,
           'firstName':this.model.firstName,
@@ -419,7 +423,8 @@ export class FirstloginComponent implements OnInit {
           'city': this.model.city,
           'zipcode': this.model.zipcode,
           'department': this.model.department,
-          'profile_image':this.base64textString
+          'profile_image':this.base64textString,
+          'otp':this.otp
         }
       const userDetails = Base64.encode(JSON.stringify(reqObj))
       localStorage.setItem('details',userDetails);
@@ -434,7 +439,9 @@ export class FirstloginComponent implements OnInit {
         window.location.href = "https://www.epsoftinc.com/"
       }
       else{
-        this.router.navigate(['/home/add-card']);
+        Swal.fire("Success","Registered Successfully","success")
+        //this.router.navigate(['/home/add-card']);
+        this.router.navigate(['/']);
       }
     }
 
@@ -447,5 +454,37 @@ export class FirstloginComponent implements OnInit {
       }
     })
   }
-  
+
+
+
+  getOTP()
+  {
+    //alert(this.userEmail)
+    
+    this.authenticationService.generateOTP(this.userEmail).subscribe(data => {
+      this.otpflag=true;
+      Swal.fire("Success","OTP sent successfully","success");
+     
+    },err=>{
+      console.log(err);
+      Swal.fire("Error","Unable to send OTP","error")
+    })
+  }
+
+  validateOTP()
+  {
+     this.authenticationService.validateOTP(this.userEmail,this.otp).subscribe((data:any)=>{
+      console.log(data)  
+      if(data.message=="OTP Verified Successfully")
+        {
+          this.onClick()
+        }else
+        {
+          Swal.fire("Error",data.message,"error")
+        }
+     }, err=>{
+       console.log(err)
+       Swal.fire("Error","Unable to register data","error")
+     })
+  }
 }
