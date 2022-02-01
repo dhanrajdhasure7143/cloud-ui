@@ -70,7 +70,8 @@ export class FirstloginComponent implements OnInit {
               private http: HttpClient,
               private deviceService: DeviceDetectorService,
               private cryptoService :CryptoService,
-              private authenticationService:AuthenticationService
+              private authenticationService:AuthenticationService,
+              private firstloginservice: FirstloginService,
               ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
@@ -410,6 +411,8 @@ export class FirstloginComponent implements OnInit {
     }
 
     onClick(){
+      
+      var payload = new FormData();
       var reqObj = {
           'userId': this.decodedToken,
           'firstName':this.model.firstName,
@@ -426,23 +429,39 @@ export class FirstloginComponent implements OnInit {
           'profile_image':this.base64textString,
           'otp':this.otp
         }
-      const userDetails = Base64.encode(JSON.stringify(reqObj))
-      localStorage.setItem('details',userDetails);
+
+        //added for otp and registration directly
+        payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+        this.firstloginservice.registerUser(payload).subscribe(res => {
+          console.log(res)
+          Swal.fire("Success","Registered Successfully","success")
+          //this.router.navigate(['/home/add-card']);
+          this.router.navigate(['/']);
+
+        },err=>{
+            Swal.fire("Error","Registration failed","error");
+        })
+        //added for otp and registration directly
+      //-----------------commented temproryly----------------------
+  
+      // const userDetails = Base64.encode(JSON.stringify(reqObj))
+      // localStorage.setItem('details',userDetails);
       
-       localStorage.setItem("selectedplan",this.model.plans)
-       var userId= this.cryptoService.encrypt(JSON.stringify(this.decodedToken));
-       var useridBase64 = btoa(userId);
-       var authkey=atob(useridBase64)
+      //  localStorage.setItem("selectedplan",this.model.plans)
+      //  var userId= this.cryptoService.encrypt(JSON.stringify(this.decodedToken));
+      //  var useridBase64 = btoa(userId);
+      //  var authkey=atob(useridBase64)
       
-       localStorage.setItem("authkey",authkey)
-      if(this.model.plans=='Enterprise'){
-        window.location.href = "https://www.epsoftinc.com/"
-      }
-      else{
-        Swal.fire("Success","Registered Successfully","success")
-        //this.router.navigate(['/home/add-card']);
-        this.router.navigate(['/']);
-      }
+      //  localStorage.setItem("authkey",authkey)
+      //------------------------------------------------------------------
+      // if(this.model.plans=='Enterprise'){
+      //   window.location.href = "https://www.epsoftinc.com/"
+      // }
+      // else{
+      //   Swal.fire("Success","Registered Successfully","success")
+      //   //this.router.navigate(['/home/add-card']);
+      //  // this.router.navigate(['/']);
+      // }
     }
 
   checkOrganizationName(value) {
@@ -477,6 +496,7 @@ export class FirstloginComponent implements OnInit {
       console.log(data)  
       if(data.message=="OTP Verified Successfully")
         {
+
           this.onClick()
         }else
         {
