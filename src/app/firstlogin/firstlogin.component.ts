@@ -438,6 +438,8 @@ export class FirstloginComponent implements OnInit {
           //this.router.navigate(['/home/add-card']);
           this.router.navigate(['/']);
 
+        },err=>{
+            Swal.fire("Error","Registration failed","error");
         })
         //added for otp and registration directly
       //-----------------commented temproryly----------------------
