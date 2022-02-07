@@ -46,16 +46,17 @@ export class CreataccountComponent implements OnInit {
    if(this.userId.endsWith('@gmail.com') || this.userId.endsWith('@yahoo.com') || 
    this.userId.endsWith('@hotmail.com') || this.userId.endsWith('@rediffmail.com')){
      this.ispublicMail=true;
+     this.error='Only Business Email is allowed';
      return
 
    }
    let encrypt = this.cryptoService.encrypt(this.userId);
    this.user.userId = encrypt;
-   this.user.firstName = this.firstname;
-   this.user.lastName = this.lastname
-   this.user.phoneNumber = this.phoneNumber
-   console.log(this.user);
-    this.loginservice.sentVerificationMail(this.user).subscribe(res=>{
+  //  this.user.firstName = this.firstname;
+  //  this.user.lastName = this.lastname
+  //  this.user.phoneNumber = this.phoneNumber
+ 
+    this.loginservice.sentVerificationMail(this.user.userId).subscribe(res=>{
        this.isresend=true;
     },error=>{
       this.error='User Already Exists'

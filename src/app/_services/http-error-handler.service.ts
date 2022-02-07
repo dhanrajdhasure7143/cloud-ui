@@ -18,7 +18,7 @@ export class HttpErrorHandler {
   handleError<T> (serviceName = '', operation = 'operation', result = {} as T) {
 
     return (error: HttpErrorResponse): Observable<T> => {
-      console.error(error);
+     
 
       const message = (error.error instanceof ErrorEvent) ?
         error.error.message :

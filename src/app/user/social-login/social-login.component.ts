@@ -6,6 +6,7 @@ import { CookieStore } from 'src/app/_services/cookie.store';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { APP_CONFIG } from 'src/app/app.config';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-social-login',
@@ -18,6 +19,9 @@ export class SocialLoginComponent implements OnInit {
   userRole: any = [];
   error = '';
   loading = false;
+  invalidUser: boolean = false;
+  validUser: boolean = false;
+  usr_data: any;
   constructor(private router: Router, 
               private route: ActivatedRoute, 
               // private acsnapshot: ActivatedRouteSnapshot,
@@ -26,9 +30,11 @@ export class SocialLoginComponent implements OnInit {
               private profileService: ProfileService,
               private sharedData: SharedDataService,
               private crypto:CryptoService,
+              private spinner:NgxSpinnerService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
+    
      localStorage.clear();
      this.route.queryParams.subscribe(params => {
       this.email = params['email']
@@ -46,34 +52,42 @@ export class SocialLoginComponent implements OnInit {
  
 // }
  authenticate(userId) {
+  this.spinner.show();
    let userName = {
      "userId" : userId
    }
   this.appService.socialLogin(userId).subscribe(user => {
     
+    if((user['errorMessage']=== "Failed to generate access and refresh token") && (user['errorCode']===4008)){
     
+      this.invalidUser = true;
+      this.spinner.hide();
+      return;
+    }
     //localStorage.setItem('currentUser',JSON.stringify({"token":data}))
     //localStorage.setItem('currentUser', JSON.stringify(user.resp_data));
       //        CookieStore.set('token', user.resp_data.accessToken, {});
  // this.router.navigate(['/activation']);
+ 
  this.authenticationService.userDetails(this.email).subscribe(data => this.checkSuccessCallback(data));
  this.appService.socialLoginValidateToken(userId);
+ setTimeout(() => {
+  this.spinner.hide();
+  this.authorize();
+ },2000);
+ 
  
 
- setTimeout(() => {
-    this.authorize();
-      }, 5000);
-
+  }, error=> {
+    
   });
-  //localStorage.setItem('currentUser',JSON.stringify({"token":"hiiiiiiiiiii"}))
-  //this.router.navigate(['/activation']);
 }
  
 checkSuccessCallback(data:any){
   
   this.sharedData.setLoggedinUserData(data);
  // this.sharedData.setLoggedinUserFirstLetter(data.firstName.split("")[0])
-
+    this.usr_data = data;
   localStorage.setItem('firstName',data.firstName);
   localStorage.setItem('lastName',data.lastName);
   localStorage.setItem('userName',data.userId);
@@ -89,18 +103,23 @@ authorize() {
   this.profileService.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
      localStorage.setItem('userRole',this.userRole);
-   if(this.userRole.includes('SuperAdmin')){
+   if(this.userRole.includes('Platform Admin')){
     this.router.navigate(['/superadmin']);
     
+   }else if(this.userRole.includes('User')){
+     this.validUser = true;
+     return;
+
+    // need to write logic to navigate Access rquest page
    }else{
     //this.router.navigate(['/activation']);
      var token=JSON.parse(localStorage.getItem('currentUser'));
     var encryptToken=btoa(token.accessToken)
     var encryptrefreshToken=btoa(token.refreshToken);
-    var firstName=localStorage.getItem('firstName');
-    var lastName=localStorage.getItem('lastName');
-    var ProfileuserId=localStorage.getItem('ProfileuserId');
-    var tenantName=localStorage.getItem('tenantName');
+    var firstName=this.usr_data.firstName; //localStorage.getItem('firstName');
+    var lastName=this.usr_data.lastName; //localStorage.getItem('lastName');
+    var ProfileuserId=this.email; //localStorage.getItem('ProfileuserId');
+    var tenantName=this.usr_data.tenantID;//localStorage.getItem('tenantName');
     var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
@@ -114,8 +133,16 @@ authorize() {
     this.loading = false;
   })
 }
-
-
-
+myFunction() {   
+               
+  document.getElementById("myDropdown").classList.toggle("show");
+  // document.getElementById("notificationBar").classList.remove('notificationBarshow');
+}
+logout() {
+  localStorage.clear();
+  sessionStorage.clear();
+    window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
+    this.router.navigate(['/']);
+}
 }
 

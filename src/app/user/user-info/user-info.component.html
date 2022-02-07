@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+      <div id="particles-js"></div>
+      <div class="col-sm-4">
+          <img class="login-bg" src="assets/images/loginimage.png">
+      </div>
+    <div class="col-md-3"></div>
+      <div class="col-md-4">
+          <mat-card class="card_forgot">
+              <div class="brand logo_forgot" >
+                      <img style="width: 230px !important; margin-left: 75px !important;margin-top: 25px !important;
+                      margin-bottom: 25px !important;" src="assets/images/EZFlow.png">
+                  </div>
+          <form autocomplete="off" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+              <div class="form-header col-md-10">
+                  <h5>User Information</h5>
+                </div>
+              <div class="col-sm-12" style="margin:15px 0px !important;"><!-- inner-addon left-addon-->
+                      <!-- <img src="assets/images/registration/mail.svg" class="icon"> -->
+                  <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
+                      <mat-label>First Name</mat-label>
+                      <input type="text" formControlName="firstName" minlength="3" matInput placeholder="Enter First Name"maxlength="25" (keypress)="lettersOnly($event)"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
+                  </mat-form-field>
+                    <!--<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">Email is required</div>
+                        <div *ngIf="emailForm.get('email').hasError('pattern') && emailForm.get('email').touched">Enter valid Email</div>
+                    </div>-->
+                    <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('firstName').hasError('required') && userForm.get('firstName').touched">
+                      First Name is Required!
+                    </mat-error>
+                    <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('firstName').hasError('minlength') && userForm.get('firstName').touched">
+                     Minimum 3 characters Required
+                    </mat-error>
+                   
+                </div>
+                <div class="col-sm-12" style="margin:15px 0px !important;">
+                  <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text" formControlName="lastName"  matInput placeholder="Enter Last Name"  maxlength="25" (keypress)="lettersOnly($event)"  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
+                </mat-form-field>
+                <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('lastName').hasError('required') && userForm.get('lastName').touched">
+                  Last Name is Required!
+                </mat-error>
+                </div>
+
+                  <!-- <div class="form-group col-sm-12">
+                      <a [routerLink]="['/']" class="backlogin">Back to Login</a>
+                    </div> -->
+                    <div class="form-group col-sm-18">
+                        <button class="hoverable button btn btn-primary login-btn">Submit</button>
+                    </div>
+          <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
+              <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
+              </div>
+          </form>
+      </mat-card>
+      </div>
+  </div>
+</div>
+
