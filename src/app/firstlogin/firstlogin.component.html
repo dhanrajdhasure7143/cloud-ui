@@ -109,7 +109,7 @@
             <mat-form-field appearance="outline" color="primary">
               <mat-label>Organization Name</mat-label>
             <input type="text" matInput [disabled]="isCompanydisabled" (keyup)="checkOrganizationName(model.company)" name="company" #company="ngModel" [(ngModel)]="model.company"
-              maxlength="30" minlength="3" placeholder="Company" required (keypress)="lettersOnly($event)">
+              maxlength="30" minlength="3" placeholder="Organization" required (keypress)="lettersOnly($event)">
             </mat-form-field>
             <!-- <span *ngIf="((company.invalid && firstloginform.submitted)|| (company.errors && company.touched))"
               class='fa fa-info-circle errspan'> Company is required 
@@ -125,7 +125,7 @@
             </span> -->
             <span class="fa fa-info-circle errspan"
             *ngIf="(company.touched || firstloginform.submitted) && company.errors?.required">
-            Company is required 
+            Organization is required 
         </span>
         <span class='fa fa-info-circle errspan' *ngIf="company.touched && company.errors?.minlength">
           Minimum 3 characters required
