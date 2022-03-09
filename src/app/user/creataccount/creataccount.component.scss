@@ -117,8 +117,9 @@
     margin-left: -10px;
   }
 .card_styles1{
-  top:12%;
+  top:8%;
   box-shadow: #5784e999 0px 1px 6px;
+  display: inline-block;
 }  
 
 :host ::ng-deep .mat-form-field-infix {
@@ -145,4 +146,10 @@
 
 :host ::ng-deep .step_main .step_sub{
   padding: 0px 0px !important;
+}
+
+.createaccountblock {
+  width: 450px !important;
+  margin: 100px auto;
+  /* text-align: center; */
 }

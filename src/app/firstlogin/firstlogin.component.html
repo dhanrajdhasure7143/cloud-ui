@@ -15,7 +15,7 @@
             
           <div class="col-md-9">         
             <div class="brand">
-                <img src="assets/images/EZFlow_horizontal_full_color.png">
+                <img src="assets/images/EZFlow.png">
             </div>
             <!-- <div class="col-sm-12 status-bar">
               <newstepselection class="register_account email_verified"></newstepselection>
@@ -171,7 +171,7 @@
           <div class=" col-md-6"><!-- form-group inner-addon left-addon-->
             <!-- <img src="assets/images/registration/Global.svg" class="icon"> -->
             <mat-form-field appearance="outline">
-              <mat-label>Country/Region</mat-label>
+              <mat-label>Country</mat-label>
             <mat-select matNativeControl (selectionChange)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
              <mat-option  [value]="undefined" disabled hidden>Country</mat-option>
              <mat-option  [value]="null" disabled hidden>Country</mat-option>
