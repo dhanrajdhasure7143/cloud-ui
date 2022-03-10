@@ -30,6 +30,7 @@ export class FirstloginComponent implements OnInit {
   departments:any[]=[];
   phnCountry: any;
   itemsShowLimit = 1;
+  isdiable:boolean=false;
   stateInfo: any[] = [];
   countryInfo: any[] = [];
   cityInfo: any[] = [];
@@ -344,13 +345,12 @@ export class FirstloginComponent implements OnInit {
     location.href = this.config.portfolioSite;
   }
   onKeydown(event){
-    
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   } 
-  }
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight"]
+       let temp =numArray.includes(event.key); //gives true or false
+      if(!temp){
+       event.preventDefault();
+      } 
+     }
   toggle() {
     this.show = !this.show;
   }
@@ -479,7 +479,8 @@ export class FirstloginComponent implements OnInit {
   getOTP()
   {
     //alert(this.userEmail)
-    
+    this.isdiable=true;
+    this.call()
     this.authenticationService.generateOTP(this.userEmail).subscribe(data => {
       this.otpflag=true;
       Swal.fire("Success","OTP sent successfully","success");
@@ -488,6 +489,12 @@ export class FirstloginComponent implements OnInit {
       console.log(err);
       Swal.fire("Error","Unable to send OTP","error")
     })
+  }
+
+  call(){
+    setTimeout(()=>{                           // <<<---using ()=> syntax
+   this.isdiable=false;
+  }, 30000);
   }
 
   validateOTP()
