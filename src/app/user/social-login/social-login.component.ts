@@ -123,10 +123,11 @@ authorize() {
     var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
+    var userLoginType = btoa("officeUser")
     var productURL = this.config.productendpoint;
     if(this.config.isNewDesignEnabled)
       productURL = this.config.newproductendpoint;
-    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
+    window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp+'&loginType='+userLoginType
    }
   },error => {
     //this.error = "Please complete your registration process";
