@@ -26,7 +26,7 @@ export class NewpasswordComponent implements OnInit {
               private particles :Particles,) { }
 
   ngOnInit() {
-    this.particles.getParticles();
+   // this.particles.getParticles();
     this.route.queryParams.subscribe(params => {
      
       let token = params['token']
