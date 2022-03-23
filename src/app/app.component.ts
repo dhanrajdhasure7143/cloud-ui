@@ -7,6 +7,7 @@ import { ProductlistService } from './_services/productlist.service';
 import { SwUpdate } from '@angular/service-worker';
 import { interval } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { CookieStore } from './_services/cookie.store';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -63,9 +64,12 @@ export class AppComponent {
     this.sharedconfig.events.bsDropdown = null;
   }
   ngOnInit() {
+    localStorage.clear();
     addEventListener("offline",(e)=>{
       this.toastr.error('Please check your internet connection');
     });
+   
+   
     addEventListener("online",(e)=>{
       this.toastr.success('You are now online');
     })
