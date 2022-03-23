@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {Ng2TelInputModule} from 'ng2-tel-input';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import {
   MatAutocompleteModule,
@@ -91,7 +92,9 @@ import {MatSelectModule} from '@angular/material/select';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    NgxSpinnerModule
+    
 
   ]
 })

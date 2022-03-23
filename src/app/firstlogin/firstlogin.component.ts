@@ -15,6 +15,7 @@ import { ProductlistService } from '../_services/productlist.service';
 import { HttpClient } from '@angular/common/http';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthenticationService } from '../_services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-firstlogin',
@@ -74,6 +75,7 @@ export class FirstloginComponent implements OnInit {
               private cryptoService :CryptoService,
               private authenticationService:AuthenticationService,
               private firstloginservice: FirstloginService,
+              private spinner:NgxSpinnerService
               ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
@@ -346,7 +348,8 @@ export class FirstloginComponent implements OnInit {
     location.href = this.config.portfolioSite;
   }
   onKeydown(event){
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight"]
+    
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight","Delete"]
        let temp =numArray.includes(event.key); //gives true or false
       if(!temp){
        event.preventDefault();
@@ -428,18 +431,20 @@ export class FirstloginComponent implements OnInit {
           'zipcode': this.model.zipcode,
           'department': this.model.department,
           'profile_image':this.base64textString,
-          'otp':this.otp
+          'otp':this.model.otp
         }
 
         //added for otp and registration directly
         payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
         this.firstloginservice.registerUser(payload).subscribe(res => {
-          console.log(res)
+          console.log(res);
+          this.spinner.hide()
           Swal.fire("Success","Registered Successfully","success")
           //this.router.navigate(['/home/add-card']);
           this.router.navigate(['/']);
 
         },err=>{
+          this.spinner.hide()
             Swal.fire("Error","Registration failed","error");
         })
         //added for otp and registration directly
@@ -479,15 +484,21 @@ export class FirstloginComponent implements OnInit {
 
   getOTP()
   {
+    debugger
+    this.spinner.show()
     //alert(this.userEmail)
     this.isdiable=true;
-    this.call()
+    this.call();
+  
     this.authenticationService.generateOTP(this.userEmail).subscribe(data => {
+      
       this.otpflag=true;
+      this.spinner.hide()
       Swal.fire("Success","OTP sent successfully","success");
      
     },err=>{
       console.log(err);
+      this.spinner.hide()
       Swal.fire("Error","Unable to send OTP","error")
     })
   }
@@ -500,18 +511,22 @@ export class FirstloginComponent implements OnInit {
 
   validateOTP()
   {
-     this.authenticationService.validateOTP(this.userEmail,this.otp).subscribe((data:any)=>{
+    this.spinner.show()
+     this.authenticationService.validateOTP(this.userEmail,this.model.otp).subscribe((data:any)=>{
       console.log(data)  
+     
       if(data.message=="OTP Verified Successfully")
         {
-
+         
           this.onClick()
         }else
         {
+          this.spinner.hide()
           Swal.fire("Error",data.message,"error")
         }
      }, err=>{
        console.log(err)
+       this.spinner.hide()
        Swal.fire("Error","Unable to register data","error")
      })
   }
