@@ -415,7 +415,41 @@ export class FirstloginComponent implements OnInit {
     }
 
     onClick(){
-      
+      if (this.config.isSubscriptionEnabled == true) {
+        var reqObj1 = {
+          'userId': this.decodedToken,
+          'firstName': this.model.firstName,
+          'lastName': this.model.lastName,
+          'password': this.model.password,
+          'phoneNumber': this.model.phoneNumber,
+          'country': this.model.country,
+          'designation': this.model.designation,
+          'company': this.model.company,
+          'state': this.model.state,
+          'city': this.model.city,
+          'zipcode': this.model.zipcode,
+          'department': this.model.department,
+          'profile_image': this.base64textString
+        }
+        const userDetails = Base64.encode(JSON.stringify(reqObj1))
+        localStorage.setItem('details', userDetails);
+
+        localStorage.setItem("selectedplan", this.model.plans)
+        var userId = this.cryptoService.encrypt(JSON.stringify(this.decodedToken));
+        var useridBase64 = btoa(userId);
+        var authkey = atob(useridBase64)
+        console.log(authkey)
+        localStorage.setItem("authkey", authkey)
+        if (this.model.plans == 'Enterprise') {
+          window.location.href = "https://www.epsoftinc.com/"
+        }
+        else {
+          this.spinner.hide();
+          this.router.navigate(['/home/add-card']);
+        }
+
+      }
+      else {
       var payload = new FormData();
       var reqObj = {
           'userId': this.decodedToken,
@@ -447,6 +481,7 @@ export class FirstloginComponent implements OnInit {
           this.spinner.hide()
             Swal.fire("Error","Registration failed","error");
         })
+      }
         //added for otp and registration directly
       //-----------------commented temproryly----------------------
   
