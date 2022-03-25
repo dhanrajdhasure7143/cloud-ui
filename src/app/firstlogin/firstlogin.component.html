@@ -303,7 +303,7 @@
             </span>
             </div>-->
             
-            <!-- <div class=" col-md-12 slt-plan">
+            <div class=" col-md-12 slt-plan" *ngIf="this.getCookie('card_enabled')=='true'">
               <label id="example-radio-group-label">Select Plan</label><br>
             <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"  name='plans' #plans="ngModel" [(ngModel)]="model.plans">
               <mat-radio-button value="Standard" >Free Tier</mat-radio-button>
@@ -312,8 +312,8 @@
            <!-- <mat-radio-button class="example-radio-button" [checked]="selectedplan == 'Free Tier'" *ngFor="let selectedplan of allplans" [value]="selectedplan">
                 {{selectedplan}}
               </mat-radio-button> -->
-           <!-- </mat-radio-group> 
-              </div> -->
+            </mat-radio-group> 
+              </div>
              
             <div class="buttns col-sm-12">
             <a [routerLink]="['/']" class="haveaccountOne pull-left">Already have an account&#63;</a>
@@ -322,8 +322,9 @@
            <div class="text-right">
             <button type="button" class="btn btn-primary" (click)="resetForm(firstloginform)" style='margin-right:27px;height:36px !important'>Clear all</button>
             <!-- <button type="submit" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr">Register</button> -->
-            <button  (click)="validateOTP()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist || otpflag==false">Submit</button>
+            <button *ngIf="this.getCookie('card_enabled')!='true'" (click)="validateOTP()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist || otpflag==false">Submit</button>
             <!-- <button (click)="getOTP()" class="btn btn-primary"  [disabled]="firstloginform.invalid || showErr || orgExsist">Submit</button> -->
+            <button  *ngIf="this.getCookie('card_enabled')=='true'" (click)="validateOTP()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist || otpflag==false">Continue</button>
           </div>
           </div>
         </div>  

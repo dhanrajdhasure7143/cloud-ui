@@ -105,7 +105,10 @@ export class FirstloginComponent implements OnInit {
 
   ngOnInit() {
   
-    
+    document.cookie = "card_enabled=false";
+    if(this.getCookie("card_enabled")!="false"){
+      document.cookie = "card_enabled=true";
+    }
     
   //  this.particles.getParticles();
     this.getCountries();
@@ -125,6 +128,22 @@ export class FirstloginComponent implements OnInit {
 
     this.model.plans="Standard"
     
+  }
+
+  getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
   }
   getCountries(){
     this.countryInfo = countries.Countries
@@ -415,7 +434,42 @@ export class FirstloginComponent implements OnInit {
     }
 
     onClick(){
-      
+     
+      if (this.getCookie("card_enabled")=="true") {
+        var reqObj1 = {
+          'userId': this.decodedToken,
+          'firstName': this.model.firstName,
+          'lastName': this.model.lastName,
+          'password': this.model.password,
+          'phoneNumber': this.model.phoneNumber,
+          'country': this.model.country,
+          'designation': this.model.designation,
+          'company': this.model.company,
+          'state': this.model.state,
+          'city': this.model.city,
+          'zipcode': this.model.zipcode,
+          'department': this.model.department,
+          'profile_image': this.base64textString
+        }
+        const userDetails = Base64.encode(JSON.stringify(reqObj1))
+        localStorage.setItem('details', userDetails);
+
+        localStorage.setItem("selectedplan", this.model.plans)
+        var userId = this.cryptoService.encrypt(JSON.stringify(this.decodedToken));
+        var useridBase64 = btoa(userId);
+        var authkey = atob(useridBase64)
+        console.log(authkey)
+        localStorage.setItem("authkey", authkey)
+        if (this.model.plans == 'Enterprise') {
+          window.location.href = "https://www.epsoftinc.com/"
+        }
+        else {
+          this.spinner.hide();
+          this.router.navigate(['/home/add-card']);
+        }
+
+      }
+      else {
       var payload = new FormData();
       var reqObj = {
           'userId': this.decodedToken,
@@ -447,6 +501,7 @@ export class FirstloginComponent implements OnInit {
           this.spinner.hide()
             Swal.fire("Error","Registration failed","error");
         })
+      }
         //added for otp and registration directly
       //-----------------commented temproryly----------------------
   
@@ -484,7 +539,7 @@ export class FirstloginComponent implements OnInit {
 
   getOTP()
   {
-    debugger
+    
     this.spinner.show()
     //alert(this.userEmail)
     this.isdiable=true;

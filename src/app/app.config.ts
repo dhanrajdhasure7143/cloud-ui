@@ -57,6 +57,5 @@ export const AppConfig: AiotalAppConfig = {
    isTwoFactorAuthenticationEnabled: false,
    isSecurityManagerEnabled : false,
    isNewDesignEnabled : true
-
 };
 

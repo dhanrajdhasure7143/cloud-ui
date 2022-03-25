@@ -64,7 +64,7 @@ export class AppComponent {
     this.sharedconfig.events.bsDropdown = null;
   }
   ngOnInit() {
-    localStorage.clear();
+  //  localStorage.clear();
     addEventListener("offline",(e)=>{
       this.toastr.error('Please check your internet connection');
     });
