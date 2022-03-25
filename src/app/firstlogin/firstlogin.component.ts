@@ -105,7 +105,10 @@ export class FirstloginComponent implements OnInit {
 
   ngOnInit() {
   
-    
+    document.cookie = "card_enabled=false";
+    if(this.getCookie("card_enabled")!="false"){
+      document.cookie = "card_enabled=true";
+    }
     
   //  this.particles.getParticles();
     this.getCountries();
@@ -125,6 +128,22 @@ export class FirstloginComponent implements OnInit {
 
     this.model.plans="Standard"
     
+  }
+
+  getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
   }
   getCountries(){
     this.countryInfo = countries.Countries
@@ -415,7 +434,8 @@ export class FirstloginComponent implements OnInit {
     }
 
     onClick(){
-      if (this.config.isSubscriptionEnabled == true) {
+     
+      if (this.getCookie("card_enabled")=="true") {
         var reqObj1 = {
           'userId': this.decodedToken,
           'firstName': this.model.firstName,
@@ -519,7 +539,7 @@ export class FirstloginComponent implements OnInit {
 
   getOTP()
   {
-    debugger
+    
     this.spinner.show()
     //alert(this.userEmail)
     this.isdiable=true;

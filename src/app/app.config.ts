@@ -19,7 +19,6 @@ export interface AiotalAppConfig {
   isTwoFactorAuthenticationEnabled : boolean;
   rpaendpoint:String;
   piendpoint:String;
-  isSubscriptionEnabled: boolean;
 }
 
 export const AppConfig: AiotalAppConfig = {
@@ -57,7 +56,6 @@ export const AppConfig: AiotalAppConfig = {
    piendpoint:"http://pidev.epsoftinc.in",
    isTwoFactorAuthenticationEnabled: false,
    isSecurityManagerEnabled : false,
-   isNewDesignEnabled : true,
-   isSubscriptionEnabled: true
+   isNewDesignEnabled : true
 };
 
