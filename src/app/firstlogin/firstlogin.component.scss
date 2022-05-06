@@ -274,3 +274,13 @@ label#example-radio-group-label {
 .slt-plan mat-radio-button label {
   font-size: 14px;
 }
+.password-btn{
+  background: none !important;
+  border:none !important;
+  img{
+    height: 27px !important;
+    // position:absolute !important;
+    margin-top: -12px;
+    // right: 30px;
+  }
+}
