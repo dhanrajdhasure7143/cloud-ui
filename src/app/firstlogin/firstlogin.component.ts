@@ -65,7 +65,8 @@ export class FirstloginComponent implements OnInit {
   orgExsist:boolean;
   otp:any="";
   otpflag:Boolean=false;
-  public hide:any = true;
+  public hide:boolean = false;
+
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,

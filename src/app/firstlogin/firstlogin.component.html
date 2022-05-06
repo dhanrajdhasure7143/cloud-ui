@@ -77,14 +77,14 @@
           <mat-form-field appearance="outline" color="primary" >
             <mat-label>Password</mat-label>
           <!--<span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>-->
-          <input [type]="hide ?  'password': 'text'" id="password" name="password" #password="ngModel" matInput autocomplete="new-password"
+          <input [type]="hide ?  'text': 'password'" id="password" name="password" #password="ngModel" matInput autocomplete="new-password"
             [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" required>
             <!-- <mat-icon style="cursor:pointer" matSuffix (click)="hide = !hide">{{hide ?  'visibility':'visibility_off'}}</mat-icon> -->
-            <span class="password-btn ml-auto" matSuffix *ngIf="hide==true" (click)="hide = false">
-              <img src='assets/images/eye-show.svg' />
+            <span class="password-btn ml-auto" matSuffix *ngIf="!hide" (click)="hide = true">
+              <img src='./../../assets/images/eye-show.svg' />
             </span>
-            <span class="password-btn ml-auto" matSuffix *ngIf="hide==false" (click)="hide = true">
-              <img src='assets/images/eye-hide.svg' />
+            <span class="password-btn ml-auto" matSuffix *ngIf="hide" (click)="hide = false">
+              <img src='./../../assets/images/eye-hide.svg' />
             </span>
           </mat-form-field>
           <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">

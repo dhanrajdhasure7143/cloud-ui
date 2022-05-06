@@ -72,10 +72,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-  document.cookie = "old_ux=false";
-  if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
-    document.cookie = "new_reg_flow=true";
-  }
+  // document.cookie = "old_ux=false";
+  // if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
+  //   document.cookie = "new_reg_flow=true";
+  // }
 
     //this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
   this.particles.getParticles();
@@ -410,13 +410,13 @@ export class LoginComponent implements OnInit {
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
     var productURL = this.config.productendpoint;
-   if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
+  //  if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
     if(this.config.isNewDesignEnabled)
         productURL = this.config.newproductendpoint;
         this.spinner.hide();
-       if(this.getCookie("new_reg_flow")=="true"){
+      //  if(this.getCookie("new_reg_flow")=="true"){
         window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
-       }
+      //  }
         //window.location.href="http://localhost:4000"+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
      }
     },error => {
