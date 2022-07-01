@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../_services';
 
 @Component({
   selector: 'app-sessionout',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SessionoutComponent implements OnInit {
 
-  constructor() {
+  constructor(private appser: AppService) {
     localStorage.clear();
     sessionStorage.clear();
+    this.appser.logout();
    }
 
   ngOnInit() {
