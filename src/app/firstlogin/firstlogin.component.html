@@ -96,7 +96,7 @@
             <!-- <img src="assets/images/registration/bag.svg" class="icon"> -->
             <mat-form-field appearance="outline" color="primary">
               <mat-label>Job Title</mat-label>
-            <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" matInput (input)="validate(jobTitle)" (keypress)="lettersOnly($event)"
+            <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" matInput  (keypress)="lettersOnly($event)"
               [(ngModel)]="model.designation" maxlength="20" minlength="2" placeholder="Job Title" required>
             </mat-form-field>
             <!-- <span *ngIf="((jobTitle.invalid && firstloginform.submitted)|| (jobTitle.errors && jobTitle.touched))"
@@ -329,4 +329,10 @@
 
 
 </div>
+<ngx-spinner bdColor="rgba(255,255,255,0.7)">
+  <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+  <!-- src='..\assets\images\RPA\rpa-loader.gif'  -->
+  
+</ngx-spinner>
+ 
 <!-- </common-body> -->
