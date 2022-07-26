@@ -29,7 +29,7 @@ export class LoginGuard implements CanActivate {
         take(1),
         map((isLoggedIn: boolean) => {
           if (isLoggedIn) {
-            this.router.navigate(['/timeout']);
+            this.router.navigate(['/active']);
             return false;
           } else {
             return true;
