@@ -9,6 +9,7 @@ import { CreataccountComponent } from './creataccount/creataccount.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { RedirectsignoutComponent } from './redirectsignout/redirectsignout.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { ActiveComponent } from './active/active.component';
 
 const routes: Routes = [{
   path: '',
@@ -44,6 +45,8 @@ const routes: Routes = [{
   {
     path:'userinfo',
     component:UserInfoComponent
+  },{
+    path:'active', component: ActiveComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }
