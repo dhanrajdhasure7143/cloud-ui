@@ -114,9 +114,9 @@ export class LoginComponent implements OnInit {
  
     this.isOTP = true;
 
-    this.authenticationService.generateOTP(this.f.username.value).subscribe(data => {
+    this.authenticationService.generateOTP(this.f.username.value.toLowerCase()).subscribe(data => {
 
-      this.profileService.getTwoFactroConfig(this.f.username.value).subscribe(res=>{
+      this.profileService.getTwoFactroConfig(this.f.username.value.toLowerCase()).subscribe(res=>{
 
         //swwet alert
         if(res.emailEnabled == true){
@@ -187,7 +187,7 @@ export class LoginComponent implements OnInit {
 
      
     
-      this.loginService.checkpasswordexpiry(this.f.username.value).subscribe(data=>{
+      this.loginService.checkpasswordexpiry(this.f.username.value.toLowerCase()).subscribe(data=>{
         let res = data;
         if(data.isError == "true"){
        
@@ -202,7 +202,7 @@ export class LoginComponent implements OnInit {
           }).then((result) => {
             
             if (result.value) {
-              localStorage.setItem('Passwordvalidite', this.f.username.value); 
+              localStorage.setItem('Passwordvalidite', this.f.username.value.toLowerCase()); 
               this.router.navigateByUrl("/changepassword"); 
             }
           });
@@ -210,7 +210,7 @@ export class LoginComponent implements OnInit {
         else{
     if(!this.twoFactorAuthConButton){
       
-      this.authenticationService.validateOTP(this.f.username.value, this.f.otpNum.value).subscribe(data => {
+      this.authenticationService.validateOTP(this.f.username.value.toLowerCase(), this.f.otpNum.value).subscribe(data => {
 
        
         this.authenticationMeothod();
@@ -250,7 +250,7 @@ export class LoginComponent implements OnInit {
  authenticationMeothod(){
    this.spinner.show();
   this.authenticationService
-  .login(this.f.username.value, this.f.password.value)
+  .login(this.f.username.value.toLowerCase(), this.f.password.value)
   .pipe(first())
   .subscribe(data => {
      this.errormsg=data;
@@ -267,7 +267,7 @@ export class LoginComponent implements OnInit {
       }
       
       if (this.f.rememberme.value) {
-        this.set('username', this.f.username.value, {});
+        this.set('username', this.f.username.value.toLowerCase(), {});
         this.set('password', this.f.password.value, {});
         if(this.twoFactorAuthenticationEnabled){
         this.set('otpNum', this.f.otpNum.value, {});
@@ -278,10 +278,10 @@ export class LoginComponent implements OnInit {
       this.loading = false;
       this.session.startWatching(); 
 
-      localStorage.setItem('ProfileuserId',this.f.username.value)
+      localStorage.setItem('ProfileuserId',this.f.username.value.toLowerCase())
 
       // user details based on userId
-      this.authenticationService.userDetails(this.f.username.value).subscribe(data => this.checkSuccessCallback(data));
+      this.authenticationService.userDetails(this.f.username.value.toLowerCase()).subscribe(data => this.checkSuccessCallback(data));
 
      
       setTimeout(() => {
@@ -487,7 +487,7 @@ onKeydownfeilds(event){
     this.twoFactorAuthConButton = true;
     
     if(this.f.username.valid){
-    this.profileService.getTwoFactroConfig(this.f.username.value).subscribe(res=>{
+    this.profileService.getTwoFactroConfig(this.f.username.value.toLowerCase()).subscribe(res=>{
       if(!res.message){
         if(res.twoFactorEnabled == true){
           this.loginForm.addControl('otpNum', this.formBuilder.control('',[Validators.required]))

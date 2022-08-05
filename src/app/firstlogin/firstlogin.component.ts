@@ -286,7 +286,7 @@ export class FirstloginComponent implements OnInit {
   // }
   var reqObj = {}
   reqObj = {
-    'userId': userDetails.userId,
+    'userId': userDetails.userId.toLowerCase(),
     'firstName': userDetails.firstName,
     'lastName': userDetails.lastName,
     'password': userDetails.password,
@@ -546,7 +546,7 @@ export class FirstloginComponent implements OnInit {
     this.isdiable=true;
     this.call();
   
-    this.authenticationService.generateOTP(this.userEmail).subscribe(data => {
+    this.authenticationService.generateOTP(this.userEmail.toLowerCase()).subscribe(data => {
       
       this.otpflag=true;
       this.spinner.hide()
@@ -568,8 +568,7 @@ export class FirstloginComponent implements OnInit {
   validateOTP()
   {
     this.spinner.show()
-     this.authenticationService.validateOTP(this.userEmail,this.model.otp).subscribe((data:any)=>{
-      console.log(data)  
+     this.authenticationService.validateOTP(this.userEmail.toLowerCase(),this.model.otp).subscribe((data:any)=>{ 
      
       if(data.message=="OTP Verified Successfully")
         {
