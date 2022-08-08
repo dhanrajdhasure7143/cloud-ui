@@ -37,7 +37,7 @@ export class ForgotpasswordComponent implements OnInit {
       if (this.emailForm.invalid) {
           return;
       }
-      this.forgotpasswordser.forgotPassword({email: this.f.email.value}).subscribe(res => {
+      this.forgotpasswordser.forgotPassword({email: this.f.email.value.toLowerCase()}).subscribe(res => {
         if(res.message ==='Password reset mail sent successfully'){
           Swal.fire({
             title: 'Success',

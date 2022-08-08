@@ -363,7 +363,7 @@ export class FirstloginComponent implements OnInit {
     var me = this;
     this.model = new User();
     setTimeout(() => {
-      me.decodedToken = me.userEmail;
+      me.decodedToken = me.userEmail.toLowerCase();
         if(this.company_name){
           this.model.company=this.company_name
         }
@@ -489,7 +489,7 @@ export class FirstloginComponent implements OnInit {
     this.isdiable=true;
     this.call();
     this.spinner.show()
-    this.authenticationService.generateOTP(this.userEmail).subscribe(data => {
+    this.authenticationService.generateOTP(this.userEmail.toLowerCase()).subscribe(data => {
       this.otpflag=true;
       this.spinner.hide()
       Swal.fire("Success","OTP sent successfully","success");
@@ -510,7 +510,7 @@ export class FirstloginComponent implements OnInit {
   validateOTP()
   {
     this.spinner.show()
-     this.authenticationService.validateOTP(this.userEmail,this.otp).subscribe((data:any)=>{
+     this.authenticationService.validateOTP(this.userEmail.toLowerCase(),this.otp).subscribe((data:any)=>{
       console.log(data)  
       if(data.message=="OTP Verified Successfully")
         {
