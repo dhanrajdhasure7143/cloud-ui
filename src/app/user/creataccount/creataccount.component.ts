@@ -41,7 +41,7 @@ export class CreataccountComponent implements OnInit {
   }
   creat_account(){
     this.user = new User();
-   this.userId=this.emailId
+   this.userId=this.emailId.toLowerCase();
   //  this.isresend=true;
    if(this.userId.endsWith('@gmail.com') || this.userId.endsWith('@yahoo.com') || 
    this.userId.endsWith('@hotmail.com') || this.userId.endsWith('@rediffmail.com')){
@@ -64,7 +64,7 @@ export class CreataccountComponent implements OnInit {
       );
   }
   resendVerificationMail(){
-    let encrypt = this.cryptoService.encrypt(this.userId);
+    let encrypt = this.cryptoService.encrypt(this.userId.toLowerCase());
     this.loginservice.resendVerificationMail(encrypt).subscribe(res=>{
       Swal.fire({
         title: 'Success',
