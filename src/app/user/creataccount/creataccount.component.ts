@@ -51,13 +51,13 @@ export class CreataccountComponent implements OnInit {
      return
 
    }
-   let encrypt = this.cryptoService.encrypt(this.userId.toLowerCase());
+   let encrypt = this.cryptoService.encrypt(this.userId);
    this.user.userId = encrypt;
   //  this.user.firstName = this.firstname;
   //  this.user.lastName = this.lastname
   //  this.user.phoneNumber = this.phoneNumber
     this.spinner.show()
-    this.loginservice.sentVerificationMail(this.user.userId.toLowerCase()).subscribe(res=>{
+    this.loginservice.sentVerificationMail(this.user.userId).subscribe(res=>{
       if(res.message=="Confirmation Email Sent Successfully"){
         this.isresend=true;
         this.spinner.hide()
@@ -72,7 +72,7 @@ export class CreataccountComponent implements OnInit {
       );
   }
   resendVerificationMail(){
-    let encrypt = this.cryptoService.encrypt(this.userId.toLowerCase());
+    let encrypt = this.cryptoService.encrypt(this.userId);
     this.loginservice.resendVerificationMail(encrypt).subscribe(res=>{
       Swal.fire({
         title: 'Success',
