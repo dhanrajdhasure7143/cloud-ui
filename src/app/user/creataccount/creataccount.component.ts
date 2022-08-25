@@ -67,7 +67,8 @@ export class CreataccountComponent implements OnInit {
        
     },error=>{
       
-      this.error='User Already Exists'
+      this.error='User Already Exists';
+      this.spinner.hide();
     }
       );
   }
