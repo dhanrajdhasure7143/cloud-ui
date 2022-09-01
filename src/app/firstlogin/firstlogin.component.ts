@@ -550,7 +550,7 @@ export class FirstloginComponent implements OnInit {
       
       this.otpflag=true;
       this.spinner.hide()
-      Swal.fire("Success","OTP sent successfully","success");
+      Swal.fire("Success","OTP sent successfully to EMail !","success");
      
     },err=>{
       console.log(err);
