@@ -494,7 +494,7 @@ export class FirstloginComponent implements OnInit {
         this.firstloginservice.registerUser(payload).subscribe(res => {
           console.log(res);
           this.spinner.hide()
-          Swal.fire("Success","Registered Successfully","success")
+          Swal.fire("Success","Registered Successfully!","success")
           //this.router.navigate(['/home/add-card']);
           this.router.navigate(['/']);
 
