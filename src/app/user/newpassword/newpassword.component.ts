@@ -94,6 +94,7 @@ export class NewpasswordComponent implements OnInit {
         })
         
       }else {
+        this.spinner.hide();
         Swal.fire({
           type: 'error',
           title: "Error",
