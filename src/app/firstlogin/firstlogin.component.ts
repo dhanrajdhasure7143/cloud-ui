@@ -492,7 +492,7 @@ export class FirstloginComponent implements OnInit {
     this.authenticationService.generateOTP(this.userEmail.toLowerCase()).subscribe(data => {
       this.otpflag=true;
       this.spinner.hide()
-      Swal.fire("Success","OTP sent successfully to EMail !","success");
+      Swal.fire("Success","OTP sent successfully to EMail!","success");
      
     },err=>{
       console.log(err);
