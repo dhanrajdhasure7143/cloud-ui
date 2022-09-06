@@ -4,7 +4,8 @@ import { APP_CONFIG } from './../../app.config';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2';
-import { Particles } from '../../_models/particlesjs'
+import { Particles } from '../../_models/particlesjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -20,10 +21,14 @@ export class NewpasswordComponent implements OnInit {
   public show:boolean=true;
   public confmshow:boolean=true;
   error:any;
+  public hide:boolean = false;
+  public hide1:boolean = false;
+
   constructor(private router: Router, 
               private route: ActivatedRoute, 
               private newpasswordServ: NewpasswordService,
-              private particles :Particles,) { }
+              private particles :Particles,
+              private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
    // this.particles.getParticles();
@@ -60,6 +65,7 @@ export class NewpasswordComponent implements OnInit {
     }
     
   onSubmit() {
+    this.spinner.show();
     this.route.queryParams.subscribe(params => {
       let resetToken = params['token']
       this.userData = {
@@ -74,11 +80,12 @@ export class NewpasswordComponent implements OnInit {
    
 }
   onSuccessOfResetPassword(res: any) {
+    this.spinner.hide();
     if(res){
       if(res.message === 'Password reset is successful'){
         Swal.fire({
           title: 'Success',
-            text: `Your password reset is successful!`,
+            text: `Your password reset is successful !`,
             type: 'success',
             
                   
@@ -87,9 +94,11 @@ export class NewpasswordComponent implements OnInit {
         })
         
       }else {
+        this.spinner.hide();
         Swal.fire({
           type: 'error',
-          title: res.errorMessage,
+          title: "Error",
+          text: res.errorMessage+' !',
          });
         //this.router.navigate(['/user']);
       }
