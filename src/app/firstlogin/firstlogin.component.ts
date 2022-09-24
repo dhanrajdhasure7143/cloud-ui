@@ -15,6 +15,7 @@ import { ProductlistService } from '../_services/productlist.service';
 import { HttpClient } from '@angular/common/http';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthenticationService } from '../_services';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-firstlogin',
@@ -30,6 +31,7 @@ export class FirstloginComponent implements OnInit {
   departments:any[]=[];
   phnCountry: any;
   itemsShowLimit = 1;
+  isdiable:boolean=false;
   stateInfo: any[] = [];
   countryInfo: any[] = [];
   cityInfo: any[] = [];
@@ -63,6 +65,8 @@ export class FirstloginComponent implements OnInit {
   orgExsist:boolean;
   otp:any="";
   otpflag:Boolean=false;
+  public hide:boolean = false;
+  isLoading:boolean = false;
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
@@ -72,6 +76,7 @@ export class FirstloginComponent implements OnInit {
               private cryptoService :CryptoService,
               private authenticationService:AuthenticationService,
               private firstloginservice: FirstloginService,
+              private spinner:NgxSpinnerService
               ) {
     this.route.queryParams.subscribe(params => {
       if(params['token'] != undefined){
@@ -344,13 +349,12 @@ export class FirstloginComponent implements OnInit {
     location.href = this.config.portfolioSite;
   }
   onKeydown(event){
-    
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
-    let temp =numArray.includes(event.key); //gives true or false
-   if(!temp){
-    event.preventDefault();
-   } 
-  }
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight"]
+       let temp =numArray.includes(event.key); //gives true or false
+      if(!temp){
+       event.preventDefault();
+      } 
+     }
   toggle() {
     this.show = !this.show;
   }
@@ -359,7 +363,7 @@ export class FirstloginComponent implements OnInit {
     var me = this;
     this.model = new User();
     setTimeout(() => {
-      me.decodedToken = me.userEmail;
+      me.decodedToken = me.userEmail.toLowerCase();
         if(this.company_name){
           this.model.company=this.company_name
         }
@@ -432,13 +436,16 @@ export class FirstloginComponent implements OnInit {
 
         //added for otp and registration directly
         payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+        this.spinner.show()
         this.firstloginservice.registerUser(payload).subscribe(res => {
           console.log(res)
-          Swal.fire("Success","Registered Successfully","success")
+          this.spinner.hide()
+          Swal.fire("Success","Registered Successfully!","success")
           //this.router.navigate(['/home/add-card']);
           this.router.navigate(['/']);
 
         },err=>{
+          this.spinner.hide()
             Swal.fire("Error","Registration failed","error");
         })
         //added for otp and registration directly
@@ -479,31 +486,44 @@ export class FirstloginComponent implements OnInit {
   getOTP()
   {
     //alert(this.userEmail)
-    
-    this.authenticationService.generateOTP(this.userEmail).subscribe(data => {
+    this.isdiable=true;
+    this.call();
+    this.spinner.show()
+    this.authenticationService.generateOTP(this.userEmail.toLowerCase()).subscribe(data => {
       this.otpflag=true;
-      Swal.fire("Success","OTP sent successfully","success");
+      this.spinner.hide()
+      Swal.fire("Success","OTP sent successfully to EMail!","success");
      
     },err=>{
       console.log(err);
+      this.spinner.hide()
       Swal.fire("Error","Unable to send OTP","error")
     })
   }
 
+  call(){
+    setTimeout(()=>{                           // <<<---using ()=> syntax
+   this.isdiable=false;
+  }, 30000);
+  }
+
   validateOTP()
   {
-     this.authenticationService.validateOTP(this.userEmail,this.otp).subscribe((data:any)=>{
+    this.spinner.show()
+     this.authenticationService.validateOTP(this.userEmail.toLowerCase(),this.otp).subscribe((data:any)=>{
       console.log(data)  
       if(data.message=="OTP Verified Successfully")
         {
-
+          this.spinner.hide()
           this.onClick()
         }else
         {
+          this.spinner.hide()
           Swal.fire("Error",data.message,"error")
         }
      }, err=>{
-       console.log(err)
+       console.log(err);
+       this.spinner.hide()
        Swal.fire("Error","Unable to register data","error")
      })
   }

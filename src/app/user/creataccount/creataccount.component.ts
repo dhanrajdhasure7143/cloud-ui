@@ -5,7 +5,7 @@ import { LoginService } from '../_services/login.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { User } from 'src/app/_models';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-creataccount',
   templateUrl: './creataccount.component.html',
@@ -30,7 +30,8 @@ export class CreataccountComponent implements OnInit {
     constructor(private particles :Particles,
                 private loginservice:LoginService,
                 private modalService: BsModalService,
-                private cryptoService: CryptoService
+                private cryptoService: CryptoService,
+                private spinner:NgxSpinnerService
                 ) { }
 
   ngOnInit() {
@@ -41,7 +42,7 @@ export class CreataccountComponent implements OnInit {
   }
   creat_account(){
     this.user = new User();
-   this.userId=this.emailId
+   this.userId=this.emailId.toLowerCase();
   //  this.isresend=true;
    if(this.userId.endsWith('@gmail.com') || this.userId.endsWith('@yahoo.com') || 
    this.userId.endsWith('@hotmail.com') || this.userId.endsWith('@rediffmail.com')){
@@ -55,11 +56,19 @@ export class CreataccountComponent implements OnInit {
   //  this.user.firstName = this.firstname;
   //  this.user.lastName = this.lastname
   //  this.user.phoneNumber = this.phoneNumber
- 
+    this.spinner.show()
     this.loginservice.sentVerificationMail(this.user.userId).subscribe(res=>{
-       this.isresend=true;
+      if(res.message=="Confirmation Email Sent Successfully"){
+        this.isresend=true;
+        this.spinner.hide()
+      }else{
+        this.spinner.hide()
+      }
+       
     },error=>{
-      this.error='User Already Exists'
+      
+      this.error='User Already Exists';
+      this.spinner.hide();
     }
       );
   }

@@ -46,6 +46,7 @@ import {
 } from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [FirstloginComponent],
@@ -91,7 +92,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    NgxSpinnerModule
 
   ]
 })
