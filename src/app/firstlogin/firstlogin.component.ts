@@ -66,6 +66,7 @@ export class FirstloginComponent implements OnInit {
   otp:any="";
   otpflag:Boolean=false;
   public hide:boolean = false;
+  otpBtn = "Get OTP";
 
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -388,6 +389,8 @@ export class FirstloginComponent implements OnInit {
           this.model.company=this.company_name
         }
     }, 100);
+    this.otpBtn="Get OTP";
+     this.isdiable=false;
     $("#image").val('')
     this.selectedFile=null;
 
@@ -551,7 +554,7 @@ export class FirstloginComponent implements OnInit {
       this.otpflag=true;
       this.spinner.hide()
       Swal.fire("Success","OTP sent successfully to EMail !","success");
-     
+     this.otpBtn="Resend OTP";
     },err=>{
       console.log(err);
       this.spinner.hide()
