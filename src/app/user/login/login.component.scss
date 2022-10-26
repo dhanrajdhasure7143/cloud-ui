@@ -312,3 +312,10 @@ h6 span {
     // right: 30px;
   }
 }
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: #8b8a8a !important;
+}
+
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label{
+  color: #8b8a8a !important;
+}
