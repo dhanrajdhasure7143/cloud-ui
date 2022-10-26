@@ -36,7 +36,7 @@
                   </mat-form-field>
                   <span *ngIf="loginForm.get('username').invalid && loginForm.get('username').errors && loginForm.get('username').dirty">
                   <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('username').hasError('required') && loginForm.get('username').touched">
-                    Email is Required!
+                    Email is Required
                   </mat-error>
                   <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('username').hasError('pattern') && loginForm.get('username').touched">
                     Enter valid email address
@@ -64,10 +64,10 @@
 
                       <span *ngIf="loginForm.get('password').invalid && loginForm.get('password').errors && loginForm.get('password').dirty">
                       <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
-                        Password is Required!
+                        Password is Required
                       </mat-error>
                       <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched">
-                        Minimum 8 Characters Required!
+                        Minimum 8 Characters Required
                       </mat-error>
                       </span>
 
