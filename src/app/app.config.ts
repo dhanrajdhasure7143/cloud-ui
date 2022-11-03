@@ -40,22 +40,21 @@ export const AppConfig: AiotalAppConfig = {
   //piendpoint:"https://eiapbeta.epsoftinc.com/prcintel"
 
 
-  // QA Urls
    portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
-   apiendpoint: 'http://apdev.epsoftinc.in',
-   tokenendpoint: 'http://idmdev.epsoftinc.in',
-   proxyTokenendpoint: 'http://10.11.0.107:3001',
-   authorizationendpoint: 'http://authdev.epsoftinc.in',
-   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
-   notificationsendpoint: 'http://alertsdev.epsoftinc.in',
-   Subscriptionendpoint:'http://subscriptiondev.epsoftinc.in',
-   productendpoint: 'http://eiapdev.epsoftinc.in',
-   newproductendpoint: 'http://eiapdevnew.epsoftinc.in',
-   socialLoginRedirectURL: 'http://eiapclouddev.epsoftinc.in/#/user',
-   rpaendpoint:"http://rpadev.epsoftinc.in",
-   piendpoint:"http://pidev.epsoftinc.in",
+   apiendpoint: 'https://ezflow.dev.epsoftinc.com/aiotalplatform',
+   tokenendpoint: 'https://ezidm.dev.epsoftinc.com',
+   proxyTokenendpoint: 'https://ezflow.dev.epsoftinc.com/securitymgr',
+   authorizationendpoint: 'https://ezflow.dev.epsoftinc.com/authservices',
+   socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
+   notificationsendpoint: 'https://ezflow.dev.epsoftinc.com/alerts',
+   Subscriptionendpoint:'https://ezflow.dev.epsoftinc.com/subscriptions',
+   productendpoint: 'https://eziap.dev.epsoftinc.com',
+   newproductendpoint: 'https://eziap.dev.epsoftinc.com',
+   socialLoginRedirectURL: 'https://ezflow.dev.epsoftinc.com/#/user',
+   rpaendpoint:"https://ezflow.dev.epsoftinc.com/wfrpa",
+   piendpoint:"https://ezflow.dev.epsoftinc.com/prcintel",
    isTwoFactorAuthenticationEnabled: false,
    isSecurityManagerEnabled : false,
    isNewDesignEnabled : true
-};
 
+};
