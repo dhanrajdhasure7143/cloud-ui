@@ -1,9 +1,9 @@
-version: '3.7'
+version: '3.8'
 
 networks:
   eps_net:
     external: true
-    name: docker_epsinternal
+    name: "dev_be_default"
   eps_host:
     external: true
     name: host
@@ -13,7 +13,11 @@ services:
     image: ${DOCKER_REGISTRY_URL}/cloud-ui:${DOCKER_TAG}
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.environment == dev
     networks:
       - eps_net
-    ports:
-      - '9090:80'
+    logging:
+      options:
+        tag: "{{.Name}}"
