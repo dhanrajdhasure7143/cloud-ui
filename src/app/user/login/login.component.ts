@@ -39,6 +39,9 @@ export class LoginComponent implements OnInit {
   public errormsg: any;
   public hide:any = true;
   inactive:any;
+  googleLoginURL:any;
+  officeLoginURL:any;
+
   constructor(
     @Inject(APP_CONFIG) private config,
     private formBuilder: FormBuilder,
@@ -108,8 +111,10 @@ export class LoginComponent implements OnInit {
     //     this.password.nativeElement.type = 'password';
     //   }
     // };
-    
+    this.googleLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=google&redirectPath="+this.config.socialLoginRedirectURL
+    this.officeLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=azure&redirectPath="+this.config.socialLoginRedirectURL
   }
+  
   generateOTP(){
  
     this.isOTP = true;
