@@ -4,6 +4,7 @@
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
         "files": [
           "/favicon.ico",
@@ -12,7 +13,9 @@
           "/assets/jsons/.json",
           "/*.css",
           "/*.js",
-          "/assets/**"
+          "/assets/**",
+          "/assets/images/**",
+          "/assets/login icons/**"
         ]
       }
     }, {
@@ -22,6 +25,8 @@
       "resources": {
         "files": [
           "/assets/**",
+          "/assets/images/**",
+          "/assets/login icons/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
