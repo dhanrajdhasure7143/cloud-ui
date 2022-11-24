@@ -73,7 +73,7 @@ export class CreataccountComponent implements OnInit {
       );
   }
   resendVerificationMail(){
-    let encrypt = this.cryptoService.encrypt(this.userId);
+    let encrypt = this.cryptoService.encrypt(this.userId.toLowerCase());
     this.loginservice.resendVerificationMail(encrypt).subscribe(res=>{
       Swal.fire({
         title: 'Success',

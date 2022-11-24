@@ -34,12 +34,14 @@
                     <div *ngIf="f.username.errors.required">Email is required</div>
                   </div>-->
                   </mat-form-field>
+                  <span *ngIf="loginForm.get('username').invalid && loginForm.get('username').errors && loginForm.get('username').dirty">
                   <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('username').hasError('required') && loginForm.get('username').touched">
-                    Email is Required!
+                    Email is Required
                   </mat-error>
                   <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('username').hasError('pattern') && loginForm.get('username').touched">
                     Enter valid email address
                   </mat-error>
+                  </span>
                 </div>
                 <div class="form-group col-md-12"><!--inner-addon left-addon right-addon-->
                     <!--<img src="assets/images/password_icon.png" class="pswIcon">
@@ -60,12 +62,14 @@
                       </mat-form-field>
 
 
+                      <span *ngIf="loginForm.get('password').invalid && loginForm.get('password').errors && loginForm.get('password').dirty">
                       <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
-                        Password is Required!
+                        Password is Required
                       </mat-error>
                       <mat-error class="fa fa-info-circle errspan" *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched">
-                        Minimum 8 Characters Required!
+                        Minimum 8 Characters Required
                       </mat-error>
+                      </span>
 
                       <!--<mat-error *ngIf="loginForm.get('password').hasError('maxlength')">
                         Maximum 50 Characters Required!
@@ -122,7 +126,7 @@
                   <img src="assets/login icons/google.svg" class="buuton-icons">Google
                 </button>  -->
                 <button mat-raised-button class="btn_style" type="button">
-                <a href="https://ezflow.idm.epsoftinc.com/api/socialLogin?authProvider=google&redirectPath=https://ezflow.epsoftinc.com/#/user">
+                <a [href]="googleLoginURL">
                   <img src="assets/login icons/google.svg" class="buuton-icons"/>Google</a> </button>
               </div>
               <div class="col-md-6 text-center" style="
@@ -133,7 +137,7 @@
                   <img src="assets/login icons/office.svg" class="buuton-icons"><label >Office 365</label>
                 </button> -->
                 <button mat-raised-button class="btn_style" type="button">
-                <a href="https://ezflow.idm.epsoftinc.com/api/socialLogin?authProvider=azure&redirectPath=https://ezflow.epsoftinc.com/#/user">
+                <a [href]="officeLoginURL">
                 <img src="assets/login icons/office.svg" class="buuton-icons"/>Office</a>   </button>
               </div>
             </div>

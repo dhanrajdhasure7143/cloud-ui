@@ -26,6 +26,7 @@ export class UserInfoComponent implements OnInit {
   submitted=false;
   public userRole:any = [];
   userId:any;
+  error:boolean=false;
   private spacialSymbolEncryption:string = '->^<-';
   ngOnInit() {
     this.particles.getParticles();

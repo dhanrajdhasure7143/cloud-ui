@@ -480,11 +480,14 @@ export class ReviewComponent implements OnInit {
                       "cvc": this.cardDetails.cvvNumber
                     }
                     var users: any;
+                    var quantity:any;
                     if (this.planselected == 'Standard') {
                       users = "30";
+                      quantity="0"
                     }
-                    if (this.planselected == 'Standard') {
+                    if (this.planselected == 'Professional') {
                       users = "100";
+                      quantity="0"
                     }
                     const plandetails = {
                       "ip": "1.2.3.4",
@@ -497,7 +500,7 @@ export class ReviewComponent implements OnInit {
                             "plan_id": this.selected_plans.id
                           },
                           "planId": this.selected_plans.id,
-                          "quantity":"100"
+                          "quantity":quantity
                         }
                       ],
                       "meta": {
@@ -608,12 +611,8 @@ export class ReviewComponent implements OnInit {
       //  });
       }
     }, err => {
-      Swal.fire({
-        title: 'Error!',
-        type: 'error',
-        text: `${err.error.message} ! Please check your user name`,
-        allowOutsideClick: false
-      });
-    });
+      this.spinner.hide();
+      Swal.fire("Error", "Registration failed", "error");
+    })
   }
 }

@@ -39,6 +39,9 @@ export class LoginComponent implements OnInit {
   public errormsg: any;
   public hide:any = true;
   inactive:any;
+  googleLoginURL:any;
+  officeLoginURL:any;
+
   constructor(
     @Inject(APP_CONFIG) private config,
     private formBuilder: FormBuilder,
@@ -72,7 +75,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-  //document.cookie = "old_ux=false";
+  // document.cookie = "old_ux=false";
   // if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
   //   document.cookie = "new_reg_flow=true";
   // }
@@ -108,8 +111,10 @@ export class LoginComponent implements OnInit {
     //     this.password.nativeElement.type = 'password';
     //   }
     // };
-    
+    this.googleLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=google&redirectPath="+this.config.socialLoginRedirectURL
+    this.officeLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=azure&redirectPath="+this.config.socialLoginRedirectURL
   }
+  
   generateOTP(){
  
     this.isOTP = true;
@@ -410,13 +415,13 @@ export class LoginComponent implements OnInit {
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
     var productURL = this.config.productendpoint;
-   // if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
+  //  if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
     if(this.config.isNewDesignEnabled)
         productURL = this.config.newproductendpoint;
         this.spinner.hide();
-       // if(this.getCookie("new_reg_flow")=="true"){
+      //  if(this.getCookie("new_reg_flow")=="true"){
         window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
-       // }
+      //  }
         //window.location.href="http://localhost:4000"+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
      }
     },error => {

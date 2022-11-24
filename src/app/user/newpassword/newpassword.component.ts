@@ -28,7 +28,7 @@ export class NewpasswordComponent implements OnInit {
               private route: ActivatedRoute, 
               private newpasswordServ: NewpasswordService,
               private particles :Particles,
-              private spinner:NgxSpinnerService) { }
+              private spinner:NgxSpinnerService,) { }
 
   ngOnInit() {
    // this.particles.getParticles();
@@ -85,7 +85,7 @@ export class NewpasswordComponent implements OnInit {
       if(res.message === 'Password reset is successful'){
         Swal.fire({
           title: 'Success',
-            text: `Your password reset is successful!`,
+            text: `Your password reset is successful !`,
             type: 'success',
             
                   
@@ -98,7 +98,7 @@ export class NewpasswordComponent implements OnInit {
         Swal.fire({
           type: 'error',
           title: "Error",
-          text: res.errorMessage+'!',
+          text: res.errorMessage+' !',
          });
         //this.router.navigate(['/user']);
       }

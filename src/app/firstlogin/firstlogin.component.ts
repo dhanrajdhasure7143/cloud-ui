@@ -66,7 +66,8 @@ export class FirstloginComponent implements OnInit {
   otp:any="";
   otpflag:Boolean=false;
   public hide:boolean = false;
-  isLoading:boolean = false;
+  otpBtn = "Get OTP";
+
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
               private route: ActivatedRoute,
@@ -106,7 +107,10 @@ export class FirstloginComponent implements OnInit {
 
   ngOnInit() {
   
-    
+    document.cookie = "card_enabled=false";
+    if(this.getCookie("card_enabled")!="false"){
+      document.cookie = "card_enabled=true";
+    }
     
   //  this.particles.getParticles();
     this.getCountries();
@@ -126,6 +130,22 @@ export class FirstloginComponent implements OnInit {
 
     this.model.plans="Standard"
     
+  }
+
+  getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
   }
   getCountries(){
     this.countryInfo = countries.Countries
@@ -267,7 +287,7 @@ export class FirstloginComponent implements OnInit {
   // }
   var reqObj = {}
   reqObj = {
-    'userId': userDetails.userId,
+    'userId': userDetails.userId.toLowerCase(),
     'firstName': userDetails.firstName,
     'lastName': userDetails.lastName,
     'password': userDetails.password,
@@ -349,7 +369,8 @@ export class FirstloginComponent implements OnInit {
     location.href = this.config.portfolioSite;
   }
   onKeydown(event){
-    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight"]
+    
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight","Delete"]
        let temp =numArray.includes(event.key); //gives true or false
       if(!temp){
        event.preventDefault();
@@ -368,6 +389,8 @@ export class FirstloginComponent implements OnInit {
           this.model.company=this.company_name
         }
     }, 100);
+    this.otpBtn="Get OTP";
+     this.isdiable=false;
     $("#image").val('')
     this.selectedFile=null;
 
@@ -415,7 +438,42 @@ export class FirstloginComponent implements OnInit {
     }
 
     onClick(){
-      
+     
+      if (this.getCookie("card_enabled")=="true") {
+        var reqObj1 = {
+          'userId': this.decodedToken,
+          'firstName': this.model.firstName,
+          'lastName': this.model.lastName,
+          'password': this.model.password,
+          'phoneNumber': this.model.phoneNumber,
+          'country': this.model.country,
+          'designation': this.model.designation,
+          'company': this.model.company,
+          'state': this.model.state,
+          'city': this.model.city,
+          'zipcode': this.model.zipcode,
+          'department': this.model.department,
+          'profile_image': this.base64textString
+        }
+        const userDetails = Base64.encode(JSON.stringify(reqObj1))
+        localStorage.setItem('details', userDetails);
+
+        localStorage.setItem("selectedplan", this.model.plans)
+        var userId = this.cryptoService.encrypt(JSON.stringify(this.decodedToken));
+        var useridBase64 = btoa(userId);
+        var authkey = atob(useridBase64)
+        console.log(authkey)
+        localStorage.setItem("authkey", authkey)
+        if (this.model.plans == 'Enterprise') {
+          window.location.href = "https://www.epsoftinc.com/"
+        }
+        else {
+          this.spinner.hide();
+          this.router.navigate(['/home/add-card']);
+        }
+
+      }
+      else {
       var payload = new FormData();
       var reqObj = {
           'userId': this.decodedToken,
@@ -431,14 +489,14 @@ export class FirstloginComponent implements OnInit {
           'zipcode': this.model.zipcode,
           'department': this.model.department,
           'profile_image':this.base64textString,
-          'otp':this.otp
+          'otp':this.model.otp
         }
 
         //added for otp and registration directly
         payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
         this.spinner.show()
         this.firstloginservice.registerUser(payload).subscribe(res => {
-          console.log(res)
+          console.log(res);
           this.spinner.hide()
           Swal.fire("Success","Registered Successfully!","success")
           //this.router.navigate(['/home/add-card']);
@@ -448,6 +506,7 @@ export class FirstloginComponent implements OnInit {
           this.spinner.hide()
             Swal.fire("Error","Registration failed","error");
         })
+      }
         //added for otp and registration directly
       //-----------------commented temproryly----------------------
   
@@ -485,15 +544,18 @@ export class FirstloginComponent implements OnInit {
 
   getOTP()
   {
+    
+    this.spinner.show()
     //alert(this.userEmail)
     this.isdiable=true;
     this.call();
-    this.spinner.show()
+  
     this.authenticationService.generateOTP(this.userEmail.toLowerCase()).subscribe(data => {
+      
       this.otpflag=true;
       this.spinner.hide()
-      Swal.fire("Success","OTP sent successfully to EMail!","success");
-     
+      Swal.fire("Success","OTP sent successfully to EMail !","success");
+     this.otpBtn="Resend OTP";
     },err=>{
       console.log(err);
       this.spinner.hide()
@@ -510,11 +572,11 @@ export class FirstloginComponent implements OnInit {
   validateOTP()
   {
     this.spinner.show()
-     this.authenticationService.validateOTP(this.userEmail.toLowerCase(),this.otp).subscribe((data:any)=>{
-      console.log(data)  
+     this.authenticationService.validateOTP(this.userEmail.toLowerCase(),this.model.otp).subscribe((data:any)=>{ 
+     
       if(data.message=="OTP Verified Successfully")
         {
-          this.spinner.hide()
+         
           this.onClick()
         }else
         {
@@ -522,7 +584,7 @@ export class FirstloginComponent implements OnInit {
           Swal.fire("Error",data.message,"error")
         }
      }, err=>{
-       console.log(err);
+       console.log(err)
        this.spinner.hide()
        Swal.fire("Error","Unable to register data","error")
      })
