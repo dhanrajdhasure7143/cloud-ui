@@ -133,7 +133,7 @@
             <!-- <div class="col-md-1"></div> -->
           <div class="col-md-2 plan_detail_box">
               <div class=" ">
-                <h4 class="select_label"><i class="fa fa-check-circle" aria-hidden="true"></i>Selected Plan Details</h4>
+                <h4 class="select_label"><em class="fa fa-check-circle" aria-hidden="true"></em>Selected Plan Details</h4>
                 <div class=" ">
                   <div class=" ">
                     <h6 class="plan_label">Plan <span> {{name}}</span></h6>
@@ -143,7 +143,7 @@
                 
     
                 <div class="plandetails">
-                    <p class="processes" *ngFor='let value of selected_plans.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
+                    <p class="processes" *ngFor='let value of selected_plans.features'><em *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></em><em *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></em><span>{{value.name}}
                         <label *ngIf="value.limited">Limited</label></span>
                     </p>
                       <!-- <p><img src="/assets/images/selectcircle.svg" alt="circle">Process Intelligence</p>
@@ -166,7 +166,7 @@
               <!-- <button class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</button> -->
             </div>
         <div class="col-sm-4">
-          <button class="btn btn-back backBtn" [routerLink]="['/activation/payment/chooseplan']"><i class="fa fa-arrow-left"></i>  Back to Change</button>
+          <button class="btn btn-back backBtn" [routerLink]="['/activation/payment/chooseplan']"><em class="fa fa-arrow-left"></em>  Back to Change</button>
         </div>
       </div>
     </div>

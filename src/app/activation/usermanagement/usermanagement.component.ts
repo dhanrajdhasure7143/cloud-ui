@@ -137,7 +137,7 @@ export class UsermanagementComponent implements OnInit {
 
     reset() {
 
-        this.modifyModel;
+        this.modifyModel={};
         this.fetchallusers();
     }
     onGridReady(params) {
