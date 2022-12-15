@@ -6,7 +6,7 @@
     <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
       <div class="example-card form-inline card-count" >
         <div class="count-text form-group">
-          <span class="icon"><img  src="assets/images/customer.svg"></span>
+          <span class="icon"><img  src="assets/images/customer.svg" alt="customer"></span>
             &nbsp;&nbsp;&nbsp;
         </div>
           <div class="count-text form-group">Customers</div>
@@ -17,7 +17,7 @@
       <div *ngIf="tenantcount!=undefined" class=" col-md-3 form-inline">
         <div class="example-card form-inline card-count" >
           <div class="count-text form-group">
-            <span class="icon"><img  src="assets/images/subscription.svg"></span>
+            <span class="icon"><img  src="assets/images/subscription.svg" alt="subscription"></span>
               &nbsp;&nbsp;&nbsp;
           </div>
             <div class="count-text form-group">Subscriptions</div>
@@ -29,7 +29,7 @@
     <div *ngIf="couponscount!=undefined" class=" col-md-3 form-inline">
       <div class="example-card form-inline card-count" >
         <div class="count-text form-group">
-          <span class="icon"><img  src="assets/images/coupon.svg"></span>
+          <span class="icon"><img  src="assets/images/coupon.svg" alt="coupon"></span>
             &nbsp;&nbsp;&nbsp;
         </div>
           <div class="count-text form-group">Coupons</div>
@@ -42,7 +42,7 @@
   <div *ngIf="vaulttotalcount!=undefined" class=" col-md-3 form-inline">
     <div class="example-card form-inline card-count" >
       <div class="count-text form-group">
-        <span class="icon"><img  src="assets/images/Vault_secrets.svg"></span>
+        <span class="icon"><img  src="assets/images/Vault_secrets.svg" alt="Vault_secrets"></span>
           &nbsp;&nbsp;&nbsp;
       </div>
         <div class="count-text form-group">Vault Secrets</div>
@@ -56,7 +56,7 @@
         <div class="col-md-1"></div>
         <div  class="col-md-5  text-center">
           <div id="Rolesbarchart">
-            <h5><b>Product - Roles & Permissions</b></h5>
+            <h5><strong></strong> Product - Roles & Permissions</strong></h5>
             <div *ngIf="rolesgraph==false && rolesandproducts!=undefined" #containerRef class="verticalbarchart"><br><br>
            <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#34568b', '#cd212a','#4b5335', '#660033', '#9999ff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="rolesandproducts" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel1"
@@ -70,7 +70,7 @@
       </div>
       </div>
        <div id="Permissionbarchart">
-       <h5><b>Permission</b></h5>
+       <h5><strong> Permission</strong></h5>
        <div *ngIf="rolesgraph==true" #permissioncontainer class="verticalbarchart"> 
         <button type="button"  class="btn btn-primary back_btn" (click)="onClickBack()">Back</button><br><br>
         <ngx-charts-bar-vertical [view]="[permissioncontainer.offsetWidth, 400]" [scheme] ="{domain: ['#fa7a35', '#79d2a6', '#ff9900', '#9c4722','#d9ce52', '#006b54']}" [results]="dsss" [gradient]="false" [xAxis]="true"
@@ -84,7 +84,7 @@
 
         <div  class="col-md-5  text-center">
           <div id="productsbarchart">
-            <h5><b>Subscriptions - Plans & Tenants</b></h5>
+            <h5><strong> Subscriptions - Plans & Tenants</strong></h5>
             <div *ngIf="products!=0" #productcontainer class="verticalbarchart"><br><br>
            <ngx-charts-bar-vertical [view]="[productcontainer.offsetWidth, 400]" [scheme] ="{domain: ['#ffd24d', '#009999', '#999966', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="products" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel3"
@@ -99,7 +99,7 @@
       
     </div>
        <div id="subscriptionsbarchart">
-       <h5><b>Plans</b></h5>
+       <h5><strong> Plans </strong></h5>
        <div *ngIf="plansdata!=0" #planscontainer class="verticalbarchart"> 
         <button type="button"  class="btn btn-primary back_btn" (click)="onClickSubscriptionBack()">Back</button><br><br>
         <ngx-charts-bar-vertical [view]="[planscontainer.offsetWidth, 400]" [scheme] ="{domain: ['#d17aa7', '#ff3333', '#66ccff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="plansdata" [gradient]="false" [xAxis]="true"
@@ -133,13 +133,13 @@
   </div>
   
 <!-- <div *ngIf="plansdata==[]" class="col-md-5  text-center">
-  <h5><b>Plans</b></h5>
+  <h5><strong>Plans</strong></h5>
   <div id="nodatafound" class="box_shadw34">
   <h3>No Data Available</h3>
 </div>
 </div>
 <div *ngIf="tabledata==[]" class="col-md-5  text-center">
-  <h5><b>Tenant Level Subscriptions</b></h5>
+  <h5><strong>Tenant Level Subscriptions</strong></h5>
   <div id="nodatafound" class="box_shadw34">
   <h3>No Data Available</h3>
 </div>
@@ -149,7 +149,7 @@
   
         <!-- <div *ngIf="alertsCountBasedOnType==0" class="col-md-5  text-center">
   
-          <h5><b>Configured Alerts - Success vs Failure</b></h5>
+          <h5><strong>Configured Alerts - Success vs Failure</strong></h5>
           <div id="piechart2" class="box_shadw34">
             <h1>No Data Found</h1>
           </div>
@@ -165,7 +165,7 @@
         <div class="col-md-1"></div>
         <div *ngIf="vaultkeycount!=0" class="col-md-5  text-center">
 
-          <h5><b>Vault - Secret Name vs Key Count</b></h5>
+          <h5><strong>Vault - Secret Name vs Key Count</strong></h5>
           <div id="secretvscount" #containerRef class="secretvscount"><br><br><br>
           <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#9bb7d4', '#cc6600', '#cc00cc', '#00a170','#ffff99', '#999966']}" [results]="vaultkeycount" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel6"
@@ -174,14 +174,14 @@
         </div>
       </div>
         <div *ngIf="vaultkeycount==0" class="col-md-5  text-center">
-          <h5><b>Vault - Secret Name vs Key Count</b></h5>
+          <h5><strong>Vault - Secret Name vs Key Count</strong></h5>
           <div id="nodatafound" class="box_shadw34">
           <h3>No Data Available</h3>
         </div>
       </div>
        
       <div  class="col-md-5  text-center">
-        <h5><b>Coupons</b></h5>
+        <h5><strong>Coupons</strong></h5>
         <div *ngIf="coupons!=0" id="piechart1" #containerRef class="box_shadw34"><br>
            <ngx-charts-pie-chart
           [view]="[containerRef.offsetWidth, 300]"
@@ -214,7 +214,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div *ngIf="tenantvsuser!=0" class="col-md-5  text-center">
-           <h5 class="teus"><b>Customers Vs Users</b></h5>
+           <h5 class="teus"><strong>Customers Vs Users</strong></h5>
            <div id="tenantvsuser" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;" ><br>
             <ngx-charts-bar-vertical [view]="[1300, 600]" [scheme] ="{domain: ['#926aa6', '#efe1ce', '#e0b589', '#660033','#f7786b', '#034f84','#98ddde','#dd4132','#99ff33', '#cc6600', '#cc00cc']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
             [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel5"
@@ -233,7 +233,7 @@
   
       </div>
       <div *ngIf="tenantvsuser==0" class="col-md-5 text-center">
-        <h5><b>Customers Vs Users</b></h5>
+        <h5><strong>Customers Vs Users</strong></h5>
         <div id="nodatafound"   class="box_shadw34"> 
           <h3>No Data Available</h3>
         </div>
