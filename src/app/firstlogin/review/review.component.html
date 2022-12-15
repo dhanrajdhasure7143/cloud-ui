@@ -7,7 +7,7 @@
       <mat-card class="mat3-card">
 
         <div class="brand">
-          <img src="assets/images/EZFlow_horizontal_full_color.png">
+          <img src="assets/images/EZFlow_horizontal_full_color.png" alt="">
         </div>
         <div class="col-md-11 review-heading">
           <h4 id="" class="plan_label ">Features will be enabled based on the selected plan</h4>
@@ -130,38 +130,30 @@
   <div class="modal-body">
 
     <div class="col-md-12 confirmationmsg" style="text-align:left;">
-      <table class="sub-confirmation">
-        <tr>
-          <td>Product</td>
-          <td> :  </td>
-          <td>{{productId}} </td>
-        </tr>
-        <tr>
-          <td>Plan</td>
-          <td> :  </td>
-          <td *ngIf="selected_plans.nickName=='Standard'">Free Tier</td>
-          <td *ngIf="selected_plans.nickName=='Professional'">{{selected_plans.nickName}}</td>
-        </tr>
-        <tr>
-          <td>Order Id</td>
-          <td> :</td>
-          <td>{{subscriptionDetails.id}} </td>
-        </tr>
-        <tr>
-          <td>Subscription Id</td>
-          <td> :</td>
-          <td>{{subscriptionDetails.subscriptionId[0]}}</td>
-        </tr>
-        <!-- <tr>
-          <td>Amount Paid</td>
-          <td> :{{totalPay}}</td>
-          <td></td>
-        </tr> -->
-        <tr>
-          <td>Period</td>
-          <td> :</td>
-          <td> {{selected_plans.term}}</td>
-        </tr>
+      <table class="sub-confirmation" aria-describedby="">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Plan</th>
+            <th>Order Id</th>
+            <th>Subscription Id</th>
+            <!-- <tr>
+                      <td>Amount Paid</td>
+                      <td> :{{totalPay}}</td>
+                      <td></td>
+                    </tr> -->
+            <th>Period</th>
+          </tr>
+        <tbody>
+          <tr>
+            <td>{{productId}} </td>
+            <td *ngIf="selected_plans.nickName=='Standard'">Free Tier</td>
+            <td *ngIf="selected_plans.nickName=='Professional'">{{selected_plans.nickName}}</td>
+            <td>{{subscriptionDetails.id}} </td>
+            <td>{{subscriptionDetails.subscriptionId[0]}}</td>
+            <td> {{selected_plans.term}}</td>
+          </tr>
+        </tbody>
       </table>
       <!-- <p>Product <span>: {{productId}}</span></p>
               <p>Plan <span>: {{selected_plans.nickName}} </span></p>
@@ -193,5 +185,5 @@
 
 
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader"/> 
+  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt=""/> 
 </ngx-spinner>

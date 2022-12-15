@@ -15,7 +15,7 @@
             
           <div class="col-md-9">         
             <div class="brand">
-                <img src="assets/images/EZFlow.png">
+                <img src="assets/images/EZFlow.png" alt="">
             </div>
             <!-- <div class="col-sm-12 status-bar">
               <newstepselection class="register_account email_verified"></newstepselection>
@@ -24,7 +24,7 @@
           <div class="col-md-3">         
             <div class="picture-container">
               <div class="picture">
-                  <img [src]="imgsrc" class="picture-src" id="wizardPicturePreview" title="">
+                  <img [src]="imgsrc" alt="" class="picture-src" id="wizardPicturePreview" title="">
                   <input type="file" id="wizard-picture" class="picture-src" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg">
                   
               </div>
@@ -36,7 +36,7 @@
       <form autocomplete="off" #firstloginform="ngForm"  class="">
         <div class="row">
           <div class="col-sm-6 ">
-            <!--<img src="assets/images/registration/user.svg" class="icon">-->
+            <!--<img src="assets/images/registration/user.svg" alt="" class="icon">-->
             <mat-form-field appearance="outline" color="primary">
               <mat-label>First Name</mat-label>
             <input type="text" name="firstName" matInput #firstName="ngModel" [(ngModel)]="model.firstName" maxlength="20" minlength="3" placeholder="First Name" required (keypress)="lettersOnly($event)">
@@ -51,7 +51,7 @@
           </div>
 
           <div class="col-sm-6"> <!-- inner-addon left-addon-->
-            <!-- <img src="assets/images/registration/user.svg" class="icon"> -->
+            <!-- <img src="assets/images/registration/user.svg"  alt="" class="icon"> -->
             <mat-form-field appearance="outline" color="primary">
               <mat-label>Last Name</mat-label>
             <input type="text" name="lastName" id="lastName" #lastName="ngModel" matInput
@@ -64,7 +64,7 @@
        
       
           <div class="col-sm-6">
-            <!--<img src="assets/images/registration/mail.svg" class="icon">-->
+            <!--<img src="assets/images/registration/mail.svg"  alt="" class="icon">-->
             <mat-form-field appearance="outline" color="primary">
               <mat-label>Email</mat-label>
             <input type="email" id="email" name='email' matInput #email="ngModel" [(ngModel)]="decodedToken" maxlength="30" placeholder="Email" required disabled>
@@ -73,7 +73,7 @@
               class='fa fa-info-circle errspan'> Email is required </span>
           </div>
         <div class="col-sm-6"><!-- inner-addon left-addon-->
-          <!-- <img src="assets/images/registration/Lock.svg" class="icon"> -->
+          <!-- <img src="assets/images/registration/Lock.svg" alt="" class="icon"> -->
           <mat-form-field appearance="outline" color="primary" >
             <mat-label>Password</mat-label>
           <!--<span (click)="toggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>-->
@@ -81,10 +81,10 @@
             [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" required>
             <!-- <mat-icon style="cursor:pointer" matSuffix (click)="hide = !hide">{{hide ?  'visibility':'visibility_off'}}</mat-icon> -->
             <span class="password-btn ml-auto" matSuffix *ngIf="!hide" (click)="hide = true">
-              <img src='./../../assets/images/eye-show.svg' />
+              <img src='./../../assets/images/eye-show.svg' alt="" />
             </span>
             <span class="password-btn ml-auto" matSuffix *ngIf="hide" (click)="hide = false">
-              <img src='./../../assets/images/eye-hide.svg' />
+              <img src='./../../assets/images/eye-hide.svg' alt=""/>
             </span>
           </mat-form-field>
           <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
@@ -93,7 +93,7 @@
           </span>
         </div>
                <div class="col-sm-6 "><!-- inner-addon left-addon-->
-            <!-- <img src="assets/images/registration/bag.svg" class="icon"> -->
+            <!-- <img src="assets/images/registration/bag.svg" alt="" class="icon"> -->
             <mat-form-field appearance="outline" color="primary">
               <mat-label>Job Title</mat-label>
             <input type="text" name="jobTitle.d" id="jobTitle" #jobTitle="ngModel" matInput  (keypress)="lettersOnly($event)"
@@ -111,7 +111,7 @@
           </div>
           
           <div class="col-sm-6 "> <!-- inner-addon left-addon-->
-            <!-- <img src="assets/images/registration/company.svg" class="icon"> -->
+            <!-- <img src="assets/images/registration/company.svg" alt=""class="icon"> -->
             <mat-form-field appearance="outline" color="primary">
               <mat-label>Organization Name</mat-label>
             <input type="text" matInput [disabled]="isCompanydisabled" (keyup)="checkOrganizationName(model.company)" name="company" #company="ngModel" [(ngModel)]="model.company"
@@ -139,7 +139,7 @@
         <span *ngIf="orgExsist" class='fa fa-info-circle errspan'> Organization Already Exsit</span>
           </div>
           <div *ngIf="!isCompanydisabled" class=" col-md-6"><!-- form-group inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/department.svg" class="icon"> -->
+              <!-- <img src="assets/images/registration/department.svg"alt="" class="icon"> -->
               <mat-form-field appearance="outline">
                 <mat-label>Department</mat-label>
               <mat-select matNativeControl (selectionChange)="onChangeDepartment($event.value)" name='department' #department="ngModel" [(ngModel)]="model.department"
@@ -154,7 +154,7 @@
             </div>
 
             <div *ngIf="isCompanydisabled" class=" col-md-6"><!-- form-group inner-addon left-addon-->
-              <!-- <img src="assets/images/registration/department.svg" class="icon"> -->
+              <!-- <img src="assets/images/registration/department.svg" alt=""class="icon"> -->
               <mat-form-field appearance="outline">
                 <mat-label>Department</mat-label>
               <mat-select matNativeControl (selectionChange)="onChangeDepartment(model.department)" name='department' #department="ngModel" [(ngModel)]="model.department"
@@ -169,13 +169,13 @@
             </div>
             
             <!-- <div  class=" col-md-6 form-group inner-addon left-addon" *ngIf="college" >
-                <img src="assets/images/registration/department.svg" class="icon">
+                <img src="assets/images/registration/department.svg"alt="" class="icon">
               <input type="text" class="form-control" name="other_department" #other_department="ngModel" [(ngModel)]='otherDepartment' maxlength="20" placeholder="Department" required>
               <span *ngIf="((other_department.invalid && firstloginform.submitted)|| (other_department.errors && other_department.touched))"
               class='fa fa-info-circle errspan'> Department is required </span>
             </div> -->
           <div class=" col-md-6"><!-- form-group inner-addon left-addon-->
-            <!-- <img src="assets/images/registration/Global.svg" class="icon"> -->
+            <!-- <img src="assets/images/registration/Global.svg" alt="" class="icon"> -->
             <mat-form-field appearance="outline">
               <mat-label>Country</mat-label>
             <mat-select matNativeControl (selectionChange)="onChangeCountry(model.country)" name='country' #country="ngModel" [(ngModel)]="model.country" required>
@@ -192,7 +192,7 @@
           
        
           <div class=" col-md-6">
-            <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
+            <!-- <img src="assets/images/registration/State.svg"  alt="" class="icon"> -->
             <mat-form-field appearance="outline">
               <mat-label>State</mat-label>
             <mat-select matNativeControl (selectionChange)="onChangeState($event.value)" name='state' #state='ngModel' [(ngModel)]='model.state' required>
@@ -207,7 +207,7 @@
           </div>
 
           <div class=" col-md-6"><!-- form-group inner-addon left-addon-->
-            <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
+            <!-- <img src="assets/images/registration/town.svg" alt="" class="icon"> -->
             <mat-form-field appearance="outline">
               <mat-label>City</mat-label>
             <mat-select matNativeControl name='city' #city='ngModel' [(ngModel)]='model.city' required>
@@ -223,7 +223,7 @@
        
        
           <div class="col-sm-6">
-            <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
+            <!-- <img src="assets/images/registration/Zip Code.svg" alt="" class="icon"> -->
             <mat-form-field appearance="outline">
               <mat-label>Zip Code</mat-label>
             <input type="text" matInput (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" [(ngModel)]="model.zipcode"
@@ -238,7 +238,7 @@
           </div>
 
           <div *ngIf ="isInput"class="col-sm-6 ph-number" ><!-- inner-addon left-addon-->
-            <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
+            <!-- <img src="assets/images/registration/smartphone.svg" alt="" class="icon phoneicon"> -->
             <mat-form-field appearance="outline">
               <mat-label>Phone Number</mat-label>
               <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" 
@@ -253,7 +253,7 @@
                 </span>
               </div>
               <div *ngIf="!isInput" class="col-sm-6 ph-number">
-                <!-- <img src="assets/images/registration/smartphone.svg" class="icon phoneicon"> -->
+                <!-- <img src="assets/images/registration/smartphone.svg" alt="" class="icon phoneicon"> -->
                 <mat-form-field appearance="outline">
                   <mat-label>Phone Number</mat-label>
                 <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" 
@@ -290,10 +290,10 @@
                   </div>
                
               <!--<div class="form-group col-sm-6 inner-addon left-addon photoupload">
-                <img src="assets/images/registration/ImageUpload.svg" class="imageuploadicon">
+                <img src="assets/images/registration/ImageUpload.svg"alt=""  class="imageuploadicon">
                 <input  class="form-control col-sm-12" id="image" placeholder="Select image to upload"
                 name='image' #image="ngModel" [(ngModel)]="profileimage" disabled/>
-                <span style="color: black;"><b>Note : Max File Size 128kb </b></span>
+                <span style="color: black;"><strong>Note : Max File Size 128kb </strong></span>
                 <span>
                 <div class="fileUpload btn btn-primary">
                 <span>Choose File</span>
@@ -342,6 +342,6 @@
 
 </div>
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader"/> 
+  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt=""/> 
 </ngx-spinner>
 <!-- </common-body> -->

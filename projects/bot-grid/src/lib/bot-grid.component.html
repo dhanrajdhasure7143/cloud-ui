@@ -10,7 +10,7 @@
   <thead>
     <tr>
       <ng-container *ngFor="let header of columnDefs | headerSelection: filterKeys; let i = index">
-        <th>{{header.headerName}}<span style="cursor:pointer" (click)="sortById(header.headerName)"><img class="sort_up" src="images/a_images/sort_p-512.png"></span></th>
+        <th>{{header.headerName}}<span style="cursor:pointer" (click)="sortById(header.headerName)"><img class="sort_up" src="images/a_images/sort_p-512.png" alt=""></span></th>
       </ng-container>
     </tr>
   </thead>
