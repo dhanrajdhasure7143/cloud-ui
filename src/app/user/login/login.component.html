@@ -1,15 +1,15 @@
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader"/>
+  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
 </ngx-spinner>
 <div class="container-fluid">
   <div class="row">
       <div id="particles-js"></div>
      <!-- <div class="col-md-4">
-          <img class="login-bg" src="assets/images/loginimage.png">
+          <img class="login-bg" src="assets/images/loginimage.png" alt="">
       </div> -->
     <div class="loginblock">
         <!--<div class="profile-pic-div">
-          <img src="assets/images/pic_male.jpg" id="photo" class="imgstyle">
+          <img src="assets/images/pic_male.jpg" id="photo" class="imgstyle" alt="">
            <input type="file" id="file">
            <label for="file" id="uploadBtn" (click)="loadImage($event)">Chosse Photo</label>
         </div>-->
@@ -17,14 +17,14 @@
           &nbsp;
           <div class="brand">
             &nbsp;
-              <img style="margin-left:45px;" src="assets/images/EZFlow.png">
+              <img style="margin-left:45px;" src="assets/images/EZFlow.png" alt="EZFlow">
 
           </div>
           &nbsp;
           <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login_form">
 
               <div class="form-group col-sm-12">
-                  <!--<img src="assets/images/username_icon.png" class="userIcon">-->
+                  <!--<img src="assets/images/username_icon.png" class="userIcon" alt="">-->
                   <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
                     <mat-label>Email</mat-label>
                   <input type="text" matInput formControlName="username" (change)="onEmailChange()" (keydown)="onKeydownfeilds($event)" placeholder="Enter Email"
@@ -44,7 +44,7 @@
                   </span>
                 </div>
                 <div class="form-group col-md-12"><!--inner-addon left-addon right-addon-->
-                    <!--<img src="assets/images/password_icon.png" class="pswIcon">
+                    <!--<img src="assets/images/password_icon.png" class="pswIcon" alt="">
                     <span  (click)="toggle()" class="input-group-add pwd-class"> <i style="margin-left : 15px" class="fa fa-eye" [ngClass]="(show==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
 
                     <input [type]="(show==true) ? 'password' : 'text'" formControlName="password" #password class="form-control pswinput"minlength="8"  placeholder="Enter Password"
@@ -54,10 +54,10 @@
                         <input [type]="hide ?  'password': 'text'" matInput formControlName="password" #password minlength="8"  placeholder="Enter Password" (keydown)="onKeydownfeilds($event)"
                         [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
                         <span class="password-btn ml-auto" matSuffix *ngIf="hide==true" (click)="hide = false">
-                          <img src='../../../assets/images/eye-show.svg' />
+                          <img src='../../../assets/images/eye-show.svg' alt="eye-show" />
                         </span>
                         <span class="password-btn ml-auto" matSuffix *ngIf="hide==false" (click)="hide = true">
-                          <img src='../../../assets/images/eye-hide.svg' />
+                          <img src='../../../assets/images/eye-hide.svg' alt="eye-hide"/>
                         </span>
                       </mat-form-field>
 
@@ -80,7 +80,7 @@
                   </div>
 
                   <div *ngIf="isOTP" class="form-group col-md-12"><!-- inner-addon left-addon right-addon-->
-                    <!--<img src="assets/images/password_icon.png" class="otpIcon">-->
+                    <!--<img src="assets/images/password_icon.png" class="otpIcon" alt="">-->
 
                     <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
                       <mat-label>OTP</mat-label>
@@ -123,22 +123,22 @@
                                margin-left: 21px;
                            ">
                  <!-- <button type="button" class="btn-buttons" a href="http://localhost:9797/oauth2/authorize-client/google">
-                  <img src="assets/login icons/google.svg" class="buuton-icons">Google
+                  <img src="assets/login icons/google.svg" class="buuton-icons" alt="">Google
                 </button>  -->
                 <button mat-raised-button class="btn_style" type="button">
                 <a [href]="googleLoginURL">
-                  <img src="assets/login icons/google.svg" class="buuton-icons"/>Google</a> </button>
+                  <img src="assets/login icons/google.svg" class="buuton-icons" alt="google"/>Google</a> </button>
               </div>
               <div class="col-md-6 text-center" style="
                                margin-left: 0%;
                                max-width: 30%;
                              " >
                 <!-- <button type="button" class="btn-buttons" (click)="azureLogin()">
-                  <img src="assets/login icons/office.svg" class="buuton-icons"><label >Office 365</label>
+                  <img src="assets/login icons/office.svg" class="buuton-icons" alt=""><label >Office 365</label>
                 </button> -->
                 <button mat-raised-button class="btn_style" type="button">
                 <a [href]="officeLoginURL">
-                <img src="assets/login icons/office.svg" class="buuton-icons"/>Office</a>   </button>
+                <img src="assets/login icons/office.svg" class="buuton-icons" alt="office"/>Office</a>   </button>
               </div>
             </div>
           </form>

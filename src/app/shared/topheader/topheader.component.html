@@ -6,30 +6,30 @@
   <ul  class="nav navTwo col-md-8">
     <li class="col-md-10"></li>
       <li class=" nav-item col-md-1 notificationBell">
-          <img class="notification-icon" style="padding-left:26px;" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt=" ">
+          <img class="notification-icon" style="padding-left:26px;" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt="Notification_Bell">
           <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:68px; top:10px;">
             <span>{{notificationscount}}</span> 
            </div>
         </li>
     <li class="text-center">
-      <!-- <img class="icon_middle pull-right" src="assets/images/pro1.png" alt="profile image"> -->
+      <!-- <img class="icon_middle pull-right" src="assets/images/pro1.png" alt="profile image" alt=""> -->
       <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-       <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
-        <span #toogleBtn (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="Drop Down"></span>      
+       <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" alt="retrievedImage"></div>
+        <span #toogleBtn (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="arrow_down"></span>      
         <div>     
         <div  id="myDropdown" class="dropdown-content">
-               <p (click)="accountSlideup()"  style="text-align: left;"><img  src="assets/images/account.svg"><span>My Account</span></p>
+               <p (click)="accountSlideup()"  style="text-align: left;"><img  src="assets/images/account.svg" alt="account"><span>My Account</span></p>
                <p *ngIf="this.userRole.includes('System Admin') || this.userRole.includes('Platform Admin') || this.userManagementEnabled" (click)="usermanagementslideUp()"
                 style="text-align: left;"><img  src="assets/images/usermanagementicon.svg" alt="usermanagementicon"><span>User Management</span></p>
                   <p *ngIf="this.userRole.includes('System Admin') || configurationEnabled" (click)="alertsSlideup()"
-                  style="text-align: left;"><img  src="assets/images/config_alerts.svg"><span>Configuration</span></p>
+                  style="text-align: left;"><img  src="assets/images/config_alerts.svg" alt="config_alerts"><span>Configuration</span></p>
                   <p *ngIf="this.userRole.includes('System Admin') || inviteUserEnabled" (click)="inviteSlideup()"
-                  style="text-align: left;"><img  src="assets/images/inviteuser.svg"><span>Invite User</span></p>
+                  style="text-align: left;"><img  src="assets/images/inviteuser.svg" alt="inviteuser"><span>Invite User</span></p>
                   <p *ngIf="this.userRole.includes('Platform Admin')"  (click)="couponSlideup()"
-                  style="text-align: left;"><img  src="assets/images/inviteuser.svg"><span>Create Coupon</span></p>
+                  style="text-align: left;"><img  src="assets/images/inviteuser.svg" alt="inviteuser"><span>Create Coupon</span></p>
                   <p *ngIf="this.userRole.includes('Platform Admin')"  (click)="vaultManagement()"
-                  style="text-align: left;"><img  src="assets/images/Vault.svg"><span>Vault Management</span></p>
-                  <p (click)="logout()"  style="text-align: left;"><img src="assets/images/Sign_Out.svg" ><span>Signout</span></p>
+                  style="text-align: left;"><img  src="assets/images/Vault.svg" alt="Vault"><span>Vault Management</span></p>
+                  <p (click)="logout()"  style="text-align: left;"><img src="assets/images/Sign_Out.svg" alt="Sign_Out"><span>Signout</span></p>
               </div> 
         </div>
           </li>

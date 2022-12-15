@@ -2,21 +2,21 @@
   <div class="row">
       <div id="particles-js"></div>
       <div class="col-sm-4">
-          <img class="login-bg" src="assets/images/loginimage.png">
+          <img class="login-bg" src="assets/images/loginimage.png" alt="loginimage">
       </div>
     <div class="col-md-3"></div>
       <div class="col-md-4">
           <mat-card class="card_forgot">
               <div class="brand logo_forgot" >
                       <img style="width: 230px !important; margin-left: 75px !important;margin-top: 25px !important;
-                      margin-bottom: 25px !important;" src="assets/images/EZFlow.png">
+                      margin-bottom: 25px !important;" src="assets/images/EZFlow.png" alt="EZFlow">
                   </div>
           <form autocomplete="off" [formGroup]="userForm" (ngSubmit)="onSubmit()">
               <div class="form-header col-md-10">
                   <h5>User Information</h5>
                 </div>
               <div class="col-sm-12" style="margin:15px 0px !important;"><!-- inner-addon left-addon-->
-                      <!-- <img src="assets/images/registration/mail.svg" class="icon"> -->
+                      <!-- <img src="assets/images/registration/mail.svg" class="icon" alt=""> -->
                   <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
                       <mat-label>First Name</mat-label>
                       <input type="text" formControlName="firstName" minlength="3" matInput placeholder="Enter First Name"maxlength="25" (keypress)="lettersOnly($event)"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
