@@ -137,7 +137,7 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnChanges, DoChec
       const elements: any[] = [];
       this.defaultEle[0].palette.forEach(element => {
         const dropCoordinates = {
-          x: index === 0 ? 500 + 'px' : 500 + 'px',
+          x: index === 0 ? 500 + 'px' : 498 + 'px',
           y: index === 0 ? 180 + 'px' : 348 + 'px'
         };
         const nodeData = this.addNode(element, dropCoordinates);

@@ -417,9 +417,8 @@ export class ProfileComponent implements OnInit {
     this.getListOfVaultconfigs();
     this.yearList=yearslist;
       this.getAllNotifications();
-    this.profileservice.getUserApplications().subscribe(resp => {
-     
-      this.apps = resp,
+    this.profileservice.getUserApplications().subscribe(resp => {  
+      this.apps = resp;
              this.apps.forEach(elementApps => {
           this.listOfUserApplications.push(elementApps.name)
         });
@@ -453,7 +452,7 @@ this.getListofCoupons();
 /**alerts */
 this.profileservice.applications().subscribe(resp => 
   {
-    this.application = resp,
+    this.application = resp;
    
   this.application.forEach(element => {
     this.listOfNames.push(element)
@@ -482,7 +481,7 @@ this.profileservice.applications().subscribe(resp =>
              
           elementuser.userId['roleIdname']=this.roleArray;
           elementuser.userId['created_at']=elementuser.created_at;
-          elementuser.userId['department']=elementuser.userId.department;
+          elementuser.userId['department']=this.department;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
           }else if(elementuser.userId.enabled == 'false'){
@@ -522,7 +521,7 @@ this.profileservice.applications().subscribe(resp =>
              
           elementuser.userId['roleIdname']=this.roleArray;
           elementuser.userId['created_at']=elementuser.created_at;
-          elementuser.userId['department']=elementuser.userId.department;
+          elementuser.userId['department']=this.department;
           if(elementuser.userId.enabled == 'true'){
             elementuser.userId['Status'] = 'Active'
           }else if(elementuser.userId.enabled == 'false'){
@@ -1418,7 +1417,7 @@ this.isupdatecouponclicked=false;
         let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.cardDetails));
         let reqObj = {"enc": encrypt};
       this.productlistservice.getMyAccountPaymentToken(reqObj).subscribe(res=>{
-        this.paymentToken=res
+        this.paymentToken=res;
         if(this.paymentToken.errorMessage==="Failed to generate payment token"){
           this.notifier.show({
             type: "error",
@@ -1444,7 +1443,7 @@ this.isupdatecouponclicked=false;
               message: "Card added successfully!"
             });
             this.modalRef.hide();
-            this.cardModel={}
+            this.cardModel={};
 
 
           }
@@ -1454,7 +1453,7 @@ this.isupdatecouponclicked=false;
               message: "Failed to add card."
             });
             this.modalRef.hide();
-            this.cardModel={}
+            this.cardModel={};
           }
 
       })
@@ -2049,7 +2048,7 @@ couponDelYes(coupon,index){
    })
    }else {
      this.profileservice.getAllRoles(2).subscribe(resp => {
-            this.allRoles = resp,
+            this.allRoles = resp;
           
             this.allRoles.forEach(elementRoles => {
                   
@@ -3205,7 +3204,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
         }
     }
     inputlettersEmail(event): boolean {
-      var regex = new RegExp("^[a-zA-Z0-9.,@_- ]+$");
+      var regex = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
       var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         if (!regex.test(key)) {
           event.preventDefault();
