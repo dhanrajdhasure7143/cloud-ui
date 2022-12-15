@@ -89,7 +89,7 @@ export class FirstloginComponent implements OnInit {
      this.service.verifyToken(token).subscribe(response=>{this.onSuccessOfVerifyToken(response),err=>{
       
        
-      this.router.navigate['/user']
+      this.router.navigate(['/user']);
        
      }})
     }else{
@@ -98,7 +98,7 @@ export class FirstloginComponent implements OnInit {
       this.decodedToken = Base64.decode(userId);
       this.userEmail = Base64.decode(userId);
       this.service.verifyInvitee(inviteId).subscribe(response =>{this.onSuccessOfConfirmToken(response),err=>{
-        this.router.navigate['/user']
+        this.router.navigate(['/user'])
       }})
       
     }
