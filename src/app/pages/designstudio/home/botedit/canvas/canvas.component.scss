@@ -121,12 +121,12 @@ select {
   height: 48px;
   width: 48px;
   line-height: 12px;
-  position: absolute;
+  // position: absolute;
   background-size: 24px;
   background-repeat: no-repeat;
   background-position: center;
   border: 1px solid #BBBBBB;
-    z-index: -1;
+    // z-index: -1;
 }
 
 .nodes-container {
