@@ -24,13 +24,7 @@ export class AlertsComponent implements OnInit {
   constructor(private alertservice: AlertsService) { }
 
   ngOnInit() {
-     this.alertservice.applications().subscribe(resp => 
-      {
-        this.application = resp,
-      this.application.forEach(element => {
-        this.listOfNames.push(element)
-        this.listOfId.push(element.app_id)
-      });})
+    this.getApplication();
   }
 
   saveConfig() {
@@ -69,4 +63,13 @@ export class AlertsComponent implements OnInit {
     });
   }
 
+  getApplication(){
+    this.alertservice.applications().subscribe(resp => {
+        this.application = resp;
+      this.application.forEach(element => {
+        this.listOfNames.push(element)
+        this.listOfId.push(element.app_id)
+      })
+    })
+  }
 }

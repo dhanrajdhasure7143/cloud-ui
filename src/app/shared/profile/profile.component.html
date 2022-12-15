@@ -180,7 +180,7 @@
                                   </form>
                             </div>
                     <div class="subscrption_id">
-                            <table class="table table-borderless col-md-12 table-hover">
+                            <table class="table table-borderless col-md-12 table-hover" aria-describedby="mydesc">
                               <thead>
                                 <tr>
                                   <th scope="col" class="types2" style="text-align:center">Subscription Id</th>
@@ -236,7 +236,7 @@
                                       </form>
                                 </div>
                         <div class="container invoice_id">
-                                <table class="table table-borderless table-hover">
+                                <table class="table table-borderless table-hover" aria-describedby="mydesc">
                                   <thead>
                                     <tr>
                                       <th scope="col" class="types">Invoice Number</th>
@@ -278,7 +278,7 @@
                                 </div>
                         <div class="container paymode">
                           <button class='btn btn-primary pull-right addCard' (click)='addPaymentCards(addCard)'>Add Card</button>
-                                <table class="table table-borderless table-hover">
+                                <table class="table table-borderless table-hover" aria-describedby="mydesc">
                                   <thead>
                                     <tr>
                                       <th scope="col" class="cardtype">Card Type</th>
@@ -492,7 +492,7 @@
                      
                       <div class="container configalerts">
                         <button class='btn btn-primary pull-right createAlert'  (click)='addAlert(configAlerts)'>Create Alert</button>
-                        <table class="table table-borderless table-hover">
+                        <table class="table table-borderless table-hover" aria-describedby="mydesc">
                           <thead>
                             <tr>
                               <th scope="col" class="alerttype" style="text-align:center">Product</th>
@@ -560,7 +560,7 @@
                      
                           <div class="container configalerts">
                             <button class='btn btn-primary pull-right createAlert'  (click)='addTemplate(configEmail)'>Create Template</button>
-                            <table class="table table-borderless table-hover">
+                            <table class="table table-borderless table-hover" aria-describedby="mydesc">
                               <thead>
                                 <tr>
                                   <th scope="col" class="alerttype" style="text-align:center">Name</th>
@@ -621,7 +621,7 @@
                      
                           <div class="container configalerts">
                             <button class='btn btn-primary pull-right createAlert'  (click)='addVault(vaultconfiguration)'>Configure Vault</button>
-                            <table class="table table-borderless table-hover">
+                            <table class="table table-borderless table-hover" aria-describedby="mydesc">
                               <thead>
                                 <tr>
                                   <th scope="col" class="alerttype" style="text-align:center">Product</th>
@@ -737,7 +737,7 @@
                                       </form>
                                     </div>
                             <div class="container usermanagement">
-                                    <table class="table table-borderless col-md-12 table-hover">
+                                    <table class="table table-borderless col-md-12 table-hover" aria-describedby="mydesc">
                                       <thead>
                                         <tr>
                                           <th scope="col" class="">Name</th>
@@ -823,7 +823,7 @@
                             <div class="container department">
                               <button *ngIf="this.userRole.includes('System Admin')" class='btn btn-primary pull-right addCard' (click)='adddept(createDept)'>Add Department</button>
 
-                            <table class="table table-borderless table-hover">
+                            <table class="table table-borderless table-hover" aria-describedby="mydesc">
                                     <thead>
                                       <tr>
                                         <th scope="col" class="types">ID</th>
@@ -879,7 +879,7 @@
                             <div class="container role">
                               
                                 <button *ngIf="this.userRole.includes('Platform Admin')" class='btn btn-primary pull-right addCard' (click)='addrole(createRole)'>Add Role</button>
-                                    <table class="table table-borderless table-hover">
+                                    <table class="table table-borderless table-hover" aria-describedby="mydesc">
                                             <thead>
                                               <tr>
                                                 <th scope="col" class="types">Product</th>
@@ -949,7 +949,7 @@
                               <div class="container role">
                                 
                                   <button *ngIf="this.userRole.includes('Platform Admin')" class='btn btn-primary pull-right addCard' (click)='addpermission(createPermission)'>Add Permission</button>
-                                      <table class="table table-borderless table-hover">
+                                      <table class="table table-borderless table-hover" aria-describedby="mydesc">
                                               <thead>
                                                 <tr>
                                                   <th scope="col" class="types">Permission</th>
@@ -1014,7 +1014,7 @@
       <div class="container coupons">
         
           <button *ngIf="this.userRole == 'Platform Admin'" class='btn btn-primary pull-right addCard' (click)='createCoupon(createcoupon)'>Create Coupon</button>
-              <table class="table table-borderless table-hover">
+              <table class="table table-borderless table-hover" aria-describedby="mydesc">
                       <thead>
                         <tr>
                           <th scope="col" class="types" style="text-align:center">Coupon ID</th>
@@ -1153,7 +1153,7 @@
 <div class="modal-body">
 
   <div  class="col-md-12 confirmationmsg">
-    <table class="vault-table">
+    <table class="vault-table" aria-describedby="mydesc">
       <tr> <td>Secret path</td> <td> : </td> <td>   /{{viewdata.keyname}}</td> </tr>
       <th>Secret Data</th>
                              <tr *ngFor="let mykey  of secretarray ;let i=index ; trackBy:loopTrackBy;">
@@ -1225,7 +1225,7 @@
                     <h4 class="noticationheading">Notifications</h4>
                 </div>
                 <div class="notificatnmsgs col-md-12">
-                  <table *ngIf="this.userRole.includes('System Admin')" class="table table-borderless table-hover">
+                  <table *ngIf="this.userRole.includes('System Admin')" class="table table-borderless table-hover" aria-describedby="mydesc">
                     <thead>
                       <tr>
                         <th scope="col" style="width:60%;">Notification Message</th>
@@ -1262,7 +1262,7 @@
                   <div  *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
                     <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
                     </div>
-                    <table *ngIf="this.userRole.includes('Platform Admin')" class="table table-borderless table-hover">
+                    <table *ngIf="this.userRole.includes('Platform Admin')" class="table table-borderless table-hover" aria-describedby="mydesc">
                       <thead>
                         <tr>
                           <th scope="col" style="width:60%;">Notification Message</th>
@@ -2495,35 +2495,33 @@
             
               <label>Version Data</label>
               
-            <table class="sub-confirmation">
-            <tr  *ngFor="let secret of secretes; let i = index;" class="form-section">
-             
-                  <td >
-                    <input required type="text"  [(ngModel)]="secret.key"
-                    name="key_{{secret.id}}"  placeholder="key">
-                  </td>
-                
-                  <td >
-                  
-              <input required type="text"  [(ngModel)]="secret.value"
-              name="value_{{secret.id}}"   placeholder="value"><!----> 
-
-                </td>
-                 
+            <table class="sub-confirmation" aria-describedby="mydesc">
+              <tr *ngFor="let secret of secretes; let i = index;" class="form-section">
+            <th></th>
                 <td>
-                  <span  (click)="addSecret()"style="padding: 0px;
-                  margin-left: 0px;"> 
+                  <input required type="text" [(ngModel)]="secret.key" name="key_{{secret.id}}" placeholder="key">
+                </td>
+            
+                <td>
+            
+                  <input required type="text" [(ngModel)]="secret.value" name="value_{{secret.id}}" placeholder="value"><!---->
+            
+                </td>
+            
+                <td>
+                  <span (click)="addSecret()" style="padding: 0px;
+                              margin-left: 0px;">
                     <img src="assets/images/Add.svg" alt="Add"></span>
-                  </td>
-                  <td>
-                  <span  (click)="removeSecrete(i)" style="padding: 0px;
-                  margin-left: -7px;"> 
+                </td>
+                <td>
+                  <span (click)="removeSecrete(i)" style="padding: 0px;
+                              margin-left: -7px;">
                     <img src="assets/images/unsubscribe.svg" alt="unsubscribe"></span>
-                  </td>
-                 
-                              
-               
-              </tr>                           
+                </td>
+            
+            
+            
+              </tr>
             </table>
                  </div>
               </div>
