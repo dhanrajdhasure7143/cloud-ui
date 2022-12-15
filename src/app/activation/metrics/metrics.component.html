@@ -17,7 +17,7 @@
   <div *ngIf="departments!=undefined" class=" col-md-3 form-inline">
     <div class="example-card form-inline  card-count">
       <div class="count-text form-group">
-        <span class="icon"><img  src="assets/images/department.svg"></span>
+        <span class="icon"><img  src="assets/images/department.svg" alt="department"></span>
           &nbsp;&nbsp;&nbsp;
       </div>
         <div class="count-text form-group">Departments</div>
@@ -38,7 +38,7 @@
 <div  class=" col-md-3 form-inline">
     <div class="example-card form-inline  card-count" >
       <div class="count-text form-group">
-        <span class="icon"><img  src="assets/images/Subscribed_products.svg"></span>
+        <span class="icon"><img  src="assets/images/Subscribed_products.svg" alt="subscribed product"></span>
           &nbsp;&nbsp;&nbsp;
       </div>
         <div class="count-text form-group">Subscriptions</div>
@@ -68,7 +68,7 @@
 <div *ngIf="botnames!=undefined" class=" col-md-3 form-inline">
   <div class="example-card form-inline  card-count" >
     <div class="count-text form-group">
-      <span class="icon"><img  src="assets/images/android-logo.svg"></span>
+      <span class="icon"><img  src="assets/images/android-logo.svg" alt="andriod logo"></span>
         &nbsp;&nbsp;&nbsp;
     </div>
       <div class="count-text form-group">Bots</div>
@@ -82,7 +82,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div *ngIf="registeredvsinvited!=0" class="col-md-5  text-center">
-            <h5><b>Users - Registered vs Invited</b></h5>
+            <h5><strong>Users - Registered vs Invited</strong></h5>
             <div id="piechart1"  #containerRef class="box_shadw34"><br>
             <ngx-charts-pie-chart
             [view]="[containerRef.offsetWidth, 300]"
@@ -100,7 +100,7 @@
         </div>
   
         <div *ngIf="registeredvsinvited==0" class="col-md-5  text-center">
-          <h5><b>Users - Registered vs Invited</b></h5>
+          <h5><strong>Users - Registered vs Invited</strong></h5>
           <div id="nodatafound"   class="box_shadw34"> 
             <h3>No Data Available</h3>
      </div>
@@ -110,7 +110,7 @@
   
         <div *ngIf="alertsCountBasedOnType!=0" class="col-md-5  text-center">
   
-            <h5><b>Configured Alerts - Success vs Failure</b></h5>
+            <h5><strong>Configured Alerts - Success vs Failure</strong></h5>
             <div id="piechart2" #containerRef class="box_shadw34"><br>
                <ngx-charts-pie-chart
               [view]="[containerRef.offsetWidth, 300]"
@@ -128,7 +128,7 @@
         </div>
   
         <div *ngIf="alertsCountBasedOnType==0" class="col-md-5  text-center">
-          <h5><b>Configured Alerts - Success vs Failure</b></h5>
+          <h5><strong>Configured Alerts - Success vs Failure</strong></h5>
           <div id="nodatafound" class="box_shadw34">
             <h3>No Data Available</h3>
           </div>
@@ -144,7 +144,7 @@
         <div class="col-md-1"></div>
   
         <div *ngIf="uservsrole!=0" class="col-md-5 text-center">
-            <h5><b>User vs Role</b></h5>
+            <h5><strong>User vs Role</strong></h5>
             <div id="uservsrolechart" #containerRef class="uservsrolechart"><br><br>
             <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme" [results]="uservsrole" [gradient]="gradient" [xAxis]="showXAxis"
             [yAxis]="showYAxis" [legend]="showLegend" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
@@ -154,14 +154,14 @@
         </div>
   
         <div *ngIf="uservsrole==0" class="col-md-5 text-center">
-          <h5><b>User vs Role</b></h5>
+          <h5><strong>User vs Role</strong></h5>
           <div id="nodatafound" class="box_shadw34">
             <h3>No Data Available</h3>
           </div>
       </div>
        
         <div *ngIf="activityvsalert!=0" class="col-md-5  text-center">
-            <h5><b>Activity vs Alert</b></h5>
+            <h5><strong>Activity vs Alert</strong></h5>
             <div id="activityvsalert" #containerRef class="activityvsalert"><br><br>
   <ngx-charts-bar-vertical-stacked
   [view]="[containerRef.offsetWidth, 400]"
@@ -181,7 +181,7 @@
         </div>
   
         <div *ngIf="activityvsalert==0" class="col-md-5  text-center">
-          <h5><b>Activity vs Alert</b></h5>
+          <h5><strong>Activity vs Alert</strong></h5>
           <div id="nodatafound" class="activityvsalert">
             <h3>No Data Available</h3>
           </div>
@@ -197,7 +197,7 @@
         <div class="col-md-1"></div>
         <div *ngIf="cards!=0" class="col-md-5  text-center">
   
-          <h5><b>Visa vs Mastercard</b></h5>
+          <h5><strong>Visa vs Mastercard</strong></h5>
           <div id="piechart3" #containerRef class="box_shadw34"><br>
             <ngx-charts-pie-chart
             [view]="[containerRef.offsetWidth, 300]"
@@ -216,7 +216,7 @@
       </div>
       <div *ngIf="cards==0" class="col-md-5  text-center">
   
-        <h5><b>Visa vs Mastercard</b></h5>
+        <h5><strong>Visa vs Mastercard</strong></h5>
         <div id="nodatafound" class="box_shadw34">
           <h3>No Data Available</h3>
         </div>
@@ -224,7 +224,7 @@
     </div>
         <div *ngIf="vaultkeycount!=0" class="col-md-5  text-center">
   
-            <h5><b>Vault - Secret Name vs Key Count</b></h5>
+            <h5><strong>Vault - Secret Name vs Key Count</strong></h5>
             <div id="secretvscount" #containerRef class="secretvscount"><br><br>
             <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="colorScheme1" [results]="vaultkeycount" [gradient]="gradient1" [xAxis]="showXAxis1"
             [yAxis]="showYAxis1" [legend]="showLegend1" [legendTitle]="''" [showXAxisLabel]="showXAxisLabel1" [showYAxisLabel]="showYAxisLabel1" [xAxisLabel]="xAxisLabel1"
@@ -235,7 +235,7 @@
   
         <div *ngIf="vaultkeycount==0" class="col-md-5  text-center">
   
-          <h5><b>Vault - Secret Name vs Key Count</b></h5>
+          <h5><strong>Vault - Secret Name vs Key Count</strong></h5>
           <div id="nodatafound" class="box_shadw34">
             <h3>No Data Available</h3>
           </div>
@@ -248,7 +248,7 @@
       <div class="col-md-1"></div>
       <div *ngIf="alerttransction!=0" class="col-md-8  text-center">
 
-        <h5 class="teus"><b>Alert Transactions</b></h5>
+        <h5 class="teus"><strong>Alert Transactions</strong></h5>
         <div  id="alerttransaction"><br><br>
           <div class="dots">
             <button (click)="click()" class="btn">
@@ -280,7 +280,7 @@
   
     
     <div *ngIf="alerttransction==0" class="col-md-8  text-center">
-      <h5><b>Alert Transactions</b></h5>
+      <h5><strong>Alert Transactions</strong></h5>
       <div id="nodatafound"   class="box_shadw34"> 
         <h3>No Data Available</h3>
  </div>
