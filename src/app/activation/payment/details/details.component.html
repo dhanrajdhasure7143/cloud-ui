@@ -79,8 +79,8 @@
                     <option [value]="null" disabled hidden>Select Card</option>
                     <option *ngFor="let pay of paymentMode" [value]="pay.id">{{pay.cardLast4}}</option>
                     </select>
-                    <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png" alt=""></span>
-                    <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png" alt=""></span>  
+                    <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png" alt="card logo"></span>
+                    <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png" alt="master"></span>  
                   </div>
                   <div *ngIf="cardid ==undefined">
                     <input  type="text" class="cc-number1 form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
@@ -88,8 +88,8 @@
                 <input  type="text" class="cc-number2 form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
                 <input  type="text" class="cc-number3 form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
                     <input  type="text"  class="cc-number4 form-control payment-input" (keypress)="numberOnly($event)" minlength="3" maxlength="4"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/>
-                    <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png" alt=""></span>
-                    <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png" alt=""></span>  
+                    <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png" alt="visa"></span>
+                    <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png" alt="master"></span>  
                   </div>
                 
               </div>
@@ -146,11 +146,11 @@
                     <p class="processes" *ngFor='let value of selected_plans.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
                         <label *ngIf="value.limited">Limited</label></span>
                     </p>
-                      <!-- <p><img src="/assets/images/selectcircle.svg" alt="">Process Intelligence</p>
-                      <p><img src="/assets/images/selectcircle.svg" alt="">Business Process Studio</p>
-                      <p><img src="/assets/images/selectcircle.svg" alt="">Service Orchestration</p>
-                      <p><img src="/assets/images/selectcircle.svg" alt="">Artificial Intelligence</p>
-                      <p><img src="/assets/images/selectcircle.svg" alt="">Live Support</p> -->
+                      <!-- <p><img src="/assets/images/selectcircle.svg" alt="circle">Process Intelligence</p>
+                      <p><img src="/assets/images/selectcircle.svg" alt="circle">Business Process Studio</p>
+                      <p><img src="/assets/images/selectcircle.svg" alt="circle">Service Orchestration</p>
+                      <p><img src="/assets/images/selectcircle.svg" alt="circle">Artificial Intelligence</p>
+                      <p><img src="/assets/images/selectcircle.svg" alt="circle">Live Support</p> -->
                       <h6 style="font-weight:600">$ {{selected_plans.amount}} <span  style="font-size: 11px;font-weight: 500">/ user per {{selected_plans.term}}</span></h6>
                 </div>
               </div>

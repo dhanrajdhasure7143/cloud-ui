@@ -15,7 +15,7 @@
             
           <div class="col-md-9">         
             <div class="brand">
-                <img src="assets/images/EZFlow.png" alt="">
+                <img src="assets/images/EZFlow.png" alt="ezflow">
             </div>
             <!-- <div class="col-sm-12 status-bar">
               <newstepselection class="register_account email_verified"></newstepselection>
@@ -24,7 +24,7 @@
           <div class="col-md-3">         
             <div class="picture-container">
               <div class="picture">
-                  <img [src]="imgsrc" alt="" class="picture-src" id="wizardPicturePreview" title="">
+                  <img [src]="imgsrc" alt="imgsrc" class="picture-src" id="wizardPicturePreview" title="">
                   <input type="file" id="wizard-picture" class="picture-src" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg">
                   
               </div>
@@ -81,10 +81,10 @@
             [(ngModel)]="model.password" [maxLength]="20" placeholder="Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" required>
             <!-- <mat-icon style="cursor:pointer" matSuffix (click)="hide = !hide">{{hide ?  'visibility':'visibility_off'}}</mat-icon> -->
             <span class="password-btn ml-auto" matSuffix *ngIf="!hide" (click)="hide = true">
-              <img src='./../../assets/images/eye-show.svg' alt="" />
+              <img src='./../../assets/images/eye-show.svg' alt="eye" />
             </span>
             <span class="password-btn ml-auto" matSuffix *ngIf="hide" (click)="hide = false">
-              <img src='./../../assets/images/eye-hide.svg' alt=""/>
+              <img src='./../../assets/images/eye-hide.svg' alt="eye"/>
             </span>
           </mat-form-field>
           <span *ngIf="((password.invalid && firstloginform.submitted) || (password.errors && password.touched))">
@@ -342,6 +342,6 @@
 
 </div>
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt=""/> 
+  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="loader"/> 
 </ngx-spinner>
 <!-- </common-body> -->

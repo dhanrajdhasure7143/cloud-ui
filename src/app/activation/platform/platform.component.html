@@ -12,16 +12,16 @@
       </div>
           <div class="col-md-2 dataCardBox" *ngFor="let eachData of visibletest;let i=index;trackBy:loopTrackBy">
               <div *ngIf="this.userRole.includes('System Admin') || this.userRole.includes('User') || eachData.subscribed" [id]="eachData.id" class="dataCard" [ngClass]="eachData.id==selectedId?'activeModule':''" (click)="selecteddata(eachData, i)">
-                  <img [src]="eachData.img" alt=""/>
+                  <img [src]="eachData.img" alt="eachdata"/>
                   <h6 id="subheading">{{eachData.title}}</h6>
 
                   <div class=" " >
                     <p *ngIf="!eachData.subscribed">Activate Free Tier
                     </p> </div> 
                     <div>
-                      <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='EZFlow'"><img  alt="" class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt=""></p>
-                      <p class="expiryInfo" *ngIf="this.showexpiryinfoezflow&&eachData.subscribed&&eachData.id=='ezflow'"><img alt="" class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezflow}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt="" ></p>
-                      <p class="expiryInfo" *ngIf="this.showexpiryinfoezbot&&eachData.subscribed&&eachData.id=='ezbot'"><img alt="" class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezbot}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt=""></p>
+                      <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='EZFlow'"><img  alt="count" class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt="info"></p>
+                      <p class="expiryInfo" *ngIf="this.showexpiryinfoezflow&&eachData.subscribed&&eachData.id=='ezflow'"><img alt="count" class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezflow}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt="info" ></p>
+                      <p class="expiryInfo" *ngIf="this.showexpiryinfoezbot&&eachData.subscribed&&eachData.id=='ezbot'"><img alt="count" class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezbot}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt="info"></p>
            
                 </div>
               </div>
@@ -52,7 +52,7 @@
   </div>
       <div class="col-md-2 dataCardBox" *ngFor="let eachData of visibletest;let i=index;trackBy:loopTrackBy">
           <div *ngIf="this.userRole.includes('System Admin') || this.userRole.includes('User') || eachData.subscribed" [id]="eachData.id" class="dataCard" [ngClass]="eachData.id==selectedId?'activeModule':''" (click)="selecteddata(eachData, i)">
-              <img [src]="eachData.img" alt=""/>
+              <img [src]="eachData.img" alt="eachdata"/>
               <h6 id="subheading">{{eachData.title}}</h6>
 
               <div class=" " >
@@ -60,9 +60,9 @@
                 </p> </div> 
                 <div>
                 
-                  <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='EZFlow'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt=""></p>
-                  <p class="expiryInfo" *ngIf="this.showexpiryinfoezflow&&eachData.subscribed&&eachData.id=='ezflow'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezflow}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt=""></p>
-                  <p class="expiryInfo" *ngIf="this.showexpiryinfoezbot&&eachData.subscribed&&eachData.id=='ezbot'"><img class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezbot}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt=""></p>
+                  <p class="expiryInfo" *ngIf="this.showexpiryinfo&&eachData.subscribed&&eachData.id=='EZFlow'"><img  alt="count"class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDays}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt="info"></p>
+                  <p class="expiryInfo" *ngIf="this.showexpiryinfoezflow&&eachData.subscribed&&eachData.id=='ezflow'"><img alt="count"class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezflow}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt="info"></p>
+                  <p class="expiryInfo" *ngIf="this.showexpiryinfoezbot&&eachData.subscribed&&eachData.id=='ezbot'"><img alt="count" class="expiryInfoclock" src="/assets/images/watch-time-count.svg">Your free tier ends in  {{remainingDaysezbot}} Days!<img class="infoicon" src="/assets/images/info-Icon.svg" alt="info"></p>
             </div>
           </div>
       </div>

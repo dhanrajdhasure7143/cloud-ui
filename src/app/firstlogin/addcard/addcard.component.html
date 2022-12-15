@@ -13,7 +13,7 @@
             
           <div class="col-md-12">         
             <div class="brand">
-                <img src="assets/images/EZFlow_horizontal_full_color.png" alt="">
+                <img src="assets/images/EZFlow_horizontal_full_color.png" alt="color">
                 <h4 class="planheading" style="margin-left:4%;">You have been opted for <strong>{{planselected}}</strong> plan</h4>
                 <!-- <h5 class="planheading" *ngIf="planselected=='Free Tier'" style="margin-left:5%">Free Tier has 30 days expiry which will be auto-upgraded to Professional</h5> -->
                 <h5 id="paymnt-subheding" style="margin-left:4%">Complete the below card details step to review your order</h5>
@@ -106,8 +106,8 @@
                     <input  type="text" class="cc-number2 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
                     <input  type="text" class="cc-number3 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
                         <input  type="text"  class="cc-number4 form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="4"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/>
-                        <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png" alt=""></span>
-                        <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png" alt=""></span>  
+                        <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png" alt="visa"></span>
+                        <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png" alt="master"></span>  
                       </div>
                     
                   </div>
