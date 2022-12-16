@@ -90,7 +90,7 @@ export class FirstloginComponent implements OnInit {
       this.onSuccessOfVerifyToken(response)},err=>{
       
        
-        this.router.navigate(['/user'])
+        this.router.navigate((['/user']));
          
        })
     }else{
