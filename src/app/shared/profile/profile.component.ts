@@ -1418,6 +1418,7 @@ this.isupdatecouponclicked=false;
         let reqObj = {"enc": encrypt};
       this.productlistservice.getMyAccountPaymentToken(reqObj).subscribe(res=>{
         this.paymentToken=res;
+      })
         if(this.paymentToken.errorMessage==="Failed to generate payment token"){
           this.notifier.show({
             type: "error",
@@ -1458,12 +1459,7 @@ this.isupdatecouponclicked=false;
 
       })
     }
-      }),err=>{
-        this.notifier.show({
-          type: "error",
-          message: "Please enter valid card details"
-        });
-      }
+     
   
       // this.profileservice.addNewCard(token).subscribe(res=>{})
       // api call

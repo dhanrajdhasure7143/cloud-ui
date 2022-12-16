@@ -36,9 +36,11 @@ export class NewpasswordComponent implements OnInit {
      
       let token = params['token']
 
-      this.newpasswordServ.resetPassword({token}).subscribe(res => {this.onSuccessOfVerifyToken(res),err=>{
-        this.router.navigate['/user']
-          }});
+      this.newpasswordServ.resetPassword({token}).subscribe(res => {
+        this.onSuccessOfVerifyToken(res)
+      },err=>{
+        this.router.navigate(['/user']);
+          });
     });
    
     
@@ -72,10 +74,11 @@ export class NewpasswordComponent implements OnInit {
         tkn : resetToken,pwd: this.newPwd
       };
       
-      this.newpasswordServ.newPassword({user: this.userData}).subscribe(res => {this.onSuccessOfResetPassword(res),err=>{
-        this.router.navigate['/user']
-      
-        }});
+      this.newpasswordServ.newPassword({user: this.userData}).subscribe(res => {
+        this.onSuccessOfResetPassword(res)},err=>{
+          this.router.navigate(['/user']);
+        
+          });
     });
    
 }

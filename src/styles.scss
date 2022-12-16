@@ -92,7 +92,7 @@ body{
   text-align: center;
 }
 
-topheader .user_division bot-infopanel .side_drp {
+ .user_division bot-infopanel .side_drp {
   position: fixed;
   top: 60px !important;
   left: calc(100vw - 336px) !important;
@@ -350,16 +350,16 @@ img.a_cp_logo {
 }
 
 
-// topheader .profile {
+//  .profile {
 //   height: auto !important;
 //   padding: 0px !important;
 // }
 
-topheader .profile_info_main{
+ .profile_info_main{
   margin: 10px 0px !important;
 }
 
-topheader .profile_info_main:last-child{
+ .profile_info_main:last-child{
   margin-bottom: 0px !important;
 }
 
@@ -381,15 +381,15 @@ label.profile_info_head {
 }
 
 
-topheader .profile_info_body {
+ .profile_info_body {
   font-weight: 500;
 }
-topheader  .profile_info_head, topheader .profile_info_body {
+  .profile_info_head,  .profile_info_body {
   margin: 0px;
   font-size: 16px;
 }
 
-topheader .account_sub_ul li {
+ .account_sub_ul li {
   margin: 5px 0px;
   display: block;
   cursor: pointer;
@@ -432,7 +432,7 @@ topheader .account_sub_ul li {
 .products_div {
   margin-top: 25px !important;
   width: 80%;
-  margin: auto;
+  margin-right: auto;
 }
 
 app-workflowedit .layout {
@@ -440,11 +440,11 @@ app-workflowedit .layout {
   top: 80px;
 }
 
-topheader .account_sub_ul li:hover a, topheader .account_sub_ul li:hover div {
+ .account_sub_ul li:hover a,  .account_sub_ul li:hover div {
   color: #006dd5;
 }
 
-topheader .account_sub_ul li:hover {
+ .account_sub_ul li:hover {
   background: #F0F8FC;
   border-right: 4px solid #006dd5;
 }

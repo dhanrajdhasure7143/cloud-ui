@@ -101,20 +101,22 @@ export class UserComponent implements OnInit {
         
         this.userService.inviteUsersLimit(selectedValue).subscribe(data => {
          // let count = 20;
-          this.userService.countOfUsersForTenantForProduct(element.appId).subscribe(respData => {this.usersCount(respData, data, element.appId),err=>{
+          this.userService.countOfUsersForTenantForProduct(element.appId).subscribe(respData => {
+            this.usersCount(respData, data, element.appId)
+          },err=>{
             
-              Swal.fire({
-                title: 'NOT_FOUND',
-                text: "Subscription plan not found for tenat for the product asimov",
-                type: 'error',
-                showCancelButton: false,
-                allowOutsideClick: false
-              }).then(function () {
-                //window.location.href = "../Subscription";
+            Swal.fire({
+              title: 'NOT_FOUND',
+              text: "Subscription plan not found for tenat for the product asimov",
+              type: 'error',
+              showCancelButton: false,
+              allowOutsideClick: false
+            }).then(function () {
+              //window.location.href = "../Subscription";
+      
+            });
         
-              });
-          
-          }})
+        })
          
         })
 
