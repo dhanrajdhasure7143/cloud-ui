@@ -139,7 +139,7 @@ this.allpaymentsList=resp
     this.productlistservice.getProductPlanes(this.productId,this.tenantID,localStorage.getItem('accessToken')).subscribe(data=> {this.plansList =data
       
       if(this.plansList.length > 1){
-        this.plansList=this.plansList.reverse();
+        this.plansList.reverse();
       }
           for(var i=0; i<this.plansList.length; i++){
             if(this.plansList[i].subscribed==true){
