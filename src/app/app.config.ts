@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 export let APP_CONFIG = new InjectionToken('app.config');
 
@@ -25,22 +26,22 @@ export const AppConfig: AiotalAppConfig = {
 
   // Dev Cloud Properties
 
-  portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
-   apiendpoint: 'https://ezflow.dev.epsoftinc.com/aiotalplatform',
-   tokenendpoint: 'https://ezidm.dev.epsoftinc.com',
-   proxyTokenendpoint: 'https://ezflow.dev.epsoftinc.com/securitymgr',
-   authorizationendpoint: 'https://ezflow.dev.epsoftinc.com/authservices',
-   socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
-   notificationsendpoint: 'https://ezflow.dev.epsoftinc.com/alerts',
-   Subscriptionendpoint:'https://ezflow.dev.epsoftinc.com/subscriptions',
-   productendpoint: 'https://eziap.dev.epsoftinc.com',
-   newproductendpoint: 'https://eziap.dev.epsoftinc.com',
-   socialLoginRedirectURL: 'https://ezflow.dev.epsoftinc.com/#/user',
-   rpaendpoint:"https://ezflow.dev.epsoftinc.com/wfrpa",
-   piendpoint:"https://ezflow.dev.epsoftinc.com/prcintel",
-   isTwoFactorAuthenticationEnabled: false,
-   isSecurityManagerEnabled : false,
-   isNewDesignEnabled : true
+   portfolioSite: environment.portfolioSite,
+   apiendpoint: environment.apiendpoint,
+   tokenendpoint: environment.tokenendpoint,
+   proxyTokenendpoint: environment.proxyTokenendpoint,
+   authorizationendpoint: environment.authorizationendpoint,
+   socialAndWorkLogin: environment.socialAndWorkLogin,
+   notificationsendpoint: environment.notificationsendpoint,
+   Subscriptionendpoint:environment.Subscriptionendpoint,
+   productendpoint: environment.productendpoint,
+   newproductendpoint: environment.newproductendpoint,
+   socialLoginRedirectURL: environment.socialLoginRedirectURL,
+   rpaendpoint:environment.rpaendpoint,
+   piendpoint:environment.piendpoint,
+   isTwoFactorAuthenticationEnabled: environment.isTwoFactorAuthenticationEnabled,
+   isSecurityManagerEnabled : environment.isSecurityManagerEnabled,
+   isNewDesignEnabled : environment.isNewDesignEnabled
 
   
   // demo
@@ -58,7 +59,6 @@ export const AppConfig: AiotalAppConfig = {
   //isTwoFactorAuthenticationEnabled: false,
   //rpaendpoint:"https://eiapbeta.epsoftinc.com/wfrpa",
   //piendpoint:"https://eiapbeta.epsoftinc.com/prcintel"
-
 
 //   // QA cloud Urls
 // portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
