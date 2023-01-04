@@ -56,7 +56,7 @@
         <div class="col-md-1"></div>
         <div  class="col-md-5  text-center">
           <div id="Rolesbarchart">
-            <h5><strong></strong> Product - Roles & Permissions</strong></h5>
+            <h5><strong> Product - Roles & Permissions</strong></h5>
             <div *ngIf="rolesgraph==false && rolesandproducts!=undefined" #containerRef class="verticalbarchart"><br><br>
            <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth, 400]" [scheme] ="{domain: ['#34568b', '#cd212a','#4b5335', '#660033', '#9999ff', '#AAAAAA','#66ccff', '#ff4d88']}" [results]="rolesandproducts" [gradient]="false" [xAxis]="true"
           [yAxis]="true" [legend]="true" [legendTitle]="''" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xaxislabel1"
