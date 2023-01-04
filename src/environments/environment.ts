@@ -3,7 +3,23 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
+  apiendpoint: 'https://ezflow.dev.epsoftinc.com/aiotalplatform',
+  tokenendpoint: 'https://ezidm.dev.epsoftinc.com',
+  proxyTokenendpoint: 'https://ezflow.dev.epsoftinc.com/securitymgr',
+  authorizationendpoint: 'https://ezflow.dev.epsoftinc.com/authservices',
+  socialAndWorkLogin: 'https://ezbotdevapi.aiotal.in',
+  notificationsendpoint: 'https://ezflow.dev.epsoftinc.com/alerts',
+  Subscriptionendpoint:'https://ezflow.dev.epsoftinc.com/subscriptions',
+  productendpoint: 'https://eziap.dev.epsoftinc.com',
+  newproductendpoint: 'https://eziap.dev.epsoftinc.com',
+  socialLoginRedirectURL: 'https://ezflow.dev.epsoftinc.com/#/user',
+  rpaendpoint:"https://ezflow.dev.epsoftinc.com/wfrpa",
+  piendpoint:"https://ezflow.dev.epsoftinc.com/prcintel",
+  isTwoFactorAuthenticationEnabled: false,
+  isSecurityManagerEnabled : false,
+  isNewDesignEnabled : true
 };
 
 /*
