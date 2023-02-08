@@ -455,13 +455,13 @@ export class ReviewComponent implements OnInit {
                       if(obj.active==true || obj.active=='true'){
                       if (obj.nickName == this.plantype) {
                         this.selected_plans = obj
-                        this.profileService.validateCoupon(null, this.selected_plans.amount, this.cardDetails.customerCount, JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp => {
-                          this.validateCoupondata = resp;
-                          this.totalPay = this.validateCoupondata.TotalPaybleAmount,
-                            this.noOfusers = this.cardDetails.customerCount
-                          this.taxPercentage = this.validateCoupondata.TaxPercentage
-                          this.taxamount = this.validateCoupondata.TaxAmount
-                        })
+                        // this.profileService.validateCoupon(null, this.selected_plans.amount, this.cardDetails.customerCount, JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp => {
+                        //   this.validateCoupondata = resp;
+                        //   this.totalPay = this.validateCoupondata.TotalPaybleAmount,
+                        //     this.noOfusers = this.cardDetails.customerCount
+                        //   this.taxPercentage = this.validateCoupondata.TaxPercentage
+                        //   this.taxamount = this.validateCoupondata.TaxAmount
+                        // })
                         if (this.selected_plans.term == "1year") {
                           this.selected_plans.term = 'Annual'
                         } else {
