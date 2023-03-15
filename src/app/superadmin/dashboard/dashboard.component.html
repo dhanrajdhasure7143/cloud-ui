@@ -1,4 +1,4 @@
-<tabset>
+<!-- <tabset>
   <tab  heading="Dashboard" id="tab1">
     <app-superadminmetrics></app-superadminmetrics>
   </tab>
@@ -12,7 +12,7 @@
       
       <div class='search-One'><br>
         <input class="form-control searchOne searching" type="text" name='search' id="search1"  [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off">
-      <!-- <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="userFilter" aria-label="Search" [ngModelOptions]="{standalone: true}"/> -->
+       <input class="form-control searchOne" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="userFilter" aria-label="Search" [ngModelOptions]="{standalone: true}"/> 
       </div>
     </div>
     </div><br>
@@ -35,7 +35,7 @@
             <td>{{plan.subscribedPlan}}</td>
             <td>{{plan.lastInvoiceAmount|currency}}</td>
             <td>{{plan.lastBillingDate}}</td>
-            <td>{{plan.dueDate}}</td><!--{{plan.nextBillingDate}}-->
+            <td>{{plan.dueDate}}</td><{{plan.nextBillingDate}}
             <td>{{plan.mobile}}</td>
             <td>{{plan.email}}</td>
           </tr>
@@ -48,6 +48,69 @@
     <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner>
   </div>
   </tab>
-</tabset>
+</tabset> -->
 
 
+<mat-tab-group class="w-100" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
+  <mat-tab label="Dashboard">
+    <ng-template mat-tab-label>
+      <mat-icon class="text-primary">dashboard</mat-icon>
+      &nbsp;&nbsp;
+      Dashboard
+    </ng-template>
+    <div *ngIf="check_tab==0">
+      <app-superadminmetrics></app-superadminmetrics>
+    </div>
+  </mat-tab>
+  <mat-tab label="Customers">
+
+    <ng-template mat-tab-label>
+      <mat-icon class="text-primary">supervised_user_circle</mat-icon>
+      &nbsp;&nbsp;
+      Customers
+    </ng-template>
+    <div *ngIf="check_tab==1">
+      <div class="container-fluid table-details">
+        <div class='search-One'><br>
+         <input class="searchOne search" type="text" name='search' id="search1"  [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off"/> 
+        </div>
+        <table class="table table-striped col-md-12" border="2" aria-describedby="mydesc">
+          <thead>
+            <tr>
+              <th scope="col" sortable="area"  class="tablecolumn-style">Admin Name <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Subscribed Plan
+                <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
+              </th>
+              <th scope="col" sortable="population" class="tablecolumn-style">Latest Invoice
+                Amount <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Last Billing Date
+                <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
+              </th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Next Billing Date
+                <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
+              </th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Mobile<i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Email<i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let plan of plans | paginate: { itemsPerPage: 10, currentPage: p } | FilterPipe: searchdashboard">
+              <td>{{plan.tenantAdminName}}</td>
+              <td>{{plan.subscribedPlan}}</td>
+              <td>{{plan.lastInvoiceAmount|currency}}</td>
+              <td>{{plan.lastBillingDate}}</td>
+              <td>{{plan.dueDate}}</td>
+              <td>{{plan.mobile}}</td>
+              <td>{{plan.email}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="plans!=='undefined'" class="dashboardpagination">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+        <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner> -->
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
