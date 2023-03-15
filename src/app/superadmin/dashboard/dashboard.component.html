@@ -71,20 +71,24 @@
     </ng-template>
     <div *ngIf="check_tab==1">
       <div class="container-fluid table-details">
+        
         <table class="table table-striped col-md-12" border="2" aria-describedby="mydesc">
           <thead>
             <tr>
-              <th scope="col" sortable="area" (sort)="onSort($event)" class="tablecolumn-style">Admin Name</th>
-              <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Subscribed Plan
+              <th scope="col" sortable="area"  class="tablecolumn-style">Admin Name <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Subscribed Plan
+                <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
               </th>
-              <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Latest Invoice
-                Amount</th>
-              <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Last Billing Date
+              <th scope="col" sortable="population" class="tablecolumn-style">Latest Invoice
+                Amount <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Last Billing Date
+                <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
               </th>
-              <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Next Billing Date
+              <th scope="col" sortable="population"  class="tablecolumn-style">Next Billing Date
+                <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
               </th>
-              <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Mobile</th>
-              <th scope="col" sortable="population" (sort)="onSort($event)" class="tablecolumn-style">Email</th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Mobile<i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population"  class="tablecolumn-style">Email<i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
             </tr>
           </thead>
           <tbody>

@@ -11,7 +11,9 @@ export class DashboardComponent implements OnInit {
   public selectedTab = 0;
   public check_tab = 0;
   searchdashboard: any;
+  sortDir=1
   p = 0;
+  displayedColumns: string[] = ['adminname', 'subscribedplan', 'amount', 'latestinvoiceamount','lastbillingdate','nextbillingdate','mobile',"email"];
   constructor(
     private firstloginservice: FirstloginService,
     private spinner: NgxSpinnerService,
@@ -22,6 +24,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
   }
+
   getSuperAdminData() {
     this.spinner.show();
     this.firstloginservice.getSuperAdminData().subscribe((res) => {
@@ -29,7 +32,35 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
     });
   }
-  onSort(e) {}
+  
+  onSortClick(event) {
+    let target = event.currentTarget,
+      classList = target.classList;
+    if (classList.contains('fa-chevron-up')) {
+      classList.remove('fa-chevron-up');
+      classList.add('fa-chevron-down');
+      this.sortDir=-1;
+    } else {
+      classList.add('fa-chevron-up');
+      classList.remove('fa-chevron-down');
+      this.sortDir=1;
+    }
+    this.sortArr('tenantAdminName');
+    this.sortArr('subscribedPlan'); 
+    this.sortArr('lastInvoiceAmount');
+    this.sortArr('lastBillingDate');
+    this.sortArr('dueDate');
+    this.sortArr('mobile');
+    this.sortArr('email');
+  }
+
+  sortArr(colName:any){
+    this.plans.sort((a,b)=>{
+      a= a[colName].toLowerCase();
+      b= b[colName].toLowerCase();
+      return a.localeCompare(b) * this.sortDir;
+    });
+  }
 
   onTabChanged(event) {
     this.check_tab = event.index;
