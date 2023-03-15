@@ -72,7 +72,7 @@
     <div *ngIf="check_tab==1">
       <div class="container-fluid table-details">
         <div class='search-One'><br>
-         <input class=" searchOne search" type="text" placeholder="Search" #search="ngModel" [(ngModel)]="userFilter" aria-label="Search" [ngModelOptions]="{standalone: true}"/> 
+         <input class="searchOne search" type="text" name='search' id="search1"  [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off"/> 
         </div>
         <table class="table table-striped col-md-12" border="2" aria-describedby="mydesc">
           <thead>
