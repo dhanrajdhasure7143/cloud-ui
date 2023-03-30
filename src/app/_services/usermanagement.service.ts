@@ -47,6 +47,9 @@ export class UsermanagementService implements OnInit {
 
 
   }
+  customPlan(userId,data): Observable<any[]> {
+    return this.http.post<any[]>(`/subscriptionservice/v1/billingContact/createCustomPlan/${userId}`, data);
+  }
 
   }
 

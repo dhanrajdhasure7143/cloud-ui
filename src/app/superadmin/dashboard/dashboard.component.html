@@ -72,25 +72,30 @@
     <div *ngIf="check_tab==1">
       <div class="container-fluid table-details">
         <div class='search-One'><br>
-         <input class="searchOne search" type="text" name='search' id="search1"  [(ngModel)]="searchdashboard" placeholder="Search" autocomplete="off"/> 
+          <input class="searchOne search" type="text" name='search' id="search1" [(ngModel)]="searchdashboard"
+            placeholder="Search" autocomplete="off" />
         </div>
         <table class="table table-striped col-md-12" border="2" aria-describedby="mydesc">
           <thead>
             <tr>
-              <th scope="col" sortable="area"  class="tablecolumn-style">Admin Name <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
-              <th scope="col" sortable="population"  class="tablecolumn-style">Subscribed Plan
+              <th scope="col" sortable="area" class="tablecolumn-style">Admin Name <i (click)="onSortClick($event)"
+                  class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population" class="tablecolumn-style">Subscribed Plan
                 <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
               </th>
               <th scope="col" sortable="population" class="tablecolumn-style">Latest Invoice
                 Amount <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
-              <th scope="col" sortable="population"  class="tablecolumn-style">Last Billing Date
+              <th scope="col" sortable="population" class="tablecolumn-style">Last Billing Date
                 <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
               </th>
-              <th scope="col" sortable="population"  class="tablecolumn-style">Next Billing Date
+              <th scope="col" sortable="population" class="tablecolumn-style">Next Billing Date
                 <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
               </th>
-              <th scope="col" sortable="population"  class="tablecolumn-style">Mobile<i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
-              <th scope="col" sortable="population"  class="tablecolumn-style">Email<i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population" class="tablecolumn-style">Mobile<i (click)="onSortClick($event)"
+                  class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population" class="tablecolumn-style">Email<i (click)="onSortClick($event)"
+                  class="my-icon fa fa-chevron-up"></i></th>
+              <th scope="col" sortable="population" class="tablecolumn-style">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -103,6 +108,11 @@
               <td>{{plan.dueDate}}</td>
               <td>{{plan.mobile}}</td>
               <td>{{plan.email}}</td>
+              <td>
+                <button (click)="openEditOverlay(plan)">
+                  <img src="../../../../assets/images/editCard.svg" alt="edit" />
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -114,3 +124,94 @@
     </div>
   </mat-tab>
 </mat-tab-group>
+
+<!-- Subscription Edit -->
+
+<div id="subscrip-edit">
+  <div class="row slider_heading">
+    <h4>Edit</h4>
+    <span class="cros">
+      <span (click)="slideDown()"><img class="" src="assets/images/crossclose.svg" alt="crossclose"></span>
+    </span>
+  </div>
+  <div class="content">
+    <div class="form_content">
+      <form class="" [formGroup]="subscriptionForm">
+        <div class="row col-md-12 m-0 p-0">
+          <div class="form-group col-md-12 pl-0">
+            <label class="label-control"> Subscription plan<span class="star">*</span>
+            </label>
+            <select name="" id="" class="form-control data" formControlName="subscriptionplan"
+              (change)="onChange($event.target.value)">
+              <option value="" [selected]="true" hidden disabled>Subscription Plan</option>
+              <option value="standard">Standard</option>
+              <option value="professional">Professional</option>
+              <option value="enterprise">Enterprise</option>
+              <option value="custom">Custom</option>
+            </select>
+            <span
+              *ngIf="subscriptionForm.get('subscriptionplan').invalid && subscriptionForm.get('subscriptionplan').touched"
+              class="errspan required"> Subscription Plan Required* </span>
+          </div>
+          <div *ngIf="isCustom">
+            <div class="form-group col-md-12 p-0">
+              <label class="label-control"> Interval <span class="star">*</span>
+              </label>
+              <select name="" id="" class="form-control data" formControlName="interval">
+                <option value="" [selected]="true" hidden disabled> Select Interval</option>
+                <option value="week">week</option>
+                <option value="month">month</option>
+                <option value="year">year</option>
+              </select>
+              <span *ngIf="subscriptionForm.get('interval').invalid && subscriptionForm.get('interval').touched"
+                class="errspan required"> Interval is Required* </span>
+            </div>
+            <div class="form-group col-md-12 p-0 checkboxes">
+              <label class="label-control">Plan Features</label>
+              <div class="row col-md-6">
+                <label class="label-control">
+                  <input type="checkbox" formControlName="Artificialintelligence">
+                  <span class="checkboxlabel">Artificial Intelligence</span>
+                </label>
+                <label class="label-control">
+                  <input type="checkbox" formControlName="Processintelligence">
+                  <span class="checkboxlabel">Process Intelligence</span>
+                </label>
+                <label class="label-control">
+                  <input type="checkbox" formControlName="Livesupport">
+                  <span class="checkboxlabel">Live Support</span>
+                </label>
+                <label class="label-control">
+                  <input type="checkbox" formControlName="Serviceorchestration">
+                  <span class="checkboxlabel">Service Orchestration</span>
+                </label>
+              </div>
+            </div>
+            <div class="row col-md-12 m-0 p-0">
+              <div class="form-group col-md-6 pl-0">
+                <label class="label-control"> Custom Plan Name<span class="star">*</span></label>
+                <input class="form-control data" placeholder="Enter Custom Plan Name" type="text" value=""
+                  formControlName="customPlanName">
+                <span
+                  *ngIf="subscriptionForm.get('customPlanName').invalid && subscriptionForm.get('customPlanName').touched"
+                  class="errspan required"> Custom Plan Name Required* </span>
+              </div>
+
+              <div class="form-group col-md-6 pl-0">
+                <label class="label-control">Custom Amount<span class="star">*</span></label>
+                <input class="form-control data" placeholder="Enter Custom Amount" type="text" value=""
+                  formControlName="customamount">
+                <span
+                  *ngIf="subscriptionForm.get('customamount').invalid && subscriptionForm.get('customamount').touched"
+                  class="errspan required"> Custom Amount Required* </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row form_footer_content">
+      <button class="btn btn-cancel">Cancel</button>
+      <button class="btn btn-primary btn-update" (click)="updateCustom()">Update</button>
+    </div>
+  </div>
