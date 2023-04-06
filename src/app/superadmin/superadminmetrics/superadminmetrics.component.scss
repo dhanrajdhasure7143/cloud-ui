@@ -60,7 +60,8 @@ background: #ff1a8c
 .backgr{
 background: #f8f8f8;
 border-radius: 3px;
-height: 2200px;
+  overflow: auto;
+  height: calc(100vh - 160px);
 }
 button.btn.btn-primary.back_btn {
   margin-left: 496px;

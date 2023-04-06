@@ -212,8 +212,8 @@
     <div class="col-md-12 btm-line"></div>
     <br>
     <div class="row">
-        <div class="col-md-1"></div>
-        <div *ngIf="tenantvsuser!=0" class="col-md-5  text-center">
+      
+        <div *ngIf="tenantvsuser!=0" class="col-md-12  text-center">
            <h5 class="teus"><strong>Customers Vs Users</strong></h5>
            <div id="tenantvsuser" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;" ><br>
             <ngx-charts-bar-vertical [view]="[1300, 600]" [scheme] ="{domain: ['#926aa6', '#efe1ce', '#e0b589', '#660033','#f7786b', '#034f84','#98ddde','#dd4132','#99ff33', '#cc6600', '#cc00cc']}" [results]="tenantvsuser" [gradient]="false" [xAxis]="true"
@@ -232,14 +232,13 @@
          
   
       </div>
-      <div *ngIf="tenantvsuser==0" class="col-md-5 text-center">
+      <div *ngIf="tenantvsuser==0" class="col-md-12 text-center">
         <h5><strong>Customers Vs Users</strong></h5>
         <div id="nodatafound"   class="box_shadw34"> 
           <h3>No Data Available</h3>
         </div>
     </div>
        
-      <div class="col-md-4"></div>
     </div>
   </div>
   </div>
