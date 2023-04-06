@@ -28,16 +28,15 @@
 
 .slider_heading {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px 15px 0px;
     margin: 0px;
     border-bottom: 1px solid #dbdbdb;
 }
 
 .form_content {
-    height: calc(100% - 125px);
+    height: calc(100% - 115px) !important;
     overflow: auto;
     padding: 15px;
-
 }
 
 div#subscrip-edit {
@@ -58,7 +57,6 @@ div#subscrip-edit {
 }
 
 .slide-left {
-    border-top: 1px solid #999999;
     position: fixed;
     display: block !important;
     z-index: 1000;

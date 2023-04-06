@@ -3,18 +3,19 @@
 <nav class=" navbar-light naveOne col-md-12">
   <a class="navbar-brand col-md-4" href="#" class="aiotal">
     <img class="titleimage" src="assets/images/EZFlow.png" alt="epsoft"> </a>
-  <ul  class="nav navTwo col-md-8">
-    <li class="col-md-10"></li>
-      <li class=" nav-item col-md-1 notificationBell">
-          <img class="notification-icon" style="padding-left:26px;" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt="Notification_Bell">
-          <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:68px; top:10px;">
+  <ul  class="nav navTwo col-md-8 justify-content-end align-items-center">
+    <!-- <li class="col-md-10"></li> -->
+      <li class=" nav-item notificationBell">
+          <img class="notification-icon" (click)='seeNotifications()' src="assets/images/Notification_Bell.svg" alt="Notification_Bell">
+          <div  class="notification-count">
             <span>{{notificationscount}}</span> 
            </div>
+           <!-- *ngIf="this.notificationscount!=0" -->
         </li>
     <li class="text-center">
       <!-- <img class="icon_middle pull-right" src="assets/images/pro1.png" alt="profile image" alt=""> -->
-      <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-       <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" alt="retrievedImage"></div>
+      <span  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</span> 
+       <span   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" alt="retrievedImage"></span>
         <span #toogleBtn (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="arrow_down"></span>      
         <div>     
         <div  id="myDropdown" class="dropdown-content">
