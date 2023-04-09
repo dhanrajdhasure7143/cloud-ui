@@ -222,3 +222,49 @@
     width: 220px;
     margin-left:28px;
   }
+
+
+// Subscription Pop-up Styles Start
+
+.modal-header.modelprhead {
+  padding: 15px 25px 10px 25px !important;
+  background-color: #f0f8ff !important;
+  border: none;
+  align-items: center;
+}
+.modal-header.modelprhead h4 {
+  font-size: 16px;
+  color: #232832;
+  font-weight: 600;
+  line-height: 22px;
+}
+.modal-body.modelprbody {
+  height: calc(100% - 114px);
+  overflow: auto;
+  padding: 15px 25px !important;
+  background-color: #FFF !important;
+}
+.modelprfooter {
+  padding: 15px 25px !important;
+  background-color: #FFF !important;
+  border: none !important;
+}
+button.btn {
+  padding: 8px 12px !important;
+  line-height: normal !important;
+  border: medium none !important;
+  font-size: 15px;
+  border-radius: 6px;
+  color: #232832;
+  min-width: 75px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+button.btn.bluebg-button {
+  background-color: #098de6;
+  color: #fff;
+  padding: 6px 30px;
+}
+
+// Subscription Pop-up Styles End

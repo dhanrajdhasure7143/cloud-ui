@@ -138,8 +138,8 @@
     <div class="form_content">
       <form class="" [formGroup]="subscriptionForm">
         <div class="row col-md-12 m-0 p-0">
-          <div class="form-group col-md-12 pl-0">
-            <label class="label-control"> Subscription plan<span class="star">*</span>
+          <div class="form-group col-md-12 p-0">
+            <label class="label-control"> Subscription Plan<span class="star">*</span>
             </label>
             <select name="" id="" class="form-control data" formControlName="subscriptionplan"
               (change)="onChange($event.target.value)">
@@ -159,33 +159,41 @@
               </label>
               <select name="" id="" class="form-control data" formControlName="interval">
                 <option value="" [selected]="true" hidden disabled> Select Interval</option>
-                <option value="week">week</option>
-                <option value="month">month</option>
-                <option value="year">year</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
               </select>
               <span *ngIf="subscriptionForm.get('interval').invalid && subscriptionForm.get('interval').touched"
                 class="errspan required"> Interval is Required* </span>
             </div>
             <div class="form-group col-md-12 p-0 checkboxes">
               <label class="label-control">Plan Features</label>
-              <div class="row col-md-6">
-                <label class="label-control">
+              <div class="row">
+                <div class="col-md-6 pr-0 form-group">
                   <input type="checkbox" formControlName="Artificialintelligence">
-                  <span class="checkboxlabel">Artificial Intelligence</span>
-                </label>
-                <label class="label-control">
+                  <label class="label-control">
+                    <span class="checkboxlabel">Artificial Intelligence</span>
+                  </label>
+                </div>
+                <div class="col-md-6 pl-0 form-group">
                   <input type="checkbox" formControlName="Processintelligence">
-                  <span class="checkboxlabel">Process Intelligence</span>
-                </label>
-                <label class="label-control">
+                  <label class="label-control">
+                    <span class="checkboxlabel">Process Intelligence</span>
+                  </label>
+                </div>
+                <div class="col-md-6 pr-0">
                   <input type="checkbox" formControlName="Livesupport">
-                  <span class="checkboxlabel">Live Support</span>
-                </label>
-                <label class="label-control">
-                  <input type="checkbox" formControlName="Serviceorchestration">
-                  <span class="checkboxlabel">Service Orchestration</span>
-                </label>
-              </div>
+                  <label class="label-control">                    
+                    <span class="checkboxlabel">Live Support</span>
+                  </label>
+                </div>
+                <div class="col-md-6 pl-0">         
+                  <input type="checkbox" formControlName="Serviceorchestration">         
+                  <label class="label-control">
+                    <span class="checkboxlabel">Service Orchestration</span>
+                  </label>
+                </div>
+              </div>              
             </div>
             <div class="row col-md-12 m-0 p-0">
               <div class="form-group col-md-6 pl-0">
