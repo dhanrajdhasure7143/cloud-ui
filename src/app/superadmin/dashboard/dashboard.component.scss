@@ -93,3 +93,9 @@ span.star {
 span.checkboxlabel {
     margin: 0px 30px 0px 8px;
 }
+
+
+.table-details {
+    height: calc(100vh - 160px) !important; 
+    overflow: auto;
+}

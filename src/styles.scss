@@ -572,3 +572,7 @@ footer .powredby_text{
   transform: translateY(-70%);
   margin-top:-200px
 }
+
+.mat-tab-body.mat-tab-body-active#mat-tab-content-0-1 {
+  overflow: hidden !important;
+}
