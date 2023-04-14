@@ -33,9 +33,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.subscriptionForm = this.formBuilder.group({
       subscriptionplan: ["", Validators.compose([Validators.required])],
-      interval: ["", Validators.compose([Validators.required])],
-      customPlanName: ["", Validators.compose([Validators.required])],
-      customamount: ["", Validators.compose([Validators.required])],
+      interval: [""],
+      customPlanName: [""],
+      customamount: [""],
       Artificialintelligence: [false],
       Processintelligence: [false],
       Livesupport: [false],
@@ -93,31 +93,49 @@ export class DashboardComponent implements OnInit {
     document.getElementById("subscrip-edit").classList.add("slide-left");
     
   }
+  closeOverlay(){
+    document.getElementById("subscrip-edit").classList.remove("slide-left");
+    this.subscriptionForm.reset();
+  }
 
-  slideDown() {
+  slideLeft() {
     document.getElementById("subscrip-edit").classList.add("slide-right");
     document.getElementById("subscrip-edit").classList.remove("slide-left");
+    this.subscriptionForm.reset();
   }
   onChange(value: string) {
     if (value === "custom") {
       this.isCustom = true;
+      this.subscriptionForm.get("interval").setValidators([Validators.required]);
+      this.subscriptionForm.get("customamount").setValidators([Validators.compose([Validators.required,Validators.maxLength(5), Validators.pattern(/^[0-9]*$/)])]);
+      this.subscriptionForm.get("customPlanName").setValidators([ Validators.compose([Validators.required,Validators.maxLength(50), Validators.pattern(/^[a-zA-Z]*$/)])]);
+      this.subscriptionForm.updateValueAndValidity();
     } else {
+      this.subscriptionForm.get("interval").clearValidators();
+      this.subscriptionForm.get("interval").updateValueAndValidity();
+      this.subscriptionForm.get("customamount").clearValidators();
+      this.subscriptionForm.get("customamount").updateValueAndValidity();
+      this.subscriptionForm.get("customPlanName").clearValidators();
+      this.subscriptionForm.get("customPlanName").updateValueAndValidity();
       this.isCustom = false;
     }
   }
   
   updateCustom() {
     this.spinner.show();
-    console.log(this.subscriptionForm.value);
     let result = this.subscriptionForm.value;
     this.restapi.customPlan(this.userid, result).subscribe((res) => {
       this.spinner.hide();
-      Swal.fire({
-        // icon: 'success',
-        title: "Success",
-        text: "Subscription Details Updated Successfully !!",
-        heightAuto: false,
-      });
+      if(res){
+        Swal.fire({
+          // icon: 'success',
+          title: "Success",
+          text: "Subscription Details Updated Successfully !!",
+          heightAuto: false,
+        });
+        this.subscriptionForm.reset();
+        this.closeOverlay();
+      }
     },
       (err) => {
         this.spinner.hide();
