@@ -131,7 +131,7 @@
   <div class="row slider_heading">
     <h4>Edit</h4>
     <span class="cros">
-      <span (click)="slideDown()"><img class="" src="assets/images/crossclose.svg" alt="crossclose"></span>
+      <span (click)="slideLeft()"><img class="" src="assets/images/crossclose.svg" alt="crossclose"></span>
     </span>
   </div>
   <div class="content">
@@ -203,6 +203,7 @@
                 <span
                   *ngIf="subscriptionForm.get('customPlanName').invalid && subscriptionForm.get('customPlanName').touched"
                   class="errspan required"> Custom Plan Name Required* </span>
+                  <span *ngIf="subscriptionForm.get('customPlanName').hasError('pattern')" class="errspan required">Only spaces are allowed between words.</span>
               </div>
 
               <div class="form-group col-md-6 pl-0">
@@ -212,6 +213,7 @@
                 <span
                   *ngIf="subscriptionForm.get('customamount').invalid && subscriptionForm.get('customamount').touched"
                   class="errspan required"> Custom Amount Required* </span>
+                  <span *ngIf="subscriptionForm.get('customamount').hasError('pattern')" class="errspan required">Amount should contain only numbers.</span>
               </div>
             </div>
           </div>
@@ -219,7 +221,10 @@
       </form>
     </div>
     <div class="row form_footer_content">
-      <button class="btn btn-cancel">Cancel</button>
-      <button class="btn btn-primary btn-update" (click)="updateCustom()">Update</button>
+      <button class="btn btn-cancel" (click)="closeOverlay()">Cancel</button>
+      <button class="btn btn-primary btn-update" (click)="updateCustom()" [disabled]="subscriptionForm.invalid">
+        Update
+      </button>
+      
     </div>
   </div>
