@@ -226,14 +226,13 @@
             <!-- <img src="assets/images/registration/Zip Code.svg" alt="" class="icon"> -->
             <mat-form-field appearance="outline">
               <mat-label>Zip Code</mat-label>
-            <input type="text" matInput (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" [(ngModel)]="model.zipcode"
-               onKeyPress="if(this.value.length==5) return false;" minlength="5" placeholder="Zip Code" 
-               pattern="^\d{5}$" required>
+            <input type="text" matInput name="zipCode" #zipCode="ngModel" [(ngModel)]="model.zipcode"
+                 maxlength="6" placeholder="Zip Code" pattern=^[A-Za-z0-9]+$ required>
             </mat-form-field>
             <span *ngIf="((zipCode.invalid && firstloginform.submitted)|| (zipCode.errors && zipCode.touched) && !(zipCode.errors.pattern))"
               class='fa fa-info-circle errspan'> Zip Code is required </span>
               <span *ngIf="zipCode.errors  && zipCode.invalid">
-                <span *ngIf="zipCode.errors.pattern"  class="fa fa-info-circle errspan">Invalid Zip Code</span>
+                <span *ngIf="zipCode.errors.pattern"  class="fa fa-info-circle errspan">Invalid Zip Code Only Alphabets and Numbers are allowed</span>
               </span>
           </div>
 

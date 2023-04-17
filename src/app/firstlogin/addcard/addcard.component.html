@@ -30,10 +30,10 @@
             <div class="col-md-5">
                   <div class="form-group col-sm-10">
                     <label for="cardHolder">Cardholder Name</label>
-                    <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
+                    <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required pattern="[a-zA-Z\s]+" required/>
                     <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                     <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
-                    class='fa fa-info-circle errspan'> Cardholder Name is required </span> 
+                    class='fa fa-info-circle errspan'> Please enter only letters (A-Z) and spaces between words are only allowed for Cardholder Name  * </span> 
                   </div>
     
                       <div class="form-group col-sm-10">
