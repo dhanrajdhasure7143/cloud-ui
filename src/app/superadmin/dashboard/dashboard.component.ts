@@ -94,14 +94,18 @@ export class DashboardComponent implements OnInit {
     
   }
   closeOverlay(){
-    document.getElementById("subscrip-edit").classList.remove("slide-left");
+    document.getElementById("subscrip-edit").style.display = 'none';
     this.subscriptionForm.reset();
+    this.subscriptionForm.get("subscriptionplan").setValue("default");
+    this.subscriptionForm.get("interval").setValue("default");
   }
 
   slideLeft() {
     document.getElementById("subscrip-edit").classList.add("slide-right");
     document.getElementById("subscrip-edit").classList.remove("slide-left");
     this.subscriptionForm.reset();
+    this.subscriptionForm.get("subscriptionplan").setValue("default");
+    this.subscriptionForm.get("interval").setValue("default");
   }
   onChange(value: string) {
     if (value === "custom") {
