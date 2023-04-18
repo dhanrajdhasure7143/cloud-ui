@@ -554,46 +554,8 @@ export class ReviewComponent implements OnInit {
                     this.spinner.hide();
                   }
                   else {
-
-                    this.productlistservice.subscribePlan(this.paymentToken.message, plandetails, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
-                      this.subscriptionDetails = data
-                      this.spinner.hide();
-                      if (this.subscriptionDetails.message == "Subscription Completed Successfully!!") {
-                        this.finalAmount = this.subscriptionDetails.amountPaid;
-                        this.sharedDataService.setFreetrialavailed(false);
-                        this.modalRef = this.modalService.show(this.template, this.config);
-                      }
-                      else {
-                        Swal.fire({
-                          title: 'Error',
-                          text: `Unable to register due to issue with the given card details. Please try again !!`,
-                          type: 'error',
-                          showCancelButton: false,
-                          allowOutsideClick: false
-                        }).then((result) => {
-                          if (result.value) {
-                            this.spinner.show();
-                            this.profileService.deleteSelectedUser(this.userDetails.userId).subscribe(resp => {
-                              this.spinner.hide();
-                              this.router.navigate(['/']);
-
-                            }, err => {
-                              Swal.fire({
-                                title: 'Error',
-                                text: `Please Register Again!!`,
-                                type: 'error',
-                                showCancelButton: false,
-                                allowOutsideClick: true
-                              }).then((result) => {
-                                if (result.value) {
-                                  this.router.navigate(['/']);
-                                }
-                              })
-                            })
-                          }
-                        })
-                      }
-                    }, err => {
+                   
+                    setTimeout(()=>{
                       this.spinner.hide();
                       Swal.fire({
                         title: 'Success',
@@ -602,9 +564,49 @@ export class ReviewComponent implements OnInit {
                         showCancelButton: false,
                         allowOutsideClick: true
                       }).then((result) => {
+                        this.productlistservice.subscribePlan(this.paymentToken.message, plandetails, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
+                          this.subscriptionDetails = data
+                          this.spinner.hide();
+                          if (this.subscriptionDetails.message == "Subscription Completed Successfully!!") {
+                            this.finalAmount = this.subscriptionDetails.amountPaid;
+                            this.sharedDataService.setFreetrialavailed(false);
+                            this.modalRef = this.modalService.show(this.template, this.config);
+                          }
+                          else {
+                            Swal.fire({
+                              title: 'Error',
+                              text: `Unable to register due to issue with the given card details. Please try again !!`,
+                              type: 'error',
+                              showCancelButton: false,
+                              allowOutsideClick: false
+                            }).then((result) => {
+                              if (result.value) {
+                                this.spinner.show();
+                                this.profileService.deleteSelectedUser(this.userDetails.userId).subscribe(resp => {
+                                  this.spinner.hide();
+                                  this.router.navigate(['/']);
+    
+                                }, err => {
+                                  Swal.fire({
+                                    title: 'Error',
+                                    text: `Please Register Again!!`,
+                                    type: 'error',
+                                    showCancelButton: false,
+                                    allowOutsideClick: true
+                                  }).then((result) => {
+                                    if (result.value) {
+                                      this.router.navigate(['/']);
+                                    }
+                                  })
+                                })
+                              }
+                            })
+                          }
+                        })
                         this.router.navigate(['/']);
                       })
-                    })
+                     },10000)
+                 
                   }
 
 
