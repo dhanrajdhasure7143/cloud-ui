@@ -36,10 +36,11 @@ export class DashboardComponent implements OnInit {
       interval: [""],
       customPlanName: [""],
       customamount: [""],
-      Artificialintelligence: [false],
-      Processintelligence: [false],
-      Livesupport: [false],
-      Serviceorchestration: [false]
+      artificial_intelligence: [false],
+      process_intelligence: [false],
+      business_process_studio:[false],
+      live_support: [false],
+      service_orchestration: [false]
     })
     this.spinner.show();
   }

@@ -137,7 +137,7 @@
   <div class="content">
     <div class="form_content">
       <form class="" [formGroup]="subscriptionForm">
-        <div class="row col-md-12 m-0 p-0">
+        <div class="col-md-12 m-0 p-0">
           <div class="form-group col-md-12 p-0">
             <label class="label-control"> Subscription Plan<span class="star">*</span>
             </label>
@@ -170,30 +170,38 @@
               <label class="label-control">Plan Features</label>
               <div class="row">
                 <div class="col-md-6 pr-0 form-group">
-                  <input type="checkbox" formControlName="Artificialintelligence">
+                  <input type="checkbox" formControlName="artificial_intelligence">
                   <label class="label-control">
                     <span class="checkboxlabel">Artificial Intelligence</span>
                   </label>
                 </div>
-                <div class="col-md-6 pl-0 form-group">
-                  <input type="checkbox" formControlName="Processintelligence">
+                <div class="col-md-6 pr-0 form-group">
+                  <input type="checkbox" formControlName="business_process_studio">
+                  <label class="label-control">
+                    <span class="checkboxlabel">Business Process Studio</span>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 pr-0 form-group">
+                  <input type="checkbox" formControlName="process_intelligence">
                   <label class="label-control">
                     <span class="checkboxlabel">Process Intelligence</span>
                   </label>
                 </div>
                 <div class="col-md-6 pr-0">
-                  <input type="checkbox" formControlName="Livesupport">
+                  <input type="checkbox" formControlName="live_support">
                   <label class="label-control">
                     <span class="checkboxlabel">Live Support</span>
                   </label>
                 </div>
-                <div class="col-md-6 pl-0">
-                  <input type="checkbox" formControlName="Serviceorchestration">
+              </div>  
+                <div class="col-md-12 pl-0">
+                  <input type="checkbox" formControlName="service_orchestration">
                   <label class="label-control">
                     <span class="checkboxlabel">Service Orchestration</span>
                   </label>
                 </div>
-              </div>
             </div>
             <div class="row col-md-12 m-0 p-0">
               <div class="form-group col-md-6 pl-0">
