@@ -29,15 +29,21 @@
         
             <div class="col-md-5">
                   <div class="form-group col-sm-10">
-                    <label for="cardHolder">Cardholder Name</label>
-                    <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required pattern="[a-zA-Z\s]+" required/>
+                    <label for="cardHolder">Cardholder Name<span class="errspan">*</span></label>
+                    <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required pattern="^[a-zA-Z][a-zA-Z\s]*" required/>
                     <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
-                    <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
-                    class='fa fa-info-circle errspan'> Please enter only letters (A-Z) and spaces between words are only allowed for Cardholder Name  * </span> 
+                    <span class='errspan required'
+                      *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) && !(cardHolder.errors.pattern))">Card
+                      Holder Name is required *</span>
+                    <span class='errspan required' *ngIf="cardHolder.errors && cardHolder.invalid">
+                      <span *ngIf="cardHolder.errors.pattern" class='required'>Please enter only letters
+                        (A-Z) and spaces between words are
+                        only allowed for Cardholder Name *</span>
+                    </span>
                   </div>
     
                       <div class="form-group col-sm-10">
-                        <label for="month">Month (MM)</label>
+                        <label for="month">Month (MM)<span class="errspan">*</span></label>
                         <select id="month" [disabled]="expmonth" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
                           <option  [value]="undefined" disabled hidden>Select Month</option>
                           <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
@@ -54,9 +60,11 @@
                           <option value="11">11</option>
                           <option value="12">12</option> -->
                         </select>
+                        <span *ngIf="((month.invalid && paymentform.submitted) || (month.errors && month.touched) )" 
+                      class='fa fa-info-circle errspan'> Month is required</span>  
                       </div>
                       <div class="form-group col-sm-10">
-                        <label for="cvv">CVV</label>
+                        <label for="cvv">CVV<span class="errspan">*</span></label>
                         <input type="password" class="form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
                       <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
                       class='fa fa-info-circle errspan'> CVV is required</span>                
@@ -112,12 +120,14 @@
                     
                   </div>
                   <div class="form-group col-sm-10">
-                    <label for="year">Year (YYYY)</label>
+                    <label for="year">Year (YYYY)<span class="errspan">*</span></label>
                     <select id="year" [disabled]="expyear" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
                       <option  [value]="undefined" disabled hidden>Select Year</option>
                       <option *ngFor="let obj of yearList; let i=index" [value]="2021+(i+1)">{{2021+(i+1)}}</option>
                       <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
                       </select>
+                      <span *ngIf="((year.invalid && paymentform.submitted) || (year.errors && year.touched) )" 
+                      class='fa fa-info-circle errspan'> Year is required</span>
                   </div>
                               
                     <!-- <div *ngIf='isStandard' class="form-group col-sm-10 state_input card_form">
