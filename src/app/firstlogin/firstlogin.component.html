@@ -188,6 +188,7 @@
             </mat-form-field>
             <span *ngIf="((country.invalid && firstloginform.submitted)|| (country.errors && country.touched))"
               class='fa fa-info-circle errspan'> Country is required </span>
+              <span class="errspan">{{errorMessage}}</span>
           </div>
           
        
@@ -204,13 +205,14 @@
             </mat-form-field>
             <span *ngIf="((state.invalid && firstloginform.submitted)|| (state.errors && state.touched))"
               class='fa fa-info-circle errspan'> State is required </span>
+              <span class="errspan">{{errorMessage1}}</span>
           </div>
 
           <div class=" col-md-6"><!-- form-group inner-addon left-addon-->
             <!-- <img src="assets/images/registration/town.svg" alt="" class="icon"> -->
             <mat-form-field appearance="outline">
               <mat-label>City</mat-label>
-            <mat-select matNativeControl name='city' #city='ngModel' [(ngModel)]='model.city' required>
+            <mat-select matNativeControl name='city' (selectionChange)="onChangeCity($event.value)"#city='ngModel' [(ngModel)]='model.city' required>
               <!-- <option *ngIf="cityInfo == ''" value="-1">City</option> -->
               <mat-option  [value]="undefined" disabled hidden>City</mat-option>
               <mat-option  [value]="null" disabled hidden>City</mat-option>
@@ -219,6 +221,7 @@
             </mat-form-field>
             <span *ngIf="((city.invalid && firstloginform.submitted)|| (city.errors && city.touched))"
               class='fa fa-info-circle errspan'> City is required </span>
+              <span class="errspan">{{errorMessage2}}</span>
           </div>
        
        
@@ -240,7 +243,7 @@
             <!-- <img src="assets/images/registration/smartphone.svg" alt="" class="icon phoneicon"> -->
             <mat-form-field appearance="outline">
               <mat-label>Phone Number</mat-label>
-              <input type="text" (keydown)="onKeydown($event)" matInput name='phoneNumber' #phoneNumber="ngModel" 
+              <input type="text" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)" matInput name='phoneNumber' #phoneNumber="ngModel" 
               [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput 
               [ng2TelInputOptions]="{initialCountry: phnCountry}"  pattern="^((\\+91-?)|0)?[0-9]{10}$" required > <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
             </mat-form-field>
@@ -255,7 +258,7 @@
                 <!-- <img src="assets/images/registration/smartphone.svg" alt="" class="icon phoneicon"> -->
                 <mat-form-field appearance="outline">
                   <mat-label>Phone Number</mat-label>
-                <input type="text" matInput (keydown)="onKeydown($event)" name='phoneNumber' #phoneNumber="ngModel" 
+                <input type="text" matInput (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)" name='phoneNumber' #phoneNumber="ngModel" 
                 [(ngModel)]="model.phoneNumber" onKeyPress="if(this.value.length==10) return false;" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}" 
                 pattern="^((\\+91-?)|0)?[0-9]{10}$" required> <!--ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"-->
                 </mat-form-field>
@@ -323,7 +326,7 @@
             <!-- <button type="submit" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr">Register</button> -->
             <button *ngIf="this.getCookie('card_enabled')!='true'" (click)="validateOTP()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist || otpflag==false">Submit</button>
             <!-- <button (click)="getOTP()" class="btn btn-primary"  [disabled]="firstloginform.invalid || showErr || orgExsist">Submit</button> -->
-            <button  *ngIf="this.getCookie('card_enabled')=='true'" (click)="validateOTP()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist || otpflag==false">Continue</button>
+            <button  *ngIf="this.getCookie('card_enabled')=='true'" (click)="validateOTP()" class="btn btn-primary" style="height:36px !important" [disabled]="firstloginform.invalid || showErr || orgExsist || otpflag==false || errorMessage || errorMessage1 || errorMessage2">Continue</button>
           </div>
           </div>
         </div>  
