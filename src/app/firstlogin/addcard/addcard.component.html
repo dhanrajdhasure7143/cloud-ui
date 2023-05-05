@@ -36,9 +36,7 @@
                       *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) && !(cardHolder.errors.pattern))">Card
                       Holder Name is required *</span>
                     <span class='errspan required' *ngIf="cardHolder.errors && cardHolder.invalid">
-                      <span *ngIf="cardHolder.errors.pattern" class='required'>Please enter only letters
-                        (A-Z) and spaces between words are
-                        only allowed for Cardholder Name *</span>
+                      <span *ngIf="cardHolder.errors.pattern" class='required'>Only Alphabets and spaces between words are allowed.</span>
                     </span>
                   </div>
     
