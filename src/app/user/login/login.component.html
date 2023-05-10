@@ -83,8 +83,8 @@
                     <!--<img src="assets/images/password_icon.png" class="otpIcon" alt="">-->
 
                     <mat-form-field class="example-full-width" style="width:340px !important;" hideRequiredMarker floatlable="auto" appearance="outline" color="primary">
-                      <mat-label>OTP</mat-label>
-                    <input type="text" maxlength="6" name = "otp" id="otp" matInput formControlName="otpNum" class="form-control otpinput" placeholder="Enter OTP"
+                      <mat-label>Code</mat-label>
+                    <input type="text" maxlength="6" name = "otp" id="otp" matInput formControlName="otpNum" class="form-control otpinput" placeholder="Enter Code"
                       required/>
                     </mat-form-field>
 
@@ -103,7 +103,7 @@
             <div class="col-sm-6">
               <button [disabled]="twoFactorAuthConButton || isOTP" class="btn btn-primary login-btn" style="
                              margin-left: 15%;
-                         " (click)="generateOTP()" id="btnn">Generate OTP</button>
+                         " (click)="generateOTP()" id="btnn">Send code</button>
             </div>
           </div>
 
