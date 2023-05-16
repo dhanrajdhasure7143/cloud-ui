@@ -270,16 +270,16 @@
 
                   <div class="col-sm-6">
                     <mat-form-field appearance="outline" color="primary">
-                      <mat-label>OTP</mat-label>
-                    <input type="text" name="OTP"  (keydown)="onKeydown($event)" matInput [(ngModel)]="model.otp" #otp="ngModel" maxlength="6" minlength="6"  placeholder="OTP" required>
+                      <mat-label>Code</mat-label>
+                    <input type="text" name="OTP"  (keydown)="onKeydown($event)" matInput [(ngModel)]="model.otp" #otp="ngModel" maxlength="6" minlength="6"  placeholder="Code" required>
                      
                   </mat-form-field>
                   <span class="fa fa-info-circle errspan"
             *ngIf="(otp.touched || firstloginform.submitted) && otp.errors?.required">
-            OTP is required 
+            Code is required 
         </span>
         <span class='fa fa-info-circle errspan' *ngIf="otp.touched && otp.errors?.minlength">
-         OTP should be of 6 digits
+         Code should be of 6 digits
         </span>
       
                 

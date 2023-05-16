@@ -64,9 +64,9 @@ export class FirstloginComponent implements OnInit {
   public deviceInfo = null;
   orgExsist:boolean;
   otp:any="";
-  otpflag:Boolean=false;
+  public otpflag:boolean = false;
   public hide:boolean = false;
-  otpBtn = "Get OTP";
+  otpBtn = "Send code";
 
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -557,12 +557,12 @@ export class FirstloginComponent implements OnInit {
       
       this.otpflag=true;
       this.spinner.hide()
-      Swal.fire("Success","OTP sent successfully to EMail !","success");
-     this.otpBtn="Resend OTP";
+      Swal.fire("Success","Code sent successfully to EMail !","success");
+     this.otpBtn="Resend code";
     },err=>{
       console.log(err);
       this.spinner.hide()
-      Swal.fire("Error","Unable to send OTP","error")
+      Swal.fire("Error","Unable to send Code","error")
     })
   }
 
