@@ -113,7 +113,7 @@ export class DashboardComponent implements OnInit {
       this.isCustom = true;
       this.subscriptionForm.get("interval").setValidators([Validators.required]);
       this.subscriptionForm.get("customamount").setValidators([Validators.compose([Validators.required,Validators.maxLength(5), Validators.pattern(/^[0-9]*$/)])]);
-      this.subscriptionForm.get("customPlanName").setValidators([ Validators.compose([Validators.required,Validators.maxLength(50), Validators.pattern(/^[a-zA-Z]*$/)])]);
+      this.subscriptionForm.get("customPlanName").setValidators([ Validators.compose([Validators.required,Validators.maxLength(50), Validators.pattern(/^[a-zA-Z][a-zA-Z\s]*$/)])]);
       this.subscriptionForm.updateValueAndValidity();
     } else {
       this.subscriptionForm.get("interval").clearValidators();
