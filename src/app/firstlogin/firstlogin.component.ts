@@ -66,7 +66,7 @@ export class FirstloginComponent implements OnInit {
   otp:any="";
   public otpflag:boolean = false;
   public hide:boolean = false;
-  otpBtn = "Get OTP";
+  otpBtn = "Send Code";
   errorMessage: string;
   errorMessage1: any;
   errorMessage2: any;
