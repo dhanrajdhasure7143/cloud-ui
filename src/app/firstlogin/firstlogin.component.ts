@@ -66,7 +66,10 @@ export class FirstloginComponent implements OnInit {
   otp:any="";
   public otpflag:boolean = false;
   public hide:boolean = false;
-  otpBtn = "Send code";
+  otpBtn = "Send Code";
+  errorMessage: string;
+  errorMessage1: any;
+  errorMessage2: any;
 
   constructor(@Inject(APP_CONFIG) private config, private router: Router, 
               private service: FirstloginService,
@@ -177,6 +180,8 @@ export class FirstloginComponent implements OnInit {
       if(this.countryInfo[i].CountryName == countryValue ){
         this.phnCountry = this.countryInfo[i].CountryCode
         this.stateInfo=this.countryInfo[i].States; 
+      }else{
+        this.errorMessage =""
       }
     }
   this.cityInfo=[];
@@ -193,16 +198,18 @@ export class FirstloginComponent implements OnInit {
     for(var i=0; i< this.stateInfo.length; i++){
       if(this.stateInfo[i].StateName == stateValue ){
         this.cityInfo=this.stateInfo[i].Cities; 
+      }else{
+        this.errorMessage1 =''
       }
     }
     this.model.city="1"
   }
   
-  // onChangeCity(cityValue){
-  //   console.log('cityValue',cityValue);
-    
-  //   // this.model.city = this.cityInfo[cityValue]
-  // }
+  onChangeCity(cityValue){
+    if(cityValue){
+      this.errorMessage2 =''
+    }
+  }
   onSuccessOfVerifyToken(response: any) {
     if(response){
       if(response.errorMessage==='Token invalid'){
@@ -591,5 +598,13 @@ export class FirstloginComponent implements OnInit {
        this.spinner.hide()
        Swal.fire("Error","Unable to register data","error")
      })
+  }
+
+  OnFlagChange(event){
+    if(event.name !=this.model.country){
+      this.errorMessage="Please Select Appropriate Country *";
+      this.errorMessage1="Please Select Appropriate State *";
+      this.errorMessage2="Please Select Appropriate City *"
+    }
   }
 }
