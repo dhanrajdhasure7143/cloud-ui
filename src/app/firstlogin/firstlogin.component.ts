@@ -5,7 +5,8 @@ import { APP_CONFIG } from './../app.config';
 import { FirstloginService } from './@providers/firstlogin.service';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
-import  countries  from './../../assets/jsons/countries.json';
+// import  countries  from './../../assets/jsons/countries.json';
+import { Country, State, City }  from 'country-state-city';
 import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
@@ -67,7 +68,7 @@ export class FirstloginComponent implements OnInit {
   public otpflag:boolean = false;
   public hide:boolean = false;
   otpBtn = "Send Code";
-  errorMessage: string;
+  errorMessage: any;
   errorMessage1: any;
   errorMessage2: any;
 
@@ -153,7 +154,7 @@ export class FirstloginComponent implements OnInit {
     return "";
   }
   getCountries(){
-    this.countryInfo = countries.Countries
+    this.countryInfo = Country.getAllCountries();
   }
   getAllDepartments(){
     this.service.getAllDepartments().subscribe(response=> {
@@ -171,37 +172,53 @@ export class FirstloginComponent implements OnInit {
   }
   onChangeCountry(countryValue) {
     this.isInput = !this.isInput;
+    this.stateInfo = State.getAllStates();
+    if(countryValue){
+        const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+        this.phnCountry = matchingCountry.isoCode;
+        this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
+        this.errorMessage=""
+    }
     // this.model.country = this.countryInfo[countryValue].CountryName;
     // this.stateInfo=this.countryInfo["India"].States;
  
-    this.stateInfo=[];
-    for(var i=0; i< this.countryInfo.length; i++){
-      if(this.countryInfo[i].CountryName == countryValue ){
-        this.phnCountry = this.countryInfo[i].CountryCode
-        this.stateInfo=this.countryInfo[i].States; 
-      }else{
-        this.errorMessage =""
-      }
-    }
-  this.cityInfo=[];
-  this.model.state="1";
-  this.model.city="1";
+  //   this.stateInfo=[];
+  //   for(var i=0; i< this.countryInfo.length; i++){
+  //     if(this.countryInfo[i].CountryName == countryValue ){
+  //       this.phnCountry = this.countryInfo[i].CountryCode
+  //       this.stateInfo=this.countryInfo[i].States; 
+  //     }else{
+  //       this.errorMessage =""
+  //     }
+  //   }
+  // this.cityInfo=[];
+  // this.model.state="1";
+  // this.model.city="1";
   }
 
   onChangeState(stateValue) {
+    this.cityInfo = City.getAllCities();
+    if(stateValue){
+      const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
+        this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+        this.errorMessage1=""
+      if (this.cityInfo.length === 0) {
+        this.cityInfo = [{ name: 'NA' }];
+      }
+    }
   
-    this.cityInfo=[];
+    // this.cityInfo=[];
     // this.model.state =this.stateInfo[stateValue].StateName
     // console.log("state : " + this.model.state);
     // this.cityInfo=this.stateInfo[stateValue].Cities;
-    for(var i=0; i< this.stateInfo.length; i++){
-      if(this.stateInfo[i].StateName == stateValue ){
-        this.cityInfo=this.stateInfo[i].Cities; 
-      }else{
-        this.errorMessage1 =''
-      }
-    }
-    this.model.city="1"
+    // for(var i=0; i< this.stateInfo.length; i++){
+    //   if(this.stateInfo[i].StateName == stateValue ){
+    //     this.cityInfo=this.stateInfo[i].Cities; 
+    //   }else{
+    //     this.errorMessage1 =''
+    //   }
+    // }
+    // this.model.city="1"
   }
   
   onChangeCity(cityValue){
