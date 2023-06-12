@@ -65,7 +65,6 @@ export class ApprovalsComponent implements OnInit {
 
   updateApprovals(headers:any, approvals:any[])
   {
-    console.log(this.tokenData)
     let filteredApprovals:any[]=[]
     filteredApprovals=approvals.filter((item:any)=>{
       if(item.status=="Pending" && item.botId==this.tokenData.botId && item.runId==this.tokenData.runId)
@@ -75,7 +74,11 @@ export class ApprovalsComponent implements OnInit {
         return item;
       }
     });
-    console.log(filteredApprovals)
+    if(filteredApprovals.length==0)
+    {
+      this.spinner.hide();
+      return;
+    }
     this.http.post(environment.rpaendpoint+`/rpa-service/update-approval-status`, filteredApprovals, {headers}).subscribe((response:any)=>{
       if(response.status)
       {
