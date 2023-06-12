@@ -56,9 +56,10 @@ import {
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ActiveComponent } from './active/active.component';
+import { ApprovalsComponent } from './approvals/approvals.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent,ChangepasswordComponent,RedirectsignoutComponent, UserInfoComponent, ActiveComponent],
+  declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent,CreataccountComponent,ChangepasswordComponent,RedirectsignoutComponent, UserInfoComponent, ActiveComponent, ApprovalsComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
