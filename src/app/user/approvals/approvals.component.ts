@@ -25,6 +25,7 @@ export class ApprovalsComponent implements OnInit {
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((params:any)=>{
+      localStorage.clear();
       let tokenData:any=JSON.parse(Base64.decode(params.token));
       this.tokenData=tokenData;
       this.tokenData["status"]=params.status;
@@ -69,7 +70,7 @@ export class ApprovalsComponent implements OnInit {
     filteredApprovals=approvals.filter((item:any)=>{
       if(item.status=="Pending" && item.botId==this.tokenData.botId && item.runId==this.tokenData.runId)
       {
-        
+        item["modifiedBy"]=this.tokenData.toUser;
         item["status"]=this.tokenData.status;
         return item;
       }
