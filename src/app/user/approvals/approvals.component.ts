@@ -37,22 +37,37 @@ export class ApprovalsComponent implements OnInit {
   loginUser()
   {
     this.spinner.show()
-    let user=this.tokenData.loggedUser;
-    this.http.post(environment.tokenendpoint+"/api/login/beta/token", {userId:user}).subscribe((response:any)=>{
-      this.getApprovals(response);
+    let user=JSON.parse(this.tokenData.loggedUser);
+    this.http.post(environment.tokenendpoint+"/api/login/beta/token", {userId:user.loggedUser}).subscribe((response:any)=>{
+      this.getTenantBasedAccessToken(response, user);
+      //this.getApprovals(response);
     },err=>{
       this.spinner.hide();
       Swal.fire("Error","Unable to get access token","error");
     })
   }
 
+  getTenantBasedAccessToken(authToken:any, user:any)
+  {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${authToken.accessToken}`)
+    .set('Refresh-Token', authToken.refreshToken)
+    .set('Timezone', timezone);
+    this.http.get(environment.tokenendpoint+"/api/login/beta/newAccessToken?tenant_id="+user.tenantId, {headers}).subscribe((authResponse:any)=>{
+      this.getApprovals(authResponse,authToken.refreshToken);
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to get access token", "error")
+    })
 
-  getApprovals(authToken:any)
+  }
+
+  getApprovals(authToken:any, refreshToken:any)
   {
     
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${authToken.accessToken}`)
-    .set('Refresh-Token', authToken.refreshToken)
+    .set('Refresh-Token', refreshToken)
     .set('Timezone', timezone);
     this.http.get(environment.rpaendpoint+`/rpa-service/rpa-inbox/${this.tokenData.toUser}`, {headers}).subscribe((response:any)=>{
       //this.approvalsList=response["data"];
