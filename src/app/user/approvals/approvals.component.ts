@@ -21,11 +21,12 @@ export class ApprovalsComponent implements OnInit {
   
   constructor(private activeRoute:ActivatedRoute, private httpBackend:HttpBackend, private spinner:NgxSpinnerService) {
     this.http=new HttpClient(this.httpBackend);
+    localStorage.clear();
+    sessionStorage.clear();
    }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe((params:any)=>{
-      localStorage.clear();
       let tokenData:any=JSON.parse(Base64.decode(params.token));
       this.tokenData=tokenData;
       this.tokenData["status"]=params.status;
@@ -90,6 +91,10 @@ export class ApprovalsComponent implements OnInit {
         return item;
       }
     });
+    if(filteredApprovals.length==0){
+      this.spinner.hide();
+      return;
+    }
     if(filteredApprovals.length==0)
     {
       this.spinner.hide();

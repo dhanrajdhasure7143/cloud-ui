@@ -59,6 +59,12 @@ export class LoginComponent implements OnInit {
     //private cookieService:CookieService,
     
   ) {
+    this.route.queryParams.subscribe(res=>{
+      if(res)
+      if(res.token){
+        this.router.navigate(['/approvals'],{queryParams:{token:res.token}});
+      }
+    });
     this.session.stopWatching();
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
@@ -70,7 +76,6 @@ export class LoginComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     });
-
   }
 
   ngOnInit() {
