@@ -5,6 +5,7 @@ import { ValidateComponent } from './validate/validate.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
 import { SessionoutComponent } from './sessionout/sessionout.component';
+import { ApprovalsComponent } from './approvals/approvals.component';
 
 const routes: Routes = [{
   path: 'activation',
@@ -38,6 +39,7 @@ const routes: Routes = [{
   path:'timeout',
   component:SessionoutComponent
 },
+{path:'approvals',component:ApprovalsComponent},
 // {
 //   path: 'pages',
 //   loadChildren: './pages/pages.module#PagesModule',
