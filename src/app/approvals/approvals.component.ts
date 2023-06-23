@@ -19,10 +19,15 @@ export class ApprovalsComponent implements OnInit {
   public http:any;
   public approvalsList:any[]=[];
   
-  constructor(private activeRoute:ActivatedRoute, private httpBackend:HttpBackend, private spinner:NgxSpinnerService) {
+  constructor(private activeRoute:ActivatedRoute, private httpBackend:HttpBackend, 
+    private spinner:NgxSpinnerService,
+    private appservice:AppService) {
+      localStorage.clear();
+      sessionStorage.clear();
+      this.appservice.logout();
     this.http=new HttpClient(this.httpBackend);
-    localStorage.clear();
-    sessionStorage.clear();
+
+
    }
 
   ngOnInit() {
