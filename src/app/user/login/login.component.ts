@@ -176,8 +176,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-  
-    
     localStorage.clear();
     this.submitted = true;
     this.session.stopWatching();
@@ -422,8 +420,19 @@ export class LoginComponent implements OnInit {
     var productURL = this.config.productendpoint;
   //  if(this.config.isNewDesignEnabled && this.getCookie("old_ux")!=="true")
     if(this.config.isNewDesignEnabled)
-        productURL = this.config.newproductendpoint;
+        // productURL = this.config.newproductendpoint;
         this.spinner.hide();
+        this.route.queryParams.subscribe(res=>{
+          if(res){
+            if(res.redirect_to == "asquare"){
+              productURL = this.config.asquareproductendpoint;
+            }else if(res.redirect_to.includes("localhost")){
+              productURL = String("http://"+res.redirect_to)
+            }else{
+              productURL = this.config.newproductendpoint;
+            }
+          }
+        })
       //  if(this.getCookie("new_reg_flow")=="true"){
         window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
       //  }

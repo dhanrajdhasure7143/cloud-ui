@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { APP_CONFIG } from './../../app.config';
+import { ProfileService } from 'src/app/_services/profile.service';
+import { AppService } from 'src/app/_services';
 
 @Component({
   selector: 'app-active',
@@ -11,7 +13,7 @@ import { APP_CONFIG } from './../../app.config';
 export class ActiveComponent implements OnInit {
 
   constructor(private crypto:CryptoService,@Inject(APP_CONFIG) private config,
-  private router: Router) { }
+  private router: Router,   private profileService:ProfileService,private appService: AppService) { }
 
   ngOnInit() {
     var token=JSON.parse(localStorage.getItem('currentUser'));
@@ -32,7 +34,11 @@ export class ActiveComponent implements OnInit {
     if(this.config.isNewDesignEnabled)
         productURL = this.config.newproductendpoint;
       //  if(this.getCookie("new_reg_flow")=="true"){
+        this.profileService.getUserRole(2).subscribe(res=>{
         window.location.href=productURL+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
+        },err=>{
+          this.appService.logout();
+        })
       //  }
     }
   }
