@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2';
 import { Particles } from '../../_models/particlesjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CryptoService } from '../../_services/crypto.service';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class NewpasswordComponent implements OnInit {
               private route: ActivatedRoute, 
               private newpasswordServ: NewpasswordService,
               private particles :Particles,
-              private spinner:NgxSpinnerService,) { }
+              private spinner:NgxSpinnerService,
+              private cryptoService: CryptoService) { }
 
   ngOnInit() {
    // this.particles.getParticles();
@@ -71,7 +73,8 @@ export class NewpasswordComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       let resetToken = params['token']
       this.userData = {
-        tkn : resetToken,pwd: this.newPwd
+        tkn: resetToken,
+        pwd: this.cryptoService.encrypt(this.newPwd)
       };
       
       this.newpasswordServ.newPassword({user: this.userData}).subscribe(res => {
