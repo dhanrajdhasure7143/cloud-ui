@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Particles } from '../../_models/particlesjs'
 import { NgForm } from '@angular/forms';
 import { AppService } from 'src/app/_services';
+import { CryptoService } from 'src/app/_services/crypto.service';
 @Component({
   selector: 'app-changepassword',
   templateUrl: './changepassword.component.html',
@@ -28,6 +29,7 @@ export class ChangepasswordComponent implements OnInit {
               private profileservice: ProfileService,
               private appser: AppService, 
               private particles :Particles,
+              private cryptoService :CryptoService
   ) { }
 
   ngOnInit() {
@@ -38,9 +40,9 @@ export class ChangepasswordComponent implements OnInit {
   onSubmit(form:NgForm){
     
     let pswdbody = {
-      "confirmPassword": this.newPwd,
-      "currentPassword": this.curtPass,
-      "newPassword":this.newPwd,
+      "confirmPassword": this.cryptoService.encrypt(this.newPwd),
+      "currentPassword": this.cryptoService.encrypt(this.curtPass),
+      "newPassword": this.cryptoService.encrypt(this.newPwd),
       "userId": this.localstorageuserid
     }
     this.profileservice.changePassword(pswdbody).subscribe(res => {
