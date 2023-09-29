@@ -16,6 +16,7 @@ export class ActiveComponent implements OnInit {
   private router: Router,   private profileService:ProfileService,private appService: AppService) { }
 
   ngOnInit() {
+    if(JSON.parse(localStorage.getItem('currentUser'))){
     var token=JSON.parse(localStorage.getItem('currentUser'));
     var encryptToken=btoa(token.accessToken)
     var encryptrefreshToken=btoa(token.refreshToken);
@@ -29,7 +30,9 @@ export class ActiveComponent implements OnInit {
     var productURL = this.config.productendpoint;
     let isActiveUser = localStorage.getItem("enabled")
     if(isActiveUser === "false"){
-      this.router.navigate(['/userinfo'])
+      // this.router.navigate(['/userinfo'])
+        this.appService.logout();
+        this.router.navigate(['/user'])
     }else{
     if(this.config.isNewDesignEnabled)
         productURL = this.config.newproductendpoint;
@@ -41,6 +44,10 @@ export class ActiveComponent implements OnInit {
         })
       //  }
     }
+  }else{
+    this.appService.logout();
+    this.router.navigate(['/user'])
+  }
   }
 
 }
