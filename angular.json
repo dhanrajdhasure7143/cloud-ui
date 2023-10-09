@@ -183,6 +183,18 @@
           "configurations": {
             "production": {
               "browserTarget": "aiotal:build:production"
+            },
+            "demo": {
+              "browserTarget": "aiotal:build:demo"
+            },
+            "qa": {
+              "browserTarget": "aiotal:build:qa"
+            },
+            "staging": {
+              "browserTarget": "aiotal:build:staging"
+            },
+            "asquaredemo": {
+              "browserTarget": "aiotal:build:asquaredemo"
             }
           }
         },
