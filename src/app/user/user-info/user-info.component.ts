@@ -44,6 +44,9 @@ export class UserInfoComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName:['',Validators.required],
+      oldPassword:['',Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$%])[a-zA-Z0-9@$%]{8,20}$/)])],
+      password:['',Validators.compose([Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$%])[a-zA-Z0-9@$%]{8,20}$/)])],
+      confirmPassword:['',Validators.required],
       userId:this.userId
   });
   }
@@ -99,6 +102,10 @@ export class UserInfoComponent implements OnInit {
            },2000);
         });
         
+      } else if(res.errorMessage == "Your current password was incorrect."){
+        Swal.fire("Error","Your current password was incorrect.","error");
+      } else if (res.errorMessage == "New Password and Confirm Password are not Matching "){
+        Swal.fire("Error","New Password and Confirm Password are not Matching.","error");
       }
    
    

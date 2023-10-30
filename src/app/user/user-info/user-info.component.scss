@@ -55,9 +55,8 @@
     background-size: cover;
   }
   
-  .card_forgot
-  {
-    top: 30% !important;
+  .card_forgot {
+    top: 2% !important;
   }
   
   :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
@@ -66,5 +65,14 @@
   
   :host ::ng-deep .mat-form-field-wrapper {
     padding-bottom: 0.14375em !important;
+  }
+
+  .password-btn{
+    background: none !important;
+    border:none !important;
+    img{
+      height: 20px !important;
+      margin-top: -12px;
+    }
   }
   
