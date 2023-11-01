@@ -1,5 +1,5 @@
 export const environment = {
-    production: true,
+    production: false,
     portfolioSite: 'http://10.11.0.82:9098/ang_pages/startforfree.html',
     apiendpoint: 'https://ezflow.qa.epsoftinc.com/aiotalplatform',
     tokenendpoint: 'https://ezidm.qa.epsoftinc.com',
