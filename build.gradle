@@ -4,6 +4,80 @@ plugins {
   id "com.github.node-gradle.node" version "2.2.4"
   id "com.bmuschko.docker-remote-api" version "6.6.1"
 }
+
+  def ENV = project.property('ENV')
+  println "ENV value: $ENV"
+ 
+  if (ENV == 'AsquareDemo') {
+      def propertiesFile = file("gradle/${ENV}/gradle.properties")
+      def myProperties = new Properties()
+      myProperties.load(new FileInputStream(propertiesFile))
+      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
+      def semver = myProperties.getProperty('semver')
+      def registryUrl = myProperties.getProperty('registryUrl')
+      def imageName = myProperties.getProperty('imageName')
+      
+      ext {
+          dockerImage = "${project.registryUrl}/${imageName}"
+          dockerTag   = "${semver}-${semverDevSuffix}"
+        }
+      
+     }
+else {
+      def propertiesFile = file("gradle/QA/gradle.properties")
+      def myProperties = new Properties()
+      myProperties.load(new FileInputStream(propertiesFile))
+      def semverDevSuffix = myProperties.getProperty('semverDevSuffix')
+      def semver = myProperties.getProperty('semver')
+      def registryUrl = myProperties.getProperty('registryUrl')
+      def imageName = myProperties.getProperty('imageName')
+      
+      ext {
+          dockerImage = "${project.registryUrl}/${imageName}"
+          dockerTag   = "${semver}-${semverDevSuffix}"
+        }
+      
+      
+     }
+
+
+
+
+
+task copyJarToBin {
+    copy {
+        from 'ezflow-service-config/cloud-ui/Dockerfile'
+        into '.'
+    }
+    }
+task copyJarToBinA {
+    copy {
+        from 'ezflow-service-config/cloud-ui/docker-compose.yml'
+        into '.'
+    }
+    }
+
+task copyJarToBinC {
+    copy {
+        from 'ezflow-service-config/cloud-ui/app.config.ts'
+        into 'src/app'
+    }
+}
+
+task copyJarToBinD {
+    copy {
+        from 'ezflow-service-config/cloud-ui/environment.ts'
+        into 'src/environments'
+    }
+}
+
+task copyJarToBinE {
+    copy {
+        from 'ezflow-service-config/cloud-ui/package.json'
+        into '.'
+    }
+}
+
 import org.apache.tools.ant.taskdefs.condition.Os      
 
 node {
@@ -16,10 +90,10 @@ npmInstall.outputs.upToDateWhen {
   false 
 }
 
-ext {
-  dockerImage = "${project.registryUrl}/${imageName}"
-  dockerTag   = "${project.semver}-${project.semverDevSuffix}"
-}
+//ext {
+//  dockerImage = "${registryUrl}/${imageName}"
+//  dockerTag   = "${semver}-${semverDevSuffix}"
+//}
 
 task cleanAll (type:Delete) {
   delete "${projectDir}/node_modules"
