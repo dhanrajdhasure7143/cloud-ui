@@ -31,6 +31,7 @@ export class UserInfoComponent implements OnInit {
   hideTwo:boolean = false;
   hideOne:boolean = false;
   hide:boolean = false;
+  isShown : boolean;
   ngOnInit() {
     this.particles.getParticles();
     // document.cookie = "old_ux=false";
@@ -80,6 +81,14 @@ export class UserInfoComponent implements OnInit {
      // this.authenticate()
     }
   }
+
+  passwordValid(event){
+    if(event.target.value == this.userForm.value.password){
+      this.isShown = false;
+    } else {
+      this.isShown = true;
+    }
+   }
   updateAccount() {
    
     let encrypt =this.spacialSymbolEncryption +this.crypto.encrypt(JSON.stringify(this.userForm.value));
@@ -172,6 +181,7 @@ export class UserInfoComponent implements OnInit {
         //window.location.href="http://localhost:4000"+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
      }
    
+
     
   
 } 

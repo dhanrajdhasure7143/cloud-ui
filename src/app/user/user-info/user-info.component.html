@@ -84,8 +84,8 @@
                   <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
                     <mat-label>Confirm Password</mat-label>
                     <input [type]="hideTwo ?  'text': 'password'" formControlName="confirmPassword"  matInput 
-                    placeholder="Confirm Password"  maxlength="21" [compare]="'password'" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
-                    <span class="password-btn ml-auto" matSuffix *ngIf="!hideTwo" (click)="hideTwo = true">
+                    placeholder="Confirm Password"  maxlength="21" [compare]="'password'" (keyup)="passwordValid($event)" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
+                    <span class="password-btn ml-auto" matSuffix *ngIf="!hideTwo" (click)="hideTwo = true" >
                       <img src='./../../assets/images/eye-show.svg' alt="eye" />
                     </span>
                     <span class="password-btn ml-auto" matSuffix *ngIf="hideTwo" (click)="hideTwo = false">
@@ -95,7 +95,7 @@
                 <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('confirmPassword').hasError('required') && userForm.get('confirmPassword').touched">
                   Confirm Password is Required!
                 </mat-error>
-                <mat-error class="fa fa-info-circle errspan"  *ngIf="userForm.hasError('compare', 'confirmPassword', 'password') && !userForm.get('confirmPassword').hasError('required') && userForm.get('confirmPassword').touched">
+                <mat-error class="fa fa-info-circle errspan" *ngIf="isShown && !userForm.get('confirmPassword').hasError('required') && userForm.get('confirmPassword').touched">
                   Passwords do not match.
                 </mat-error>
                 </div>
