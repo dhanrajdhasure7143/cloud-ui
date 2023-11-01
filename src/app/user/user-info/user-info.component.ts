@@ -28,6 +28,9 @@ export class UserInfoComponent implements OnInit {
   userId:any;
   error:boolean=false;
   private spacialSymbolEncryption:string = '->^<-';
+  hideTwo:boolean = false;
+  hideOne:boolean = false;
+  hide:boolean = false;
   ngOnInit() {
     this.particles.getParticles();
     // document.cookie = "old_ux=false";
