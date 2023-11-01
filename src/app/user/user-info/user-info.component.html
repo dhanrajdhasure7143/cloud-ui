@@ -42,12 +42,68 @@
                   Last Name is Required!
                 </mat-error>
                 </div>
-
+                <div class="col-sm-12" style="margin:15px 0px !important;">
+                  <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
+                    <mat-label> Current Password </mat-label>
+                    <input [type]="hide ?  'text': 'password'" formControlName="oldPassword"  matInput 
+                    placeholder="Enter Current Password"  maxlength="21"  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
+                    <span class="password-btn ml-auto" matSuffix *ngIf="!hide" (click)="hide = true">
+                      <img src='./../../assets/images/eye-show.svg' alt="eye" />
+                    </span>
+                    <span class="password-btn ml-auto" matSuffix *ngIf="hide" (click)="hide = false">
+                      <img src='./../../assets/images/eye-hide.svg' alt="eye"/>
+                    </span>
+                </mat-form-field>
+                <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('oldPassword').hasError('required') && userForm.get('oldPassword').touched">
+                  Current Password is Required!
+                </mat-error>
+                <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('oldPassword').hasError('pattern')"> 
+                  Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number
+                </mat-error>
+                </div>
+                <div class="col-sm-12" style="margin:15px 0px !important;">
+                  <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
+                    <mat-label>New Password</mat-label>
+                    <input [type]="hideOne ?  'text': 'password'" formControlName="password"  matInput 
+                    placeholder="Enter New Password"  maxlength="21"  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
+                    <span class="password-btn ml-auto" matSuffix *ngIf="!hideOne" (click)="hideOne = true">
+                      <img src='./../../assets/images/eye-show.svg' alt="eye" />
+                    </span>
+                    <span class="password-btn ml-auto" matSuffix *ngIf="hideOne" (click)="hideOne = false">
+                      <img src='./../../assets/images/eye-hide.svg' alt="eye"/>
+                    </span>
+                </mat-form-field>
+                <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('password').hasError('required') && userForm.get('password').touched">
+                  New Password is Required!
+                </mat-error>
+                <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('password').hasError('pattern')"> 
+                  Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number
+                </mat-error>
+                </div>
+                <div class="col-sm-12" style="margin:15px 0px !important;">
+                  <mat-form-field hideRequiredMarker style="width:340px !important" floatlable="auto" appearance="outline" color="primary">
+                    <mat-label>Confirm Password</mat-label>
+                    <input [type]="hideTwo ?  'text': 'password'" formControlName="confirmPassword"  matInput 
+                    placeholder="Confirm Password"  maxlength="21" [compare]="'password'" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
+                    <span class="password-btn ml-auto" matSuffix *ngIf="!hideTwo" (click)="hideTwo = true">
+                      <img src='./../../assets/images/eye-show.svg' alt="eye" />
+                    </span>
+                    <span class="password-btn ml-auto" matSuffix *ngIf="hideTwo" (click)="hideTwo = false">
+                      <img src='./../../assets/images/eye-hide.svg' alt="eye"/>
+                    </span>
+                </mat-form-field>
+                <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('confirmPassword').hasError('required') && userForm.get('confirmPassword').touched">
+                  Confirm Password is Required!
+                </mat-error>
+                <mat-error class="fa fa-info-circle errspan"  *ngIf="userForm.hasError('compare', 'confirmPassword', 'password') && !userForm.get('confirmPassword').hasError('required') && userForm.get('confirmPassword').touched">
+                  Passwords do not match.
+                </mat-error>
+                </div>
                   <!-- <div class="form-group col-sm-12">
                       <a [routerLink]="['/']" class="backlogin">Back to Login</a>
                     </div> -->
                     <div class="form-group col-sm-18">
-                        <button class="hoverable button btn btn-primary login-btn">Submit</button>
+                        <button [disabled]="userForm.invalid" class="hoverable button btn btn-primary login-btn">Submit</button>
                     </div>
           <div style="overflow-wrap: break-word;" class="errordiv col-md-12">
               <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>
