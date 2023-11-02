@@ -66,8 +66,8 @@
                   "maximumError": "5mb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "demo": {
               "fileReplacements": [
@@ -92,8 +92,8 @@
                   "maximumError": "5mb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "qa": {
               "fileReplacements": [
@@ -118,8 +118,8 @@
                   "maximumError": "5mb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "staging": {
               "fileReplacements": [
@@ -144,8 +144,8 @@
                   "maximumError": "5mb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             },
             "asquaredemo": {
               "fileReplacements": [
@@ -170,8 +170,8 @@
                   "maximumError": "5mb"
                 }
               ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "serviceWorker": false,
+              "ngswConfigPath": "null"
             }
           }
         },
