@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
+    production: true,
     portfolioSite: 'https://10.11.0.82:9098/ang_pages/startforfree.html',
    apiendpoint: 'https://ezflow.demo.epsoftinc.com/aiotalplatform',
    tokenendpoint: 'https://ezidm.demo.epsoftinc.com',
@@ -15,7 +15,7 @@ export const environment = {
    isTwoFactorAuthenticationEnabled: false,
    rpaendpoint:"https://ezflow.demo.epsoftinc.com/wfrpa",
    piendpoint:"https://ezflow.demo.epsoftinc.com/prcintel",
-   asquareproductendpoint: 'https://ezflowasquare.dev.epsoftinc.com',
+   asquareproductendpoint: 'https://ezflowasquare.demo.epsoftinc.com',
    isNewDesignEnabled : true
   
   };
