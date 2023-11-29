@@ -4,12 +4,6 @@ plugins {
   id "com.github.node-gradle.node" version "2.2.4"
   id "com.bmuschko.docker-remote-api" version "6.6.1"
 }
-
-  def ENV = project.property('ENV')
-  println "ENV value: $ENV"
- 
-
-      
       ext {
           dockerImage = "${project.registryUrl}/${imageName}"
           dockerTag   = "${semver}-${semverDevSuffix}"
