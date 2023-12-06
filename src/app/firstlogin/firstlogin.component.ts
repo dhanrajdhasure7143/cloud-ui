@@ -113,7 +113,7 @@ export class FirstloginComponent implements OnInit {
      }
 
   ngOnInit() {
-    document.cookie = "card_enabled=false";
+    document.cookie = "card_enabled=true";
     if(this.getCookie("card_enabled")!="false"){
       document.cookie = "card_enabled=true";
     }
