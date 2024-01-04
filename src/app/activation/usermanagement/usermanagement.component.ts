@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
-import { AllCommunityModules } from '@ag-grid-community/all-modules';
 import { Cellrender } from 'src/app/activation/usermanagement/cellrender';
 
 @Component({
@@ -49,7 +48,7 @@ export class UsermanagementComponent implements OnInit {
     rowData: any = [];
     userId: any;
 
-    modules = AllCommunityModules;
+    // modules = AllCommunityModules;
     ngOnInit() {
 
         this.rowData =[

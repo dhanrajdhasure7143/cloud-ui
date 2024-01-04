@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 // import  countries  from './../../assets/jsons/countries.json';
 import { Country, State, City }  from 'country-state-city';
-import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
 import { mergeMapTo } from 'rxjs/operators';

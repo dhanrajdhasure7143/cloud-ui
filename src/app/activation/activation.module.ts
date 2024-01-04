@@ -9,7 +9,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PlandetailsComponent } from './plandetails/plandetails.component';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { UsermanagementComponent } from './usermanagement/usermanagement.component';
-import { AgGridModule } from 'ag-grid-angular';
 import { ModalModule } from 'ngx-bootstrap';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule } from '@angular/forms';
@@ -31,9 +30,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
  ProgressbarModule.forRoot(),
  ModalModule.forRoot(),
  TabsModule.forRoot(),
- AgGridModule.withComponents([
- UsermanagementComponent,Cellrender
- ]),
  FormsModule,
  ],
  exports: [PlatformComponent],
