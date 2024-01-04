@@ -20,13 +20,5 @@
       "es2018",
       "dom"
     ],
-    "paths": {
-      "bot-grid": [
-        "dist/bot-grid"
-      ],
-      "bot-grid/*": [
-        "dist/bot-grid/*"
-      ]
-    }
   }
 }

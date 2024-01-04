@@ -67,10 +67,9 @@
     "ngx-toastr": "^10.0.4",
     "particles.js": "^2.0.0",
     "particlesjs": "^2.2.3",
-    "rxjs": "~6.6.7",
+    "rxjs": "~6.4.0",
     "sweetalert2": "^8.18.0",
     "tslib": "^1.14.1",
-    "underscore": "^1.9.1",
     "zipcodes": "^8.0.0",
     "zone.js": "~0.9.1"
   },
