@@ -12,7 +12,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { SuperadminmetricsComponent } from './superadminmetrics/superadminmetrics.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { MatIconModule, MatTabsModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent],
