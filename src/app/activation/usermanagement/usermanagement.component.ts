@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
-import { Cellrender } from 'src/app/activation/usermanagement/cellrender';
+
 
 @Component({
     selector: 'app-usermanagement',
@@ -69,7 +69,7 @@ export class UsermanagementComponent implements OnInit {
     constructor(private http: HttpClient, private userService: UsermanagementService, 
         public modal: BsModalService) {
 
-        this.frameworkComponents = { childMessageRenderer: Cellrender }
+        this.frameworkComponents = []
     }
 
     showRecords(size) {

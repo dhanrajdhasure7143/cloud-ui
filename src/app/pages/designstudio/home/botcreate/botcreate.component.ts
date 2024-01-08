@@ -27,7 +27,7 @@ const AllRobotsByPrjId= {
   styleUrls: ['./botcreate.component.scss']
 })
 export class BotcreateComponent implements OnInit {
-  @ViewChild('createBot') form: any;
+  @ViewChild('createBot',{static:false}) form: any;
   public showcreate = false;
   public workflowname = '';
 

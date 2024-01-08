@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { idLocale } from 'ngx-bootstrap';
 import { InputResponse } from '../@models/workflowRobot';
 
 const httpOptions = {

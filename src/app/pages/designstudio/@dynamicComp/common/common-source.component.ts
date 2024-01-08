@@ -4,7 +4,6 @@ import { Component, Input, AfterViewInit, ViewChild, ElementRef, OnInit } from '
 import { FormsModule, FormGroup, FormControl, NgForm } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
-import * as _ from 'underscore';
 import swal from 'sweetalert2';
 import { TextBoxComponent } from '../../input-fields/textbox';
 import { CheckBoxComponent } from './../../input-fields/checkbox';
@@ -22,10 +21,10 @@ export class CommonSourceComponent implements OnInit {
   //@Input() name;
   @Input() node;
   @Input() pipeline;
-  @ViewChild("test", { read: ElementRef }) test: ElementRef;
-  @ViewChild(TextBoxComponent) textbox: TextBoxComponent;
-  @ViewChild(CheckBoxComponent) checkbox: CheckBoxComponent;
-  @ViewChild(DropDownComponent) dropdown: DropDownComponent;
+  @ViewChild("test", { static: false }) test: ElementRef;
+  @ViewChild(TextBoxComponent,{static:false}) textbox: TextBoxComponent;
+  @ViewChild(CheckBoxComponent,{static:false}) checkbox: CheckBoxComponent;
+  @ViewChild(DropDownComponent,{static:false}) dropdown: DropDownComponent;
   errors = [];
   public tempTabIndex;
   public tabActiveId: number = 0;

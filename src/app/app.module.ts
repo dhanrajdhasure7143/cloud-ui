@@ -16,10 +16,9 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 //import { BotGridModule } from 'bot-grid';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ValidateComponent } from './validate/validate.component';
-import { BsModalService } from 'ngx-bootstrap';
 
 import { SuperadminModule } from './superadmin/superadmin.module';
-import { DeviceDetectorModule } from 'ngx-device-detector';
+import { DeviceDetectorModule, DeviceDetectorService } from 'ngx-device-detector';
 import { UserIdleModule } from 'angular-user-idle';
 import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -81,7 +80,8 @@ export const contentfulConfig: ContentfulConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     BackendURLProvider,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    BsModalService],
+    DeviceDetectorService
+],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

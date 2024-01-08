@@ -7,8 +7,7 @@ import { ReviewComponent } from './review/review.component';
 import { ChooseplanComponent } from './chooseplan/chooseplan.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
-import { BsModalService } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { CouponComponent } from './coupon/coupon.component';
 import { NgxSpinnerModule } from "ngx-spinner";
     
@@ -24,6 +23,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
     NgxSpinnerModule,
     ModalModule.forRoot(),
   ],
-  providers:[BsModalService]
+  providers:[]
 })
 export class PaymentModule { }

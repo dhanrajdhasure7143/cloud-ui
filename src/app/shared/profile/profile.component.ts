@@ -17,7 +17,7 @@ import moment from 'moment';
 import { ObjectUnsubscribedError, Observable } from 'rxjs';
 import { log } from 'console';
 import * as $ from 'jquery';
-import { TabsetComponent } from 'ngx-bootstrap';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { CryptoService } from 'src/app/_services/crypto.service';
 
 
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
   @Input() public isnotification: boolean;
   @Input() public isvaultMangment:boolean;
   // @ViewChild('staticTabs') staticTabs: TabsetComponent;
-  @ViewChild('staticTabs') staticTabs: TabsetComponent;
+  @ViewChild('staticTabs',{static:false}) staticTabs: TabsetComponent;
   public model: User;
   public yearList:any;
   config = {

@@ -73,7 +73,7 @@ export class ReviewComponent implements OnInit {
   public deviceInfo = null;
   paymentMode: any;
   details: any;
-  @ViewChild('template') template: TemplateRef<any>;
+  @ViewChild('template',{static:false}) template: TemplateRef<any>;
   planselected: string;
   planterm: string;
   planamount: string;

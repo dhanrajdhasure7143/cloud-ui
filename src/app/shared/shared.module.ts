@@ -22,7 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { SearchPipe } from './custom_pipe/searchpipe';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NotifierModule, NotifierService } from "angular-notifier";
 import { FooterComponent } from './footer/footer.component';

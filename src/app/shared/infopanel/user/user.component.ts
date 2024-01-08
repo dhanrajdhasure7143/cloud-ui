@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppService, UserService } from 'src/app/_services';
 import Swal from 'sweetalert2';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap';
-import { element } from '@angular/core/src/render3';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 
 
