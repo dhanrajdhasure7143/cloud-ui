@@ -40,8 +40,7 @@
             ],
             "scripts": [
               "node_modules/intl-tel-input/build/js/intlTelInput.min.js"
-            ],
-            "es5BrowserSupport": true
+            ]
           },
           "configurations": {
             "production": {
