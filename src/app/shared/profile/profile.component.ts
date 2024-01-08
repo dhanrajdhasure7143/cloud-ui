@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
   @Input() public isnotification: boolean;
   @Input() public isvaultMangment:boolean;
   // @ViewChild('staticTabs') staticTabs: TabsetComponent;
-  @ViewChild('staticTabs',{static:false}) staticTabs: TabsetComponent;
+  @ViewChild('staticTabs') staticTabs: TabsetComponent;
   public model: User;
   public yearList:any;
   config = {

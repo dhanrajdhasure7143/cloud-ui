@@ -22,8 +22,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('password',{static:false}) password: ElementRef;
-  @ViewChild('rememberme',{static:false}) checkbox: ElementRef;
+  @ViewChild('password') password: ElementRef;
+  @ViewChild('rememberme') checkbox: ElementRef;
   loginForm: FormGroup;
   loading = false;
   submitted = false;

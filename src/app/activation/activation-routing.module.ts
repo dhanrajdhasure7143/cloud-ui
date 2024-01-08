@@ -22,7 +22,7 @@ const routes: Routes = [{
     component: AlertsComponent
   }, {
     path: 'payment',
-    loadChildren: './payment/payment.module#PaymentModule'
+    loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)
   }, {
     path: 'usermanagement',
     component: UsermanagementComponent

@@ -10,7 +10,7 @@ import { element } from 'protractor';
   styleUrls: ['./side-nav-bar.component.scss']
 })
 export class SideNavBarComponent implements OnInit {
-  @ViewChild(BsDropdownDirective,{static:false}) bsDropdown: BsDropdownDirective;
+  @ViewChild(BsDropdownDirective) bsDropdown: BsDropdownDirective;
   compIndex = 0;
   constructor(@Inject(ContentfulConfigService) private sharedconfig: ContentfulConfig) { }
 

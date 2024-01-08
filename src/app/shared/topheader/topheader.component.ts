@@ -41,7 +41,7 @@ export class TopheaderComponent implements OnInit {
   notificationscount: any;
   public stopnotificationsapicall:any
 
-  @ViewChild("toogleBtn",{static:false}) toogleBtn;
+  @ViewChild("toogleBtn") toogleBtn;
   logintype: string;
   isvaultMangment: boolean;
   customUserRole: any;

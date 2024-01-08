@@ -5,7 +5,7 @@ import { ContentfulService, ContentfulConfigService, ContentfulConfig } from '.'
 @NgModule()
 export class ContentfulModule {
 
-  static forRoot(config: ContentfulConfig): ModuleWithProviders {
+  static forRoot(config: ContentfulConfig): ModuleWithProviders<ContentfulModule> {
     return {
       ngModule: ContentfulModule,
       providers: [

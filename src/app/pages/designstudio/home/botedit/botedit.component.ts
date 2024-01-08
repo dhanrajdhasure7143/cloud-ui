@@ -18,7 +18,7 @@ export class BoteditComponent implements OnInit, AfterViewInit, DoCheck {
   public botName;
   public robotName;
   public bot;
-  @ViewChild(CanvasComponent,{static:false}) canvas: CanvasComponent;
+  @ViewChild(CanvasComponent) canvas: CanvasComponent;
   public robot = {};
   public robotChanges = {};
   public differ: any;

@@ -1,8 +1,10 @@
 import 'particles.js/particles';
 import * as particlesJS from 'particlesjs';
+import { Injectable } from "@angular/core";
 
 declare var particlesJS :any;
 
+@Injectable()
 export class Particles{
   getParticles(){
     particlesJS("particles-js", {

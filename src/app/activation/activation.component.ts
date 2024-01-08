@@ -12,7 +12,7 @@ import { SharedDataService } from '../_services/shared-data.service';
   styleUrls: ['./activation.component.scss']
 })
 export class ActivationComponent implements OnInit {
-  @ViewChild(BsDropdownDirective,{static: false}) bsdropdown: BsDropdownDirective;
+  @ViewChild(BsDropdownDirective) bsdropdown: BsDropdownDirective;
   @ViewChildren(BsDropdownDirective) bsDropdown: QueryList<BsDropdownDirective>;
   compIndex = 0;
   dropdown;

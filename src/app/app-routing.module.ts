@@ -9,25 +9,25 @@ import { ApprovalsComponent } from './approvals/approvals.component';
 
 const routes: Routes = [{
   path: 'activation',
-  loadChildren: './activation/activation.module#ActivationModule',
+  loadChildren: () => import('./activation/activation.module').then(m => m.ActivationModule),
   canActivate: [AuthGuard]
 },
 {
   path: 'shared',
-  loadChildren: './shared/shared.module#SharedModule',
+  loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule),
 }, 
 {
   path: 'home',
-  loadChildren: './home/home.module#HomeModule'
+  loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
 }, 
 {
   path: 'user',
-  loadChildren: './user/user.module#UserModule',
+  loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   canActivate: [LoginGuard]
 }, 
 {
   path:'superadmin',
-  loadChildren:'./superadmin/superadmin.module#SuperadminModule',
+  loadChildren:() => import('./superadmin/superadmin.module').then(m => m.SuperadminModule),
 },{
   path: '404',
   component: ErrorPageComponent
