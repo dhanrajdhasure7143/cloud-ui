@@ -76,8 +76,7 @@ export const contentfulConfig: ContentfulConfig = {
     { provide: APP_CONFIG, useValue: AppConfig },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     BackendURLProvider,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-      DeviceDetectorService
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
 ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

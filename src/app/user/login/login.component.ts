@@ -8,7 +8,7 @@ import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
-import { Particles } from '../../_models/particlesjs';
+// import { Particles } from '../../_models/particlesjs';
 import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private sharedData: SharedDataService,
     public userService: UserService,
-    private particles :Particles,
+    // private particles :Particles,
     private profileService:ProfileService,
     private crypto:CryptoService,
     private spinner:NgxSpinnerService
@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
   // }
 
     //this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
-  this.particles.getParticles();
+  // this.particles.getParticles();
 
     
 // if(!this.twoFactorAuthConButton){
