@@ -17,6 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "crypto-js",
+              "rxjs",
+              "lodash",
+              "raf",
+              "@babel/runtime",
+              "chart.js"
+            ],
             "aot": true,
             "outputPath": "dist/aiotal",
             "index": "src/index.html",
