@@ -1,17 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap');
-@import "~angular-notifier/styles";
+// @import "~angular-notifier/styles";
+@import "node_modules/angular-notifier/styles";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 // regular style toast
-@import '~ngx-toastr/toastr';
+@import 'ngx-toastr/toastr';
 // or
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~ngx-toastr/toastr-bs4-alert';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+@import 'ngx-toastr/toastr-bs4-alert';
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 // @import '~ngx-toastr/toastr-bs4-alert';
