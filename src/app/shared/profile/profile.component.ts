@@ -415,7 +415,7 @@ export class ProfileComponent implements OnInit {
   this.getListOfEmailTemplates();
     this.getAllPermissions();
     this.getListOfVaultconfigs();
-    this.yearList=yearslist;
+    // this.yearList=yearslist;
       this.getAllNotifications();
     this.profileservice.getUserApplications().subscribe(resp => {  
       this.apps = resp;
