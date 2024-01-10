@@ -6,7 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { subtract } from 'ngx-bootstrap/chronos';
 import Swal from 'sweetalert2';
 import { ProfileService } from 'src/app/_services/profile.service';
-import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
+// import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { CryptoService } from 'src/app/_services/crypto.service';
