@@ -16,6 +16,6 @@ export const environment = {
    rpaendpoint:"https://ezflow.epsoftinc.com/wfrpa",
    piendpoint:"https://ezflow.epsoftinc.com/prcintel",
    asquareproductendpoint: 'https://ezflowasquare.epsoftinc.com',
-   isNewDesignEnabled : true
-
+   isNewDesignEnabled : true,
+   isSubscrptionEnabled : false
 };
