@@ -51,7 +51,7 @@ export class BoteditComponent implements OnInit, AfterViewInit, DoCheck {
   clearCanvas() {
     Swal.fire({
       title: 'Are you sure want to clear all the changes?',
-      type: 'warning',
+      icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

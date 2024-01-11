@@ -54,7 +54,7 @@ export class NewpasswordComponent implements OnInit {
         Swal.fire({
           title: 'Error',
             text: `Reset password token expired!!`,
-            type: 'error',
+            icon: 'error',
             
                   
         }).then(()=>{
@@ -92,7 +92,7 @@ export class NewpasswordComponent implements OnInit {
         Swal.fire({
           title: 'Success',
             text: `Your password reset is successful !`,
-            type: 'success',
+            icon: 'success',
             
                   
         }).then(()=>{
@@ -102,7 +102,7 @@ export class NewpasswordComponent implements OnInit {
       }else {
         this.spinner.hide();
         Swal.fire({
-          type: 'error',
+          icon: 'error',
           title: "Error",
           text: res.errorMessage+' !',
          });

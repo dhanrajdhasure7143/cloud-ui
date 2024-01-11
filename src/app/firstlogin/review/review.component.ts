@@ -199,7 +199,7 @@ export class ReviewComponent implements OnInit {
         Swal.fire({
           title: 'Error',
           text: `Invalid Card Details!!`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: false
 
@@ -242,7 +242,7 @@ export class ReviewComponent implements OnInit {
         Swal.fire({
           title: 'Error',
           text: `Invalid Card Details!!`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: false
 
@@ -267,7 +267,7 @@ export class ReviewComponent implements OnInit {
             Swal.fire({
               title: 'Successful',
               text: `Coupon applied successfully!!`,
-              type: 'success',
+              icon: 'success',
               showCancelButton: false,
               allowOutsideClick: false
             })
@@ -280,7 +280,7 @@ export class ReviewComponent implements OnInit {
             Swal.fire({
               title: 'Error',
               text: `Invalid Coupon Code!!`,
-              type: 'error',
+              icon: 'error',
               showCancelButton: false,
               allowOutsideClick: false
             })
@@ -324,7 +324,7 @@ export class ReviewComponent implements OnInit {
     Swal.fire({
       title: 'Success',
       text: `Registration completed successfully!`,
-      type: 'success',
+      icon: 'success',
       showCancelButton: false,
       allowOutsideClick: false
     }).then((result) => {
@@ -391,7 +391,7 @@ export class ReviewComponent implements OnInit {
         Swal.fire({
           title: 'Error!',
           text: "Uploaded file is too large",
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -400,7 +400,7 @@ export class ReviewComponent implements OnInit {
         Swal.fire({
           title: 'Error!',
           text: "Please upload png or jpg image",
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -409,7 +409,7 @@ export class ReviewComponent implements OnInit {
         Swal.fire({
           title: 'Error!',
           text: "User already registered. Please try to login!!",
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         }).then((result) => {
@@ -520,7 +520,7 @@ export class ReviewComponent implements OnInit {
                     Swal.fire({
                       title: 'Error',
                       text: `Invalid Card Details!!`,
-                      type: 'error',
+                      icon: 'error',
                       showCancelButton: false,
                       allowOutsideClick: false
 
@@ -539,7 +539,7 @@ export class ReviewComponent implements OnInit {
                           Swal.fire({
                             title: 'Error',
                             text: `Please Register Again!!`,
-                            type: 'error',
+                            icon: 'error',
                             showCancelButton: false,
                             allowOutsideClick: true
                           }).then((result) => {
@@ -560,7 +560,7 @@ export class ReviewComponent implements OnInit {
                       Swal.fire({
                         title: 'Success',
                         text: `Subscription Completed Successfully!!`,
-                        type: 'success',
+                        icon: 'success',
                         showCancelButton: false,
                         allowOutsideClick: true
                       }).then((result) => {
@@ -576,7 +576,7 @@ export class ReviewComponent implements OnInit {
                             Swal.fire({
                               title: 'Error',
                               text: `Unable to register due to issue with the given card details. Please try again !!`,
-                              type: 'error',
+                              icon: 'error',
                               showCancelButton: false,
                               allowOutsideClick: false
                             }).then((result) => {
@@ -590,7 +590,7 @@ export class ReviewComponent implements OnInit {
                                   Swal.fire({
                                     title: 'Error',
                                     text: `Please Register Again!!`,
-                                    type: 'error',
+                                    icon: 'error',
                                     showCancelButton: false,
                                     allowOutsideClick: true
                                   }).then((result) => {

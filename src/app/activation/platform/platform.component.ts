@@ -236,7 +236,7 @@ export class PlatformComponent implements OnInit {
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,
-    //   type: 'info',
+    //   icon: 'info',
     //   showCancelButton: false,
     //   allowOutsideClick: false
     // })

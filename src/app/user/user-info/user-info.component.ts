@@ -101,7 +101,7 @@ export class UserInfoComponent implements OnInit {
         Swal.fire({
           title: "Success",
           text: "User Details Updated Successfully!!",
-          type: 'success',
+          icon: 'success',
         }).then(()=>{
          // localStorage.setItem('ProfileuserId',this.userId)
           this.authenticationService.userDetails(this.userId).subscribe(data => this.checkSuccessCallback(data));

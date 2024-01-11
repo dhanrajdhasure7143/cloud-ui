@@ -46,7 +46,7 @@ export class ForgotpasswordComponent implements OnInit {
           Swal.fire({
             title: 'Success',
             text: `Reset password link has been sent to your email successfully!`,
-            type: 'success',
+            icon: 'success',
             
            
             // showConfirmButton: true,
@@ -57,7 +57,7 @@ export class ForgotpasswordComponent implements OnInit {
         } else {
           this.spinner.hide();
           Swal.fire({
-            type: 'error',
+            icon: 'error',
             title:"Error",
             text: "User Not Found!!"
             

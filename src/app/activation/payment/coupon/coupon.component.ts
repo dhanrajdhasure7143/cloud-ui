@@ -52,7 +52,7 @@ export class CouponComponent implements OnInit {
       Swal.fire({
         title: 'Successful',
         text: `Coupon creation successful...`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
       }) 

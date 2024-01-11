@@ -231,7 +231,7 @@ export class FirstloginComponent implements OnInit {
         Swal.fire({
           title: 'Error',
           text: `This email has been already registered with us. Please register with different email.`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: false
         }).then((result) => {
@@ -348,7 +348,7 @@ export class FirstloginComponent implements OnInit {
         Swal.fire({
           title: 'Error!',
           text: "Uploaded file is too large",
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -358,7 +358,7 @@ export class FirstloginComponent implements OnInit {
         Swal.fire({
           title: 'Error!',
           text: "Please upload png or jpg image",
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -367,7 +367,7 @@ export class FirstloginComponent implements OnInit {
       Swal.fire({
         title: 'Success',
         text: `Registration completed successfully!`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
       }).then((result) => {
@@ -381,7 +381,7 @@ export class FirstloginComponent implements OnInit {
   }, err => {
       Swal.fire({
         title: 'Error!',
-        type: 'error',
+        icon: 'error',
         text: `${err.error.message} ! Please check your user name`,
         allowOutsideClick: false
       });

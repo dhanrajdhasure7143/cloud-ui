@@ -79,7 +79,7 @@ export class CreataccountComponent implements OnInit {
       Swal.fire({
         title: 'Success',
         text: `Account activation email resent successfully !!`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       }) 

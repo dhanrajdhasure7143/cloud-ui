@@ -107,7 +107,7 @@ export class UserComponent implements OnInit {
             Swal.fire({
               title: 'NOT_FOUND',
               text: "Subscription plan not found for tenat for the product asimov",
-              type: 'error',
+              icon: 'error',
               showCancelButton: false,
               allowOutsideClick: false
             }).then(function () {
@@ -135,7 +135,7 @@ export class UserComponent implements OnInit {
       Swal.fire({
         title: 'Error',
         text: `You already reached to maximum invitation count...!!`,
-        type: 'error',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: false
       }).then(function () {
@@ -156,7 +156,7 @@ export class UserComponent implements OnInit {
       Swal.fire({
         title: 'Error',
         text: `You don't have admin role for this product to invite...!!`,
-        type: 'error',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: false
       }).then(function () {
@@ -254,7 +254,7 @@ export class UserComponent implements OnInit {
        Swal.fire({
         title: 'Success',
         text: `Invitation email sent successfully!!`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
       }).then((result) => {
@@ -265,7 +265,7 @@ export class UserComponent implements OnInit {
     }, err => {
       Swal.fire({
         title: 'Error!',
-        type: 'error',
+        icon: 'error',
         text: `User already exist`,
         allowOutsideClick: false
       });

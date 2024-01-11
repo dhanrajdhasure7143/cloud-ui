@@ -1480,7 +1480,7 @@ cancelVaultconfig(){
         title: 'Confirmation',
         // text: `Updated failed, Please try again.`,
         html: '<h4> Do you want to set this card as default?</h4> ',
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: true,
         allowOutsideClick: true,
       }).then((result) => {
@@ -1491,7 +1491,7 @@ cancelVaultconfig(){
               title: 'Success',
               text: "Default card is set successfully.",
               // Default card is set successfully!!
-              type: 'success',
+              icon: 'success',
               showCancelButton: false,
               allowOutsideClick: true
             })
@@ -1500,7 +1500,7 @@ cancelVaultconfig(){
             Swal.fire({
               title: 'Error!',
               text: 'Please try again.',
-              type: 'error',
+              icon: 'error',
               showCancelButton: false,
               allowOutsideClick: true
             })
@@ -1610,7 +1610,7 @@ cancelVaultconfig(){
     Swal.fire({
       title: 'Warning',
       text: "No subscriptions found for the product!",
-      type: 'error',
+      icon: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
@@ -1621,7 +1621,7 @@ cancelVaultconfig(){
     Swal.fire({
       title: 'Warning',
       text: "No subscriptions found for the product!",
-      type: 'error',
+      icon: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
@@ -1636,7 +1636,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Success',
         text: "Invite mail sent successfully!",
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1655,7 +1655,7 @@ cancelVaultconfig(){
         Swal.fire({
           title: 'Error',
           text:this.data.body.errorMessage,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -1673,7 +1673,7 @@ cancelVaultconfig(){
         Swal.fire({
           title: 'Error',
           text:this.data.body.errorMessage,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -1692,7 +1692,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Error',
         text:this.data.body.errorMessage,
-        type: 'error',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1711,7 +1711,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Error',
         text:this.data.body.errorMessage,
-        type: 'error',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1729,7 +1729,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Warning',
         text: this.data.body.errorMessage,
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1747,7 +1747,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Warning',
         text: this.data.body.message,
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1766,7 +1766,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Warning',
         text: "You are trying to invite invalid Domain/Product!",
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1785,7 +1785,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Warning',
         text: this.data.body.message,
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1805,7 +1805,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Error',
         text: this.data.body.message,
-        type: 'error',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1825,7 +1825,7 @@ cancelVaultconfig(){
       Swal.fire({
         title: 'Error',
         text: `Unable to send invitation link !!`,
-        type: 'error',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -1844,7 +1844,7 @@ cancelVaultconfig(){
     Swal.fire({
       title: 'Error',
       text: "Inivation not sent due to technical issue.",
-      type: 'error',
+      icon: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
@@ -1864,7 +1864,7 @@ cancelVaultconfig(){
     Swal.fire({
       title: 'Error',
       text: `Inivation not sent due to technical issue.`,
-      type: 'error',
+      icon: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
@@ -1953,7 +1953,7 @@ form.resetForm();
           Swal.fire({
             title: 'Success',
             text: `Role deleted successfully!`,
-            type: 'success',
+            icon: 'success',
             showCancelButton: false,
             allowOutsideClick: true
           }) 
@@ -1973,7 +1973,7 @@ deleteUserYes(user,index){
     Swal.fire({
       title: 'Success',
       text: resp.message,
-      type: 'success',
+      icon: 'success',
       showCancelButton: false,
       allowOutsideClick: true
     })
@@ -1986,7 +1986,7 @@ deleteUserYes(user,index){
     Swal.fire({
       title: 'Error',
       text: `User Not Found`,
-      type: 'error',
+      icon: 'error',
       showCancelButton: false,
       allowOutsideClick: true
     })
@@ -2134,7 +2134,7 @@ couponDelYes(coupon,index){
         Swal.fire({ 
           title: 'Success',
           text: `Updated successfully !!`,
-          type: 'success',
+          icon: 'success',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -2145,7 +2145,7 @@ couponDelYes(coupon,index){
         Swal.fire({
           title: 'Error',
           text: `Unable to update the role !!`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -2178,7 +2178,7 @@ couponDelYes(coupon,index){
         Swal.fire({
           title: 'Success',
           text: `Role updated successfully!`,
-          type: 'success',
+          icon: 'success',
           showCancelButton: false,
           allowOutsideClick: true
         }) 
@@ -2273,7 +2273,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       Swal.fire({
         title: 'Success',
         text: `Role created successfully!`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       }) 
@@ -2283,7 +2283,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
       Swal.fire({
         title: 'Error',
         text: `Role already exists!`,
-        type: 'info',
+        icon: 'info',
         showCancelButton: false,
         allowOutsideClick: true
       }) 

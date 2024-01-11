@@ -64,7 +64,7 @@
     "particlesjs": "^2.2.3",
     "primeng": "^14.0.0",
     "rxjs": "~6.6.7",
-    "sweetalert2": "^8.18.0",
+    "sweetalert2": "^10.16.11",
     "tslib": "^2.0.0",
     "underscore": "^1.13.6",
     "zipcodes": "^8.0.0",

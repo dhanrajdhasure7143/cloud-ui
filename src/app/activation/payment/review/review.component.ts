@@ -144,7 +144,7 @@ public paymentToken:any;
         Swal.fire({
           title: 'Error',
           text: `Invalid Card Details!!`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: false
           
@@ -202,7 +202,7 @@ this.sharedDataService.setFreetrialavailed(false);
         Swal.fire({
           title: 'Error',
           text: `Invalid Card Details!!`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: false
           
@@ -227,7 +227,7 @@ this.sharedDataService.setFreetrialavailed(false);
         Swal.fire({
           title: 'Successful',
           text: `Coupon applied successfully!!`,
-          type: 'success',
+          icon: 'success',
           showCancelButton: false,
           allowOutsideClick: false
         })
@@ -240,7 +240,7 @@ this.sharedDataService.setFreetrialavailed(false);
         Swal.fire({
           title: 'Error',
           text: `Invalid Coupon Code!!`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: false
         })

@@ -110,7 +110,7 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
         Swal.fire({
           title: 'Success',
           text: 'Your Free Trail has been started successfully for '+localStorage.getItem("selectedproductId")+' product',
-          type: 'success',
+          icon: 'success',
           showCancelButton: false,
           allowOutsideClick: true
         }) 
@@ -128,7 +128,7 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
         Swal.fire({
           title: 'Error!',
           text: `Please try again.`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -159,7 +159,7 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
       Swal.fire({
         title: 'Thank you!',
         text: `Soon our person from Sales will contact you.`,
-        type: 'info',
+        icon: 'info',
         showCancelButton: false,
         allowOutsideClick: true,
       })
@@ -167,7 +167,7 @@ this.productlistservice.getFreeTierInfo(localStorage.getItem("selectedproductId"
       Swal.fire({
         title: 'Oops!',
         text: `Internal server error, Please try again.`,
-        type: 'error',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true,
       })

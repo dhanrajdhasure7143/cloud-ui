@@ -103,7 +103,7 @@ export class UsermanagementComponent implements OnInit {
             this.modifyModel.userId = this.selectedRowUserId;
         } else {
             Swal.fire({
-                type: 'info',
+                icon: 'info',
                 text: 'Please select a record'
             });
         }
@@ -118,7 +118,7 @@ export class UsermanagementComponent implements OnInit {
         this.isRoleStatus = data.message;
         if (this.isRoleStatus === 'Successfully updated user in OPA') {
             Swal.fire({
-                type: 'success',
+                icon: 'success',
                 text: 'Successfully Updated'
             });
             this.isAvailable = true;
@@ -126,7 +126,7 @@ export class UsermanagementComponent implements OnInit {
             this.reset();
         } else {
             Swal.fire({
-                type: 'error',
+                icon: 'error',
                 text: 'Failed to Updated'
             });
             this.isAvailable = false;

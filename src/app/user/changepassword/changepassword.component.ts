@@ -53,7 +53,7 @@ export class ChangepasswordComponent implements OnInit {
           Swal.fire({
             width: "400px",
             position: 'center',
-            type: "success",
+            icon: "success",
             title: res.message,
             showConfirmButton: false,
             timer: 2000
@@ -67,7 +67,7 @@ export class ChangepasswordComponent implements OnInit {
           }else{
             Swal.fire({
               width:"400px",
-              type: 'error',
+              icon: 'error',
               text: res.errorMessage,
              });
           }
@@ -75,7 +75,7 @@ export class ChangepasswordComponent implements OnInit {
             Swal.fire({
               title: 'Error',
               text: `Password cannot be same as your last 5 passwords!!`,
-              type: 'error',
+              icon: 'error',
               showCancelButton: false,
               allowOutsideClick: true
             });
