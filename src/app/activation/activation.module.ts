@@ -15,7 +15,6 @@ import { FormsModule } from '@angular/forms';
 import { UsermanagementService } from '../_services/usermanagement.service';
 import { AlertsComponent } from './alerts/alerts.component';
 // import { Cellrender } from './usermanagement/cellrender';
-import { Particles } from '../_models/particlesjs';
 import { MetricsComponent , Slicedate } from './metrics/metrics.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -39,6 +38,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
   ],
-  providers:[Particles]
+  providers:[]
 })
 export class ActivationModule { }

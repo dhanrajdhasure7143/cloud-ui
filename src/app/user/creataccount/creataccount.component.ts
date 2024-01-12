@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-// import { Particles } from '../../_models/particlesjs';
 import { LoginService } from '../_services/login.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CryptoService } from 'src/app/_services/crypto.service';
@@ -28,7 +27,6 @@ export class CreataccountComponent implements OnInit {
   private user: User;
   modalRef: BsModalRef;
     constructor(
-      // private particles :Particles,
                 private loginservice:LoginService,
                 private modalService: BsModalService,
                 private cryptoService: CryptoService,
@@ -36,7 +34,6 @@ export class CreataccountComponent implements OnInit {
                 ) { }
 
   ngOnInit() {
-    // this.particles.getParticles();
   }
   onchangechekbox(){
     this.isdisable=!this.isagree;

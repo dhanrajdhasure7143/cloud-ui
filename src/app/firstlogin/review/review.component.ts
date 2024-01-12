@@ -93,7 +93,6 @@ export class ReviewComponent implements OnInit {
     @Inject(APP_CONFIG) private appconfig) { }
 
   ngOnInit() {
-    // this.particles.getParticles();
     this.EnteredCarddetails();
     this.planselected = localStorage.getItem('selectedplan')
     if (this.planselected == 'Standard') {

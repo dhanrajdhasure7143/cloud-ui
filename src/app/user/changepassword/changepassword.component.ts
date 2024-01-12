@@ -3,7 +3,6 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2';
-import { Particles } from '../../_models/particlesjs'
 import { NgForm } from '@angular/forms';
 import { AppService } from 'src/app/_services';
 import { CryptoService } from 'src/app/_services/crypto.service';
@@ -28,12 +27,10 @@ export class ChangepasswordComponent implements OnInit {
               private route: ActivatedRoute, 
               private profileservice: ProfileService,
               private appser: AppService, 
-              private particles :Particles,
               private cryptoService :CryptoService
   ) { }
 
   ngOnInit() {
-    this.particles.getParticles();
     this.localstorageuserid = localStorage.getItem("Passwordvalidite");  
   }
 

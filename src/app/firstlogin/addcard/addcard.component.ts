@@ -91,7 +91,6 @@ export class AddcardComponent implements OnInit {
     private paymentmode: ProfileService) { }
 
   ngOnInit() {
-   // this.particles.getParticles();
  
     this.planselected = localStorage.getItem('selectedplan')
     if(this.planselected=='Standard'){

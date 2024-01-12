@@ -9,7 +9,6 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { NewpasswordComponent } from './newpassword/newpassword.component';
 import { CompareValidatorDirective } from './shared/compare-validator.directive';
 import { SocialLoginComponent } from './social-login/social-login.component';
-import { Particles } from '../_models/particlesjs';
 import { CreataccountComponent } from './creataccount/creataccount.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SharedModule } from '../shared/shared.module';
@@ -100,6 +99,6 @@ import { ActiveComponent } from './active/active.component';
         MatTreeModule
     ],
     exports: [LoginComponent],
-    providers: [Particles]
+    providers: []
 })
 export class UserModule { }

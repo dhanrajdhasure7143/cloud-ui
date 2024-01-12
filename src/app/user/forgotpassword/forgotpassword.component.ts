@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { APP_CONFIG } from './../../app.config';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Particles } from '../../_models/particlesjs'
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({ templateUrl: 'forgotpassword.component.html',
@@ -21,12 +20,10 @@ export class ForgotpasswordComponent implements OnInit {
                       private router: Router,
                       private formBuilder: FormBuilder,  
                       private forgotpasswordser: ForgotpasswordService,
-                      private particles :Particles,
                       private spinner:NgxSpinnerService
                       ) { }
 
   ngOnInit() {
-    //this.particles.getParticles();
       this.emailForm = this.formBuilder.group({
           email: ['', [Validators.required, Validators.email]],
       });

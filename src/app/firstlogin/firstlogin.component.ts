@@ -117,7 +117,6 @@ export class FirstloginComponent implements OnInit {
       document.cookie = "card_enabled=true";
     }
     
-  //  this.particles.getParticles();
     this.getCountries();
     this.getAllDepartments();
 

@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Particles } from '../../_models/particlesjs'
 import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +17,7 @@ import { SharedDataService } from 'src/app/_services/shared-data.service';
 export class UserInfoComponent implements OnInit {
 
   constructor( @Inject(APP_CONFIG) private config,private router: Router,
-    private formBuilder: FormBuilder,private particles :Particles,private crypto:CryptoService,
+    private formBuilder: FormBuilder,private crypto:CryptoService,
     private spinner:NgxSpinnerService,private profileService:ProfileService, private api:AppService,
     private authenticationService:AuthenticationService,private sharedData: SharedDataService) { }
 
@@ -33,7 +32,6 @@ export class UserInfoComponent implements OnInit {
   hide:boolean = false;
   isShown : boolean;
   ngOnInit() {
-    this.particles.getParticles();
     // document.cookie = "old_ux=false";
     // if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
     //   document.cookie = "new_reg_flow=true";
