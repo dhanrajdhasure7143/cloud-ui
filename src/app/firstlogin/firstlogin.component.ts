@@ -17,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthenticationService } from '../_services';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-firstlogin',
@@ -113,7 +114,7 @@ export class FirstloginComponent implements OnInit {
      }
 
   ngOnInit() {
-    document.cookie = "card_enabled=false";
+    document.cookie = "card_enabled="+environment.isSubscrptionEnabled;
     if(this.getCookie("card_enabled")!="false"){
       document.cookie = "card_enabled=true";
     }
