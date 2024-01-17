@@ -22,6 +22,9 @@ export class ChangepasswordComponent implements OnInit {
   public confmshow:boolean=true;
   public eyeshow:boolean = true;
   public localstoragepassword: any;
+  public hide:boolean = false;
+  public hide1:boolean = false;
+  public hide2:boolean = false;
   constructor(
     private router: Router, 
               private route: ActivatedRoute, 
