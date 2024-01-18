@@ -42,7 +42,7 @@
                       <mat-form-field appearance="outline" style="padding:0px 35px !important;">
                         <mat-label>Email</mat-label>
                       <input type="text" matInput name="email" #email="ngModel" [(ngModel)]="emailId"
-                      pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Enter Email" (keypress)="inputlettersEmail($event)" 
+                      pattern="^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$" required email placeholder="Enter Email" (keypress)="inputlettersEmail($event)" 
                         [ngClass]="{ 'is-invalid': ((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) }" />
                       </mat-form-field>
                       <span  style="padding:0px 35px !important;" *ngIf="((email.invalid && creataccount.submitted) || (email.errors && email.touched) ) "
