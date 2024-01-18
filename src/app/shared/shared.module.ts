@@ -22,7 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { SearchPipe } from './custom_pipe/searchpipe';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NotifierModule, NotifierService } from "angular-notifier";
 import { FooterComponent } from './footer/footer.component';
@@ -38,45 +38,44 @@ import { NewstepselectionComponent } from './newstepselection/newstepselection.c
 
 
 @NgModule({
-  declarations: [SideNavBarComponent,
-      HeaderComponent,
-      ContentComponent,
-      DynamicCompHostDirective,
-      AccordionComponent,
-      AccordionGroupComponent,
-      InfopanelComponent,
-      SystemComponent,
-      UserComponent,
-      NotificationComponent,
-      TopheaderComponent,
-      BodyComponent,
-      TrailheaderComponent,
-      StepselectionComponent,
-      ProfileComponent,
-      SearchPipe,
-      FooterComponent,
-      TermsconditionsComponent,
-      PrivacypolicyComponent,
-      CompareValidatorDirective,
-      NewstepselectionComponent
-      ],
-  imports: [
-    CommonModule,
-    SharedRoutingModule,
-    BsDropdownModule.forRoot(),
-    PortalModule,
-    FormsModule,
-    Ng2TelInputModule,
-    ModalModule.forRoot(),
-    TabsModule.forRoot(),
-    NotifierModule,
-    NgSelectModule,
-    NgxPaginationModule,
-    NgxSpinnerModule,
-    Ng2SearchPipeModule
-  ],
-  providers: [NotifierService],
-  exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent,FooterComponent,NewstepselectionComponent,TermsconditionsComponent,PrivacypolicyComponent],
-  entryComponents: [SideNavBarComponent, HeaderComponent, ContentComponent, UserComponent, SystemComponent, NotificationComponent, TopheaderComponent,FooterComponent]
+    declarations: [SideNavBarComponent,
+        HeaderComponent,
+        ContentComponent,
+        DynamicCompHostDirective,
+        AccordionComponent,
+        AccordionGroupComponent,
+        InfopanelComponent,
+        SystemComponent,
+        UserComponent,
+        NotificationComponent,
+        TopheaderComponent,
+        BodyComponent,
+        TrailheaderComponent,
+        StepselectionComponent,
+        ProfileComponent,
+        SearchPipe,
+        FooterComponent,
+        TermsconditionsComponent,
+        PrivacypolicyComponent,
+        CompareValidatorDirective,
+        NewstepselectionComponent
+    ],
+    imports: [
+        CommonModule,
+        SharedRoutingModule,
+        BsDropdownModule.forRoot(),
+        PortalModule,
+        FormsModule,
+        Ng2TelInputModule,
+        ModalModule.forRoot(),
+        TabsModule.forRoot(),
+        NotifierModule,
+        NgSelectModule,
+        NgxPaginationModule,
+        NgxSpinnerModule,
+        Ng2SearchPipeModule
+    ],
+    providers: [NotifierService],
+    exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent, FooterComponent, NewstepselectionComponent, TermsconditionsComponent, PrivacypolicyComponent]
 })
 export class SharedModule { }

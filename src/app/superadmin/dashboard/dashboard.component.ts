@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
       if(res){
         Swal.fire({
-          // icon: 'success',
+          icon: 'success',
           title: "Success",
           text: "Subscription Details Updated Successfully !!",
           heightAuto: false,
@@ -145,7 +145,7 @@ export class DashboardComponent implements OnInit {
       (err) => {
         this.spinner.hide();
         Swal.fire({
-          // icon: "error",
+          icon: "error",
           title: "Oops...",
           text: "Something went wrong!",
           heightAuto: false,

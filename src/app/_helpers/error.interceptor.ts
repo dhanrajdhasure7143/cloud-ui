@@ -75,7 +75,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     Swal.fire({
       title: 'Error',
       text: "Method Not Allowed.",
-      type: 'error',
+      icon: 'error',
       showCancelButton: false,
       allowOutsideClick: false,
       confirmButtonColor: '#3085d6',

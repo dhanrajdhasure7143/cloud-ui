@@ -1,14 +1,12 @@
 import { ContentfulConfig } from './../../contentful/models/contentful-config';
 import { ContentfulConfigService } from './../../contentful/services/contentful-config.service';
 import { Component, OnInit, ViewChild, ViewChildren, QueryList, Inject, AfterViewInit, HostListener } from '@angular/core';
-import { BsDropdownDirective } from 'ngx-bootstrap';
+import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/_services';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { subscribeOn } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SELECT_VALUE_ACCESSOR } from '@angular/forms/src/directives/select_control_value_accessor';
-import { containsElement } from '@angular/animations/browser/src/render/shared';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ProfileComponent } from '../profile/profile.component';

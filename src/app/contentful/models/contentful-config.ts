@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { BsDropdownDirective } from 'ngx-bootstrap';
+import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 
 export interface ContentfulConfig {
   userSharedData: any;

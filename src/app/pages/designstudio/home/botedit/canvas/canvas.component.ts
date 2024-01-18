@@ -3,7 +3,7 @@ import { jsPlumb } from 'jsplumb';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { ContentfulConfigService, ContentfulConfig } from '../../../../../contentful';
 import * as _ from 'underscore';
-import { PopoverDirective } from 'ngx-bootstrap';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { Observable, of } from 'rxjs';
 
 const bottom = {

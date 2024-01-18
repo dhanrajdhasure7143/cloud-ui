@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import { UserService } from 'src/app/_services';
-import { Particles } from 'src/app/_models/particlesjs';
 
 import Swal from 'sweetalert2';
 import { APP_CONFIG } from 'src/app/app.config';
@@ -44,13 +43,11 @@ export class PlatformComponent implements OnInit {
     private productlistservice:ProductlistService,
     public userService: UserService,
     private profileservice: ProfileService,
-    private particles :Particles,
     private crypto:CryptoService,
     @Inject(APP_CONFIG) private config,
 ) { }
   ngOnInit() {
     
-    this.particles.getParticles();
     // if(this.getCookie("new_reg_flow")!="false" || this.getCookie("new_reg_flow")==undefined){
     //   document.cookie = "new_reg_flow=true";
     // }
@@ -236,7 +233,7 @@ export class PlatformComponent implements OnInit {
     // Swal.fire({
     //   title: 'Info!',
     //   text: `Coming soon...`,
-    //   type: 'info',
+    //   icon: 'info',
     //   showCancelButton: false,
     //   allowOutsideClick: false
     // })

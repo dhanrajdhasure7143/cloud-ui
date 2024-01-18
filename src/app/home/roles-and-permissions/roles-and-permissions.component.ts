@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/_services';
-import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-roles-and-permissions',

@@ -33,7 +33,7 @@ export class AlertsComponent implements OnInit {
   }
   successCallbackSubmit(data) {
     Swal.fire({
-      type: 'success',
+      icon: 'success',
       text: 'Successfully Updated'
        });
   }

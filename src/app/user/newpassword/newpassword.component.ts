@@ -4,7 +4,6 @@ import { APP_CONFIG } from './../../app.config';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2';
-import { Particles } from '../../_models/particlesjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CryptoService } from '../../_services/crypto.service';
 
@@ -28,12 +27,10 @@ export class NewpasswordComponent implements OnInit {
   constructor(private router: Router, 
               private route: ActivatedRoute, 
               private newpasswordServ: NewpasswordService,
-              private particles :Particles,
               private spinner:NgxSpinnerService,
               private cryptoService: CryptoService) { }
 
   ngOnInit() {
-   // this.particles.getParticles();
     this.route.queryParams.subscribe(params => {
      
       let token = params['token']
@@ -54,7 +51,7 @@ export class NewpasswordComponent implements OnInit {
         Swal.fire({
           title: 'Error',
             text: `Reset password token expired!!`,
-            type: 'error',
+            icon: 'error',
             
                   
         }).then(()=>{
@@ -92,7 +89,7 @@ export class NewpasswordComponent implements OnInit {
         Swal.fire({
           title: 'Success',
             text: `Your password reset is successful !`,
-            type: 'success',
+            icon: 'success',
             
                   
         }).then(()=>{
@@ -102,7 +99,7 @@ export class NewpasswordComponent implements OnInit {
       }else {
         this.spinner.hide();
         Swal.fire({
-          type: 'error',
+          icon: 'error',
           title: "Error",
           text: res.errorMessage+' !',
          });

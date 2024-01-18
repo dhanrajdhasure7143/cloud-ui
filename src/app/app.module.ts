@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import 'hammerjs';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
@@ -14,12 +13,10 @@ import { ContentfulConfig } from './contentful';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 //import { BotGridModule } from 'bot-grid';
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ValidateComponent } from './validate/validate.component';
-import { BsModalService } from 'ngx-bootstrap';
 
 import { SuperadminModule } from './superadmin/superadmin.module';
-import { DeviceDetectorModule } from 'ngx-device-detector';
+import { DeviceDetectorModule, DeviceDetectorService } from 'ngx-device-detector';
 import { UserIdleModule } from 'angular-user-idle';
 import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -68,8 +65,7 @@ export const contentfulConfig: ContentfulConfig = {
     SuperadminModule,
     PopoverModule.forRoot(),
     //BotGridModule,
-    Ng4LoadingSpinnerModule.forRoot(),
-    DeviceDetectorModule,
+    DeviceDetectorModule.forRoot(),
     UserIdleModule.forRoot({idle: 7200, timeout: 1, ping: 1740}),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
@@ -80,8 +76,8 @@ export const contentfulConfig: ContentfulConfig = {
     { provide: APP_CONFIG, useValue: AppConfig },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     BackendURLProvider,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    BsModalService],
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

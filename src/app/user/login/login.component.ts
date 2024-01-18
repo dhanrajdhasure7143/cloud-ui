@@ -8,7 +8,6 @@ import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
-import { Particles } from '../../_models/particlesjs';
 import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
@@ -52,7 +51,6 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private sharedData: SharedDataService,
     public userService: UserService,
-    private particles :Particles,
     private profileService:ProfileService,
     private crypto:CryptoService,
     private spinner:NgxSpinnerService
@@ -86,7 +84,6 @@ export class LoginComponent implements OnInit {
   // }
 
     //this.twoFactorAuthenticationEnabled = this.config.isTwoFactorAuthenticationEnabled;
-  this.particles.getParticles();
 
     
 // if(!this.twoFactorAuthConButton){
@@ -133,7 +130,7 @@ export class LoginComponent implements OnInit {
           Swal.fire({
             title: 'Success!',
             text: `OTP has been sent to your registered Email.`,
-            type: 'success',
+            icon: 'success',
             showCancelButton: false,
             allowOutsideClick: true
           })
@@ -143,7 +140,7 @@ export class LoginComponent implements OnInit {
           Swal.fire({
             title: 'Success!',
             text: `OTP has been sent to your registered Mobile Number.`,
-            type: 'success',
+            icon: 'success',
             showCancelButton: false,
             allowOutsideClick: true
           })
@@ -152,7 +149,7 @@ export class LoginComponent implements OnInit {
       Swal.fire({
         title: 'Success!',
         text: `OTP has been sent to your registered Email and Mobile number.`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
@@ -202,7 +199,7 @@ export class LoginComponent implements OnInit {
           Swal.fire({
             width: '400px',
             text: data.message, 
-            type: 'error',
+            icon: 'error',
             showCancelButton: false,
             confirmButtonColor: '#007bff',
             cancelButtonColor: '#d33',
@@ -267,7 +264,7 @@ export class LoginComponent implements OnInit {
         this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."
         this.spinner.hide()
         Swal.fire({
-          type: 'error',
+          icon: 'error',
           title:"Error",
           text: "Your account is temporarily locked for 3 hours!!"
         });

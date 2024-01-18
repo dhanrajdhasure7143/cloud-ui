@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 // import  countries  from './../../assets/jsons/countries.json';
 import { Country, State, City }  from 'country-state-city';
-import { Logger } from 'ag-grid-community';
 import * as $ from 'jquery';
 import { NgForm } from '@angular/forms';
 import { mergeMapTo } from 'rxjs/operators';
@@ -119,7 +118,6 @@ export class FirstloginComponent implements OnInit {
       document.cookie = "card_enabled=true";
     }
     
-  //  this.particles.getParticles();
     this.getCountries();
     this.getAllDepartments();
 
@@ -233,7 +231,7 @@ export class FirstloginComponent implements OnInit {
         Swal.fire({
           title: 'Error',
           text: `This email has been already registered with us. Please register with different email.`,
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: false
         }).then((result) => {
@@ -350,7 +348,7 @@ export class FirstloginComponent implements OnInit {
         Swal.fire({
           title: 'Error!',
           text: "Uploaded file is too large",
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -360,7 +358,7 @@ export class FirstloginComponent implements OnInit {
         Swal.fire({
           title: 'Error!',
           text: "Please upload png or jpg image",
-          type: 'error',
+          icon: 'error',
           showCancelButton: false,
           allowOutsideClick: true
         })
@@ -369,7 +367,7 @@ export class FirstloginComponent implements OnInit {
       Swal.fire({
         title: 'Success',
         text: `Registration completed successfully!`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
       }).then((result) => {
@@ -383,7 +381,7 @@ export class FirstloginComponent implements OnInit {
   }, err => {
       Swal.fire({
         title: 'Error!',
-        type: 'error',
+        icon: 'error',
         text: `${err.error.message} ! Please check your user name`,
         allowOutsideClick: false
       });

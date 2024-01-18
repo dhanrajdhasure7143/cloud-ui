@@ -98,7 +98,7 @@ export class EditprofileComponent implements OnInit {
       Swal.fire({
         title: 'Success',
         text: `Update completed successfully!!`,
-        type: 'success',
+        icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
       }).then((result) => {

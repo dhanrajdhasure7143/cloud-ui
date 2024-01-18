@@ -3,7 +3,6 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2';
-import { Particles } from '../../_models/particlesjs'
 import { NgForm } from '@angular/forms';
 import { AppService } from 'src/app/_services';
 import { CryptoService } from 'src/app/_services/crypto.service';
@@ -23,17 +22,18 @@ export class ChangepasswordComponent implements OnInit {
   public confmshow:boolean=true;
   public eyeshow:boolean = true;
   public localstoragepassword: any;
+  public hide:boolean = false;
+  public hide1:boolean = false;
+  public hide2:boolean = false;
   constructor(
     private router: Router, 
               private route: ActivatedRoute, 
               private profileservice: ProfileService,
               private appser: AppService, 
-              private particles :Particles,
               private cryptoService :CryptoService
   ) { }
 
   ngOnInit() {
-    this.particles.getParticles();
     this.localstorageuserid = localStorage.getItem("Passwordvalidite");  
   }
 
@@ -53,7 +53,7 @@ export class ChangepasswordComponent implements OnInit {
           Swal.fire({
             width: "400px",
             position: 'center',
-            type: "success",
+            icon: "success",
             title: res.message,
             showConfirmButton: false,
             timer: 2000
@@ -67,7 +67,7 @@ export class ChangepasswordComponent implements OnInit {
           }else{
             Swal.fire({
               width:"400px",
-              type: 'error',
+              icon: 'error',
               text: res.errorMessage,
              });
           }
@@ -75,7 +75,7 @@ export class ChangepasswordComponent implements OnInit {
             Swal.fire({
               title: 'Error',
               text: `Password cannot be same as your last 5 passwords!!`,
-              type: 'error',
+              icon: 'error',
               showCancelButton: false,
               allowOutsideClick: true
             });
