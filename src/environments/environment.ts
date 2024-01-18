@@ -20,7 +20,8 @@ export const environment = {
   asquareproductendpoint: 'https://ezflowasquare.dev.epsoftinc.com',
   isTwoFactorAuthenticationEnabled: false,
   isSecurityManagerEnabled : false,
-  isNewDesignEnabled : true
+  isNewDesignEnabled : true,
+  isSubscrptionEnabled : true
 };
 
 /*
