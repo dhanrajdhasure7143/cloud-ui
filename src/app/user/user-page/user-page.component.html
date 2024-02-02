@@ -1,0 +1,126 @@
+<div class="container">
+
+    <div class="logo">
+        <img style="width:170px !important" src="assets/images/EZFlow.png" alt="EZFlow">
+    </div>
+
+    <div class="message">
+        <p class="msg-one"><img src="/assets/images/hand.jpg" alt="Hand Image" class="hand-image">Hey {{user}}</p>
+        <p class="msg-two">Great Going</p>
+        <p class="msg-three">Now, Let us know more about you</p>
+    </div>
+
+    <form [formGroup]="userForm">
+        <div class="fields">
+            <div class="row">
+                <div class="col-md-4" id="col-job">
+                    <label class="form-label" for="jobTitle">Job Title<span>*</span></label>
+                    <input type="text" formControlName="jobTitle" class="form-control" id="jobTitle"
+                        (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="20">
+                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
+                        class="text-danger">
+                        {{ getErrorMessage('jobTitle') }}
+                    </span>
+                </div>
+                <div class="col-md-4" id="col-org">
+                    <label for="organization" class="form-label">Organization<span>*</span></label>
+                    <input type="text" formControlName="organization" class="form-control" id="organization"
+                        (keypress)="lettersOnly($event)" placeholder="Enter your organization" maxlength="30"
+                        minlength="2">
+                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
+                        class="text-danger">
+                        {{ getErrorMessage('organization') }}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="col-dept">
+                    <label for="department" class="form-label">Department<span>*</span></label>
+                    <select formControlName="department" class="form-control" id="department">
+                        <option value="" disabled selected>Select your department</option>
+                        <option *ngFor="let department of departments" [value]="department">{{ department }}</option>
+                    </select>
+                    <div *ngIf="f.department.touched && f.department.errors" class="text-danger">
+                        <span>Department required </span>
+                    </div>
+                </div>
+                <div class="col-md-4" id="col-country">
+                    <label for="country" class="form-label">Country<span>*</span></label>
+                    <select formControlName="country" class="form-control" id="country"
+                        (change)="onChangeCountry($event.target.value)" name='country' required>
+                        <option value="" disabled selected>Select your country</option>
+                        <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>
+                    </select>
+                    <span *ngIf="f.country.touched && f.country.errors" class="text-danger">
+                        Country required </span>
+                    <span class="errspan">{{errorMessage}}</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" id="col-state">
+                    <label for="state" class="form-label">State<span>*</span></label>
+                    <select formControlName="state" class="form-control" id="state"
+                        (change)="onChangeState($event.target.value)" name='state' required>
+                        <option value="" disabled selected>Select your state</option>
+                        <option *ngFor="let state of stateInfo" [value]="state.name">{{ state.name }}</option>
+                    </select>
+                    <span *ngIf="f.state.touched && f.state.errors" class="text-danger">
+                        State required </span>
+                    <span class="errspan">{{errorMessage1}}</span>
+                </div>
+
+                <div class="col-md-4" id="col-city">
+                    <label for="city" class="form-label">City<span>*</span></label>
+                    <select formControlName="city" class="form-control" id="city"
+                        (change)="onChangeCity($event.target.value)" name='city' required>
+                        <option value="" disabled selected>Select your city</option>
+                        <option *ngFor="let city of cityInfo" [value]="city.name">{{ city.name }}</option>
+                    </select>
+                    <span *ngIf="f.city.touched && f.city.errors" class="text-danger">
+                        City required </span>
+                    <span class="errspan">{{errorMessage2}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="col-zip">
+                    <label for="inputZip" class="form-label">Zip Code<span>*</span></label>
+                    <input type="text" formControlName="zipCode" class="form-control" id="inputZip"
+                        placeholder="Enter your zip code" maxlength="6" pattern=^[A-Za-z0-9]+$ required>
+                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('zipCode') !== ''"
+                        class="text-danger">
+                        {{ getErrorMessage('zipCode') }}
+                    </span>
+                </div>
+                <div class="col-md-4" id="col-phone">
+                    <label for="phoneNumber" class="form-label">Phone Number<span>*</span></label>
+                    <div class="phone-input-container">
+                        <div class="ng2tel-container">
+                            <span class="ng2tel-flag"></span>
+                            <div>
+                                <input type="text" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                                    class="phoneNumber" id="phone" formControlName="phoneNumber"
+                                    onKeyPress="if(this.value.length==10) return false;" ng2TelInput
+                                    [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                    pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="text-danger">
+                        <span>Phone Number required </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <button type="button" class="btn btn-primary btn-sm" id="clearbtn" (click)="clearAllFields()">Reset
+                    </button>
+            </div>
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-primary btn-sm" id="submitbtn">Continue</button>
+            </div>
+        </div>
+    </form>
+</div>
+
