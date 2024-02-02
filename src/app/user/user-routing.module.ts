@@ -10,6 +10,7 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
 import { RedirectsignoutComponent } from './redirectsignout/redirectsignout.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ActiveComponent } from './active/active.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 const routes: Routes = [{
   path: '',
@@ -41,6 +42,10 @@ const routes: Routes = [{
   {
     path: 'signout',
     component: RedirectsignoutComponent
+  },
+  {
+    path: 'user-page',
+    component: UserPageComponent
   },
   {
     path:'userinfo',
