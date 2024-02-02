@@ -52,9 +52,11 @@ import { MatTreeModule } from '@angular/material/tree';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ActiveComponent } from './active/active.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
-    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, SignUpComponent],
     imports: [
         CommonModule,
         UserRoutingModule,
@@ -96,7 +98,8 @@ import { ActiveComponent } from './active/active.component';
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        MatTreeModule
+        MatTreeModule,
+        PasswordModule
     ],
     exports: [LoginComponent],
     providers: []

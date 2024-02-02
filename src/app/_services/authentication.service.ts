@@ -80,9 +80,13 @@ export class AuthenticationService {
          
       return this.http.get('/api/user/details?userId='+username,httpOptions);
     }
-    generateOTP(username: string) {
+    generateOTPSignUp(username: string) {
          
-      return this.http.get('/api/login/beta/generateOTP?userId='+username ,{responseType:'json'});
+      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+true,{responseType:'json'});
+    }
+    generateOTPLogin(username: string) {
+         
+      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+false,{responseType:'json'});
     }
     validateOTP(username: string, otp: string) {
          
