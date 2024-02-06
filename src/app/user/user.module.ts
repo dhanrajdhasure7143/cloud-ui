@@ -55,9 +55,11 @@ import { ActiveComponent } from './active/active.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { PasswordModule } from 'primeng/password';
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
+import { UserPageComponent } from './user-page/user-page.component';
+import { Ng2TelInputModule } from 'ng2-tel-input';
 
 @NgModule({
-    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, SignUpComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent,SignUpComponent, UserPageComponent],
     imports: [
         CommonModule,
         UserRoutingModule,
@@ -101,7 +103,8 @@ import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
         MatTooltipModule,
         MatTreeModule,
         PasswordModule,
-        PrimengCustomModule
+        PrimengCustomModule,
+        Ng2TelInputModule
     ],
     exports: [LoginComponent],
     providers: []
