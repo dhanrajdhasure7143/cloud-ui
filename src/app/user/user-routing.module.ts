@@ -14,10 +14,10 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'signup',
     component: SignUpComponent},
   {
-    path: 'login',
+    path: '',
     component: LoginComponent},
   {
     path: 'register',

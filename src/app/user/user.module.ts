@@ -54,6 +54,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { ActiveComponent } from './active/active.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { PasswordModule } from 'primeng/password';
+import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 
 @NgModule({
     declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, SignUpComponent],
@@ -99,7 +100,8 @@ import { PasswordModule } from 'primeng/password';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        PasswordModule
+        PasswordModule,
+        PrimengCustomModule
     ],
     exports: [LoginComponent],
     providers: []

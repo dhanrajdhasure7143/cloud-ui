@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -57,6 +58,7 @@ export class SignUpComponent implements OnInit {
     private crypto:CryptoService,
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
+    private messageService:MessageService
     //private cookieService:CookieService,
     
   ) {}
@@ -90,13 +92,16 @@ export class SignUpComponent implements OnInit {
       this.profileService.getTwoFactroConfig(this.signupForm.value.email.toLowerCase()).subscribe(res=>{
         //swwet alert
         if(res.emailEnabled == true){
-          Swal.fire({
-            title: 'Success!',
-            text: `OTP has been sent to your registered Email.`,
-            icon: 'success',
-            showCancelButton: false,
-            allowOutsideClick: true
-          })
+          // Swal.fire({
+          //   title: 'Success!',
+          //   text: `OTP has been sent to your registered Email.`,
+          //   icon: 'success',
+          //   showCancelButton: false,
+          //   allowOutsideClick: true
+          // })
+          this.messageService.add({
+            severity: 'success', summary: 'Success', detail: "OTP Generated Successfully"
+          });
              
         }
         if(res.smsEnabled == true){
