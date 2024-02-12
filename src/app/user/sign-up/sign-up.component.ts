@@ -13,7 +13,6 @@ import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
-import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -43,6 +42,9 @@ export class SignUpComponent implements OnInit {
   isShowOtp : boolean = false;
   messages : any[] = ["Efficiency and Time Saving","Personalized for Better Engagement","Multi-Channel Integration","Compliance and Security Measures","Data-Driven Decision Making"]
   userEmail: any;
+  isGenerate : boolean = false;
+  isValidate : boolean = false;
+  isOtpSent : boolean = false
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -58,7 +60,6 @@ export class SignUpComponent implements OnInit {
     private crypto:CryptoService,
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
-    private messageService:MessageService
     //private cookieService:CookieService,
     
   ) {}
@@ -81,65 +82,40 @@ export class SignUpComponent implements OnInit {
   }
 
   showOtp(event){
-    if(event.target.value.includes('@') && this.signupForm.get('email').valid)
-    this.isShowOtp = true;
-    else
-    this.isShowOtp = false;
+    if(event.target.value.includes('@') && this.signupForm.get('email').valid){
+      this.isGenerate = true;
+      this.isShowOtp = true;
+      this.isOtpSent = false
+    } else{
+      this.isGenerate = false;
+      this.isShowOtp = false;
+      this.isOtpSent = false
+    }
   }
   
   generateOTP(){
-    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase()).subscribe(data => {
-      this.profileService.getTwoFactroConfig(this.signupForm.value.email.toLowerCase()).subscribe(res=>{
-        //swwet alert
-        if(res.emailEnabled == true){
-          // Swal.fire({
-          //   title: 'Success!',
-          //   text: `OTP has been sent to your registered Email.`,
-          //   icon: 'success',
-          //   showCancelButton: false,
-          //   allowOutsideClick: true
-          // })
-          this.messageService.add({
-            severity: 'success', summary: 'Success', detail: "OTP Generated Successfully"
-          });
-             
-        }
-        if(res.smsEnabled == true){
-          Swal.fire({
-            title: 'Success!',
-            text: `OTP has been sent to your registered Mobile Number.`,
-            icon: 'success',
-            showCancelButton: false,
-            allowOutsideClick: true
-          })
-        }
-        if(res.emailEnabled == true && res.smsEnabled == true){
+    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase()).subscribe((data : any) => {
+     console.log(data.errorMessage)  
+     if(data.message == "OTP Sent Successfully"){
       Swal.fire({
         title: 'Success!',
-        text: `OTP has been sent to your registered Email and Mobile number.`,
+        text: `OTP has been sent to your registered Email.`,
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
-    }
-          },error => {
-            this.error = "Failed to generate One Time Password.";
-            this.loading = false;
-      });
-      
+      this.isGenerate = false
+      this.isOtpSent = true;
+      this.isValidate = true;
+      this.isShowOtp = true;
+     } else {
+      Swal.fire("Error",data.errorMessage,"error")
+     }
 
-          
-      
     },
-    
-  
     );
 
   }
-
-// onSubmit(){
-//   console.log(this.signupForm.value.email)
-// }
 
 onSubmit() {
 var payload = new FormData();
@@ -161,7 +137,9 @@ payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        this.router.navigate(['/']);
+        this.router.navigate(['user-page'], {
+          queryParams: { name : this.signupForm.value.firstName, email : this.signupForm.value.email.toLowerCase() },
+        });
       }
     });
   }
@@ -176,6 +154,7 @@ payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 }
 
 validateOTP(){
+  this.isGenerate = false;
   this.spinner.show()
    this.authenticationService.validateOTP(this.signupForm.value.email.toLowerCase(),this.signupForm.value.otp).subscribe((data:any)=>{ 
    
@@ -183,6 +162,14 @@ validateOTP(){
       {
         this.spinner.hide()
         this.isShowOtp = false;
+        this.isValidate = false;
+        Swal.fire({
+          title: 'Success!',
+          text: `OTP Verified Successfully.`,
+          icon: 'success',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
       }else
       {
         this.spinner.hide()

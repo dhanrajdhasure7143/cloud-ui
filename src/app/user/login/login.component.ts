@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit {
  
     this.isOTP = true;
 
-    this.authenticationService.generateOTPLogin(this.f.username.value.toLowerCase()).subscribe(data => {
+    this.authenticationService.generateOTP(this.f.username.value.toLowerCase()).subscribe(data => {
 
       this.profileService.getTwoFactroConfig(this.f.username.value.toLowerCase()).subscribe(res=>{
 

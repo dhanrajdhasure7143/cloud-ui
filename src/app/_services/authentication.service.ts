@@ -80,13 +80,9 @@ export class AuthenticationService {
          
       return this.http.get('/api/user/details?userId='+username,httpOptions);
     }
-    generateOTPSignUp(username: string) {
+    generateOTP(username: string) {
          
-      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+true,{responseType:'json'});
-    }
-    generateOTPLogin(username: string) {
-         
-      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+false,{responseType:'json'});
+      return this.http.get('/api/login/beta/generateOTP?userId='+username ,{responseType:'json'});
     }
     validateOTP(username: string, otp: string) {
          
@@ -95,5 +91,9 @@ export class AuthenticationService {
     getToken(userName: any): Observable<any>{
       return this.http.post<any>('/api/login/beta/token', userName,httpOptions)
 
+    }
+    generateOTPSignUp(username: string) {
+         
+      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+true,{responseType:'json'});
     }
 }

@@ -68,13 +68,15 @@
     width: 230px;
     // position : fixed;
   }
-  .login-btn{
+  .signup-btn{
     /*margin-left: 45%;*/
     margin-left:0%;
     width: 130px !important;
     border-radius: 6px;
     font-size: 14px;
     height: 40px;
+    margin-left: 33%; 
+    margin-top: 10px;
   }
   .signupbtn{
     width: 120px !important;
@@ -348,4 +350,89 @@
   font-size: 12px !important;
   line-height: 17px;
   letter-spacing: 0.2px;
+}
+
+.ezflow-img{
+  width: 170px !important;
+  margin-top: 10px
+}
+
+.bot-title-header{
+  margin-top: 20px;
+}
+
+.bot-title{
+  margin-left: 135px;
+  font-size: 40px;
+  font-weight: 800; color: black;
+}
+
+.bot-image{
+  width: 450px;
+  height: 350px; 
+  margin-left: 100px;
+}
+
+.tick{
+  height: 10px; 
+  width: 20px;
+}
+
+.bot-feature{
+  margin-left: 5px;
+}
+
+.create{
+  text-align: center;
+}
+
+.signup-header{
+  font-size: large; 
+  font-weight: 800; 
+  margin-bottom: 0px !important; 
+  color: black;
+}
+
+.create-label{
+  padding-top: 2px;
+  padding-left: 3px;
+}
+
+#email-buttons {
+  position: relative !important;
+  left: 94% !important;
+  cursor: pointer;
+  bottom: 35px !important;
+  border-radius: 50% !important;
+  color: #007bff;
+}
+
+.label-control{
+  margin-bottom: 5px; 
+  font-weight: 500; 
+}
+
+.form-control {
+  height: 45px !important;
+  border-radius: 5px;
+}
+
+#otp-message{
+  margin-top: -35px !important;
+}
+
+.divide{
+  padding-top:10px
+}
+
+.footer-google{
+  margin-right: 0%;
+}
+
+.footer-microsoft{
+  margin-left: 0%;
+}
+
+#footer-button{
+  margin-top: 15px;
 }
