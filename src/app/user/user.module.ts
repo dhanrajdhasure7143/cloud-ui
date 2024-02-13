@@ -54,9 +54,10 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { ActiveComponent } from './active/active.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { Ng2TelInputModule } from 'ng2-tel-input';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 @NgModule({
-    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent, SubscriptionComponent],
     imports: [
         CommonModule,
         UserRoutingModule,

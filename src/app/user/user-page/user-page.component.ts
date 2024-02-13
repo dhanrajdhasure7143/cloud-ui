@@ -1,7 +1,11 @@
 // import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Country, State, City } from 'country-state-city';
+import { CryptoService } from 'src/app/_services/crypto.service';
+import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-page',
@@ -25,6 +29,7 @@ export class UserPageComponent implements OnInit {
   state: any;
   city: any;
   user: any;
+  userEmail : any;
 
   clearFormValues = {
     jobTitle: '',
@@ -37,7 +42,17 @@ export class UserPageComponent implements OnInit {
     phoneNumber: ''
   };
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private route:ActivatedRoute,
+              private service: FirstloginService,
+              private crypto:CryptoService,
+              private router: Router
+              ) {
+    this.route.queryParams.subscribe((data)=>{
+      this.user = data.name,
+      this.userEmail = data.email
+    })
+   }
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
@@ -181,5 +196,35 @@ export class UserPageComponent implements OnInit {
 
     return '';
   }
+
+  registrationSave(){
+    console.log(this.userForm.value,"hello")
+    var payload = new FormData();
+    var reqObj = {}
+    reqObj = {
+      userId : this.userEmail,
+      jobTitle : this.userForm.value.jobTitle,
+      department : this.userForm.value.department,
+      organization : this.userForm.value.organization,
+      country : this.userForm.value.country,
+      zipCode : this.userForm.value.zipCode,
+      phoneNumber : this.userForm.value.phoneNumber
+}
+payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+this.service.registrationContinue(payload).subscribe((res : any) => {
+  if(res.body.code == 200) {
+    Swal.fire({
+      title: 'Success!',
+      text: res.message,
+      icon: 'success',
+      showCancelButton: false,
+      allowOutsideClick: true
+    })
+    this.router.navigate(['/']);
+  } else {
+    Swal.fire("Error",res.errorMessage,"error")
+  }
+  })
+}
 
 }

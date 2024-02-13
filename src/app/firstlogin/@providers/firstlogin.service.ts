@@ -65,5 +65,13 @@ export class FirstloginService {
     return this.http.get<any>(`/api/user/checkOrganizationExists?orgName=`+orgName);
   }
 
+  registrationContinue(payload){
+    let headers = new HttpHeaders({});
+    return this.http.post<any>('/api/user/registration-continue', payload,{ headers:headers,observe: 'response' })
+  }
+
+  loadPredefinedBots(): Observable<any>{
+    return this.http.get<any>(`/api/user/loadPredefinedBotPlans`)
+  }
 
 }
