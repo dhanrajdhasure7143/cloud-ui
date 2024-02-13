@@ -74,4 +74,8 @@ export class FirstloginService {
     return this.http.get<any>(`/api/user/loadPredefinedBotPlans`)
   }
 
+  registrationStart(payload){
+    let headers = new HttpHeaders({});
+    return this.http.post<any>('/api/user/registration-start', payload,{ headers:headers,observe: 'response' })
+  }
 }
