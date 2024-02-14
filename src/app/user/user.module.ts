@@ -99,7 +99,7 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        Ng2TelInputModule
+        Ng2TelInputModule 
     ],
     exports: [LoginComponent],
     providers: []

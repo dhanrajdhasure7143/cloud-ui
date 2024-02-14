@@ -9,118 +9,149 @@
         <p class="msg-two">Great Going</p>
         <p class="msg-three">Now, Let us know more about you</p>
     </div>
-
+    
     <form [formGroup]="userForm">
         <div class="fields">
             <div class="row">
-                <div class="col-md-4" id="col-job">
+                <div class="col-md-6" id="col-job">
                     <label class="form-label" for="jobTitle">Job Title<span>*</span></label>
                     <input type="text" formControlName="jobTitle" class="form-control" id="jobTitle"
-                        (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="20">
-                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
+                        (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="30"
+                        minlength="2">
+                    <span
+                        *ngIf="userForm.get('jobTitle').invalid && userForm.get('jobTitle').touched && !userForm.get('jobTitle').hasError('pattern') && !userForm.controls['jobTitle'].hasError('maxlength')"
+                        class="required" class="text-danger"> Job title required </span>
+                    <span *ngIf="userForm.controls['jobTitle'].hasError('minlength')" class="required"
                         class="text-danger">
-                        {{ getErrorMessage('jobTitle') }}
+                        Minimum 2 characters required
                     </span>
-                </div>
-                <div class="col-md-4" id="col-org">
+                    <span *ngIf="userForm.controls['jobTitle'].hasError('maxlength')" class="required"
+                        class="text-danger">
+                        Maximum of 30 characters
+                    </span>
+                    <span
+                        *ngIf="userForm.get('jobTitle').hasError('pattern') && !userForm.controls['jobTitle'].hasError('maxlength')"
+                        class="required" class="text-danger">
+                        Only space between words are allowed,numbers & special characters are not allowed.
+                    </span>
+                </div>               
+                <div class="col-md-6" id="col-org">
                     <label for="organization" class="form-label">Organization<span>*</span></label>
                     <input type="text" formControlName="organization" class="form-control" id="organization"
                         (keypress)="lettersOnly($event)" placeholder="Enter your organization" maxlength="30"
                         minlength="2">
-                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
+                        <span
+                        *ngIf="userForm.get('organization').invalid && userForm.get('organization').touched && !userForm.get('organization').hasError('pattern') && !userForm.controls['organization'].hasError('maxlength')"
+                        class="required" class="text-danger"> Organization required </span>
+                    <span *ngIf="userForm.controls['organization'].hasError('minlength')" class="required"
                         class="text-danger">
-                        {{ getErrorMessage('organization') }}
+                        Minimum 2 characters required
+                    </span>
+                    <span *ngIf="userForm.controls['organization'].hasError('maxlength')" class="required"
+                        class="text-danger">
+                        Maximum of 30 characters
+                    </span>
+                    <span
+                        *ngIf="userForm.get('organization').hasError('pattern') && !userForm.controls['organization'].hasError('maxlength')"
+                        class="required" class="text-danger">
+                        Only space between words are allowed,numbers & special characters are not allowed.
                     </span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4" id="col-dept">
+                <div class="col-md-6" id="col-dept">
                     <label for="department" class="form-label">Department<span>*</span></label>
-                    <select formControlName="department" class="form-control" id="department">
-                        <option value="" disabled selected>Select your department</option>
-                        <option *ngFor="let department of departments" [value]="department">{{ department }}</option>
+                    <select formControlName="department" class="form-control" id="department"
+                        placeholder="Select your department">
+                        <option value="" disabled selected>Select department</option>
+                        <option *ngFor="let department of departments" [value]="department.departmentName">{{
+                            department.departmentName }}</option>
                     </select>
                     <div *ngIf="f.department.touched && f.department.errors" class="text-danger">
                         <span>Department required </span>
                     </div>
                 </div>
-                <div class="col-md-4" id="col-country">
+                <div class="col-md-6" id="col-country">
                     <label for="country" class="form-label">Country<span>*</span></label>
                     <select formControlName="country" class="form-control" id="country"
-                        (change)="onChangeCountry($event.target.value)" name='country' required>
-                        <option value="" disabled selected>Select your country</option>
+                        placeholder="Select your country" (change)="onChangeCountry($event.target.value)" name='country'
+                        required>
+                        <option value="" disabled selected>Select country</option>
                         <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>
                     </select>
                     <span *ngIf="f.country.touched && f.country.errors" class="text-danger">
                         Country required </span>
-                    <span class="errspan">{{errorMessage}}</span>
+                    <span class="text-danger">{{errorMessage}}</span>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-4" id="col-state">
+                <div class="col-md-6" id="col-state">
                     <label for="state" class="form-label">State<span>*</span></label>
-                    <select formControlName="state" class="form-control" id="state"
-                        (change)="onChangeState($event.target.value)" name='state' required>
+                    <select formControlName="state" class="form-control" id="state" placeholder="Select State"
+                        (change)="onChangeState($event.target.value)" name='state' [disabled]="!fieldsEnabled" required>
                         <option value="" disabled selected>Select your state</option>
                         <option *ngFor="let state of stateInfo" [value]="state.name">{{ state.name }}</option>
                     </select>
                     <span *ngIf="f.state.touched && f.state.errors" class="text-danger">
                         State required </span>
-                    <span class="errspan">{{errorMessage1}}</span>
-                </div>
-
-                <div class="col-md-4" id="col-city">
+                    <span class="text-danger">{{errorMessage1}}</span>
+                </div>                      
+                <div class="col-md-6" id="col-city">
                     <label for="city" class="form-label">City<span>*</span></label>
-                    <select formControlName="city" class="form-control" id="city"
-                        (change)="onChangeCity($event.target.value)" name='city' required>
+                    <select formControlName="city" class="form-control" id="city" placeholder="Select City"
+                        (change)="onChangeCity($event.target.value)" name='city' [disabled]="!fieldsEnabled" required>
                         <option value="" disabled selected>Select your city</option>
                         <option *ngFor="let city of cityInfo" [value]="city.name">{{ city.name }}</option>
                     </select>
                     <span *ngIf="f.city.touched && f.city.errors" class="text-danger">
                         City required </span>
-                    <span class="errspan">{{errorMessage2}}</span>
+                    <span class="text-danger">{{errorMessage2}}</span>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4" id="col-zip">
+                <div class="col-md-6" id="col-zip">
                     <label for="inputZip" class="form-label">Zip Code<span>*</span></label>
                     <input type="text" formControlName="zipCode" class="form-control" id="inputZip"
-                        placeholder="Enter your zip code" maxlength="6" pattern=^[A-Za-z0-9]+$ required>
-                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('zipCode') !== ''"
+                        (keypress)="numbersOnly($event)" placeholder="Enter your zip code" maxlength="6" required>
+                        <span *ngIf="userForm.controls['organization'].hasError('maxlength')" class="required"
                         class="text-danger">
-                        {{ getErrorMessage('zipCode') }}
+                        Maximum of 6 characters
+                    </span>
+                    <span
+                        *ngIf="userForm.get('organization').hasError('pattern')"
+                        class="required" class="text-danger">
+                        Only numbers are allowed
                     </span>
                 </div>
-                <div class="col-md-4" id="col-phone">
+                <div class="col-md-6" id="col-phone">
                     <label for="phoneNumber" class="form-label">Phone Number<span>*</span></label>
                     <div class="phone-input-container">
                         <div class="ng2tel-container">
                             <span class="ng2tel-flag"></span>
                             <div>
-                                <input type="text" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
-                                    class="phoneNumber" id="phone" formControlName="phoneNumber"
-                                    onKeyPress="if(this.value.length==10) return false;" ng2TelInput
-                                    [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                <input type="text" (keydown)="onKeydown($event)"
+                                    (countryChange)="OnFlagChange($event, phnCountry)" class="phoneNumber" id="phone"
+                                    formControlName="phoneNumber" onKeyPress="if(this.value.length==10) return false;"
+                                    ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"
                                     pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="text-danger">
-                        <span>Phone Number required </span>
-                    </div>
+                    <span
+                        *ngIf="userForm.get('phoneNumber').invalid && userForm.get('phoneNumber').touched"
+                        class="required" class="text-danger"> Phone number required </span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
-                <button type="button" class="btn btn-primary btn-sm" id="clearbtn" (click)="clearAllFields()">Reset
-                    </button>
+            <div class="reset-btn">
+                <input class="btn btn-primary" id="reset-btn" type="reset" value="Reset" (click)="resetForm()">
             </div>
-            <div class="col-md-5">
-                <button type="submit" class="btn btn-primary btn-sm" id="submitbtn">Continue</button>
+            <div class="submit-btn">
+                <button type="submit" class="btn btn-primary" id="submit-btn"
+                    [disabled]="!userForm.valid">Continue</button>
             </div>
         </div>
     </form>
 </div>
-

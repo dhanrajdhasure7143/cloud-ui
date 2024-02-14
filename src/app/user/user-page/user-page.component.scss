@@ -20,26 +20,28 @@
 }
 
 .msg-one {
-    font-weight: bold;
+    font-weight: bolder;
     margin:0;
-    font-size: 12px;
+    font-size: 14px;
+    color: black;
 }
 
 .msg-two {
-    font-weight: bold;
-    font-size: 22px;
+    font-weight: bolder;
+    font-size: 26px;
     margin:0;
-
+    color: black;
 }
 
 .msg-three {
-    font-weight: bold;
+    font-weight: bolder;
     margin:0;
-    font-size: 11px;
+    font-size: 14px;
+    color: black;
 }
 
 .fields{
-    margin-left: 210px;
+    justify-content: center;
 }
 
 .row{
@@ -47,66 +49,157 @@
     padding:5px;
 }
 
-#col-job, #col-org, #col-dept, #col-country{
-    margin-right:125px;
-    padding:5px;
-} 
-
-#col-state, #col-city, #col-zip, #col-phone{
-    margin-right:125px;
-    padding:5px;
-    margin-top:-19px;
-}
-
 .form-label{
     font-weight: bold;
 }
 
-.btn{
-    padding: 5px 60px;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-// #clearbtn{
-//     margin-left: 240px;
-//     padding: 5px 35px;
-//     margin-top:25px;
-// }
-
-// #submitbtn{
-//     margin-left:150px;
-//     padding: 5px 35px;
-//     margin-top: 25px;
-// }
-
-#clearbtn{
-    margin-left: 360px;
+#reset-btn {
+    margin-left: 750px;
     margin-top: 25px;
+    padding: 5px 50px;
+    border-radius: 4px;
 }
 
-#submitbtn{
-    margin-left: 130px;
-    margin-top: 25px;
+#submit-btn {
+    margin-left: 930px;
+    margin-top: -63px;
+    padding: 5px 40px;
 }
 
-.text-danger{
-    font-size: 12px;
-    margin-top:10px;
+.text-danger {
+    font-size: 10px;
+    margin-top: 10px;
 }
 
 label span {
-    color: red; 
-    margin-left: 4px; 
+    color: red;
+    margin-left: 4px;
 }
 
 .phoneNumber {
-    width:285px;
+    width: 515px;
     padding: 3px;
     border: 1px solid #D6DDF2;
     border-radius: 4px;
 }
 
+.btn {
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .logo img {
+        width: 100px;
+        margin-left: 30px;
+    }
+
+    .message {
+        margin-left: 0px;
+        margin-top:15px;
+    }
+
+    #col-phone {
+        margin-top: 10px;
+    }
+    .submit-btn {
+        margin-left: -750px;
+        margin-top: 45px;
+    }
+
+    .reset-btn {
+        margin-left: -320px;
+        margin-top: -15px;
+    }
+
+    .form-control{
+        width:300px;
+        margin-left:90px;
+    }
+
+    .form-label{
+        margin-left:90px;
+    }
+
+    .phone-input-container{
+        margin-left:90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo img {
+        width: 100px;
+        margin-left: 30px;
+    }
+
+    .message {
+        margin-left: 0px;
+        margin-top:15px;
+    }
+
+    #col-phone {
+        margin-top: 10px;
+    }
+    .submit-btn {
+        margin-left: -415px;
+        margin-top: 0px;
+    }
+
+    .reset-btn {
+        margin-left: -418px;
+        margin-top: 10px;
+    }
+
+    .form-control{
+        width:230px;
+        margin-left:-5px;
+    }
+
+    .form-label{
+        margin-left:-5px;
+    }
+
+    .phone-input-container{
+        margin-left:-5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo img {
+        width: 80px;
+        margin: 10px;
+    }
+
+    #col-phone {
+        margin-top: 25px;
+    }
+
+    .message {
+        margin-top:15px;
+    }
+
+    .submit-btn {
+        margin-left: -630px;
+        margin-top: 0px;
+    }
+
+    .reset-btn {
+        margin-left: -600px;
+        margin-top: 10px;
+    }
+
+    .form-control{
+        width:230px;
+        margin-left:-180px;
+    }
+
+    .form-label{
+        margin-left:-180px;
+    }
+
+    .phone-input-container{
+        margin-left:-180px;
+    }
+}
 
 
   
