@@ -10,11 +10,16 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
 import { RedirectsignoutComponent } from './redirectsignout/redirectsignout.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ActiveComponent } from './active/active.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserPageComponent } from './user-page/user-page.component';
 
-const routes: Routes = [{
-  path: '',
-  component: LoginComponent},
+const routes: Routes = [
+  {
+    path: 'signup',
+    component: SignUpComponent},
+  {
+    path: '',
+    component: LoginComponent},
   {
     path: 'register',
     component: RegisterComponent
