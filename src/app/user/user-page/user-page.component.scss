@@ -25,7 +25,6 @@
     font-size: 14px;
     color: black;
 }
-
 .msg-two {
     font-weight: bolder;
     font-size: 26px;
@@ -49,7 +48,7 @@
     padding:5px;
 }
 
-.form-label{
+#label-name{
     font-weight: bold;
 }
 
@@ -66,12 +65,12 @@
     padding: 5px 40px;
 }
 
-.text-danger {
+#error-msg {
     font-size: 10px;
     margin-top: 10px;
 }
 
-label span {
+.star {
     color: red;
     margin-left: 4px;
 }
@@ -101,22 +100,23 @@ label span {
     #col-phone {
         margin-top: 10px;
     }
-    .submit-btn {
+
+    #submit-btn {
         margin-left: -750px;
         margin-top: 45px;
     }
 
-    .reset-btn {
+    #reset-btn {
         margin-left: -320px;
         margin-top: -15px;
     }
 
-    .form-control{
+    .form-text{
         width:300px;
         margin-left:90px;
     }
 
-    .form-label{
+    #label-name{
         margin-left:90px;
     }
 
@@ -139,22 +139,23 @@ label span {
     #col-phone {
         margin-top: 10px;
     }
-    .submit-btn {
+
+    #submit-btn {
         margin-left: -415px;
         margin-top: 0px;
     }
 
-    .reset-btn {
+    #reset-btn {
         margin-left: -418px;
         margin-top: 10px;
     }
 
-    .form-control{
+    .form-text{
         width:230px;
         margin-left:-5px;
     }
 
-    .form-label{
+    #label-name{
         margin-left:-5px;
     }
 
@@ -177,22 +178,22 @@ label span {
         margin-top:15px;
     }
 
-    .submit-btn {
+    #submit-btn {
         margin-left: -630px;
         margin-top: 0px;
     }
 
-    .reset-btn {
+    #reset-btn {
         margin-left: -600px;
         margin-top: 10px;
     }
 
-    .form-control{
+    .form-text{
         width:230px;
         margin-left:-180px;
     }
 
-    .form-label{
+    #label-name{
         margin-left:-180px;
     }
 
