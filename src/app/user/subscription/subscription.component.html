@@ -28,7 +28,9 @@
                     <div style="font-size: 13px;
                     margin-top: 5px;
                     color: #2785ff;
-                    font-weight: 800;"> Try Now </div>
+                    font-weight: 800;" >
+                        <a class="signup_styles text-primary" (click)="sendEmailEnterPricePlan()"> Try Now </a> 
+                     </div>
                 </div>
             </div>
         </div>
@@ -92,3 +94,7 @@
         <!-- <div class="col-md-1"></div> -->
     </div>
 </div>
+
+<ngx-spinner bdColor="#bebcbc66" type="">
+    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+  </ngx-spinner>

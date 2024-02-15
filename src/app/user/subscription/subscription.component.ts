@@ -4,6 +4,8 @@ import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.serv
 import { Country, State, City } from 'country-state-city';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-subscription',
@@ -24,7 +26,9 @@ export class SubscriptionComponent implements OnInit {
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
               private route:ActivatedRoute,
-              private profileservice : ProfileService ) {
+              private profileservice : ProfileService,
+              private spinner : NgxSpinnerService
+              ) {
                 this.route.queryParams.subscribe((data)=>{
                 this.userEmail = data.email
                 })
@@ -78,6 +82,23 @@ userDetails() {
 
 paymentPlan(){
 
+}
+
+sendEmailEnterPricePlan(){
+  this.spinner.show();
+  this.service.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
+    Swal.fire({
+        title: 'Success!',
+        text: `Thank you for choosing Enterprice plan, Our team will contact you soon`,
+        icon: 'success',
+        showCancelButton: false,
+        allowOutsideClick: false
+      })
+      this.spinner.hide();
+  },err=>{
+    this.spinner.hide();
+
+  })
 }
 
 }
