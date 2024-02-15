@@ -104,6 +104,7 @@ import { SubscriptionComponent } from './subscription/subscription.component';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
+        Ng2TelInputModule,
         PasswordModule,
         PrimengCustomModule,
         Ng2TelInputModule,

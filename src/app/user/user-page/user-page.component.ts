@@ -1,4 +1,3 @@
-// import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +14,7 @@ import Swal from 'sweetalert2';
 
 export class UserPageComponent implements OnInit {
   userForm: FormGroup;
-  departments = ['Engineering', 'HR', 'Finance', 'Infra', 'Admin'];
+  departments: any[] = [];
   stateInfo: any[] = [];
   countryInfo: any[] = [];
   cityInfo: any[] = [];
@@ -26,21 +25,15 @@ export class UserPageComponent implements OnInit {
   errorMessage2: any;
   country: any;
   jobTitle: any;
+  organization: any;
+  department: any;
   state: any;
   city: any;
+  zipCode: any;
+  phoneNumber: any;
   user: any;
   userEmail : any;
-
-  clearFormValues = {
-    jobTitle: '',
-    organization: '',
-    department: '',
-    country: '',
-    state: '',
-    city: '',
-    zipCode: '',
-    phoneNumber: ''
-  };
+  fieldsEnabled: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
               private route:ActivatedRoute,
@@ -56,40 +49,31 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.formBuilder.group({
-      jobTitle: ['', [Validators.required, Validators.minLength(2)]],
-      organization: ['', [Validators.required, Validators.minLength(2)]],
+      jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
+      organization: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
+      zipCode: ["", Validators.compose([Validators.required, Validators.pattern('^[0-9]+$'), Validators.maxLength(6)])],
       department: ['', Validators.required],
       country: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      phoneNumber: ['', Validators.required]
-
+      phoneNumber: ['', Validators.required],
+      phnCountry: [''],
     });
     this.getCountries();
-
-    this.userForm.get('country').valueChanges.subscribe((selectedCountry) => {
-      if (selectedCountry) {
-        this.userForm.get('state').setValue('');
-        this.userForm.get('city').setValue('');
-      }
-    });
-
-    this.userForm.get('state').valueChanges.subscribe((selectedState) => {
-      if (selectedState) {
-        this.userForm.get('city').setValue('');
-      }
-    });
-  }
-
-  clearAllFields() {
-    this.userForm.reset(this.clearFormValues);
+    this.getAllDepartments();
   }
 
   getCountries() {
     this.countryInfo = Country.getAllCountries();
   }
 
+  getAllDepartments() {
+    this.service.getAllDepartments().subscribe((response: any) => {
+      this.departments = response;
+    })
+  }
+
+  // If country changes, states and cities gets changed according to the country selected 
   onChangeCountry(countryValue) {
     this.isInput = !this.isInput;
     this.stateInfo = State.getAllStates();
@@ -100,8 +84,34 @@ export class UserPageComponent implements OnInit {
       this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode)
       this.errorMessage = ""
     }
+    if (this.stateInfo == null || this.stateInfo.length === 0) {
+      this.userForm.get('state').disable();
+      this.userForm.get('city').disable();
+      this.userForm.get('state').clearValidators();
+      this.userForm.get('state').updateValueAndValidity();
+    }
+
+    // Set the flag to true if there are states available, otherwise false
+    this.fieldsEnabled = this.stateInfo && this.stateInfo.length > 0;
+
+    if (this.fieldsEnabled) {
+      this.userForm.get('state').enable();
+      this.userForm.get('city').enable();
+    } else {
+      // Clear state and city values if there are no states available
+      this.userForm.get('state').setValue('');
+      this.userForm.get('city').setValue('');
+    }
+
+    this.userForm.get('country').valueChanges.subscribe((selectedCountry) => {
+      if (selectedCountry) {
+        this.userForm.get('state').setValue('');
+        this.userForm.get('city').setValue('');
+      }
+    });
   }
 
+  // If state changes, cities gets changed accordingly
   onChangeState(stateValue) {
     this.cityInfo = City.getAllCities();
     if (stateValue) {
@@ -112,6 +122,11 @@ export class UserPageComponent implements OnInit {
         this.cityInfo = [{ name: 'NA' }];
       }
     }
+    this.userForm.get('state').valueChanges.subscribe((selectedState) => {
+      if (selectedState) {
+        this.userForm.get('city').setValue('');
+      }
+    });
   }
 
   onChangeCity(cityValue) {
@@ -120,24 +135,8 @@ export class UserPageComponent implements OnInit {
     }
   }
 
-  hasError(event: any): void {
-    // Handle hasError event
-  }
-
-  getNumber(event: any): void {
-    // Handle getNumber event
-  }
-
-  telInputObject(event: any): void {
-    // Handle telInputObject event
-  }
-
-  onPhnCountryChange(event: any): void {
-    // Handle phnCountryChange event
-  }
-
+  // Accepting only letters in the Job title, organization fields
   lettersOnly(event): boolean {
-
     var regex = new RegExp("^[a-zA-Z ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
     if (!regex.test(key)) {
@@ -149,52 +148,38 @@ export class UserPageComponent implements OnInit {
     }
   }
 
-  onKeydown(event) {
-
-    let numArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"]
-    let temp = numArray.includes(event.key); //gives true or false
-    if (!temp) {
+  // Accepting only numbers for zip code field
+  numbersOnly(event): boolean {
+    var regex = new RegExp("^[0-9]+$"); // Regex to allow only numbers
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
       event.preventDefault();
+      return false;
     }
   }
 
-  OnFlagChange(event) {
-      if(event.name != this.country){
-      this.errorMessage="Please Select Appropriate Country *";
-      this.errorMessage1="Please Select Appropriate State *";
-      this.errorMessage2="Please Select Appropriate City *"
+  // If country and flag are different, it generates error message
+  OnFlagChange(event, phonecode) {
+    var code = event.iso2;
+    var testcode = code.toString().toUpperCase();
+    if (testcode != phonecode) {
+      this.errorMessage = "Please Select Appropriate Country *";
+      this.errorMessage1 = "Please Select Appropriate State *";
+      this.errorMessage2 = "Please Select Appropriate City *"
+      this.userForm.get('state').enable();
+      this.userForm.get('city').enable();
     }
+    const selectedCountry = this.countryInfo.find((item: any) => item.isoCode == code);
+    this.fieldsEnabled = State.getStatesOfCountry(selectedCountry.isoCode).length > 0;
   }
-  
+
   get f() {
     return this.userForm.controls;
   }
 
-  getErrorMessage(controlName: string): string {
-    const control = this.userForm.get(controlName);
-
-    if (control.touched && control.errors) {
-      if (control.errors.required) {
-        if (controlName == "jobTitle") {
-          return "Job Title required"
-        }
-        else if (controlName == "organization") {
-          return "Organization required"
-        }
-        else if (controlName == "zipCode") {
-          return "Zip Code required"
-        }
-        return `${controlName} required`;
-      }
-      if (control.errors.minlength) {
-        return "Minimum 2 characters required";
-      }
-      if (control.errors.pattern) {
-        return "Only Alphabets and Numbers are allowed";
-      }
-    }
-
-    return '';
+  // To enable continue button if all fields are valid and 2 fields of state and city are disabled
+  get userFormValid(): boolean {
+    return this.jobTitle.trim() !== '' && this.organization.trim() !== '' && this.department.trim() !== '' && this.state.trim() !== '' && this.city.trim() !== '' && this.zipCode.trim() !== '' && this.phoneNumber.trim() !== '';
   }
 
   registrationSave(){
@@ -229,4 +214,11 @@ this.service.registrationContinue(payload).subscribe((res : any) => {
   })
 }
 
+  // To reset the error messages generated for country state and city
+  resetForm() {
+    this.userForm.reset();
+    this.errorMessage = "";
+    this.errorMessage1 = "";
+    this.errorMessage2 = ""
+  }
 }
