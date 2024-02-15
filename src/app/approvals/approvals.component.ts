@@ -34,6 +34,7 @@ export class ApprovalsComponent implements OnInit {
     this.activeRoute.queryParams.subscribe((params:any)=>{
       let tokenData:any=JSON.parse(Base64.decode(params.token));
       this.tokenData=tokenData;
+      console.log(this.tokenData)
       this.tokenData["status"]=params.status;
       this.status=params.status;
       this.loginUser();
@@ -44,6 +45,7 @@ export class ApprovalsComponent implements OnInit {
   {
     this.spinner.show()
     let user=JSON.parse(this.tokenData.loggedUser);
+    console.log(user)
     this.http.post(environment.tokenendpoint+"/api/login/beta/token", {userId:user.loggedUser}).subscribe((response:any)=>{
       this.getTenantBasedAccessToken(response, user);
       //this.getApprovals(response);

@@ -112,7 +112,7 @@
                                             <span class="ng2tel-flag"></span>
                                             <div>
                                                 <input type="text" style="height: 45px !important;
-                                    border-radius: 5px; width: 444px;" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                                    border-radius: 5px; width: 444px;" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event, phnCountry)"
                                                     class="form-control" id="phone" formControlName="phoneNumber"
                                                     onKeyPress="if(this.value.length==10) return false;" ng2TelInput
                                                     [ng2TelInputOptions]="{initialCountry: phnCountry}"
