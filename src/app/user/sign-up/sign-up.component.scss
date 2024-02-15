@@ -76,7 +76,7 @@
     font-size: 14px;
     height: 40px;
     margin-left: 33%; 
-    margin-top: 10px;
+    // margin-top: 10px;
   }
   .signupbtn{
     width: 120px !important;
@@ -435,4 +435,27 @@
 
 #footer-button{
   margin-top: 15px;
+}
+
+.resend{
+  font-size: 12px;
+    margin-left: 264px;
+    display: flex;
+    letter-spacing: 0.2px;
+    line-height: 17px;
+    color: #007bff;
+    margin-top: -20px;
+    cursor: pointer;
+}
+
+.verify{
+  position: relative !important;
+  left: 79% !important;
+  cursor: pointer;
+  line-height: 17px;
+  letter-spacing: 0.2px;
+  font-size: 12px;
+  bottom: 35px !important;
+  /* border-radius: 50% !important; */
+  color: #007bff;
 }

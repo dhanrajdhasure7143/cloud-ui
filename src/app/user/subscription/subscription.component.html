@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div class="col-md-1"></div> -->
+        <div class="col-md-7">
+        <div class="logo">
+            <img style="width:170px !important; margin: 10px;" src="assets/images/EZFlow.png" alt="EZFlow">
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4 text-center bot-plans" *ngFor="let plan of botPlans; let i = index">
+                    <div class="circle"> <img src="../../../assets/MicroBot_New.jpg" alt="" width="60px" height="60px"></div>
+                    <div> <span>{{plan.predefinedBotPlanName}}</span>  </div>
+                    <div> <span> ${{plan.amount}} / {{plan.interval}} </span> <i *ngIf="showArrowRight" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> <i *ngIf="showArrowDown" class="pi pi-arrow-circle-down" style="margin:10px" (click)="hideDescription()"></i> </div>
+                    <div class="line"></div>
+                    <div class="description-box" *ngIf="selectedPlanIndex === i">
+                        <span> {{ plan.description }} </span>
+                    </div> 
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin: 50px 0 0 0">
+            <div class="row">
+                <div class="col-md-1">
+                    <img src="../../../assets/copilot.svg" width="40px" height="40px" style="margin: 10px 0 0 30px" alt="">
+                </div>
+                <div class="col-md-11">
+                    <div for="" class="label-control"> New Personalized Enterprise-Level Planning? </div>
+                    <div style="font-size: 13px;
+                    margin-top: 5px;
+                    color: #2785ff;
+                    font-weight: 800;"> Try Now </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-5">
+            <div class="col-md-12" style="padding: 30px; height: 70px;">
+                <span style="font-weight: 800; color: #2785ff;"> Your card information will be safeguarded. </span>
+            </div>
+            <div class="col-md-12 d-flex">
+                <div class="card text-center p-10 card" style="height: 50px; width: 150px; margin-left:17px">
+                  <span style="margin-top: 12px;"> Monthly </span> 
+                </div>
+                <div class="card text-center p-10 card" style="height: 50px; width: 150px;margin-left:17px ">
+                    <span style="margin-top: 12px;"> Yearly </span> 
+                  </div>
+            </div>
+            <form action="" [formGroup]="subscriptionForm">
+                <div class="col-md-12" style="margin-top: 12px;">
+                    <div class="col-md-10 p-10 form-group">
+                        <label for="" class="label-control"> Card Information </label>
+                        <input type="text" name="" id="" class="form-control" formControlName="cardNumber" placeholder="1234 1234 1234 1234">
+                        <div class="d-flex">
+                            <input type="text" pInputText name="" id="" class="form-control" formControlName="monthYear" placeholder="MM / YY" style="width: 70%;" >
+                            <input type="text" pInputText name="" id="" class="form-control" formControlName="cvv" placeholder="CVV" style="width: 30%;">
+                        </div>    
+                    </div>
+                     <div class="col-md-10 p-10 form-group">
+                        <label for="" class="label-control"> Card Holder Name</label>
+                        <input type="text" pInputText name="" id="" formControlName="userName" class="form-control" placeholder="Full Name on Card">
+                     </div>
+                     <div class="col-md-10 p-10 form-group">
+                        <label for="" class="label-control"> Country or Region </label>
+                        <select class="form-control" formControlName="country" placeholder="Select Country" required>
+                            <option value="" disabled selected> Select your country </option>
+                            <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>                        </select>
+                        <!-- <p-dropdown [options]="countries" formControlName="country"
+                        [style]="{'width':'100%'}" placeholder="Select Country or Region"></p-dropdown> -->
+                     </div>
+                     <div class="col-md-10 p-10 form-group">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <input type="checkbox" name="" formControlName="autoBilling" id="" style="    margin-top: 17px; margin-left: 15px;">   
+                                </div>
+                                <div class="col-md-11" style="padding: 10px;">
+                                    <label for="" class="label-control"> Automate Billing upon expiration. </label>
+                                    <div style="font-size: 12px;"> Facilitates the hassle-free experience by automating the billing cycle once it expires, ensuring uninterrepted service. </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="col-md-10 p-10 form-group">
+                        <button type="button" class="btn btn-primary w-100" style="font-weight: 700;" (click)="paymentPlan()"> Pay Now (300$) </button>
+                     </div>
+                     <div class="col-md-10 p-10 form-group">
+                        <p>By confirming your subscription, you allow EZFlow to charge your card for this payment and future payments in accordance with their teams</p>
+                     </div>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="col-md-1"></div> -->
+    </div>
+</div>

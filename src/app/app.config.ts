@@ -21,6 +21,7 @@ export interface AiotalAppConfig {
   piendpoint:String;
   isNewDesignEnabled : boolean;
   asquareproductendpoint: String;
+  isNewSignupFlow : boolean;
 }
 
 export const AppConfig: AiotalAppConfig = {
@@ -43,7 +44,8 @@ export const AppConfig: AiotalAppConfig = {
    isTwoFactorAuthenticationEnabled: environment.isTwoFactorAuthenticationEnabled,
    isSecurityManagerEnabled : environment.isSecurityManagerEnabled,
    isNewDesignEnabled : environment.isNewDesignEnabled,
-   asquareproductendpoint : environment.asquareproductendpoint
+   asquareproductendpoint : environment.asquareproductendpoint,
+   isNewSignupFlow : environment.isNewSignupFlow
 
   
   // demo

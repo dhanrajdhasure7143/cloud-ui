@@ -1,111 +1,126 @@
-.container{
-    overflow: hidden;
-}
+// .container{
+//     overflow: hidden;
+// }
 
-.logo{
-    margin-top:20px;
-    padding-left: 30px;
-}
+// .logo{
+//     margin-top:20px;
+//     padding-left: 30px;
+// }
 
-.message{
-    justify-content: center;
-    height: 13vh;
-    margin: 2px;
-    text-align: center;
-}
+// .message{
+//     justify-content: center;
+//     height: 13vh;
+//     margin: 2px;
+//     text-align: center;
+// }
 
 .hand-image {
     width: 20px;
     margin:0px 10px;
 }
 
-.msg-one {
-    font-weight: bold;
-    margin:0;
-    font-size: 12px;
+.label-control{
+    margin-bottom: 5px; 
+    font-weight: 500; 
 }
 
-.msg-two {
-    font-weight: bold;
-    font-size: 22px;
-    margin:0;
-
+.required,.star{display:inline-block;text-transform: lowercase;}
+.required::first-letter,.star::first-letter{text-transform: uppercase;}
+.required,
+.star {
+  color: #ea3d3d;
+  font-size: 12px !important;
+  line-height: 17px;
+  letter-spacing: 0.2px;
 }
 
-.msg-three {
-    font-weight: bold;
-    margin:0;
-    font-size: 11px;
-}
-
-.fields{
-    margin-left: 210px;
-}
-
-.row{
-    margin:5px;
-    padding:5px;
-}
-
-#col-job, #col-org, #col-dept, #col-country{
-    margin-right:125px;
-    padding:5px;
-} 
-
-#col-state, #col-city, #col-zip, #col-phone{
-    margin-right:125px;
-    padding:5px;
-    margin-top:-19px;
-}
-
-.form-label{
-    font-weight: bold;
-}
-
-.btn{
-    padding: 5px 60px;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-// #clearbtn{
-//     margin-left: 240px;
-//     padding: 5px 35px;
-//     margin-top:25px;
+// .msg-one {
+//     font-weight: bold;
+//     margin:0;
+//     font-size: 12px;
 // }
 
-// #submitbtn{
-//     margin-left:150px;
-//     padding: 5px 35px;
+// .msg-two {
+//     font-weight: bold;
+//     font-size: 22px;
+//     margin:0;
+
+// }
+
+// .msg-three {
+//     font-weight: bold;
+//     margin:0;
+//     font-size: 11px;
+// }
+
+// .fields{
+//     margin-left: 210px;
+// }
+
+// .row{
+//     margin:5px;
+//     padding:5px;
+// }
+
+// #col-job, #col-org, #col-dept, #col-country{
+//     margin-right:125px;
+//     padding:5px;
+// } 
+
+// #col-state, #col-city, #col-zip, #col-phone{
+//     margin-right:125px;
+//     padding:5px;
+//     margin-top:-19px;
+// }
+
+// .form-label{
+//     font-weight: bold;
+// }
+
+// .btn{
+//     padding: 5px 60px;
+//     font-size: 15px;
+//     font-weight: bold;
+// }
+
+// // #clearbtn{
+// //     margin-left: 240px;
+// //     padding: 5px 35px;
+// //     margin-top:25px;
+// // }
+
+// // #submitbtn{
+// //     margin-left:150px;
+// //     padding: 5px 35px;
+// //     margin-top: 25px;
+// // }
+
+// #clearbtn{
+//     margin-left: 360px;
 //     margin-top: 25px;
 // }
 
-#clearbtn{
-    margin-left: 360px;
-    margin-top: 25px;
-}
+// #submitbtn{
+//     margin-left: 130px;
+//     margin-top: 25px;
+// }
 
-#submitbtn{
-    margin-left: 130px;
-    margin-top: 25px;
-}
+// .text-danger{
+//     font-size: 12px;
+//     margin-top:10px;
+// }
 
-.text-danger{
-    font-size: 12px;
-    margin-top:10px;
-}
+// label span {
+//     color: red; 
+//     margin-left: 4px; 
+// }
 
-label span {
-    color: red; 
-    margin-left: 4px; 
-}
-
-.phoneNumber {
-    width:285px;
-    padding: 3px;
-    border: 1px solid #D6DDF2;
-    border-radius: 4px;
-}
+// .phoneNumber {
+//     width:285px;
+//     padding: 3px;
+//     border: 1px solid #D6DDF2;
+//     border-radius: 4px;
+// }
 
 
 

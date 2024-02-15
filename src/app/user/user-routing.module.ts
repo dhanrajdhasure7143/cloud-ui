@@ -12,11 +12,9 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { ActiveComponent } from './active/active.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
-  {
-    path: 'signup',
-    component: SignUpComponent},
   {
     path: '',
     component: LoginComponent},
@@ -55,8 +53,18 @@ const routes: Routes = [
   {
     path:'userinfo',
     component:UserInfoComponent
-  },{
-    path:'active', component: ActiveComponent
+  },
+  {
+    path:'active',
+    component: ActiveComponent
+  },
+  {
+    path:'subscription',
+    component: SubscriptionComponent
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }
