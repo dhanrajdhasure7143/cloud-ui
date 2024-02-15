@@ -46,7 +46,8 @@ export class SignUpComponent implements OnInit {
   userEmail: any;
   isGenerate : boolean = false;
   isValidate : boolean = false;
-  isOtpSent : boolean = false
+  isOtpSent : boolean = false;
+  ispublicMail:boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -97,6 +98,16 @@ export class SignUpComponent implements OnInit {
   }
   
   generateOTP(){
+    this.ispublicMail=false;
+    let userId=this.signupForm.value.email.toLowerCase();
+   //  this.isresend=true;
+    if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
+    userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
+      this.ispublicMail=true;
+      this.error='Only Business Email is allowed';
+      return
+ 
+    }
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase()).subscribe((data : any) => {
      console.log(data.errorMessage)  
      if(data.message == "OTP Sent Successfully"){
