@@ -48,6 +48,8 @@ export class SignUpComponent implements OnInit {
   isValidate : boolean = false;
   isOtpSent : boolean = false;
   ispublicMail:boolean = false;
+  isEmailDisable : boolean = false;
+  isSuccess : boolean = false
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -99,6 +101,7 @@ export class SignUpComponent implements OnInit {
   
   generateOTP(){
     this.ispublicMail=false;
+    this.isEmailDisable = true;
     let userId=this.signupForm.value.email.toLowerCase();
    //  this.isresend=true;
     if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
@@ -172,6 +175,7 @@ payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 
 validateOTP(){
   this.isGenerate = false;
+  this.isSuccess = true;
   this.spinner.show()
    this.authenticationService.validateOTP(this.signupForm.value.email.toLowerCase(),this.signupForm.value.otp).subscribe((data:any)=>{ 
    

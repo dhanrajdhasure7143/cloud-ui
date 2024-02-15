@@ -418,7 +418,7 @@
 }
 
 #otp-message{
-  margin-top: -35px !important;
+  margin-top: -10px !important;
 }
 
 .divide{
@@ -438,8 +438,7 @@
 }
 
 .resend{
-  font-size: 12px;
-    margin-left: 264px;
+    margin-left: 250px;
     display: flex;
     letter-spacing: 0.2px;
     line-height: 17px;
@@ -450,12 +449,15 @@
 
 .verify{
   position: relative !important;
-  left: 79% !important;
+  left: 75% !important;
   cursor: pointer;
   line-height: 17px;
   letter-spacing: 0.2px;
-  font-size: 12px;
   bottom: 35px !important;
   /* border-radius: 50% !important; */
-  color: #007bff;
+  // color: #007bff;
+}
+
+.verify:hover, .resend:hover  {
+  text-decoration: underline;
 }
