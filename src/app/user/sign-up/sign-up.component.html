@@ -51,24 +51,24 @@
                     </div>
                 </div>
                 &nbsp;
-                <form autocomplete="off" [formGroup]="signupForm" class="login_form">
+                <form autocomplete="off" [formGroup]="signupForm" class="login_form" cdkTrapFocus>
                     <div class="form-group col-sm-12">
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="firstName"> First Name </label>
                             <input type="text" maxlength="51" class="form-control" formControlName="firstName"
-                                value="" placeholder="Enter First Name">
+                                value="" placeholder="Enter First Name" tabindex="1">
                             <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="lastName"> Last Name </label>
                             <input type="text" maxlength="51" class="form-control" formControlName="lastName"
-                                value="" placeholder="Enter Last Name">
+                                value="" placeholder="Enter Last Name" tabindex="2">
                             <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="email"> Email </label>
                             <input type="text" maxlength="51" class="form-control" formControlName="email"
-                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" (keyup)="showOtp($event)">
+                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" (keyup)="showOtp($event)" tabindex="3">
                                 <!-- <i *ngIf="isGenerate" (click)="generateOTP()" class="fa fa-arrow-right" id="email-buttons" data-toggle="tooltip" data-placement="right" title="Send OTP"></i> -->
                                 <i *ngIf="isOtpSent" class="fa fa-check text-success" id="email-buttons"></i>
                                 <span *ngIf="isGenerate" (click)="generateOTP()" class="verify" > Verify Email </span>
@@ -83,7 +83,7 @@
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="password"> Password </label>
                             <input [type]="hide ?  'password': 'text'" maxlength="51" class="form-control" formControlName="password"
-                            value="" placeholder="Enter Password">
+                            value="" placeholder="Enter Password"  tabindex="4">
                             <span class="password-btn ml-auto" *ngIf="hide==true" (click)="hide = false">
                                 <img src='../../../assets/images/eye-show.svg' alt="eye-show" />
                               </span>
