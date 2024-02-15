@@ -122,6 +122,7 @@ export class SignUpComponent implements OnInit {
   }
   
   generateOTP(isResend){
+    this.spinner.show()
     this.ispublicMail=false;
     let userId=this.signupForm.value.email.toLowerCase();
     //  this.isresend=true;
@@ -129,10 +130,15 @@ export class SignUpComponent implements OnInit {
      userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
        this.ispublicMail=true;
        this.error='Only Business Email is allowed';
+       this.spinner.hide()
+       setTimeout(() => {
+        this.error='';
+      }, 3000);
        return
      } else {
        this.ispublicMail=false;
      }
+     this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
      console.log(data.errorMessage)  
      if(data.message == "OTP Sent Successfully"){
@@ -144,17 +150,18 @@ export class SignUpComponent implements OnInit {
         allowOutsideClick: true
       })
       this.timer(2)
-      // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP has been sent to your registered Email.' });
-      this.isGenerate = false
+      this.isGenerate = false;
+      this.isEmailDisable = true;
       this.isOtpSent = true;
       this.isValidate = true;
       this.isShowOtp = true;
       this.resendEnable = true;
-      this.isEmailDisable = true;
       setTimeout(() => {
         this.resendEnable = false;
-      }, 20000);
+      }, 120000);
+      this.spinner.hide()
      } else {
+      this.spinner.hide()
       Swal.fire("Error",data.errorMessage,"error")
      }
     },err=>{
@@ -202,16 +209,15 @@ payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 }
 
 validateOTP(){
-  this.isGenerate = false;
-  this.isSuccess = true;
   this.spinner.show()
    this.authenticationService.validateOTP(this.signupForm.value.email.toLowerCase(),this.signupForm.value.otp).subscribe((data:any)=>{ 
-   
     if(data.message=="OTP Verified Successfully")
       {
         this.spinner.hide()
         this.isShowOtp = false;
         this.isValidate = false;
+        this.isSuccess = true;
+        this.isGenerate = false;
         Swal.fire({
           title: 'Success!',
           text: `OTP Verified Successfully.`,
@@ -219,18 +225,31 @@ validateOTP(){
           showCancelButton: false,
           allowOutsideClick: true
         })
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Verified Successfully.' });
+        // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Verified Successfully.' });
       }else
       {
         this.spinner.hide()
         Swal.fire("Error",data.message,"error")
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'data.message' });
+        // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'data.message' });
       }
    }, err=>{
      console.log(err)
      this.spinner.hide()
      Swal.fire("Error","Unable to register data","error")
    })
+}
+
+lettersOnly(event): boolean {
+    
+  var regex = new RegExp("^[a-zA-Z ]+$");
+  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+      event.preventDefault();
+      return false;
+    }
+    if ((event.target.selectionStart === 0 && event.code === 'Space')){
+      event.preventDefault();
+    }
 }
 
 }

@@ -55,22 +55,21 @@
                     <div class="form-group col-sm-12">
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="firstName"> First Name </label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="firstName"
+                            <input type="text" maxlength="51" class="form-control" formControlName="firstName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter First Name" tabindex="1">
                             <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="lastName"> Last Name </label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="lastName"
+                            <input type="text" maxlength="51" class="form-control" formControlName="lastName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter Last Name" tabindex="2">
                             <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="email"> Email </label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="email"
-                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" (keyup)="showOtp($event)" tabindex="3" [disabled]="isEmailDisable">
-                                <!-- <i *ngIf="isGenerate" (click)="generateOTP()" class="fa fa-arrow-right" id="email-buttons" data-toggle="tooltip" data-placement="right" title="Send OTP"></i> -->
-                                <i *ngIf="isSuccess" class="fa fa-check text-success" id="email-buttons"></i>
+                            <input type="text" maxlength="51" class="form-control" formControlName="email" [attr.disabled]="isEmailDisable ? true : null"
+                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" (keyup)="showOtp($event)" tabindex="3">
+                                <i *ngIf="isSuccess" class="pi pi-verified text-success" id="email-buttons"></i>
                                 <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify signup_styles text-primary" > Verify Email </span>
                             <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
                             <span class="required" *ngIf="ispublicMail" style="margin-left: -80px;">{{error}}</span>  
@@ -78,10 +77,10 @@
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" maxlength="51" class="form-control" formControlName="otp"
                                 value="" placeholder="Enter Email Verification Code">
-                                <i *ngIf="isValidate" (click)="validateOTP()" class="fa fa-arrow-right" id="email-buttons"></i>
+                                <i *ngIf="isValidate" (click)="validateOTP()" class="fa fa-check text-success" id="email-buttons"></i> 
                                 <span class="required">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
-                                <span *ngIf="resendEnable" class="resend text-secondary" > Resend Code </span>    
+                                <span *ngIf="resendEnable" class="resend-disable text-secondary" > Resend Code </span>    
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="password"> Password </label>
@@ -100,25 +99,25 @@
                         <div class="col-sm-12">
                           <button class="btn btn-primary signup-btn"(click)="onSubmit()" [disabled]="signupForm.invalid" type="submit" id="btn">Sign Up</button>
                         </div>
-                        <div class="form-group row grp-buttons text-center">
+                        <!-- <div class="form-group row grp-buttons text-center">
                             <div class="col-sm-12 ">
                                 <div class="divide">
                                     <h6><span> or </span></h6>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-12 footer-google">
+                            <div class="col-md-12 footer-google">
                                 <button class="btn_style text-center" type="button">
                                     <a [href]="googleLoginURL">
                                         <img src="assets/login icons/google.svg" class="buuton-icons"
                                             alt="google" /> Continue with Google</a> </button>
-                            </div> -->
+                            </div>
                             <div class="col-md-12 footer-microsoft">
                                 <button class="btn_style text-center" type="button" id="footer-button">
                                     <a [href]="officeLoginURL">
                                         <img src="assets/login icons/office.svg" class="buuton-icons"
                                             alt="office" /> Continue with Microsoft </a> </button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
                 &nbsp;
