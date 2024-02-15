@@ -71,15 +71,16 @@
                                 value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" (keyup)="showOtp($event)" tabindex="3" [disabled]="isEmailDisable">
                                 <!-- <i *ngIf="isGenerate" (click)="generateOTP()" class="fa fa-arrow-right" id="email-buttons" data-toggle="tooltip" data-placement="right" title="Send OTP"></i> -->
                                 <i *ngIf="isSuccess" class="fa fa-check text-success" id="email-buttons"></i>
-                                <span *ngIf="isGenerate" (click)="generateOTP()" class="verify signup_styles text-primary" > Verify Email </span>
+                                <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify signup_styles text-primary" > Verify Email </span>
                             <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
-                            <span class="required" *ngIf="ispublicMail">{{error}}</span>  
+                            <span class="required" *ngIf="ispublicMail" style="margin-left: -80px;">{{error}}</span>  
                         </div>
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" maxlength="51" class="form-control" formControlName="otp"
                                 value="" placeholder="Enter Email Verification Code">
                                 <i *ngIf="isValidate" (click)="validateOTP()" class="fa fa-arrow-right" id="email-buttons"></i>
-                                <span *ngIf="isOtpSent" class="resend signup_styles text-primary" (click)="generateOTP()" > Resend Code </span>  
+                                <span class="required">{{display}}</span>
+                                <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>  
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="password"> Password </label>

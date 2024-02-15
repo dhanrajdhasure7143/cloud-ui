@@ -49,7 +49,9 @@ export class SignUpComponent implements OnInit {
   isOtpSent : boolean = false;
   ispublicMail:boolean = false;
   isEmailDisable : boolean = false;
-  isSuccess : boolean = false
+  isSuccess : boolean = false;
+  display : any;
+  resendEnable : boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -98,34 +100,60 @@ export class SignUpComponent implements OnInit {
       // this.isOtpSent = false
     }
   }
+
+  timer(minute) {
+    let seconds: number = minute * 60;
+    let textSec: any = "0";
+    let statSec: number = 60;
+    const prefix = minute < 10 ? "0" : "";
+    const timer = setInterval(() => {
+      seconds--;
+      if (statSec != 0) statSec--;
+      else statSec = 59;
+      if (statSec < 10) {
+        textSec = "0" + statSec;
+      } else textSec = statSec;
+      this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
+      if (seconds == 0) {
+        console.log("finished");
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
   
-  generateOTP(){
+  generateOTP(isResend){
     this.ispublicMail=false;
-    this.isEmailDisable = true;
     let userId=this.signupForm.value.email.toLowerCase();
-   //  this.isresend=true;
-    if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
-    userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
-      this.ispublicMail=true;
-      this.error='Only Business Email is allowed';
-      return
- 
-    }
-    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase()).subscribe((data : any) => {
+    //  this.isresend=true;
+     if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
+     userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
+       this.ispublicMail=true;
+       this.error='Only Business Email is allowed';
+       return
+     } else {
+       this.ispublicMail=false;
+     }
+    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
      console.log(data.errorMessage)  
      if(data.message == "OTP Sent Successfully"){
-      // Swal.fire({
-      //   title: 'Success!',
-      //   text: `OTP has been sent to your registered Email.`,
-      //   icon: 'success',
-      //   showCancelButton: false,
-      //   allowOutsideClick: true
-      // })
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP has been sent to your registered Email.' });
+      Swal.fire({
+        title: 'Success!',
+        text: `OTP has been sent to your registered Email.`,
+        icon: 'success',
+        showCancelButton: false,
+        allowOutsideClick: true
+      })
+      this.timer(2)
+      // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP has been sent to your registered Email.' });
       this.isGenerate = false
       this.isOtpSent = true;
       this.isValidate = true;
       this.isShowOtp = true;
+      this.resendEnable = true;
+      this.isEmailDisable = true;
+      setTimeout(() => {
+        this.resendEnable = false;
+      }, 20000);
      } else {
       Swal.fire("Error",data.errorMessage,"error")
      }
