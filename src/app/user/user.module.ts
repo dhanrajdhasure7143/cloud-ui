@@ -102,6 +102,7 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
+        Ng2TelInputModule,
         PasswordModule,
         PrimengCustomModule,
         Ng2TelInputModule
