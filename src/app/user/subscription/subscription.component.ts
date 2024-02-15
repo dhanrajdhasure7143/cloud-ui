@@ -104,7 +104,7 @@ sendEmailEnterPricePlan(){
     if(res.errorMessage !="User not present"){
     Swal.fire({
         title: 'Success!',
-        text: `Thank you for choosing Enterprice plan, Our team will contact you soon`,
+        text: `Thank you for choosing Enterprise plan, Our team will contact you soon`,
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false

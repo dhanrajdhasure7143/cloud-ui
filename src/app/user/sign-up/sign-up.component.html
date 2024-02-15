@@ -80,7 +80,8 @@
                                 value="" placeholder="Enter Email Verification Code">
                                 <i *ngIf="isValidate" (click)="validateOTP()" class="fa fa-arrow-right" id="email-buttons"></i>
                                 <span class="required">{{display}}</span>
-                                <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>  
+                                <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
+                                <span *ngIf="resendEnable" class="resend text-secondary" > Resend Code </span>    
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="password"> Password </label>

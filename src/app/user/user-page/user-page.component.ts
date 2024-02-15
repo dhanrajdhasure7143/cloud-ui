@@ -204,7 +204,7 @@ this.service.registrationContinue(payload).subscribe((res : any) => {
   if(res.body.code == 200) {
     Swal.fire({
       title: 'Success!',
-      text: res.message,
+      text: res.body.message,
       icon: 'success',
       showCancelButton: false,
       allowOutsideClick: true
