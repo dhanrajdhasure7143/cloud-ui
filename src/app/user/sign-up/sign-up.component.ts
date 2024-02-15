@@ -87,12 +87,12 @@ export class SignUpComponent implements OnInit {
   showOtp(event){
     if(event.target.value.includes('@') && this.signupForm.get('email').valid){
       this.isGenerate = true;
-      this.isShowOtp = true;
-      this.isOtpSent = false
+      // this.isShowOtp = true;
+      // this.isOtpSent = false
     } else{
       this.isGenerate = false;
-      this.isShowOtp = false;
-      this.isOtpSent = false
+      // this.isShowOtp = false;
+      // this.isOtpSent = false
     }
   }
   
