@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country, State, City } from 'country-state-city';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from 'sweetalert2';
@@ -39,7 +40,8 @@ export class UserPageComponent implements OnInit {
               private route:ActivatedRoute,
               private service: FirstloginService,
               private crypto:CryptoService,
-              private router: Router
+              private router: Router,
+              private spinner: NgxSpinnerService
               ) {
     this.route.queryParams.subscribe((data)=>{
       this.user = data.name,
@@ -183,6 +185,7 @@ export class UserPageComponent implements OnInit {
   }
 
   registrationSave(){
+    this.spinner.show();
     console.log(this.userForm.value,"hello")
     var payload = new FormData();
     var reqObj = {}
@@ -197,6 +200,7 @@ export class UserPageComponent implements OnInit {
 }
 payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 this.service.registrationContinue(payload).subscribe((res : any) => {
+  this.spinner.hide();
   if(res.body.code == 200) {
     Swal.fire({
       title: 'Success!',
@@ -204,11 +208,15 @@ this.service.registrationContinue(payload).subscribe((res : any) => {
       icon: 'success',
       showCancelButton: false,
       allowOutsideClick: true
-    })
-    this.router.navigate(['/subscription'],{
-      queryParams: { email : this.userEmail },
-    });
+  }).then((result) => {
+    if (result.value) {
+      this.router.navigate(['/subscription'],{
+        queryParams: { email : this.userEmail },
+      });
+    }
+  });
   } else {
+    this.spinner.hide();
     Swal.fire("Error",res.errorMessage,"error")
   }
   })

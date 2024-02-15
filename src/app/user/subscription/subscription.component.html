@@ -7,15 +7,17 @@
         </div>
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-4 text-center bot-plans" *ngFor="let plan of botPlans; let i = index">
-                    <div class="circle"> <img src="../../../assets/MicroBot_New.jpg" alt="" width="60px" height="60px"></div>
-                    <div> <span>{{plan.predefinedBotPlanName}}</span>  </div>
-                    <div> <span> ${{plan.amount}} / {{plan.interval}} </span> <i *ngIf="showArrowRight" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> <i *ngIf="showArrowDown" class="pi pi-arrow-circle-down" style="margin:10px" (click)="hideDescription()"></i> </div>
-                    <div class="line"></div>
-                    <div class="description-box" *ngIf="selectedPlanIndex === i">
-                        <span> {{ plan.description }} </span>
+                <div class="col-md-4 text-center bot-plans" *ngFor="let plan of predefinedPlans; let i = index">
+                    <div (click)="onSelectPredefinedBot(plan, i)">
+                        <div class="circle" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> <img src="../../../assets/MicroBot_New.jpg" alt="" width="60px" height="60px"></div>
+                        <div> <span>{{plan.predefinedBotPlanName}}</span>  </div>
+                        <div> <span> ${{plan.amount}} / {{plan.interval}} </span> <i *ngIf="showArrowRight" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> <i *ngIf="showArrowDown" class="pi pi-arrow-circle-down" style="margin:10px" (click)="hideDescription()"></i> </div>
+                        <div class="line"></div>
+                        <div class="description-box" *ngIf="selectedPlanIndex === i">
+                            <span> {{ plan.description }} </span>
+                        </div>
                     </div> 
-                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-12" style="margin: 50px 0 0 0">
@@ -40,10 +42,10 @@
                 <span style="font-weight: 800; color: #2785ff;"> Your card information will be safeguarded. </span>
             </div>
             <div class="col-md-12 d-flex">
-                <div class="card text-center p-10 card" style="height: 50px; width: 150px; margin-left:17px">
+                <div class="card text-center p-10 card" [ngClass]="planType=='Monthly'?'circle-color':''" style="height: 50px; width: 150px; margin-left:17px" (click)="selectplanType('Monthly')">
                   <span style="margin-top: 12px;"> Monthly </span> 
                 </div>
-                <div class="card text-center p-10 card" style="height: 50px; width: 150px;margin-left:17px ">
+                <div class="card text-center p-10 card" [ngClass]="planType=='Yearly'?'circle-color':''" style="height: 50px; width: 150px;margin-left:17px "  (click)="selectplanType('Yearly')">
                     <span style="margin-top: 12px;"> Yearly </span> 
                   </div>
             </div>
@@ -83,7 +85,7 @@
                         </div>
                      </div>
                      <div class="col-md-10 p-10 form-group">
-                        <button type="button" class="btn btn-primary w-100" style="font-weight: 700;" (click)="paymentPlan()"> Pay Now (300$) </button>
+                        <button type="button" class="btn btn-primary w-100" style="font-weight: 700;" (click)="paymentPlan()"> Pay Now (<span>{{selectedAmount*(planType=='Monthly'?1:12)}}</span> $) </button>
                      </div>
                      <div class="col-md-10 p-10 form-group">
                         <p>By confirming your subscription, you allow EZFlow to charge your card for this payment and future payments in accordance with their teams</p>
