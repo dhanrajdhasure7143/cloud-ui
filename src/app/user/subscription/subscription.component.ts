@@ -98,7 +98,7 @@ paymentPlan(){
 
 }
 
-sendEmailEnterPricePlan(){
+sendEmailEnterPrisePlan(){
   this.spinner.show();
   this.service.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
     if(res.errorMessage !="User not present"){

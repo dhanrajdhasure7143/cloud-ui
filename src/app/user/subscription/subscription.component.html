@@ -8,8 +8,8 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-4 text-center bot-plans" *ngFor="let plan of predefinedPlans; let i = index">
-                    <div (click)="onSelectPredefinedBot(plan, i)">
-                        <div class="circle" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> <img src="../../../assets/MicroBot_New.jpg" alt="" width="60px" height="60px"></div>
+                    <div class="bot-details">
+                        <div class="circle" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> <img src="../../../assets/MicroBot_New.jpg" alt="" width="60px" height="60px"></div>
                         <div> <span>{{plan.predefinedBotPlanName}}</span>  </div>
                         <div> <span> ${{plan.amount}} / {{plan.interval}} </span> <i *ngIf="showArrowRight" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> <i *ngIf="showArrowDown" class="pi pi-arrow-circle-down" style="margin:10px" (click)="hideDescription()"></i> </div>
                         <div class="line"></div>
@@ -31,7 +31,7 @@
                     margin-top: 5px;
                     color: #2785ff;
                     font-weight: 800;" >
-                        <a class="signup_styles text-primary" (click)="sendEmailEnterPricePlan()"> Try Now </a> 
+                        <a class="signup_styles text-primary" (click)="sendEmailEnterPrisePlan()"> Try Now </a> 
                      </div>
                 </div>
             </div>

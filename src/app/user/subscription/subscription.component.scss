@@ -26,7 +26,7 @@
     border: 1px solid #098de6;
 }
 .selected-circle{
-    border: 2px solid #9dc44b;
+    border: 2px solid #97ce20;
 }
 
 .line {
@@ -42,5 +42,12 @@
     border-radius: 10px;
     border: 1px solid #098de6;
     margin: 10px;
+    padding: 10px;
+}
+
+.bot-details:hover{
+    -webkit-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+    box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
     padding: 10px;
 }
