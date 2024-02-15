@@ -446,8 +446,12 @@ export class LoginComponent implements OnInit {
   }
 
   requestDemo() {
-    // location.href = this.config.portfolioSite;
-this.router.navigate(['/createaccount'])
+    if(this.config.isNewSignupFlow){
+      this.router.navigate(['/signup'])
+    } else {
+      // location.href = this.config.portfolioSite;
+      this.router.navigate(['/createaccount'])
+    }
   }
 
   googleLogin() {

@@ -13,10 +13,12 @@ import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
+  providers: [MessageService]
 })
 export class SignUpComponent implements OnInit {
 
@@ -60,6 +62,7 @@ export class SignUpComponent implements OnInit {
     private crypto:CryptoService,
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
+    public messageService:MessageService,
     //private cookieService:CookieService,
     
   ) {}
@@ -97,13 +100,14 @@ export class SignUpComponent implements OnInit {
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase()).subscribe((data : any) => {
      console.log(data.errorMessage)  
      if(data.message == "OTP Sent Successfully"){
-      Swal.fire({
-        title: 'Success!',
-        text: `OTP has been sent to your registered Email.`,
-        icon: 'success',
-        showCancelButton: false,
-        allowOutsideClick: true
-      })
+      // Swal.fire({
+      //   title: 'Success!',
+      //   text: `OTP has been sent to your registered Email.`,
+      //   icon: 'success',
+      //   showCancelButton: false,
+      //   allowOutsideClick: true
+      // })
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP has been sent to your registered Email.' });
       this.isGenerate = false
       this.isOtpSent = true;
       this.isValidate = true;
@@ -111,9 +115,11 @@ export class SignUpComponent implements OnInit {
      } else {
       Swal.fire("Error",data.errorMessage,"error")
      }
-
-    },
-    );
+    },err=>{
+      console.log(err)
+      this.spinner.hide()
+      Swal.fire("Error","Something Went Wrong","error")
+    });
 
   }
 
@@ -170,10 +176,12 @@ validateOTP(){
           showCancelButton: false,
           allowOutsideClick: true
         })
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Verified Successfully.' });
       }else
       {
         this.spinner.hide()
         Swal.fire("Error",data.message,"error")
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'data.message' });
       }
    }, err=>{
      console.log(err)

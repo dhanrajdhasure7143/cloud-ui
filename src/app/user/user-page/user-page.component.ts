@@ -220,7 +220,9 @@ this.service.registrationContinue(payload).subscribe((res : any) => {
       showCancelButton: false,
       allowOutsideClick: true
     })
-    this.router.navigate(['/']);
+    this.router.navigate(['/subscription'],{
+      queryParams: { email : this.userEmail },
+    });
   } else {
     Swal.fire("Error",res.errorMessage,"error")
   }

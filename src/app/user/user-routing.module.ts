@@ -16,9 +16,6 @@ import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
   {
-    path: 'signup',
-    component: SignUpComponent},
-  {
     path: '',
     component: LoginComponent},
   {
@@ -64,6 +61,10 @@ const routes: Routes = [
   {
     path:'subscription',
     component: SubscriptionComponent
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }
