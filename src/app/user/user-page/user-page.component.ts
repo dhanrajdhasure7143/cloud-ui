@@ -221,4 +221,31 @@ this.service.registrationContinue(payload).subscribe((res : any) => {
     this.errorMessage1 = "";
     this.errorMessage2 = ""
   }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.userForm.get(controlName);
+
+    if (control.touched && control.errors) {
+      if (control.errors.required) {
+        if (controlName == "jobTitle") {
+          return "Job Title required"
+        }
+        else if (controlName == "organization") {
+          return "Organization required"
+        }
+        else if (controlName == "zipCode") {
+          return "Zip Code required"
+        }
+        return `${controlName} required`;
+      }
+      if (control.errors.minlength) {
+        return "Minimum 2 characters required";
+      }
+      if (control.errors.pattern) {
+        return "Only Alphabets and Numbers are allowed";
+      }
+    }
+
+    return '';
+  }
 }
