@@ -18,14 +18,14 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                 <div class="col-md-10" style="margin-top: 30px;">
-                    <form [formGroup]="userForm">
+                    <form [formGroup]="userForm" cdkTrapFocus>
                         <!-- <div class="fields"> -->
                             <div class="row">
                                 <div class="form-group col-md-6 pl-0">
                                     <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
                                     <input type="text" formControlName="jobTitle" class="form-control" style="height: 45px !important;
                                     border-radius: 5px;" id="jobTitle"
-                                        (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="20">
+                                        (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="20" tabindex="1">
                                     <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
                                         class="required">
                                         {{ getErrorMessage('jobTitle') }}
@@ -36,7 +36,7 @@
                                     <input type="text" formControlName="organization" class="form-control" style="height: 45px !important;
                                     border-radius: 5px;" id="organization"
                                         (keypress)="lettersOnly($event)" placeholder="Enter your organization" maxlength="30"
-                                        minlength="2">
+                                        minlength="2" tabindex="2">
                                     <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
                                         class="required">
                                         {{ getErrorMessage('organization') }}
@@ -47,7 +47,7 @@
                                 <div class="form-group col-md-6 pl-0">
                                     <label for="department" class="label-control">Department <span class="star">*</span> </label>
                                     <select formControlName="department" class="form-control" style="height: 45px !important;
-                                    border-radius: 5px;" id="department">
+                                    border-radius: 5px;" id="department" tabindex="3">
                                         <option value="" disabled selected>Select your department</option>
                                         <option *ngFor="let department of departments" [value]="department">{{ department }}</option>
                                     </select>
@@ -59,7 +59,7 @@
                                     <label for="country" class="label-control">Country <span class="star">*</span> </label>
                                     <select formControlName="country" class="form-control" id="country" style="height: 45px !important;
                                     border-radius: 5px;"
-                                        (change)="onChangeCountry($event.target.value)" name='country' required>
+                                        (change)="onChangeCountry($event.target.value)" name='country' required tabindex="4">
                                         <option value="" disabled selected>Select your country</option>
                                         <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>
                                     </select>
@@ -73,7 +73,7 @@
                                     <label for="state" class="label-control">State <span class="star">*</span> </label>
                                     <select formControlName="state" class="form-control" style="height: 45px !important;
                                     border-radius: 5px;" id="state"
-                                        (change)="onChangeState($event.target.value)" name='state' required>
+                                        (change)="onChangeState($event.target.value)" name='state' tabindex="5" required>
                                         <option value="" disabled selected>Select your state</option>
                                         <option *ngFor="let state of stateInfo" [value]="state.name">{{ state.name }}</option>
                                     </select>
@@ -85,7 +85,7 @@
                                     <label for="city" class="label-control">City <span class="star">*</span></label>
                                     <select formControlName="city" class="form-control" id="city" style="height: 45px !important;
                                     border-radius: 5px;"
-                                        (change)="onChangeCity($event.target.value)" name='city' required>
+                                        (change)="onChangeCity($event.target.value)" name='city' tabindex="6" required>
                                         <option value="" disabled selected>Select your city</option>
                                         <option *ngFor="let city of cityInfo" [value]="city.name">{{ city.name }}</option>
                                     </select>
@@ -99,7 +99,7 @@
                                     <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
                                     <input type="text" formControlName="zipCode" style="height: 45px !important;
                                     border-radius: 5px;" class="form-control" id="inputZip"
-                                        placeholder="Enter your zip code" maxlength="6" pattern=^[A-Za-z0-9]+$ required>
+                                        placeholder="Enter your zip code" maxlength="6" pattern=^[A-Za-z0-9]+$ tabindex="7" required>
                                     <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('zipCode') !== ''"
                                         class="required">
                                         {{ getErrorMessage('zipCode') }}
@@ -116,7 +116,7 @@
                                                     class="form-control" id="phone" formControlName="phoneNumber"
                                                     onKeyPress="if(this.value.length==10) return false;" ng2TelInput
                                                     [ng2TelInputOptions]="{initialCountry: phnCountry}"
-                                                    pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
+                                                    pattern="^((\\+91-?)|0)?[0-9]{10}$" tabindex="8" required>
                                             </div>
                                         </div>
                                     </div>
