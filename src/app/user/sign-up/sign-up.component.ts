@@ -131,12 +131,8 @@ export class SignUpComponent implements OnInit {
   showOtp(event){
     if(event.target.value.includes('@') && this.signupForm.get('email').valid){
       this.isGenerate = true;
-      // this.isShowOtp = true;
-      // this.isOtpSent = false
     } else{
       this.isGenerate = false;
-      // this.isShowOtp = false;
-      // this.isOtpSent = false
     }
   }
 
@@ -154,7 +150,6 @@ export class SignUpComponent implements OnInit {
       } else textSec = statSec;
       this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
       if (seconds == 0) {
-        console.log("finished");
         clearInterval(timer);
       }
     }, 1000);
@@ -179,7 +174,6 @@ export class SignUpComponent implements OnInit {
      }
      this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
-     console.log(data.errorMessage)  
      if(data.message == "OTP Sent Successfully"){
       Swal.fire({
         title: 'Success!',
@@ -402,7 +396,6 @@ get userFormValid(): boolean {
 
 registrationSave(){
   this.spinner.show();
-  console.log(this.userForm.value,"hello")
   var payload = new FormData();
   var reqObj = {}
   reqObj = {
@@ -416,25 +409,24 @@ registrationSave(){
     country : this.userForm.value.country,
     state : this.userForm.value.state,
     city : this.userForm.value.city,
-    zipCode : this.userForm.value.zipCode,
+    zipcode : this.userForm.value.zipCode,
     phoneNumber : this.userForm.value.phoneNumber,
     isSubscriptionEnabled : true
 }
 payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 this.service.registerUser(payload).subscribe((res : any) => {
-  console.log(res)
 this.spinner.hide();
-if(res.body.code == 200) {
+if(res.body.message == "Registration Complete") {
   Swal.fire({
     title: 'Success!',
-    text: res.body.message,
+    text: 'Registration Done Successfully',
     icon: 'success',
     showCancelButton: false,
     allowOutsideClick: true
 }).then((result) => {
   if (result.value) {
     this.router.navigate(['/subscription'],{
-      queryParams: { email : this.userEmail },
+      queryParams: { email : this.signupForm.value.email.toLowerCase() },
     });
   }
 });
@@ -480,8 +472,9 @@ getErrorMessage(controlName: string): string {
   return '';
 }
 
-checkOrganizationName(value) {
-  this.service.organizationCheck(value).subscribe(res => {
+checkOrganizationName(event : any) {
+  console.log(event.target.value)
+  this.service.organizationCheck(event.target.value).subscribe(res => {
     if (res.message == "Organization Name already Exists") {
       this.orgExsist = true;
     } else {
@@ -489,4 +482,12 @@ checkOrganizationName(value) {
     }
   })
 }
+
+onKeydown(event){ 
+  let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight","Delete"]
+     let temp =numArray.includes(event.key); //gives true or false
+    if(!temp){
+     event.preventDefault();
+    } 
+   }
 }

@@ -67,14 +67,14 @@
                             <label class="label-control" for="email"> Email </label>
                             <input type="text" maxlength="51" class="form-control" formControlName="email" [attr.disabled]="isEmailDisable ? true : null"
                                 value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" (keyup)="showOtp($event)" tabindex="3">
-                                <i *ngIf="isSuccess" class="pi pi-verified text-success" id="email-buttons"></i>
                                 <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify signup_styles text-primary" > Verify Email </span>
+                                <i *ngIf="isSuccess" class="pi pi-verified text-success" id="email-buttons"></i>
                             <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
                             <span class="required" *ngIf="ispublicMail" style="margin-left: -80px;">{{error}}</span>  
                         </div>
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" maxlength="51" class="form-control" formControlName="otp"
-                                value="" placeholder="Enter Email Verification Code">
+                                value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)">
                                 <i *ngIf="isValidate" (click)="validateOTP()" class="fa fa-check text-success" id="email-buttons"></i> 
                                 <span class="required">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
@@ -141,7 +141,7 @@
                                 <select formControlName="department" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="department" tabindex="3">
                                     <option value="" disabled selected>Select your department</option>
-                                    <option *ngFor="let department of departments" [value]="department">{{ department.departmentName }}</option>
+                                    <option *ngFor="let department of departments" [value]="department.departmentName">{{ department.departmentName }}</option>
                                 </select>
                                 <div *ngIf="f.department.touched && f.department.errors" class="required">
                                     <span>Department required </span>
