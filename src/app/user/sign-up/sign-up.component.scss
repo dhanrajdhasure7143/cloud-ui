@@ -292,26 +292,26 @@
     border-top: 1em solid transparent;
   }
 
-  .col-md-7 {
+  .bot-display {
     height: 650px; /* Set the desired height for the scrollable content */
 }
 
-.col-md-7:hover {
+.bot-display:hover {
   overflow-y: scroll; /* Shows the scrollbar on hover */
 }
 
 /* For WebKit (Chrome, Safari) browsers */
-.col-md-7::-webkit-scrollbar {
+.bot-display::-webkit-scrollbar {
     // width: 3px; /* Set the scrollbar width */
     scrollbar-width: thin; /* Set the scrollbar width to a thin size */
     scrollbar-color: transparent #cce5f5; /* Set the scrollbar color to transparent */
 }
 
-.col-md-7::-webkit-scrollbar-thumb {
+.bot-display::-webkit-scrollbar-thumb {
   background-color: #cce5f5; /* Set the scrollbar thumb color to transparent */
 }
 
-.col-md-7::-webkit-scrollbar-track {
+.bot-display::-webkit-scrollbar-track {
   background-color: transparent; /* Set the scrollbar track color to transparent */
 }
 
@@ -464,4 +464,28 @@
 
 .verify:hover, .resend:hover  {
   text-decoration: underline;
+}
+
+.user-screen{
+  margin: 10px;
+}
+
+.hand-image {
+  width: 20px;
+  margin:0px 10px;
+}
+
+.label-control{
+  margin-bottom: 5px; 
+  font-weight: 500; 
+}
+
+.user-screen{
+  margin: 35px 0 0 50px;
+}
+
+.container-fluid{
+  // margin: 0 100px 0 100px !important;
+  // max-width: 1400px !important;
+  padding: 0 50px 0 50px;
 }
