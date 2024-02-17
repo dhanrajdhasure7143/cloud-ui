@@ -59,9 +59,10 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { SubscriptionComponent } from './subscription/subscription.component';
+import { OrderPaymentComponent } from './order-payment/order-payment.component';
 
 @NgModule({
-    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent],
     imports: [
         CommonModule,
         UserRoutingModule,

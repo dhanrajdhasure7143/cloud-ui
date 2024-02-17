@@ -13,6 +13,7 @@ import { ActiveComponent } from './active/active.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
+import { OrderPaymentComponent } from './order-payment/order-payment.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignUpComponent
+  },
+  {
+    path: 'order',
+    component: OrderPaymentComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }
