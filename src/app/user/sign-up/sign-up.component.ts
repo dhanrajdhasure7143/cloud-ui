@@ -173,6 +173,7 @@ export class SignUpComponent implements OnInit {
   }
 
 onSubmit() {
+  this.router.navigate(["/subscription"])
 var payload = new FormData();
 var reqObj = {}
 reqObj = {

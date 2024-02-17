@@ -1,17 +1,50 @@
 <div class="container-fluid">
     <div class="row">
-        <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-7">
-        <div class="logo">
-            <img style="width:170px !important; margin: 10px;" src="assets/images/EZFlow.png" alt="EZFlow">
-        </div>
         <div class="col-md-12">
+            <div class="logo">
+                <img style="width:170px !important; margin: 10px;" src="assets/images/EZFlow.png" alt="EZFlow">
+            </div>
+        </div>
+        <!-- <div class="col-md-1"></div> -->
+        <div class="col-md-5">
+            <div class="col-md-12" style="margin: 10px 0 0 0">
+                <div>
+                    <h4 class="label-control">Enterprise Plan</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <img src="../../../assets/copilot.svg" width="40px" height="40px" alt="">
+                    </div>
+                    <div class="col-md-11">
+                        <div for="" class="label-control"> New Personalized Enterprise-Level Planning? </div>
+                        <div style="font-size: 13px;margin-top: 5px;color: #2785ff;font-weight: 800;" >
+                            <a class="signup_styles text-primary" (click)="sendEmailEnterPrisePlan()"> Try Now </a> 
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+        <div class="col-md-12" style="margin: 10px 0 0 0">
+            <div>
+                <h4 class="label-control">Predefined Bots</h4>
+            </div>
             <div class="row">
-                <div class="col-md-4 text-center bot-plans" *ngFor="let plan of predefinedPlans; let i = index">
+                <div class="col-md-4 bot-plans" *ngFor="let plan of predefinedPlans; let i = index">
                     <div class="bot-details">
-                        <div class="circle" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> <img src="../../../assets/MicroBot_New.jpg" alt="" width="60px" height="60px"></div>
-                        <div> <span>{{plan.predefinedBotPlanName}}</span>  </div>
-                        <div> <span> ${{plan.amount}} / {{plan.interval}} </span> <i *ngIf="showArrowRight" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> <i *ngIf="showArrowDown" class="pi pi-arrow-circle-down" style="margin:10px" (click)="hideDescription()"></i> </div>
+                        <div class="circle text-center" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
+                            <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
+                        </div>
+                        <div class="label-control text-center"> {{plan.predefinedBotPlanName}} </div>
+                        <div> <p> ${{plan.amount}} / {{plan.interval}} </p></div>
+                         <div>
+                            <p-radioButton name="groupname" value="Monthly" label="Monthly" [(ngModel)]="plan.interval"></p-radioButton>
+                            <p-radioButton name="groupname" value="Yearly" label="Yearly"  [(ngModel)]="plan.interval"></p-radioButton>
+                        </div>
+                        <div>
+                            <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> 
+                            <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:10px" (click)="hideDescription()"></i>
+                        </div>
                         <div class="line"></div>
                         <div class="description-box" *ngIf="selectedPlanIndex === i">
                             <span> {{ plan.description }} </span>
@@ -20,24 +53,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12" style="margin: 50px 0 0 0">
-            <div class="row">
-                <div class="col-md-1">
-                    <img src="../../../assets/copilot.svg" width="40px" height="40px" style="margin: 10px 0 0 30px" alt="">
-                </div>
-                <div class="col-md-11">
-                    <div for="" class="label-control"> New Personalized Enterprise-Level Planning? </div>
-                    <div style="font-size: 13px;
-                    margin-top: 5px;
-                    color: #2785ff;
-                    font-weight: 800;" >
-                        <a class="signup_styles text-primary" (click)="sendEmailEnterPrisePlan()"> Try Now </a> 
-                     </div>
-                </div>
-            </div>
+
         </div>
-        </div>
-        <div class="col-md-5">
+        <!-- <div class="col-md-5">
             <div class="col-md-12" style="padding: 30px; height: 70px;">
                 <span style="font-weight: 800; color: #2785ff;"> Your card information will be safeguarded. </span>
             </div>
@@ -67,9 +85,8 @@
                         <label for="" class="label-control"> Country or Region </label>
                         <select class="form-control" formControlName="country" placeholder="Select Country" required>
                             <option value="" disabled selected> Select your country </option>
-                            <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>                        </select>
-                        <!-- <p-dropdown [options]="countries" formControlName="country"
-                        [style]="{'width':'100%'}" placeholder="Select Country or Region"></p-dropdown> -->
+                            <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>                        
+                        </select>
                      </div>
                      <div class="col-md-10 p-10 form-group">
                         <div class="card">
@@ -92,8 +109,7 @@
                      </div>
                 </div>
             </form>
-        </div>
-        <!-- <div class="col-md-1"></div> -->
+        </div> -->
     </div>
 </div>
 

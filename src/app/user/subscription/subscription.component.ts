@@ -25,7 +25,8 @@ export class SubscriptionComponent implements OnInit {
   predefinedPlans:any[]=[];
   selectedPlans:any=[];
   selectedAmount:number=0;
-  planType="Monthly"
+  planType="Monthly";
+  selectedValue:any
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
