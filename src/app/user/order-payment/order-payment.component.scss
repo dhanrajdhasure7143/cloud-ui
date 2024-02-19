@@ -1,0 +1,33 @@
+.hand-image {
+    width: 20px;
+    margin:0px 10px;
+}
+
+.label-control{
+    margin-bottom: 5px; 
+    font-weight: 500;
+    color: black; 
+}
+
+.required,.star{display:inline-block;text-transform: lowercase;}
+.required::first-letter,.star::first-letter{text-transform: uppercase;}
+.required,
+.star {
+  color: #ea3d3d;
+  font-size: 12px !important;
+  line-height: 17px;
+  letter-spacing: 0.2px;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.line {
+    height: 1px;
+    background: #cbcbcb;
+}
+
+input {
+    height: 45px !important;
+}

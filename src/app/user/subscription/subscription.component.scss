@@ -9,14 +9,14 @@
 
 .bot-plans{
     margin: 10px 0 0 0;
-    min-height : 230px;
+    min-height : 240px;
     max-height : max-content;
 }
 
 .circle {
-    width: 90px;
-    height: 90px;
-    line-height: 90px;
+    width: 75px;
+    height: 75px;
+    line-height: 65px;
     border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -31,6 +31,9 @@
 
 .line {
     height: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #098de6;
     width: 70px;
     margin: 10px 0 0 75px;
@@ -38,16 +41,20 @@
 
 .description-box{
     max-height: max-content;
-    width: 240px;
+    width: auto;
+    max-width: max-content;
     border-radius: 10px;
     border: 1px solid #098de6;
     margin: 10px;
     padding: 10px;
 }
-
-.bot-details:hover{
-    -webkit-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
-    -moz-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
-    box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+.bot-details{
     padding: 10px;
 }
+
+// .bot-details:hover{
+//     -webkit-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+//     -moz-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+//     box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
+//     padding: 2px;
+// }

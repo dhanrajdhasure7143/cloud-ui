@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from "primeng/toast";
 import { TriStateCheckboxModule } from "primeng/tristatecheckbox";
 import { CheckboxModule } from "primeng/checkbox";
@@ -92,8 +91,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     SplitButtonModule,
     SkeletonModule,
     InputSwitchModule,
-    ProgressSpinnerModule,
-    BrowserAnimationsModule
+    ProgressSpinnerModule
   ],
   exports: [
     ToastModule,
@@ -139,8 +137,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     SplitButtonModule,
     SkeletonModule,
     InputSwitchModule,
-    ProgressSpinnerModule,
-    BrowserAnimationsModule
+    ProgressSpinnerModule
   ],
   providers: [ConfirmationService, MessageService]
 })

@@ -298,4 +298,11 @@ getCustomUserRole(appID):Observable<any>{
   return this.http.get<any>('/authorizationservice/api/v1/user/role/'+appID,httpOptions)
 }
 
+private dataSubject = new BehaviorSubject<any>(null);
+public data$ = this.dataSubject.asObservable();
+
+updateData(newData: any) {
+  this.dataSubject.next(newData);
+}
+
 }

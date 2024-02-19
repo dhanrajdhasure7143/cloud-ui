@@ -25,7 +25,9 @@ export class SubscriptionComponent implements OnInit {
   predefinedPlans:any[]=[];
   selectedPlans:any=[];
   selectedAmount:number=0;
-  planType="Monthly"
+  planType="Monthly";
+  selectedValue:any;
+  plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -62,7 +64,6 @@ export class SubscriptionComponent implements OnInit {
 
   loadPredefinedBots(){
     this.service.loadPredefinedBots().subscribe((response : any) =>{
-      console.log(response.data)
       if(response){
       this.botPlans = response.data;
       this.botPlans.forEach(item=>{
@@ -87,14 +88,16 @@ hideDescription() {
 
 userDetails() {
   this.profileservice.getUserDetails(this.userEmail).subscribe((data : any) =>{
-    console.log(data,"testing")
   })
 }
 
 paymentPlan(){
-  if(this.selectedPlans.length == 0){
-    return
-  }
+  // if(this.selectedPlans.length == 0){
+  //   return
+  // }
+  let details = JSON.stringify(this.selectedPlans)
+  this.profileservice.updateData(details)
+  this.router.navigate(["/order"]);
 
 }
 
@@ -124,7 +127,6 @@ sendEmailEnterPrisePlan(){
 }
 
 onSelectPredefinedBot(plan, index){
-  console.log(plan)
   this.selectedPlans = [];
   this.selectedAmount=0;
   this.predefinedPlans[index]["isSelected"]= !this.predefinedPlans[index]["isSelected"];
@@ -133,7 +135,6 @@ onSelectPredefinedBot(plan, index){
     if(item.isSelected){
       this.selectedPlans.push(item);
       this.selectedAmount += parseInt(item.amount);
-      console.log(this.selectedAmount)
     }
   })
 

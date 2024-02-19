@@ -1,0 +1,77 @@
+<div class="container-fluid">
+    <div class="logo" style="margin-top: 10px">
+        <img style="width:170px !important;" src="assets/images/EZFlow.png" alt="EZFlow">
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+         <div class="col-md-12" style="height: 250px; padding: 50px; max-height: max-content;">
+            <h4 class="label-control"> Orders </h4>
+            <ul style="list-style-type:square;">
+                <li class="label-control" *ngFor="let item of planDetails"> {{item.predefinedBotPlanName}} -  USD {{item.amount}} / {{item.interval}}</li>
+            </ul>
+         </div>
+         <div class="col-md-12" style="height: 170px;">
+            <div>
+                <form action="" [formGroup]="subscriptionForm" cdkTrapFocus>
+                    <div class="col-md-12" style="margin-top: 12px;">
+                        <div class="col-md-6 p-10 form-group">
+                            <label for="" class="label-control"> Card Information </label>
+                            <input type="text" name="" id="" class="form-control" formControlName="cardNumber" onpaste="return false;" autocomplete="off" ondrop="return false;" placeholder="1234 1234 1234 1234" tabindex="1">
+                            <div class="d-flex">
+                                <input type="text" pInputText name="" id="" class="form-control" formControlName="monthYear" onpaste="return false;" ondrop="return false;" placeholder="MM / YY" style="width: 70%;" tabindex="2">
+                                <input type="text" pInputText name="" id="" class="form-control" formControlName="cvv" autocomplete="off" onpaste="return false;" ondrop="return false;" placeholder="CVV" style="width: 30%;" tabindex="3">
+                            </div>    
+                        </div>
+                         <div class="col-md-6 p-10 form-group">
+                            <label for="" class="label-control"> Card Holder Name</label>
+                            <input type="text" pInputText name="" id="" onpaste="return false;" ondrop="return false;" autocomplete="off" formControlName="userName" class="form-control" placeholder="Full Name on Card" tabindex="4">
+                         </div>
+                         <!-- <div class="col-md-10 p-10 form-group">
+                            <label for="" class="label-control"> Country or Region </label>
+                            <select class="form-control" formControlName="country" placeholder="Select Country" required>
+                                <option value="" disabled selected> Select your country </option>
+                                <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>                        
+                            </select>
+                         </div> -->
+                         <!-- <div class="col-md-10 p-10 form-group">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <input type="checkbox" name="" formControlName="autoBilling" id="" style="margin-top: 17px; margin-left: 15px;">   
+                                    </div>
+                                    <div class="col-md-11" style="padding: 10px;">
+                                        <label for="" class="label-control"> Automate Billing upon expiration. </label>
+                                        <div style="font-size: 12px;"> Facilitates the hassle-free experience by automating the billing cycle once it expires, ensuring uninterrepted service. </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div> -->
+                         <div class="col-md-10 p-10 form-group">
+                            <p>By confirming your subscription, you allow EZFlow to charge your card for this payment and future payments in accordance with their teams</p>
+                         </div>
+                    </div>
+                </form>
+            </div>
+         </div>
+        </div>
+        <div class="col-md-4" style="margin-top: 50px; padding-right: 80px;">
+            <h4 class="label-control">ORDER SUMMARY </h4>
+            <div class="line"></div>
+            <div class="row" *ngFor="let item of planDetails" style="margin-top: 15px;">
+                <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> 1 * {{item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'"> 12 * {{item.amount}} </span> </span> </div> 
+                <div class="col-md-6 text-center"> <span class="label-control"> USD <span *ngIf="item.interval === 'Monthly'">  {{1 * item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{12 * item.amount}} </span> </span> </div>
+            </div>
+            <div class="line" style="margin-top: 12px;"></div>
+            <div class="row" style="margin-top: 15px;">
+                <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
+                <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
+            </div>
+            <div class="col-md 12 text-center" style="margin-top: 30px;"> <button class="btn btn-primary"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="#bebcbc66" type="">
+    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+  </ngx-spinner>
+

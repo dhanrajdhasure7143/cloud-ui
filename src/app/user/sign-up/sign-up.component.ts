@@ -14,6 +14,7 @@ import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { MessageService } from 'primeng/api';
+import { Country, State, City } from 'country-state-city';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -57,6 +58,29 @@ export class SignUpComponent implements OnInit {
   features: any;
   featuresList: any[] =[];
   description: any[]=[];
+  userForm : FormGroup;
+  showUserScreen : boolean = false;
+  departments: any[] = [];
+  stateInfo: any[] = [];
+  countryInfo: any[] = [];
+  cityInfo: any[] = [];
+  isInput: boolean;
+  phnCountry: any;
+  errorMessage: any;
+  errorMessage1: any;
+  errorMessage2: any;
+  country: any;
+  jobTitle: any;
+  organization: any;
+  department: any;
+  state: any;
+  city: any;
+  zipCode: any;
+  phoneNumber: any;
+  user: any;
+  fieldsEnabled: boolean = true;
+  isPasswordDisable : boolean = true;
+  orgExsist : boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -89,8 +113,23 @@ export class SignUpComponent implements OnInit {
     lastName: [ '', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$")])],
     email: [ '', [Validators.required,Validators.email]],
     otp:[''],
-    password: ['', Validators.required],
+    password: ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$%])[a-zA-Z0-9@$%]{8,20}$")])],
     });
+
+    this.userForm = this.formBuilder.group({
+      jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
+      organization: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
+      zipCode: ["", Validators.compose([Validators.required, Validators.pattern('^[0-9]+$'), Validators.maxLength(6)])],
+      department: ['', Validators.required],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+    });
+
+    this.getCountries();
+    this.getAllDepartments();
+
     this.googleLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=google&redirectPath="+this.config.socialLoginRedirectURL
     this.officeLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=azure&redirectPath="+this.config.socialLoginRedirectURL
   }
@@ -98,7 +137,6 @@ export class SignUpComponent implements OnInit {
   getPlanDetails() {
     this.service.getPlanDetails().subscribe((response: any) => {
       this.planDetails = response.data;
-      console.log("plandetails:", this.planDetails);
       this.planDetails.forEach(plan => {
         plan.featuresList = plan.features.split(',').map(feature => feature.trim());
       });
@@ -108,12 +146,8 @@ export class SignUpComponent implements OnInit {
   showOtp(event){
     if(event.target.value.includes('@') && this.signupForm.get('email').valid){
       this.isGenerate = true;
-      // this.isShowOtp = true;
-      // this.isOtpSent = false
     } else{
       this.isGenerate = false;
-      // this.isShowOtp = false;
-      // this.isOtpSent = false
     }
   }
 
@@ -131,7 +165,6 @@ export class SignUpComponent implements OnInit {
       } else textSec = statSec;
       this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
       if (seconds == 0) {
-        console.log("finished");
         clearInterval(timer);
       }
     }, 1000);
@@ -155,7 +188,6 @@ export class SignUpComponent implements OnInit {
      }
      this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
-     console.log(data.errorMessage)  
      if(data.message == "OTP Sent Successfully"){
       Swal.fire({
         title: 'Success!',
@@ -187,44 +219,42 @@ export class SignUpComponent implements OnInit {
 
   }
 onSubmit() {
-var payload = new FormData();
-var reqObj = {}
-reqObj = {
-  'firstName': this.signupForm.value.firstName,
-  'lastName': this.signupForm.value.lastName,
-  'userId' : this.signupForm.value.email.toLowerCase(),
-  'password': this.signupForm.value.password,
-}
-payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-  this.service.registrationStart(payload).subscribe(res => {
-  if(res.body) {
-    Swal.fire({
-      title: 'Success',
-      text: `Registration completed successfully!`,
-      icon: 'success',
-      showCancelButton: false,
-      allowOutsideClick: false
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['user-page'], {
-          queryParams: { name : this.signupForm.value.firstName, email : this.signupForm.value.email.toLowerCase() },
-        });
-      }
-    });
-  }
-}, err => {
-    Swal.fire({
-      title: 'Error!',
-      icon: 'error',
-      text: `${err.error.message} ! Please check your user name`,
-      allowOutsideClick: false
-    });
-  });
+this.showUserScreen = true;
+// var payload = new FormData();
+// var reqObj = {}
+// reqObj = {
+//   'firstName': this.signupForm.value.firstName,
+//   'lastName': this.signupForm.value.lastName,
+//   'userId' : this.signupForm.value.email.toLowerCase(),
+//   'password': this.signupForm.value.password,
+// }
+// payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+//   this.service.registrationStart(payload).subscribe(res => {
+//   if(res.body) {
+//     Swal.fire({
+//       title: 'Success',
+//       text: `Registration completed successfully!`,
+//       icon: 'success',
+//       showCancelButton: false,
+//       allowOutsideClick: false
+//     })
+//     this.showUserScreen = true;
+//   } else {
+
+//   }
+// }, err => {
+//     Swal.fire({
+//       title: 'Error!',
+//       icon: 'error',
+//       text: `${err.error.message} ! Please check your user name`,
+//       allowOutsideClick: false
+//     });
+//   });
 }
 
 validateOTP(){
   this.spinner.show()
-   this.authenticationService.validateOTP(this.signupForm.value.email.toLowerCase(),this.signupForm.value.otp).subscribe((data:any)=>{ 
+   this.authenticationService.validateOTPSignUp(this.signupForm.value.email.toLowerCase(),this.signupForm.value.otp).subscribe((data:any)=>{ 
     if(data.message=="OTP Verified Successfully")
       {
         this.spinner.hide()
@@ -232,6 +262,7 @@ validateOTP(){
         this.isValidate = false;
         this.isSuccess = true;
         this.isGenerate = false;
+        this.isPasswordDisable = false
         Swal.fire({
           title: 'Success!',
           text: `OTP Verified Successfully.`,
@@ -265,4 +296,210 @@ lettersOnly(event): boolean {
     }
 }
 
+backtoSignUp(){
+  this.showUserScreen = false;
+}
+
+getCountries() {
+  this.countryInfo = Country.getAllCountries();
+}
+
+getAllDepartments() {
+  this.service.getAllDepartments().subscribe((response: any) => {
+    this.departments = response;
+  })
+}
+
+// If country changes, states and cities gets changed according to the country selected 
+onChangeCountry(countryValue) {
+  this.isInput = !this.isInput;
+  this.stateInfo = State.getAllStates();
+
+  if (countryValue) {
+    const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+    this.phnCountry = matchingCountry.isoCode;
+    this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode)
+    this.errorMessage = ""
+  }
+  if (this.stateInfo == null || this.stateInfo.length === 0) {
+    this.userForm.get('state').disable();
+    this.userForm.get('city').disable();
+    this.userForm.get('state').clearValidators();
+    this.userForm.get('state').updateValueAndValidity();
+  }
+
+  // Set the flag to true if there are states available, otherwise false
+  this.fieldsEnabled = this.stateInfo && this.stateInfo.length > 0;
+
+  if (this.fieldsEnabled) {
+    this.userForm.get('state').enable();
+    this.userForm.get('city').enable();
+  } else {
+    // Clear state and city values if there are no states available
+    this.userForm.get('state').setValue('');
+    this.userForm.get('city').setValue('');
+  }
+
+  this.userForm.get('country').valueChanges.subscribe((selectedCountry) => {
+    if (selectedCountry) {
+      this.userForm.get('state').setValue('');
+      this.userForm.get('city').setValue('');
+    }
+  });
+}
+
+// If state changes, cities gets changed accordingly
+onChangeState(stateValue) {
+  this.cityInfo = City.getAllCities();
+  if (stateValue) {
+    const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
+    this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+    this.errorMessage1 = ""
+    if (this.cityInfo.length === 0) {
+      this.cityInfo = [{ name: 'NA' }];
+    }
+  }
+  this.userForm.get('state').valueChanges.subscribe((selectedState) => {
+    if (selectedState) {
+      this.userForm.get('city').setValue('');
+    }
+  });
+}
+
+onChangeCity(cityValue) {
+  if (cityValue) {
+    this.errorMessage2 = ''
+  }
+}
+
+// Accepting only numbers for zip code field
+numbersOnly(event): boolean {
+  var regex = new RegExp("^[0-9]+$"); // Regex to allow only numbers
+  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+  if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+  }
+}
+
+// If country and flag are different, it generates error message
+OnFlagChange(event, phonecode) {
+  var code = event.iso2;
+  var testcode = code.toString().toUpperCase();
+  if (testcode != phonecode) {
+    this.errorMessage = "Please Select Appropriate Country *";
+    this.errorMessage1 = "Please Select Appropriate State *";
+    this.errorMessage2 = "Please Select Appropriate City *"
+    this.userForm.get('state').enable();
+    this.userForm.get('city').enable();
+  }
+  const selectedCountry = this.countryInfo.find((item: any) => item.isoCode == code);
+  this.fieldsEnabled = State.getStatesOfCountry(selectedCountry.isoCode).length > 0;
+}
+
+get f() {
+  return this.userForm.controls;
+}
+
+// To enable continue button if all fields are valid and 2 fields of state and city are disabled
+get userFormValid(): boolean {
+  return this.jobTitle.trim() !== '' && this.organization.trim() !== '' && this.department.trim() !== '' && this.state.trim() !== '' && this.city.trim() !== '' && this.zipCode.trim() !== '' && this.phoneNumber.trim() !== '';
+}
+
+registrationSave(){
+  this.spinner.show();
+  var payload = new FormData();
+  var reqObj = {}
+  reqObj = {
+    firstName: this.signupForm.value.firstName,
+    lastName: this.signupForm.value.lastName,
+    userId : this.signupForm.value.email.toLowerCase(),
+    password: this.signupForm.value.password,
+    designation : this.userForm.value.jobTitle,
+    department : this.userForm.value.department,
+    company : this.userForm.value.organization,
+    country : this.userForm.value.country,
+    state : this.userForm.value.state,
+    city : this.userForm.value.city,
+    zipcode : this.userForm.value.zipCode,
+    phoneNumber : this.userForm.value.phoneNumber,
+    isSubscriptionEnabled : true
+}
+payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+this.service.registerUser(payload).subscribe((res : any) => {
+this.spinner.hide();
+if(res.body.message == "Registration Complete") {
+  Swal.fire({
+    title: 'Success!',
+    text: 'Registration Done Successfully',
+    icon: 'success',
+    showCancelButton: false,
+    allowOutsideClick: true
+}).then((result) => {
+  if (result.value) {
+    this.router.navigate(['/subscription'],{
+      queryParams: { email : this.signupForm.value.email.toLowerCase() },
+    });
+  }
+});
+} else {
+  this.spinner.hide();
+  Swal.fire("Error",res.errorMessage,"error")
+}
+})
+}
+
+// To reset the error messages generated for country state and city
+resetForm() {
+  this.userForm.reset();
+  this.errorMessage = "";
+  this.errorMessage1 = "";
+  this.errorMessage2 = ""
+}
+
+getErrorMessage(controlName: string): string {
+  const control = this.userForm.get(controlName);
+
+  if (control.touched && control.errors) {
+    if (control.errors.required) {
+      if (controlName == "jobTitle") {
+        return "Job Title required"
+      }
+      else if (controlName == "organization") {
+        return "Organization required"
+      }
+      else if (controlName == "zipCode") {
+        return "Zip Code required"
+      }
+      return `${controlName} required`;
+    }
+    if (control.errors.minlength) {
+      return "Minimum 2 characters required";
+    }
+    if (control.errors.pattern) {
+      return "Only Alphabets and Numbers are allowed";
+    }
+  }
+
+  return '';
+}
+
+checkOrganizationName(event : any) {
+  console.log(event.target.value)
+  this.service.organizationCheck(event.target.value).subscribe(res => {
+    if (res.message == "Organization Name already Exists") {
+      this.orgExsist = true;
+    } else {
+      this.orgExsist = false;
+    }
+  })
+}
+
+onKeydown(event){ 
+  let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight","Delete"]
+     let temp =numArray.includes(event.key); //gives true or false
+    if(!temp){
+     event.preventDefault();
+    } 
+   }
 }
