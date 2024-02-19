@@ -82,4 +82,8 @@ export class FirstloginService {
     let headers = new HttpHeaders({});
     return this.http.get<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
   }
+
+  getPlanDetails(): Observable<any>{
+    return this.http.get<any>(`/api/user/loadPredefinedBotPlans`);
+  }
 }
