@@ -92,8 +92,12 @@ export class AuthenticationService {
       return this.http.post<any>('/api/login/beta/token', userName,httpOptions)
 
     }
-    generateOTPSignUp(username: string) {
-         
-      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+true,{responseType:'json'});
+
+    generateOTPSignUp(username: string,isResend) {
+      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+true+"&isResendOTP="+isResend,{responseType:'json'});
+    }
+
+    validateOTPSignUp(username: string, otp: string){
+      return this.http.get('/api/login/beta/validateOTP?userId='+username+"&otp="+otp+"&isNewRegistrationFlow="+true,{responseType:'json'});
     }
 }

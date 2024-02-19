@@ -15,6 +15,7 @@
 @import 'bootstrap/scss/mixins';
 @import 'ngx-toastr/toastr-bs4-alert';
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~primeicons/primeicons.css';
 
 // @import '~ngx-toastr/toastr-bs4-alert';
 body {
@@ -556,9 +557,9 @@ footer .powredby_text{
 .ph-number .mat-form-field-label-wrapper {
   margin-left: 30px !important;
 }
-.ph-number .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
-  padding-left: 50px !important; 
-}
+// .ph-number .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
+//   padding-left: 30px !important; 
+// }
 
 
 
@@ -574,4 +575,31 @@ footer .powredby_text{
 
 .mat-tab-body.mat-tab-body-active#mat-tab-content-0-1 {
   overflow: hidden !important;
+}
+
+.p-dropdown-filter-container input {
+  height: 45px !important;
+}
+
+.p-dropdown {
+  border: 1px solid var(--formfield-bordercolor) !important;
+  width: 100% !important;
+  background-color: transparent !important;
+}
+
+.p-dropdown.p-component.p-dropdown-open {
+  background-color: #fff !important;
+  border: 1px solid var(--secondary-bluecolor) !important;
+}
+
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: var(--formlabel-color) !important;
+}
+
+.toast-container.toast-top-full-width .ngx-toastr {
+  width: 100% !important;
+}
+
+.toast-container.toast-top-full-width .ngx-toastr .toast-message {
+  line-height: 2;
 }

@@ -139,8 +139,9 @@
                         *ngIf="userForm.get('phoneNumber').invalid && userForm.get('phoneNumber').touched"
                         class="required" class="text-danger" id="error-msg"> Phone number required </span>
                 </div>
+                <div class="col-md-1"></div>
             </div>
-        </div>
+            </div>
         <div class="row">
             <div class="reset-btn">
                 <input class="btn btn-primary" id="reset-btn" type="reset" value="Reset" (click)="resetForm()">

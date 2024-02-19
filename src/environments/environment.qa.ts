@@ -17,6 +17,7 @@ export const environment = {
     isTwoFactorAuthenticationEnabled: false,
     isSecurityManagerEnabled : false,
     isNewDesignEnabled : true,
-   isSubscrptionEnabled : false
+   isSubscrptionEnabled : false,
+   isNewSignupFlow : false
  
   };

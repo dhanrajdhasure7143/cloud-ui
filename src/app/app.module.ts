@@ -25,6 +25,7 @@ import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { SessionoutComponent } from './sessionout/sessionout.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
+import { ToastModule } from 'primeng/toast';
 
 export const contentfulConfig: ContentfulConfig = {
   userSharedData: '',
@@ -70,6 +71,7 @@ export const contentfulConfig: ContentfulConfig = {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
       positionClass: 'toast-top-full-width',maxOpened:1,autoDismiss:true}), // ToastrModule added
+      ToastModule  
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

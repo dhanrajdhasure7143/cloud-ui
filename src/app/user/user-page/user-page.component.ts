@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Country, State, City } from 'country-state-city';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CryptoService } from 'src/app/_services/crypto.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
@@ -28,10 +33,23 @@ export class UserPageComponent implements OnInit {
   zipCode: any;
   phoneNumber: any;
   user: any;
+  userEmail : any;
   fieldsEnabled: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
-    private service: FirstloginService) {
+              private route:ActivatedRoute,
+              private service: FirstloginService,
+              private crypto:CryptoService,
+              private router: Router,
+              private spinner: NgxSpinnerService
+              ) {
+    this.route.queryParams.subscribe((data)=>{
+      this.user = data.name,
+      this.userEmail = data.email
+    })
+   }
+
+  ngOnInit(): void {
     this.userForm = this.formBuilder.group({
       jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       organization: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
@@ -43,9 +61,6 @@ export class UserPageComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       phnCountry: [''],
     });
-  }
-
-  ngOnInit(): void {
     this.getCountries();
     this.getAllDepartments();
   }
@@ -169,11 +184,76 @@ export class UserPageComponent implements OnInit {
     return this.jobTitle.trim() !== '' && this.organization.trim() !== '' && this.department.trim() !== '' && this.state.trim() !== '' && this.city.trim() !== '' && this.zipCode.trim() !== '' && this.phoneNumber.trim() !== '';
   }
 
+  registrationSave(){
+    this.spinner.show();
+    console.log(this.userForm.value,"hello")
+    var payload = new FormData();
+    var reqObj = {}
+    reqObj = {
+      userId : this.userEmail,
+      jobTitle : this.userForm.value.jobTitle,
+      department : this.userForm.value.department,
+      organization : this.userForm.value.organization,
+      country : this.userForm.value.country,
+      zipCode : this.userForm.value.zipCode,
+      phoneNumber : this.userForm.value.phoneNumber
+}
+payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+this.service.registrationContinue(payload).subscribe((res : any) => {
+  this.spinner.hide();
+  if(res.body.code == 200) {
+    Swal.fire({
+      title: 'Success!',
+      text: res.body.message,
+      icon: 'success',
+      showCancelButton: false,
+      allowOutsideClick: true
+  }).then((result) => {
+    if (result.value) {
+      this.router.navigate(['/subscription'],{
+        queryParams: { email : this.userEmail },
+      });
+    }
+  });
+  } else {
+    this.spinner.hide();
+    Swal.fire("Error",res.errorMessage,"error")
+  }
+  })
+}
+
   // To reset the error messages generated for country state and city
   resetForm() {
     this.userForm.reset();
     this.errorMessage = "";
     this.errorMessage1 = "";
     this.errorMessage2 = ""
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.userForm.get(controlName);
+
+    if (control.touched && control.errors) {
+      if (control.errors.required) {
+        if (controlName == "jobTitle") {
+          return "Job Title required"
+        }
+        else if (controlName == "organization") {
+          return "Organization required"
+        }
+        else if (controlName == "zipCode") {
+          return "Zip Code required"
+        }
+        return `${controlName} required`;
+      }
+      if (control.errors.minlength) {
+        return "Minimum 2 characters required";
+      }
+      if (control.errors.pattern) {
+        return "Only Alphabets and Numbers are allowed";
+      }
+    }
+
+    return '';
   }
 }

@@ -57,9 +57,12 @@ import { PasswordModule } from 'primeng/password';
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 import { UserPageComponent } from './user-page/user-page.component';
 import { Ng2TelInputModule } from 'ng2-tel-input';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { SubscriptionComponent } from './subscription/subscription.component';
+import { OrderPaymentComponent } from './order-payment/order-payment.component';
 
 @NgModule({
-    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent,SignUpComponent, UserPageComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent],
     imports: [
         CommonModule,
         UserRoutingModule,
@@ -105,7 +108,8 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
         Ng2TelInputModule,
         PasswordModule,
         PrimengCustomModule,
-        Ng2TelInputModule
+        Ng2TelInputModule,
+        CdkStepperModule
     ],
     exports: [LoginComponent],
     providers: []
