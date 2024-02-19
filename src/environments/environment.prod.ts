@@ -17,5 +17,6 @@ export const environment = {
    piendpoint:"https://ezflow.epsoftinc.com/prcintel",
    asquareproductendpoint: 'https://ezflowasquare.epsoftinc.com',
    isNewDesignEnabled : true,
-   isSubscrptionEnabled : false
+   isSubscrptionEnabled : false,
+   isNewSignupFlow : false
 };
