@@ -1,146 +1,155 @@
 <div class="container">
-    <div class="logo" style="margin-top: 10px">
-        <img style="width:170px !important;" src="assets/images/EZFlow.png" alt="EZFlow">
+    <div class="logo">
+        <img style="width:170px !important" src="assets/images/EZFlow.png" alt="EZFlow">
     </div>
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-12 text-center" style="display: block;">
-                <!-- <div class="message"> -->
-                    <span style="font-size: 15px; margin-left: -15px;
-                    font-weight: 800; color: black; display: block;"><img src="/assets/images/hand.jpg" alt="Hand Image" class="hand-image">Hey {{user}}</span>
-                    <span style="font-size: 25px;
-                    font-weight: 800; color: black; display: block;">Great Going</span>
-                    <span style="font-size: 15px;
-                    font-weight: 800; color: black;">Now, Let us know more about you</span>
-                <!-- </div> -->
+    <div class="message">
+        <p class="msg-one"><img src="/assets/images/hand.jpg" alt="Hand Image" class="hand-image">Hey {{user}}</p>
+        <p class="msg-two">Great Going</p>
+        <p class="msg-three">Now, Let us know more about you</p>
+    </div>
+    <form [formGroup]="userForm">
+        <div class="fields">
+            <div class="row">
+                <div class="col-md-6" id="col-job">
+                    <label class="form-label" for="jobTitle" id="label-name">Job Title<span class="star">*</span></label>
+                    <input type="text" formControlName="jobTitle" class="form-control form-text" id="jobTitle" 
+                        (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="30"
+                        minlength="2">
+                    <span
+                        *ngIf="userForm.get('jobTitle').invalid && userForm.get('jobTitle').touched && !userForm.get('jobTitle').hasError('pattern') && !userForm.controls['jobTitle'].hasError('maxlength')"
+                        class="required" class="text-danger" id="error-msg"> Job title required </span>
+                    <span *ngIf="userForm.controls['jobTitle'].hasError('minlength')" class="required"
+                        class="text-danger" id="error-msg">
+                        Minimum 2 characters required
+                    </span>
+                    <span *ngIf="userForm.controls['jobTitle'].hasError('maxlength')" class="required"
+                        class="text-danger" id="error-msg">
+                        Maximum of 30 characters
+                    </span>
+                    <span
+                        *ngIf="userForm.get('jobTitle').hasError('pattern') && !userForm.controls['jobTitle'].hasError('maxlength')"
+                        class="required" class="text-danger" id="error-msg">
+                        Only space between words are allowed,numbers & special characters are not allowed.
+                    </span>
+                </div>               
+                <div class="col-md-6" id="col-org">
+                    <label for="organization" class="form-label" id="label-name">Organization<span class="star">*</span></label>
+                    <input type="text" formControlName="organization" class="form-control form-text" id="organization"
+                        (keypress)="lettersOnly($event)" placeholder="Enter your organization" maxlength="30"
+                        minlength="2">
+                        <span
+                        *ngIf="userForm.get('organization').invalid && userForm.get('organization').touched && !userForm.get('organization').hasError('pattern') && !userForm.controls['organization'].hasError('maxlength')"
+                        class="required" class="text-danger" id="error-msg"> Organization required </span>
+                    <span *ngIf="userForm.controls['organization'].hasError('minlength')" class="required"
+                        class="text-danger" id="error-msg">
+                        Minimum 2 characters required
+                    </span>
+                    <span *ngIf="userForm.controls['organization'].hasError('maxlength')" class="required"
+                        class="text-danger" id="error-msg">
+                        Maximum of 30 characters
+                    </span>
+                    <span
+                        *ngIf="userForm.get('organization').hasError('pattern') && !userForm.controls['organization'].hasError('maxlength')"
+                        class="required" class="text-danger" id="error-msg">
+                        Only space between words are allowed,numbers & special characters are not allowed.
+                    </span>
+                </div>
             </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-1"></div>
-                <div class="col-md-10" style="margin-top: 30px;">
-                    <form [formGroup]="userForm" cdkTrapFocus>
-                        <!-- <div class="fields"> -->
-                            <div class="row">
-                                <div class="form-group col-md-6 pl-0">
-                                    <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
-                                    <input type="text" formControlName="jobTitle" class="form-control" style="height: 45px !important;
-                                    border-radius: 5px;" id="jobTitle"
-                                        (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="20" tabindex="1">
-                                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
-                                        class="required">
-                                        {{ getErrorMessage('jobTitle') }}
-                                    </span>
-                                </div>
-                                <div class="form-group col-md-6 pr-0" style="height: 96px;" >
-                                    <label for="organization" class="label-control">Organization <span class="star">*</span> </label>
-                                    <input type="text" formControlName="organization" class="form-control" style="height: 45px !important;
-                                    border-radius: 5px;" id="organization"
-                                        (keypress)="lettersOnly($event)" placeholder="Enter your organization" maxlength="30"
-                                        minlength="2" tabindex="2">
-                                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
-                                        class="required">
-                                        {{ getErrorMessage('organization') }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6 pl-0">
-                                    <label for="department" class="label-control">Department <span class="star">*</span> </label>
-                                    <select formControlName="department" class="form-control" style="height: 45px !important;
-                                    border-radius: 5px;" id="department" tabindex="3">
-                                        <option value="" disabled selected>Select your department</option>
-                                        <option *ngFor="let department of departments" [value]="department">{{ department.departmentName }}</option>
-                                    </select>
-                                    <div *ngIf="f.department.touched && f.department.errors" class="required">
-                                        <span>Department required </span>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6 pr-0">
-                                    <label for="country" class="label-control">Country <span class="star">*</span> </label>
-                                    <select formControlName="country" class="form-control" id="country" style="height: 45px !important;
-                                    border-radius: 5px;"
-                                        (change)="onChangeCountry($event.target.value)" name='country' required tabindex="4">
-                                        <option value="" disabled selected>Select your country</option>
-                                        <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>
-                                    </select>
-                                    <span *ngIf="f.country.touched && f.country.errors" class="required">
-                                        Country required </span>
-                                    <span class="required">{{errorMessage}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6 pl-0">
-                                    <label for="state" class="label-control">State <span class="star">*</span> </label>
-                                    <select formControlName="state" class="form-control" style="height: 45px !important;
-                                    border-radius: 5px;" id="state"
-                                        (change)="onChangeState($event.target.value)" name='state' tabindex="5" required>
-                                        <option value="" disabled selected>Select your state</option>
-                                        <option *ngFor="let state of stateInfo" [value]="state.name">{{ state.name }}</option>
-                                    </select>
-                                    <span *ngIf="f.state.touched && f.state.errors" class="required">
-                                        State required </span>
-                                    <span class="required">{{errorMessage1}}</span>
-                                </div>
-                                <div class="form-group col-md-6 pr-0">
-                                    <label for="city" class="label-control">City <span class="star">*</span></label>
-                                    <select formControlName="city" class="form-control" id="city" style="height: 45px !important;
-                                    border-radius: 5px;"
-                                        (change)="onChangeCity($event.target.value)" name='city' tabindex="6" required>
-                                        <option value="" disabled selected>Select your city</option>
-                                        <option *ngFor="let city of cityInfo" [value]="city.name">{{ city.name }}</option>
-                                    </select>
-                                    <span *ngIf="f.city.touched && f.city.errors" class="required">
-                                        City required </span>
-                                    <span class="required">{{errorMessage2}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6 pl-0">
-                                    <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
-                                    <input type="text" formControlName="zipCode" style="height: 45px !important;
-                                    border-radius: 5px;" class="form-control" id="inputZip"
-                                        placeholder="Enter your zip code" maxlength="6" pattern=^[A-Za-z0-9]+$ tabindex="7" required>
-                                    <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('zipCode') !== ''"
-                                        class="required">
-                                        {{ getErrorMessage('zipCode') }}
-                                    </span>
-                                </div>
-                                <div class="form-group col-md-6 pr-0">
-                                    <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
-                                    <div class="phone-input-container">
-                                        <div class="ng2tel-container">
-                                            <span class="ng2tel-flag"></span>
-                                            <div>
-                                                <input type="text" style="height: 45px !important;
-                                    border-radius: 5px; width: 444px;" (keydown)="numbersOnly($event)" (countryChange)="OnFlagChange($event, phnCountry)"
-                                                    class="form-control" id="phone" formControlName="phoneNumber"
-                                                    onKeyPress="if(this.value.length==10) return false;" ng2TelInput
-                                                    [ng2TelInputOptions]="{initialCountry: phnCountry}"
-                                                    pattern="^((\\+91-?)|0)?[0-9]{10}$" tabindex="8" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
-                                        <span>Phone Number required </span>
-                                    </div>
-                                </div>
-                            </div>
-                        <div class="row">
-                            <div class="col-md-12" style="display: flex; justify-content: flex-end; margin-top: 10px;">
-                                <button type="button" class="btn btn-primary" id="clearbtn" style="margin-right: 30px;width: 75px;" (click)="resetForm()">Reset</button>
-                                <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid" id="submitbtn" (click)="registrationSave()">Continue</button>
+            <div class="row">
+                <div class="col-md-6" id="col-dept">
+                    <label for="department" class="form-label" id="label-name">Department<span class="star">*</span></label>
+                    <select formControlName="department" class="form-control form-text" id="department" 
+                        placeholder="Select your department">
+                        <option value="" disabled selected>Select department</option>
+                        <option *ngFor="let department of departments" [value]="department.departmentName">{{
+                            department.departmentName }}</option>
+                    </select>
+                    <div *ngIf="f.department.touched && f.department.errors" class="text-danger" id="error-msg">
+                        <span>Department required </span>
+                    </div>
+                </div>
+                <div class="col-md-6" id="col-country">
+                    <label for="country" class="form-label" id="label-name">Country<span class="star">*</span></label>
+                    <select formControlName="country" class="form-control form-text" id="country" 
+                        placeholder="Select your country" (change)="onChangeCountry($event.target.value)" name='country'
+                        required>
+                        <option value="" disabled selected>Select country</option>
+                        <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>
+                    </select>
+                    <span *ngIf="f.country.touched && f.country.errors" class="text-danger" id="error-msg">
+                        Country required </span>
+                    <span class="text-danger" id="error-msg">{{errorMessage}}</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" id="col-state">
+                    <label for="state" class="form-label" id="label-name">State<span class="star">*</span></label>
+                    <select formControlName="state" class="form-control form-text" id="state" placeholder="Select State" 
+                        (change)="onChangeState($event.target.value)" name='state' [disabled]="!fieldsEnabled" required>
+                        <option value="" disabled selected>Select state</option>
+                        <option *ngFor="let state of stateInfo" [value]="state.name">{{ state.name }}</option>
+                    </select>
+                    <span *ngIf="f.state.touched && f.state.errors" class="text-danger" id="error-msg">
+                        State required </span>
+                    <span class="text-danger" id="error-msg">{{errorMessage1}}</span>
+                </div>                      
+                <div class="col-md-6" id="col-city">
+                    <label for="city" class="form-label" id="label-name">City<span class="star">*</span></label>
+                    <select formControlName="city" class="form-control form-text" id="city" placeholder="Select City" 
+                        (change)="onChangeCity($event.target.value)" name='city' [disabled]="!fieldsEnabled" required>
+                        <option value="" disabled selected>Select city</option>
+                        <option *ngFor="let city of cityInfo" [value]="city.name">{{ city.name }}</option>
+                    </select>
+                    <span *ngIf="f.city.touched && f.city.errors" class="text-danger" id="error-msg">
+                        City required </span>
+                    <span class="text-danger" id="error-msg">{{errorMessage2}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" id="col-zip">
+                    <label for="inputZip" class="form-label" id="label-name">Zip Code<span class="star">*</span></label>
+                    <input type="text" formControlName="zipCode" class="form-control form-text" id="inputZip" 
+                        (keypress)="numbersOnly($event)" placeholder="Enter zip code" maxlength="6" required>
+                        <span *ngIf="userForm.controls['zipCode'].hasError('maxlength')" class="required"
+                        class="text-danger" id="error-msg">
+                        Maximum of 6 characters
+                    </span>
+                    <span
+                        *ngIf="userForm.get('zipCode').hasError('pattern')"
+                        class="required" class="text-danger" id="error-msg">
+                        Only numbers are allowed
+                    </span>
+                </div>
+                <div class="col-md-6" id="col-phone">
+                    <label for="phoneNumber" class="form-label" id="label-name">Phone Number<span class="star">*</span></label>
+                    <div class="phone-input-container">
+                        <div class="ng2tel-container">
+                            <span class="ng2tel-flag"></span>
+                            <div>
+                                <input type="text" (keypress)="numbersOnly($event)" 
+                                    (countryChange)="OnFlagChange($event, phnCountry)" class="phoneNumber" id="phone"
+                                    formControlName="phoneNumber" onKeyPress="if(this.value.length==10) return false;"
+                                    ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                    pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <span
+                        *ngIf="userForm.get('phoneNumber').invalid && userForm.get('phoneNumber').touched"
+                        class="required" class="text-danger" id="error-msg"> Phone number required </span>
                 </div>
                 <div class="col-md-1"></div>
             </div>
             </div>
+        <div class="row">
+            <div class="reset-btn">
+                <input class="btn btn-primary" id="reset-btn" type="reset" value="Reset" (click)="resetForm()">
+            </div>
+            <div class="submit-btn">
+                <button type="submit" class="btn btn-primary" id="submit-btn"
+                    [disabled]="!userForm.valid">Continue</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
-
-<ngx-spinner bdColor="#bebcbc66" type="">
-    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
-  </ngx-spinner>
-
