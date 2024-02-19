@@ -52,6 +52,11 @@ export class SignUpComponent implements OnInit {
   isSuccess : boolean = false;
   display : any;
   resendEnable : boolean = false;
+  planDetails: any[]=[];
+  planName: any[]=[];
+  features: any;
+  featuresList: any[] =[];
+  description: any[]=[];
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -69,15 +74,16 @@ export class SignUpComponent implements OnInit {
     private service: FirstloginService,
     public messageService:MessageService,
     //private cookieService:CookieService,
-    
   ) {}
 
   ngOnInit() {
+
+    this.getPlanDetails();
+
     this.messages = this.messages.map((message, index) => ({
       id: index+1,
       content: message
     }));
-  
   this.signupForm = this.formBuilder.group({
     firstName: [ '', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$")])],
     lastName: [ '', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$")])],
@@ -87,6 +93,16 @@ export class SignUpComponent implements OnInit {
     });
     this.googleLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=google&redirectPath="+this.config.socialLoginRedirectURL
     this.officeLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=azure&redirectPath="+this.config.socialLoginRedirectURL
+  }
+
+  getPlanDetails() {
+    this.service.getPlanDetails().subscribe((response: any) => {
+      this.planDetails = response.data;
+      console.log("plandetails:", this.planDetails);
+      this.planDetails.forEach(plan => {
+        plan.featuresList = plan.features.split(',').map(feature => feature.trim());
+      });
+    })
   }
 
   showOtp(event){
@@ -120,7 +136,6 @@ export class SignUpComponent implements OnInit {
       }
     }, 1000);
   }
-  
   generateOTP(isResend){
     this.spinner.show()
     this.ispublicMail=false;
@@ -171,7 +186,6 @@ export class SignUpComponent implements OnInit {
     });
 
   }
-
 onSubmit() {
 var payload = new FormData();
 var reqObj = {}
@@ -239,8 +253,7 @@ validateOTP(){
    })
 }
 
-lettersOnly(event): boolean {
-    
+lettersOnly(event): boolean {      
   var regex = new RegExp("^[a-zA-Z ]+$");
   var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
     if (!regex.test(key)) {

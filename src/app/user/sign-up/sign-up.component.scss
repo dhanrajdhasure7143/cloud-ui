@@ -361,16 +361,11 @@
   margin-top: 20px;
 }
 
-.bot-title{
-  margin-left: 135px;
-  font-size: 40px;
-  font-weight: 800; color: black;
-}
-
 .bot-image{
   width: 450px;
   height: 350px; 
   margin-left: 100px;
+  margin-top:-30px;
 }
 
 .tick{
@@ -464,4 +459,58 @@
 
 .verify:hover, .resend:hover  {
   text-decoration: underline;
+}
+
+// Styles for dynamic data 
+
+.bot-details {
+  overflow-x: hidden;
+}
+
+.container {
+  overflow: hidden;
+}
+
+.planName {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 800; color: black;
+  width: 600px; 
+  display: inline-block; 
+}
+
+.feature{
+  font-size: 16px;
+  font-weight:bolder;
+  color: #0061cf;
+}
+
+.feature-heading {
+  margin-bottom: 6px;
+  margin-top:-15px;
+}
+
+.feature-details {
+  width: 700px; 
+}
+
+.feature-item {
+  display: inline-block;
+  width: 290px; 
+  margin-right: 10px;
+  margin-bottom: 0px;
+}
+
+.description {
+  // display: inline-block;
+  color: #0061cf;
+  font-weight: bold;
+  margin-top:5px;
+}
+
+.descript {
+  display: inline-block;
+  width: 600px; 
+  text-align: justify;
+  margin-top:10px;
 }

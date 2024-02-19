@@ -11,7 +11,27 @@
     </div>
     <div class="row">
         <div class="col-md-7">
-            <div class="bot-title-header">
+            <div class="bot-details">
+            <div *ngFor="let plan of planDetails" class="bot-title-header">
+                <p class="planName">{{ plan.predefinedBotPlanName }}</p>
+                <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
+                <div class="feature-details">
+                    <div class="feature-heading">
+                        <span class="feature">Features: </span>
+                    </div>
+                    <div class="row">
+                        <div *ngFor="let feature of plan.featuresList" class="col-md-6">
+                            <div class="mb-3">
+                                <span class="feature-item">&#10003; {{ feature }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="description">Description: </div>
+                <div class="descript">{{ plan.description}}</div> -->
+            </div>
+        </div>
+            <!-- <div class="bot-title-header">
                 <span class="bot-title"> Virtual Marketing Bot </span>
                 <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
             </div>
@@ -36,7 +56,7 @@
                     <img src="../../../assets/approve-default.svg" class="tick" alt="approve" srcset=""> 
                     <span class="bot-feature"> Data-Driven Decision Making </span>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="col-md-5">
             <div class="loginblock">
@@ -57,13 +77,13 @@
                             <label class="label-control" for="firstName"> First Name </label>
                             <input type="text" maxlength="51" class="form-control" formControlName="firstName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter First Name" tabindex="1">
-                            <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
+                            <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="lastName"> Last Name </label>
                             <input type="text" maxlength="51" class="form-control" formControlName="lastName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter Last Name" tabindex="2">
-                            <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
+                            <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>                       
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="email"> Email </label>
