@@ -1,0 +1,14 @@
+img.testplus {
+    width: 16px;
+    height: 16px;
+    margin-right: 17px;
+    cursor: pointer;
+  }
+
+.actionmenu:hover img.default-icon, .actionmenu img.hover-icon {
+    display: none;
+}
+
+.actionmenu:hover img.hover-icon {
+    display: initial;
+}

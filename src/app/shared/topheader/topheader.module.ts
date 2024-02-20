@@ -11,7 +11,7 @@ import { TopheaderRoutingModule } from './topheader-routing.module';
     CommonModule,
     TopheaderRoutingModule,
      NgMultiSelectDropDownModule,
-    Ng2TelInputModule
+    Ng2TelInputModule,
 
   ]
 })

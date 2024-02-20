@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <p-table #dt [value]="enterPriseList" [columns]="columnList"  [scrollable]="true" [globalFilterFields]="['userId','userName','department','phoneNumber','country','createdDate']"
+              [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
+              <ng-template pTemplate="caption">
+                <div class="">
+                  <span class="p-input-icon-right gridsearch">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
+                  </span>  
+                  <button pButton label="Clear" class="p-button-outlined only_clearbtn"  (click)="clearTableFilters(dt)"></button>
+                </div>
+            </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
+                      <p-columnFilter *ngIf="each.ShowFilter" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                      [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                              <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
+                                  optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
+                              </p-dropdown>
+                          </ng-template>
+                      </p-columnFilter>
+                      <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top">
+                            <span *ngIf="col.ColumnName!='action'">
+                                <span *ngIf="col.ColumnName!='createdDate'">{{rowData[col.ColumnName]}}</span>
+                                <span *ngIf="col.ColumnName=='createdDate'">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
+                            </span>
+                            <span *ngIf="col.ColumnName=='action'" class="actionmenu">
+                                <a (click)="editRowBy_Id(rowData)" pTooltip="Edit" tooltipPosition="top">
+                                    <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                    <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                </a>
+                            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td style="justify-content: center;" colspan="8">No Records Found</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isDisplayOverlay">
+    <app-split-overlay (closeOverlay)="closeOverlay($event)">
+        <div class="h-100">
+            <div class="create-header">
+                <h3 >Update User</h3>
+            </div>
+        </div>
+    </app-split-overlay>
+  </div>
