@@ -43,7 +43,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     var me = this;
     
     if (reqUrl.url.indexOf('/api/login/beta/accessToken') < 0 && err.message.indexOf('oauth') < 0 && err.status === 401) {
-     if(err.error.errorMessage){
+    //  if(err.error.errorMessage){
       // Swal.fire({
       //   title: 'Error',
       //   text: "Session expired, Please login again.",
@@ -62,7 +62,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         // }, 3000);
         
       // })
-    }
+    // }
      
    } else if (err.status === 502 || err.status === 503 || err.status === 504)  {
       localStorage.clear();
