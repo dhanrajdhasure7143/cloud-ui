@@ -6,6 +6,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { BadgatewayPageComponent } from './badgateway-page/badgateway-page.component';
 import { SessionoutComponent } from './sessionout/sessionout.component';
 import { ApprovalsComponent } from './approvals/approvals.component';
+import { TokenAuthGuard } from './_guards/tokenauth.guards';
 
 const routes: Routes = [{
   path: 'activation',
@@ -28,6 +29,7 @@ const routes: Routes = [{
 {
   path:'superadmin',
   loadChildren:() => import('./superadmin/superadmin.module').then(m => m.SuperadminModule),
+  canActivate: [TokenAuthGuard]
 },{
   path: '404',
   component: ErrorPageComponent
