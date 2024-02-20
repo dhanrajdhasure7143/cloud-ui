@@ -16,6 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CustomersComponent } from './customers/customers.component';
 import { EnterpriseCustomersComponent } from './enterprise-customers/enterprise-customers.component';
+import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
+
 
 @NgModule({
   declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent],
@@ -32,7 +34,9 @@ import { EnterpriseCustomersComponent } from './enterprise-customers/enterprise-
     NgxChartsModule,
     MatTabsModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PrimengCustomModule,
+    
   ]
 })
 export class SuperadminModule { }

@@ -34,6 +34,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { CompareValidatorDirective } from './comparepsw-validator.directive';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NewstepselectionComponent } from './newstepselection/newstepselection.component';
+import { AngularSplitModule } from 'angular-split';
+import { SplitOverlayComponent } from './split-overlay/split-overlay.component';
 
 
 
@@ -58,7 +60,8 @@ import { NewstepselectionComponent } from './newstepselection/newstepselection.c
         TermsconditionsComponent,
         PrivacypolicyComponent,
         CompareValidatorDirective,
-        NewstepselectionComponent
+        NewstepselectionComponent,
+        SplitOverlayComponent
     ],
     imports: [
         CommonModule,
@@ -73,9 +76,19 @@ import { NewstepselectionComponent } from './newstepselection/newstepselection.c
         NgSelectModule,
         NgxPaginationModule,
         NgxSpinnerModule,
-        Ng2SearchPipeModule
+        Ng2SearchPipeModule,
+        AngularSplitModule,
     ],
     providers: [NotifierService],
-    exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, AccordionComponent, AccordionGroupComponent, InfopanelComponent, TopheaderComponent, BodyComponent, UserComponent, TrailheaderComponent, StepselectionComponent, FooterComponent, NewstepselectionComponent, TermsconditionsComponent, PrivacypolicyComponent]
+    exports: [SideNavBarComponent, HeaderComponent, ContentComponent, DynamicCompHostDirective, 
+        AccordionComponent, AccordionGroupComponent, InfopanelComponent, 
+        TopheaderComponent, BodyComponent, 
+        UserComponent, TrailheaderComponent,
+        StepselectionComponent, FooterComponent, 
+        NewstepselectionComponent, 
+        TermsconditionsComponent, 
+        PrivacypolicyComponent,
+        SplitOverlayComponent
+    ]
 })
 export class SharedModule { }

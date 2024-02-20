@@ -1,0 +1,101 @@
+.dashboardpagination {
+    margin-left: 60%;
+}
+
+.background {
+    height: 800px;
+}
+
+.customer-table {
+    margin-top: -16px;
+}
+
+.search-One {
+    margin-top: 0px;
+    margin-left: 221px;
+}
+
+.search {
+    float: right;
+    margin-bottom: 7px;
+    margin-top: -22px;
+}
+
+.cros {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.slider_heading {
+    width: 100%;
+    padding: 12px 15px 0px;
+    margin: 0px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.form_content {
+    height: calc(100vh - 115px) !important;
+    overflow: auto;
+    padding: 15px;
+}
+
+div#subscrip-edit {
+    display: none;
+}
+
+.row.form_footer_content {
+    padding: 0px 15px;
+    justify-content: right;
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    right: 15px;
+}
+
+.row.form_footer_content .btn-update {
+    margin-left: 10px;
+}
+
+.slide-left {
+    position: fixed;
+    display: block !important;
+    z-index: 1000;
+    background: white;
+    top: 0px !important;
+    width: 45% !important;
+    right: 0px !important;
+    left: unset !important;
+    height: 100% !important;
+    border-left: 1px solid #ccc;
+    box-shadow: 0px 0px 10px #ddd;
+    overflow: hidden;
+}
+
+label.label-control {
+    font-size: 15px !important;
+    margin-bottom: 3px;
+}
+
+span.star {
+    color: red;
+    margin-left: 3px;
+}
+
+.form-control {
+    padding: 5px 10px !important;
+    border: 1px solid #979797;
+    height: 40px !important;
+    width: 100%;
+    font-size: 14px !important;
+    color: #232832;
+}
+
+span.checkboxlabel {
+    margin: 0px 30px 0px 8px;
+}
+
+
+.table-details {
+    height: calc(100vh - 160px) !important; 
+    overflow: auto;
+}

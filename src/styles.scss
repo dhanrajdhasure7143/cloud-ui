@@ -603,3 +603,89 @@ footer .powredby_text{
 .toast-container.toast-top-full-width .ngx-toastr .toast-message {
   line-height: 2;
 }
+
+.no-split-pane .as-split-gutter {
+  display: none !important;
+}
+
+.as-split-gutter {
+  background-color: #94949c !important
+}
+as-split-area.as-split-area {
+  overflow-y: hidden !important;
+}
+.as-split-gutter.ng-star-inserted.testplus {
+  background-color: #f3f3f3 !important;
+}
+.as-horizontal > .as-split-gutter > .as-split-gutter-icon {
+  background-color: #f3f3f3 !important;
+}
+as-split-area {
+  overflow: hidden !important;
+}
+.as-split-area.show {
+  flex-basis: calc(100% - 0px) !important;
+}
+
+/* Overlay Screen Styles Start */
+.dynamic-forms-modal{
+  display: none;
+  position: fixed;
+  padding-left: 60px !important;
+  z-index: 1000;
+  left: 0;
+  top: 55px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.3);
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+}
+.onb-usroverlay .splitter-headers {
+  top: 18px !important;
+}
+.splitoverlaydiv .p-tabview.p-component,
+.commentBox .p-tabview.p-component {
+  height: 100%;
+}
+.splitoverlaycontent {
+  height: calc(100% - 95px);
+}
+.splitoverlaycontent .p-dropdown {
+  width: 200px;
+  height: 36px !important;
+}
+.splitoverlaycontent input.p-inputtext {
+  height: 36px !important;
+}
+.splitoverlaydiv h4,
+.commentBox .p-tabview .p-tabview-nav li .p-tabview-nav-link span {
+  font-size: 18px;
+  margin: 0px !important;
+  font-weight: 600;
+}
+.splitoverlaydiv .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
+.commentBox .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link,
+.configtabs .p-tabview .p-tabview-nav li:not(:first-child) .p-tabview-nav-link {
+  padding: 0px 0px !important;
+  margin-left: 30px !important;
+}
+.splitoverlaydiv .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
+.commentBox .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link,
+.configtabs .p-tabview .p-tabview-nav li:first-child .p-tabview-nav-link {
+    padding: 0px !important;
+}
+.configtabs .p-tabview-nav-container {
+  padding: 10px 20px 0px;
+}
+.splitoverlaydiv .p-tabview .p-tabview-nav,
+.configtabs .p-tabview .p-tabview-nav {
+  height: 45px;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+.main-color{
+  color: #098de6;
+}
