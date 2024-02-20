@@ -14,9 +14,11 @@ import { SuperadminmetricsComponent } from './superadminmetrics/superadminmetric
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { CustomersComponent } from './customers/customers.component';
+import { EnterpriseCustomersComponent } from './enterprise-customers/enterprise-customers.component';
 
 @NgModule({
-  declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent],
+  declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent],
   imports: [
     CommonModule,
     SharedModule,
