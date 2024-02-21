@@ -32,7 +32,8 @@ export class SubscriptionComponent implements OnInit {
   isDisabled : boolean = true;
   password : any;
   isReview_order:boolean = false;
-  selected_plans_list:any
+  selected_plans_list:any;
+  log_data:any={}
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -46,6 +47,7 @@ export class SubscriptionComponent implements OnInit {
                   if(data){
                   let params:any = JSON.parse(this.crypto.decrypt(data.token));
                   console.log(params)
+                  this.log_data = params
                 this.userEmail = params.email;
                 this.password = params.password;
                 console.log(this.userEmail,this.password)

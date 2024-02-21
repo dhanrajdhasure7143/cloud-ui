@@ -25,6 +25,7 @@ export class OrderPaymentComponent implements OnInit {
   cardDetails: FormGroup;
   @Input("planDetails") planDetails:any[]=[];
   @Output() backtoScreen = new EventEmitter();
+  @Input() log_data: any={};
   totalAmount : number;
   userEmail : any;
   userDetails : any = {};
@@ -75,11 +76,17 @@ export class OrderPaymentComponent implements OnInit {
       cardHolderName: [''],
     });
 
-    // this.registrationDetails();
   }
 
   ngOnChanges(){
     console.log(this.planDetails)
+    if(this.log_data){
+      this.userEmail = this.log_data.email;
+      this.password = this.log_data.password
+    }
+    if(this.userEmail){
+      this.registrationDetails();
+    }
   }
 
   calculateTotalPrice(): number {
@@ -168,8 +175,7 @@ export class OrderPaymentComponent implements OnInit {
           showCancelButton: false,
           allowOutsideClick: true
         })
-      }
-      else if (res.body.errorMessage === 'Uploaded file is not supported') {
+      } else if (res.body.errorMessage === 'Uploaded file is not supported') {
         Swal.fire({
           title: 'Error!',
           text: "Please upload png or jpg image",
@@ -177,8 +183,7 @@ export class OrderPaymentComponent implements OnInit {
           showCancelButton: false,
           allowOutsideClick: true
         })
-      }
-      else if (res.body.errorMessage === 'User already registered') {
+      } else if (res.body.errorMessage === 'User already registered') {
         Swal.fire({
           title: 'Error!',
           text: "User already registered. Please try to login!!",
@@ -190,8 +195,7 @@ export class OrderPaymentComponent implements OnInit {
             this.router.navigate(['/']);
           }
         })
-      }
-      else {
+      } else {
         this.spinner.show();
         //  if (result.value) {
         let res: any;
@@ -321,7 +325,6 @@ export class OrderPaymentComponent implements OnInit {
                             }
                           })
                         })
-
                       }
                     })
                     this.spinner.hide();
