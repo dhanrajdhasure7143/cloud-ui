@@ -81,7 +81,8 @@ export class SignUpComponent implements OnInit {
   fieldsEnabled: boolean = true;
   isPasswordDisable : boolean = true;
   orgExsist : boolean = false;
-  userDetails : any = {}
+  userDetails : any = {};
+  isTimeOutshow : boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -205,6 +206,7 @@ export class SignUpComponent implements OnInit {
         showCancelButton: false,
         allowOutsideClick: true
       })
+      this.isTimeOutshow = true;
       this.timer(2)
       this.isGenerate = false;
       this.isEmailDisable = true;
@@ -213,6 +215,7 @@ export class SignUpComponent implements OnInit {
       this.resendEnable = true;
       setTimeout(() => {
         this.resendEnable = false;
+        this.isTimeOutshow = false;
       }, 120000);
       this.spinner.hide()
      } else if (data.errorMessage == "User already registered"){
@@ -229,7 +232,6 @@ export class SignUpComponent implements OnInit {
           this.router.navigate(['/login']);
         }
       })
-
      } else {
       this.spinner.hide()
       Swal.fire("Error",data.errorMessage,"error")

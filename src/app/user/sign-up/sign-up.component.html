@@ -51,13 +51,13 @@
                     <div class="form-group col-md-12">
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="firstName"> First Name </label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="firstName" (keypress)="lettersOnly($event)"
+                            <input type="text" maxlength="20" minlength="3" class="form-control" formControlName="firstName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter First Name" tabindex="1" autocomplete="off">
                             <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="lastName"> Last Name </label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="lastName" (keypress)="lettersOnly($event)"
+                            <input type="text" maxlength="20" minlength="3" class="form-control" formControlName="lastName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter Last Name" autocomplete="off" tabindex="2">
                             <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
                         </div>
@@ -68,19 +68,20 @@
                                 <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify signup_styles text-primary" > Verify Email </span>
                                 <i *ngIf="isSuccess" class="pi pi-verified text-success" id="email-buttons"></i>
                             <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
+                            <span class="required" *ngIf="signupForm.get('email').hasError('pattern') && signupForm.get('email').touched"> Enter valid email address </span>
                             <span class="required" *ngIf="ispublicMail">{{error}}</span>  
                         </div>
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" minlength="6" maxlength="6" class="form-control" formControlName="otp" autocomplete="off"
                                 value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)" (keyup)="showValidateButton($event)">
                                 <i *ngIf="isValidate" (click)="validateOTP()" class="pi pi-check" id="email-buttons"></i> 
-                                <span class="required">{{display}}</span>
+                                <span *ngIf="isTimeOutshow" class="required">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary" > Resend Code </span>    
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="password"> Password </label>
-                            <input [type]="hide ?  'password': 'text'" maxlength="51" class="form-control" formControlName="password"
+                            <input [type]="hide ?  'password': 'text'" maxlength="20" minlength="8" class="form-control" formControlName="password"
                             value="" placeholder="Enter Password"  tabindex="4" autocomplete="off" [attr.disabled]="isPasswordDisable ? true : null">
                                 <span class="password-btn ml-auto" *ngIf="hide==true" (click)="hide = false">
                                     <img  src='../../../assets/images/eye-show.svg' alt="eye-show" />
@@ -89,12 +90,16 @@
                                     <img src='../../../assets/images/eye-hide.svg' alt="eye-hide"/>
                                   </span>
 
-                              <span *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && !signupForm.get('password').hasError('pattern') && !signupForm.controls['password'].hasError('maxlength')" class="required" style="position: relative;bottom: 23px;"> Password Required </span>    
+                              <span *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && !signupForm.get('password').hasError('pattern') && !signupForm.controls['password'].hasError('maxlength')" class="required"> Password Required </span>
+                              <span class="required" *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched"> Minimum 8 Characters Required </span>    
+                              <span class="required" *ngIf="signupForm.get('password').hasError('pattern') && signupForm.get('password').touched"> 
+                                Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number
+                              </span>
                             <!-- <p-password [formControlName]="password" [style]="{'width':'100%','height':'45px'}" [toggleMask]="true"></p-password> -->
                         </div>
 
                         <div class="col-sm-12">
-                          <button class="btn btn-primary signup-btn"(click)="onSubmit()" [disabled]="signupForm.invalid" type="submit" id="btn"> Next </button>
+                          <button class="btn btn-primary signup-btn" (click)="onSubmit()" [disabled]="signupForm.invalid" type="submit" id="btn"> Next </button>
                         </div>
                     </div>
                 </form>
@@ -110,21 +115,21 @@
                 <form [formGroup]="userForm" style="margin: 35px 0 0 40px" cdkTrapFocus>
                     <!-- <div class="fields"> -->
                         <div class="row">
-                            <div class="form-group col-md-6 pl-0">
+                            <div class="col-md-6 pl-0 form-group ">
                                 <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
                                 <input type="text" formControlName="jobTitle" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="jobTitle" autocomplete="off"
-                                    (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="20" tabindex="1">
+                                    (keypress)="lettersOnly($event)" placeholder="Enter job title" maxlength="20" tabindex="1">
                                 <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
                                     class="required">
                                     {{ getErrorMessage('jobTitle') }}
                                 </span>
                             </div>
-                            <div class="form-group col-md-6 pr-0" style="height: 96px;" >
+                            <div class="col-md-6 pr-0 form-group" >
                                 <label for="organization" class="label-control">Organization <span class="star">*</span> </label>
                                 <input type="text" formControlName="organization" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)" autocomplete="off"
-                                    (keypress)="lettersOnly($event)" placeholder="Enter your organization" maxlength="30"
+                                    (keypress)="lettersOnly($event)" placeholder="Enter organization" maxlength="30"
                                     minlength="2" tabindex="2">
                                 <span *ngIf="orgExsist" class='required'> Organization Already Exist</span>
                                 <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
@@ -134,75 +139,76 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-6 pl-0">
+                            <div class="col-md-6 pl-0 form-group">
                                 <label for="department" class="label-control">Department <span class="star">*</span> </label>
                                 <select formControlName="department" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="department" tabindex="3" autocomplete="off">
-                                    <option value="" disabled selected>Select your department</option>
+                                    <option value="" disabled selected>Select department</option>
                                     <option *ngFor="let department of departments" [value]="department.departmentName">{{ department.departmentName }}</option>
                                 </select>
                                 <div *ngIf="f.department.touched && f.department.errors" class="required">
                                     <span>Department required </span>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6 pr-0">
+                            <div class="col-md-6 pr-0 form-group">
                                 <label for="country" class="label-control">Country <span class="star">*</span> </label>
                                 <select formControlName="country" class="form-control" id="country" style="height: 45px !important;
                                 border-radius: 5px;" autocomplete="off"
                                     (change)="onChangeCountry($event.target.value)" name='country' required tabindex="4">
-                                    <option value="" disabled selected>Select your country</option>
+                                    <option value="" disabled selected> Select country</option>
                                     <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>
                                 </select>
+                                <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
                                 <span *ngIf="f.country.touched && f.country.errors" class="required">
                                     Country required </span>
                                 <span class="required">{{errorMessage}}</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-6 pl-0">
+                            <div class="col-md-6 pl-0 form-group">
                                 <label for="state" class="label-control">State <span class="star">*</span> </label>
                                 <select formControlName="state" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="state" autocomplete="off"
                                     (change)="onChangeState($event.target.value)" name='state' tabindex="5" required>
-                                    <option value="" disabled selected>Select your state</option>
+                                    <option value="" disabled selected>Select state</option>
                                     <option *ngFor="let state of stateInfo" [value]="state.name">{{ state.name }}</option>
                                 </select>
+                                                                <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
                                 <span *ngIf="f.state.touched && f.state.errors" class="required">
                                     State required </span>
                                 <span class="required">{{errorMessage1}}</span>
                             </div>
-                            <div class="form-group col-md-6 pr-0">
+                            <div class="col-md-6 pr-0 form-group">
                                 <label for="city" class="label-control">City <span class="star">*</span></label>
                                 <select formControlName="city" class="form-control" id="city" style="height: 45px !important;
                                 border-radius: 5px;" autocomplete="off"
                                     (change)="onChangeCity($event.target.value)" name='city' tabindex="6" required>
-                                    <option value="" disabled selected>Select your city</option>
+                                    <option value="" disabled selected>Select city</option>
                                     <option *ngFor="let city of cityInfo" [value]="city.name">{{ city.name }}</option>
                                 </select>
+                                                                <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
                                 <span *ngIf="f.city.touched && f.city.errors" class="required">
                                     City required </span>
                                 <span class="required">{{errorMessage2}}</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-6 pl-0">
+                            <div class="col-md-6 pl-0 form-group">
                                 <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
                                 <input type="text" formControlName="zipCode" style="height: 45px !important;
                                 border-radius: 5px;" class="form-control" id="inputZip" autocomplete="off"
-                                    placeholder="Enter your zip code" maxlength="6" pattern=^[A-Za-z0-9]+$ tabindex="7" required>
-                                <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('zipCode') !== ''"
-                                    class="required">
-                                    {{ getErrorMessage('zipCode') }}
-                                </span>
+                                    placeholder="Enter zip code" maxlength="6" pattern=^[A-Za-z0-9]+$ tabindex="7" required>
+                                                                <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
+                                <span class="required" *ngIf="getErrorMessage('zipCode') !== ''"> {{ getErrorMessage('zipCode') }} </span>
                             </div>
-                            <div class="form-group col-md-6 pr-0">
+                            <div class="col-md-6 pr-0 form-group">
                                 <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
                                 <div class="phone-input-container">
                                     <div class="ng2tel-container">
                                         <span class="ng2tel-flag"></span>
                                         <div>
                                             <input type="text" style="height: 45px !important;
-                                border-radius: 5px; width: 253px;" (keydown)="numbersOnly($event)" (countryChange)="OnFlagChange($event, phnCountry)"
+                                border-radius: 5px; width: auto" (keydown)="numbersOnly($event)" (countryChange)="OnFlagChange($event, phnCountry)"
                                                 class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
                                                 onKeyPress="if(this.value.length==10) return false;" ng2TelInput
                                                 [ng2TelInputOptions]="{initialCountry: phnCountry}"
