@@ -1,7 +1,3 @@
-<div class="container-fluid">
-    <div class="logo" style="margin-top: 10px">
-        <img style="width:170px !important;" src="assets/images/EZFlow.png" alt="EZFlow">
-    </div>
     <div class="row">
         <div class="col-md-8">
          <div class="col-md-12" style="height: 250px; padding: 50px; max-height: max-content;">
@@ -66,10 +62,13 @@
                 <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
                 <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
             </div>
-            <div class="col-md 12 text-center" style="margin-top: 30px;"> <button class="btn btn-primary" (click)="paymentSubscription()"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  </div>
+            <div class="col-md 12 text-center" style="margin-top: 30px;">
+                <button class="btn btn-primary" (click)="backToplans()"> Back</button>
+                <button class="btn btn-primary" (click)="paymentSubscription()"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
+            </div>
         </div>
     </div>
-</div>
+
 
 <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>

@@ -6,7 +6,7 @@
             </div>
         </div>
         <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-4" style="padding-left: 90px ;">
+        <div class="col-md-4" style="padding-left: 90px ;" *ngIf="!isReview_order">
             <div class="col-md-12" style="margin: 10px 0 0 0">
                 <div class="text-center">
                     <h4 class="label-control">Enterprise Plan</h4>
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8" style="padding-right: 60px;">
+        <div class="col-md-8" style="padding-right: 60px;" *ngIf="!isReview_order">
         <div class="col-md-12">
             <div class="text-center">
                 <h4 class="label-control">Predefined Bots</h4>
@@ -78,8 +78,13 @@
             </div>
         </div>
         </div>
+        <div *ngIf="isReview_order">
+            <app-order-payment [planDetails]="selected_plans_list" (backtoScreen)="readValue($event)"></app-order-payment>
+        </div>
     </div>
 </div>
+
+
 
 <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
