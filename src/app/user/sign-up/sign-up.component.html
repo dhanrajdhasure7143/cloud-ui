@@ -16,7 +16,7 @@
             </div> -->
             <div *ngFor="let plan of planDetails" class="bot-title-header">
                 <div class="bot-details">
-                <p class="planName">{{ plan.predefinedBotPlanName }}</p>
+                <p class="planName">{{ plan.predefinedBotName }}</p>
                 <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
             </div>
                 <div class="feature-details">
@@ -68,12 +68,12 @@
                                 <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify signup_styles text-primary" > Verify Email </span>
                                 <i *ngIf="isSuccess" class="pi pi-verified text-success" id="email-buttons"></i>
                             <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
-                            <span class="required" *ngIf="ispublicMail" style="margin-left: -80px;">{{error}}</span>  
+                            <span class="required" *ngIf="ispublicMail">{{error}}</span>  
                         </div>
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
-                            <input type="text" maxlength="51" class="form-control" formControlName="otp" autocomplete="off"
-                                value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)">
-                                <i *ngIf="isValidate" (click)="validateOTP()" class="fa fa-check text-success" id="email-buttons"></i> 
+                            <input type="text" minlength="6" maxlength="6" class="form-control" formControlName="otp" autocomplete="off"
+                                value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)" (keyup)="showValidateButton($event)">
+                                <i *ngIf="isValidate" (click)="validateOTP()" class="pi pi-check" id="email-buttons"></i> 
                                 <span class="required">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary" > Resend Code </span>    

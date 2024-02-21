@@ -306,7 +306,7 @@ updateData(newData: any) {
 }
 
 getDetailsUser(username : any){
-  return this.http.get('/api/user/users/'+username,{responseType:"json"})
+  return this.http.get('/api/user/'+username,{responseType:"json"})
 }
 
 }

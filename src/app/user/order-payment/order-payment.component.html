@@ -58,7 +58,7 @@
             <h4 class="label-control">ORDER SUMMARY </h4>
             <div class="line"></div>
             <div class="row" *ngFor="let item of planDetails" style="margin-top: 15px;">
-                <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> {{item.predefinedBotName}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{item.amount}} </span> </span> </div> 
+                <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> {{item.predefinedBotName}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{item.predefinedBotName}} </span> </span> </div> 
                 <div class="col-md-6 text-center"> <span class="label-control"> USD <span *ngIf="item.interval === 'Monthly'">  {{ item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{ item.amount }} </span> </span> </div>
             </div>
             <div class="line" style="margin-top: 12px;"></div>

@@ -81,6 +81,7 @@ export class SignUpComponent implements OnInit {
   fieldsEnabled: boolean = true;
   isPasswordDisable : boolean = true;
   orgExsist : boolean = false;
+  userDetails : any = {}
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -144,10 +145,18 @@ export class SignUpComponent implements OnInit {
   }
 
   showOtp(event){
+    this.isGenerate = false;
     if(event.target.value.includes('@') && this.signupForm.get('email').valid){
-      this.isGenerate = true;
-    } else{
-      this.isGenerate = false;
+       if(event.target.value.endsWith('@gmail.com') || event.target.value.endsWith('@yahoo.com') || 
+       event.target.value.endsWith('@hotmail.com') || event.target.value.endsWith('@rediffmail.com')){
+         this.ispublicMail=true;
+         this.error='Only Business Email is allowed';
+         this.isGenerate = false;
+       } else {
+        this.error = '';
+        this.isGenerate = true;
+        this.ispublicMail=false;
+       }
     }
   }
 
@@ -171,21 +180,21 @@ export class SignUpComponent implements OnInit {
   }
   generateOTP(isResend){
     this.spinner.show()
-    this.ispublicMail=false;
-    let userId=this.signupForm.value.email.toLowerCase();
-    //  this.isresend=true;
-     if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
-     userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
-       this.ispublicMail=true;
-       this.error='Only Business Email is allowed';
-       this.spinner.hide()
-       setTimeout(() => {
-        this.error='';
-      }, 3000);
-       return
-     } else {
-       this.ispublicMail=false;
-     }
+    // this.ispublicMail=false;
+    // let userId=this.signupForm.value.email.toLowerCase();
+    // //  this.isresend=true;
+    //  if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
+    //  userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
+    //    this.ispublicMail=true;
+    //    this.error='Only Business Email is allowed';
+    //    this.spinner.hide()
+    //    setTimeout(() => {
+    //     this.error='';
+    //   }, 3000);
+    //    return
+    //  } else {
+    //    this.ispublicMail=false;
+    //  }
      this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
      if(data.message == "OTP Sent Successfully"){
@@ -200,13 +209,27 @@ export class SignUpComponent implements OnInit {
       this.isGenerate = false;
       this.isEmailDisable = true;
       this.isOtpSent = true;
-      this.isValidate = true;
       this.isShowOtp = true;
       this.resendEnable = true;
       setTimeout(() => {
         this.resendEnable = false;
       }, 120000);
       this.spinner.hide()
+     } else if (data.errorMessage == "User already registered"){
+      this.spinner.hide()
+      this.profileService.getDetailsUser(this.signupForm.value.email.toLowerCase()).subscribe((data : any) =>{
+        if(data.response.registrationProcess == "basic_details_completed"){
+          Swal.fire({
+            title: 'Success!',
+            text: `User Already Registered. Navigating to Subscription`,
+            icon: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+          this.router.navigate(['/login']);
+        }
+      })
+
      } else {
       this.spinner.hide()
       Swal.fire("Error",data.errorMessage,"error")
@@ -407,7 +430,8 @@ get userFormValid(): boolean {
 }
 
 registrationSave(){
-  this.spinner.show();
+  // this.spinner.show();
+  // This payload is for Registration Continue API
   var payload = new FormData();
   var reqObj = {}
   reqObj = {
@@ -415,16 +439,17 @@ registrationSave(){
     lastName: this.signupForm.value.lastName,
     userId : this.signupForm.value.email.toLowerCase(),
     password: this.signupForm.value.password,
-    designation : this.userForm.value.jobTitle,
+    jobTitle : this.userForm.value.jobTitle,
     department : this.userForm.value.department,
-    company : this.userForm.value.organization,
+    organization : this.userForm.value.organization,
     country : this.userForm.value.country,
     state : this.userForm.value.state,
     city : this.userForm.value.city,
-    zipcode : this.userForm.value.zipCode,
+    zipCode : this.userForm.value.zipCode,
     phoneNumber : this.userForm.value.phoneNumber,
-    isSubscriptionEnabled : true
+    // isSubscriptionEnabled : true
 }
+console.log(reqObj,this.crypto.encrypt(JSON.stringify(reqObj)),"reqObj")
 payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 this.service.registrationContinue(payload).subscribe((res : any) => {
 this.spinner.hide();
@@ -438,7 +463,7 @@ if(res.body.message == "User Details Saved Successfully!!") {
 }).then((result) => {
   if (result.value) {
     this.router.navigate(['/subscription'],{
-      queryParams: { email : this.signupForm.value.email.toLowerCase() },
+      queryParams: { email : this.signupForm.value.email.toLowerCase(), password : this.signupForm.value.password },
     });
   }
 });
@@ -477,7 +502,7 @@ getErrorMessage(controlName: string): string {
       return "Minimum 2 characters required";
     }
     if (control.errors.pattern) {
-      return "Only Alphabets and Numbers are allowed";
+      return "Only Numbers are allowed";
     }
   }
 
@@ -502,4 +527,12 @@ onKeydown(event){
      event.preventDefault();
     } 
    }
+
+   showValidateButton(event ){
+    console.log(event.target.value.length)
+    if(event.target.value.length == 6)
+    this.isValidate = true
+    else
+    this.isValidate = false
+   } 
 }

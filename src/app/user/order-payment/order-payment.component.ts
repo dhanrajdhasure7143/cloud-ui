@@ -26,7 +26,7 @@ export class OrderPaymentComponent implements OnInit {
   planDetails : any[] = [];
   totalAmount : number;
   userEmail : any;
-  userDetails : any[] = [];
+  userDetails : any = {};
   agent: string;
   public deviceInfo = null;
   public ipAddress: string;
@@ -44,6 +44,8 @@ export class OrderPaymentComponent implements OnInit {
   public cardData: any;
   public subscriptionDetails: any;
   finalAmount: any;
+  base64textString:any;
+  password : any;
 
   constructor(private formBuilder: FormBuilder,
               private route:ActivatedRoute,
@@ -64,7 +66,9 @@ export class OrderPaymentComponent implements OnInit {
               private productlistservice: ProductlistService,
               ) {
                 this.route.queryParams.subscribe((data)=>{
-                  this.userEmail = data.email
+                  this.userEmail = data.email,
+                  this.planDetails = JSON.parse(data.details),
+                  this.password = data.password
                   })
               }
 
@@ -74,10 +78,6 @@ export class OrderPaymentComponent implements OnInit {
       monthYear: [''],
       cvv: [''],
       cardHolderName: [''],
-    });
-
-    this.profileService.data$.subscribe((data : any) => {
-      this.planDetails = JSON.parse(data)
     });
 
     this.registrationDetails();
@@ -98,39 +98,9 @@ export class OrderPaymentComponent implements OnInit {
   registrationDetails() {
     console.log(this.userEmail,"this.userEmail")
     this.profileService.getDetailsUser(this.userEmail.toLowerCase()).subscribe((data : any) =>{
-      this.userDetails = data
-      console.log(this.userDetails,"dead")
+      this.userDetails = data.response
     })
   }
-
-  // paymentSubscription(){
-  //   var payload = new FormData();
-
-  //   var reqObj = {}
-  //   reqObj = {
-  //     'userId': (this.userDetails as any).userId,
-  //     'firstName': (this.userDetails as any).firstName,
-  //     'lastName': (this.userDetails as any).lastName,
-  //     'password': (this.userDetails as any).password,
-  //     'phoneNumber': (this.userDetails as any).phoneNumber,
-  //     'country': (this.userDetails as any).country,
-  //     'designation': (this.userDetails as any).designation,
-  //     'company': (this.userDetails as any).company,
-  //     'state': (this.userDetails as any).state,
-  //     'city': (this.userDetails as any).city,
-  //     'zipcode': (this.userDetails as any).zipcode,
-  //     'department': (this.userDetails as any).department,
-  //     'isSubscriptionEnabled': true
-  //   }
-
-  //   console.log(reqObj,"reqObj")
-
-  //   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
-  //   this.firstloginservice.registerUser(payload).subscribe(res => {
-  //     this.spinner.hide();
-
-  // })
-  // }
 
   public getBrowserName() {
     this.agent = window.navigator.userAgent.toLowerCase()
@@ -154,37 +124,42 @@ export class OrderPaymentComponent implements OnInit {
 
   }
 
+  getBase64pic(file) {
+    var reader = new FileReader();
+    reader.onload = this._handleReaderLoadedpic.bind(this);
+    reader.readAsBinaryString(file);
+  }
+  
+  _handleReaderLoadedpic(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    this.base64textString = btoa(binaryString);
+  }
+
   paymentSubscription() {
     this.spinner.show();
-    this.userDetails = JSON.parse(Base64.decode(localStorage.getItem('details')));
-
-
     var payload = new FormData();
-
     var reqObj = {}
     reqObj = {
-      'userId': (this.userDetails as any).userId,
-      'firstName': (this.userDetails as any).firstName,
-      'lastName': (this.userDetails as any).lastName,
-      'password': (this.userDetails as any).password,
-      'phoneNumber': (this.userDetails as any).phoneNumber,
-      'country': (this.userDetails as any).country,
-      'designation': (this.userDetails as any).designation,
-      'company': (this.userDetails as any).company,
-      'state': (this.userDetails as any).state,
-      'city': (this.userDetails as any).city,
-      'zipcode': (this.userDetails as any).zipcode,
-      'department': (this.userDetails as any).department,
+      'userId': this.userDetails.userId,
+      'firstName': this.userDetails.firstName,
+      'lastName': this.userDetails.lastName,
+      'password': this.password,
+      'phoneNumber': this.userDetails.phoneNumber,
+      'country': this.userDetails.country,
+      'designation': this.userDetails.designation,
+      'company': this.userDetails.company,
+      'state': this.userDetails.state,
+      'city': this.userDetails.city,
+      'zipcode': this.userDetails.zipcode,
+      'department': this.userDetails.department,
+      'profile_image':this.userDetails.profile_image,
+      'otp': "",
       'isSubscriptionEnabled': true
     }
-    // if(this.selectedFile!=undefined){
-    //   reqObj['profilePic'] = payload;
-    //   reqObj['profilePicName'] = this.selectedFile.name;
-    // }
 
+    console.log(reqObj,this.cryptoService.encrypt(JSON.stringify(reqObj)),"reqObj")
     payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
     this.firstloginservice.registerUser(payload).subscribe((res : any) => {
-      res
       this.spinner.hide();
       if (res.body.errorMessage === 'Uploaded file is too large') {
         Swal.fire({
@@ -221,13 +196,13 @@ export class OrderPaymentComponent implements OnInit {
         this.spinner.show();
         //  if (result.value) {
         let res: any;
-        this.authenticationService.userDetails(this.userEmail.toLowerCase()).subscribe(data => {
+        this.profileService.getDetailsUser(this.userEmail.toLowerCase()).subscribe(data => {
           res = data;
           localStorage.setItem("tenantid", res.tenantID)
           let headers = {};
+          console.log(localStorage,"localStorage");
           let url = `/api/login/beta/accessToken`;
           const browser = this.getBrowserName();
-
           this.deviceInfo = this.deviceService.getDeviceInfo();
           if (this.ipAddress == undefined)
             this.ipAddress = '0.0.0.1';
@@ -235,10 +210,10 @@ export class OrderPaymentComponent implements OnInit {
             'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type': 'W',
             'browser': browser
           }
-
-          let reqObj = { 'userId': (this.userDetails as any).userId, 'password': (this.userDetails as any).password }
+          let reqObj = { 'userId': this.userEmail.toLowerCase(), 'password': this.password }
           let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(reqObj));
           this.http.post<any>(url, { "enc": encrypt }, { headers }).subscribe(user => {
+            console.log(user,"user")
             if (user.accessToken) {
               localStorage.setItem('accessToken', JSON.stringify(user.accessToken));
               localStorage.setItem('refreshToken', JSON.stringify(user.refreshToken));

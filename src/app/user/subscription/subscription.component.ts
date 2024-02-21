@@ -29,6 +29,7 @@ export class SubscriptionComponent implements OnInit {
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
   isDisabled : boolean = true;
+  password : any
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -38,7 +39,8 @@ export class SubscriptionComponent implements OnInit {
               private router: Router
               ) {
                 this.route.queryParams.subscribe((data)=>{
-                this.userEmail = data.email
+                this.userEmail = data.email;
+                this.password = data.password
                 })
                }
 
@@ -106,7 +108,7 @@ paymentPlan(){
   let selectedBotPlans = JSON.stringify(selected_plans_list)
   this.profileservice.updateData(selectedBotPlans)
   this.router.navigate(["/order"],{
-    queryParams: { email : this.userEmail },
+    queryParams: { email : this.userEmail,details : selectedBotPlans, password : this.password  },
   });
 
 }
