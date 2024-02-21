@@ -29,7 +29,7 @@ const routes: Routes = [{
 {
   path:'superadmin',
   loadChildren:() => import('./superadmin/superadmin.module').then(m => m.SuperadminModule),
-  canActivate: [TokenAuthGuard]
+  // canActivate: [TokenAuthGuard]
 },{
   path: '404',
   component: ErrorPageComponent
