@@ -129,17 +129,16 @@ public myname:any[]
     // this.sharedService.getLoggedinUserData().subscribe(data=>{this.mydata=data
     
     // });
-    setTimeout(() => {
-      this.getAllNotifications();
-    }, 500);
-
+ 
     this.spinner.show();
     setTimeout(() => {
       this.getImage();
-        },500);
+      this.getAllNotifications();
+    },500);
         
         setTimeout(() => {
           this.spinner.hide();
+          this.profileName();
         }, 5000);
   }
 
@@ -268,9 +267,6 @@ public myname:any[]
   }
 
   profileName(){
- 
-    
-    
     this.firstname=localStorage.getItem('firstName');
       this.lastname=localStorage.getItem('lastName');
       var firstnameFirstLetter=this.firstname.charAt(0)

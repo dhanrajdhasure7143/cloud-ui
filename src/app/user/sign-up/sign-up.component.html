@@ -8,33 +8,31 @@
             <img class="ezflow-img" src="assets/images/EZFlow.png" alt="EZFlow">
         </div>
     <div class="row">
-        <div class="col-md-7 bot-display">
-            <div class="bot-title-header">
+        <div class="col-md-7">
+            <div class="bot-plan-details">
+            <!-- <div class="bot-title-header">
                 <span class="bot-title"> Virtual Marketing Bot </span>
                 <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
+            </div> -->
+            <div *ngFor="let plan of planDetails" class="bot-title-header">
+                <div class="bot-details">
+                <p class="planName">{{ plan.predefinedBotPlanName }}</p>
+                <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="../../../assets/approve-default.svg" class="tick"  alt="approve" srcset=""> 
-                    <span class="bot-feature"> Efficiency and Time Saving </span>
-                </div>
-                <div class="col-md-6">
-                    <img src="../../../assets/approve-default.svg" class="tick" alt="approve" srcset=""> 
-                    <span class="bot-feature"> Personalized for Better Engagement </span>
-                </div>
-                <div class="col-md-6">
-                    <img src="../../../assets/approve-default.svg" class="tick" alt="approve" srcset=""> 
-                    <span class="bot-feature"> Multi-Channel Integration </span>
-                </div>
-                <div class="col-md-6">
-                    <img src="../../../assets/approve-default.svg" class="tick" alt="approve" srcset=""> 
-                    <span class="bot-feature"> Compliance and Security Measures </span>
-                </div>
-                <div class="col-md-6">
-                    <img src="../../../assets/approve-default.svg" class="tick" alt="approve" srcset=""> 
-                    <span class="bot-feature"> Data-Driven Decision Making </span>
+                <div class="feature-details">
+                    <div class="feature-heading">
+                        <span class="feature">Features: </span>
+                    </div>
+                    <div class="row">
+                        <div *ngFor="let feature of plan.featuresList" class="col-md-6">
+                            <div class="mb-3">
+                                <span class="feature-item">&#10003; {{ feature }}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
         </div>
         <div class="col-md-5" *ngIf="!showUserScreen">
             <div class="loginblock">

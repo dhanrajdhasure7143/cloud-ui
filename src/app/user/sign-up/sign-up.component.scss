@@ -304,11 +304,11 @@
 .bot-display::-webkit-scrollbar {
     // width: 3px; /* Set the scrollbar width */
     scrollbar-width: thin; /* Set the scrollbar width to a thin size */
-    scrollbar-color: transparent #cce5f5; /* Set the scrollbar color to transparent */
+    scrollbar-color:  #9DBCEA;/* Set the scrollbar color to transparent */
 }
 
 .bot-display::-webkit-scrollbar-thumb {
-  background-color: #cce5f5; /* Set the scrollbar thumb color to transparent */
+  background-color: #9DBCEA; /* Set the scrollbar thumb color to transparent */
 }
 
 .bot-display::-webkit-scrollbar-track {
@@ -371,6 +371,7 @@
   width: 450px;
   height: 350px; 
   margin-left: 100px;
+  margin-top:-30px;
 }
 
 .tick{
@@ -464,6 +465,88 @@
 
 .verify:hover, .resend:hover  {
   text-decoration: underline;
+}
+
+// Styles for dynamic data 
+
+.bot-details {
+  // overflow-x: hidden;
+  // margin-left: 125px;
+  text-align: center;
+}
+
+.bot-plan-details {
+  height:650px;
+  overflow-y: auto;
+  width:auto;
+}
+
+.bot-plan-details:hover {
+  overflow-y: scroll; 
+  
+}
+
+.bot-plan-details::-webkit-scrollbar {
+  scrollbar-width: thin;
+}
+
+.bot-plan-details::-webkit-scrollbar-thumb {
+  background-color: #ffffff; /* Set the color of the scrollbar thumb */
+}
+
+.bot-plan-details:hover::-webkit-scrollbar-thumb {
+    background-color: #9DBCEA;
+}
+
+.planName {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 800; color: black;
+  width: 600px; 
+  display: inline-block; 
+}
+
+.feature{
+  font-size: 16px;
+  font-weight:bolder;
+  color: #0061cf;
+}
+
+.feature-heading {
+  // margin-bottom: 6px;
+  // margin-top:-15px;
+  width: 100%; 
+  text-align: left; 
+  margin-bottom: 10px; 
+
+}
+
+.feature-details {
+  width: 550px; 
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+}
+
+.feature-item {
+  width: 100%; 
+  max-width: 290px; 
+  margin-bottom: 10px;
+}
+
+.description {
+  // display: inline-block;
+  color: #0061cf;
+  font-weight: bold;
+  margin-top:5px;
+}
+
+.descript {
+  display: inline-block;
+  width: 600px; 
+  text-align: justify;
+  margin-top:10px;
 }
 
 .user-screen{
