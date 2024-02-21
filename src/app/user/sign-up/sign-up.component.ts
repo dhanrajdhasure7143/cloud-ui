@@ -414,9 +414,9 @@ registrationSave(){
     isSubscriptionEnabled : true
 }
 payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-this.service.registerUser(payload).subscribe((res : any) => {
+this.service.registrationContinue(payload).subscribe((res : any) => {
 this.spinner.hide();
-if(res.body.message == "Registration Complete") {
+if(res.body.message == "User Details Saved Successfully!!") {
   Swal.fire({
     title: 'Success!',
     text: 'Registration Done Successfully',

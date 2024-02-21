@@ -1,12 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country, State, City } from 'country-state-city';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthenticationService } from 'src/app/_services';
 import { CryptoService } from 'src/app/_services/crypto.service';
+import { ProductlistService } from 'src/app/_services/productlist.service';
 import { ProfileService } from 'src/app/_services/profile.service';
+import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from 'sweetalert2';
+import { LoginService } from '../_services/login.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { IpServiceService } from 'src/app/_services/ip-service.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-order-payment',
@@ -14,9 +22,28 @@ import Swal from 'sweetalert2';
   styleUrls: ['./order-payment.component.scss']
 })
 export class OrderPaymentComponent implements OnInit {
-  subscriptionForm: FormGroup;
+  cardDetails: FormGroup;
   planDetails : any[] = [];
   totalAmount : number;
+  userEmail : any;
+  userDetails : any[] = [];
+  agent: string;
+  public deviceInfo = null;
+  public ipAddress: string;
+  private spacialSymbolEncryption: string = '->^<-';
+  public productId: any;
+  public plantype: any;
+  tenantID: string;
+  public plansList: any; 
+  public selected_plans: any = {};
+  public name: any;
+  promo: any;
+  public paymentToken: any;
+  public error = '';
+  public success = '';
+  public cardData: any;
+  public subscriptionDetails: any;
+  finalAmount: any;
 
   constructor(private formBuilder: FormBuilder,
               private route:ActivatedRoute,
@@ -24,38 +51,379 @@ export class OrderPaymentComponent implements OnInit {
               private crypto:CryptoService,
               private router: Router,
               private spinner: NgxSpinnerService,
-              private profileService : ProfileService
-              ) {}
+              private modalService: BsModalService,
+              private profileService: ProfileService,
+              private sharedDataService: SharedDataService,
+              private firstloginservice: FirstloginService,
+              private ip: IpServiceService,
+              private authenticationService: AuthenticationService,
+              private deviceService: DeviceDetectorService,
+              private http: HttpClient, 
+              private loginservice: LoginService,
+              private cryptoService: CryptoService,
+              private productlistservice: ProductlistService,
+              ) {
+                this.route.queryParams.subscribe((data)=>{
+                  this.userEmail = data.email
+                  })
+              }
 
   ngOnInit(): void {
-    this.subscriptionForm = this.formBuilder.group({
+    this.cardDetails = this.formBuilder.group({
       cardNumber: [''],
       monthYear: [''],
       cvv: [''],
-      lastName: [''],
-      userName: [''],
-      country: [''],
-      autoBilling: ['']
+      cardHolderName: [''],
     });
 
     this.profileService.data$.subscribe((data : any) => {
       this.planDetails = JSON.parse(data)
-      console.log(this.planDetails)
     });
+
+    this.registrationDetails();
   }
 
   calculateTotalPrice(): number {
     this.totalAmount = 0;
-
     for (const plan of this.planDetails) {
       if (plan.interval === 'Monthly') {
         this.totalAmount += plan.amount;
       } else if (plan.interval === 'Yearly') {
-        this.totalAmount += plan.amount * 12;
+        this.totalAmount += plan.amount;
       }
     }
-
     return this.totalAmount;
   }
 
+  registrationDetails() {
+    console.log(this.userEmail,"this.userEmail")
+    this.profileService.getDetailsUser(this.userEmail.toLowerCase()).subscribe((data : any) =>{
+      this.userDetails = data
+      console.log(this.userDetails,"dead")
+    })
+  }
+
+  // paymentSubscription(){
+  //   var payload = new FormData();
+
+  //   var reqObj = {}
+  //   reqObj = {
+  //     'userId': (this.userDetails as any).userId,
+  //     'firstName': (this.userDetails as any).firstName,
+  //     'lastName': (this.userDetails as any).lastName,
+  //     'password': (this.userDetails as any).password,
+  //     'phoneNumber': (this.userDetails as any).phoneNumber,
+  //     'country': (this.userDetails as any).country,
+  //     'designation': (this.userDetails as any).designation,
+  //     'company': (this.userDetails as any).company,
+  //     'state': (this.userDetails as any).state,
+  //     'city': (this.userDetails as any).city,
+  //     'zipcode': (this.userDetails as any).zipcode,
+  //     'department': (this.userDetails as any).department,
+  //     'isSubscriptionEnabled': true
+  //   }
+
+  //   console.log(reqObj,"reqObj")
+
+  //   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+  //   this.firstloginservice.registerUser(payload).subscribe(res => {
+  //     this.spinner.hide();
+
+  // })
+  // }
+
+  public getBrowserName() {
+    this.agent = window.navigator.userAgent.toLowerCase()
+
+    switch (true) {
+      case this.agent.indexOf('edge') > -1:
+        return 'edge';
+      case this.agent.indexOf('opr') > -1 && !!(<any>window).opr:
+        return 'opera';
+      case this.agent.indexOf('chrome') > -1 && !!(<any>window).chrome:
+        return 'chrome';
+      case this.agent.indexOf('trident') > -1:
+        return 'ie';
+      case this.agent.indexOf('firefox') > -1:
+        return 'firefox';
+      case this.agent.indexOf('safari') > -1:
+        return 'safari';
+      default:
+        return 'other';
+    }
+
+  }
+
+  paymentSubscription() {
+    this.spinner.show();
+    this.userDetails = JSON.parse(Base64.decode(localStorage.getItem('details')));
+
+
+    var payload = new FormData();
+
+    var reqObj = {}
+    reqObj = {
+      'userId': (this.userDetails as any).userId,
+      'firstName': (this.userDetails as any).firstName,
+      'lastName': (this.userDetails as any).lastName,
+      'password': (this.userDetails as any).password,
+      'phoneNumber': (this.userDetails as any).phoneNumber,
+      'country': (this.userDetails as any).country,
+      'designation': (this.userDetails as any).designation,
+      'company': (this.userDetails as any).company,
+      'state': (this.userDetails as any).state,
+      'city': (this.userDetails as any).city,
+      'zipcode': (this.userDetails as any).zipcode,
+      'department': (this.userDetails as any).department,
+      'isSubscriptionEnabled': true
+    }
+    // if(this.selectedFile!=undefined){
+    //   reqObj['profilePic'] = payload;
+    //   reqObj['profilePicName'] = this.selectedFile.name;
+    // }
+
+    payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+    this.firstloginservice.registerUser(payload).subscribe((res : any) => {
+      res
+      this.spinner.hide();
+      if (res.body.errorMessage === 'Uploaded file is too large') {
+        Swal.fire({
+          title: 'Error!',
+          text: "Uploaded file is too large",
+          icon: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+      }
+      else if (res.body.errorMessage === 'Uploaded file is not supported') {
+        Swal.fire({
+          title: 'Error!',
+          text: "Please upload png or jpg image",
+          icon: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+      }
+      else if (res.body.errorMessage === 'User already registered') {
+        Swal.fire({
+          title: 'Error!',
+          text: "User already registered. Please try to login!!",
+          icon: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['/']);
+          }
+        })
+      }
+      else {
+        this.spinner.show();
+        //  if (result.value) {
+        let res: any;
+        this.authenticationService.userDetails(this.userEmail.toLowerCase()).subscribe(data => {
+          res = data;
+          localStorage.setItem("tenantid", res.tenantID)
+          let headers = {};
+          let url = `/api/login/beta/accessToken`;
+          const browser = this.getBrowserName();
+
+          this.deviceInfo = this.deviceService.getDeviceInfo();
+          if (this.ipAddress == undefined)
+            this.ipAddress = '0.0.0.1';
+          headers = {
+            'device-info': this.deviceInfo.userAgent, 'ip-address': this.ipAddress, 'device-type': 'W',
+            'browser': browser
+          }
+
+          let reqObj = { 'userId': (this.userDetails as any).userId, 'password': (this.userDetails as any).password }
+          let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(reqObj));
+          this.http.post<any>(url, { "enc": encrypt }, { headers }).subscribe(user => {
+            if (user.accessToken) {
+              localStorage.setItem('accessToken', JSON.stringify(user.accessToken));
+              localStorage.setItem('refreshToken', JSON.stringify(user.refreshToken));
+
+              this.spinner.hide();
+              this.spinner.show();
+              this.productId = "EZFlow";
+              this.plantype = localStorage.getItem("selectedplan")
+              this.tenantID = localStorage.getItem("tenantid");
+              this.productlistservice.getProductPlanes(this.productId, this.tenantID, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
+                this.plansList = data
+                this.plansList.forEach(obj => {
+                  if (obj.active == true || obj.active == 'true') {
+                    if (obj.nickName == this.plantype) {
+                      this.selected_plans = obj
+                      // this.profileService.validateCoupon(null, this.selected_plans.amount, this.cardDetails.customerCount, JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp => {
+                      //   this.validateCoupondata = resp;
+                      //   this.totalPay = this.validateCoupondata.TotalPaybleAmount,
+                      //     this.noOfusers = this.cardDetails.customerCount
+                      //   this.taxPercentage = this.validateCoupondata.TaxPercentage
+                      //   this.taxamount = this.validateCoupondata.TaxAmount
+                      // })
+                      if (this.selected_plans.term == "1year") {
+                        this.selected_plans.term = 'Annual'
+                      } else {
+                        this.selected_plans.term = 'One Month'
+                      }
+                      this.name = this.selected_plans.nickName;
+                    }
+                  }
+                });
+
+                const cardValue = {
+                  "name": this.cardDetails.value.cardHolderName,
+                  "number": this.cardDetails.value.cardNumber,
+                  // "exp_month": this.cardDetails.cardmonth,
+                  // "exp_year": this.cardDetails.cardyear,
+                  "cvc": this.cardDetails.value.cvv
+                }
+                var users: any;
+                var quantity: any;
+                // if (this.planselected == 'Standard') {
+                //   users = "30";
+                //   quantity = "0"
+                // }
+                // if (this.planselected == 'Professional') {
+                //   users = "100";
+                //   quantity = "0"
+                // }
+                const plandetails = {
+                  "ip": "1.2.3.4",
+                  "promo": this.promo,
+                  "items": [
+                    {
+                      "meta": {
+                        "orderable": true,
+                        "visible": true,
+                        "plan_id": this.selected_plans.id
+                      },
+                      "planId": this.selected_plans.id,
+                      "quantity": quantity
+                    }
+                  ],
+                  "meta": {
+                    "orderable": true,
+                    "visible": true,
+                    "product_id": "EZFlow"
+                  }
+                }
+
+                let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue))
+                let reqObj = { "enc": encrypt };
+                this.productlistservice.getSubscriptionPaymentToken(reqObj, JSON.parse(localStorage.getItem('accessToken'))).subscribe(res => {
+                  this.spinner.show();
+                  this.paymentToken = res
+                  if (this.paymentToken.message == 'Failed To Generate Payment Token') {
+
+                    Swal.fire({
+                      title: 'Error',
+                      text: `Invalid Card Details!!`,
+                      icon: 'error',
+                      showCancelButton: false,
+                      allowOutsideClick: false
+
+                    }).then((result) => {
+                      if (result.value) {
+                        this.profileService.deleteSelectedUser(this.userEmail).subscribe(resp => {
+                          let encrypt = this.cryptoService.encrypt(this.userEmail);
+                          let user = encrypt;
+                          this.loginservice.sentVerificationMail(user).subscribe(res => {
+                            this.router.navigate(['/home/add-card', this.cardData]);
+                          }, error => {
+                            this.error = 'User Already Exists'
+                          }
+                          );
+                        }, err => {
+                          Swal.fire({
+                            title: 'Error',
+                            text: `Please Register Again!!`,
+                            icon: 'error',
+                            showCancelButton: false,
+                            allowOutsideClick: true
+                          }).then((result) => {
+                            if (result.value) {
+                              this.router.navigate(['/']);
+                            }
+                          })
+                        })
+
+                      }
+                    })
+                    this.spinner.hide();
+                  }
+                  else {
+                   
+                    setTimeout(()=>{
+                      this.spinner.hide();
+                      Swal.fire({
+                        title: 'Success',
+                        text: `Subscription Completed Successfully!!`,
+                        icon: 'success',
+                        showCancelButton: false,
+                        allowOutsideClick: true
+                      }).then((result) => {
+                        this.productlistservice.subscribePlan(this.paymentToken.message, plandetails, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
+                          this.subscriptionDetails = data
+                          this.spinner.hide();
+                          if (this.subscriptionDetails.message == "Subscription Completed Successfully!!") {
+                            this.finalAmount = this.subscriptionDetails.amountPaid;
+                            this.sharedDataService.setFreetrialavailed(false);
+
+                          }
+                          else {
+                            Swal.fire({
+                              title: 'Error',
+                              text: `Unable to register due to issue with the given card details. Please try again !!`,
+                              icon: 'error',
+                              showCancelButton: false,
+                              allowOutsideClick: false
+                            }).then((result) => {
+                              if (result.value) {
+                                this.spinner.show();
+                                this.profileService.deleteSelectedUser(this.userEmail).subscribe(resp => {
+                                  this.spinner.hide();
+                                  this.router.navigate(['/']);
+    
+                                }, err => {
+                                  Swal.fire({
+                                    title: 'Error',
+                                    text: `Please Register Again!!`,
+                                    icon: 'error',
+                                    showCancelButton: false,
+                                    allowOutsideClick: true
+                                  }).then((result) => {
+                                    if (result.value) {
+                                      this.router.navigate(['/']);
+                                    }
+                                  })
+                                })
+                              }
+                            })
+                          }
+                        })
+                        this.router.navigate(['/']);
+                      })
+                     },10000)
+                 
+                  }
+
+
+                })
+              });
+
+            }
+
+          });
+        });
+
+        //  }
+
+        //  });
+      }
+    }, err => {
+      this.spinner.hide();
+      Swal.fire("Error", "Registration failed", "error");
+    })
+  }
 }

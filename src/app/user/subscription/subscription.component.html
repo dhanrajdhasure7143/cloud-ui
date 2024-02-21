@@ -31,25 +31,28 @@
                 <h4 class="label-control">Predefined Bots</h4>
             </div>
             <div class="row">
-                <div class="col-md-4 bot-plans" *ngFor="let plan of predefinedPlans; let i = index">
+                <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
                     <div class="bot-details">
                         <div class="circle text-center" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
                             <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
                         </div>
-                        <div class="label-control text-center"> {{plan.predefinedBotPlanName}} </div>
-                        <div class="label-control text-center"> ${{plan.amount}} / {{plan.interval}} </div>
+                        <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
+                        <div class="text-center" *ngFor="let detail of plan.planDetails">  
+                            <span *ngIf="plan.selectedTerm == detail.interval">{{detail.amount}} $ / {{plan.selectedTerm}}</span>
+                            <!-- <span >{{detail.amount}} / {{plan.isSelected}}</span> -->
+                         </div>
                          <div style="display: flex !important;">
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-1"></div>
                                     <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
-                                        <p-radioButton name="Monthly" value="Monthly" [(ngModel)]="plan.interval"></p-radioButton>
-                                        <label for="" class="label-control ml-2"> Monthly </label>
+                                        <p-radioButton name="Monthly" id="month" value="Monthly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
+                                        <label for="" class="ml-2"> Monthly </label>
                                     </div>
                                     <div class="col-md-1"></div>
                                     <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
-                                        <p-radioButton name="Yearly" value="Yearly" [(ngModel)]="plan.interval"></p-radioButton>
-                                        <label for="" class="label-control ml-2"> Yearly </label>
+                                        <p-radioButton name="Yearly" id="year" value="Yearly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
+                                        <label for="" class="ml-2"> Yearly </label>
                                     </div>
                                     <div class="col-md-3">
                                         <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> 
@@ -70,7 +73,8 @@
                 </div>
             </div>
             <div class="col-md-12 p-10 form-group text-center" style="margin-top: 20px;">
-                <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()"> Next (<span>{{selectedAmount*(planType=='Monthly'?1:12)}}</span> $) </button>
+                <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed </button>
+                <!-- <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()"> Next (<span>{{selectedAmount*(planType=='Monthly'?1:12)}}</span> $) </button> -->
             </div>
         </div>
         </div>

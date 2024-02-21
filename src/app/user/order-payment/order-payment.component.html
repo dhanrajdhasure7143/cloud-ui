@@ -7,12 +7,12 @@
          <div class="col-md-12" style="height: 250px; padding: 50px; max-height: max-content;">
             <h4 class="label-control"> Orders </h4>
             <ul style="list-style-type:square;">
-                <li class="label-control" *ngFor="let item of planDetails"> {{item.predefinedBotPlanName}} -  USD {{item.amount}} / {{item.interval}}</li>
+                <li class="label-control" *ngFor="let item of planDetails"> {{item.predefinedBotName}} -  USD {{item.amount}} / {{item.interval}} </li>
             </ul>
          </div>
          <div class="col-md-12" style="height: 170px;">
             <div>
-                <form action="" [formGroup]="subscriptionForm" cdkTrapFocus>
+                <form action="" [formGroup]="cardDetails" cdkTrapFocus>
                     <div class="col-md-12" style="margin-top: 12px;">
                         <div class="col-md-6 p-10 form-group">
                             <label for="" class="label-control"> Card Information </label>
@@ -24,7 +24,7 @@
                         </div>
                          <div class="col-md-6 p-10 form-group">
                             <label for="" class="label-control"> Card Holder Name</label>
-                            <input type="text" pInputText name="" id="" onpaste="return false;" ondrop="return false;" autocomplete="off" formControlName="userName" class="form-control" placeholder="Full Name on Card" tabindex="4">
+                            <input type="text" pInputText name="" id="" onpaste="return false;" ondrop="return false;" autocomplete="off" formControlName="cardHolderName" class="form-control" placeholder="Full Name on Card" tabindex="4">
                          </div>
                          <!-- <div class="col-md-10 p-10 form-group">
                             <label for="" class="label-control"> Country or Region </label>
@@ -58,15 +58,15 @@
             <h4 class="label-control">ORDER SUMMARY </h4>
             <div class="line"></div>
             <div class="row" *ngFor="let item of planDetails" style="margin-top: 15px;">
-                <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> 1 * {{item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'"> 12 * {{item.amount}} </span> </span> </div> 
-                <div class="col-md-6 text-center"> <span class="label-control"> USD <span *ngIf="item.interval === 'Monthly'">  {{1 * item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{12 * item.amount}} </span> </span> </div>
+                <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> {{item.predefinedBotName}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{item.amount}} </span> </span> </div> 
+                <div class="col-md-6 text-center"> <span class="label-control"> USD <span *ngIf="item.interval === 'Monthly'">  {{ item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{ item.amount }} </span> </span> </div>
             </div>
             <div class="line" style="margin-top: 12px;"></div>
             <div class="row" style="margin-top: 15px;">
                 <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
                 <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
             </div>
-            <div class="col-md 12 text-center" style="margin-top: 30px;"> <button class="btn btn-primary"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  </div>
+            <div class="col-md 12 text-center" style="margin-top: 30px;"> <button class="btn btn-primary" (click)="paymentSubscription()"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  </div>
         </div>
     </div>
 </div>

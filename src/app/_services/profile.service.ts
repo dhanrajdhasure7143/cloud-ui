@@ -305,4 +305,8 @@ updateData(newData: any) {
   this.dataSubject.next(newData);
 }
 
+getDetailsUser(username : any){
+  return this.http.get('/api/user/users/'+username,{responseType:"json"})
+}
+
 }
