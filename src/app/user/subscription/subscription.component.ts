@@ -6,6 +6,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 @Component({
   selector: 'app-subscription',
@@ -29,23 +30,31 @@ export class SubscriptionComponent implements OnInit {
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
   isDisabled : boolean = true;
-  password : any
+  password : any;
+  isReview_order:boolean = false;
+  selected_plans_list:any
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
               private route:ActivatedRoute,
               private profileservice : ProfileService,
               private spinner : NgxSpinnerService,
-              private router: Router
+              private router: Router,
+              private crypto: CryptoService
               ) {
                 this.route.queryParams.subscribe((data)=>{
-                this.userEmail = data.email;
-                this.password = data.password
+                  if(data){
+                  let params:any = JSON.parse(this.crypto.decrypt(data.token));
+                  console.log(params)
+                this.userEmail = params.email;
+                this.password = params.password;
+                console.log(this.userEmail,this.password)
+                  }
                 })
                }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     this.subscriptionForm = this.formBuilder.group({
       cardNumber: [''],
       monthYear: [''],
@@ -66,6 +75,7 @@ export class SubscriptionComponent implements OnInit {
 
   loadPredefinedBots(){
     this.service.loadPredefinedBots().subscribe((response : any) =>{
+      this.spinner.hide()
       if(response){
       this.botPlans = response.data;
       this.botPlans.forEach(item=>{
@@ -73,6 +83,19 @@ export class SubscriptionComponent implements OnInit {
         item["selectedTerm"] = "Monthly"
       })
       }
+    },err=>{
+      this.spinner.hide();
+      Swal.fire({
+        title: 'Success!',
+        text: 'User details saved successfully. Please processed with subscription!',
+        icon: 'success',
+        showCancelButton: false,
+        allowOutsideClick: true
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['/signup']);
+      }
+    });
     })
   }
 
@@ -89,7 +112,8 @@ hideDescription() {
 }
 
 paymentPlan(){
-  let selected_plans_list=[]
+  this.isReview_order = true;
+  this.selected_plans_list=[];
   this.selectedPlans.forEach(element => {
     element.planDetails.forEach(item => {
       if(element.selectedTerm == item.interval){
@@ -98,18 +122,18 @@ paymentPlan(){
         obj["interval"] = item.interval;
         obj["priceId"] = item.priceId;
         obj["amount"] = item.amount
-        selected_plans_list.push(obj)
+        this.selected_plans_list.push(obj);
       }
     });
   });
   // if(this.selectedPlans.length == 0){
   //   return
   // }
-  let selectedBotPlans = JSON.stringify(selected_plans_list)
-  this.profileservice.updateData(selectedBotPlans)
-  this.router.navigate(["/order"],{
-    queryParams: { email : this.userEmail,details : selectedBotPlans, password : this.password  },
-  });
+  // let selectedBotPlans = JSON.stringify(selected_plans_list)
+  // this.profileservice.updateData(selectedBotPlans)
+  // this.router.navigate(["/order"],{
+  //   queryParams: { email : this.userEmail,details : selectedBotPlans, password : this.password  },
+  // });
 
 }
 
@@ -119,7 +143,7 @@ sendEmailEnterPrisePlan(){
     if(res.errorMessage !="User not present"){
     Swal.fire({
         title: 'Success!',
-        text: `Thank you for choosing Enterprise plan, Our team will contact you soon`,
+        text: `Thank you for choosing Enterprise plan, Our team will contact you soon!`,
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
@@ -147,6 +171,10 @@ onSelectPredefinedBot(plan, index){
       this.selectedPlans.push(item);
     }
   })
+}
+
+readValue(value){
+  this.isReview_order = false;
 }
 
 

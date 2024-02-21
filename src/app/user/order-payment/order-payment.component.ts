@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Country, State, City } from 'country-state-city';
@@ -23,7 +23,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class OrderPaymentComponent implements OnInit {
   cardDetails: FormGroup;
-  planDetails : any[] = [];
+  @Input("planDetails") planDetails:any[]=[];
+  @Output() backtoScreen = new EventEmitter();
   totalAmount : number;
   userEmail : any;
   userDetails : any = {};
@@ -64,13 +65,7 @@ export class OrderPaymentComponent implements OnInit {
               private loginservice: LoginService,
               private cryptoService: CryptoService,
               private productlistservice: ProductlistService,
-              ) {
-                this.route.queryParams.subscribe((data)=>{
-                  this.userEmail = data.email,
-                  this.planDetails = JSON.parse(data.details),
-                  this.password = data.password
-                  })
-              }
+              ) {}
 
   ngOnInit(): void {
     this.cardDetails = this.formBuilder.group({
@@ -80,7 +75,11 @@ export class OrderPaymentComponent implements OnInit {
       cardHolderName: [''],
     });
 
-    this.registrationDetails();
+    // this.registrationDetails();
+  }
+
+  ngOnChanges(){
+    console.log(this.planDetails)
   }
 
   calculateTotalPrice(): number {
@@ -400,5 +399,9 @@ export class OrderPaymentComponent implements OnInit {
       this.spinner.hide();
       Swal.fire("Error", "Registration failed", "error");
     })
+  }
+
+  backToplans(){
+    this.backtoScreen.emit(true)
   }
 }

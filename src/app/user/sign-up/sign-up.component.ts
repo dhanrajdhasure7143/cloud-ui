@@ -200,7 +200,7 @@ export class SignUpComponent implements OnInit {
      if(data.message == "OTP Sent Successfully"){
       Swal.fire({
         title: 'Success!',
-        text: `OTP has been sent to your registered Email.`,
+        text: `OTP has been sent to your registered Email!`,
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
@@ -216,18 +216,35 @@ export class SignUpComponent implements OnInit {
       }, 120000);
       this.spinner.hide()
      } else if (data.errorMessage == "User already registered"){
-      this.spinner.hide()
+      this.spinner.show()
       this.profileService.getDetailsUser(this.signupForm.value.email.toLowerCase()).subscribe((data : any) =>{
-        if(data.response.registrationProcess == "basic_details_completed"){
+      this.spinner.hide()
+        if(data.response)
+        if(data.response.enterprisePlan){
           Swal.fire({
-            title: 'Success!',
-            text: `User Already Registered. Navigating to Subscription`,
-            icon: 'success',
+            title: 'Info',
+            text: `This user already requested for Enterprise plan. Please use other email to signup!`,
+            icon: 'info',
             showCancelButton: false,
             allowOutsideClick: true
           })
-          this.router.navigate(['/login']);
-        }
+        }else{
+        // if(data.response.registrationProcess == "basic_details_completed"){
+          Swal.fire({
+            title: 'Info',
+            text: `User Already exist, please processed sign in!`,
+            icon: 'info',
+            showCancelButton: false,
+            allowOutsideClick: true
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigate(['/user'],{
+                queryParams: { email : this.userEmail },
+              });
+            }
+          });
+        // }
+      }
       })
 
      } else {
@@ -288,7 +305,7 @@ validateOTP(){
         this.isPasswordDisable = false
         Swal.fire({
           title: 'Success!',
-          text: `OTP Verified Successfully.`,
+          text: `OTP Verified Successfully!`,
           icon: 'success',
           showCancelButton: false,
           allowOutsideClick: true
@@ -430,7 +447,7 @@ get userFormValid(): boolean {
 }
 
 registrationSave(){
-  // this.spinner.show();
+  this.spinner.show();
   // This payload is for Registration Continue API
   var payload = new FormData();
   var reqObj = {}
@@ -456,14 +473,15 @@ this.spinner.hide();
 if(res.body.message == "User Details Saved Successfully!!") {
   Swal.fire({
     title: 'Success!',
-    text: 'Registration Done Successfully',
+    text: 'User details saved successfully. Please processed with subscription!',
     icon: 'success',
     showCancelButton: false,
     allowOutsideClick: true
 }).then((result) => {
   if (result.value) {
+    let obj = {email : this.signupForm.value.email.toLowerCase(), password : this.signupForm.value.password}
     this.router.navigate(['/subscription'],{
-      queryParams: { email : this.signupForm.value.email.toLowerCase(), password : this.signupForm.value.password },
+      queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
     });
   }
 });
