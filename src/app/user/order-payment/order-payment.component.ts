@@ -48,6 +48,7 @@ export class OrderPaymentComponent implements OnInit {
   finalAmount: any;
   base64textString:any;
   password : any;
+  isButtonEnable : boolean = true
 
   constructor(private formBuilder: FormBuilder,
               private route:ActivatedRoute,
@@ -410,5 +411,9 @@ export class OrderPaymentComponent implements OnInit {
 
   onchangecheckbox(event : any){
     console.log(event,event.target.checked)
+    if(event.target.checked)
+    this.isButtonEnable = false;
+    else
+    this.isButtonEnable = true;
   }
 }

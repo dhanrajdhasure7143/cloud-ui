@@ -1,4 +1,4 @@
-<div class="container-fluid">  
+<div class="container">  
     <div class="row">
         <div class="col-md-7">
          <div class="col-md-12" style="height: 200px; padding : 10px 50px; max-height: max-content;">
@@ -24,39 +24,41 @@
                             <input type="text" pInputText name="" id="" onpaste="return false;" ondrop="return false;" autocomplete="off" formControlName="cardHolderName" class="form-control" placeholder="Full Name on Card" tabindex="4">
                          </div>
                          <div class="col-md-10 p-10 form-group">
-                            <p>By confirming your subscription, you allow EZFlow to charge your card for this payment and future payments in accordance with their terms</p>
+                            <p style="font-size: 13px;"> Auto-renewal feature enabled by default. If you wish to opt out of auto-renewal, simply manage your subscription preferences in the Subscription Management tab.</p>
                          </div>
                     </div>
                 </form>
             </div>
          </div>
         </div>
-        <div class="col-md-5" style="padding-right: 80px;">
-            <h4 class="label-control">ORDER SUMMARY </h4>
-            <div class="line"></div>
-            <div class="row" *ngFor="let item of planDetails" style="margin-top: 15px;">
-                <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> {{item.predefinedBotName}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{item.predefinedBotName}} </span> </span> </div> 
-                <div class="col-md-6 text-center"> <span class="label-control"> USD <span *ngIf="item.interval === 'Monthly'">  {{ item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{ item.amount }} </span> </span> </div>
+        <div class="col-md-5" style="padding: 10px;">
+            <div style="height: 70vh;">
+                <h4 class="label-control">Order Summary </h4>
+                <div class="line"></div>
+                <div class="row" *ngFor="let item of planDetails" style="margin-top: 15px;">
+                    <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> {{item.predefinedBotName}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{item.predefinedBotName}} </span> </span> </div> 
+                    <div class="col-md-6 text-center"> <span class="label-control"> USD <span *ngIf="item.interval === 'Monthly'">  {{ item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{ item.amount }} </span> </span> </div>
+                </div>
+                <div class="line" style="margin-top: 12px;"></div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
+                    <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
+                </div>
             </div>
-            <div class="line" style="margin-top: 12px;"></div>
-            <div class="row" style="margin-top: 15px;">
-                <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
-                <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
-            </div>
-            <div style="margin-top: 300px;">
+            <div>
                 <div class="col md-12">
-                    <div class="row">
+                    <div class="row" style="margin-left: 50px;">
                         <div class="col-md-2" style="margin-right: -35px;">
                             <input class="form-control" style="height: 15px !important; margin-top: 6px;" type="checkbox" name="checkbox"  (change)="onchangecheckbox($event)">
                         </div>
                         <div class="col-md-10">
-                            <label class="label-control"> I agree with the terms of service and the <a target="_blank" href="" [routerLink]="['/terms']"> Privacy Policy</a></label>
+                            <label class="label-control" style="font-size: 10px;"> I agree with the <a target="_blank" href="" [routerLink]="['/terms']" > terms of service </a>  and the <a target="_blank" href="" [routerLink]="['/privacy']"> Privacy Policy</a></label>
                         </div>
                     </div>
                 </div>
                 <div class="col-md 12 text-center" style="margin-top: 15px;">
                     <button class="btn btn-primary" (click)="backToplans()"> Back</button>
-                    <button class="btn btn-primary" (click)="paymentSubscription()" style="margin-left: 5px;"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
+                    <button class="btn btn-primary" (click)="paymentSubscription()" [disabled]="isButtonEnable" style="margin-left: 5px;"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
                 </div>
             </div>
         </div>
