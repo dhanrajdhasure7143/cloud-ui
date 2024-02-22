@@ -1,6 +1,7 @@
+<div class="container-fluid">  
     <div class="row">
-        <div class="col-md-8">
-         <div class="col-md-12" style="height: 250px; padding: 50px; max-height: max-content;">
+        <div class="col-md-7">
+         <div class="col-md-12" style="height: 200px; padding : 10px 50px; max-height: max-content;">
             <h4 class="label-control"> Orders </h4>
             <ul style="list-style-type:square;">
                 <li class="label-control" *ngFor="let item of planDetails"> {{item.predefinedBotName}} -  USD {{item.amount}} / {{item.interval}} </li>
@@ -22,26 +23,6 @@
                             <label for="" class="label-control"> Card Holder Name</label>
                             <input type="text" pInputText name="" id="" onpaste="return false;" ondrop="return false;" autocomplete="off" formControlName="cardHolderName" class="form-control" placeholder="Full Name on Card" tabindex="4">
                          </div>
-                         <!-- <div class="col-md-10 p-10 form-group">
-                            <label for="" class="label-control"> Country or Region </label>
-                            <select class="form-control" formControlName="country" placeholder="Select Country" required>
-                                <option value="" disabled selected> Select your country </option>
-                                <option *ngFor="let country of countryInfo" [value]="country.name">{{ country.name }}</option>                        
-                            </select>
-                         </div> -->
-                         <!-- <div class="col-md-10 p-10 form-group">
-                            <div class="card">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <input type="checkbox" name="" formControlName="autoBilling" id="" style="margin-top: 17px; margin-left: 15px;">   
-                                    </div>
-                                    <div class="col-md-11" style="padding: 10px;">
-                                        <label for="" class="label-control"> Automate Billing upon expiration. </label>
-                                        <div style="font-size: 12px;"> Facilitates the hassle-free experience by automating the billing cycle once it expires, ensuring uninterrepted service. </div>
-                                    </div>
-                                </div>
-                            </div>
-                         </div> -->
                          <div class="col-md-10 p-10 form-group">
                             <p>By confirming your subscription, you allow EZFlow to charge your card for this payment and future payments in accordance with their terms</p>
                          </div>
@@ -50,7 +31,7 @@
             </div>
          </div>
         </div>
-        <div class="col-md-4" style="margin-top: 50px; padding-right: 80px;">
+        <div class="col-md-5" style="padding-right: 80px;">
             <h4 class="label-control">ORDER SUMMARY </h4>
             <div class="line"></div>
             <div class="row" *ngFor="let item of planDetails" style="margin-top: 15px;">
@@ -62,12 +43,25 @@
                 <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
                 <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
             </div>
-            <div class="col-md 12 text-center" style="margin-top: 30px;">
-                <button class="btn btn-primary" (click)="backToplans()"> Back</button>
-                <button class="btn btn-primary" (click)="paymentSubscription()" style="margin-left: 5px;"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
+            <div style="margin-top: 300px;">
+                <div class="col md-12">
+                    <div class="row">
+                        <div class="col-md-2" style="margin-right: -35px;">
+                            <input class="form-control" style="height: 15px !important; margin-top: 6px;" type="checkbox" name="checkbox"  (change)="onchangecheckbox($event)">
+                        </div>
+                        <div class="col-md-10">
+                            <label class="label-control"> I agree with the terms of service and the <a target="_blank" href="" [routerLink]="['/terms']"> Privacy Policy</a></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md 12 text-center" style="margin-top: 15px;">
+                    <button class="btn btn-primary" (click)="backToplans()"> Back</button>
+                    <button class="btn btn-primary" (click)="paymentSubscription()" style="margin-left: 5px;"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
+                </div>
             </div>
         </div>
-    </div>
+</div>
+</div>
 
 
 <ngx-spinner bdColor="#bebcbc66" type="">
