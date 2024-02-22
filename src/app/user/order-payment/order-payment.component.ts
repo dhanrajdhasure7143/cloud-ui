@@ -407,4 +407,8 @@ export class OrderPaymentComponent implements OnInit {
   backToplans(){
     this.backtoScreen.emit(true)
   }
+
+  onchangecheckbox(event : any){
+    console.log(event,event.target.checked)
+  }
 }

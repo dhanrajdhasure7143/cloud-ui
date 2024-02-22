@@ -203,19 +203,15 @@
                             </div>
                             <div class="col-md-6 pr-0 form-group">
                                 <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
-                                <div class="phone-input-container">
                                     <div class="ng2tel-container">
                                         <span class="ng2tel-flag"></span>
-                                        <div>
                                             <input type="text" style="height: 45px !important;
-                                border-radius: 5px; width: 302px" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event, phnCountry)"
+                                border-radius: 5px; width: 100%;" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event, phnCountry)"
                                                 class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
                                                 onKeyPress="if(this.value.length==10) return false;" ng2TelInput
                                                 [ng2TelInputOptions]="{initialCountry: phnCountry}"
                                                 pattern="^((\\+91-?)|0)?[0-9]{10}$" tabindex="8" required>
-                                        </div>
                                     </div>
-                                </div>
                                 <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
                                     <span>Phone Number required </span>
                                 </div>
