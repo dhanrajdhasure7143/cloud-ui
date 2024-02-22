@@ -15,8 +15,8 @@
                     <img src="../../../assets/copilot.svg" width="40px" height="40px" alt="">
                     <div for="" class="label-control" style="margin: 0 0 0 10px;"> New Personalized Enterprise-Level Planning? </div>
                 </div>
-                <div style="font-size: 13px;margin-top: -20px;color: #2785ff;font-weight: 800;cursor: pointer; margin-left: 50px;" >
-                    <a class="signup_styles text-primary" (click)="sendEmailEnterPrisePlan()"> Try Now </a> 
+                <div style="font-size: 13px;margin-top: -15px;color: #2785ff;font-weight: 800;cursor: pointer; margin-left: 50px;" >
+                    <a class="signup_styles text-primary" (click)="sendEmailEnterPrisePlan()"> CONTACT US </a> 
                 </div>
                 <div class="col-md-12" style="margin: 40px 0 0 10px;">
                     <ul style="list-style-type:square;">
@@ -32,13 +32,13 @@
             </div>
             <div class="row">
                 <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
-                    <div class="bot-details">
+                    <div class="bot-details" style="width: 300px;">
                         <div class="circle text-center" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
                             <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
                         </div>
                         <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
                         <div class="text-center" *ngFor="let detail of plan.planDetails">  
-                            <span *ngIf="plan.selectedTerm == detail.interval">{{detail.amount}} $ / {{plan.selectedTerm}}</span>
+                            <span *ngIf="plan.selectedTerm == detail.interval"> USD {{detail.amount}}  / {{plan.selectedTerm}}</span>
                             <!-- <span >{{detail.amount}} / {{plan.isSelected}}</span> -->
                          </div>
                          <div style="display: flex !important;">
@@ -47,16 +47,16 @@
                                     <div class="col-md-1"></div>
                                     <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
                                         <p-radioButton name="Monthly" id="month" value="Monthly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
-                                        <label for="" class="ml-2"> Monthly </label>
+                                        <label for="" class="ml-2" style="margin-top: 5px;"> Monthly </label>
                                     </div>
                                     <div class="col-md-1"></div>
                                     <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
                                         <p-radioButton name="Yearly" id="year" value="Yearly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
-                                        <label for="" class="ml-2"> Yearly </label>
+                                        <label for="" class="ml-2" style="margin-top: 5px;"> Yearly </label>
                                     </div>
                                     <div class="col-md-3">
-                                        <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:10px" (click)="showDescription(i)"></i> 
-                                        <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:10px" (click)="hideDescription()"></i>
+                                        <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:13px 10px 10px 10px; cursor: pointer;" (click)="showDescription(i)"></i> 
+                                        <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:13px 10px 10px 10px; cursor: pointer;" (click)="hideDescription()"></i>
                                     </div>
                                     <div class="col-md-1"></div>
                                 </div>

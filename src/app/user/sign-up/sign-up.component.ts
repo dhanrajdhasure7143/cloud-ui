@@ -83,6 +83,7 @@ export class SignUpComponent implements OnInit {
   orgExsist : boolean = false;
   userDetails : any = {};
   isTimeOutshow : boolean = false;
+  isStateNull : boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -364,10 +365,10 @@ onChangeCountry(countryValue) {
     this.errorMessage = ""
   }
   if (this.stateInfo == null || this.stateInfo.length === 0) {
-    this.userForm.get('state').disable();
-    this.userForm.get('city').disable();
-    this.userForm.get('state').clearValidators();
-    this.userForm.get('state').updateValueAndValidity();
+    this.isStateNull = true
+
+  } else {
+    this.isStateNull = false
   }
 
   // Set the flag to true if there are states available, otherwise false
@@ -429,9 +430,9 @@ OnFlagChange(event, phonecode) {
   var code = event.iso2;
   var testcode = code.toString().toUpperCase();
   if (testcode != phonecode) {
-    this.errorMessage = "Please Select Appropriate Country *";
-    this.errorMessage1 = "Please Select Appropriate State *";
-    this.errorMessage2 = "Please Select Appropriate City *"
+    this.errorMessage = "Please Select Appropriate Country";
+    this.errorMessage1 = "Please Select Appropriate State";
+    this.errorMessage2 = "Please Select Appropriate City"
     this.userForm.get('state').enable();
     this.userForm.get('city').enable();
   }

@@ -257,7 +257,7 @@ export class OrderPaymentComponent implements OnInit {
                   "cvc": this.cardDetails.value.cvv
                 }
                 var users: any;
-                var quantity: any;
+                var quantity: any = 0;
                 // if (this.planselected == 'Standard') {
                 //   users = "30";
                 //   quantity = "0"

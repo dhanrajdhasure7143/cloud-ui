@@ -408,6 +408,32 @@
   color: #007bff;
 }
 
+#validate-buttons {
+  position: relative !important;
+  left: 90% !important;
+  cursor: pointer;
+  bottom: 35px !important;
+  border-radius: 50% !important;
+  color: #098de6;
+  font-size: 0.7rem; 
+  border: 1px solid #098de6; 
+  padding: 6px; 
+}
+
+#validate-buttons:hover{
+  background-color: #098de6;
+  color: white;
+}
+
+#disable-validate-buttons{
+  position: relative !important;
+  left: 90% !important;
+  bottom: 35px !important;
+  border-radius: 50% !important;
+  color: #EBEBE4;
+  font-size: 0.7rem; 
+}
+
 .label-control{
   margin-bottom: 5px; 
   font-weight: 500; 

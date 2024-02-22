@@ -74,8 +74,8 @@
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" minlength="6" maxlength="6" class="form-control" formControlName="otp" autocomplete="off"
                                 value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)" (keyup)="showValidateButton($event)">
-                                <i *ngIf="isValidate" (click)="validateOTP()" class="pi pi-check" id="email-buttons"></i> 
-                                <span *ngIf="isTimeOutshow" class="required">{{display}}</span>
+                                <i (click)="validateOTP()" class="pi pi-check"  style="font-size: 0.7rem; border: 1px solid #098de6; padding: 6px; left: 90% important;" id="validate-buttons"></i>
+                                <span *ngIf="isTimeOutshow" class="required" style="margin-left: -20px; font-weight: 600;">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary" > Resend Code </span>    
                         </div>
@@ -99,7 +99,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                          <button class="btn btn-primary signup-btn" (click)="onSubmit()" [disabled]="signupForm.invalid" type="submit" id="btn"> Next </button>
+                          <button class="btn btn-primary signup-btn" (click)="onSubmit()"  [disabled]="signupForm.invalid" type="submit" id="btn"> Next </button>
                         </div>
                     </div>
                 </form>
@@ -164,7 +164,7 @@
                                 <span class="required">{{errorMessage}}</span>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" *ngIf="!isStateNull">
                             <div class="col-md-6 pl-0 form-group">
                                 <label for="state" class="label-control">State <span class="star">*</span> </label>
                                 <select formControlName="state" class="form-control" style="height: 45px !important;
@@ -208,7 +208,7 @@
                                         <span class="ng2tel-flag"></span>
                                         <div>
                                             <input type="text" style="height: 45px !important;
-                                border-radius: 5px; width: auto" (keydown)="numbersOnly($event)" (countryChange)="OnFlagChange($event, phnCountry)"
+                                border-radius: 5px; width: 302px" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event, phnCountry)"
                                                 class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
                                                 onKeyPress="if(this.value.length==10) return false;" ng2TelInput
                                                 [ng2TelInputOptions]="{initialCountry: phnCountry}"
