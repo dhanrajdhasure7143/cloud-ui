@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { MessageService } from 'primeng/api';
 import { Country, State, City } from 'country-state-city';
+import { Location} from '@angular/common'
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -84,6 +85,8 @@ export class SignUpComponent implements OnInit {
   userDetails : any = {};
   isTimeOutshow : boolean = false;
   isStateNull : boolean = false;
+  userId:any;
+  userPsw:any;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -100,8 +103,26 @@ export class SignUpComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
     public messageService:MessageService,
+    private location : Location
     //private cookieService:CookieService,
-  ) {}
+  ) {
+    this.route.queryParams.subscribe((res)=>{
+      if(res){
+        if(res.token){
+        let parms = JSON.parse(atob(res.token))
+        console.log("testing",parms)
+        if(parms.screen == 2){
+          this.showUserScreen = true;
+          this.userId= res.usermail
+          this.userPsw = res.userpassword
+        }else{
+          this.showUserScreen = false;
+        }
+      }
+      }
+    }
+    )
+  }
 
   ngOnInit() {
 
@@ -261,38 +282,34 @@ export class SignUpComponent implements OnInit {
     });
 
   }
-onSubmit() {
-this.showUserScreen = true;
-// var payload = new FormData();
-// var reqObj = {}
-// reqObj = {
-//   'firstName': this.signupForm.value.firstName,
-//   'lastName': this.signupForm.value.lastName,
-//   'userId' : this.signupForm.value.email.toLowerCase(),
-//   'password': this.signupForm.value.password,
-// }
-// payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-//   this.service.registrationStart(payload).subscribe(res => {
-//   if(res.body) {
-//     Swal.fire({
-//       title: 'Success',
-//       text: `Registration completed successfully!`,
-//       icon: 'success',
-//       showCancelButton: false,
-//       allowOutsideClick: false
-//     })
-//     this.showUserScreen = true;
-//   } else {
-
-//   }
-// }, err => {
-//     Swal.fire({
-//       title: 'Error!',
-//       icon: 'error',
-//       text: `${err.error.message} ! Please check your user name`,
-//       allowOutsideClick: false
-//     });
-//   });
+  onRegistrationStart() {
+    // this.showUserScreen = true;
+    this.spinner.show()
+    var payload = new FormData();
+    var reqObj = {}
+    reqObj = {
+      'firstName': this.signupForm.value.firstName,
+      'lastName': this.signupForm.value.lastName,
+      'userId' : this.signupForm.value.email.toLowerCase(),
+      'password': this.signupForm.value.password,
+    }
+    this.userId = this.signupForm.value.email.toLowerCase();
+    this.userPsw = this.signupForm.value.password
+    payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+      this.service.registrationStart(payload).subscribe(res => {
+        this.spinner.hide()
+        this.showUserScreen = true;
+        let url=this.router.url.split('?');
+        let rplaceUrl = {"screen":"2",usermail:this.signupForm.value.email.toLowerCase(),userpassword:this.signupForm.value.password} 
+        this.location.replaceState(url[0]+'?token='+btoa(JSON.stringify(rplaceUrl)));
+    }, err => {
+    Swal.fire({
+      title: 'Error!',
+      icon: 'error',
+      text: `${err.error.message} ! Please check your user name`,
+      allowOutsideClick: false
+    });
+  });
 }
 
 validateOTP(){
@@ -455,10 +472,11 @@ registrationSave(){
   var payload = new FormData();
   var reqObj = {}
   reqObj = {
-    firstName: this.signupForm.value.firstName,
-    lastName: this.signupForm.value.lastName,
-    userId : this.signupForm.value.email.toLowerCase(),
-    password: this.signupForm.value.password,
+    // firstName: this.signupForm.value.firstName,
+    // lastName: this.signupForm.value.lastName,
+    // userId : this.signupForm.value.email.toLowerCase(),
+    // password: this.signupForm.value.password,
+    userId:this.userId,
     jobTitle : this.userForm.value.jobTitle,
     department : this.userForm.value.department,
     organization : this.userForm.value.organization,
@@ -474,20 +492,24 @@ payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 this.service.registrationContinue(payload).subscribe((res : any) => {
 this.spinner.hide();
 if(res.body.message == "User Details Saved Successfully!!") {
-  Swal.fire({
-    title: 'Success!',
-    text: 'User details saved successfully. Please processed with subscription!',
-    icon: 'success',
-    showCancelButton: false,
-    allowOutsideClick: true
-}).then((result) => {
-  if (result.value) {
-    let obj = {email : this.signupForm.value.email.toLowerCase(), password : this.signupForm.value.password}
+  let obj = {email : this.userId, password : this.userPsw}
     this.router.navigate(['/subscription'],{
       queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
     });
-  }
-});
+//   Swal.fire({
+//     title: 'Success!',
+//     text: 'User details saved successfully. Please processed with subscription!',
+//     icon: 'success',
+//     showCancelButton: false,
+//     allowOutsideClick: true
+// }).then((result) => {
+//   if (result.value) {
+//     let obj = {email : this.userId, password : this.userPsw}
+//     this.router.navigate(['/subscription'],{
+//       queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+//     });
+//   }
+// });
 } else {
   this.spinner.hide();
   Swal.fire("Error",res.errorMessage,"error")
