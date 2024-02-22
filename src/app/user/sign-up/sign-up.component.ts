@@ -113,8 +113,8 @@ export class SignUpComponent implements OnInit {
         console.log("testing",parms)
         if(parms.screen == 2){
           this.showUserScreen = true;
-          this.userId= res.usermail
-          this.userPsw = res.userpassword
+          this.userId= parms.usermail
+          this.userPsw = parms.userpassword
         }else{
           this.showUserScreen = false;
         }
@@ -127,7 +127,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
 
     this.getPlanDetails();
-
+    this.spinner.show();
     this.messages = this.messages.map((message, index) => ({
       id: index+1,
       content: message
@@ -159,6 +159,9 @@ export class SignUpComponent implements OnInit {
   }
 
   getPlanDetails() {
+    setTimeout(() => {
+      this.spinner.hide();      
+    }, 1000);
     this.service.getPlanDetails().subscribe((response: any) => {
       this.planDetails = response.data;
       this.planDetails.forEach(plan => {
