@@ -48,7 +48,8 @@ export class OrderPaymentComponent implements OnInit {
   finalAmount: any;
   base64textString:any;
   password : any;
-  isButtonEnable : boolean = true
+  isButtonEnable : boolean = true;
+  isChecked: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private route:ActivatedRoute,
@@ -71,10 +72,10 @@ export class OrderPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.cardDetails = this.formBuilder.group({
-      cardNumber: [''],
-      expiry: [''],
-      cvv: [''],
-      cardHolderName: [''],
+      cardNumber: ['',Validators.required],
+      expiry: ['',Validators.required],
+      cvv: ['',Validators.required],
+      cardHolderName: ['',Validators.required],
     });
 
   }

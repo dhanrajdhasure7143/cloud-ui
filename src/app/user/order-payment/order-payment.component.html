@@ -16,7 +16,7 @@
                             <input type="text" name="" id="" class="form-control" formControlName="cardNumber" (keyup)="formatCreditCardNumber()" onpaste="return false;" autocomplete="off" ondrop="return false;" maxlength="19" placeholder="1234 1234 1234 1234" tabindex="1">
                             <div class="d-flex">
                                 <input type="text" pInputText name="" id="" class="form-control" formControlName="expiry" onpaste="return false;" ondrop="return false;" placeholder="MM / YY" style="width: 70%;" tabindex="2">
-                                <input type="text" pInputText name="" id="" class="form-control" formControlName="cvv" autocomplete="off" onpaste="return false;" ondrop="return false;" placeholder="CVV" minlength="3" maxlength="5" style="width: 30%;" tabindex="3">
+                                <input type="text" pInputText name="" id="" class="form-control" formControlName="cvv" autocomplete="off" onpaste="return false;" ondrop="return false;" placeholder="CVC" minlength="3" maxlength="5" style="width: 30%;" tabindex="3">
                             </div>    
                         </div>
                          <div class="col-md-6 p-10 form-group">
@@ -39,10 +39,14 @@
                     <div class="col-md-6 text-center"> <span class="label-control"> <span *ngIf="item.interval === 'Monthly'"> {{item.predefinedBotName}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{item.predefinedBotName}} </span> </span> </div> 
                     <div class="col-md-6 text-center"> <span class="label-control"> USD <span *ngIf="item.interval === 'Monthly'">  {{ item.amount}}  </span> <span *ngIf="item.interval === 'Yearly'">  {{ item.amount }} </span> </span> </div>
                 </div>
-                <div class="line" style="margin-top: 12px;"></div>
-                <div class="row" style="margin-top: 15px;">
-                    <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
-                    <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="line"></div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="col-md-6 text-center"> <span class="label-control"> Total Amount </span> </div> 
+                            <div class="col-md-6 text-center"> <span class="label-control"> USD {{ calculateTotalPrice() }} </span> </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
@@ -50,6 +54,7 @@
                     <div class="row" style="margin-left: 50px;">
                         <div class="col-md-2" style="margin-right: -35px;">
                             <input class="form-control" style="height: 15px !important; margin-top: 6px; cursor: pointer;" type="checkbox" name="checkbox"  (change)="onchangecheckbox($event)">
+                            <!-- <p-checkbox [(ngModel)]="isChecked" value="" inputId="" (change)="onchangecheckbox($event)"></p-checkbox> -->
                         </div>
                         <div class="col-md-10">
                             <label class="label-control" style="font-size: 10px;"> I agree with the <a target="_blank" href="" [routerLink]="['/terms']" > terms of service </a>  and the <a target="_blank" href="" [routerLink]="['/privacy']"> Privacy Policy</a></label>
@@ -58,7 +63,7 @@
                 </div>
                 <div class="col-md 12 text-center" style="margin-top: 15px;">
                     <button class="btn btn-primary" (click)="backToplans()"> Back</button>
-                    <button class="btn btn-primary" (click)="paymentSubscription()" [disabled]="isButtonEnable" style="margin-left: 5px;"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
+                    <button class="btn btn-primary" (click)="paymentSubscription()" [disabled]="cardDetails.invalid && isButtonEnable" style="margin-left: 5px;"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
                 </div>
                 <div class="col-md 12" style="margin-top: 15px;">
                     <p style="font-size: 13px;">
