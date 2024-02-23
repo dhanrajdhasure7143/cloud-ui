@@ -34,6 +34,7 @@ export class SubscriptionComponent implements OnInit {
   isReview_order:boolean = false;
   selected_plans_list:any;
   log_data:any={}
+  isRegistered : boolean = false;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -50,6 +51,7 @@ export class SubscriptionComponent implements OnInit {
                   this.log_data = params
                 this.userEmail = params.email;
                 this.password = params.password;
+                this.isRegistered = params.isRegistered;
                 console.log(this.userEmail,this.password)
                   }
                 })

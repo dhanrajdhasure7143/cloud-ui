@@ -268,6 +268,12 @@ export class LoginComponent implements OnInit {
           queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
         });
       }
+      if(data.current_registration_screen == "subscription_pending" ){
+        let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login", isRegistered : true}
+        this.router.navigate(['/subscription'],{
+          queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+        });
+      }
       if(data.current_registration_screen == "drafted_user_credentials" ){
         let obj = {"screen":"2",usermail:this.f.username.value.toLowerCase(),userpassword:this.f.password.value,navigatingFrom:"login"} 
         this.router.navigate(['/signup'],{queryParams: { token: btoa(JSON.stringify(obj))},});

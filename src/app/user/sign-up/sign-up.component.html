@@ -111,7 +111,7 @@
                 <form [formGroup]="userForm" style="margin: 35px 0 0 40px" cdkTrapFocus>
                     <!-- <div class="fields"> -->
                         <div class="row">
-                            <div class="col-md-6 pl-0 form-group ">
+                            <div class="form-group col-md-6 pl-0">
                                 <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
                                 <input type="text" formControlName="jobTitle" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="jobTitle" autocomplete="off"
@@ -121,7 +121,7 @@
                                     {{ getErrorMessage('jobTitle') }}
                                 </span>
                             </div>
-                            <div class="col-md-6 pr-0 form-group" >
+                            <div class="form-group col-md-6 pr-0" >
                                 <label for="organization" class="label-control">Organization <span class="star">*</span> </label>
                                 <input type="text" formControlName="organization" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)" autocomplete="off"
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 pl-0 form-group">
+                            <div class="form-group col-md-6 pl-0">
                                 <label for="department" class="label-control">Department <span class="star">*</span> </label>
                                 <select formControlName="department" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="department" tabindex="3" autocomplete="off">
@@ -146,7 +146,7 @@
                                     <span>Department required </span>
                                 </div>
                             </div>
-                            <div class="col-md-6 pr-0 form-group">
+                            <div class="form-group col-md-6 pr-0">
                                 <label for="country" class="label-control">Country <span class="star">*</span> </label>
                                 <select formControlName="country" class="form-control" id="country" style="height: 45px !important;
                                 border-radius: 5px;" autocomplete="off"
@@ -161,7 +161,7 @@
                             </div>
                         </div>
                         <div class="row" *ngIf="!isStateNull">
-                            <div class="col-md-6 pl-0 form-group">
+                            <div class="form-group col-md-6 pl-0">
                                 <label for="state" class="label-control">State <span class="star">*</span> </label>
                                 <select formControlName="state" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="state" autocomplete="off"
@@ -174,7 +174,7 @@
                                     State required </span>
                                 <span class="required">{{errorMessage1}}</span>
                             </div>
-                            <div class="col-md-6 pr-0 form-group">
+                            <div class="form-group col-md-6 pr-0">
                                 <label for="city" class="label-control">City <span class="star">*</span></label>
                                 <select formControlName="city" class="form-control" id="city" style="height: 45px !important;
                                 border-radius: 5px;" autocomplete="off"
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 pl-0 form-group">
+                            <div class="form-group col-md-6 pl-0">
                                 <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
                                 <input type="text" formControlName="zipCode" style="height: 45px !important;
                                 border-radius: 5px;" class="form-control" id="inputZip" autocomplete="off"
@@ -197,7 +197,7 @@
                                                                 <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
                                 <span class="required" *ngIf="getErrorMessage('zipCode') !== ''"> {{ getErrorMessage('zipCode') }} </span>
                             </div>
-                            <div class="col-md-6 pr-0 form-group">
+                            <div class="form-group col-md-6 pr-0">
                                 <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
                                     <div class="ng2tel-container">
                                         <span class="ng2tel-flag"></span>

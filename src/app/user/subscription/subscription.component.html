@@ -78,7 +78,7 @@
         </div>
         </div>
         <div *ngIf="isReview_order">
-            <app-order-payment [planDetails]="selected_plans_list" (backtoScreen)="readValue($event)" [log_data]="log_data"></app-order-payment>
+            <app-order-payment [planDetails]="selected_plans_list" (backtoScreen)="readValue($event)" [log_data]="log_data" [isRegistered] = "isRegistered"></app-order-payment>
         </div>
     </div>
 </div>
