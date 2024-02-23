@@ -72,7 +72,7 @@ export class OrderPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.cardDetails = this.formBuilder.group({
       cardNumber: [''],
-      monthYear: [''],
+      expiry: [''],
       cvv: [''],
       cardHolderName: [''],
     });
@@ -416,4 +416,23 @@ export class OrderPaymentComponent implements OnInit {
     else
     this.isButtonEnable = true;
   }
+
+  formatCreditCardNumber(): void {
+    const control = this.cardDetails.get('cardNumber');
+    let value = control.value.replace(/\s+/g, ''); // Remove existing spaces
+    value = value.replace(/\D/g, ''); // Remove non-numeric characters
+
+    if (value.length > 16) {
+      value = value.slice(0, 16);
+    }
+
+    const formattedValue = this.formatCreditCardNumberWithSpaces(value);
+    control.setValue(formattedValue, { emitEvent: false });
+  }
+
+  private formatCreditCardNumberWithSpaces(value: string): string {
+    const groups = value.match(/[\s\S]{1,4}/g) || [];
+    return groups.join(' ');
+  }
+
 }
