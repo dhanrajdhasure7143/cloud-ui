@@ -32,8 +32,8 @@
             <div class="row">
                 <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
                     <div class="bot-details" style="width: 290px;">
-                        <div class="circle text-center" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
-                            <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px" style="cursor: pointer;">
+                        <div class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
+                            <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
                         </div>
                         <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
                         <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.planDetails">  
@@ -54,8 +54,8 @@
                                         <label for="" class="ml-2" style="margin-top: 5px;"> Yearly </label>
                                     </div>
                                     <div class="col-md-3">
-                                        <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:13px 10px 10px 10px; cursor: pointer;" (click)="showDescription(i)"></i> 
-                                        <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:13px 10px 10px 10px; cursor: pointer;" (click)="hideDescription()"></i>
+                                        <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="showDescription(i)"></i> 
+                                        <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="hideDescription()"></i>
                                     </div>
                                     <div class="col-md-1"></div>
                                 </div>
