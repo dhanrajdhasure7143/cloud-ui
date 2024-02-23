@@ -6,17 +6,16 @@
             </div>
         </div>
         <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-4" style="padding-left: 90px ;" *ngIf="!isReview_order">
+        <div class="col-md-4" style="padding-left: 60px ;" *ngIf="!isReview_order">
             <div class="col-md-12" style="margin: 10px 0 0 0">
                 <div class="text-center">
                     <h4 class="label-control">Enterprise Plan</h4>
                 </div>
-                <div class="d-flex" style="margin-top: 90px; display: flex !important;">
+                <div class="d-flex" style="margin-top: 40px; display: flex !important;">
                     <img src="../../../assets/copilot.svg" width="40px" height="40px" alt="">
-                    <div for="" class="label-control" style="margin: 0 0 0 10px;"> New Personalized Enterprise-Level Planning? </div>
+                    <div for="" class="label-control" style="margin: 0 0 0 10px;"> New Personalized Enterprise Level Planning? </div>
                 </div>
-                <div style="font-size: 13px;margin-top: -15px;color: #2785ff;font-weight: 800;cursor: pointer; margin-left: 50px;" >
-                    <a class="signup_styles text-primary" (click)="sendEmailEnterPrisePlan()"> CONTACT US </a> 
+                <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
                 </div>
                 <div class="col-md-12" style="margin: 40px 0 0 10px;">
                     <ul style="list-style-type:square;">
@@ -32,12 +31,12 @@
             </div>
             <div class="row">
                 <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
-                    <div class="bot-details" style="width: 300px;">
+                    <div class="bot-details" style="width: 290px;">
                         <div class="circle text-center" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
                             <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
                         </div>
                         <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
-                        <div class="text-center" *ngFor="let detail of plan.planDetails">  
+                        <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.planDetails">  
                             <span *ngIf="plan.selectedTerm == detail.interval"> USD {{detail.amount}}  / {{plan.selectedTerm}}</span>
                             <!-- <span >{{detail.amount}} / {{plan.isSelected}}</span> -->
                          </div>
