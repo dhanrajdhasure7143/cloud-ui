@@ -1,9 +1,9 @@
 <div class="container">  
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-7" style="padding-left: 100px;">
          <div class="col-md-12" style="height: 200px; padding : 10px 50px; max-height: max-content;">
-            <h4 class="label-control"> Orders </h4>
-            <ul style="list-style-type:square;">
+            <h4 class="label-control"> Review your Orders </h4>
+            <ul style="list-style-type:square; margin-top: 10px;">
                 <li class="label-control" *ngFor="let item of planDetails"> {{item.predefinedBotName}} -  USD {{item.amount}} / {{item.interval}} </li>
             </ul>
          </div>
@@ -13,10 +13,10 @@
                     <div class="col-md-12" style="margin-top: 12px;">
                         <div class="col-md-6 p-10 form-group">
                             <label for="" class="label-control"> Card Information </label>
-                            <input type="text" name="" id="" class="form-control" formControlName="cardNumber" onpaste="return false;" autocomplete="off" ondrop="return false;" placeholder="1234 1234 1234 1234" tabindex="1">
+                            <input type="text" name="" id="" class="form-control" formControlName="cardNumber" (keyup)="formatCreditCardNumber()" onpaste="return false;" autocomplete="off" ondrop="return false;" maxlength="19" placeholder="1234 1234 1234 1234" tabindex="1">
                             <div class="d-flex">
-                                <input type="text" pInputText name="" id="" class="form-control" formControlName="monthYear" onpaste="return false;" ondrop="return false;" placeholder="MM / YY" style="width: 70%;" tabindex="2">
-                                <input type="text" pInputText name="" id="" class="form-control" formControlName="cvv" autocomplete="off" onpaste="return false;" ondrop="return false;" placeholder="CVV" style="width: 30%;" tabindex="3">
+                                <input type="text" pInputText name="" id="" class="form-control" formControlName="expiry" onpaste="return false;" ondrop="return false;" placeholder="MM / YY" style="width: 70%;" tabindex="2">
+                                <input type="text" pInputText name="" id="" class="form-control" formControlName="cvv" autocomplete="off" onpaste="return false;" ondrop="return false;" placeholder="CVV" minlength="3" maxlength="5" style="width: 30%;" tabindex="3">
                             </div>    
                         </div>
                          <div class="col-md-6 p-10 form-group">
@@ -32,7 +32,7 @@
          </div>
         </div>
         <div class="col-md-5" style="padding: 10px;">
-            <div style="height: 70vh;">
+            <div style="height: 60vh;">
                 <h4 class="label-control">Order Summary </h4>
                 <div class="line"></div>
                 <div class="row" *ngFor="let item of planDetails" style="margin-top: 15px;">
@@ -49,7 +49,7 @@
                 <div class="col md-12">
                     <div class="row" style="margin-left: 50px;">
                         <div class="col-md-2" style="margin-right: -35px;">
-                            <input class="form-control" style="height: 15px !important; margin-top: 6px;" type="checkbox" name="checkbox"  (change)="onchangecheckbox($event)">
+                            <input class="form-control" style="height: 15px !important; margin-top: 6px; cursor: pointer;" type="checkbox" name="checkbox"  (change)="onchangecheckbox($event)">
                         </div>
                         <div class="col-md-10">
                             <label class="label-control" style="font-size: 10px;"> I agree with the <a target="_blank" href="" [routerLink]="['/terms']" > terms of service </a>  and the <a target="_blank" href="" [routerLink]="['/privacy']"> Privacy Policy</a></label>
@@ -59,6 +59,11 @@
                 <div class="col-md 12 text-center" style="margin-top: 15px;">
                     <button class="btn btn-primary" (click)="backToplans()"> Back</button>
                     <button class="btn btn-primary" (click)="paymentSubscription()" [disabled]="isButtonEnable" style="margin-left: 5px;"> Pay Now (USD {{ calculateTotalPrice() }}) </button>  
+                </div>
+                <div class="col-md 12" style="margin-top: 15px;">
+                    <p style="font-size: 13px;">
+                        You'll be charged $ {{calculateTotalPrice()}} until you cancel the subscription. To learn more see <a href=""> FAQ's </a>
+                    </p>
                 </div>
             </div>
         </div>
