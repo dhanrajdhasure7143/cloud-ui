@@ -144,6 +144,31 @@ export class OrderPaymentComponent implements OnInit {
   }
 
   paymentSubscription() {
+    console.log(this.selected_plans, this.planDetails)
+    let items=[]
+    this.planDetails.forEach(element => {
+      let obj = {
+        "meta": {
+          "orderable": true,
+          "visible": true,
+          "plan_id": element.priceId
+        },
+        "planId": element.priceId,
+        "quantity": 1
+      }
+      items.push(obj)
+    });
+    const plandetails = {
+      "ip": "1.2.3.4",
+      "promo": this.promo,
+      "items": items,
+      "meta": {
+        "orderable": true,
+        "visible": true,
+        "product_id": "EZFlow"
+      }
+    }
+    console.log(plandetails)
     this.spinner.show();
     var payload = new FormData();
     var reqObj = {}
@@ -217,11 +242,11 @@ export class OrderPaymentComponent implements OnInit {
           }
           let reqObj = { 'userId': this.userEmail.toLowerCase(), 'password': this.password }
           let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(reqObj));
-          this.http.post<any>(url, { "enc": encrypt }, { headers }).subscribe(user => {
-            console.log(user,"user")
-            if (user.accessToken) {
-              localStorage.setItem('accessToken', JSON.stringify(user.accessToken));
-              localStorage.setItem('refreshToken', JSON.stringify(user.refreshToken));
+          this.http.post<any>(url, { "enc": encrypt }, { headers }).subscribe(res => {
+            console.log("AccessToken",res)
+            if (res.accessToken) {
+              localStorage.setItem('accessToken', JSON.stringify(res.accessToken));
+              localStorage.setItem('refreshToken', JSON.stringify(res.refreshToken));
 
               this.spinner.hide();
               this.spinner.show();
@@ -230,26 +255,26 @@ export class OrderPaymentComponent implements OnInit {
               this.tenantID = localStorage.getItem("tenantid");
               this.productlistservice.getProductPlanes(this.productId, this.tenantID, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
                 this.plansList = data
-                this.plansList.forEach(obj => {
-                  if (obj.active == true || obj.active == 'true') {
-                    if (obj.nickName == this.plantype) {
-                      this.selected_plans = obj
-                      // this.profileService.validateCoupon(null, this.selected_plans.amount, this.cardDetails.customerCount, JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp => {
-                      //   this.validateCoupondata = resp;
-                      //   this.totalPay = this.validateCoupondata.TotalPaybleAmount,
-                      //     this.noOfusers = this.cardDetails.customerCount
-                      //   this.taxPercentage = this.validateCoupondata.TaxPercentage
-                      //   this.taxamount = this.validateCoupondata.TaxAmount
-                      // })
-                      if (this.selected_plans.term == "1year") {
-                        this.selected_plans.term = 'Annual'
-                      } else {
-                        this.selected_plans.term = 'One Month'
-                      }
-                      this.name = this.selected_plans.nickName;
-                    }
-                  }
-                });
+                // this.plansList.forEach(obj => {
+                //   if (obj.active == true || obj.active == 'true') {
+                //     if (obj.nickName == this.plantype) {
+                //       this.selected_plans = obj
+                //       // this.profileService.validateCoupon(null, this.selected_plans.amount, this.cardDetails.customerCount, JSON.parse(localStorage.getItem('accessToken'))).subscribe(resp => {
+                //       //   this.validateCoupondata = resp;
+                //       //   this.totalPay = this.validateCoupondata.TotalPaybleAmount,
+                //       //     this.noOfusers = this.cardDetails.customerCount
+                //       //   this.taxPercentage = this.validateCoupondata.TaxPercentage
+                //       //   this.taxamount = this.validateCoupondata.TaxAmount
+                //       // })
+                //       if (this.selected_plans.term == "1year") {
+                //         this.selected_plans.term = 'Annual'
+                //       } else {
+                //         this.selected_plans.term = 'One Month'
+                //       }
+                //       this.name = this.selected_plans.nickName;
+                //     }
+                //   }
+                // });
 
                 const cardValue = {
                   "name": this.cardDetails.value.cardHolderName,
@@ -268,26 +293,26 @@ export class OrderPaymentComponent implements OnInit {
                 //   users = "100";
                 //   quantity = "0"
                 // }
-                const plandetails = {
-                  "ip": "1.2.3.4",
-                  "promo": this.promo,
-                  "items": [
-                    {
-                      "meta": {
-                        "orderable": true,
-                        "visible": true,
-                        "plan_id": this.selected_plans.id
-                      },
-                      "planId": this.selected_plans.id,
-                      "quantity": quantity
-                    }
-                  ],
-                  "meta": {
-                    "orderable": true,
-                    "visible": true,
-                    "product_id": "EZFlow"
-                  }
-                }
+                // const plandetails = {
+                //   "ip": "1.2.3.4",
+                //   "promo": this.promo,
+                //   "items": [
+                //     {
+                //       "meta": {
+                //         "orderable": true,
+                //         "visible": true,
+                //         "plan_id": this.selected_plans.id
+                //       },
+                //       "planId": this.selected_plans.id,
+                //       "quantity": quantity
+                //     }
+                //   ],
+                //   "meta": {
+                //     "orderable": true,
+                //     "visible": true,
+                //     "product_id": "EZFlow"
+                //   }
+                // }
 
                 let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(cardValue))
                 let reqObj = { "enc": encrypt };
@@ -305,28 +330,28 @@ export class OrderPaymentComponent implements OnInit {
 
                     }).then((result) => {
                       if (result.value) {
-                        this.profileService.deleteSelectedUser(this.userEmail).subscribe(resp => {
-                          let encrypt = this.cryptoService.encrypt(this.userEmail);
-                          let user = encrypt;
-                          this.loginservice.sentVerificationMail(user).subscribe(res => {
-                            this.router.navigate(['/home/add-card', this.cardData]);
-                          }, error => {
-                            this.error = 'User Already Exists'
-                          }
-                          );
-                        }, err => {
-                          Swal.fire({
-                            title: 'Error',
-                            text: `Please Register Again!!`,
-                            icon: 'error',
-                            showCancelButton: false,
-                            allowOutsideClick: true
-                          }).then((result) => {
-                            if (result.value) {
-                              this.router.navigate(['/']);
-                            }
-                          })
-                        })
+                        // this.profileService.deleteSelectedUser(this.userEmail).subscribe(resp => {
+                        //   let encrypt = this.cryptoService.encrypt(this.userEmail);
+                        //   let user = encrypt;
+                        //   this.loginservice.sentVerificationMail(user).subscribe(res => {
+                        //     this.router.navigate(['/home/add-card', this.cardData]);
+                        //   }, error => {
+                        //     this.error = 'User Already Exists'
+                        //   }
+                        //   );
+                        // }, err => {
+                        //   Swal.fire({
+                        //     title: 'Error',
+                        //     text: `Please Register Again!!`,
+                        //     icon: 'error',
+                        //     showCancelButton: false,
+                        //     allowOutsideClick: true
+                        //   }).then((result) => {
+                        //     if (result.value) {
+                        //       this.router.navigate(['/']);
+                        //     }
+                        //   })
+                        // })
                       }
                     })
                     this.spinner.hide();
@@ -347,7 +372,7 @@ export class OrderPaymentComponent implements OnInit {
                           this.spinner.hide();
                           if (this.subscriptionDetails.message == "Subscription Completed Successfully!!") {
                             this.finalAmount = this.subscriptionDetails.amountPaid;
-                            this.sharedDataService.setFreetrialavailed(false);
+                            // this.sharedDataService.setFreetrialavailed(false);
 
                           }
                           else {
@@ -360,23 +385,23 @@ export class OrderPaymentComponent implements OnInit {
                             }).then((result) => {
                               if (result.value) {
                                 this.spinner.show();
-                                this.profileService.deleteSelectedUser(this.userEmail).subscribe(resp => {
-                                  this.spinner.hide();
-                                  this.router.navigate(['/']);
+                                // this.profileService.deleteSelectedUser(this.userEmail).subscribe(resp => {
+                                //   this.spinner.hide();
+                                //   this.router.navigate(['/']);
     
-                                }, err => {
-                                  Swal.fire({
-                                    title: 'Error',
-                                    text: `Please Register Again!!`,
-                                    icon: 'error',
-                                    showCancelButton: false,
-                                    allowOutsideClick: true
-                                  }).then((result) => {
-                                    if (result.value) {
-                                      this.router.navigate(['/']);
-                                    }
-                                  })
-                                })
+                                // }, err => {
+                                //   Swal.fire({
+                                //     title: 'Error',
+                                //     text: `Please Register Again!!`,
+                                //     icon: 'error',
+                                //     showCancelButton: false,
+                                //     allowOutsideClick: true
+                                //   }).then((result) => {
+                                //     if (result.value) {
+                                //       this.router.navigate(['/']);
+                                //     }
+                                //   })
+                                // })
                               }
                             })
                           }
