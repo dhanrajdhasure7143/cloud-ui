@@ -149,13 +149,14 @@ sendEmailEnterPrisePlan(){
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['/login'],{
-          queryParams: { email : this.userEmail },
-        });
-      }
-    });
+    })
+    // .then((result) => {
+    //   if (result.value) {
+    //     this.router.navigate(['/login'],{
+    //       queryParams: { email : this.userEmail },
+    //     });
+    //   }
+    // });
   }
       this.spinner.hide();
   },err=>{
