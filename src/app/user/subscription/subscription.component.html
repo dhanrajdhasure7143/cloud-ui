@@ -15,13 +15,13 @@
                     <img src="../../../assets/copilot.svg" width="40px" height="40px" alt="">
                     <div for="" class="label-control" style="margin: 0 0 0 10px;"> New Personalized Enterprise Level Planning? </div>
                 </div>
-                <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
                 </div>
                 <div class="col-md-12" style="margin: 40px 0 0 10px;">
                     <ul style="list-style-type:square;">
                         <li class="label-control" *ngFor="let item of plans">{{item}}</li>
                     </ul>
                 </div>
+                <div> <button class="btn btn-primary contact" style="margin: 140px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
             </div>
         </div>
         <div class="col-md-8" style="padding-right: 60px;" *ngIf="!isReview_order">
