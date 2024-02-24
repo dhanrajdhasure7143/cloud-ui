@@ -9,7 +9,7 @@ import { UsermanagementService } from 'src/app/_services/usermanagement.service'
 export class EnterpriseCustomersComponent implements OnInit {
   enterPriseList:any=[];
   isDisplayOverlay:boolean = false;
-
+  userData:any={};
   columnList=[
     {DisplayName:"User mail",ColumnName:"userId",ShowFilter: true,sort:true},
     {DisplayName:"Name",ColumnName:"userName",ShowFilter: true,sort:true},
@@ -39,8 +39,10 @@ export class EnterpriseCustomersComponent implements OnInit {
     })
   }
 
-  editRowBy_Id(rowData){
+  openOverlay(type,rowData){
     this.isDisplayOverlay = true;
+    console.log(rowData,"rowData")
+    this.userData= rowData
   }
 
   closeOverlay(event){

@@ -689,3 +689,13 @@ as-split-area {
 .main-color{
   color: #098de6;
 }
+
+.required,.star{display:inline-block;text-transform: lowercase;}
+.required::first-letter,.star::first-letter{text-transform: uppercase;}
+.required,
+.star {
+  color: #ea3d3d;
+  font-size: 12px !important;
+  line-height: 17px;
+  letter-spacing: 0.2px;
+}

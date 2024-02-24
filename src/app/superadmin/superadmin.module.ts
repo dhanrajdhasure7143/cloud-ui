@@ -17,10 +17,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CustomersComponent } from './customers/customers.component';
 import { EnterpriseCustomersComponent } from './enterprise-customers/enterprise-customers.component';
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
-
-
+import { OnboardTenantComponent } from './onboard-tenant/onboard-tenant.component';
+import { MatSelectModule } from '@angular/material/select';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 @NgModule({
-  declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent],
+  declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent, OnboardTenantComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -36,7 +39,10 @@ import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
     MatIconModule,
     ReactiveFormsModule,
     PrimengCustomModule,
-    
+    MatSelectModule,
+    Ng2TelInputModule,
+    BsDatepickerModule.forRoot(),
+    ScrollPanelModule
   ]
 })
 export class SuperadminModule { }
