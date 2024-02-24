@@ -102,6 +102,13 @@ export class OnboardTenantComponent implements OnInit {
     this.tenantForm.get("lastName").setValue(this.userData["lastName"]);
     this.tenantForm.get("jobTitle").setValue(this.userData["designation"]);
     this.tenantForm.get("company").setValue(this.userData["company"]);
+    this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
+    this.tenantForm.get("country").setValue(this.userData["country"]);
+    this.tenantForm.get("state").setValue(this.userData["state"]);
+    this.tenantForm.get("city").setValue(this.userData["city"]);
+    this.onChangeCountry(this.userData["country"])
+    this.onChangeState(this.userData["state"])
+    this.onChangeCity(this.userData["city"])
   }
 
   // getOnboardTenantDetails(data:any) {
@@ -112,6 +119,7 @@ export class OnboardTenantComponent implements OnInit {
   // }
 
   updateAccount() {
+    console.log(this.tenantForm.value.expiryDate,"this.tenantForm.value.expiryDate")
     this.spinner.show();
     var payload = new FormData();
     var reqObj = {}
@@ -127,7 +135,9 @@ export class OnboardTenantComponent implements OnInit {
       phoneNumber : this.tenantForm.value.phoneNumber,
       expiryDate : this.tenantForm.value.expiryDate,
   }
-  payload.append('userId', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+  console.log(this.tenantForm.value.expiryDate,"this.tenantForm.value.expiryDate")
+  payload.append('firstname', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+  console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
 
 }
 
@@ -142,6 +152,7 @@ export class OnboardTenantComponent implements OnInit {
   }
 
   onChangeCountry(countryValue) {
+    console.log(countryValue)
     this.isInput = !this.isInput;
     this.stateInfo = State.getAllStates();
     
@@ -169,34 +180,35 @@ export class OnboardTenantComponent implements OnInit {
       this.tenantForm.get('state').setValue('');
       this.tenantForm.get('city').setValue('');
     }
-    
-    this.tenantForm.get('country').valueChanges.subscribe((selectedCountry) => {
-      if (selectedCountry) {
-        this.tenantForm.get('state').setValue('state');
-        this.tenantForm.get('city').setValue('city');
-      }
-    });
   }
   
   onChangeState(stateValue) {
+    console.log(stateValue)
     this.cityInfo = City.getAllCities();
     if (stateValue) {
       const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
       this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
       this.errorMessage1 = ""
+      this.tenantForm.get('state').setValue(stateValue);
       if (this.cityInfo.length === 0) {
         this.cityInfo = [{ name: 'NA' }];
       }
     }
-    this.tenantForm.get('state').valueChanges.subscribe((selectedState) => {
-      if (selectedState) {
-        this.tenantForm.get('city').setValue('city');
+
+    this.cityInfo.some((cityItem: any) =>{
+      if(cityItem.name === this.userData["city"]){
+        this.tenantForm.get('city').setValue(cityItem.name);
+        this.tenantForm.get('city').setValue(this.userData["city"]);
+
       }
-    });
+
+    } );
   }
 
   onChangeCity(cityValue) {
+    console.log(cityValue)
     if (cityValue) {
+      this.tenantForm.get('city').setValue(cityValue);
       this.errorMessage2 = ''
     }
   }
