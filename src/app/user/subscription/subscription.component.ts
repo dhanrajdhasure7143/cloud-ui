@@ -6,6 +6,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 @Component({
   selector: 'app-subscription',
@@ -15,7 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class SubscriptionComponent implements OnInit {
 
   subscriptionForm: FormGroup;
-  botPlans : any[] = []
+  botPlans : any[] = [];
   countries : any[] = [];
   selectedPlanIndex: number = -1;
   showArrowRight : boolean = true;
@@ -28,21 +29,36 @@ export class SubscriptionComponent implements OnInit {
   planType="Monthly";
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
+  isDisabled : boolean = true;
+  password : any;
+  isReview_order:boolean = false;
+  selected_plans_list:any;
+  log_data:any={}
+  isRegistered : boolean = false;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
               private route:ActivatedRoute,
               private profileservice : ProfileService,
               private spinner : NgxSpinnerService,
-              private router: Router
+              private router: Router,
+              private crypto: CryptoService
               ) {
                 this.route.queryParams.subscribe((data)=>{
-                this.userEmail = data.email
+                  if(data){
+                  let params:any = JSON.parse(this.crypto.decrypt(data.token));
+                  console.log(params)
+                  this.log_data = params
+                this.userEmail = params.email;
+                this.password = params.password;
+                this.isRegistered = params.isRegistered;
+                console.log(this.userEmail,this.password)
+                  }
                 })
                }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     this.subscriptionForm = this.formBuilder.group({
       cardNumber: [''],
       monthYear: [''],
@@ -54,7 +70,6 @@ export class SubscriptionComponent implements OnInit {
     });
 
     this.loadPredefinedBots();
-    this.userDetails();
     this.getCountries();
   }
 
@@ -64,13 +79,27 @@ export class SubscriptionComponent implements OnInit {
 
   loadPredefinedBots(){
     this.service.loadPredefinedBots().subscribe((response : any) =>{
+      this.spinner.hide()
       if(response){
       this.botPlans = response.data;
       this.botPlans.forEach(item=>{
         item["isSelected"] = false;
-        this.predefinedPlans.push(item)
+        item["selectedTerm"] = "Monthly"
       })
       }
+    },err=>{
+      this.spinner.hide();
+      Swal.fire({
+        title: 'Success!',
+        text: 'User details saved successfully. Please processed with subscription!',
+        icon: 'success',
+        showCancelButton: false,
+        allowOutsideClick: true
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['/signup']);
+      }
+    });
     })
   }
 
@@ -86,18 +115,29 @@ hideDescription() {
   this.showArrowDown = false;
 }
 
-userDetails() {
-  this.profileservice.getUserDetails(this.userEmail).subscribe((data : any) =>{
-  })
-}
-
 paymentPlan(){
+  this.isReview_order = true;
+  this.selected_plans_list=[];
+  this.selectedPlans.forEach(element => {
+    element.planDetails.forEach(item => {
+      if(element.selectedTerm == item.interval){
+        let obj={};
+        obj["predefinedBotName"]=element.predefinedBotName;
+        obj["interval"] = item.interval;
+        obj["priceId"] = item.priceId;
+        obj["amount"] = item.amount
+        this.selected_plans_list.push(obj);
+      }
+    });
+  });
   // if(this.selectedPlans.length == 0){
   //   return
   // }
-  let details = JSON.stringify(this.selectedPlans)
-  this.profileservice.updateData(details)
-  this.router.navigate(["/order"]);
+  // let selectedBotPlans = JSON.stringify(selected_plans_list)
+  // this.profileservice.updateData(selectedBotPlans)
+  // this.router.navigate(["/order"],{
+  //   queryParams: { email : this.userEmail,details : selectedBotPlans, password : this.password  },
+  // });
 
 }
 
@@ -107,17 +147,18 @@ sendEmailEnterPrisePlan(){
     if(res.errorMessage !="User not present"){
     Swal.fire({
         title: 'Success!',
-        text: `Thank you for choosing Enterprise plan, Our team will contact you soon`,
+        text: `Thank you for choosing Enterprise plan, Our team will contact you soon!`,
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: false
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['/login'],{
-          queryParams: { email : this.userEmail },
-        });
-      }
-    });
+    })
+    // .then((result) => {
+    //   if (result.value) {
+    //     this.router.navigate(['/login'],{
+    //       queryParams: { email : this.userEmail },
+    //     });
+    //   }
+    // });
   }
       this.spinner.hide();
   },err=>{
@@ -128,21 +169,18 @@ sendEmailEnterPrisePlan(){
 
 onSelectPredefinedBot(plan, index){
   this.selectedPlans = [];
-  this.selectedAmount=0;
-  this.predefinedPlans[index]["isSelected"]= !this.predefinedPlans[index]["isSelected"];
-  // this.selectedPlans = this.predefinedPlans.filter(item=> {return item.isSelected});
-  this.predefinedPlans.forEach(item=>{
+  this.botPlans[index]["isSelected"]= !this.botPlans[index]["isSelected"];
+  this.isDisabled = this.botPlans.every(item => !item.isSelected);
+  this.botPlans.forEach(item=>{
     if(item.isSelected){
       this.selectedPlans.push(item);
-      this.selectedAmount += parseInt(item.amount);
     }
   })
-
-  // this.selectedAmount =
 }
 
-selectplanType(type){
-  this.planType= type;
+readValue(value){
+  this.isReview_order = false;
 }
+
 
 }

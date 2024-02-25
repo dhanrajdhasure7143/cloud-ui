@@ -78,9 +78,10 @@ export class FirstloginService {
     let headers = new HttpHeaders({});
     return this.http.post<any>('/api/user/registration-start', payload,{ headers:headers,observe: 'response' })
   }
+  
   sendEmailEntrepricePlan(userId:string){
     let headers = new HttpHeaders({});
-    return this.http.get<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+    return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
   }
 
   getPlanDetails(): Observable<any>{

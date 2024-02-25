@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { MessageService } from 'primeng/api';
 import { Country, State, City } from 'country-state-city';
+import { Location} from '@angular/common'
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -81,6 +82,11 @@ export class SignUpComponent implements OnInit {
   fieldsEnabled: boolean = true;
   isPasswordDisable : boolean = true;
   orgExsist : boolean = false;
+  userDetails : any = {};
+  isTimeOutshow : boolean = false;
+  isStateNull : boolean = false;
+  userId:any;
+  userPsw:any;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -97,13 +103,31 @@ export class SignUpComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
     public messageService:MessageService,
+    private location : Location
     //private cookieService:CookieService,
-  ) {}
+  ) {
+    this.route.queryParams.subscribe((res)=>{
+      if(res){
+        if(res.token){
+        let parms = JSON.parse(atob(res.token))
+        console.log("testing",parms)
+        if(parms.screen == 2){
+          this.showUserScreen = true;
+          this.userId= parms.usermail
+          this.userPsw = parms.userpassword
+        }else{
+          this.showUserScreen = false;
+        }
+      }
+      }
+    }
+    )
+  }
 
   ngOnInit() {
 
     this.getPlanDetails();
-
+    this.spinner.show();
     this.messages = this.messages.map((message, index) => ({
       id: index+1,
       content: message
@@ -135,6 +159,9 @@ export class SignUpComponent implements OnInit {
   }
 
   getPlanDetails() {
+    setTimeout(() => {
+      this.spinner.hide();      
+    }, 1000);
     this.service.getPlanDetails().subscribe((response: any) => {
       this.planDetails = response.data;
       this.planDetails.forEach(plan => {
@@ -144,10 +171,18 @@ export class SignUpComponent implements OnInit {
   }
 
   showOtp(event){
+    this.isGenerate = false;
     if(event.target.value.includes('@') && this.signupForm.get('email').valid){
-      this.isGenerate = true;
-    } else{
-      this.isGenerate = false;
+       if(event.target.value.endsWith('@gmail.com') || event.target.value.endsWith('@yahoo.com') || 
+       event.target.value.endsWith('@hotmail.com') || event.target.value.endsWith('@rediffmail.com')){
+         this.ispublicMail=true;
+         this.error='Only Business Email is allowed';
+         this.isGenerate = false;
+       } else {
+        this.error = '';
+        this.isGenerate = true;
+        this.ispublicMail=false;
+       }
     }
   }
 
@@ -171,42 +206,74 @@ export class SignUpComponent implements OnInit {
   }
   generateOTP(isResend){
     this.spinner.show()
-    this.ispublicMail=false;
-    let userId=this.signupForm.value.email.toLowerCase();
-    //  this.isresend=true;
-     if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
-     userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
-       this.ispublicMail=true;
-       this.error='Only Business Email is allowed';
-       this.spinner.hide()
-       setTimeout(() => {
-        this.error='';
-      }, 3000);
-       return
-     } else {
-       this.ispublicMail=false;
-     }
+    // this.ispublicMail=false;
+    // let userId=this.signupForm.value.email.toLowerCase();
+    // //  this.isresend=true;
+    //  if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
+    //  userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
+    //    this.ispublicMail=true;
+    //    this.error='Only Business Email is allowed';
+    //    this.spinner.hide()
+    //    setTimeout(() => {
+    //     this.error='';
+    //   }, 3000);
+    //    return
+    //  } else {
+    //    this.ispublicMail=false;
+    //  }
      this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
      if(data.message == "OTP Sent Successfully"){
       Swal.fire({
         title: 'Success!',
-        text: `OTP has been sent to your registered Email.`,
+        text: `OTP has been sent to your registered Email!`,
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
+      this.isTimeOutshow = true;
       this.timer(2)
       this.isGenerate = false;
       this.isEmailDisable = true;
       this.isOtpSent = true;
-      this.isValidate = true;
       this.isShowOtp = true;
       this.resendEnable = true;
       setTimeout(() => {
         this.resendEnable = false;
+        this.isTimeOutshow = false;
       }, 120000);
       this.spinner.hide()
+     } else if (data.errorMessage == "User already registered"){
+      this.spinner.show()
+      this.profileService.getDetailsUser(this.signupForm.value.email.toLowerCase()).subscribe((data : any) =>{
+      this.spinner.hide()
+        if(data.response)
+        if(data.response.enterprisePlan){
+          Swal.fire({
+            title: 'Info',
+            text: `This user already requested for Enterprise plan. Please use other email to signup!`,
+            icon: 'info',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+        }else{
+        // if(data.response.registrationProcess == "basic_details_completed"){
+          Swal.fire({
+            title: 'Info',
+            text: `User Already exist, please processed sign in!`,
+            icon: 'info',
+            showCancelButton: false,
+            allowOutsideClick: true
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigate(['/user'],{
+                queryParams: { email : this.userEmail },
+              });
+            }
+          });
+        // }
+      }
+      })
      } else {
       this.spinner.hide()
       Swal.fire("Error",data.errorMessage,"error")
@@ -218,38 +285,34 @@ export class SignUpComponent implements OnInit {
     });
 
   }
-onSubmit() {
-this.showUserScreen = true;
-// var payload = new FormData();
-// var reqObj = {}
-// reqObj = {
-//   'firstName': this.signupForm.value.firstName,
-//   'lastName': this.signupForm.value.lastName,
-//   'userId' : this.signupForm.value.email.toLowerCase(),
-//   'password': this.signupForm.value.password,
-// }
-// payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-//   this.service.registrationStart(payload).subscribe(res => {
-//   if(res.body) {
-//     Swal.fire({
-//       title: 'Success',
-//       text: `Registration completed successfully!`,
-//       icon: 'success',
-//       showCancelButton: false,
-//       allowOutsideClick: false
-//     })
-//     this.showUserScreen = true;
-//   } else {
-
-//   }
-// }, err => {
-//     Swal.fire({
-//       title: 'Error!',
-//       icon: 'error',
-//       text: `${err.error.message} ! Please check your user name`,
-//       allowOutsideClick: false
-//     });
-//   });
+  onRegistrationStart() {
+    // this.showUserScreen = true;
+    this.spinner.show()
+    var payload = new FormData();
+    var reqObj = {}
+    reqObj = {
+      'firstName': this.signupForm.value.firstName,
+      'lastName': this.signupForm.value.lastName,
+      'userId' : this.signupForm.value.email.toLowerCase(),
+      'password': this.signupForm.value.password,
+    }
+    this.userId = this.signupForm.value.email.toLowerCase();
+    this.userPsw = this.signupForm.value.password
+    payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+      this.service.registrationStart(payload).subscribe(res => {
+        this.spinner.hide()
+        this.showUserScreen = true;
+        let url=this.router.url.split('?');
+        let rplaceUrl = {"screen":"2",usermail:this.signupForm.value.email.toLowerCase(),userpassword:this.signupForm.value.password} 
+        this.location.replaceState(url[0]+'?token='+btoa(JSON.stringify(rplaceUrl)));
+    }, err => {
+    Swal.fire({
+      title: 'Error!',
+      icon: 'error',
+      text: `${err.error.message} ! Please check your user name`,
+      allowOutsideClick: false
+    });
+  });
 }
 
 validateOTP(){
@@ -265,7 +328,7 @@ validateOTP(){
         this.isPasswordDisable = false
         Swal.fire({
           title: 'Success!',
-          text: `OTP Verified Successfully.`,
+          text: `OTP Verified Successfully!`,
           icon: 'success',
           showCancelButton: false,
           allowOutsideClick: true
@@ -322,10 +385,10 @@ onChangeCountry(countryValue) {
     this.errorMessage = ""
   }
   if (this.stateInfo == null || this.stateInfo.length === 0) {
-    this.userForm.get('state').disable();
-    this.userForm.get('city').disable();
-    this.userForm.get('state').clearValidators();
-    this.userForm.get('state').updateValueAndValidity();
+    this.isStateNull = true
+
+  } else {
+    this.isStateNull = false
   }
 
   // Set the flag to true if there are states available, otherwise false
@@ -387,9 +450,9 @@ OnFlagChange(event, phonecode) {
   var code = event.iso2;
   var testcode = code.toString().toUpperCase();
   if (testcode != phonecode) {
-    this.errorMessage = "Please Select Appropriate Country *";
-    this.errorMessage1 = "Please Select Appropriate State *";
-    this.errorMessage2 = "Please Select Appropriate City *"
+    this.errorMessage = "Please Select Appropriate Country";
+    this.errorMessage1 = "Please Select Appropriate State";
+    this.errorMessage2 = "Please Select Appropriate City"
     this.userForm.get('state').enable();
     this.userForm.get('city').enable();
   }
@@ -408,40 +471,48 @@ get userFormValid(): boolean {
 
 registrationSave(){
   this.spinner.show();
+  // This payload is for Registration Continue API
   var payload = new FormData();
   var reqObj = {}
   reqObj = {
-    firstName: this.signupForm.value.firstName,
-    lastName: this.signupForm.value.lastName,
-    userId : this.signupForm.value.email.toLowerCase(),
-    password: this.signupForm.value.password,
-    designation : this.userForm.value.jobTitle,
+    // firstName: this.signupForm.value.firstName,
+    // lastName: this.signupForm.value.lastName,
+    // userId : this.signupForm.value.email.toLowerCase(),
+    // password: this.signupForm.value.password,
+    userId:this.userId,
+    jobTitle : this.userForm.value.jobTitle,
     department : this.userForm.value.department,
-    company : this.userForm.value.organization,
+    organization : this.userForm.value.organization,
     country : this.userForm.value.country,
     state : this.userForm.value.state,
     city : this.userForm.value.city,
-    zipcode : this.userForm.value.zipCode,
+    zipCode : this.userForm.value.zipCode,
     phoneNumber : this.userForm.value.phoneNumber,
-    isSubscriptionEnabled : true
+    // isSubscriptionEnabled : true
 }
+console.log(reqObj,this.crypto.encrypt(JSON.stringify(reqObj)),"reqObj")
 payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-this.service.registerUser(payload).subscribe((res : any) => {
+this.service.registrationContinue(payload).subscribe((res : any) => {
 this.spinner.hide();
-if(res.body.message == "Registration Complete") {
-  Swal.fire({
-    title: 'Success!',
-    text: 'Registration Done Successfully',
-    icon: 'success',
-    showCancelButton: false,
-    allowOutsideClick: true
-}).then((result) => {
-  if (result.value) {
+if(res.body.message == "User Details Saved Successfully!!") {
+  let obj = {email : this.userId, password : this.userPsw}
     this.router.navigate(['/subscription'],{
-      queryParams: { email : this.signupForm.value.email.toLowerCase() },
+      queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
     });
-  }
-});
+//   Swal.fire({
+//     title: 'Success!',
+//     text: 'User details saved successfully. Please processed with subscription!',
+//     icon: 'success',
+//     showCancelButton: false,
+//     allowOutsideClick: true
+// }).then((result) => {
+//   if (result.value) {
+//     let obj = {email : this.userId, password : this.userPsw}
+//     this.router.navigate(['/subscription'],{
+//       queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+//     });
+//   }
+// });
 } else {
   this.spinner.hide();
   Swal.fire("Error",res.errorMessage,"error")
@@ -477,7 +548,7 @@ getErrorMessage(controlName: string): string {
       return "Minimum 2 characters required";
     }
     if (control.errors.pattern) {
-      return "Only Alphabets and Numbers are allowed";
+      return "Only Numbers are allowed";
     }
   }
 
@@ -502,4 +573,12 @@ onKeydown(event){
      event.preventDefault();
     } 
    }
+
+   showValidateButton(event ){
+    console.log(event.target.value.length)
+    if(event.target.value.length == 6)
+    this.isValidate = true
+    else
+    this.isValidate = false
+   } 
 }
