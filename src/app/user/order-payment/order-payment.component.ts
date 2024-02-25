@@ -300,6 +300,7 @@ subscriptionPlan(){
         'otp': "",
         'isSubscriptionEnabled': true
       }
+      console.log("reqObj",reqObj)
       payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
       this.firstloginservice.registerUser(payload).subscribe((res : any) => {
         this.spinner.hide();

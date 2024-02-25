@@ -27,7 +27,7 @@ import Swal from 'sweetalert2';
   encapsulation : ViewEncapsulation.None,
 })
 export class OnboardTenantComponent implements OnInit {
-  @Input() userData: any[] = [];
+  @Input() userData: any;
   @Output() valueChange = new EventEmitter();
   tenantForm: FormGroup;
   private spacialSymbolEncryption: string = "->^<-";
@@ -140,17 +140,24 @@ export class OnboardTenantComponent implements OnInit {
       firstName: this.tenantForm.value.firstName,
       lastName: this.tenantForm.value.lastName,
       designation : this.tenantForm.value.jobTitle,
-      departmemt : this.tenantForm.value.departmemt,
+      departmemt : this.tenantForm.value.department,
       company : this.tenantForm.value.company,
       country : this.tenantForm.value.country,
       state : this.tenantForm.value.state,
       city : this.tenantForm.value.city,
       phoneNumber : this.tenantForm.value.phoneNumber,
+      'zipcode': this.userData.zipcode,
+      'profile_image':null,
+      'otp': "",
+      'isSubscriptionEnabled': true,
+      password:"Welcome@123"
       // expiryDate : this.datePipe.transform(originalDate, 'EEE MMM dd yyyy'),
   }
+
   console.log("reqObj",reqObj);
-  console.log(this.tenantForm.value,"this.tenantForm.value.expiryDate")
+  // console.log(this.tenantForm.value,"this.tenantForm.value.expiryDate")
   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+  // payload.append('expairyData', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
   this.rest_api.onBoardTenant(payload, expiryDate).subscribe((response: any) => {
     console.log(response);
