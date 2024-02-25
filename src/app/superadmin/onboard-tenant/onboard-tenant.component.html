@@ -126,6 +126,18 @@
                             City required </span>
                         <span class="required">{{errorMessage2}}</span>
                     </div>
+
+                    <div class="form-group col-md-6 pr-0">
+                        <label for="city" class="label-control" id="label-name">City<span class="star">*</span></label>
+                        <select formControlName="departmemt" class="form-control form-text" id="city" placeholder="Select City" 
+                            name='city' [disabled]="!fieldsEnabled" required>
+                            <option value="" disabled selected>Select Department</option>
+                            <option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;' [value]="department.departmentId">{{department.departmentName}}</option>
+                        </select>
+                        <span *ngIf="f.city.touched && f.city.errors" class="required">
+                            City required </span>
+                        <span class="required">{{errorMessage2}}</span>
+                    </div>
                     <div class="form-group col-md-6 pl-0">
                         <label for="phoneNumber" class="label-control" id="label-name">Phone Number<span class="star">*</span></label>
                         <div class="phone-input-container">

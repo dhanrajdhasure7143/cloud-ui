@@ -63,13 +63,15 @@ export class OnboardTenantComponent implements OnInit {
   datepickerPlacement = 'top';
   datePickerConfig: Partial<BsDatepickerConfig>;
   tenantDetails: any;
+  departments:any
  
   constructor(
     private formBuilder: FormBuilder,
-    private api: FirstloginService,
+    private service: FirstloginService,
     private cryptoService: CryptoService,
     private spinner: NgxSpinnerService,
     private tenant_api: ProfileService,
+ 
   ) {
     this.tenantForm = this.formBuilder.group({
       userId: ["", [Validators.required, Validators.email]],
@@ -78,6 +80,7 @@ export class OnboardTenantComponent implements OnInit {
       jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       company: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],     
       country: ['', Validators.required],
+      departmemt: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
       phoneNumber: ['', Validators.required],
@@ -93,6 +96,7 @@ export class OnboardTenantComponent implements OnInit {
   ngOnInit() {
     
     this.userDetails();
+    this.getAllDepartments();
     // this.getOnboardTenantDetails(this.data);
 }
   ngOnChanges(changes:SimpleChanges){
@@ -124,10 +128,11 @@ export class OnboardTenantComponent implements OnInit {
     var payload = new FormData();
     var reqObj = {}
     reqObj = {
-      userId : this.tenantForm.value.email.toLowerCase(),
+      userId : this.tenantForm.value.userId.toLowerCase(),
       firstName: this.tenantForm.value.firstName,
       lastName: this.tenantForm.value.lastName,
       designation : this.tenantForm.value.jobTitle,
+      departmemt : this.tenantForm.value.departmemt,
       company : this.tenantForm.value.company,
       country : this.tenantForm.value.country,
       state : this.tenantForm.value.state,
@@ -268,6 +273,15 @@ export class OnboardTenantComponent implements OnInit {
     this.errorMessage = "";
     this.errorMessage1 = "";
     this.errorMessage2 = "";
+  }
+
+  getAllDepartments(){
+    this.service.getAllDepartments().subscribe(response=> {
+      this.departments = response;      
+    })
+  }
+  loopTrackBy(index, term){
+    return index;
   }
 }
 
