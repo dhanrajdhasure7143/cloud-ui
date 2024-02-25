@@ -8,7 +8,6 @@ import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
-import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,6 +15,7 @@ import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.serv
 import { MessageService } from 'primeng/api';
 import { Country, State, City } from 'country-state-city';
 import { Location} from '@angular/common'
+import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -98,7 +98,7 @@ export class SignUpComponent implements OnInit {
     private loginService: LoginService,
     private sharedData: SharedDataService,
     public userService: UserService,
-    private profileService:ProfileService,
+    private rest_api:UsermanagementService,
     private crypto:CryptoService,
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
@@ -245,7 +245,7 @@ export class SignUpComponent implements OnInit {
       this.spinner.hide()
      } else if (data.errorMessage == "User already registered"){
       this.spinner.show()
-      this.profileService.getDetailsUser(this.signupForm.value.email.toLowerCase()).subscribe((data : any) =>{
+      this.rest_api.getDetailsUser(this.signupForm.value.email.toLowerCase()).subscribe((data : any) =>{
       this.spinner.hide()
         if(data.response)
         if(data.response.enterprisePlan){

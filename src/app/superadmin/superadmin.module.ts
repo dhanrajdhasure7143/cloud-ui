@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SuperadminRoutingModule } from './superadmin-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -43,6 +43,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     Ng2TelInputModule,
     BsDatepickerModule.forRoot(),
     ScrollPanelModule
-  ]
+  ],
+providers:[DatePipe]
 })
 export class SuperadminModule { }

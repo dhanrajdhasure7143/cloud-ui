@@ -305,12 +305,4 @@ updateData(newData: any) {
   this.dataSubject.next(newData);
 }
 
-getOnboardTenantDetails(data: any): Observable<any>{
-  return this.http.post<any>('api/tenant/enterprise-registration-complete', data,httpOptions)
-}
-
-getDetailsUser(username : any){
-  return this.http.get('/api/user/'+username,{responseType:"json"})
-}
-
 }

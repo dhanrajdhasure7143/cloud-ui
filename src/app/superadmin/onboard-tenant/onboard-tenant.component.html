@@ -127,16 +127,16 @@
                         <span class="required">{{errorMessage2}}</span>
                     </div>
 
-                    <div class="form-group col-md-6 pr-0">
-                        <label for="city" class="label-control" id="label-name">City<span class="star">*</span></label>
-                        <select formControlName="departmemt" class="form-control form-text" id="city" placeholder="Select City" 
-                            name='city' [disabled]="!fieldsEnabled" required>
+                    <div class="form-group col-md-6 pl-0">
+                        <label for="department" class="label-control" id="label-name">Department<span class="star">*</span></label>
+                        <select formControlName="department" class="form-control form-text" id="department" placeholder="Select Department" 
+                            name='department' [disabled]="!fieldsEnabled" required>
                             <option value="" disabled selected>Select Department</option>
                             <option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;' [value]="department.departmentId">{{department.departmentName}}</option>
                         </select>
-                        <span *ngIf="f.city.touched && f.city.errors" class="required">
-                            City required </span>
-                        <span class="required">{{errorMessage2}}</span>
+                        <span *ngIf="f.department.touched && f.department.errors" class="required">
+                            Department required </span>
+                        <!-- <span class="required">Department Required!</span> -->
                     </div>
                     <div class="form-group col-md-6 pl-0">
                         <label for="phoneNumber" class="label-control" id="label-name">Phone Number<span class="star">*</span></label>
@@ -159,9 +159,12 @@
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label for="expiryDate">Expiry Date</label>
-                        <div class="date-field">
+                        <!-- <div class="date-field">
                             <input type="text" class="form-control cal-box" formControlName="expiryDate" placeholder="Select Expiry Date" bsDatepicker [minDate]="minDate" bsDatepicker [placement]="datepickerPlacement">
                             <img src="assets/images/calendar.png" alt="cal" class="cal-img">
+                        </div> -->
+                        <div class="field col-12 md:col-4">
+                            <p-calendar formControlName="expiryDate" [showIcon]="true" inputId="icon"></p-calendar>
                         </div>
                     </div>
                 </div>
@@ -169,9 +172,9 @@
         <div class="createform-footer">
             <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()">Reset</button>
             <button type="button" class="btn btn-primary ml-2" id="reset-btn"> Register </button>
-            <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()"> Onboard </button>
+            <!-- <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()"> Onboard </button> -->
             <button type="button" class="btn btn-primary" id="update-btn" (click)="updateAccount()"
-                [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> Offboard </button>
+                [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> OnBorad </button>
         </div>
     </div>
 </div>

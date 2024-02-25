@@ -7,7 +7,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/_services';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { ProductlistService } from 'src/app/_services/productlist.service';
-import { ProfileService } from 'src/app/_services/profile.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from 'sweetalert2';
@@ -16,6 +15,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { IpServiceService } from 'src/app/_services/ip-service.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { APP_CONFIG } from 'src/app/app.config';
+import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 
 @Component({
   selector: 'app-order-payment',
@@ -61,7 +61,7 @@ export class OrderPaymentComponent implements OnInit {
               private router: Router,
               private spinner: NgxSpinnerService,
               private modalService: BsModalService,
-              private profileService: ProfileService,
+              private rest_api: UsermanagementService,
               private sharedDataService: SharedDataService,
               private firstloginservice: FirstloginService,
               private ip: IpServiceService,
@@ -112,7 +112,7 @@ export class OrderPaymentComponent implements OnInit {
 
   registrationDetails() {
     console.log(this.userEmail,"this.userEmail")
-    this.profileService.getDetailsUser(this.userEmail.toLowerCase()).subscribe((data : any) =>{
+    this.rest_api.getDetailsUser(this.userEmail.toLowerCase()).subscribe((data : any) =>{
       this.userDetails = data.response
     })
   }
@@ -178,7 +178,7 @@ subscriptionPlan(){
     }
   }
   let res: any;
-  this.profileService.getDetailsUser(this.userEmail.toLowerCase()).subscribe(data => {
+  this.rest_api.getDetailsUser(this.userEmail.toLowerCase()).subscribe(data => {
     res = data;
     localStorage.setItem("tenantid", res.tenantID)
     let headers = {};

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewEncapsulation, Output, EventEmitter, Input, ViewChild, SimpleChanges, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
@@ -13,6 +14,7 @@ import { AuthenticationService } from 'src/app/_services';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { ProductlistService } from 'src/app/_services/productlist.service';
 import { ProfileService } from 'src/app/_services/profile.service';
+import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { APP_CONFIG } from 'src/app/app.config';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { environment } from 'src/environments/environment';
@@ -71,6 +73,8 @@ export class OnboardTenantComponent implements OnInit {
     private cryptoService: CryptoService,
     private spinner: NgxSpinnerService,
     private tenant_api: ProfileService,
+    private datePipe: DatePipe,
+    private rest_api: UsermanagementService
  
   ) {
     this.tenantForm = this.formBuilder.group({
@@ -80,7 +84,7 @@ export class OnboardTenantComponent implements OnInit {
       jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       company: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],     
       country: ['', Validators.required],
-      departmemt: ['', Validators.required],
+      department: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
       phoneNumber: ['', Validators.required],
@@ -110,6 +114,7 @@ export class OnboardTenantComponent implements OnInit {
     this.tenantForm.get("country").setValue(this.userData["country"]);
     this.tenantForm.get("state").setValue(this.userData["state"]);
     this.tenantForm.get("city").setValue(this.userData["city"]);
+    this.tenantForm.get("department").setValue(this.userData["department"]);
     this.onChangeCountry(this.userData["country"])
     this.onChangeState(this.userData["state"])
     this.onChangeCity(this.userData["city"])
@@ -124,9 +129,12 @@ export class OnboardTenantComponent implements OnInit {
 
   updateAccount() {
     console.log(this.tenantForm.value.expiryDate,"this.tenantForm.value.expiryDate")
-    this.spinner.show();
+    // this.spinner.show();
     var payload = new FormData();
     var reqObj = {}
+    console.log(this.tenantForm.value);
+    const originalDate = new Date(this.tenantForm.value.expiryDate);
+    let expiryDate = this.datePipe.transform(originalDate, 'EEE MMM dd yyyy')
     reqObj = {
       userId : this.tenantForm.value.userId.toLowerCase(),
       firstName: this.tenantForm.value.firstName,
@@ -138,12 +146,15 @@ export class OnboardTenantComponent implements OnInit {
       state : this.tenantForm.value.state,
       city : this.tenantForm.value.city,
       phoneNumber : this.tenantForm.value.phoneNumber,
-      expiryDate : this.tenantForm.value.expiryDate,
+      // expiryDate : this.datePipe.transform(originalDate, 'EEE MMM dd yyyy'),
   }
-  console.log(this.tenantForm.value.expiryDate,"this.tenantForm.value.expiryDate")
-  payload.append('firstname', this.cryptoService.encrypt(JSON.stringify(reqObj)));
+  console.log("reqObj",reqObj);
+  console.log(this.tenantForm.value,"this.tenantForm.value.expiryDate")
+  payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
-
+  this.rest_api.onBoardTenant(payload, expiryDate).subscribe((response: any) => {
+    console.log(response);
+  })
 }
 
   userDetails() {
