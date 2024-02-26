@@ -238,19 +238,20 @@ subscriptionPlan(){
             }
             else {
                 this.spinner.hide();
-                Swal.fire({
-                  title: 'Success',
-                  text: `Subscription Completed Successfully!!`,
-                  icon: 'success',
-                  showCancelButton: false,
-                  allowOutsideClick: true
-                }).then((result) => {
+                // .then((result) => {
                   this.productlistservice.subscribePlan(this.paymentToken.message, plandetails, JSON.parse(localStorage.getItem('accessToken'))).subscribe(data => {
                     this.subscriptionDetails = data
                     this.spinner.hide();
                     if (this.subscriptionDetails.message == "Subscription Completed Successfully!!") {
                       this.finalAmount = this.subscriptionDetails.amountPaid;
                       // this.sharedDataService.setFreetrialavailed(false);
+                      Swal.fire({
+                        title: 'Success',
+                        text: `Subscription Completed Successfully!!`,
+                        icon: 'success',
+                        showCancelButton: false,
+                        allowOutsideClick: true
+                      })
                     }
                     else {
                       Swal.fire({
@@ -267,7 +268,7 @@ subscriptionPlan(){
                     }
                   })
                   this.router.navigate(['/']);
-                })
+                // })
             }
           })
         });
