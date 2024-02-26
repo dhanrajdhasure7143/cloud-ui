@@ -25,13 +25,13 @@ li.nav-item.notificationBell {
   position: relative;
 }
  .res-circle {
-    width: 40px;
+    width: 35px;
     border-radius: 100%;
     text-align: center;
-    height: 40px;
+    height: 35px;
     font-size: 18px;
     background: #ffff;
-    line-height: 40px;
+    line-height: 35px;
     font-weight: 500;
     color: #098DE6;
     display: inline-block;
@@ -119,4 +119,13 @@ li.nav-item.notificationBell {
   .header-logosize{
     width:95%;
     // margin-top: 10px;
+  }
+
+  .header-rgttext {
+    font-weight: 400;
+    display: block;
+    font-size: 16px;
+  }
+  .header-userrole {
+    font-size: 12px !important;
   }

@@ -9,8 +9,8 @@
                 <div class="row form-details">
                     <div class="form-group col-md-6 pl-0">
                         <label class="label-control" for="email">Email<span class="star">*</span></label>
-                        <input type="text" name = "email" class="form-control" formControlName="userId"
-                        pattern="^\S*[@]\S*[.]\S*$" required placeholder="Enter Email" disabled/> 
+                        <input type="text" name = "email" class="form-control form-text" formControlName="userId"
+                        pattern="^\S*[@]\S*[.]\S*$" required placeholder="Enter Email" /> 
                         <span *ngIf="tenantForm.get('userId').invalid && tenantForm.get('userId').touched && !tenantForm.get('userId').hasError('pattern') && !tenantForm.controls['userId'].hasError('maxlength')" class="required"> Email Required </span>    
                     </div>
                     <div class="form-group col-md-6 pr-0">

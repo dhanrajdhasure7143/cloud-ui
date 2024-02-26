@@ -114,3 +114,11 @@ img.testplus {
 .actionmenu:hover img.hover-icon {
     display: initial;
 }
+
+.enterprise-layout{
+    background: #f8f8f8;
+    border-radius: 3px;
+    overflow: auto;
+    height: calc(100vh - 160px);
+    scrollbar-color:#cce5f5
+}

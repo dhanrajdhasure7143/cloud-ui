@@ -801,3 +801,41 @@ as-split-area {
   background-color: #098de6 !important; 
   color: #fff !important;
 }
+
+ ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar:hover {
+width: 10px !important;
+height: 10px !important;
+cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+background: #098de630;
+border-radius: 10px;
+cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+// background: var(--main-bluecolor) !important;
+cursor: pointer;
+width:10px;
+height:10px;
+}
+
+.password-input{
+  width: 100% !important;
+  height: 45px !important;
+}
+
+.p-input-icon-right > .p-inputtext{
+  width: 100% !important;
+}

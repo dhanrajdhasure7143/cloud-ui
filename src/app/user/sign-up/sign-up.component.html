@@ -47,19 +47,19 @@
                     <div class="form-group col-md-12">
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="firstName"> First Name </label>
-                            <input type="text" maxlength="20" minlength="3" class="form-control" formControlName="firstName" (keypress)="lettersOnly($event)"
+                            <input type="text" pInputText maxlength="20" minlength="3" class="form-control" formControlName="firstName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter First Name" tabindex="1" autocomplete="off">
                             <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="lastName"> Last Name </label>
-                            <input type="text" maxlength="20" minlength="3" class="form-control" formControlName="lastName" (keypress)="lettersOnly($event)"
+                            <input type="text" pInputText maxlength="20" minlength="3" class="form-control" formControlName="lastName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter Last Name" autocomplete="off" tabindex="2">
                             <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
                         </div>
-                    <div class="col-md-12 p-10 form-group" style="height: 74px;">
+                    <div class="col-md-12 p-10 form-group" style=" max-height: 96px !important;">
                             <label class="label-control" for="email"> Email </label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="email" [attr.disabled]="isEmailDisable ? true : null"
+                            <input type="text" pInputText maxlength="51" class="form-control" formControlName="email" [attr.disabled]="isEmailDisable ? true : null"
                                 value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off" (keyup)="showOtp($event)" tabindex="3">
                                 <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify signup_styles text-primary" > Verify Email </span>
                                 <i *ngIf="isSuccess" class="pi pi-verified text-success" id="email-buttons"></i>
@@ -68,30 +68,29 @@
                             <span *ngIf="ispublicMail" class="required">{{error}}</span>  
                         </div>
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
-                            <input type="text" minlength="6" maxlength="6" class="form-control" formControlName="otp" autocomplete="off"
+                            <input type="text" pInputText minlength="6" maxlength="6" class="form-control" formControlName="otp" autocomplete="off"
                                 value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)" (keyup)="showValidateButton($event)">
                                 <i *ngIf="isValidateOTP" (click)="validateOTP()" class="pi pi-check"  style="font-size: 0.7rem; border: 1px solid #098de6; padding: 6px; left: 90% important;" id="validate-buttons"></i>
                                 <span *ngIf="isTimeOutshow" class="required" style="margin-left: -20px; font-weight: 600;">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary" > Resend Code </span>    
                         </div>
-                        <div class="col-md-12 p-10 form-group">
-                            <label class="label-control" for="password"> Password </label>
-                            <input [type]="hide ?  'password': 'text'" maxlength="20" minlength="8" class="form-control" formControlName="password"
-                            value="" placeholder="Enter Password"  tabindex="4" autocomplete="off" [attr.disabled]="isPasswordDisable ? true : null">
-                                <span class="password-btn ml-auto" *ngIf="hide==true" (click)="hide = false">
-                                    <img  src='../../../assets/images/eye-show.svg' alt="eye-show" />
-                                  </span>
-                                  <span class="password-btn ml-auto" *ngIf="hide==false" (click)="hide = true">
-                                    <img src='../../../assets/images/eye-hide.svg' alt="eye-hide"/>
-                                  </span>
-
+                        <div class="col-md-12 p-10 form-group d-block">
+                            <label class="label-control" for="password"> Password </label> <br>
+                            <!-- <input [type]="hide ?  'password': 'text'" maxlength="20" minlength="8" class="form-control" formControlName="password"
+                            value=""> -->
+                            <p-password styleClass="password-input" formControlName="password" value="password" [toggleMask]="true" [disabled]="isPasswordDisable ? true : null" placeholder="Enter Password" tabindex="4" autocomplete="off"></p-password>
+                            <!-- <span class="password-btn ml-auto" *ngIf="hide==true" (click)="hide = false">
+                                <img  src='../../../assets/images/eye-show.svg' alt="eye-show" />
+                              </span>
+                              <span class="password-btn ml-auto" *ngIf="hide==false" (click)="hide = true">
+                                <img src='../../../assets/images/eye-hide.svg' alt="eye-hide"/>
+                            </span> -->
                               <span *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && !signupForm.get('password').hasError('pattern') && !signupForm.controls['password'].hasError('maxlength')" class="required"> Password Required </span>
                               <span class="required" *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched"> Minimum 8 Characters Required </span>    
                               <span class="required" *ngIf="signupForm.get('password').hasError('pattern') && signupForm.get('password').touched"> 
                                 Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number
                               </span>
-                            <!-- <p-password [formControlName]="password" [style]="{'width':'100%','height':'45px'}" [toggleMask]="true"></p-password> -->
                         </div>
 
                         <div class="col-sm-12">

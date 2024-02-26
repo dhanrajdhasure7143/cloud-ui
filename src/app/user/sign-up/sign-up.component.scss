@@ -76,7 +76,7 @@
     font-size: 14px;
     height: 40px;
     margin-left: 33%; 
-    // margin-top: 10px;
+    margin-top: 20px;
   }
   .signupbtn{
     width: 120px !important;
@@ -603,4 +603,9 @@
   #phone {
     width: 100% !important;
   }
+}
+
+.password-input{
+  width: 100% !important;
+  height: 45px !important;
 }

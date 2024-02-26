@@ -14,13 +14,18 @@
             <span>{{notificationscount}}</span> 
            </div>
         </li> -->
-    <li class="text-center" style="position: relative; bottom: 8px;">
+    <li class="text-center" style="position: relative; bottom: 8px; display: flex; color: #fff;">
       <!-- <img class="icon_middle pull-right" src="assets/images/pro1.png" alt="profile image" alt=""> -->
       <span  class="res-circle " *ngIf="profilePicture==false">
         {{firstletter|uppercase}}
       </span> 
+      <div class="txt-wh">
+        <span class="header-rgttext"> John </span>
+        <span class="header-userrole"> Platform Admin </span>
+      </div> 
        <span   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" alt="retrievedImage"></span>
-        <span #toogleBtn (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="arrow_down"></span>      
+        <span #toogleBtn (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="arrow_down" style="color: #fff;"></span>
+        <!-- <button type="button" #toogleBtn pButton icon="pi pi-angle-down" (click)="myFunction()"></button>       -->
         <div>     
         <div  id="myDropdown" class="dropdown-content">
                <p (click)="accountSlideup()"  style="text-align: left;"><img  src="assets/images/account.svg" alt="account"><span>My Account</span></p>

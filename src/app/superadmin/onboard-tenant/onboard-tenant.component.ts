@@ -101,13 +101,12 @@ export class OnboardTenantComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    this.userDetails();
+    this.getCountries();
     this.getAllDepartments();
-    // this.getOnboardTenantDetails(this.data);
 }
   ngOnChanges(changes:SimpleChanges){
-    this.userDetails();
+    this.getCountries();
+    this.getAllDepartments();
     this.tenantForm.get("userId").setValue(this.userData["userId"]);
     this.tenantForm.get("firstName").setValue(this.userData["firstName"]);
     this.tenantForm.get("lastName").setValue(this.userData["lastName"]);
@@ -115,17 +114,10 @@ export class OnboardTenantComponent implements OnInit {
     this.tenantForm.get("department").setValue(this.userData["department"]);
     this.tenantForm.get("company").setValue(this.userData["company"]);
     this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
-    // this.tenantForm.get("country").setValue(this.userData["country"]);
-    // this.tenantForm.get("state").setValue(this.userData["state"]);
-    // this.tenantForm.get("city").setValue(this.userData["city"]);
-    // this.onChangeCountry(this.userData["country"])
-    // this.onChangeState(this.userData["state"])
-    // this.onChangeCity(this.userData["city"])
-
-    if(this.userData["country"]) {
-      const matchingCountry = this.countryInfo.find((item: any) => item.name == this.userData["country"]);
-      this.phnCountry = matchingCountry.isoCode;
-    }
+    this.tenantForm.get("country").setValue(this.userData["country"]);
+    this.onChangeCountry(this.userData["country"])
+    this.onChangeState(this.userData["state"])
+    this.onChangeCity(this.userData["city"])
   }
 
   updateAccount() {
@@ -186,11 +178,11 @@ export class OnboardTenantComponent implements OnInit {
   })
 }
 
-  userDetails() {
-    this.getCountries();
-    // this.expiryDate();
-    // this.setMinDate();
-  }
+  // userDetails() {
+  //   this.getCountries();
+  //   // this.expiryDate();
+  //   // this.setMinDate();
+  // }
 
   getCountries() {
     this.countryInfo = Country.getAllCountries();
@@ -203,7 +195,7 @@ export class OnboardTenantComponent implements OnInit {
     
     if (countryValue) {
       const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
-      this.phnCountry = matchingCountry.isoCode;
+      this.phnCountryCode = matchingCountry.isoCode;
       this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode);
       this.errorMessage = ""
     }
