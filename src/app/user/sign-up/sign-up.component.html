@@ -57,7 +57,7 @@
                                 value="" placeholder="Enter Last Name" autocomplete="off" tabindex="2">
                             <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
                         </div>
-                    <div class="col-md-12 p-10 form-group" style=" max-height: 96px !important;">
+                    <div class="col-md-12 p-10 form-group" style="height: 74px">
                             <label class="label-control" for="email"> Email </label>
                             <input type="text" pInputText maxlength="51" class="form-control" formControlName="email" [attr.disabled]="isEmailDisable ? true : null"
                                 value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off" (keyup)="showOtp($event)" tabindex="3">
