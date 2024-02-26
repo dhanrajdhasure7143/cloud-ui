@@ -9,10 +9,12 @@ export class TokenAuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(): boolean {
-    const accessToken = localStorage.getItem('accessToken');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const userRole = localStorage.getItem("userRole")
 
-    if (accessToken) {
+    if (currentUser) {
       // Access token exists, allow navigation
+      if(userRole == "Platform Admin")
       return true;
     } else {
       // Access token does not exist, redirect to login page
