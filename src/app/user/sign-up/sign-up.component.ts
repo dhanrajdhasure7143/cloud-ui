@@ -87,6 +87,8 @@ export class SignUpComponent implements OnInit {
   isStateNull : boolean = false;
   userId:any;
   userPsw:any;
+  isErrorMessage : boolean = false;
+  isValidateOTP : boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -237,6 +239,7 @@ export class SignUpComponent implements OnInit {
       this.isEmailDisable = true;
       this.isOtpSent = true;
       this.isShowOtp = true;
+      this.isValidateOTP = true;
       this.resendEnable = true;
       setTimeout(() => {
         this.resendEnable = false;
@@ -322,6 +325,7 @@ validateOTP(){
       {
         this.spinner.hide()
         this.isShowOtp = false;
+        this.isValidateOTP = false;
         this.isValidate = false;
         this.isSuccess = true;
         this.isGenerate = false;
@@ -450,6 +454,7 @@ OnFlagChange(event, phonecode) {
   var code = event.iso2;
   var testcode = code.toString().toUpperCase();
   if (testcode != phonecode) {
+    this.isErrorMessage = true;
     this.errorMessage = "Please Select Appropriate Country";
     this.errorMessage1 = "Please Select Appropriate State";
     this.errorMessage2 = "Please Select Appropriate City"

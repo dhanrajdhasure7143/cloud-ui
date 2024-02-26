@@ -50,9 +50,9 @@
   input[type="number"]::-webkit-outer-spin-button { 
     -webkit-appearance: none;
   }
-  .phonenumber{
-    margin-right: 100px !important;
-  }
+  // .phonenumber{
+  //   margin-right: 100px !important;
+  // }
   .registrbtn{
     border-radius: 20px;
     height: 30px;
@@ -290,12 +290,12 @@
   font-weight: bold;
 }
 
-.form-details{
-  margin:-2px;
-}
+// .form-details{
+//   margin:-2px;
+// }
 
 .phoneNumber {
-  width: 295px;
+  width: 77vh;
   padding: 3px;
   border: 1px solid #D6DDF2;
   border-radius: 4px;

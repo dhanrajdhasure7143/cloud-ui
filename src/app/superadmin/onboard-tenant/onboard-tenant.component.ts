@@ -60,12 +60,13 @@ export class OnboardTenantComponent implements OnInit {
   lastName: any;
   company: any;
   expiryForm: any;
-  minDate: Date;
+  minDate: string;
   data: any;
   datepickerPlacement = 'top';
   datePickerConfig: Partial<BsDatepickerConfig>;
   tenantDetails: any;
-  departments:any
+  departments:any;
+  showErrorMessage : boolean = false;
  
   constructor(
     private formBuilder: FormBuilder,
@@ -83,18 +84,20 @@ export class OnboardTenantComponent implements OnInit {
       lastName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       company: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],     
-      country: ['', Validators.required],
-      department: ['', Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      country: ["", Validators.required],
+      department: ["", Validators.required],
+      state: ["", Validators.required],
+      city: ["", Validators.required],
+      phoneNumber: ["", Validators.required],
       phnCountry: [''],
-      expiryDate: ['', Validators.required],
+      expiryDate: ["", Validators.required],
     });
-    this.datePickerConfig = {
-      dateInputFormat: 'YYYY-MM-DD',
-      minDate: new Date() // Disables all dates before today
-    };
+    // this.datePickerConfig = {
+    //   dateInputFormat: 'YYYY-MM-DD',
+    //   minDate: new Date() // Disables all dates before today
+    // };
+    const today = new Date();
+    this.minDate = this.formatDate(today);
   }
 
   ngOnInit() {
@@ -104,32 +107,30 @@ export class OnboardTenantComponent implements OnInit {
     // this.getOnboardTenantDetails(this.data);
 }
   ngOnChanges(changes:SimpleChanges){
-    console.log("testing",this.userData);
+    this.userDetails();
     this.tenantForm.get("userId").setValue(this.userData["userId"]);
     this.tenantForm.get("firstName").setValue(this.userData["firstName"]);
     this.tenantForm.get("lastName").setValue(this.userData["lastName"]);
     this.tenantForm.get("jobTitle").setValue(this.userData["designation"]);
+    this.tenantForm.get("department").setValue(this.userData["department"]);
     this.tenantForm.get("company").setValue(this.userData["company"]);
     this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
-    this.tenantForm.get("country").setValue(this.userData["country"]);
-    this.tenantForm.get("state").setValue(this.userData["state"]);
-    this.tenantForm.get("city").setValue(this.userData["city"]);
-    this.tenantForm.get("department").setValue(this.userData["department"]);
-    this.onChangeCountry(this.userData["country"])
-    this.onChangeState(this.userData["state"])
-    this.onChangeCity(this.userData["city"])
-  }
+    // this.tenantForm.get("country").setValue(this.userData["country"]);
+    // this.tenantForm.get("state").setValue(this.userData["state"]);
+    // this.tenantForm.get("city").setValue(this.userData["city"]);
+    // this.onChangeCountry(this.userData["country"])
+    // this.onChangeState(this.userData["state"])
+    // this.onChangeCity(this.userData["city"])
 
-  // getOnboardTenantDetails(data:any) {
-  //   this.tenant_api.getOnboardTenantDetails(data).subscribe((response:any)=>{
-  //     this.tenantDetails = response;
-  //     console.log("tenantDetails:", this.tenantDetails);
-  //   });
-  // }
+    if(this.userData["country"]) {
+      const matchingCountry = this.countryInfo.find((item: any) => item.name == this.userData["country"]);
+      this.phnCountry = matchingCountry.isoCode;
+    }
+  }
 
   updateAccount() {
     console.log(this.tenantForm.value.expiryDate,"this.tenantForm.value.expiryDate")
-    // this.spinner.show();
+    this.spinner.show();
     var payload = new FormData();
     var reqObj = {}
     console.log(this.tenantForm.value);
@@ -150,7 +151,7 @@ export class OnboardTenantComponent implements OnInit {
       'profile_image':null,
       'otp': "",
       'isSubscriptionEnabled': true,
-      password:"Welcome@123"
+      // password:"Welcome@123"
       // expiryDate : this.datePipe.transform(originalDate, 'EEE MMM dd yyyy'),
   }
 
@@ -158,16 +159,37 @@ export class OnboardTenantComponent implements OnInit {
   // console.log(this.tenantForm.value,"this.tenantForm.value.expiryDate")
   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   // payload.append('expairyData', this.cryptoService.encrypt(JSON.stringify(reqObj)));
-  console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
-  this.rest_api.onBoardTenant(payload, expiryDate).subscribe((response: any) => {
-    console.log(response);
+  // console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
+  var reqData = {}
+  reqData = {
+    userId : this.tenantForm.value.userId.toLowerCase(),
+    expiresAt : new Date(expiryDate)
+  }
+  this.service.registerUser(payload).subscribe((res : any) => {
+    if(res.errorCode == 5019){
+        Swal.fire({
+    title: 'Error!',
+    text: res.errorMessage,
+    icon: 'error',
+    showCancelButton: false,
+    allowOutsideClick: true
+  })
+    this.spinner.hide();
+    } else {
+      this.rest_api.onBoardTenant(reqData).subscribe((response: any) => {
+        this.spinner.hide();
+      })
+    }
+  }, err => {
+    this.spinner.hide();
+    Swal.fire("Error", "Error Occured", "error");
   })
 }
 
   userDetails() {
     this.getCountries();
-    this.expiryDate();
-    this.setMinDate();
+    // this.expiryDate();
+    // this.setMinDate();
   }
 
   getCountries() {
@@ -218,9 +240,10 @@ export class OnboardTenantComponent implements OnInit {
       }
     }
 
-    this.cityInfo.some((cityItem: any) =>{
+    this.cityInfo.find((cityItem: any) =>{
       if(cityItem.name === this.userData["city"]){
         this.tenantForm.get('city').setValue(cityItem.name);
+        console.log(cityItem.name,"cityItem.name")
         this.tenantForm.get('city').setValue(this.userData["city"]);
 
       }
@@ -261,6 +284,7 @@ export class OnboardTenantComponent implements OnInit {
     var code = event.iso2;
     var testcode = code.toString().toUpperCase();
     if (testcode != phonecode) {
+      this.showErrorMessage = true;
       this.errorMessage = "Please Select Appropriate Country *";
       this.errorMessage1 = "Please Select Appropriate State *";
       this.errorMessage2 = "Please Select Appropriate City *"
@@ -275,16 +299,16 @@ export class OnboardTenantComponent implements OnInit {
     return this.tenantForm.controls;
   }
   
-  expiryDate() {
-    this.expiryForm = this.formBuilder.group({
-    expiryDate: [null]
-    });
-  }
+  // expiryDate() {
+  //   this.expiryForm = this.formBuilder.group({
+  //   expiryDate: [null]
+  //   });
+  // }
 
-  setMinDate() {
-    const today = new Date();
-    this.minDate = today;
-  }
+  // setMinDate() {
+  //   const today = new Date();
+  //   this.minDate = today;
+  // }
 
   resetForm() {
     this.tenantForm.reset();
@@ -300,6 +324,13 @@ export class OnboardTenantComponent implements OnInit {
   }
   loopTrackBy(index, term){
     return index;
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
   }
 }
 

@@ -55,8 +55,9 @@ export class UsermanagementService implements OnInit {
     return this.http.get("/api/user/fetch-enterprise-users")
   }
 
-  onBoardTenant(data: any, expiryDate): Observable<any>{
-    return this.http.post<any>('api/tenant/enterprise-registration-complete?expiresat='+expiryDate, data,httpOptions)
+  onBoardTenant(data: any): Observable<any>{
+    // return this.http.post<any>('api/tenant/enterprise-registration-complete', data,httpOptions)
+    return this.http.post<any>('api/tenant/enterprise-registration-complete', data)
   }
 
   getDetailsUser(username : any){

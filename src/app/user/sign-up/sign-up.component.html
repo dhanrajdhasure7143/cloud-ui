@@ -57,20 +57,20 @@
                                 value="" placeholder="Enter Last Name" autocomplete="off" tabindex="2">
                             <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
                         </div>
-                        <div class="col-md-12 p-10 form-group">
+                    <div class="col-md-12 p-10 form-group" style="height: 74px;">
                             <label class="label-control" for="email"> Email </label>
                             <input type="text" maxlength="51" class="form-control" formControlName="email" [attr.disabled]="isEmailDisable ? true : null"
                                 value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off" (keyup)="showOtp($event)" tabindex="3">
                                 <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify signup_styles text-primary" > Verify Email </span>
                                 <i *ngIf="isSuccess" class="pi pi-verified text-success" id="email-buttons"></i>
                             <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
-                            <span class="required" *ngIf="signupForm.get('email').hasError('pattern') && signupForm.get('email').touched"> Enter valid email address </span>
-                            <span class="required" *ngIf="ispublicMail">{{error}}</span>  
+                            <span *ngIf="signupForm.get('email').hasError('pattern') && signupForm.get('email').touched" class="required"> Enter valid email address </span>
+                            <span *ngIf="ispublicMail" class="required">{{error}}</span>  
                         </div>
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" minlength="6" maxlength="6" class="form-control" formControlName="otp" autocomplete="off"
                                 value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)" (keyup)="showValidateButton($event)">
-                                <i (click)="validateOTP()" class="pi pi-check"  style="font-size: 0.7rem; border: 1px solid #098de6; padding: 6px; left: 90% important;" id="validate-buttons"></i>
+                                <i *ngIf="isValidateOTP" (click)="validateOTP()" class="pi pi-check"  style="font-size: 0.7rem; border: 1px solid #098de6; padding: 6px; left: 90% important;" id="validate-buttons"></i>
                                 <span *ngIf="isTimeOutshow" class="required" style="margin-left: -20px; font-weight: 600;">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary" > Resend Code </span>    
@@ -111,7 +111,7 @@
                 <form [formGroup]="userForm" style="margin: 35px 0 0 40px" cdkTrapFocus>
                     <!-- <div class="fields"> -->
                         <div class="row">
-                            <div class="form-group col-md-6 pl-0"  style="height: 96px;">
+                            <div class="form-group col-md-6 pl-0">
                                 <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
                                 <input type="text" formControlName="jobTitle" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="jobTitle" autocomplete="off"
@@ -157,7 +157,7 @@
                                 <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
                                 <span *ngIf="f.country.touched && f.country.errors" class="required">
                                     Country required </span>
-                                <span class="required">{{errorMessage}}</span>
+                                <span *ngIf="isErrorMessage" class="required">{{errorMessage}}</span>
                             </div>
                         </div>
                         <div class="row" *ngIf="!isStateNull">
@@ -172,7 +172,7 @@
                                                                 <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
                                 <span *ngIf="f.state.touched && f.state.errors" class="required">
                                     State required </span>
-                                <span class="required">{{errorMessage1}}</span>
+                                <span *ngIf="isErrorMessage" class="required">{{errorMessage1}}</span>
                             </div>
                             <div class="form-group col-md-6 pr-0">
                                 <label for="city" class="label-control">City <span class="star">*</span></label>
@@ -185,7 +185,7 @@
                                                                 <!-- <p-dropdown [options]="countryInfo" formControlName="country"></p-dropdown> -->
                                 <span *ngIf="f.city.touched && f.city.errors" class="required">
                                     City required </span>
-                                <span class="required">{{errorMessage2}}</span>
+                                <span *ngIf="isErrorMessage" class="required">{{errorMessage2}}</span>
                             </div>
                         </div>
                         <div class="row">

@@ -10,16 +10,15 @@
                     <div class="form-group col-md-6 pl-0">
                         <label class="label-control" for="email">Email<span class="star">*</span></label>
                         <input type="text" name = "email" class="form-control" formControlName="userId"
-                        pattern="^\S*[@]\S*[.]\S*$" required email [value]="useremail" placeholder="Send from ex: abc@xyz.com"/>  
+                        pattern="^\S*[@]\S*[.]\S*$" required placeholder="Enter Email" disabled/> 
+                        <span *ngIf="tenantForm.get('userId').invalid && tenantForm.get('userId').touched && !tenantForm.get('userId').hasError('pattern') && !tenantForm.controls['userId'].hasError('maxlength')" class="required"> Email Required </span>    
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label class="label-control" for="firstName" id="label-name">First Name<span class="star">*</span></label>
                         <input type="text" formControlName="firstName" class="form-control form-text" id="firstName" 
                         (keypress)="lettersOnly($event)" placeholder="Enter first name" maxlength="30"
                         minlength="2">
-                    <span
-                        *ngIf="tenantForm.get('firstName').invalid && tenantForm.get('firstName').touched" 
-                        class="required"> First name required </span>
+                    <span *ngIf="tenantForm.get('firstName').invalid && tenantForm.get('firstName').touched && !tenantForm.get('firstName').hasError('pattern') && !tenantForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
                     <span *ngIf="tenantForm.controls['firstName'].hasError('minlength')" class="required">
                         Minimum 2 characters required
                     </span>
@@ -37,9 +36,7 @@
                         <input type="text" formControlName="lastName" class="form-control form-text" id="lastName" 
                         (keypress)="lettersOnly($event)" placeholder="Enter last name" maxlength="30"
                         minlength="2">
-                    <span
-                        *ngIf="tenantForm.get('lastName').invalid && tenantForm.get('lastName').touched"
-                        class="required"> Last name required </span>
+                        <span *ngIf="tenantForm.get('lastName').invalid && tenantForm.get('lastName').touched && !tenantForm.get('lastName').hasError('pattern') && !tenantForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>    
                     <span *ngIf="tenantForm.controls['lastName'].hasError('minlength')" class="required">
                         Minimum 2 characters required
                     </span>
@@ -73,9 +70,9 @@
                         </span>
                     </div>
                     <div class="form-group col-md-6 pl-0">
-                        <label class="label-control" for="company" id="label-name">Company<span class="star">*</span></label>
+                        <label class="label-control" for="company" id="label-name"> Organization <span class="star">*</span></label>
                         <input type="text" formControlName="company" class="form-control form-text" id="company" 
-                            (keypress)="lettersOnly($event)" placeholder="Enter company" maxlength="30"
+                            (keypress)="lettersOnly($event)" placeholder="Enter Organization" maxlength="30"
                             minlength="2">
                         <span
                             *ngIf="tenantForm.get('company').invalid && tenantForm.get('company').touched"
@@ -93,6 +90,17 @@
                         </span>
                     </div>
                     <div class="form-group col-md-6 pr-0">
+                        <label for="department" class="label-control" id="label-name">Department<span class="star">*</span></label>
+                        <select formControlName="department" class="form-control form-text" id="department" placeholder="Select Department" 
+                            name='department' [disabled]="!fieldsEnabled" required>
+                            <option value="" disabled selected>Select Department</option>
+                            <option *ngFor='let department of departments;' [value]="department.departmentId">{{department.departmentName}}</option>
+                        </select>
+                        <span *ngIf="f.department.touched && f.department.errors" class="required">
+                            Department required </span>
+                        <!-- <span class="required">Department Required!</span> -->
+                    </div>
+                    <div class="form-group col-md-6 pl-0">
                         <label for="country" class="label-control" id="label-name">Country<span class="star">*</span></label>
                         <select formControlName="country" class="form-control form-text" id="country" 
                         (change)="onChangeCountry($event.target.value)" placeholder="Select country" name='country'
@@ -102,53 +110,41 @@
                         </select>
                         <span *ngIf="f.country.touched && f.country.errors" class="required">
                             Country required </span>
-                        <span class="required">{{errorMessage}}</span>
+                        <span *ngIf="showErrorMessage" class="required">{{errorMessage}}</span>
                     </div>   
-                    <div class="form-group col-md-6 pl-0">
+                    <div class="form-group col-md-6 pr-0">
                         <label for="state" class="label-control" id="label-name">State<span class="star">*</span></label>
                         <select formControlName="state" class="form-control form-text" id="state" (change)="onChangeState($event.target.value)" placeholder="Select State" 
                             name='state' [disabled]="!fieldsEnabled" required>
                             <option value="" disabled selected>Select state</option>
-                            <option *ngFor="let state of stateInfo" [value]="state.name">{{ state.name }}</option>
+                            <option *ngFor="let state of stateInfo">{{ state.name }}</option>
                         </select>
                         <span *ngIf="f.state.touched && f.state.errors" class="required">
                             State required </span>
-                        <span class="required">{{errorMessage1}}</span>
+                        <span *ngIf="showErrorMessage" class="required">{{errorMessage1}}</span>
                     </div>
-                    <div class="form-group col-md-6 pr-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label for="city" class="label-control" id="label-name">City<span class="star">*</span></label>
                         <select formControlName="city" class="form-control form-text" id="city" (change)="onChangeCity($event.target.value)" placeholder="Select City" 
                             name='city' [disabled]="!fieldsEnabled" required>
                             <option value="" disabled selected>Select city</option>
-                            <option *ngFor="let city of cityInfo" [value]="city.name">{{ city.name }}</option>
+                            <option *ngFor="let city of cityInfo">{{ city.name }}</option>
                         </select>
                         <span *ngIf="f.city.touched && f.city.errors" class="required">
                             City required </span>
-                        <span class="required">{{errorMessage2}}</span>
-                    </div>
-
-                    <div class="form-group col-md-6 pl-0">
-                        <label for="department" class="label-control" id="label-name">Department<span class="star">*</span></label>
-                        <select formControlName="department" class="form-control form-text" id="department" placeholder="Select Department" 
-                            name='department' [disabled]="!fieldsEnabled" required>
-                            <option value="" disabled selected>Select Department</option>
-                            <option *ngFor='let department of departments; let i=index;trackBy:loopTrackBy;' [value]="department.departmentId">{{department.departmentName}}</option>
-                        </select>
-                        <span *ngIf="f.department.touched && f.department.errors" class="required">
-                            Department required </span>
-                        <!-- <span class="required">Department Required!</span> -->
-                    </div>
-                    <div class="form-group col-md-6 pl-0">
+                        <span *ngIf="showErrorMessage" class="required">{{errorMessage2}}</span>
+                    </div>  
+                    <div class="form-group col-md-6 pr-0">
                         <label for="phoneNumber" class="label-control" id="label-name">Phone Number<span class="star">*</span></label>
                         <div class="phone-input-container">
                             <div class="ng2tel-container">
                                 <span class="ng2tel-flag"></span>
                                 <div>
-                                    <input type="text" (keypress)="numbersOnly($event)" 
+                                    <input type="text" (keypress)="numbersOnly($event)"  style="width: 100%;"
                                         (countryChange)="OnFlagChange($event, phnCountry)" 
                                         class="phoneNumber" id="phone"
                                         formControlName="phoneNumber" onKeyPress="if(this.value.length==10) return false;"
-                                        ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                        ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                         pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
                                 </div>
                             </div>
@@ -157,24 +153,18 @@
                             *ngIf="tenantForm.get('phoneNumber').invalid && tenantForm.get('phoneNumber').touched"
                             class="required"> Phone number required </span>
                     </div>
-                    <div class="form-group col-md-6 pr-0">
-                        <label for="expiryDate">Expiry Date</label>
-                        <!-- <div class="date-field">
-                            <input type="text" class="form-control cal-box" formControlName="expiryDate" placeholder="Select Expiry Date" bsDatepicker [minDate]="minDate" bsDatepicker [placement]="datepickerPlacement">
-                            <img src="assets/images/calendar.png" alt="cal" class="cal-img">
-                        </div> -->
-                        <div class="field col-12 md:col-4">
-                            <p-calendar formControlName="expiryDate" [showIcon]="true" inputId="icon"></p-calendar>
-                        </div>
+                    <div class="form-group col-md-6 pl-0">
+                        <label for="expiryDate">Expiry Date <span class="star">*</span></label>
+                            <input type="date" class="form-control cal-box" formControlName="expiryDate" max="9999-12-31" [min]="minDate" placeholder="Select Expiry Date">
                     </div>
                 </div>
         </form>
         <div class="createform-footer">
             <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()">Reset</button>
-            <button type="button" class="btn btn-primary ml-2" id="reset-btn"> Register </button>
+            <!-- <button type="button" class="btn btn-primary ml-2" id="reset-btn"> Register </button> -->
             <!-- <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()"> Onboard </button> -->
             <button type="button" class="btn btn-primary" id="update-btn" (click)="updateAccount()"
-                [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> OnBorad </button>
+                [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> Update </button>
         </div>
     </div>
 </div>

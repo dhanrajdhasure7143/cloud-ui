@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 
 @Component({
@@ -14,14 +15,16 @@ export class EnterpriseCustomersComponent implements OnInit {
     {DisplayName:"User mail",ColumnName:"userId",ShowFilter: true,sort:true},
     {DisplayName:"Name",ColumnName:"userName",ShowFilter: true,sort:true},
     {DisplayName:"Phone Number",ColumnName:"phoneNumber",ShowFilter: true,sort:true},
-    {DisplayName:"Department",ColumnName:"department",ShowFilter: true,sort:true},
+    // {DisplayName:"Department",ColumnName:"department",ShowFilter: true,sort:true},
     {DisplayName:"Country",ColumnName:"country",ShowFilter: true,sort:true},
     {DisplayName:"Created Date",ColumnName:"createdDate",ShowFilter: true,sort:true},
     {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
   ]
-  constructor(private rest_api : UsermanagementService) { }
+  constructor(private rest_api : UsermanagementService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.getenterPriseRequestedUsers()
   }
 
@@ -29,6 +32,7 @@ export class EnterpriseCustomersComponent implements OnInit {
     this.rest_api.getenterPriseRequestedUsers().subscribe((res:any)=>{
       console.log(res)
       if(res.code== 200){
+        this.spinner.hide();
         this.enterPriseList = res.data
         this.enterPriseList.map(item=>{
           item["userName"] = item.firstName+" "+item.lastName

@@ -21,6 +21,17 @@ export class CustomersComponent implements OnInit {
   public subscriptionForm: FormGroup;
   userid: any;
   plans: any = [];
+  isDisplayOverlay:boolean = false;
+  columnList=[
+    {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
+    {DisplayName:"Subscribed Plan",ColumnName:"subscribedPlan",ShowFilter: true,sort:true},
+    {DisplayName:"Latest Invoice Amount",ColumnName:"lastInvoiceAmount",ShowFilter: true,sort:true},
+    {DisplayName:"Last Billing Date",ColumnName:"lastBillingDate",ShowFilter: true,sort:true},
+    {DisplayName:"Next Billing Date",ColumnName:"dueDate",ShowFilter: true,sort:true},
+    {DisplayName:"Mobile",ColumnName:"mobile",ShowFilter: true,sort:true},
+    {DisplayName:"Email",ColumnName:"email",ShowFilter: true,sort:true},
+    {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
+  ]
 
   constructor(
     private firstloginservice: FirstloginService,
@@ -54,12 +65,12 @@ export class CustomersComponent implements OnInit {
     document.getElementById("subscrip-edit").classList.add("slide-left");
     
   }
-  closeOverlay(){
-    document.getElementById("subscrip-edit").style.display = 'none';
-    this.subscriptionForm.reset();
-    this.subscriptionForm.get("subscriptionplan").setValue("default");
-    this.subscriptionForm.get("interval").setValue("default");
-  }
+  // closeOverlay(){
+  //   document.getElementById("subscrip-edit").style.display = 'none';
+  //   this.subscriptionForm.reset();
+  //   this.subscriptionForm.get("subscriptionplan").setValue("default");
+  //   this.subscriptionForm.get("interval").setValue("default");
+  // }
 
   slideLeft() {
     document.getElementById("subscrip-edit").classList.add("slide-right");
@@ -99,7 +110,7 @@ export class CustomersComponent implements OnInit {
           heightAuto: false,
         });
         this.subscriptionForm.reset();
-        this.closeOverlay();
+        // this.closeOverlay();
       }
     },
       (err) => {
@@ -118,6 +129,7 @@ export class CustomersComponent implements OnInit {
   getSuperAdminData() {
     this.spinner.show();
     this.firstloginservice.getSuperAdminData().subscribe((res) => {
+      console.log(res,"customers")
       this.plans = res;
       this.spinner.hide();
     });
@@ -152,5 +164,14 @@ export class CustomersComponent implements OnInit {
     });
   }
 
+  openOverlay(type,rowData){
+    this.isDisplayOverlay = true;
+    console.log(rowData,"rowData")
+    // this.userData= rowData
+  }
+
+  closeOverlay(event){
+    this.isDisplayOverlay = false;
+  }
 
 }
