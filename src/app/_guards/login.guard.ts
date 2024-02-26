@@ -4,6 +4,7 @@ import { take, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { AuthenticationService, AppService } from '../_services';
+import { ProfileService } from '../_services/profile.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class LoginGuard implements CanActivate {
 
   constructor(private authService: AuthenticationService, 
               private appService: AppService, 
-              private router: Router) { }
+              private router: Router,
+              private service : ProfileService) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -29,7 +31,15 @@ export class LoginGuard implements CanActivate {
         take(1),
         map((isLoggedIn: boolean) => {
           if (isLoggedIn) {
-            this.router.navigate(['/active']);
+          this.service.getUserRole(2).subscribe(res => {
+            if(res.message =="Platform Admin"){
+              this.router.navigate(['/superadmin']);
+            }else{
+              this.router.navigate(['/active']);
+            }
+          },err=>{
+            this.router.navigate(['/user']);
+          });
             return false;
           } else {
             return true;
