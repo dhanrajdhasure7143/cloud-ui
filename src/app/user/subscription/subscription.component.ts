@@ -82,12 +82,19 @@ export class SubscriptionComponent implements OnInit {
   loadPredefinedBots(){
     this.service.loadPredefinedBots().subscribe((response : any) =>{
       this.spinner.hide()
+      console.log(response)
       if(response){
-      this.botPlans = response.data;
-      this.botPlans.forEach(item=>{
-        item["isSelected"] = false;
-        item["selectedTerm"] = "Monthly"
-      })
+        response.forEach(element => {
+          let obj=element.product
+          obj["priceCollection"] = element.priceCollection
+          this.botPlans.push(obj)
+        });
+        console.log(this.botPlans)
+      // this.botPlans = response;
+      // this.botPlans.forEach(item=>{
+      //   item["isSelected"] = false;
+      //   item["selectedTerm"] = "Monthly"
+      // })
       }
     },err=>{
       this.spinner.hide();
