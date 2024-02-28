@@ -36,6 +36,7 @@ export class SubscriptionComponent implements OnInit {
   log_data:any={}
   isRegistered : boolean = false;
   totalAmount : number = 0;
+  selectedPlan: string = '';
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -208,13 +209,14 @@ readValue(value){
 }
 
 planSelection(event){
+  this.selectedPlan = event
   let plansData = []
-  console.log(this.selectedPlans.planDetails, event,"this.botPlans")
   this.selectedPlans.forEach((item : any) => {
     plansData.push(item.planDetails)
   })
+  console.log(plansData,"plansData")
   for (const plan of plansData) {
-    if (plan.interval === event) {
+    if (plan.interval == event) {
       this.totalAmount += plan.amount;
       console.log(this.totalAmount)
     }
