@@ -18,6 +18,7 @@ export const environment = {
     isSecurityManagerEnabled : false,
     isNewDesignEnabled : true,
    isSubscrptionEnabled : false,
-   isNewSignupFlow : false
- 
+   isNewSignupFlow : false,
+   paymentSuccessURL:"https://ezflow.qa.epsoftinc.com/#/success",
+   paymentFailuerURL:"https://ezflow.qa.epsoftinc.com/#/fail"
   };

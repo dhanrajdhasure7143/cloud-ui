@@ -43,7 +43,7 @@ export class SubscriptionComponent implements OnInit {
               private profileservice : ProfileService,
               private spinner : NgxSpinnerService,
               private router: Router,
-              private crypto: CryptoService
+              private crypto: CryptoService,
               ) {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
@@ -91,9 +91,9 @@ export class SubscriptionComponent implements OnInit {
     },err=>{
       this.spinner.hide();
       Swal.fire({
-        title: 'Success!',
-        text: 'User details saved successfully. Please processed with subscription!',
-        icon: 'success',
+        title: 'Error!',
+        text: 'Failed to load',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true
     }).then((result) => {
@@ -117,20 +117,44 @@ hideDescription() {
 }
 
 paymentPlan(){
-  this.isReview_order = true;
+  // this.isReview_order = true;
+   
+// {
+//   "price":["price_1OoK1ASGPu394vele0kSwgko", "price_1OoJvwSGPu394velC9wLmrR6"],
+//   "customerEmail":"praveen.bookala@gmail.com",
+//   "successUrl":"https://ezflow.dev.epsoftinc.com/users",
+//   "cancelUrl":"https://ezflow.dev.epsoftinc.com/users"
+//   }
   this.selected_plans_list=[];
-  this.selectedPlans.forEach(element => {
-    element.planDetails.forEach(item => {
-      if(element.selectedTerm == item.interval){
-        let obj={};
-        obj["predefinedBotName"]=element.predefinedBotName;
-        obj["interval"] = item.interval;
-        obj["priceId"] = item.priceId;
-        obj["amount"] = item.amount
-        this.selected_plans_list.push(obj);
+  // this.selectedPlans.forEach(element => {
+  //   element.planDetails.forEach(item => {
+  //     if(element.selectedTerm == item.interval){
+  //       let obj={};
+  //       obj["predefinedBotName"]=element.predefinedBotName;
+  //       obj["interval"] = item.interval;
+  //       obj["priceId"] = item.priceId;
+  //       obj["amount"] = item.amount
+  //       this.selected_plans_list.push(obj);
+  //     }
+  //   });
+  // });
+  
+  let req_body={
+      "price":["price_1OoK1ASGPu394vele0kSwgko", "price_1OoJvwSGPu394velC9wLmrR6"],
+      "customerEmail":"praveen.bookala@gmail.com",
+      "successUrl":"https://ezflow.dev.epsoftinc.com/users",
+      "cancelUrl":"https://ezflow.dev.epsoftinc.com/users"
       }
-    });
-  });
+
+  // this.selectedPlans.forEach(element => {
+  //     element.planDetails.forEach(item => {
+  //       this.selected_plans_list.push(item.priceId)
+  // })
+  // })
+  this.service.getCheckoutScreen(req_body).subscribe(res=>{
+    console.log(res)
+  })
+  console.log(this.selected_plans_list, this.selectedPlans)
   // if(this.selectedPlans.length == 0){
   //   return
   // }

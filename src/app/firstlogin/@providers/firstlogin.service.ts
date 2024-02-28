@@ -71,7 +71,7 @@ export class FirstloginService {
   }
 
   loadPredefinedBots(): Observable<any>{
-    return this.http.get<any>(`/api/user/loadPredefinedBotPlans`)
+    return this.http.get<any>(`/api/user/ProductPriceCollectionBean`)
   }
 
   registrationStart(payload){
@@ -86,5 +86,9 @@ export class FirstloginService {
 
   getPlanDetails(): Observable<any>{
     return this.http.get<any>(`/api/user/loadPredefinedBotPlans`);
+  }
+
+  getCheckoutScreen(body){
+    return this.http.post("/subscriptionservice/v1/products/create-checkout-session",body)
   }
 }
