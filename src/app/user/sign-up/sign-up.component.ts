@@ -161,11 +161,17 @@ export class SignUpComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();      
     }, 1000);
-    this.service.getPlanDetails().subscribe((response: any) => {
-      this.planDetails = response.data;
-      this.planDetails.forEach(plan => {
-        plan.featuresList = plan.features.split(',').map(feature => feature.trim());
-      });
+    this.service.loadPredefinedBots().subscribe((response: any) => {
+      if(response){
+        response.forEach(element => {
+          let obj=element.product
+          obj["priceCollection"] = element.priceCollection
+          let data = element.product.metadata.product_features
+          obj["features"] = JSON.parse(data);
+          this.planDetails.push(obj)
+        });
+      }
+      console.log(this.planDetails)
     })
   }
 

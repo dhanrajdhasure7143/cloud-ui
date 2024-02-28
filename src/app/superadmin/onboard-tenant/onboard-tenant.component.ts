@@ -109,14 +109,10 @@ export class OnboardTenantComponent implements OnInit {
     this.tenantForm.get("department").setValue(this.userData["department"]);
     this.tenantForm.get("company").setValue(this.userData["company"]);
     this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
-
     const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
-
     this.tenantForm.get("country").setValue(this.userData["country"]);
-  
     this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
     this.tenantForm.get("state").setValue(this.stateInfo["name"]);
-
     const matchingState = this.stateInfo.find((item: any) => item.name === this.userData["state"]);
     this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
     this.tenantForm.get("city").setValue(this.cityInfo["name"]);

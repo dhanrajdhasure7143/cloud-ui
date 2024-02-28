@@ -54,7 +54,7 @@
                             <div class="description-box" *ngIf="selectedPlanIndex === i">
                                 <span> {{ plan.description }} </span>
                                 <ul style="list-style-type:none;">
-                                    <li *ngFor="let item of plan.features.split(',')"> <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"> </i> {{ item.trim() }} </li>
+                                    <li *ngFor="let item of plan.features"> <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"> </i> {{ item }} </li>
                                 </ul>
                             </div>
                         </div> 

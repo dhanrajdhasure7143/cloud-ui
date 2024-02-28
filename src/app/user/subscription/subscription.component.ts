@@ -87,6 +87,8 @@ export class SubscriptionComponent implements OnInit {
         response.forEach(element => {
           let obj=element.product
           obj["priceCollection"] = element.priceCollection
+          let data = element.product.metadata.product_features
+          obj["features"] = JSON.parse(data);
           this.botPlans.push(obj)
         });
         console.log(this.botPlans)
