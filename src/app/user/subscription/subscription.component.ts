@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CryptoService } from 'src/app/_services/crypto.service';
+import { switchMap } from 'rxjs/operators';
+import { StripeService } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-subscription',
@@ -45,6 +48,7 @@ export class SubscriptionComponent implements OnInit {
               private spinner : NgxSpinnerService,
               private router: Router,
               private crypto: CryptoService,
+              private stripeService: StripeService
               ) {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
@@ -152,8 +156,8 @@ paymentPlan(){
   let req_body={
       "price":["price_1OoK1ASGPu394vele0kSwgko", "price_1OoJvwSGPu394velC9wLmrR6"],
       "customerEmail":"praveen.bookala@gmail.com",
-      "successUrl":"https://ezflow.dev.epsoftinc.com/users",
-      "cancelUrl":"https://ezflow.dev.epsoftinc.com/users"
+      "successUrl":environment.paymentSuccessURL,
+      "cancelUrl":environment.paymentFailuerURL
       }
 
   // this.selectedPlans.forEach(element => {
@@ -161,7 +165,13 @@ paymentPlan(){
   //       this.selected_plans_list.push(item.priceId)
   // })
   // })
-  this.service.getCheckoutScreen(req_body).subscribe(res=>{
+  this.service.getCheckoutScreen(req_body).pipe(
+    switchMap((session:any) => {
+      console.log(session)
+      return this.stripeService.redirectToCheckout({ sessionId: session.id })
+    })
+  )
+  .subscribe(res=>{
     console.log(res)
   })
   console.log(this.selected_plans_list, this.selectedPlans)

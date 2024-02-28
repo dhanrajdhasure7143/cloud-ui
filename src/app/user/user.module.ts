@@ -62,6 +62,7 @@ import { SubscriptionComponent } from './subscription/subscription.component';
 import { OrderPaymentComponent } from './order-payment/order-payment.component';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
     declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent, SuccessPaymentComponent, FailPaymentComponent],
@@ -110,7 +111,8 @@ import { FailPaymentComponent } from './fail-payment/fail-payment.component';
         Ng2TelInputModule,
         PasswordModule,
         PrimengCustomModule,
-        CdkStepperModule
+        CdkStepperModule,
+        NgxStripeModule.forRoot('pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq')
     ],
     exports: [LoginComponent],
     providers: []
