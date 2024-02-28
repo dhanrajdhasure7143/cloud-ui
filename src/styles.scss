@@ -737,44 +737,59 @@ as-split-area {
 .createform-overlay label {
   font-size: 14px;
   color: var(--formlabel-color);
-  margin-bottom: 2px;
+  margin-bottom: 5px;
   line-height: 18px;
   text-transform: capitalize;
 }
+
 .createform-overlay input.p-inputtext,
 .createform-overlay .p-dropdown,
 .splitoverlaycontent .p-dropdown,
 .splitoverlaycontent input.p-inputtext,
 .maindivfoprm input.p-inputtext,
 .maindivfoprm  .p-dropdown {
-  border-color: var(--formfield-bordercolor) !important;
+  border: 1px solid #ced4da !important;
   color: var(--main-txtcolor);
-  height: 40px;
+  height: 40px !important;
   background: transparent;
   box-shadow: none !important;
 }
-.createform-overlay input.p-inputtext:focus,
-.createform-overlay .p-dropdown:focus,
-.createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
-.createform-overlay .p-dropdown.p-dropdown-open,
-.splitoverlaycontent .p-dropdown.p-dropdown-open,
-.splitoverlaycontent input.p-inputtext:focus,
-.maindivfoprm input.p-inputtext:focus,
-.maindivfoprm .p-dropdown:focus,
-.maindivfoprm .p-dropdown.p-dropdown-open {
-  border-color: var(--secondary-bluecolor) !important;
-  background-color: #fff;
+
+.createform-overlay .p-dropdown .p-dropdown-label.p-placeholder,
+.createform-overlay .p-dropdown .p-dropdown-label {
+  padding-top: 6px !important;
 }
-.createform-overlay input.p-inputtext::placeholder,
-.p-dropdown .p-dropdown-label.p-placeholder {
-  color: var(--formlabel-color) !important;
-}
+
+// .createform-overlay input.p-inputtext:focus,
+// .createform-overlay .p-dropdown:focus,
+// .createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
+// .createform-overlay .p-dropdown.p-dropdown-open,
+// .splitoverlaycontent .p-dropdown.p-dropdown-open,
+// .splitoverlaycontent input.p-inputtext:focus,
+// .maindivfoprm input.p-inputtext:focus,
+// .maindivfoprm .p-dropdown:focus,
+// .maindivfoprm .p-dropdown.p-dropdown-open {
+//   border-color: var(--secondary-bluecolor) !important;
+//   background-color: #fff;
+// }
+// .createform-overlay input.p-inputtext::placeholder,
+// .p-dropdown .p-dropdown-label.p-placeholder {
+//   color: var(--formlabel-color) !important;
+// }
 .createform-overlay textarea.p-inputtextarea.p-inputtext {
   background: transparent;
   border: 1px solid var(--formfield-bordercolor);
   box-shadow: none;
   width: 100%;
   overflow: hidden;
+}
+
+.createform-overlay label {
+  font-size: 14px;
+  color: var(--formlabel-color);
+  margin-bottom: 2px;
+  line-height: 18px;
+  text-transform: capitalize;
 }
 .createform-footer {
   margin-top: auto !important;
@@ -838,4 +853,15 @@ height:10px;
 
 .p-input-icon-right > .p-inputtext{
   width: 100% !important;
+}
+
+.p-dropdown {
+  border: 1px solid #ced4da !important;
+  color: var(--main-txtcolor);
+  background: transparent;
+  box-shadow: none !important;
+}
+
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: #6c757d !important;
 }

@@ -14,6 +14,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { OrderPaymentComponent } from './order-payment/order-payment.component';
+import { SuccessPaymentComponent } from './success-payment/success-payment.component';
+import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 
 const routes: Routes = [
   {
@@ -70,6 +72,14 @@ const routes: Routes = [
   {
     path: 'order',
     component: OrderPaymentComponent
+  },
+  {
+    path: 'success',
+    component: SuccessPaymentComponent
+  },
+  {
+    path: 'fail',
+    component: FailPaymentComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }

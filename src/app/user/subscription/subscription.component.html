@@ -16,12 +16,12 @@
                     <div for="" class="label-control" style="margin: 0 0 0 10px;"> New Personalized Enterprise Level Planning? </div>
                 </div>
                 </div>
-                <div class="col-md-12" style="margin: 40px 0 0 10px;">
+                <div class="col-md-12" style="margin: 20px 0 0 10px;">
                     <ul style="list-style-type:square;">
                         <li class="label-control" *ngFor="let item of plans">{{item}}</li>
                     </ul>
                 </div>
-                <div> <button class="btn btn-primary contact" style="margin: 140px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
+                <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
             </div>
         </div>
         <div class="col-md-8" style="padding-right: 60px;" *ngIf="!isReview_order">
@@ -37,13 +37,14 @@
                         </div>
                         <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
                         <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.planDetails">  
-                            <span *ngIf="plan.selectedTerm == detail.interval"> USD {{detail.amount}}  / {{plan.selectedTerm}}</span>
+                            <span *ngIf="plan.selectedTerm == 'Monthly'"> USD {{detail.amount}} per {{detail.interval}}</span>
+                            <span *ngIf="plan.selectedTerm == 'Yearly'"> USD {{detail.amount}}  per {{detail.interval}}</span>
                             <!-- <span >{{detail.amount}} / {{plan.isSelected}}</span> -->
                          </div>
                          <div style="display: flex !important;">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-1"></div>
+                            <div class="col-md-12 text-center">
+                                <!-- <div class="row"> -->
+                                    <!-- <div class="col-md-1"></div>
                                     <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
                                         <p-radioButton name="Monthly" id="month" value="Monthly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
                                         <label for="" class="ml-2" style="margin-top: 5px;"> Monthly </label>
@@ -52,13 +53,12 @@
                                     <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
                                         <p-radioButton name="Yearly" id="year" value="Yearly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
                                         <label for="" class="ml-2" style="margin-top: 5px;"> Yearly </label>
-                                    </div>
-                                    <div class="col-md-3">
+                                    </div> -->
+                                    <div>
                                         <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="showDescription(i)"></i> 
                                         <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="hideDescription()"></i>
                                     </div>
-                                    <div class="col-md-1"></div>
-                                </div>
+                                <!-- </div> -->
                             </div>
                          </div>
                         <!-- <div class="line"></div> -->
@@ -71,8 +71,12 @@
                     </div> 
                 </div>
             </div>
-            <div class="col-md-12 p-10 form-group text-center" style="margin-top: 20px;">
-                <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed </button>
+            <div class="col-md-12 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: end;">
+                <button type="button" class="btn btn-primary"> Monthly </button>
+                <button type="button" class="btn btn-primary ml-2"> Yearly </button>
+            </div>
+            <div class="col-md-12 p-10 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: end;">
+                <button type="button" class="btn btn-primary" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed </button>
                 <!-- <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()"> Next (<span>{{selectedAmount*(planType=='Monthly'?1:12)}}</span> $) </button> -->
             </div>
         </div>

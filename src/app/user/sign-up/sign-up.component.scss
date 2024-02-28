@@ -401,9 +401,9 @@
 
 #email-buttons {
   position: relative !important;
-  left: 94% !important;
+  left: 93% !important;
   cursor: pointer;
-  bottom: 35px !important;
+  bottom: 33px !important;
   border-radius: 50% !important;
   color: #007bff;
 }
@@ -608,4 +608,8 @@
 .password-input{
   width: 100% !important;
   height: 45px !important;
+}
+
+:host ::ng-deep .iti {
+  width: 100%;
 }

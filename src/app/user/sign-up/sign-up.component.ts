@@ -377,65 +377,37 @@ getAllDepartments() {
   })
 }
 
-// If country changes, states and cities gets changed according to the country selected 
 onChangeCountry(countryValue) {
-  this.isInput = !this.isInput;
   this.stateInfo = State.getAllStates();
-
-  if (countryValue) {
-    const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
-    this.phnCountry = matchingCountry.isoCode;
-    this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode)
-    this.errorMessage = ""
+  if(countryValue){
+      const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue.name);
+      console.log(matchingCountry,"matchingCountry")
+      this.phnCountry = matchingCountry.isoCode;
+      console.log(this.phnCountry)
+      this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
+      this.errorMessage=""
+      if (this.stateInfo.length === 0) {
+        this.stateInfo = [{ name: 'NA' }]
+        this.cityInfo = [{ name: 'NA' }];
+      }
   }
-  if (this.stateInfo == null || this.stateInfo.length === 0) {
-    this.isStateNull = true
-
-  } else {
-    this.isStateNull = false
-  }
-
-  // Set the flag to true if there are states available, otherwise false
-  this.fieldsEnabled = this.stateInfo && this.stateInfo.length > 0;
-
-  if (this.fieldsEnabled) {
-    this.userForm.get('state').enable();
-    this.userForm.get('city').enable();
-  } else {
-    // Clear state and city values if there are no states available
-    this.userForm.get('state').setValue('');
-    this.userForm.get('city').setValue('');
-  }
-
-  this.userForm.get('country').valueChanges.subscribe((selectedCountry) => {
-    if (selectedCountry) {
-      this.userForm.get('state').setValue('');
-      this.userForm.get('city').setValue('');
-    }
-  });
 }
 
-// If state changes, cities gets changed accordingly
 onChangeState(stateValue) {
   this.cityInfo = City.getAllCities();
-  if (stateValue) {
-    const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
-    this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
-    this.errorMessage1 = ""
+  if(stateValue){
+    const matchingState = this.stateInfo.find((item: any) => item.name == stateValue.name);
+      this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+      this.errorMessage1=""
     if (this.cityInfo.length === 0) {
       this.cityInfo = [{ name: 'NA' }];
     }
   }
-  this.userForm.get('state').valueChanges.subscribe((selectedState) => {
-    if (selectedState) {
-      this.userForm.get('city').setValue('');
-    }
-  });
 }
 
-onChangeCity(cityValue) {
-  if (cityValue) {
-    this.errorMessage2 = ''
+onChangeCity(cityValue){
+  if(cityValue){
+    this.errorMessage2 =''
   }
 }
 
@@ -449,29 +421,17 @@ numbersOnly(event): boolean {
   }
 }
 
-// If country and flag are different, it generates error message
-OnFlagChange(event, phonecode) {
-  var code = event.iso2;
-  var testcode = code.toString().toUpperCase();
-  if (testcode != phonecode) {
+OnFlagChange(event : any, phonecode : any) {
+  if(event.name != this.userForm.value.country.name){
     this.isErrorMessage = true;
     this.errorMessage = "Please Select Appropriate Country";
     this.errorMessage1 = "Please Select Appropriate State";
     this.errorMessage2 = "Please Select Appropriate City"
-    this.userForm.get('state').enable();
-    this.userForm.get('city').enable();
   }
-  const selectedCountry = this.countryInfo.find((item: any) => item.isoCode == code);
-  this.fieldsEnabled = State.getStatesOfCountry(selectedCountry.isoCode).length > 0;
 }
 
 get f() {
   return this.userForm.controls;
-}
-
-// To enable continue button if all fields are valid and 2 fields of state and city are disabled
-get userFormValid(): boolean {
-  return this.jobTitle.trim() !== '' && this.organization.trim() !== '' && this.department.trim() !== '' && this.state.trim() !== '' && this.city.trim() !== '' && this.zipCode.trim() !== '' && this.phoneNumber.trim() !== '';
 }
 
 registrationSave(){
@@ -486,11 +446,11 @@ registrationSave(){
     // password: this.signupForm.value.password,
     userId:this.userId,
     jobTitle : this.userForm.value.jobTitle,
-    department : this.userForm.value.department,
+    department : this.userForm.value.department.departmentId,
     organization : this.userForm.value.organization,
-    country : this.userForm.value.country,
-    state : this.userForm.value.state,
-    city : this.userForm.value.city,
+    country : this.userForm.value.country.name,
+    state : this.userForm.value.state.name,
+    city : this.userForm.value.city.name,
     zipCode : this.userForm.value.zipCode,
     phoneNumber : this.userForm.value.phoneNumber,
     // isSubscriptionEnabled : true

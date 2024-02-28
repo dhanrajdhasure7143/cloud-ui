@@ -295,7 +295,6 @@
 // }
 
 .phoneNumber {
-  width: 77vh;
   padding: 3px;
   border: 1px solid #D6DDF2;
   border-radius: 4px;
@@ -323,6 +322,12 @@
   padding-right: 30px; 
 }
 
+::ng-deep .iti .iti--allow-dropdown .iti--show-flags {
+  width: 100% !important; 
+}
 
-
-  
+@media screen and (max-width: 600px) {
+  #phone {
+    width: 100% !important;
+  }
+}

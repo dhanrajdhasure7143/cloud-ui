@@ -1,0 +1,26 @@
+.container-fluid{
+    background-color:rgba(0, 0, 0, 0.125)
+}
+
+.card{
+    height: 75%;
+    left: 35%;
+    width: 30%;
+    top: 10%;
+}
+
+.fail-image{
+    width: 50%;
+    margin-top: 40px;
+    height: 50%;
+    position: relative;
+    left: 25%;
+}
+
+.title-fail{
+    color: #e65d64;
+}
+
+.fail-message{
+    color: black;
+}

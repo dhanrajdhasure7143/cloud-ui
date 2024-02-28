@@ -60,9 +60,11 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { OrderPaymentComponent } from './order-payment/order-payment.component';
+import { SuccessPaymentComponent } from './success-payment/success-payment.component';
+import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 
 @NgModule({
-    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent, SuccessPaymentComponent, FailPaymentComponent],
     imports: [
         CommonModule,
         UserRoutingModule,
@@ -108,7 +110,6 @@ import { OrderPaymentComponent } from './order-payment/order-payment.component';
         Ng2TelInputModule,
         PasswordModule,
         PrimengCustomModule,
-        Ng2TelInputModule,
         CdkStepperModule
     ],
     exports: [LoginComponent],

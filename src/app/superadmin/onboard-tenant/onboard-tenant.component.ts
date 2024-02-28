@@ -43,10 +43,6 @@ export class OnboardTenantComponent implements OnInit {
   country: any[];
   state: any[];
   city:any[];
-  pswdmodel: any = {};
-  public eyeshow: boolean = true;
-  public neweyeshow: boolean = true;
-  public confeyeshow: boolean = true;
   show: boolean = false;
   phnCountry: any;
   fieldsEnabled: boolean = true;
@@ -89,7 +85,6 @@ export class OnboardTenantComponent implements OnInit {
       state: ["", Validators.required],
       city: ["", Validators.required],
       phoneNumber: ["", Validators.required],
-      phnCountry: [''],
       expiryDate: ["", Validators.required],
     });
     // this.datePickerConfig = {
@@ -114,10 +109,24 @@ export class OnboardTenantComponent implements OnInit {
     this.tenantForm.get("department").setValue(this.userData["department"]);
     this.tenantForm.get("company").setValue(this.userData["company"]);
     this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
+
+    const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
+
     this.tenantForm.get("country").setValue(this.userData["country"]);
-    this.onChangeCountry(this.userData["country"])
-    this.onChangeState(this.userData["state"])
-    this.onChangeCity(this.userData["city"])
+  
+    this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
+    this.tenantForm.get("state").setValue(this.stateInfo["name"]);
+
+    const matchingState = this.stateInfo.find((item: any) => item.name === this.userData["state"]);
+    this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+    this.tenantForm.get("city").setValue(this.cityInfo["name"]);
+    if (this.stateInfo.length === 0) {
+      this.tenantForm.get("state").setValue('NA');
+      this.tenantForm.get("city").setValue('NA');
+    }
+    if (this.cityInfo.length === 0) {
+      this.tenantForm.get("city").setValue('NA');
+    }
   }
 
   updateAccount() {
@@ -133,11 +142,11 @@ export class OnboardTenantComponent implements OnInit {
       firstName: this.tenantForm.value.firstName,
       lastName: this.tenantForm.value.lastName,
       designation : this.tenantForm.value.jobTitle,
-      departmemt : this.tenantForm.value.department,
+      departmemt : this.tenantForm.value.department.departmentId,
       company : this.tenantForm.value.company,
-      country : this.tenantForm.value.country,
-      state : this.tenantForm.value.state,
-      city : this.tenantForm.value.city,
+      country : this.tenantForm.value.country.name,
+      state : this.tenantForm.value.state.name,
+      city : this.tenantForm.value.city.name,
       phoneNumber : this.tenantForm.value.phoneNumber,
       'zipcode': this.userData.zipcode,
       'profile_image':null,
@@ -188,66 +197,109 @@ export class OnboardTenantComponent implements OnInit {
     this.countryInfo = Country.getAllCountries();
   }
 
+  // onChangeCountry(countryValue) {
+  //   console.log(countryValue)
+  //   this.isInput = !this.isInput;
+  //   this.stateInfo = State.getAllStates();
+    
+  //   if (countryValue) {
+  //     const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
+  //     this.phnCountryCode = matchingCountry.isoCode;
+  //     this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode);
+  //     this.errorMessage = ""
+  //   }
+  //   if (this.stateInfo == null || this.stateInfo.length === 0) {
+  //     this.tenantForm.get('state').disable();
+  //     this.tenantForm.get('city').disable();
+  //     this.tenantForm.get('state').clearValidators();
+  //     this.tenantForm.get('state').updateValueAndValidity();
+  //   }
+    
+  //   // Set the flag to true if there are states available, otherwise false
+  //   this.fieldsEnabled = this.stateInfo && this.stateInfo.length > 0;
+    
+  //   if (this.fieldsEnabled) {
+  //     this.tenantForm.get('state').enable();
+  //     this.tenantForm.get('city').enable();
+  //   } else {
+  //     // Clear state and city values if there are no states available
+  //     this.tenantForm.get('state').setValue('');
+  //     this.tenantForm.get('city').setValue('');
+  //   }
+  // }
+  
+  // onChangeState(stateValue) {
+  //   console.log(stateValue)
+  //   this.cityInfo = City.getAllCities();
+  //   if (stateValue) {
+  //     const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
+  //     this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+  //     this.errorMessage1 = ""
+  //     this.tenantForm.get('state').setValue(stateValue);
+  //     if (this.cityInfo.length === 0) {
+  //       this.cityInfo = [{ name: 'NA' }];
+  //     }
+  //   }
+
+  //   this.cityInfo.find((cityItem: any) =>{
+  //     if(cityItem.name === this.userData["city"]){
+  //       this.tenantForm.get('city').setValue(cityItem.name);
+  //       console.log(cityItem.name,"cityItem.name")
+  //       this.tenantForm.get('city').setValue(this.userData["city"]);
+
+  //     }
+
+  //   } );
+  // }
+
+  // onChangeCity(cityValue) {
+  //   console.log(cityValue)
+  //   if (cityValue) {
+  //     this.tenantForm.get('city').setValue(cityValue);
+  //     this.errorMessage2 = ''
+  //   }
+  // }
+
   onChangeCountry(countryValue) {
-    console.log(countryValue)
-    this.isInput = !this.isInput;
     this.stateInfo = State.getAllStates();
-    
-    if (countryValue) {
-      const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
-      this.phnCountryCode = matchingCountry.isoCode;
-      this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode);
-      this.errorMessage = ""
-    }
-    if (this.stateInfo == null || this.stateInfo.length === 0) {
-      this.tenantForm.get('state').disable();
-      this.tenantForm.get('city').disable();
-      this.tenantForm.get('state').clearValidators();
-      this.tenantForm.get('state').updateValueAndValidity();
-    }
-    
-    // Set the flag to true if there are states available, otherwise false
-    this.fieldsEnabled = this.stateInfo && this.stateInfo.length > 0;
-    
-    if (this.fieldsEnabled) {
-      this.tenantForm.get('state').enable();
-      this.tenantForm.get('city').enable();
-    } else {
-      // Clear state and city values if there are no states available
-      this.tenantForm.get('state').setValue('');
-      this.tenantForm.get('city').setValue('');
+    if(countryValue){
+        const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue.name);
+        console.log(matchingCountry,"matchingCountry")
+        this.phnCountry = matchingCountry.isoCode;
+        console.log(this.phnCountry)
+        this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
+        this.errorMessage=""
+        if (this.stateInfo.length === 0) {
+          this.stateInfo = [{ name: 'NA' }]
+          this.cityInfo = [{ name: 'NA' }];
+        }
     }
   }
   
   onChangeState(stateValue) {
-    console.log(stateValue)
     this.cityInfo = City.getAllCities();
-    if (stateValue) {
-      const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
-      this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
-      this.errorMessage1 = ""
-      this.tenantForm.get('state').setValue(stateValue);
+    if(stateValue){
+      const matchingState = this.stateInfo.find((item: any) => item.name == stateValue.name);
+        this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+        this.errorMessage1=""
       if (this.cityInfo.length === 0) {
         this.cityInfo = [{ name: 'NA' }];
       }
     }
-
-    this.cityInfo.find((cityItem: any) =>{
-      if(cityItem.name === this.userData["city"]){
-        this.tenantForm.get('city').setValue(cityItem.name);
-        console.log(cityItem.name,"cityItem.name")
-        this.tenantForm.get('city').setValue(this.userData["city"]);
-
-      }
-
-    } );
   }
-
-  onChangeCity(cityValue) {
-    console.log(cityValue)
-    if (cityValue) {
-      this.tenantForm.get('city').setValue(cityValue);
-      this.errorMessage2 = ''
+  
+  onChangeCity(cityValue){
+    if(cityValue){
+      this.errorMessage2 =''
+    }
+  }
+  
+  OnFlagChange(event : any, phonecode : any) {
+    if(event.name != this.tenantForm.value.country.name){
+      this.showErrorMessage = true;
+      this.errorMessage = "Please Select Appropriate Country";
+      this.errorMessage1 = "Please Select Appropriate State";
+      this.errorMessage2 = "Please Select Appropriate City"
     }
   }
 
@@ -272,20 +324,20 @@ export class OnboardTenantComponent implements OnInit {
     }
   }
 
-  OnFlagChange(event, phonecode) {
-    var code = event.iso2;
-    var testcode = code.toString().toUpperCase();
-    if (testcode != phonecode) {
-      this.showErrorMessage = true;
-      this.errorMessage = "Please Select Appropriate Country *";
-      this.errorMessage1 = "Please Select Appropriate State *";
-      this.errorMessage2 = "Please Select Appropriate City *"
-      this.tenantForm.get('state').enable();
-      this.tenantForm.get('city').enable();
-    }
-    const selectedCountry = this.countryInfo.find((item: any) => item.isoCode == code);
-    this.fieldsEnabled = State.getStatesOfCountry(selectedCountry.isoCode).length > 0;
-  }
+  // OnFlagChange(event, phonecode) {
+  //   var code = event.iso2;
+  //   var testcode = code.toString().toUpperCase();
+  //   if (testcode != phonecode) {
+  //     this.showErrorMessage = true;
+  //     this.errorMessage = "Please Select Appropriate Country *";
+  //     this.errorMessage1 = "Please Select Appropriate State *";
+  //     this.errorMessage2 = "Please Select Appropriate City *"
+  //     this.tenantForm.get('state').enable();
+  //     this.tenantForm.get('city').enable();
+  //   }
+  //   const selectedCountry = this.countryInfo.find((item: any) => item.isoCode == code);
+  //   this.fieldsEnabled = State.getStatesOfCountry(selectedCountry.isoCode).length > 0;
+  // }
   
   get f() {
     return this.tenantForm.controls;
