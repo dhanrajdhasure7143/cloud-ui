@@ -6,13 +6,13 @@
             </div>
         </div>
         <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-4" style="padding-left: 60px ;" *ngIf="!isReview_order">
+        <div class="col-md-3" style="padding-left: 60px; padding-right: 0px;" *ngIf="!isReview_order">
             <div class="col-md-12" style="margin: 10px 0 0 0">
                 <div class="text-center">
                     <h4 class="label-control">Enterprise Plan</h4>
                 </div>
                 <div class="d-flex" style="margin-top: 40px; display: flex !important;">
-                    <img src="../../../assets/copilot.svg" width="40px" height="40px" alt="">
+                    <img src="../../../assets/copilot.svg" width="40px" height="40px" alt="" style="position: relative; top: 8px;">
                     <div for="" class="label-control" style="margin: 0 0 0 10px;"> New Personalized Enterprise Level Planning? </div>
                 </div>
                 </div>
@@ -24,56 +24,46 @@
                 <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
             </div>
         </div>
-        <div class="col-md-8" style="padding-right: 60px;" *ngIf="!isReview_order">
+        <div class="col-md-9" style="padding-right: 60px;" *ngIf="!isReview_order">
         <div class="col-md-12">
             <div class="text-center">
                 <h4 class="label-control">Predefined Bots</h4>
             </div>
-            <div class="row">
-                <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
-                    <div class="bot-details" style="width: 290px;">
-                        <div class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
-                            <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
-                        </div>
-                        <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
-                        <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.planDetails">  
-                            <span *ngIf="plan.selectedTerm == 'Monthly'"> USD {{detail.amount}} per {{detail.interval}}</span>
-                            <span *ngIf="plan.selectedTerm == 'Yearly'"> USD {{detail.amount}}  per {{detail.interval}}</span>
-                            <!-- <span >{{detail.amount}} / {{plan.isSelected}}</span> -->
-                         </div>
-                         <div style="display: flex !important;">
-                            <div class="col-md-12 text-center">
-                                <!-- <div class="row"> -->
-                                    <!-- <div class="col-md-1"></div>
-                                    <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
-                                        <p-radioButton name="Monthly" id="month" value="Monthly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
-                                        <label for="" class="ml-2" style="margin-top: 5px;"> Monthly </label>
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-3" style="display: flex !important; margin-top: 10px;">
-                                        <p-radioButton name="Yearly" id="year" value="Yearly" [(ngModel)]="plan.selectedTerm"></p-radioButton>
-                                        <label for="" class="ml-2" style="margin-top: 5px;"> Yearly </label>
-                                    </div> -->
-                                    <div>
-                                        <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="showDescription(i)"></i> 
-                                        <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="hideDescription()"></i>
-                                    </div>
-                                <!-- </div> -->
+            <div class="col-md-12" style="height: 375px !important; overflow-y: scroll;overflow-x: hidden;">
+                <div class="row">
+                    <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
+                        <div class="bot-details" style="width: 290px;">
+                            <div class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
+                                <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
                             </div>
-                         </div>
-                        <!-- <div class="line"></div> -->
-                        <div class="description-box" *ngIf="selectedPlanIndex === i">
-                            <span> {{ plan.description }} </span>
-                            <ul style="list-style-type:none;">
-                                <li *ngFor="let item of plan.features.split(',')"> <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"> </i> {{ item.trim() }} </li>
-                            </ul>
-                        </div>
-                    </div> 
+                            <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
+                            <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.planDetails">  
+                                <span *ngIf="plan.selectedTerm == 'Monthly'"> USD {{detail.amount}} / {{detail.interval}}</span>
+                                <span *ngIf="plan.selectedTerm == 'Yearly'"> USD {{detail.amount}} / {{detail.interval}}</span>
+                             </div>
+                             <div style="display: flex !important;">
+                                <div class="col-md-12 text-center">
+                                        <div>
+                                            <i *ngIf="selectedPlanIndex != i" class="pi pi-arrow-circle-right" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="showDescription(i)"></i> 
+                                            <i *ngIf="selectedPlanIndex == i" class="pi pi-arrow-circle-down" style="margin:17px 10px 10px 10px; cursor: pointer;" (click)="hideDescription()"></i>
+                                        </div>
+                                    <!-- </div> -->
+                                </div>
+                             </div>
+                            <!-- <div class="line"></div> -->
+                            <div class="description-box" *ngIf="selectedPlanIndex === i">
+                                <span> {{ plan.description }} </span>
+                                <ul style="list-style-type:none;">
+                                    <li *ngFor="let item of plan.features.split(',')"> <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"> </i> {{ item.trim() }} </li>
+                                </ul>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
             </div>
             <div class="col-md-12 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: end;">
-                <button type="button" class="btn btn-primary"> Monthly </button>
-                <button type="button" class="btn btn-primary ml-2"> Yearly </button>
+                <span (click)="planSelection('Monthly')"> Monthly </span>
+                <span (click)="planSelection('Yearly')"> Yearly </span>
             </div>
             <div class="col-md-12 p-10 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: end;">
                 <button type="button" class="btn btn-primary" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed </button>
