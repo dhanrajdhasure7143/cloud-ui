@@ -175,6 +175,7 @@ onSelectPredefinedBot(plan, index){
   this.isDisabled = this.botPlans.every(item => !item.isSelected);
   this.botPlans.forEach(item=>{
     if(item.isSelected){
+      console.log(item)
       this.selectedPlans.push(item);
     }
   })
@@ -191,11 +192,15 @@ planSelection(event){
     plansData.push(item.planDetails)
   })
   console.log(plansData,"plansData")
-  for (const plan of plansData) {
-    if (plan.interval == event) {
-      this.totalAmount += plan.amount;
-      console.log(this.totalAmount)
+  this.totalAmount = 0;
+  for (const planGroup of plansData) {
+    for (const plan of planGroup) {
+      if (plan.interval === this.selectedPlan) {
+        this.totalAmount += plan.amount;
+        console.log(this.totalAmount)
+      }
     }
   }
+
 }
 }
