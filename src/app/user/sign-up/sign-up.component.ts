@@ -30,7 +30,6 @@ export class SignUpComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-  error = '';
   public userRole:any = [];
   public show:boolean=true;
   public isOTP:boolean = false;
@@ -65,7 +64,7 @@ export class SignUpComponent implements OnInit {
   stateInfo: any[] = [];
   countryInfo: any[] = [];
   cityInfo: any[] = [];
-  isInput: boolean;
+  isInput: boolean = false;
   phnCountry: any;
   errorMessage: any;
   errorMessage1: any;
@@ -84,7 +83,6 @@ export class SignUpComponent implements OnInit {
   orgExsist : boolean = false;
   userDetails : any = {};
   isTimeOutshow : boolean = false;
-  isStateNull : boolean = false;
   userId:any;
   userPsw:any;
   isErrorMessage : boolean = false;
@@ -112,7 +110,6 @@ export class SignUpComponent implements OnInit {
       if(res){
         if(res.token){
         let parms = JSON.parse(atob(res.token))
-        console.log("testing",parms)
         if(parms.screen == 2){
           this.showUserScreen = true;
           this.userId= parms.usermail
@@ -173,15 +170,12 @@ export class SignUpComponent implements OnInit {
   }
 
   showOtp(event){
-    this.isGenerate = false;
     if(event.target.value.includes('@') && this.signupForm.get('email').valid){
        if(event.target.value.endsWith('@gmail.com') || event.target.value.endsWith('@yahoo.com') || 
        event.target.value.endsWith('@hotmail.com') || event.target.value.endsWith('@rediffmail.com')){
          this.ispublicMail=true;
-         this.error='Only Business Email is allowed';
          this.isGenerate = false;
        } else {
-        this.error = '';
         this.isGenerate = true;
         this.ispublicMail=false;
        }
@@ -378,12 +372,12 @@ getAllDepartments() {
 }
 
 onChangeCountry(countryValue) {
+  this.isInput = !this.isInput;
   this.stateInfo = State.getAllStates();
   if(countryValue){
-      const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue.name);
-      console.log(matchingCountry,"matchingCountry")
-      this.phnCountry = matchingCountry.isoCode;
-      console.log(this.phnCountry)
+      const matchingCountry = this.countryInfo.find((item: any) => item.name === countryValue.name);
+      console.log(matchingCountry)
+      this.phnCountry = matchingCountry.flag;
       this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
       this.errorMessage=""
       if (this.stateInfo.length === 0) {
@@ -421,7 +415,7 @@ numbersOnly(event): boolean {
   }
 }
 
-OnFlagChange(event : any, phonecode : any) {
+OnFlagChange(event : any) {
   if(event.name != this.userForm.value.country.name){
     this.isErrorMessage = true;
     this.errorMessage = "Please Select Appropriate Country";
@@ -455,7 +449,6 @@ registrationSave(){
     phoneNumber : this.userForm.value.phoneNumber,
     // isSubscriptionEnabled : true
 }
-console.log(reqObj,this.crypto.encrypt(JSON.stringify(reqObj)),"reqObj")
 payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
 this.service.registrationContinue(payload).subscribe((res : any) => {
 this.spinner.hide();
@@ -521,7 +514,6 @@ getErrorMessage(controlName: string): string {
 }
 
 checkOrganizationName(event : any) {
-  console.log(event.target.value)
   this.service.organizationCheck(event.target.value).subscribe(res => {
     if (res.message == "Organization Name already Exists") {
       this.orgExsist = true;
@@ -537,13 +529,5 @@ onKeydown(event){
     if(!temp){
      event.preventDefault();
     } 
-   }
-
-   showValidateButton(event ){
-    console.log(event.target.value.length)
-    if(event.target.value.length == 6)
-    this.isValidate = true
-    else
-    this.isValidate = false
    } 
 }

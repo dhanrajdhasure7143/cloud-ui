@@ -6,7 +6,7 @@
             </div>
         </div>
         <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-3" style="padding-left: 60px; padding-right: 0px;" *ngIf="!isReview_order">
+        <div class="col-md-3" style="padding-left: 50px; padding-right: 0px;" *ngIf="!isReview_order">
             <div class="col-md-12" style="margin: 10px 0 0 0">
                 <div class="text-center">
                     <h4 class="label-control">Enterprise Plan</h4>
@@ -24,12 +24,12 @@
                 <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 40px;" (click)="sendEmailEnterPrisePlan()"> CONTACT US </button>  
             </div>
         </div>
-        <div class="col-md-9" style="padding-right: 60px;" *ngIf="!isReview_order">
+        <div class="col-md-9" style="padding-right: 50px;" *ngIf="!isReview_order">
         <div class="col-md-12">
             <div class="text-center">
                 <h4 class="label-control">Predefined Bots</h4>
             </div>
-            <div class="col-md-12" style="height: 375px !important; overflow-y: scroll;overflow-x: hidden;">
+            <div class="col-md-12" style="height: 300px !important; overflow-y: scroll;overflow-x: hidden;">
                 <div class="row">
                     <div class="col-md-4 bot-plans" *ngFor="let plan of botPlans; let i = index">
                         <div class="bot-details" style="width: 290px;">
@@ -62,8 +62,8 @@
                 </div>
             </div>
             <div class="col-md-12 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: end;">
-                <span (click)="planSelection('Monthly')"> Monthly </span>
-                <span (click)="planSelection('Yearly')"> Yearly </span>
+                <span class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </span>
+                <span class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </span>
             </div>
             <div class="col-md-12 p-10 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: end;">
                 <button type="button" class="btn btn-primary" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed </button>

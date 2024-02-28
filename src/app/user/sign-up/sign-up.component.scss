@@ -483,13 +483,11 @@
   line-height: 17px;
   letter-spacing: 0.2px;
   bottom: 35px !important;
-  /* border-radius: 50% !important; */
-  // color: #007bff;
   font-weight: 420 !important;
   font-size: 14px !important;
 }
 
-.verify:hover, .resend:hover  {
+.verify:hover  {
   text-decoration: underline;
 }
 
