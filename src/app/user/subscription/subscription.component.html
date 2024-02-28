@@ -36,10 +36,10 @@
                             <div class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
                                 <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
                             </div>
-                            <div class="label-control text-center"> {{plan.predefinedBotName}} </div>
-                            <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.planDetails">  
-                                <span *ngIf="plan.selectedTerm == 'Monthly'"> USD {{detail.amount}} / {{detail.interval}}</span>
-                                <span *ngIf="plan.selectedTerm == 'Yearly'"> USD {{detail.amount}} / {{detail.interval}}</span>
+                            <div class="label-control text-center"> {{plan.name}} </div>
+                            <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.priceCollection">  
+                                <span> USD {{detail.unitAmount}} per {{detail.nickname}}</span>
+                                <!-- <span *ngIf="detail.nickname == 'yearly'"> USD {{detail.unitAmount}} / {{detail.nickname}}</span> -->
                              </div>
                              <div style="display: flex !important;">
                                 <div class="col-md-12 text-center">
