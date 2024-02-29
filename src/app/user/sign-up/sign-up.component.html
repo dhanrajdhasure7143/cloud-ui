@@ -77,15 +77,7 @@
                         </div>
                         <div class="col-md-12 p-10 form-group d-block">
                             <label class="label-control" for="password"> Password </label> <br>
-                            <!-- <input [type]="hide ?  'password': 'text'" maxlength="20" minlength="8" class="form-control" formControlName="password"
-                            value=""> -->
                             <p-password styleClass="password-input" formControlName="password" value="password" [feedback]="false" [toggleMask]="true" [disabled]="isPasswordDisable ? true : null" placeholder="Enter Password" tabindex="4" autocomplete="off"></p-password>
-                            <!-- <span class="password-btn ml-auto" *ngIf="hide==true" (click)="hide = false">
-                                <img  src='../../../assets/images/eye-show.svg' alt="eye-show" />
-                              </span>
-                              <span class="password-btn ml-auto" *ngIf="hide==false" (click)="hide = true">
-                                <img src='../../../assets/images/eye-hide.svg' alt="eye-hide"/>
-                            </span> -->
                               <span *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && !signupForm.get('password').hasError('pattern') && !signupForm.controls['password'].hasError('maxlength')" class="required"> Password Required </span>
                               <span class="required" *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched"> Minimum 8 Characters Required </span>    
                               <span class="required" *ngIf="signupForm.get('password').hasError('pattern') && signupForm.get('password').touched"> 
