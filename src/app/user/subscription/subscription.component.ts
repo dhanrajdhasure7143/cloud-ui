@@ -131,6 +131,7 @@ hideDescription() {
 }
 
 paymentPlan() {
+  this.spinner.show();
   let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
   this.selectedPlans.forEach((element) => {
@@ -144,6 +145,7 @@ paymentPlan() {
   if (filteredPriceIds.length === 0) {
     // Handle the case when no price is selected for the chosen interval
     console.error('No price selected for the chosen interval.');
+    this.spinner.hide();
     return;
   }
 
@@ -155,18 +157,16 @@ paymentPlan() {
   };
   console.log("PLAN_ID's", req_body);
   
-  this.service.getCheckoutScreen(req_body)
-    .pipe(
+  this.service.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
-        console.log(session);
+        this.spinner.hide();
         return this.stripeService.redirectToCheckout({ sessionId: session.id });
       })
-    )
-    .subscribe(
+    ).subscribe(
       res => {
-        console.log(res);
-      },
-      error => {
+        this.spinner.hide();
+      },error => {
+        this.spinner.hide();
         console.error('Error during payment:', error);
       }
     );
@@ -199,16 +199,17 @@ sendEmailEnterPrisePlan(){
   })
 }
 
-onSelectPredefinedBot(plan, index){
+onSelectPredefinedBot(plan, index) {
   this.selectedPlans = [];
-  this.botPlans[index]["isSelected"]= !this.botPlans[index]["isSelected"];
+  this.botPlans[index].isSelected = !this.botPlans[index].isSelected;
   this.isDisabled = this.botPlans.every(item => !item.isSelected);
-  this.botPlans.forEach(item=>{
-    if(item.isSelected){
-      console.log(item)
+  this.botPlans.forEach(item => {
+    if (item.isSelected) {
       this.selectedPlans.push(item);
     }
-  })
+  });
+  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "";
+  this.isDisabled = this.selectedPlans.length === 0;
 }
 
 readValue(value){
