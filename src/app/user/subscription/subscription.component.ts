@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CryptoService } from 'src/app/_services/crypto.service';
+import { switchMap } from 'rxjs/operators';
+import { StripeService } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-subscription',
@@ -35,6 +38,8 @@ export class SubscriptionComponent implements OnInit {
   selected_plans_list:any;
   log_data:any={}
   isRegistered : boolean = false;
+  totalAmount : number = 0;
+  selectedPlan: string = '';
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -42,7 +47,8 @@ export class SubscriptionComponent implements OnInit {
               private profileservice : ProfileService,
               private spinner : NgxSpinnerService,
               private router: Router,
-              private crypto: CryptoService
+              private crypto: CryptoService,
+              private stripeService: StripeService
               ) {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
@@ -80,19 +86,28 @@ export class SubscriptionComponent implements OnInit {
   loadPredefinedBots(){
     this.service.loadPredefinedBots().subscribe((response : any) =>{
       this.spinner.hide()
+      console.log(response)
       if(response){
-      this.botPlans = response.data;
-      this.botPlans.forEach(item=>{
-        item["isSelected"] = false;
-        item["selectedTerm"] = "Monthly"
-      })
+        response.forEach(element => {
+          let obj=element.product
+          obj["priceCollection"] = element.priceCollection
+          let data = element.product.metadata.product_features
+          obj["features"] = JSON.parse(data);
+          this.botPlans.push(obj)
+        });
+        console.log(this.botPlans)
+      // this.botPlans = response;
+      // this.botPlans.forEach(item=>{
+      //   item["isSelected"] = false;
+      //   item["selectedTerm"] = "Monthly"
+      // })
       }
     },err=>{
       this.spinner.hide();
       Swal.fire({
-        title: 'Success!',
-        text: 'User details saved successfully. Please processed with subscription!',
-        icon: 'success',
+        title: 'Error!',
+        text: 'Failed to load',
+        icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true
     }).then((result) => {
@@ -115,31 +130,48 @@ hideDescription() {
   this.showArrowDown = false;
 }
 
-paymentPlan(){
-  this.isReview_order = true;
-  this.selected_plans_list=[];
-  this.selectedPlans.forEach(element => {
-    element.planDetails.forEach(item => {
-      if(element.selectedTerm == item.interval){
-        let obj={};
-        obj["predefinedBotName"]=element.predefinedBotName;
-        obj["interval"] = item.interval;
-        obj["priceId"] = item.priceId;
-        obj["amount"] = item.amount
-        this.selected_plans_list.push(obj);
+paymentPlan() {
+  let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
+  let filteredPriceIds = [];
+  this.selectedPlans.forEach((element) => {
+    element.priceCollection.forEach((price) => {
+      if (price.recurring.interval === selectedInterval) {
+        filteredPriceIds.push(price.id);
       }
     });
   });
-  // if(this.selectedPlans.length == 0){
-  //   return
-  // }
-  // let selectedBotPlans = JSON.stringify(selected_plans_list)
-  // this.profileservice.updateData(selectedBotPlans)
-  // this.router.navigate(["/order"],{
-  //   queryParams: { email : this.userEmail,details : selectedBotPlans, password : this.password  },
-  // });
 
+  if (filteredPriceIds.length === 0) {
+    // Handle the case when no price is selected for the chosen interval
+    console.error('No price selected for the chosen interval.');
+    return;
+  }
+
+  let req_body = {
+    "price": filteredPriceIds,
+    "customerEmail": this.userEmail,
+    "successUrl": environment.paymentSuccessURL,
+    "cancelUrl": environment.paymentFailuerURL
+  };
+  console.log("PLAN_ID's", req_body);
+  
+  this.service.getCheckoutScreen(req_body)
+    .pipe(
+      switchMap((session: any) => {
+        console.log(session);
+        return this.stripeService.redirectToCheckout({ sessionId: session.id });
+      })
+    )
+    .subscribe(
+      res => {
+        console.log(res);
+      },
+      error => {
+        console.error('Error during payment:', error);
+      }
+    );
 }
+
 
 sendEmailEnterPrisePlan(){
   this.spinner.show();
@@ -173,6 +205,7 @@ onSelectPredefinedBot(plan, index){
   this.isDisabled = this.botPlans.every(item => !item.isSelected);
   this.botPlans.forEach(item=>{
     if(item.isSelected){
+      console.log(item)
       this.selectedPlans.push(item);
     }
   })
@@ -182,5 +215,41 @@ readValue(value){
   this.isReview_order = false;
 }
 
+// planSelection(event){
+//   this.selectedPlan = event
+//   let plansData = []
+//   this.selectedPlans.forEach((item : any) => {
+//     plansData.push(item.planDetails)
+//   })
+//   console.log(plansData,"plansData")
+//   this.totalAmount = 0;
+//   for (const planGroup of plansData) {
+//     for (const plan of planGroup) {
+//       if (plan.interval === this.selectedPlan) {
+//         this.totalAmount += plan.amount;
+//         console.log(this.totalAmount)
+//       }
+//     }
+//   }
+// }
 
+  planSelection(interval: string) {
+    this.selectedPlan = interval;
+    let plansData = [];
+    let selectedInterval = (interval === 'Monthly') ? 'month' : 'year';
+    this.selectedPlans.forEach((item) => {
+      item.priceCollection.forEach((price) => {
+        if (price.recurring.interval === selectedInterval) {
+          plansData.push(price.unitAmount);
+        }
+      });
+    });
+    console.log(plansData, "plansData");
+    this.totalAmount = 0;
+    plansData.forEach((amount) => {
+      this.totalAmount += amount;
+    });
+    console.log(this.totalAmount);
+  }
+  
 }

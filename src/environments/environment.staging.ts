@@ -18,5 +18,7 @@ export const environment = {
    asquareproductendpoint: 'https://ezflowasquare.staging.epsoftinc.com',
    isNewDesignEnabled : true,
    isSubscrptionEnabled : false,
-   isNewSignupFlow : false
+   isNewSignupFlow : false,
+   paymentSuccessURL:"https://ezflow.staging.epsoftinc.com/#/success",
+   paymentFailuerURL:"https://ezflow.staging.epsoftinc.com/#/fail"
 }
