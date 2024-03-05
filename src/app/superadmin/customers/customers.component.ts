@@ -4,12 +4,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from "sweetalert2";
-
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+  styleUrls: ['./customers.component.scss'],
+  providers: [MessageService]
 })
 export class CustomersComponent implements OnInit {
   isCustom: boolean;
@@ -22,6 +23,18 @@ export class CustomersComponent implements OnInit {
   userid: any;
   plans: any = [];
   isDisplayOverlay:boolean = false;
+  activeTabIndex = 0;
+  newTabData: any[];
+  isOverlay:boolean = false;
+  isOffboarding = false;
+  offboardingReason = '';
+  selectedAction: 'offboard' | 'extendTenure' | null = null;
+  tenureExtensionDate: string = '';
+  isExtendTenure=false;
+  tenantId: string = '';
+  statusValue:boolean =true;
+  showToast: boolean = false;
+
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
     {DisplayName:"Subscribed Plan",ColumnName:"subscribedPlan",ShowFilter: true,sort:true},
@@ -33,16 +46,28 @@ export class CustomersComponent implements OnInit {
     {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
   ]
 
+  newColumnList = [
+    { ColumnName: 'tenantId', DisplayName: 'Tenant ID', sort: true, ShowFilter: true },
+    { ColumnName: 'company', DisplayName: 'Company Name', sort: true, ShowFilter: true },
+    { ColumnName: 'tenantDomain', DisplayName: 'Tenant Domain', sort: true, ShowFilter: true },
+    { ColumnName: 'country', DisplayName: 'Country', sort: true, ShowFilter: true },
+    { ColumnName: 'phoneNumber', DisplayName: 'Phone Number', sort: true, ShowFilter: true },
+    { ColumnName: 'newAction', DisplayName: 'Action', sort: false, ShowFilter: false },
+  ];
+
   constructor(
     private firstloginservice: FirstloginService,
     private restapi: UsermanagementService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
+    private api : UsermanagementService,
+    private messageService: MessageService
   ) { 
     
   }
 
   ngOnInit(): void {
+    this.loadNewData();
     this.getSuperAdminData();
     this.subscriptionForm = this.formBuilder.group({
       subscriptionplan: ["", Validators.compose([Validators.required])],
@@ -57,6 +82,10 @@ export class CustomersComponent implements OnInit {
     })
     this.spinner.show();
 
+  }
+
+  show() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }
 
   openEditOverlay(plan) {
@@ -172,6 +201,136 @@ export class CustomersComponent implements OnInit {
 
   closeOverlay(event){
     this.isDisplayOverlay = false;
+  }
+  
+  onTabChange($event){
+    this.activeTabIndex=1;
+    this.loadNewData();
+  }
+
+  loadNewData(): void {
+    this.api.getEnterpriseList().subscribe((response: any[]) => {
+      if (response) {
+        this.newTabData = response.reduce((acc, element) => {
+          return acc.concat(element.usersData.map(user => ({ ...element, ...user })));
+        }, []);
+
+        console.log('This is the new API Response from the new Method: ', this.newTabData);
+      }
+    });
+  }
+
+  getPlanDetails() {
+    this.api.getEnterpriseList().subscribe((response: any) => {
+      if(response){
+        response.forEach(element => {
+          let obj=element.product
+          obj["usersData"] = element.priceCollection
+          let data = element.product.metadata.product_features
+          obj["features"] = JSON.parse(data);
+          this.newTabData.push(obj)
+        });
+      }
+      console.log(this.newTabData)
+    })
+  }
+
+  processNewData(newData: any[]): void {
+      console.log('This is the UsersData: ', newData);
+  }
+
+  openOffboardOverlay(actionType: any, tenantId: string){
+    this.isOverlay = true;
+    this.selectedAction = actionType;
+    this.tenantId = tenantId;
+
+    console.log('The Result is Here : ',tenantId)
+  }
+
+  closeOffboardOverlay(event){
+    this.isOverlay = false;
+    this.isOffboarding = !this.isOffboarding;
+    this.isExtendTenure=false;
+    this.isOffboarding=false;
+  }
+
+  toggleOffboarding() {
+    this.isOffboarding = !this.isOffboarding;
+  }
+
+  offboardTenant() {
+    if (this.tenantId) {
+      console.log('tenenat ID : ',this.tenantId);
+      const payload = {
+        "tenantId": this.tenantId,
+        "status": this.statusValue,
+      };
+
+      console.log('Payload Data :',payload);
+      this.api.offBoardTenant(this.statusValue,this.tenantId).subscribe(
+        (response:any) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Tenant Offboarded Successfully." });
+          console.log('API Response:', response);
+        },
+        
+        error => {
+          console.error('API Error IS HERE :', error);
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to Offboard Tenant.' });
+
+          if (error.errorCode && error.errorMessage) {
+            console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
+          }
+        }
+      );
+    }
+    else{
+      console.error('API Error: Unable to handle the Offboard Tenant Option.');
+    }
+    this.closeOffboardOverlay(event);
+    this.offboardingReason = '';
+  }
+
+  toggleActionType() {
+    this.isOffboarding = this.selectedAction === 'offboard';
+    this.isExtendTenure = this.selectedAction === 'extendTenure';
+  }
+
+  extendTenure(){
+    if (this.tenantId && this.tenureExtensionDate) {
+      console.log("Selected date for Tenure Extension : ", this.tenureExtensionDate)
+ 
+      const reqBody = {
+        expiresAt: this.tenureExtensionDate
+      };
+
+      this.api.extendTenure(this.tenantId, reqBody).subscribe(
+        (response:any) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tenure Extended Succesfully' });
+          // this.show();
+          console.log('Extend Tenure Response: ', response);
+        },
+        error => {
+          console.error('API Expiry error IS HERE :', error);
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to extend tenure.' });
+          if (error.errorCode && error.errorMessage) {
+            console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
+          }
+        }
+      );
+    }
+    else{
+      console.error('API Error: Unable to handle the Extend Tenure Option.');
+    }
+    this.closeOffboardOverlay(event);
+    this.offboardingReason = '';
+  }
+  
+  performAction() {
+    if (this.selectedAction === 'offboard') {
+      this.offboardTenant();
+    } else if (this.selectedAction === 'extendTenure') {
+      this.extendTenure();
+    }
   }
 
 }
