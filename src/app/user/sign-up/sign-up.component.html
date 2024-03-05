@@ -60,8 +60,8 @@
                     <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="email"> Email </label>
                             <input type="text" pInputText maxlength="51" class="form-control" formControlName="email" style="padding-right: 90px;" [attr.disabled]="isEmailDisable ? true : null"
-                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off" (keyup)="showOtp($event)" tabindex="3">
-                                <span *ngIf="isGenerate" (click)="generateOTP('false')" class="verify text-primary"> Verify Email </span>
+                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off" (keyup)="showOtp($event); checkEmailValidity()" tabindex="3">
+                                <span *ngIf="isGenerate && !isEmailEmptyOrInvalid" (click)="generateOTP('false')" class="verify text-primary"> Verify Email </span>
                                 <span *ngIf="isSuccess"> <i class="pi pi-verified text-success" id="email-buttons"></i></span>
                                 <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
                                 <span *ngIf="signupForm.get('email').hasError('pattern') && signupForm.get('email').touched" class="required"> Enter valid email address </span>
