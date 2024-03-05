@@ -76,7 +76,7 @@
     font-size: 14px;
     height: 40px;
     margin-left: 33%; 
-    // margin-top: 10px;
+    margin-top: 20px;
   }
   .signupbtn{
     width: 120px !important;
@@ -401,11 +401,37 @@
 
 #email-buttons {
   position: relative !important;
-  left: 94% !important;
+  left: 93% !important;
+  cursor: pointer;
+  bottom: 33px !important;
+  border-radius: 50% !important;
+  color: #007bff;
+}
+
+#validate-buttons {
+  position: relative !important;
+  left: 90% !important;
   cursor: pointer;
   bottom: 35px !important;
   border-radius: 50% !important;
-  color: #007bff;
+  color: #098de6;
+  font-size: 0.7rem; 
+  border: 1px solid #098de6; 
+  padding: 6px; 
+}
+
+#validate-buttons:hover{
+  background-color: #098de6;
+  color: white;
+}
+
+#disable-validate-buttons{
+  position: relative !important;
+  left: 90% !important;
+  bottom: 35px !important;
+  border-radius: 50% !important;
+  color: #EBEBE4;
+  font-size: 0.7rem; 
 }
 
 .label-control{
@@ -445,7 +471,6 @@
     line-height: 17px;
     color: #007bff;
     margin-top: -20px;
-    cursor: pointer;
     font-weight: 420 !important;
     font-size: 14px !important;
 }
@@ -457,13 +482,11 @@
   line-height: 17px;
   letter-spacing: 0.2px;
   bottom: 35px !important;
-  /* border-radius: 50% !important; */
-  // color: #007bff;
   font-weight: 420 !important;
   font-size: 14px !important;
 }
 
-.verify:hover, .resend:hover  {
+.verify:hover  {
   text-decoration: underline;
 }
 
@@ -571,4 +594,19 @@
   // margin: 0 100px 0 100px !important;
   // max-width: 1400px !important;
   padding: 0 50px 0 50px;
+}
+
+@media screen and (max-width: 600px) {
+  #phone {
+    width: 100% !important;
+  }
+}
+
+.password-input{
+  width: 100% !important;
+  height: 45px !important;
+}
+
+:host ::ng-deep .iti {
+  width: 100%;
 }

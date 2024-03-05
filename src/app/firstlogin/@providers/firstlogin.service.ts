@@ -71,19 +71,33 @@ export class FirstloginService {
   }
 
   loadPredefinedBots(): Observable<any>{
-    return this.http.get<any>(`/api/user/loadPredefinedBotPlans`)
+    return this.http.get<any>("/subscriptionservice/v1/stripe/load-predefined-bots")
   }
 
   registrationStart(payload){
     let headers = new HttpHeaders({});
     return this.http.post<any>('/api/user/registration-start', payload,{ headers:headers,observe: 'response' })
   }
+  
   sendEmailEntrepricePlan(userId:string){
     let headers = new HttpHeaders({});
-    return this.http.get<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+    return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
   }
 
   getPlanDetails(): Observable<any>{
     return this.http.get<any>(`/api/user/loadPredefinedBotPlans`);
   }
+
+  getCheckoutScreen(body){
+    return this.http.post("/subscriptionservice/v1/stripe/create-checkout-session",body)
+  }
+
+  registrationComplete(id:any){
+    return this.http.post('/api/user/complete_user_registration/'+id,{});
+  }
+
+  insertCustomerSubscription(userEmail: string, tenantId: string) {
+    return this.http.post(`/subscriptionservice/v1/stripe/insert-customer-subscriptions?userId=${userEmail}&tenantId=${tenantId}`, {});
+  }
+  
 }

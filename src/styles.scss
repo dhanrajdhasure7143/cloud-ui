@@ -686,6 +686,186 @@ as-split-area {
   height: 45px;
   border-bottom: 1px solid #e0e0e0 !important;
 }
+.commentBox .p-tabview .p-tabview-nav {
+  height: 50px !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  padding-top: 5px;
+  margin: 0px 15px 10px;
+}
+
+.commentBox .p-tabview-panels {
+  height: calc(100% - 45px) !important;
+  padding-top: 0px !important;
+}
+
+.create-body .prjoverlay .p-card.p-component {
+  border-radius: 8px;
+  border: 1px solid var(--cards-bordercolor);
+  box-shadow: none;
+}
+.create-body .prjoverlay .p-card.p-component:hover {
+  border: 1px solid var(--secondary-bluecolor);
+}
+.create-body .prjoverlay .p-card .p-card-body{
+  height: 230px !important;
+  width: 230px;
+  border-radius: 8px;
+  text-align: center;
+}
+.create-body .prjoverlay .p-card .p-card-content {
+  margin-top: 0px !important;
+  padding: 0px !important;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-header {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 15px 0px;
+  margin: 0px 20px;
+}
+.create-header h3 {
+  font-size: 16px;
+  margin: 0px;
+}
+.createform-overlay {
+  height: calc(100% - 105px);
+  overflow: auto;
+  padding: 15px 20px 0px;
+}
+.createform-overlay label {
+  font-size: 14px;
+  color: var(--formlabel-color);
+  margin-bottom: 5px;
+  line-height: 18px;
+  text-transform: capitalize;
+}
+
+.createform-overlay input.p-inputtext,
+.createform-overlay .p-dropdown,
+.splitoverlaycontent .p-dropdown,
+.splitoverlaycontent input.p-inputtext,
+.maindivfoprm input.p-inputtext,
+.maindivfoprm  .p-dropdown {
+  border: 1px solid #ced4da !important;
+  color: var(--main-txtcolor);
+  height: 40px !important;
+  background: transparent;
+  box-shadow: none !important;
+}
+
+.createform-overlay .p-dropdown .p-dropdown-label.p-placeholder,
+.createform-overlay .p-dropdown .p-dropdown-label {
+  padding-top: 6px !important;
+}
+
+// .createform-overlay input.p-inputtext:focus,
+// .createform-overlay .p-dropdown:focus,
+// .createform-overlay textarea.p-inputtextarea.p-inputtext:focus,
+// .createform-overlay .p-dropdown.p-dropdown-open,
+// .splitoverlaycontent .p-dropdown.p-dropdown-open,
+// .splitoverlaycontent input.p-inputtext:focus,
+// .maindivfoprm input.p-inputtext:focus,
+// .maindivfoprm .p-dropdown:focus,
+// .maindivfoprm .p-dropdown.p-dropdown-open {
+//   border-color: var(--secondary-bluecolor) !important;
+//   background-color: #fff;
+// }
+// .createform-overlay input.p-inputtext::placeholder,
+// .p-dropdown .p-dropdown-label.p-placeholder {
+//   color: var(--formlabel-color) !important;
+// }
+.createform-overlay textarea.p-inputtextarea.p-inputtext {
+  background: transparent;
+  border: 1px solid var(--formfield-bordercolor);
+  box-shadow: none;
+  width: 100%;
+  overflow: hidden;
+}
+
+.createform-overlay label {
+  font-size: 14px;
+  color: var(--formlabel-color);
+  margin-bottom: 2px;
+  line-height: 18px;
+  text-transform: capitalize;
+}
+.createform-footer {
+  margin-top: auto !important;
+  text-align: end;
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+}
+
 .main-color{
   color: #098de6;
+}
+
+.required,.star{display:inline-block;text-transform: lowercase;}
+.required::first-letter,.star::first-letter{text-transform: uppercase;}
+.required,
+.star {
+  color: #ea3d3d;
+  font-size: 12px !important;
+  line-height: 17px;
+  letter-spacing: 0.2px;
+}
+.btn-primary{
+  background-color: #098de6 !important; 
+  color: #fff !important;
+}
+
+ ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar:hover {
+width: 10px !important;
+height: 10px !important;
+cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+background: #098de630;
+border-radius: 10px;
+cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+// background: var(--main-bluecolor) !important;
+cursor: pointer;
+width:10px;
+height:10px;
+}
+
+.password-input{
+  width: 100% !important;
+  height: 45px !important;
+}
+
+.p-input-icon-right > .p-inputtext{
+  width: 100% !important;
+}
+
+.p-dropdown {
+  border: 1px solid #ced4da !important;
+  color: var(--main-txtcolor);
+  background: transparent;
+  box-shadow: none !important;
+}
+
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: #6c757d !important;
+}
+
+.p-component .p-overlay{
+  width: 250px !important;
 }

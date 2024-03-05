@@ -259,6 +259,26 @@ export class LoginComponent implements OnInit {
   .pipe(first())
   .subscribe(data => {
      this.errormsg=data;
+     console.log(data)
+     if(data.isError == "true"){
+      this.spinner.hide();
+      if(data.current_registration_screen == "basic_details_completed" ){
+        let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login"}
+        this.router.navigate(['/subscription'],{
+          queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+        });
+      }
+      if(data.current_registration_screen == "subscription_pending" ){
+        let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login", isRegistered : true}
+        this.router.navigate(['/subscription'],{
+          queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+        });
+      }
+      if(data.current_registration_screen == "drafted_user_credentials" ){
+        let obj = {"screen":"2",usermail:this.f.username.value.toLowerCase(),userpassword:this.f.password.value,navigatingFrom:"login"} 
+        this.router.navigate(['/signup'],{queryParams: { token: btoa(JSON.stringify(obj))},});
+      }
+     }
       if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){
 
         this.error = "You completed your maximum attempts. Your account is temporarily locked for 3 hours."

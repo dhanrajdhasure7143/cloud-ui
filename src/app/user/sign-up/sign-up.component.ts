@@ -8,13 +8,14 @@ import { CookieStore } from 'src/app/_services/cookie.store';
 import { APP_CONFIG } from './../../app.config';
 import { LoginService } from '../_services/login.service';
 import { SharedDataService } from 'src/app/_services/shared-data.service';
-import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { MessageService } from 'primeng/api';
 import { Country, State, City } from 'country-state-city';
+import { Location} from '@angular/common'
+import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -29,7 +30,6 @@ export class SignUpComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
-  error = '';
   public userRole:any = [];
   public show:boolean=true;
   public isOTP:boolean = false;
@@ -64,7 +64,7 @@ export class SignUpComponent implements OnInit {
   stateInfo: any[] = [];
   countryInfo: any[] = [];
   cityInfo: any[] = [];
-  isInput: boolean;
+  isInput: boolean = false;
   phnCountry: any;
   errorMessage: any;
   errorMessage1: any;
@@ -81,6 +81,13 @@ export class SignUpComponent implements OnInit {
   fieldsEnabled: boolean = true;
   isPasswordDisable : boolean = true;
   orgExsist : boolean = false;
+  userDetails : any = {};
+  isTimeOutshow : boolean = false;
+  userId:any;
+  userPsw:any;
+  isErrorMessage : boolean = false;
+  isValidateOTP : boolean = false;
+  isEmailEmptyOrInvalid : boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -92,18 +99,35 @@ export class SignUpComponent implements OnInit {
     private loginService: LoginService,
     private sharedData: SharedDataService,
     public userService: UserService,
-    private profileService:ProfileService,
+    private rest_api:UsermanagementService,
     private crypto:CryptoService,
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
     public messageService:MessageService,
+    private location : Location
     //private cookieService:CookieService,
-  ) {}
+  ) {
+    this.route.queryParams.subscribe((res)=>{
+      if(res){
+        if(res.token){
+        let parms = JSON.parse(atob(res.token))
+        if(parms.screen == 2){
+          this.showUserScreen = true;
+          this.userId= parms.usermail
+          this.userPsw = parms.userpassword
+        }else{
+          this.showUserScreen = false;
+        }
+      }
+      }
+    }
+    )
+  }
 
   ngOnInit() {
 
     this.getPlanDetails();
-
+    this.spinner.show();
     this.messages = this.messages.map((message, index) => ({
       id: index+1,
       content: message
@@ -135,19 +159,38 @@ export class SignUpComponent implements OnInit {
   }
 
   getPlanDetails() {
-    this.service.getPlanDetails().subscribe((response: any) => {
-      this.planDetails = response.data;
-      this.planDetails.forEach(plan => {
-        plan.featuresList = plan.features.split(',').map(feature => feature.trim());
-      });
+    setTimeout(() => {
+      this.spinner.hide();      
+    }, 1000);
+    this.service.loadPredefinedBots().subscribe((response: any) => {
+      if(response){
+        response.forEach(element => {
+          let obj=element.product
+          obj["priceCollection"] = element.priceCollection
+          let data = element.product.metadata.product_features
+          obj["features"] = JSON.parse(data);
+          this.planDetails.push(obj)
+        });
+      }
+      console.log(this.planDetails)
     })
+  }
+
+  checkEmailValidity() {
+    const emailFormControl = this.signupForm.get('email');
+    this.isEmailEmptyOrInvalid = emailFormControl.value.trim() === '' || (emailFormControl.invalid && emailFormControl.touched);
   }
 
   showOtp(event){
     if(event.target.value.includes('@') && this.signupForm.get('email').valid){
-      this.isGenerate = true;
-    } else{
-      this.isGenerate = false;
+       if(event.target.value.endsWith('@gmail.com') || event.target.value.endsWith('@yahoo.com') || 
+       event.target.value.endsWith('@hotmail.com') || event.target.value.endsWith('@rediffmail.com')){
+         this.ispublicMail=true;
+         this.isGenerate = false;
+       } else {
+        this.isGenerate = true;
+        this.ispublicMail=false;
+       }
     }
   }
 
@@ -171,42 +214,75 @@ export class SignUpComponent implements OnInit {
   }
   generateOTP(isResend){
     this.spinner.show()
-    this.ispublicMail=false;
-    let userId=this.signupForm.value.email.toLowerCase();
-    //  this.isresend=true;
-     if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
-     userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
-       this.ispublicMail=true;
-       this.error='Only Business Email is allowed';
-       this.spinner.hide()
-       setTimeout(() => {
-        this.error='';
-      }, 3000);
-       return
-     } else {
-       this.ispublicMail=false;
-     }
+    // this.ispublicMail=false;
+    // let userId=this.signupForm.value.email.toLowerCase();
+    // //  this.isresend=true;
+    //  if(userId.endsWith('@gmail.com') || userId.endsWith('@yahoo.com') || 
+    //  userId.endsWith('@hotmail.com') || userId.endsWith('@rediffmail.com')){
+    //    this.ispublicMail=true;
+    //    this.error='Only Business Email is allowed';
+    //    this.spinner.hide()
+    //    setTimeout(() => {
+    //     this.error='';
+    //   }, 3000);
+    //    return
+    //  } else {
+    //    this.ispublicMail=false;
+    //  }
      this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
      if(data.message == "OTP Sent Successfully"){
       Swal.fire({
         title: 'Success!',
-        text: `OTP has been sent to your registered Email.`,
+        text: `OTP has been sent to your registered Email!`,
         icon: 'success',
         showCancelButton: false,
         allowOutsideClick: true
       })
+      this.isTimeOutshow = true;
       this.timer(2)
       this.isGenerate = false;
       this.isEmailDisable = true;
       this.isOtpSent = true;
-      this.isValidate = true;
       this.isShowOtp = true;
+      this.isValidateOTP = true;
       this.resendEnable = true;
       setTimeout(() => {
         this.resendEnable = false;
+        this.isTimeOutshow = false;
       }, 120000);
       this.spinner.hide()
+     } else if (data.errorMessage == "User already registered"){
+      this.spinner.show()
+      this.rest_api.getDetailsUser(this.signupForm.value.email.toLowerCase()).subscribe((data : any) =>{
+      this.spinner.hide()
+        if(data.response)
+        if(data.response.enterprisePlan){
+          Swal.fire({
+            title: 'Info',
+            text: `This user already requested for Enterprise plan. Please use other email to signup!`,
+            icon: 'info',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+        }else{
+        // if(data.response.registrationProcess == "basic_details_completed"){
+          Swal.fire({
+            title: 'Info',
+            text: `User Already exist, please processed sign in!`,
+            icon: 'info',
+            showCancelButton: false,
+            allowOutsideClick: true
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigate(['/user'],{
+                queryParams: { email : this.userEmail },
+              });
+            }
+          });
+        // }
+      }
+      })
      } else {
       this.spinner.hide()
       Swal.fire("Error",data.errorMessage,"error")
@@ -218,38 +294,34 @@ export class SignUpComponent implements OnInit {
     });
 
   }
-onSubmit() {
-this.showUserScreen = true;
-// var payload = new FormData();
-// var reqObj = {}
-// reqObj = {
-//   'firstName': this.signupForm.value.firstName,
-//   'lastName': this.signupForm.value.lastName,
-//   'userId' : this.signupForm.value.email.toLowerCase(),
-//   'password': this.signupForm.value.password,
-// }
-// payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-//   this.service.registrationStart(payload).subscribe(res => {
-//   if(res.body) {
-//     Swal.fire({
-//       title: 'Success',
-//       text: `Registration completed successfully!`,
-//       icon: 'success',
-//       showCancelButton: false,
-//       allowOutsideClick: false
-//     })
-//     this.showUserScreen = true;
-//   } else {
-
-//   }
-// }, err => {
-//     Swal.fire({
-//       title: 'Error!',
-//       icon: 'error',
-//       text: `${err.error.message} ! Please check your user name`,
-//       allowOutsideClick: false
-//     });
-//   });
+  onRegistrationStart() {
+    // this.showUserScreen = true;
+    this.spinner.show()
+    var payload = new FormData();
+    var reqObj = {}
+    reqObj = {
+      'firstName': this.signupForm.value.firstName,
+      'lastName': this.signupForm.value.lastName,
+      'userId' : this.signupForm.value.email.toLowerCase(),
+      'password': this.signupForm.value.password,
+    }
+    this.userId = this.signupForm.value.email.toLowerCase();
+    this.userPsw = this.signupForm.value.password
+    payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+      this.service.registrationStart(payload).subscribe(res => {
+        this.spinner.hide()
+        this.showUserScreen = true;
+        let url=this.router.url.split('?');
+        let rplaceUrl = {"screen":"2",usermail:this.signupForm.value.email.toLowerCase(),userpassword:this.signupForm.value.password} 
+        this.location.replaceState(url[0]+'?token='+btoa(JSON.stringify(rplaceUrl)));
+    }, err => {
+    Swal.fire({
+      title: 'Error!',
+      icon: 'error',
+      text: `${err.error.message} ! Please check your user name`,
+      allowOutsideClick: false
+    });
+  });
 }
 
 validateOTP(){
@@ -259,13 +331,14 @@ validateOTP(){
       {
         this.spinner.hide()
         this.isShowOtp = false;
+        this.isValidateOTP = false;
         this.isValidate = false;
         this.isSuccess = true;
         this.isGenerate = false;
         this.isPasswordDisable = false
         Swal.fire({
           title: 'Success!',
-          text: `OTP Verified Successfully.`,
+          text: `OTP Verified Successfully!`,
           icon: 'success',
           showCancelButton: false,
           allowOutsideClick: true
@@ -310,65 +383,37 @@ getAllDepartments() {
   })
 }
 
-// If country changes, states and cities gets changed according to the country selected 
 onChangeCountry(countryValue) {
   this.isInput = !this.isInput;
   this.stateInfo = State.getAllStates();
-
-  if (countryValue) {
-    const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
-    this.phnCountry = matchingCountry.isoCode;
-    this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode)
-    this.errorMessage = ""
+  if(countryValue){
+      const matchingCountry = this.countryInfo.find((item: any) => item.name === countryValue.name);
+      console.log(matchingCountry)
+      this.phnCountry = matchingCountry.flag;
+      this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
+      this.errorMessage=""
+      if (this.stateInfo.length === 0) {
+        this.stateInfo = [{ name: 'NA' }]
+        this.cityInfo = [{ name: 'NA' }];
+      }
   }
-  if (this.stateInfo == null || this.stateInfo.length === 0) {
-    this.userForm.get('state').disable();
-    this.userForm.get('city').disable();
-    this.userForm.get('state').clearValidators();
-    this.userForm.get('state').updateValueAndValidity();
-  }
-
-  // Set the flag to true if there are states available, otherwise false
-  this.fieldsEnabled = this.stateInfo && this.stateInfo.length > 0;
-
-  if (this.fieldsEnabled) {
-    this.userForm.get('state').enable();
-    this.userForm.get('city').enable();
-  } else {
-    // Clear state and city values if there are no states available
-    this.userForm.get('state').setValue('');
-    this.userForm.get('city').setValue('');
-  }
-
-  this.userForm.get('country').valueChanges.subscribe((selectedCountry) => {
-    if (selectedCountry) {
-      this.userForm.get('state').setValue('');
-      this.userForm.get('city').setValue('');
-    }
-  });
 }
 
-// If state changes, cities gets changed accordingly
 onChangeState(stateValue) {
   this.cityInfo = City.getAllCities();
-  if (stateValue) {
-    const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
-    this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
-    this.errorMessage1 = ""
+  if(stateValue){
+    const matchingState = this.stateInfo.find((item: any) => item.name == stateValue.name);
+      this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+      this.errorMessage1=""
     if (this.cityInfo.length === 0) {
       this.cityInfo = [{ name: 'NA' }];
     }
   }
-  this.userForm.get('state').valueChanges.subscribe((selectedState) => {
-    if (selectedState) {
-      this.userForm.get('city').setValue('');
-    }
-  });
 }
 
-onChangeCity(cityValue) {
-  if (cityValue) {
-    this.errorMessage2 = ''
+onChangeCity(cityValue){
+  if(cityValue){
+    this.errorMessage2 =''
   }
 }
 
@@ -382,66 +427,62 @@ numbersOnly(event): boolean {
   }
 }
 
-// If country and flag are different, it generates error message
-OnFlagChange(event, phonecode) {
-  var code = event.iso2;
-  var testcode = code.toString().toUpperCase();
-  if (testcode != phonecode) {
-    this.errorMessage = "Please Select Appropriate Country *";
-    this.errorMessage1 = "Please Select Appropriate State *";
-    this.errorMessage2 = "Please Select Appropriate City *"
-    this.userForm.get('state').enable();
-    this.userForm.get('city').enable();
+OnFlagChange(event : any) {
+  if(event.name != this.userForm.value.country.name){
+    this.isErrorMessage = true;
+    this.errorMessage = "Please Select Appropriate Country";
+    this.errorMessage1 = "Please Select Appropriate State";
+    this.errorMessage2 = "Please Select Appropriate City"
   }
-  const selectedCountry = this.countryInfo.find((item: any) => item.isoCode == code);
-  this.fieldsEnabled = State.getStatesOfCountry(selectedCountry.isoCode).length > 0;
 }
 
 get f() {
   return this.userForm.controls;
 }
 
-// To enable continue button if all fields are valid and 2 fields of state and city are disabled
-get userFormValid(): boolean {
-  return this.jobTitle.trim() !== '' && this.organization.trim() !== '' && this.department.trim() !== '' && this.state.trim() !== '' && this.city.trim() !== '' && this.zipCode.trim() !== '' && this.phoneNumber.trim() !== '';
-}
-
 registrationSave(){
   this.spinner.show();
+  // This payload is for Registration Continue API
   var payload = new FormData();
   var reqObj = {}
   reqObj = {
-    firstName: this.signupForm.value.firstName,
-    lastName: this.signupForm.value.lastName,
-    userId : this.signupForm.value.email.toLowerCase(),
-    password: this.signupForm.value.password,
-    designation : this.userForm.value.jobTitle,
-    department : this.userForm.value.department,
-    company : this.userForm.value.organization,
-    country : this.userForm.value.country,
-    state : this.userForm.value.state,
-    city : this.userForm.value.city,
-    zipcode : this.userForm.value.zipCode,
+    // firstName: this.signupForm.value.firstName,
+    // lastName: this.signupForm.value.lastName,
+    // userId : this.signupForm.value.email.toLowerCase(),
+    // password: this.signupForm.value.password,
+    userId:this.userId,
+    jobTitle : this.userForm.value.jobTitle,
+    department : this.userForm.value.department.departmentId,
+    organization : this.userForm.value.organization,
+    country : this.userForm.value.country.name,
+    state : this.userForm.value.state.name,
+    city : this.userForm.value.city.name,
+    zipCode : this.userForm.value.zipCode,
     phoneNumber : this.userForm.value.phoneNumber,
-    isSubscriptionEnabled : true
+    // isSubscriptionEnabled : true
 }
 payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-this.service.registerUser(payload).subscribe((res : any) => {
+this.service.registrationContinue(payload).subscribe((res : any) => {
 this.spinner.hide();
-if(res.body.message == "Registration Complete") {
-  Swal.fire({
-    title: 'Success!',
-    text: 'Registration Done Successfully',
-    icon: 'success',
-    showCancelButton: false,
-    allowOutsideClick: true
-}).then((result) => {
-  if (result.value) {
+if(res.body.message == "User Details Saved Successfully!!") {
+  let obj = {email : this.userId, password : this.userPsw}
     this.router.navigate(['/subscription'],{
-      queryParams: { email : this.signupForm.value.email.toLowerCase() },
+      queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
     });
-  }
-});
+//   Swal.fire({
+//     title: 'Success!',
+//     text: 'User details saved successfully. Please processed with subscription!',
+//     icon: 'success',
+//     showCancelButton: false,
+//     allowOutsideClick: true
+// }).then((result) => {
+//   if (result.value) {
+//     let obj = {email : this.userId, password : this.userPsw}
+//     this.router.navigate(['/subscription'],{
+//       queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+//     });
+//   }
+// });
 } else {
   this.spinner.hide();
   Swal.fire("Error",res.errorMessage,"error")
@@ -477,7 +518,7 @@ getErrorMessage(controlName: string): string {
       return "Minimum 2 characters required";
     }
     if (control.errors.pattern) {
-      return "Only Alphabets and Numbers are allowed";
+      return "Space between words are allowed";
     }
   }
 
@@ -485,7 +526,6 @@ getErrorMessage(controlName: string): string {
 }
 
 checkOrganizationName(event : any) {
-  console.log(event.target.value)
   this.service.organizationCheck(event.target.value).subscribe(res => {
     if (res.message == "Organization Name already Exists") {
       this.orgExsist = true;
@@ -501,5 +541,5 @@ onKeydown(event){
     if(!temp){
      event.preventDefault();
     } 
-   }
+   } 
 }
