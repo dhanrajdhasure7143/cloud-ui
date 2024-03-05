@@ -62,8 +62,10 @@
                 </div>
             </div>
             <div class="col-md-12 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: center;">
-                <span class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </span>
-                <span class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </span>
+                <!-- <span [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </span> -->
+                <!-- <span [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </span> -->
+                <button [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </button>
+                <button [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </button>
             </div>
             <div class="col-md-12 p-10 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: center;">
                 <button type="button" class="btn btn-primary" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed (USD {{totalAmount}}) </button>

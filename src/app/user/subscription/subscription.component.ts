@@ -130,61 +130,48 @@ hideDescription() {
   this.showArrowDown = false;
 }
 
-paymentPlan(){
-  // this.isReview_order = true;
-   
-// {
-//   "price":["price_1OoK1ASGPu394vele0kSwgko", "price_1OoJvwSGPu394velC9wLmrR6"],
-//   "customerEmail":"praveen.bookala@gmail.com",
-//   "successUrl":"https://ezflow.dev.epsoftinc.com/users",
-//   "cancelUrl":"https://ezflow.dev.epsoftinc.com/users"
-//   }
-  this.selected_plans_list=[];
-  // this.selectedPlans.forEach(element => {
-  //   element.planDetails.forEach(item => {
-  //     if(element.selectedTerm == item.interval){
-  //       let obj={};
-  //       obj["predefinedBotName"]=element.predefinedBotName;
-  //       obj["interval"] = item.interval;
-  //       obj["priceId"] = item.priceId;
-  //       obj["amount"] = item.amount
-  //       this.selected_plans_list.push(obj);
-  //     }
-  //   });
-  // });
-  
-  let req_body={
-      "price":["price_1OoK1ASGPu394vele0kSwgko", "price_1OoJvwSGPu394velC9wLmrR6"],
-      "customerEmail":"praveen.bookala@gmail.com",
-      "successUrl":environment.paymentSuccessURL,
-      "cancelUrl":environment.paymentFailuerURL
+paymentPlan() {
+  let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
+  let filteredPriceIds = [];
+  this.selectedPlans.forEach((element) => {
+    element.priceCollection.forEach((price) => {
+      if (price.recurring.interval === selectedInterval) {
+        filteredPriceIds.push(price.id);
       }
+    });
+  });
 
-  // this.selectedPlans.forEach(element => {
-  //     element.planDetails.forEach(item => {
-  //       this.selected_plans_list.push(item.priceId)
-  // })
-  // })
-  this.service.getCheckoutScreen(req_body).pipe(
-    switchMap((session:any) => {
-      console.log(session)
-      return this.stripeService.redirectToCheckout({ sessionId: session.id })
-    })
-  )
-  .subscribe(res=>{
-    console.log(res)
-  })
-  console.log(this.selected_plans_list, this.selectedPlans)
-  // if(this.selectedPlans.length == 0){
-  //   return
-  // }
-  // let selectedBotPlans = JSON.stringify(selected_plans_list)
-  // this.profileservice.updateData(selectedBotPlans)
-  // this.router.navigate(["/order"],{
-  //   queryParams: { email : this.userEmail,details : selectedBotPlans, password : this.password  },
-  // });
+  if (filteredPriceIds.length === 0) {
+    // Handle the case when no price is selected for the chosen interval
+    console.error('No price selected for the chosen interval.');
+    return;
+  }
 
+  let req_body = {
+    "price": filteredPriceIds,
+    "customerEmail": this.userEmail,
+    "successUrl": environment.paymentSuccessURL,
+    "cancelUrl": environment.paymentFailuerURL
+  };
+  console.log("PLAN_ID's", req_body);
+  
+  this.service.getCheckoutScreen(req_body)
+    .pipe(
+      switchMap((session: any) => {
+        console.log(session);
+        return this.stripeService.redirectToCheckout({ sessionId: session.id });
+      })
+    )
+    .subscribe(
+      res => {
+        console.log(res);
+      },
+      error => {
+        console.error('Error during payment:', error);
+      }
+    );
 }
+
 
 sendEmailEnterPrisePlan(){
   this.spinner.show();
@@ -228,22 +215,41 @@ readValue(value){
   this.isReview_order = false;
 }
 
-planSelection(event){
-  this.selectedPlan = event
-  let plansData = []
-  this.selectedPlans.forEach((item : any) => {
-    plansData.push(item.planDetails)
-  })
-  console.log(plansData,"plansData")
-  this.totalAmount = 0;
-  for (const planGroup of plansData) {
-    for (const plan of planGroup) {
-      if (plan.interval === this.selectedPlan) {
-        this.totalAmount += plan.amount;
-        console.log(this.totalAmount)
-      }
-    }
-  }
+// planSelection(event){
+//   this.selectedPlan = event
+//   let plansData = []
+//   this.selectedPlans.forEach((item : any) => {
+//     plansData.push(item.planDetails)
+//   })
+//   console.log(plansData,"plansData")
+//   this.totalAmount = 0;
+//   for (const planGroup of plansData) {
+//     for (const plan of planGroup) {
+//       if (plan.interval === this.selectedPlan) {
+//         this.totalAmount += plan.amount;
+//         console.log(this.totalAmount)
+//       }
+//     }
+//   }
+// }
 
-}
+  planSelection(interval: string) {
+    this.selectedPlan = interval;
+    let plansData = [];
+    let selectedInterval = (interval === 'Monthly') ? 'month' : 'year';
+    this.selectedPlans.forEach((item) => {
+      item.priceCollection.forEach((price) => {
+        if (price.recurring.interval === selectedInterval) {
+          plansData.push(price.unitAmount);
+        }
+      });
+    });
+    console.log(plansData, "plansData");
+    this.totalAmount = 0;
+    plansData.forEach((amount) => {
+      this.totalAmount += amount;
+    });
+    console.log(this.totalAmount);
+  }
+  
 }

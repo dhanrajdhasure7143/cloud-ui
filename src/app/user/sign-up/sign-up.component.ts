@@ -512,7 +512,7 @@ getErrorMessage(controlName: string): string {
       return "Minimum 2 characters required";
     }
     if (control.errors.pattern) {
-      return "Only Numbers are allowed";
+      return "Space between words are allowed";
     }
   }
 
