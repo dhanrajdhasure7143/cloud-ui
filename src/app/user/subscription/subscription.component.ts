@@ -210,6 +210,7 @@ onSelectPredefinedBot(plan, index) {
   });
   this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "";
   this.isDisabled = this.selectedPlans.length === 0;
+  this.planSelection(this.selectedPlan);
 }
 
 readValue(value){
