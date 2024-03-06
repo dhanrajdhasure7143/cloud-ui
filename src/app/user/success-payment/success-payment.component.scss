@@ -24,6 +24,7 @@
     justify-content: center;
     align-items:center;
     cursor: pointer;
+    margin-top: -25px;
 }
 
 .success-image{
@@ -34,8 +35,10 @@
 
 .image-circle:hover .wave span {
     position:absolute;
-    left: 150px;
-    top:80px;
+    // left: 150px;
+    // top:80px;
+    left: 37%;
+    top: 14%;
     width: 100px;
     height: 100px;
     background: #a5e7ba;
@@ -58,6 +61,7 @@
     margin: -20px 0 15px;
     font-size: 36px;
     font-weight: bolder;
+    margin-top: -50px 
 }
 
 .success-message1{
