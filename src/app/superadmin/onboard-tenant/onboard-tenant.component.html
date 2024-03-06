@@ -92,7 +92,7 @@
                     <div class="form-group col-md-6 pr-0">
                         <label for="department" class="label-control" id="label-name">Department<span class="star">*</span></label>
                         <p-dropdown formControlName="department" [style]="{'width':'100%'}" autocomplete="off" 
-                          [options]="departments" optionLabel="departmentName" value="departmentId" placeholder="Select Department"> 
+                          [options]="departments" optionLabel="departmentName" optionValue="departmentId" placeholder="Select Department"> 
                         </p-dropdown>
                         <span *ngIf="f.department.touched && f.department.errors" class="required">
                             Department required </span>
@@ -101,7 +101,7 @@
                     <div class="form-group col-md-6 pl-0">
                         <label for="country" class="label-control" id="label-name">Country<span class="star">*</span></label>
                         <p-dropdown formControlName="country" [filter]="true" [style]="{'width':'100%'}" autocomplete="off" 
-                          [options]="countryInfo" optionLabel="name" optionValue ="name" placeholder="Select Country" (onChange)="onChangeCountry($event.value)"> 
+                          [options]="countryInfo" optionLabel="name" optionValue ="name" placeholder="Select Country" (onChange)="onChangeCountry($event.value,'change')"> 
                         </p-dropdown>
                         <span *ngIf="f.country.touched && f.country.errors" class="required">
                             Country required </span>
@@ -110,7 +110,7 @@
                     <div class="form-group col-md-6 pr-0">
                         <label for="state" class="label-control" id="label-name">State<span class="star">*</span></label>
                         <p-dropdown formControlName="state" [filter]="true" [style]="{'width':'100%'}" autocomplete="off" 
-                          [options]="stateInfo" optionLabel="name" optionValue="name" placeholder="Select State" (onChange)="onChangeState($event.value)"> 
+                          [options]="stateInfo" optionLabel="name" optionValue="name" placeholder="Select State" (onChange)="onChangeState($event.value,'change')"> 
                         </p-dropdown>
                         <span *ngIf="f.state.touched && f.state.errors" class="required">
                             State required </span>

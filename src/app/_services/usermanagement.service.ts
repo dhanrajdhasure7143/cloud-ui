@@ -63,6 +63,20 @@ export class UsermanagementService implements OnInit {
   getDetailsUser(username : any){
     return this.http.get('/api/user/'+username,{responseType:"json"})
   }
+
+  getEnterpriseList(){
+    return this.http.get('/api/tenant/enterprise-tenantlist')
   }
 
+  offBoardTenant(status, id) {
+    const url = `/api/tenant/offBoard-Tenant?tenantId=${id}&status=${status}`;
+    const emptyBody = {};
+    return this.http.post(url,emptyBody);
+  }
 
+  extendTenure(id, date){
+    const url = `/api/tenant/enterprise-user-update-expInfo?tenantId=${id}`;
+    return this.http.post(url,date);
+  }
+
+}
