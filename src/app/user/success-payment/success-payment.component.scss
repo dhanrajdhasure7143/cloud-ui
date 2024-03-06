@@ -11,6 +11,7 @@
     max-width: 400px;
     text-align: center;
     padding: 20px;
+    position: relative;
     // height: 75%;
     // left: 35%;
     // top: 10%;
@@ -53,27 +54,26 @@
 
 .title-success{
     color: #44b669;
-    margin: -15px 1px 15px 1px;
+    // margin: -25px 1px 15px 1px;
+    margin: -20px 0 15px;
     font-size: 36px;
     font-weight: bolder;
 }
 
 .success-message1{
     color: black;
-    margin:15px;
-    font-size: 16px;
+    // margin:6px 1px 4px 1px;
+    margin: 10px 0 8px;
+    font-size: 14px;
     font-weight: bold;
 }
 
 .success-message2 {
     color: black;
-    margin: 5px;
-    font-size: 16px;
+    // margin: 5px;
+    margin: 8px 0;
+    font-size: 15px;
     font-weight: bold;
-}
-.redirect-timer{
-    text-align: center;
-    color: black;
 }
 
 @media only screen and (min-width: 768px) {
