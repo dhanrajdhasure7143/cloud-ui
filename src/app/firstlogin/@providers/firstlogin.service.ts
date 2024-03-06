@@ -91,4 +91,13 @@ export class FirstloginService {
   getCheckoutScreen(body){
     return this.http.post("/subscriptionservice/v1/stripe/create-checkout-session",body)
   }
+
+  registrationComplete(id:any){
+    return this.http.post('/api/user/complete_user_registration/'+id,{});
+  }
+
+  insertCustomerSubscription(userEmail: string, tenantId: string) {
+    return this.http.post(`/subscriptionservice/v1/stripe/insert-customer-subscriptions?userId=${userEmail}&tenantId=${tenantId}`, {});
+  }
+  
 }

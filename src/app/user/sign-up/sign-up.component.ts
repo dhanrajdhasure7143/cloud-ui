@@ -87,6 +87,7 @@ export class SignUpComponent implements OnInit {
   userPsw:any;
   isErrorMessage : boolean = false;
   isValidateOTP : boolean = false;
+  isEmailEmptyOrInvalid : boolean = false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -173,6 +174,11 @@ export class SignUpComponent implements OnInit {
       }
       console.log(this.planDetails)
     })
+  }
+
+  checkEmailValidity() {
+    const emailFormControl = this.signupForm.get('email');
+    this.isEmailEmptyOrInvalid = emailFormControl.value.trim() === '' || (emailFormControl.invalid && emailFormControl.touched);
   }
 
   showOtp(event){

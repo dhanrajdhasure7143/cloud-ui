@@ -20,5 +20,6 @@ export const environment = {
    isSubscrptionEnabled : false,
    isNewSignupFlow : false,
    paymentSuccessURL:"https://ezflow.staging.epsoftinc.com/#/success",
-   paymentFailuerURL:"https://ezflow.staging.epsoftinc.com/#/fail"
+   paymentFailuerURL:"https://ezflow.staging.epsoftinc.com/#/fail",
+   stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
 }
