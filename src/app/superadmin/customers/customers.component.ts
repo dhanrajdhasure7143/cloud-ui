@@ -48,10 +48,11 @@ export class CustomersComponent implements OnInit {
 
   newColumnList = [
     { ColumnName: 'tenantId', DisplayName: 'Tenant ID', sort: true, ShowFilter: true },
-    { ColumnName: 'company', DisplayName: 'Company Name', sort: true, ShowFilter: true },
+    { ColumnName: 'tenantName', DisplayName: 'Tenanat Name', sort: true, ShowFilter: true },
     { ColumnName: 'tenantDomain', DisplayName: 'Tenant Domain', sort: true, ShowFilter: true },
-    { ColumnName: 'country', DisplayName: 'Country', sort: true, ShowFilter: true },
-    { ColumnName: 'phoneNumber', DisplayName: 'Phone Number', sort: true, ShowFilter: true },
+    { ColumnName: 'tenantType', DisplayName: 'Tenant Type', sort: true, ShowFilter: true },
+    { ColumnName: 'isOffboardTenant', DisplayName: 'Offboard Status', sort: true, ShowFilter: true },
+    { ColumnName: 'enterpriseUserExpiryAt', DisplayName: 'Expiry Date', sort: true, ShowFilter: true },
     { ColumnName: 'newAction', DisplayName: 'Action', sort: false, ShowFilter: false },
   ];
 
@@ -211,29 +212,32 @@ export class CustomersComponent implements OnInit {
   loadNewData(): void {
     this.api.getEnterpriseList().subscribe((response: any[]) => {
       if (response) {
-        this.newTabData = response.reduce((acc, element) => {
-          return acc.concat(element.usersData.map(user => ({ ...element, ...user })));
-        }, []);
+        this.newTabData = response
+
+        // .reduce((acc, element) => {
+        //   return acc.concat(element.usersData.map(user => ({ ...element, ...user })));
+        // }, []);
 
         console.log('This is the new API Response from the new Method: ', this.newTabData);
       }
     });
   }
 
-  getPlanDetails() {
-    this.api.getEnterpriseList().subscribe((response: any) => {
-      if(response){
-        response.forEach(element => {
-          let obj=element.product
-          obj["usersData"] = element.priceCollection
-          let data = element.product.metadata.product_features
-          obj["features"] = JSON.parse(data);
-          this.newTabData.push(obj)
-        });
-      }
-      console.log(this.newTabData)
-    })
-  }
+  // getPlanDetails() {
+  //   this.api.getEnterpriseList().subscribe((response: any) => {
+  //     if(response){
+  //       this.newTabData=response;
+  //       // response.forEach(element => {
+  //       //   let obj=element.product
+  //       //   obj["usersData"] = element.priceCollection
+  //       //   let data = element.product.metadata.product_features
+  //       //   obj["features"] = JSON.parse(data);
+  //       //   this.newTabData.push(obj)
+  //       // });
+  //     }
+  //     console.log(this.newTabData)
+  //   })
+  // }
 
   processNewData(newData: any[]): void {
       console.log('This is the UsersData: ', newData);

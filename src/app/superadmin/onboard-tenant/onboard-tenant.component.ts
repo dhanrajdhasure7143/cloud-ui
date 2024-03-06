@@ -100,29 +100,29 @@ export class OnboardTenantComponent implements OnInit {
     this.getAllDepartments();
 }
   ngOnChanges(changes:SimpleChanges){
-    this.getCountries();
-    this.getAllDepartments();
+    console.log(this.userData, "userData")
+    // this.getCountries();
+    // this.getAllDepartments();
     this.tenantForm.get("userId").setValue(this.userData["userId"]);
     this.tenantForm.get("firstName").setValue(this.userData["firstName"]);
     this.tenantForm.get("lastName").setValue(this.userData["lastName"]);
     this.tenantForm.get("jobTitle").setValue(this.userData["designation"]);
-    this.tenantForm.get("department").setValue(this.userData["department"]);
     this.tenantForm.get("company").setValue(this.userData["company"]);
     this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
-    const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
-    this.tenantForm.get("country").setValue(this.userData["country"]);
-    this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
-    this.tenantForm.get("state").setValue(this.stateInfo["name"]);
-    const matchingState = this.stateInfo.find((item: any) => item.name === this.userData["state"]);
-    this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
-    this.tenantForm.get("city").setValue(this.cityInfo["name"]);
-    if (this.stateInfo.length === 0) {
-      this.tenantForm.get("state").setValue('NA');
-      this.tenantForm.get("city").setValue('NA');
-    }
-    if (this.cityInfo.length === 0) {
-      this.tenantForm.get("city").setValue('NA');
-    }
+
+         const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
+        this.tenantForm.get("country").setValue(this.userData["country"]);
+        this.onChangeCountry(this.userData["country"],"update");
+
+        // const matchingState = this.stateInfo.find((item: any) => item.name === this.userData["state"]);
+        // this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
+        // if (this.stateInfo.length === 0) {
+        //   this.tenantForm.get("state").setValue('NA');
+        //   this.tenantForm.get("city").setValue('NA');
+        // }
+        // if (this.cityInfo.length === 0) {
+        //   this.tenantForm.get("city").setValue('NA');
+        // }
   }
 
   updateAccount() {
@@ -193,95 +193,44 @@ export class OnboardTenantComponent implements OnInit {
     this.countryInfo = Country.getAllCountries();
   }
 
-  // onChangeCountry(countryValue) {
-  //   console.log(countryValue)
-  //   this.isInput = !this.isInput;
-  //   this.stateInfo = State.getAllStates();
-    
-  //   if (countryValue) {
-  //     const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
-  //     this.phnCountryCode = matchingCountry.isoCode;
-  //     this.stateInfo = State.getStatesOfCountry(matchingCountry.isoCode);
-  //     this.errorMessage = ""
-  //   }
-  //   if (this.stateInfo == null || this.stateInfo.length === 0) {
-  //     this.tenantForm.get('state').disable();
-  //     this.tenantForm.get('city').disable();
-  //     this.tenantForm.get('state').clearValidators();
-  //     this.tenantForm.get('state').updateValueAndValidity();
-  //   }
-    
-  //   // Set the flag to true if there are states available, otherwise false
-  //   this.fieldsEnabled = this.stateInfo && this.stateInfo.length > 0;
-    
-  //   if (this.fieldsEnabled) {
-  //     this.tenantForm.get('state').enable();
-  //     this.tenantForm.get('city').enable();
-  //   } else {
-  //     // Clear state and city values if there are no states available
-  //     this.tenantForm.get('state').setValue('');
-  //     this.tenantForm.get('city').setValue('');
-  //   }
-  // }
-  
-  // onChangeState(stateValue) {
-  //   console.log(stateValue)
-  //   this.cityInfo = City.getAllCities();
-  //   if (stateValue) {
-  //     const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
-  //     this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
-  //     this.errorMessage1 = ""
-  //     this.tenantForm.get('state').setValue(stateValue);
-  //     if (this.cityInfo.length === 0) {
-  //       this.cityInfo = [{ name: 'NA' }];
-  //     }
-  //   }
 
-  //   this.cityInfo.find((cityItem: any) =>{
-  //     if(cityItem.name === this.userData["city"]){
-  //       this.tenantForm.get('city').setValue(cityItem.name);
-  //       console.log(cityItem.name,"cityItem.name")
-  //       this.tenantForm.get('city').setValue(this.userData["city"]);
-
-  //     }
-
-  //   } );
-  // }
-
-  // onChangeCity(cityValue) {
-  //   console.log(cityValue)
-  //   if (cityValue) {
-  //     this.tenantForm.get('city').setValue(cityValue);
-  //     this.errorMessage2 = ''
-  //   }
-  // }
-
-  onChangeCountry(countryValue) {
+  onChangeCountry(countryValue,type) {
+    this.countryInfo = Country.getAllCountries();
     this.stateInfo = State.getAllStates();
     if(countryValue){
-        const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue.name);
-        console.log(matchingCountry,"matchingCountry")
+        const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
         this.phnCountry = matchingCountry.isoCode;
-        console.log(this.phnCountry)
         this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
         this.errorMessage=""
         if (this.stateInfo.length === 0) {
           this.stateInfo = [{ name: 'NA' }]
           this.cityInfo = [{ name: 'NA' }];
         }
+        if(type=="update"){
+          setTimeout(() => {
+            this.onChangeState(this.userData["state"],"update");
+            this.tenantForm.get("state").setValue(this.userData["state"]);
+          }, 100);
+        }
     }
+
   }
   
-  onChangeState(stateValue) {
+  onChangeState(stateValue, type) {
     this.cityInfo = City.getAllCities();
     if(stateValue){
-      const matchingState = this.stateInfo.find((item: any) => item.name == stateValue.name);
+      const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
+      console.log(matchingState,this.stateInfo)
         this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
         this.errorMessage1=""
       if (this.cityInfo.length === 0) {
         this.cityInfo = [{ name: 'NA' }];
       }
+      if(type =="update"){
+        this.tenantForm.get("city").setValue(this.userData["city"]);
+      }
     }
+
   }
   
   onChangeCity(cityValue){
@@ -359,7 +308,8 @@ export class OnboardTenantComponent implements OnInit {
 
   getAllDepartments(){
     this.service.getAllDepartments().subscribe(response=> {
-      this.departments = response;      
+      this.departments = response;  
+        this.tenantForm.get("department").setValue(this.userData["department"]);
     })
   }
   loopTrackBy(index, term){
