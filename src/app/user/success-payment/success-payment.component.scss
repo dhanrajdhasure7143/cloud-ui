@@ -1,19 +1,19 @@
 .container-fluid{
     background-color:rgba(0, 0, 0, 0.125);
     height: 100vh;
-    display: flex;
+    // display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .card{
     width: 80%;
-    max-width: 400px;
+    // max-width: 400px;
     text-align: center;
     padding: 20px;
-    // height: 75%;
-    // left: 35%;
-    // top: 10%;
+    height: 75%;
+    left: 35%;
+    top: 10%;
 }
 
 .image-circle {
@@ -53,14 +53,14 @@
 
 .title-success{
     color: #44b669;
-    margin: -15px 1px 15px 1px;
+    margin: -25px 1px 15px 1px;
     font-size: 36px;
     font-weight: bolder;
 }
 
 .success-message1{
     color: black;
-    margin:15px;
+    margin:6px 1px 4px 1px;
     font-size: 16px;
     font-weight: bold;
 }
@@ -70,10 +70,6 @@
     margin: 5px;
     font-size: 16px;
     font-weight: bold;
-}
-.redirect-timer{
-    text-align: center;
-    color: black;
 }
 
 @media only screen and (min-width: 768px) {
