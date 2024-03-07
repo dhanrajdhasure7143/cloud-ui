@@ -49,19 +49,17 @@ export class SuccessPaymentComponent implements OnInit {
             }else{
               Swal.fire({
                 title: 'Error!',
-                text: `Subscription failed, Please try again!`,
+                text: "Something went wrong!",
                 icon: 'error',
                 showCancelButton: false,
                 allowOutsideClick: false,
               })
             }
           }, subscriptionError => {
-            // Handle subscription error if needed
-          Swal.fire("Error","Subscription failed, Please try again!","error")
+              Swal.fire("Error","Something went wrong!","error")
           });
         }, error => {
-          // Handle error if needed
-          Swal.fire("Error","Subscription failed, Please try again!","error")
+            Swal.fire("Error","Something went wrong!","error")
         });
       }
     });

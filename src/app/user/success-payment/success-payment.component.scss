@@ -11,6 +11,7 @@
     max-width: 400px;
     text-align: center;
     padding: 20px;
+    position: relative;
     // height: 75%;
     // left: 35%;
     // top: 10%;
@@ -23,6 +24,7 @@
     justify-content: center;
     align-items:center;
     cursor: pointer;
+    margin-top: -25px;
 }
 
 .success-image{
@@ -33,8 +35,10 @@
 
 .image-circle:hover .wave span {
     position:absolute;
-    left: 150px;
-    top:80px;
+    // left: 150px;
+    // top:80px;
+    left: 37%;
+    top: 14%;
     width: 100px;
     height: 100px;
     background: #a5e7ba;
@@ -53,27 +57,27 @@
 
 .title-success{
     color: #44b669;
-    margin: -15px 1px 15px 1px;
+    // margin: -25px 1px 15px 1px;
+    margin: -20px 0 15px;
     font-size: 36px;
     font-weight: bolder;
+    margin-top: -50px 
 }
 
 .success-message1{
     color: black;
-    margin:15px;
-    font-size: 16px;
+    // margin:6px 1px 4px 1px;
+    margin: 10px 0 8px;
+    font-size: 14px;
     font-weight: bold;
 }
 
 .success-message2 {
     color: black;
-    margin: 5px;
-    font-size: 16px;
+    // margin: 5px;
+    margin: 8px 0;
+    font-size: 15px;
     font-weight: bold;
-}
-.redirect-timer{
-    text-align: center;
-    color: black;
 }
 
 @media only screen and (min-width: 768px) {
