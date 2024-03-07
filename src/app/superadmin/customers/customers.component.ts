@@ -268,8 +268,8 @@ export class CustomersComponent implements OnInit {
         },   
         error => {
           console.error('API Error IS HERE :', error);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to Offboard Tenant.' });
-
+          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Failed to Offboard Tenant.' });
+          this.spinner.hide();
           if (error.errorCode && error.errorMessage) {
             console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
           }
@@ -302,8 +302,9 @@ export class CustomersComponent implements OnInit {
           this.spinner.hide();
         },
         error => {
+          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Failed to extend tenure' });
           console.error('API Expiry error IS HERE :', error);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to extend tenure.' });
+          this.spinner.hide();
           if (error.errorCode && error.errorMessage) {
             console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
           }
