@@ -67,50 +67,50 @@
                 </span>  
                 <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt)"></button>
               </div>
-            </ng-template>
-                <ng-template pTemplate="header" let-columns>
+              </ng-template>
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
+                        <p-columnFilter *ngIf="each.ShowFilter" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                        [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
+                          optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
+                        </p-dropdown>
+                      </ng-template>
+                    </p-columnFilter>
+                    <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
                   <tr>
-                    <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
-                      <p-columnFilter *ngIf="each.ShowFilter" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                      [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
-                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
-                        optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
-                      </p-dropdown>
-                    </ng-template>
-                  </p-columnFilter>
-                  <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-                        <tr>
-                            <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top">
-                                <span *ngIf="col.ColumnName!='action'">
-                                    <span *ngIf="col.ColumnName!='createdDate'">{{rowData[col.ColumnName]}}</span>
-                                    <span *ngIf="col.ColumnName=='createdDate'">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
-                                </span>
-                                <span *ngIf="col.ColumnName=='newAction'" class="actionmenu">
-                                    <a (click)="openOffboardOverlay('update', rowData.tenantId)" pTooltip="Edit" tooltipPosition="top">
-                                        <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
-                                        <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
-                                    </a>
-                                </span>
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                      <tr>
-                        <td style="justify-content: center;" colspan="8">No Records Found</td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                </div>
-            </div>
+                      <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top">
+                          <span *ngIf="col.ColumnName!='action'">
+                              <span *ngIf="col.ColumnName!='enterpriseUserCreatedAt' && col.ColumnName!='enterpriseUserExpiryAt'">{{rowData[col.ColumnName]}}</span>
+                              <span *ngIf="col.ColumnName=='enterpriseUserCreatedAt' || col.ColumnName=='enterpriseUserExpiryAt'">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
+                          </span>
+                          <span *ngIf="col.ColumnName=='newAction'" class="actionmenu">
+                              <a (click)="openOffboardOverlay('update', rowData.tenantId, rowData.isOffboardTenant, rowData.enterpriseUserExpiryAt)" pTooltip="Edit" tooltipPosition="top">
+                                  <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                  <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                              </a>
+                          </span>
+                      </td>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td style="justify-content: center;" colspan="8">No Records Found</td>
+                  </tr>
+              </ng-template>
+            </p-table>
+          </div>
         </div>
-      </p-tabPanel>
+      </div>
+    </p-tabPanel>
 
-      <p-tabPanel header="Subscribed Users">
+    <p-tabPanel header="Subscribed Users">
 
         <div class="row">
           <div class="col-12">
@@ -290,31 +290,35 @@
     <app-split-overlay (closeOverlay)="closeOffboardOverlay($event)">
       <div class="h-100">
         <div class="create-header">
-          <h3> Edit </h3>
+          <h3> Tenant Details Updation </h3>
         </div>
         <div class="createform-overlay">
-          <h5> Please select the below Options </h5>
-        <label style="margin-right: 20px;">
+          <!-- <h5> Please select the below Options </h5> -->
+        <label style="margin-right: 20px;" *ngIf="isOffboarded== false">
           <input type="radio" name="actionType" [(ngModel)]="selectedAction" value="offboard"
             (change)="toggleActionType()"> Offboard Tenant
+        </label>
+        <label style="margin-right: 20px;" *ngIf="isOffboarded">
+          <input type="radio" name="actionType" [(ngModel)]="selectedAction" value="offboard"
+            (change)="toggleActionType()"> Revoke Tenant
         </label>
         <label>
           <input type="radio" name="actionType" [(ngModel)]="selectedAction" value="extendTenure"
             (change)="toggleActionType()"> Extend Tenure
         </label>
         <div >
-          <div *ngIf="isOffboarding" style="margin-top: 20px;">
+          <!-- <div *ngIf="isOffboarding && !isOffboarded" style="margin-top: 20px;">
             <div class="form-group col-md-12 p-0">
               <label class="label-control">Reason for Offboarding<span class="star">*</span></label>
               <textarea class="form-control data" placeholder="Enter reason" [(ngModel)]="offboardingReason"></textarea>
               <span *ngIf="!offboardingReason && offboardingReason.touched" class="errspan required"> Offboarding Reason
                 Required* </span>
             </div>
-          </div>
+          </div> -->
           <div *ngIf="isExtendTenure" style="margin-top: 20px;">
             <div class="form-group col-md-12 p-0">
               <label class="label-control">Select Date for Tenure Extension<span class="star">*</span></label>
-              <input type="date" class="form-control data" [(ngModel)]="tenureExtensionDate" />
+              <input type="date" class="form-control data" [(ngModel)]="tenureExtensionDate" [min]="minDate()"/>
               <span *ngIf="!tenureExtensionDate && tenureExtensionDate.touched" class="errspan required"> Tenure Extension
                 Date Required* </span>
             </div>
@@ -328,12 +332,17 @@
             Extend Tenure
           </button>
 
-          <button *ngIf="selectedAction === 'offboard'" class="btn btn-primary btn-update" (click)="performAction()"
-            [disabled]="selectedAction === 'offboard' && !offboardingReason">
+          <button *ngIf="selectedAction === 'offboard' && isOffboarded== false " class="btn btn-primary btn-update" (click)="performAction()"
+            >
             Offboard Tenant
           </button>
 
-          
+          <!-- [disabled]="selectedAction === 'offboard' && !offboardingReason" -->
+
+          <button *ngIf="selectedAction === 'offboard' && isOffboarded== true " class="btn btn-primary btn-update" (click)="performAction()"
+            [disabled]="selectedAction === 'offboard' && offboardingReason">
+            Revoke Tenant
+          </button> 
         </div>
 
         </div>
