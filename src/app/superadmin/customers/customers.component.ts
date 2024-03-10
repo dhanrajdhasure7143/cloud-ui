@@ -29,10 +29,11 @@ export class CustomersComponent implements OnInit {
   isOffboarding = false;
   offboardingReason = '';
   selectedAction: 'offboard' | 'extendTenure' | null = null;
-  tenureExtensionDate: String = null;
+  tenureExtensionDate: string = '';
   isExtendTenure=false;
   tenantId: string = '';
-  isOffboarded:boolean=false;
+  statusValue:boolean =true;
+  showToast: boolean = false;
 
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
@@ -49,9 +50,8 @@ export class CustomersComponent implements OnInit {
     { ColumnName: 'tenantId', DisplayName: 'Tenant ID', sort: true, ShowFilter: true },
     { ColumnName: 'tenantName', DisplayName: 'Tenanat Name', sort: true, ShowFilter: true },
     { ColumnName: 'tenantDomain', DisplayName: 'Tenant Domain', sort: true, ShowFilter: true },
-    { ColumnName: 'systemAdminUsers', DisplayName: 'System Admin Users', sort: true, ShowFilter: true },
+    { ColumnName: 'tenantType', DisplayName: 'Tenant Type', sort: true, ShowFilter: true },
     { ColumnName: 'isOffboardTenant', DisplayName: 'Offboard Status', sort: true, ShowFilter: true },
-    { ColumnName: 'enterpriseUserCreatedAt', DisplayName: 'Created Date', sort: true, ShowFilter: true },
     { ColumnName: 'enterpriseUserExpiryAt', DisplayName: 'Expiry Date', sort: true, ShowFilter: true },
     { ColumnName: 'newAction', DisplayName: 'Action', sort: false, ShowFilter: false },
   ];
@@ -154,6 +154,7 @@ export class CustomersComponent implements OnInit {
       }
     );
   }
+
   
   getSuperAdminData() {
     this.spinner.show();
@@ -212,7 +213,12 @@ export class CustomersComponent implements OnInit {
     this.api.getEnterpriseList().subscribe((response: any[]) => {
       if (response) {
         this.newTabData = response
-        this.updateSystemAdminUsers();
+
+        // .reduce((acc, element) => {
+        //   return acc.concat(element.usersData.map(user => ({ ...element, ...user })));
+        // }, []);
+
+        console.log('This is the new API Response from the new Method: ', this.newTabData);
       }
     });
   }
@@ -233,12 +239,16 @@ export class CustomersComponent implements OnInit {
   //   })
   // }
 
-  openOffboardOverlay(actionType: any, tenantId: string, isOfboarded: boolean, tenExpiryDate: String){
+  processNewData(newData: any[]): void {
+      console.log('This is the UsersData: ', newData);
+  }
+
+  openOffboardOverlay(actionType: any, tenantId: string){
     this.isOverlay = true;
     this.selectedAction = actionType;
     this.tenantId = tenantId;
-    this.isOffboarded=isOfboarded;
-    this.tenureExtensionDate=tenExpiryDate.split('T')[0];
+
+    console.log('The Result is Here : ',tenantId)
   }
 
   closeOffboardOverlay(event){
@@ -254,22 +264,23 @@ export class CustomersComponent implements OnInit {
 
   offboardTenant() {
     if (this.tenantId) {
-      this.spinner.show();
-      this.api.offBoardTenant(!this.isOffboarded,this.tenantId).subscribe(
+      console.log('tenenat ID : ',this.tenantId);
+      const payload = {
+        "tenantId": this.tenantId,
+        "status": this.statusValue,
+      };
+
+      console.log('Payload Data :',payload);
+      this.api.offBoardTenant(this.statusValue,this.tenantId).subscribe(
         (response:any) => {
-          if (this.isOffboarded) {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: "Tenant Revoked Successfully." });
-          }
-          else{
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: "Tenant Offboarded Successfully." });
-          }
-          this.loadNewData();
-          this.spinner.hide();
-        },   
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Tenant Offboarded Successfully." });
+          console.log('API Response:', response);
+        },
+        
         error => {
           console.error('API Error IS HERE :', error);
-          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Failed to Offboard Tenant.' });
-          this.spinner.hide();
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to Offboard Tenant.' });
+
           if (error.errorCode && error.errorMessage) {
             console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
           }
@@ -290,7 +301,8 @@ export class CustomersComponent implements OnInit {
 
   extendTenure(){
     if (this.tenantId && this.tenureExtensionDate) {
-      this.spinner.show();
+      console.log("Selected date for Tenure Extension : ", this.tenureExtensionDate)
+ 
       const reqBody = {
         expiresAt: this.tenureExtensionDate
       };
@@ -298,13 +310,12 @@ export class CustomersComponent implements OnInit {
       this.api.extendTenure(this.tenantId, reqBody).subscribe(
         (response:any) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tenure Extended Succesfully' });
-          this.loadNewData();
-          this.spinner.hide();
+          // this.show();
+          console.log('Extend Tenure Response: ', response);
         },
         error => {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Failed to extend tenure' });
           console.error('API Expiry error IS HERE :', error);
-          this.spinner.hide();
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to extend tenure.' });
           if (error.errorCode && error.errorMessage) {
             console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
           }
@@ -326,26 +337,4 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  updateSystemAdminUsers(): void {
-    this.newTabData.forEach(tenant => {
-      tenant['systemAdminUsers'] = this.getSystemAdminUsers(tenant.tenantId);
-    });
-  }
-  
-  getSystemAdminUsers(tenantId: string): string {
-    const selectedTenant = this.newTabData.find(tenant => tenant.tenantId === tenantId);
-  
-    const systemAdminUsers = selectedTenant?.usersData
-      ?.filter(user => user.roleName === 'System Admin')
-      ?.map(user => user.userId)
-      .join(', ');
-
-    return systemAdminUsers || '';
-  }
-  
-  minDate(): string {
-    const today = new Date();
-    const formattedToday = today.toISOString().split('T')[0];
-    return formattedToday;
-  }
 }
