@@ -24,16 +24,14 @@ export class CustomersComponent implements OnInit {
   plans: any = [];
   isDisplayOverlay:boolean = false;
   activeTabIndex = 0;
-  newTabData: any[];
   isOverlay:boolean = false;
-  isOffboarding = false;
-  offboardingReason = '';
-  selectedAction: 'offboard' | 'extendTenure' | null = null;
+
   tenureExtensionDate: string = '';
   isExtendTenure=false;
   tenantId: string = '';
   statusValue:boolean =true;
   showToast: boolean = false;
+  public check_tab = 0;
 
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
@@ -45,16 +43,6 @@ export class CustomersComponent implements OnInit {
     {DisplayName:"Email",ColumnName:"email",ShowFilter: true,sort:true},
     {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
   ]
-
-  newColumnList = [
-    { ColumnName: 'tenantId', DisplayName: 'Tenant ID', sort: true, ShowFilter: true },
-    { ColumnName: 'tenantName', DisplayName: 'Tenanat Name', sort: true, ShowFilter: true },
-    { ColumnName: 'tenantDomain', DisplayName: 'Tenant Domain', sort: true, ShowFilter: true },
-    { ColumnName: 'tenantType', DisplayName: 'Tenant Type', sort: true, ShowFilter: true },
-    { ColumnName: 'isOffboardTenant', DisplayName: 'Offboard Status', sort: true, ShowFilter: true },
-    { ColumnName: 'enterpriseUserExpiryAt', DisplayName: 'Expiry Date', sort: true, ShowFilter: true },
-    { ColumnName: 'newAction', DisplayName: 'Action', sort: false, ShowFilter: false },
-  ];
 
   constructor(
     private firstloginservice: FirstloginService,
@@ -68,7 +56,6 @@ export class CustomersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadNewData();
     this.getSuperAdminData();
     this.subscriptionForm = this.formBuilder.group({
       subscriptionplan: ["", Validators.compose([Validators.required])],
@@ -81,34 +68,13 @@ export class CustomersComponent implements OnInit {
       live_support: [false],
       service_orchestration: [false]
     })
-    this.spinner.show();
-
   }
 
   show() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }
 
-  openEditOverlay(plan) {
-    this.userid = plan.email
-    document.getElementById("subscrip-edit").classList.remove("slide-right");
-    document.getElementById("subscrip-edit").classList.add("slide-left");
-    
-  }
-  // closeOverlay(){
-  //   document.getElementById("subscrip-edit").style.display = 'none';
-  //   this.subscriptionForm.reset();
-  //   this.subscriptionForm.get("subscriptionplan").setValue("default");
-  //   this.subscriptionForm.get("interval").setValue("default");
-  // }
 
-  slideLeft() {
-    document.getElementById("subscrip-edit").classList.add("slide-right");
-    document.getElementById("subscrip-edit").classList.remove("slide-left");
-    this.subscriptionForm.reset();
-    this.subscriptionForm.get("subscriptionplan").setValue("default");
-    this.subscriptionForm.get("interval").setValue("default");
-  }
   onChange(value: string) {
     if (value === "custom") {
       this.isCustom = true;
@@ -159,7 +125,6 @@ export class CustomersComponent implements OnInit {
   getSuperAdminData() {
     this.spinner.show();
     this.firstloginservice.getSuperAdminData().subscribe((res) => {
-      console.log(res,"customers")
       this.plans = res;
       this.spinner.hide();
     });
@@ -196,144 +161,18 @@ export class CustomersComponent implements OnInit {
 
   openOverlay(type,rowData){
     this.isDisplayOverlay = true;
-    console.log(rowData,"rowData")
-    // this.userData= rowData
   }
 
   closeOverlay(event){
     this.isDisplayOverlay = false;
   }
   
-  onTabChange($event){
-    this.activeTabIndex=1;
-    this.loadNewData();
-  }
-
-  loadNewData(): void {
-    this.api.getEnterpriseList().subscribe((response: any[]) => {
-      if (response) {
-        this.newTabData = response
-
-        // .reduce((acc, element) => {
-        //   return acc.concat(element.usersData.map(user => ({ ...element, ...user })));
-        // }, []);
-
-        console.log('This is the new API Response from the new Method: ', this.newTabData);
-      }
-    });
-  }
-
-  // getPlanDetails() {
-  //   this.api.getEnterpriseList().subscribe((response: any) => {
-  //     if(response){
-  //       this.newTabData=response;
-  //       // response.forEach(element => {
-  //       //   let obj=element.product
-  //       //   obj["usersData"] = element.priceCollection
-  //       //   let data = element.product.metadata.product_features
-  //       //   obj["features"] = JSON.parse(data);
-  //       //   this.newTabData.push(obj)
-  //       // });
-  //     }
-  //     console.log(this.newTabData)
-  //   })
-  // }
-
-  processNewData(newData: any[]): void {
-      console.log('This is the UsersData: ', newData);
-  }
-
-  openOffboardOverlay(actionType: any, tenantId: string){
-    this.isOverlay = true;
-    this.selectedAction = actionType;
-    this.tenantId = tenantId;
-
-    console.log('The Result is Here : ',tenantId)
-  }
-
-  closeOffboardOverlay(event){
-    this.isOverlay = false;
-    this.isOffboarding = !this.isOffboarding;
-    this.isExtendTenure=false;
-    this.isOffboarding=false;
-  }
-
-  toggleOffboarding() {
-    this.isOffboarding = !this.isOffboarding;
-  }
-
-  offboardTenant() {
-    if (this.tenantId) {
-      console.log('tenenat ID : ',this.tenantId);
-      const payload = {
-        "tenantId": this.tenantId,
-        "status": this.statusValue,
-      };
-
-      console.log('Payload Data :',payload);
-      this.api.offBoardTenant(this.statusValue,this.tenantId).subscribe(
-        (response:any) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Tenant Offboarded Successfully." });
-          console.log('API Response:', response);
-        },
-        
-        error => {
-          console.error('API Error IS HERE :', error);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to Offboard Tenant.' });
-
-          if (error.errorCode && error.errorMessage) {
-            console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
-          }
-        }
-      );
-    }
-    else{
-      console.error('API Error: Unable to handle the Offboard Tenant Option.');
-    }
-    this.closeOffboardOverlay(event);
-    this.offboardingReason = '';
-  }
-
-  toggleActionType() {
-    this.isOffboarding = this.selectedAction === 'offboard';
-    this.isExtendTenure = this.selectedAction === 'extendTenure';
-  }
-
-  extendTenure(){
-    if (this.tenantId && this.tenureExtensionDate) {
-      console.log("Selected date for Tenure Extension : ", this.tenureExtensionDate)
- 
-      const reqBody = {
-        expiresAt: this.tenureExtensionDate
-      };
-
-      this.api.extendTenure(this.tenantId, reqBody).subscribe(
-        (response:any) => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tenure Extended Succesfully' });
-          // this.show();
-          console.log('Extend Tenure Response: ', response);
-        },
-        error => {
-          console.error('API Expiry error IS HERE :', error);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to extend tenure.' });
-          if (error.errorCode && error.errorMessage) {
-            console.error(`Error Code: ${error.errorCode}, Error Message: ${error.errorMessage}`);
-          }
-        }
-      );
-    }
-    else{
-      console.error('API Error: Unable to handle the Extend Tenure Option.');
-    }
-    this.closeOffboardOverlay(event);
-    this.offboardingReason = '';
-  }
-  
-  performAction() {
-    if (this.selectedAction === 'offboard') {
-      this.offboardTenant();
-    } else if (this.selectedAction === 'extendTenure') {
-      this.extendTenure();
+  onTabChange(event,tabView){
+    const tab = tabView.tabs[event.index].header;
+    this.activeTabIndex = event.index;
+    this.check_tab = event.index;
+    if(this.activeTabIndex == 1){
+      this.getSuperAdminData();
     }
   }
 

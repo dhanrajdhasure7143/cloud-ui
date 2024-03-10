@@ -25,8 +25,8 @@ export class TopheaderComponent implements OnInit {
    public isusers:boolean=false;
    public mydata:any[];
    public isnotification:boolean=false;
-   lastname: string;
-   firstname: string;
+   lastname: string='';
+   firstname: string='';
   userRole: any = [];
   isCoupon: boolean=false;
   firstletter: string;
@@ -133,7 +133,7 @@ public myname:any[]
     this.spinner.show();
     setTimeout(() => {
       this.getImage();
-      this.getAllNotifications();
+      // this.getAllNotifications();
     },500);
         
         setTimeout(() => {
@@ -300,7 +300,7 @@ public myname:any[]
           let userId =  localStorage.getItem("userName")
           this.stopnotificationsapicall=setTimeout(() => {
             if(this.role!=null&&userId!=null){
-            this.getAllNotifications();
+            // this.getAllNotifications();
             }
           }, 20000);
         }
