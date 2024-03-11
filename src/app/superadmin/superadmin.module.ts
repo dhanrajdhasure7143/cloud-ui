@@ -22,8 +22,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { EnterpriseRequestsComponent } from './enterprise-requests/enterprise-requests.component';
 @NgModule({
-  declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent, OnboardTenantComponent],
+  declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent, 
+    OnboardTenantComponent,
+    EnterpriseRequestsComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,

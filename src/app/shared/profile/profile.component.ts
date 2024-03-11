@@ -2748,10 +2748,16 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
 
    
       passwordChange(form:NgForm){
+        // let pswdbody = {
+        //   "confirmPassword": this.pswdmodel.confirmPassword,
+        //   "currentPassword": this.pswdmodel.currentPassword,
+        //   "newPassword":this.pswdmodel.confirmPassword,
+        //   "userId": localStorage.getItem('userName')
+        // }
         let pswdbody = {
-          "confirmPassword": this.pswdmodel.confirmPassword,
-          "currentPassword": this.pswdmodel.currentPassword,
-          "newPassword":this.pswdmodel.confirmPassword,
+          "confirmPassword": this.cryptoService.encrypt(this.pswdmodel.confirmPassword),
+          "currentPassword": this.cryptoService.encrypt(this.pswdmodel.currentPassword),
+          "newPassword": this.cryptoService.encrypt(this.pswdmodel.confirmPassword),
           "userId": localStorage.getItem('userName')
         }
       this.profileservice.changePassword(pswdbody).subscribe(res => {

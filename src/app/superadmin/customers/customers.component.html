@@ -1,121 +1,23 @@
-<!-- <div class="container-fluid table-details">
-    <div class='search-One'><br>
-      <input class="searchOne search" type="text" name='search' id="search1" [(ngModel)]="searchdashboard"
-        placeholder="Search" autocomplete="off" />
-    </div>
-    <table class="table table-striped col-md-12" border="2" aria-describedby="mydesc">
-      <thead>
-        <tr>
-          <th scope="col" sortable="area" class="tablecolumn-style">Admin Name <i (click)="onSortClick($event)"
-              class="my-icon fa fa-chevron-up"></i></th>
-          <th scope="col" sortable="population" class="tablecolumn-style">Subscribed Plan
-            <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
-          </th>
-          <th scope="col" sortable="population" class="tablecolumn-style">Latest Invoice
-            Amount <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i></th>
-          <th scope="col" sortable="population" class="tablecolumn-style">Last Billing Date
-            <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
-          </th>
-          <th scope="col" sortable="population" class="tablecolumn-style">Next Billing Date
-            <i (click)="onSortClick($event)" class="my-icon fa fa-chevron-up"></i>
-          </th>
-          <th scope="col" sortable="population" class="tablecolumn-style">Mobile<i (click)="onSortClick($event)"
-              class="my-icon fa fa-chevron-up"></i></th>
-          <th scope="col" sortable="population" class="tablecolumn-style">Email<i (click)="onSortClick($event)"
-              class="my-icon fa fa-chevron-up"></i></th>
-          <th scope="col" sortable="population" class="tablecolumn-style">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let plan of plans | paginate: { itemsPerPage: 10, currentPage: p } | FilterPipe: searchdashboard">
-          <td>{{plan.tenantAdminName}}</td>
-          <td>{{plan.subscribedPlan}}</td>
-          <td>{{plan.lastInvoiceAmount|currency}}</td>
-          <td>{{plan.lastBillingDate}}</td>
-          <td>{{plan.dueDate}}</td>
-          <td>{{plan.mobile}}</td>
-          <td>{{plan.email}}</td>
-          <td>
-            <button (click)="openEditOverlay(plan)">
-              <img src="../../../../assets/images/editCard.svg" alt="edit" />
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="plans!=='undefined'" class="dashboardpagination">
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
-  </div> -->
-
   <div class="container-fluid">
-  
-    <p-tabView [(activeIndex)]="activeTabIndex" (onChange)="onTabChange($event)" >
+    <p-tabView #tabView styleClass="customer-tabs" [(activeIndex)]="activeTabIndex" (onChange)="onTabChange($event, tabView)" >
     <p-tabPanel header="Enterprise users">
-      <div class="row">
-        <div class="col-12">
-          <div class="enterprise-layout">
-          <!-- <p-scrollPanel [style]="{width: '100%', height: '100%'}"> -->
-            <p-table #dt [value]="newTabData" [columns]="newColumnList"  [scrollable]="true" [globalFilterFields]="['newUserId','userName','department','phoneNumber','country','createdDate']"
-            [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
-            <ng-template pTemplate="caption">
-              <div class="p-d-flex" style="text-align: end;">
-                <span class="p-input-icon-right gridsearch">
-                  <i class="pi pi-search"></i>
-                  <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
-                </span>  
-                <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt)"></button>
-              </div>
-            </ng-template>
-                <ng-template pTemplate="header" let-columns>
-                  <tr>
-                    <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
-                      <p-columnFilter *ngIf="each.ShowFilter" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                      [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
-                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
-                        optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
-                      </p-dropdown>
-                    </ng-template>
-                  </p-columnFilter>
-                  <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-                        <tr>
-                            <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top">
-                                <span *ngIf="col.ColumnName!='action'">
-                                    <span *ngIf="col.ColumnName!='createdDate'">{{rowData[col.ColumnName]}}</span>
-                                    <span *ngIf="col.ColumnName=='createdDate'">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
-                                </span>
-                                <span *ngIf="col.ColumnName=='newAction'" class="actionmenu">
-                                    <a (click)="openOffboardOverlay('update', rowData.tenantId)" pTooltip="Edit" tooltipPosition="top">
-                                        <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
-                                        <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
-                                    </a>
-                                </span>
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                      <tr>
-                        <td style="justify-content: center;" colspan="8">No Records Found</td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                </div>
-            </div>
+        <ng-template pTemplate="header">
+          <i class="pi pi-users" style="font-size: 1rem;"></i>
+          <span class="titlelabel">Enterprise Tenants</span>
+        </ng-template>
+        <div *ngIf="check_tab == 0" class="enterprise-layout">
+          <app-enterprise-customers></app-enterprise-customers>
         </div>
       </p-tabPanel>
 
       <p-tabPanel header="Subscribed Users">
-
-        <div class="row">
+        <ng-template pTemplate="header">
+          <i class="pi pi-users" style="font-size: 1rem;"></i>
+          <span class="titlelabel">Subscribed Users</span>
+        </ng-template>
+        <div class="row" *ngIf="check_tab == 1">
           <div class="col-12">
             <div class="enterprise-layout">
-            <!-- <p-scrollPanel [style]="{width: '100%', height: '100%'}"> -->
               <p-table #dt *ngIf="activeTabIndex === 1" [value]="plans" [columns]="columnList"  [scrollable]="true" [globalFilterFields]="['userId','userName','department','phoneNumber','country','createdDate']"
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
@@ -286,7 +188,7 @@
     </app-split-overlay>
   </div>
 
-  <div *ngIf="isOverlay">
+  <!-- <div *ngIf="isOverlay">
     <app-split-overlay (closeOverlay)="closeOffboardOverlay($event)">
       <div class="h-100">
         <div class="create-header">
@@ -339,7 +241,7 @@
         </div>
       </div>
     </app-split-overlay>
-  </div>
+  </div> -->
   <div class="card flex justify-content-center gap-2">
     <p-toast></p-toast>
     <!-- <button type="button" pButton pRipple (click)="show()" label="Show" class="p-button-success"></button> -->
