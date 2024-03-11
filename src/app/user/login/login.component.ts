@@ -12,6 +12,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 //import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -466,12 +467,24 @@ export class LoginComponent implements OnInit {
   }
 
   requestDemo() {
+    this.router.navigate(['/signup'])
     if(this.config.isNewSignupFlow){
-      this.router.navigate(['/signup'])
-    } else {
-      // location.href = this.config.portfolioSite;
-      this.router.navigate(['/createaccount'])
+      console.log("new flow")
+    }else{
+      console.log("old flow")
     }
+    if(environment.isNewSignupFlow){
+      console.log("new flow-1")
+    }else{
+      console.log("old flow-1")
+    }
+
+    // if(this.config.isNewSignupFlow){
+      // this.router.navigate(['/signup'])
+    // } else {
+    //   // location.href = this.config.portfolioSite;
+    //   this.router.navigate(['/createaccount'])
+    // }
   }
 
   googleLogin() {
