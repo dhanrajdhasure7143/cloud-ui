@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
   countryInfo: any[] = [];
   cityInfo: any[] = [];
   isInput: boolean = false;
-  phnCountry: any;
+  phnCountry: string="us";
   errorMessage: any;
   errorMessage1: any;
   errorMessage2: any;
@@ -389,7 +389,7 @@ onChangeCountry(countryValue) {
   if(countryValue){
       const matchingCountry = this.countryInfo.find((item: any) => item.name === countryValue.name);
       console.log(matchingCountry)
-      this.phnCountry = matchingCountry.flag;
+      this.phnCountry = matchingCountry.isoCode.toLowerCase();
       this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
       this.errorMessage=""
       if (this.stateInfo.length === 0) {
