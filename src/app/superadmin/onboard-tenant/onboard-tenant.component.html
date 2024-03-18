@@ -5,26 +5,49 @@
         <h3> Onboard Tenant </h3>
     </div>
     <div class="createform-overlay">
-        <form [formGroup]="tenantForm" autocomplete="off"  class="tenant-form" (ngSubmit)="updateAccount()" class="col-12" tenant-form>
+        <form [formGroup]="tenantForm" autocomplete="off"  class="tenant-form" class="col-12" tenant-form>
                 <div class="row form-details">
-                    <div class="form-group col-md-6 pl-0">
+                    <!-- <div class="form-group col-md-6 pl-0">
                         <label class="label-control" for="email">Email<span class="star">*</span></label>
                         <input type="text" pInputText name="email" class="form-control form-text" formControlName="userId"
                         pattern="^\S*[@]\S*[.]\S*$" required placeholder="Enter Email" /> 
                         <span *ngIf="tenantForm.get('userId').invalid && tenantForm.get('userId').touched && !tenantForm.get('userId').hasError('pattern') && !tenantForm.controls['userId'].hasError('maxlength')" class="required"> Email Required </span>    
+                    </div> -->
+
+                    <div class="form-group pl-0" [ngClass]="isCreateAccount?'col-md-6':'col-md-12'">
+                        <label class="label-control" for="email"> Email <span class="star">*</span></label>
+                        <input type="text" pInputText maxlength="51" class="form-control" formControlName="userId" style="padding-right: 90px;"
+                            value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off">
+                            <span *ngIf="!ispublicMail && tenantForm.get('userId').invalid && tenantForm.get('userId').touched && !tenantForm.get('userId').hasError('pattern') && !tenantForm.controls['userId'].hasError('maxlength')" class="required"> Email Required </span>
+                            <span *ngIf="tenantForm.get('userId').hasError('pattern') && tenantForm.get('userId').touched" class="required"> Enter valid email address </span>
+                            <span *ngIf="ispublicMail" class="required">Only Business Email is allowed</span>     
+                    </div> 
+
+                    <div class="form-group col-md-6 pl-0 d-block" *ngIf="isCreateAccount">
+                        <label class="label-control" for="password"> Password </label> <br>
+                        <p-password styleClass="password-input" formControlName="password" value="password" [feedback]="false" [toggleMask]="true" placeholder="Enter Password" autocomplete="off"></p-password>
+                          <span *ngIf="tenantForm.get('password').invalid && tenantForm.get('password').touched && !tenantForm.get('password').hasError('pattern') && !tenantForm.controls['password'].hasError('maxlength')" class="required"> Password Required </span>
+                          <span class="required" *ngIf="tenantForm.get('password').hasError('minlength') && tenantForm.get('password').touched"> Minimum 8 Characters Required </span>    
+                          <span class="required" *ngIf="tenantForm.get('password').hasError('pattern') && tenantForm.get('password').touched"> 
+                            Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number
+                          </span>
                     </div>
-                    <div class="form-group col-md-6 pr-0">
+
+
+
+                    <div class="form-group col-md-6 pl-0">
                         <label class="label-control" for="firstName" id="label-name">First Name<span class="star">*</span></label>
-                        <input type="text" pInputText formControlName="firstName" class="form-control form-text" id="firstName" 
+                        <input type="text" pInputText formControlName="firstName" class="form-control" id="firstName" style="height: 45px !important;
+                        border-radius: 5px;"
                         (keypress)="lettersOnly($event)" placeholder="Enter first name" maxlength="30"
                         minlength="2">
                     <span *ngIf="tenantForm.get('firstName').invalid && tenantForm.get('firstName').touched && !tenantForm.get('firstName').hasError('pattern') && !tenantForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
-                    <span *ngIf="tenantForm.controls['firstName'].hasError('minlength')" class="required">
+                    <!-- <span *ngIf="tenantForm.controls['firstName'].hasError('minlength')" class="required">
                         Minimum 2 characters required
                     </span>
                     <span *ngIf="tenantForm.controls['firstName'].hasError('maxlength')" class="required">
                         Maximum of 30 characters
-                    </span>
+                    </span> -->
                     <span
                         *ngIf="tenantForm.get('firstName').hasError('pattern') && !tenantForm.controls['firstName'].hasError('maxlength')"
                         class="required">
@@ -33,36 +56,38 @@
                     </div>
                     <div class="form-group col-md-6 pl-0">
                         <label class="label-control" for="lastName" id="label-name">Last Name<span class="star">*</span></label>
-                        <input type="text" pInputText formControlName="lastName" class="form-control form-text" id="lastName" 
+                        <input type="text" pInputText formControlName="lastName" class="form-control" style="height: 45px !important;
+                        border-radius: 5px;" id="lastName" 
                         (keypress)="lettersOnly($event)" placeholder="Enter last name" maxlength="30"
                         minlength="2">
                         <span *ngIf="tenantForm.get('lastName').invalid && tenantForm.get('lastName').touched && !tenantForm.get('lastName').hasError('pattern') && !tenantForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>    
-                    <span *ngIf="tenantForm.controls['lastName'].hasError('minlength')" class="required">
-                        Minimum 2 characters required
-                    </span>
-                    <span *ngIf="tenantForm.controls['lastName'].hasError('maxlength')" class="required">
-                        Maximum of 30 characters
-                    </span>
+                        <!-- <span *ngIf="tenantForm.controls['lastName'].hasError('minlength')" class="required">
+                            Minimum 2 characters required
+                        </span>
+                        <span *ngIf="tenantForm.controls['lastName'].hasError('maxlength')" class="required">
+                            Maximum of 30 characters
+                        </span> -->
                     <span
                         *ngIf="tenantForm.get('lastName').hasError('pattern') && !tenantForm.controls['lastName'].hasError('maxlength')"
                         class="required">
                         Only space between words are allowed,numbers & special characters are not allowed.
                     </span>  
                     </div>
-                    <div class="form-group col-md-6 pr-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label class="label-control" for="jobTitle" id="label-name">Job Title<span class="star">*</span></label>
-                        <input type="text" pInputText formControlName="jobTitle" class="form-control form-text" id="jobTitle" 
+                        <input type="text" pInputText formControlName="jobTitle" class="form-control" style="height: 45px !important;
+                        border-radius: 5px;" id="jobTitle" 
                             (keypress)="lettersOnly($event)" placeholder="Enter your job title" maxlength="30"
                             minlength="2">
                         <span
                             *ngIf="tenantForm.get('jobTitle').invalid && tenantForm.get('jobTitle').touched && !tenantForm.get('jobTitle').hasError('pattern') && !tenantForm.controls['jobTitle'].hasError('maxlength')"
                             class="required"> Job title required </span>
-                        <span *ngIf="tenantForm.controls['jobTitle'].hasError('minlength')" class="required">
+                        <!-- <span *ngIf="tenantForm.controls['jobTitle'].hasError('minlength')" class="required">
                             Minimum 2 characters required
                         </span>
                         <span *ngIf="tenantForm.controls['jobTitle'].hasError('maxlength')" class="required">
                             Maximum of 30 characters
-                        </span>
+                        </span> -->
                         <span
                             *ngIf="tenantForm.get('jobTitle').hasError('pattern') && !tenantForm.controls['jobTitle'].hasError('maxlength')"
                             class="required">
@@ -71,25 +96,28 @@
                     </div>
                     <div class="form-group col-md-6 pl-0">
                         <label class="label-control" for="company" id="label-name"> Organization <span class="star">*</span></label>
-                        <input type="text" pInputText formControlName="company" class="form-control form-text" id="company" 
+                        <input type="text" pInputText formControlName="company" class="form-control" style="height: 45px !important;
+                        border-radius: 5px;" id="company" 
                             (keypress)="lettersOnly($event)" placeholder="Enter Organization" maxlength="30"
                             minlength="2">
                         <span
                             *ngIf="tenantForm.get('company').invalid && tenantForm.get('company').touched"
-                            class="required"> Company required </span>
-                        <span *ngIf="tenantForm.controls['company'].hasError('minlength')" class="required">
-                            Minimum 2 characters required
-                        </span>
-                        <span *ngIf="tenantForm.controls['company'].hasError('maxlength')" class="required">
-                            Maximum of 30 characters
-                        </span>
+                            class="required"> Company required
+                            <!-- <span *ngIf="tenantForm.controls['company'].hasError('minlength')" class="required">
+                                Minimum 2 characters required
+                            </span>
+                            <span *ngIf="tenantForm.controls['company'].hasError('maxlength')" class="required">
+                                Maximum of 30 characters
+                            </span> -->
+                         </span>
+                        
                         <span
                             *ngIf="tenantForm.get('company').hasError('pattern') && !tenantForm.controls['company'].hasError('maxlength')"
                             class="required">
                             Only space between words are allowed,numbers & special characters are not allowed.
                         </span>
                     </div>
-                    <div class="form-group col-md-6 pr-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label for="department" class="label-control" id="label-name">Department<span class="star">*</span></label>
                         <p-dropdown formControlName="department" [style]="{'width':'100%'}" autocomplete="off" 
                           [options]="departments" optionLabel="departmentName" optionValue="departmentId" placeholder="Select Department"> 
@@ -107,7 +135,7 @@
                             Country required </span>
                         <span *ngIf="showErrorMessage" class="required">{{errorMessage}}</span>
                     </div>   
-                    <div class="form-group col-md-6 pr-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label for="state" class="label-control" id="label-name">State<span class="star">*</span></label>
                         <p-dropdown formControlName="state" [filter]="true" [style]="{'width':'100%'}" autocomplete="off" 
                           [options]="stateInfo" optionLabel="name" optionValue="name" placeholder="Select State" (onChange)="onChangeState($event.value,'change')"> 
@@ -124,8 +152,51 @@
                         <span *ngIf="f.city.touched && f.city.errors" class="required">
                             City required </span>
                         <span *ngIf="showErrorMessage" class="required">{{errorMessage2}}</span>
-                    </div>  
-                    <div class="form-group col-md-6 pr-0">
+                    </div> 
+                    
+                    <div *ngIf="isInput"  class="form-group col-md-6 pl-0 ph-number-onboard">
+                        <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
+                            <div class="ng2tel-container">
+                                <span class="ng2tel-flag"></span>
+                                    <input type="text" pInputText style="height: 45px !important;
+                                        border-radius: 5px;" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                                        class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
+                                        onKeyPress="if(this.value.length==10) return false;" ng2TelInput
+                                        [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                        pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
+                            </div>
+                        <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
+                            <span>Phone Number required </span>
+                        </div>
+                    </div>
+                    <div *ngIf="!isInput"  class="form-group col-md-6 pl-0 ph-number-onboard">
+                        <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
+                            <div class="ng2tel-container">
+                                <span class="ng2tel-flag"></span>
+                                    <input type="text" pInputText style="height: 45px !important;
+                                        border-radius: 5px;" (keydown)="onKeydown($event)" (countryChange)="OnFlagChange($event)"
+                                        class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
+                                        onKeyPress="if(this.value.length==10) return false;" ng2TelInput
+                                        [ng2TelInputOptions]="{initialCountry: phnCountry}"
+                                        pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
+                            </div>
+                        <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
+                            <span>Phone Number required </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 pl-0">
+                        <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
+                        <input type="text" pInputText formControlName="zipCode" style="height: 45px !important;
+                        border-radius: 5px;" class="form-control" id="inputZip" autocomplete="off"
+                            placeholder="Enter zip code" maxlength="6" tabindex="7" (keydown)="onKeydown($event)" required>
+                        <span class="required" *ngIf="getErrorMessage('zipCode') !== ''"> {{ getErrorMessage('zipCode') }} </span>
+                    </div>
+                    
+
+
+
+                    <!-- <div class="form-group col-md-6 pr-0">
                         <label for="phoneNumber" class="label-control" id="label-name">Phone Number<span class="star">*</span></label>
                             <div class="ng2tel-container">
                                 <span class="ng2tel-flag"></span>
@@ -139,7 +210,7 @@
                         <span
                             *ngIf="tenantForm.get('phoneNumber').invalid && tenantForm.get('phoneNumber').touched"
                             class="required"> Phone number required </span>
-                    </div>
+                    </div> -->
                     <div class="form-group col-md-6 pl-0">
                         <label for="expiryDate">Expiry Date <span class="star">*</span></label>
                         <input type="date" pInputText class="form-control cal-box" formControlName="expiryDate" max="9999-12-31" [min]="minDate" placeholder="Select Expiry Date">
@@ -150,8 +221,10 @@
             <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()">Reset</button>
             <!-- <button type="button" class="btn btn-primary ml-2" id="reset-btn"> Register </button> -->
             <!-- <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()"> Onboard </button> -->
-            <button type="button" class="btn btn-primary" id="update-btn" (click)="updateAccount()"
+            <button *ngIf="!isCreateAccount" type="button" class="btn btn-primary" id="update-btn" (click)="updateAccount('update')"
                 [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> Update </button>
+                <button *ngIf="isCreateAccount" type="button" class="btn btn-primary" id="update-btn" (click)="updateAccount('create')"
+                [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> Onboard Tenant </button>
         </div>
     </div>
 </div>

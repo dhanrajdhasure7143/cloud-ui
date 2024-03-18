@@ -44,7 +44,7 @@ export class OnboardTenantComponent implements OnInit {
   state: any[];
   city:any[];
   show: boolean = false;
-  phnCountry: any;
+  phnCountry: any='ux';
   fieldsEnabled: boolean = true;
   isFormOverlay: boolean = false;
   phoneNumber: any;
@@ -63,6 +63,8 @@ export class OnboardTenantComponent implements OnInit {
   tenantDetails: any;
   departments:any;
   showErrorMessage : boolean = false;
+  ispublicMail:boolean = false;
+  isCreateAccount:boolean = false;
  
   constructor(
     private formBuilder: FormBuilder,
@@ -76,6 +78,7 @@ export class OnboardTenantComponent implements OnInit {
   ) {
     this.tenantForm = this.formBuilder.group({
       userId: ["", [Validators.required, Validators.email]],
+      password: ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$%])[a-zA-Z0-9@$%]{8,20}$")])],
       firstName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       lastName: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
@@ -86,6 +89,7 @@ export class OnboardTenantComponent implements OnInit {
       city: ["", Validators.required],
       phoneNumber: ["", Validators.required],
       expiryDate: ["", Validators.required],
+      zipCode: ["", Validators.required],
     });
     // this.datePickerConfig = {
     //   dateInputFormat: 'YYYY-MM-DD',
@@ -101,18 +105,31 @@ export class OnboardTenantComponent implements OnInit {
 }
   ngOnChanges(changes:SimpleChanges){
     console.log(this.userData, "userData")
+    if(this.userData){
     // this.getCountries();
     // this.getAllDepartments();
-    this.tenantForm.get("userId").setValue(this.userData["userId"]);
-    this.tenantForm.get("firstName").setValue(this.userData["firstName"]);
-    this.tenantForm.get("lastName").setValue(this.userData["lastName"]);
-    this.tenantForm.get("jobTitle").setValue(this.userData["designation"]);
-    this.tenantForm.get("company").setValue(this.userData["company"]);
-    this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
+    const includePasswordControl = this.tenantForm.get('password');
+    includePasswordControl.clearValidators();
+    // includePasswordControl.setValidators([Validators.required])
+    includePasswordControl.updateValueAndValidity();
 
-         const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
+        this.isCreateAccount = false;
+        this.tenantForm.get("userId").setValue(this.userData["userId"]);
+        this.tenantForm.get("firstName").setValue(this.userData["firstName"]);
+        this.tenantForm.get("lastName").setValue(this.userData["lastName"]);
+        this.tenantForm.get("jobTitle").setValue(this.userData["designation"]);
+        this.tenantForm.get("company").setValue(this.userData["company"]);
+        this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
+        const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
         this.tenantForm.get("country").setValue(this.userData["country"]);
         this.onChangeCountry(this.userData["country"],"update");
+      }else{
+        this.isCreateAccount = true;
+        const includePasswordControl = this.tenantForm.get('password');
+        // includePasswordControl.clearValidators();
+        includePasswordControl.setValidators([Validators.required])
+        includePasswordControl.updateValueAndValidity();
+      }
 
         // const matchingState = this.stateInfo.find((item: any) => item.name === this.userData["state"]);
         // this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
@@ -125,7 +142,7 @@ export class OnboardTenantComponent implements OnInit {
         // }
   }
 
-  updateAccount() {
+  updateAccount(type) {
     console.log(this.tenantForm.value.expiryDate,"this.tenantForm.value.expiryDate")
     this.spinner.show();
     var payload = new FormData();
@@ -140,16 +157,20 @@ export class OnboardTenantComponent implements OnInit {
       designation : this.tenantForm.value.jobTitle,
       departmemt : this.tenantForm.value.department.departmentId,
       company : this.tenantForm.value.company,
-      country : this.tenantForm.value.country.name,
-      state : this.tenantForm.value.state.name,
-      city : this.tenantForm.value.city.name,
+      country : this.tenantForm.value.country,
+      state : this.tenantForm.value.state,
+      city : this.tenantForm.value.city,
       phoneNumber : this.tenantForm.value.phoneNumber,
-      'zipcode': this.userData.zipcode,
+      'zipcode': this.tenantForm.value.zipcode,
       'profile_image':null,
       'otp': "",
-      'isSubscriptionEnabled': true,
+      'isSubscriptionEnabled': false,
       // password:"Welcome@123"
       // expiryDate : this.datePipe.transform(originalDate, 'EEE MMM dd yyyy'),
+  }
+  if(type == "create"){
+    reqObj["password"] = this.tenantForm.value.password;
+    reqObj["expiryDate"] = expiryDate;
   }
 
   console.log("reqObj",reqObj);
@@ -157,37 +178,71 @@ export class OnboardTenantComponent implements OnInit {
   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   // payload.append('expairyData', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   // console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
-  var reqData = {}
-  reqData = {
-    userId : this.tenantForm.value.userId.toLowerCase(),
-    expiresAt : new Date(expiryDate)
+  console.log(payload)
+  if(type != "create"){
+    this.onBoardEnterPriseTenant(payload);
+  }else{
+    this.createEnterPriseTenant(payload);
   }
-  this.service.registerUser(payload).subscribe((res : any) => {
-    if(res.errorCode == 5019){
-        Swal.fire({
-    title: 'Error!',
-    text: res.errorMessage,
-    icon: 'error',
-    showCancelButton: false,
-    allowOutsideClick: true
-  })
-    this.spinner.hide();
-    } else {
-      this.rest_api.onBoardTenant(reqData).subscribe((response: any) => {
-        this.spinner.hide();
-      })
-    }
-  }, err => {
-    this.spinner.hide();
-    Swal.fire("Error", "Error Occured", "error");
-  })
-}
 
-  // userDetails() {
-  //   this.getCountries();
-  //   // this.expiryDate();
-  //   // this.setMinDate();
-  // }
+  }
+
+  createEnterPriseTenant(payload){
+    this.service.createEnterPriseUser(payload).subscribe((res : any) => {
+      if(res.errorCode == 5019){
+          Swal.fire({title: 'Error!',text: res.errorMessage,icon: 'error',showCancelButton: false,allowOutsideClick: true})
+      this.spinner.hide();
+      } else {
+        Swal.fire({
+          title: 'Success!',
+          text: `Successfully Created Tenant!`,
+          icon: 'success',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+        this.spinner.hide();
+      }
+    }, err => {
+      this.spinner.hide();
+      Swal.fire("Error", "Error Occured", "error");
+    })
+  }
+
+  onBoardEnterPriseTenant(payload){
+    const originalDate = new Date(this.tenantForm.value.expiryDate);
+    let expiryDate = this.datePipe.transform(originalDate, 'EEE MMM dd yyyy')
+    this.service.registerUser(payload).subscribe((res : any) => {
+      if(res.errorCode == 5019){
+          Swal.fire({
+          title: 'Error!',
+          text: res.errorMessage,
+          icon: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        })
+      this.spinner.hide();
+      } else {
+        var reqData  = {
+          userId : this.tenantForm.value.userId.toLowerCase(),
+          expiresAt : new Date(expiryDate)
+        }
+        this.rest_api.onBoardTenant(reqData).subscribe((response: any) => {
+          this.spinner.hide();
+          Swal.fire({
+            title: 'Success!',
+            text: `Successfully Created Tenant!`,
+            icon: 'success',
+            showCancelButton: false,
+            allowOutsideClick: true
+          })
+          this.spinner.hide();
+        })
+      }
+    }, err => {
+      this.spinner.hide();
+      Swal.fire("Error", "Error Occured", "error");
+    })
+  }
 
   getCountries() {
     this.countryInfo = Country.getAllCountries();
@@ -195,11 +250,12 @@ export class OnboardTenantComponent implements OnInit {
 
 
   onChangeCountry(countryValue,type) {
+    this.isInput = !this.isInput;
     this.countryInfo = Country.getAllCountries();
     this.stateInfo = State.getAllStates();
     if(countryValue){
         const matchingCountry = this.countryInfo.find((item: any) => item.name == countryValue);
-        this.phnCountry = matchingCountry.isoCode;
+        this.phnCountry = matchingCountry.isoCode.toLowerCase();
         this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
         this.errorMessage=""
         if (this.stateInfo.length === 0) {
@@ -321,6 +377,41 @@ export class OnboardTenantComponent implements OnInit {
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
+  }
+
+  getErrorMessage(controlName: string): string {
+    const control = this.tenantForm.get(controlName);
+  
+    if (control.touched && control.errors) {
+      if (control.errors.required) {
+        if (controlName == "jobTitle") {
+          return "Job Title required"
+        }
+        else if (controlName == "organization") {
+          return "Organization required"
+        }
+        else if (controlName == "zipCode") {
+          return "Zip Code required"
+        }
+        return `${controlName} required`;
+      }
+      if (control.errors.minlength) {
+        return "Minimum 2 characters required";
+      }
+      if (control.errors.pattern) {
+        return "Space between words are allowed";
+      }
+    }
+  
+    return '';
+  }
+
+  onKeydown(event){ 
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab","ArrowLeft","ArrowRight","Delete"]
+       let temp =numArray.includes(event.key); //gives true or false
+      if(!temp){
+       event.preventDefault();
+      } 
   }
 }
 
