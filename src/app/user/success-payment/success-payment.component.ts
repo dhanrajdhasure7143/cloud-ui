@@ -21,6 +21,7 @@ export class SuccessPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptionComplete();
+    this.startCountdown();
   }
 
   subscriptionComplete(){
@@ -45,7 +46,8 @@ export class SuccessPaymentComponent implements OnInit {
               //     this.router.navigate((['/user']));
               //   }
               // });
-              this.startCountdown();
+
+              // this.startCountdown();
             }else{
               Swal.fire({
                 title: 'Error!',
