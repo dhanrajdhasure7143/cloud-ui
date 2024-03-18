@@ -99,5 +99,12 @@ export class FirstloginService {
   insertCustomerSubscription(userEmail: string, tenantId: string) {
     return this.http.post(`/subscriptionservice/v1/stripe/insert-customer-subscriptions?userId=${userEmail}&tenantId=${tenantId}`, {});
   }
+
+  createEnterPriseUser(payload): Observable<any> { 
+    let headers = new HttpHeaders({
+      "repayment": 'true'
+    });
+    return this.http.post<any>(`/api/user/enterprise-tenant-registration`, payload,{ headers:headers,observe: 'response' });
+  }
   
 }
