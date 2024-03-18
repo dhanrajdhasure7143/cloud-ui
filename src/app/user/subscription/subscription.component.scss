@@ -1,6 +1,7 @@
 .label-control {
-    font-weight: 800;
+    font-size: 23px;
     color: black;
+    font-weight: bolder;
 }
 
 .form-control {
@@ -11,6 +12,7 @@
     margin: 10px 0 0 0;
     min-height : 240px;
     max-height : max-content;
+    padding: 3px;
 }
 
 .circle {
@@ -26,7 +28,8 @@
     border: 1px solid #098de6;
 }
 .selected-circle{
-    border: 2px solid #97ce20;
+    // border: 2px solid #97ce20;
+    border: 6px solid #098de6;
 }
 
 .line {
@@ -39,25 +42,13 @@
     margin: 10px 0 0 75px;
 }
 
-.description-box{
-    max-height: max-content;
-    width: auto;
-    max-width: max-content;
-    border-radius: 10px;
-    border: 1px solid #098de6;
-    margin: 10px;
-    padding: 10px;
-}
-.bot-details{
-    padding: 10px;
-}
-
 .bot-details:hover{
     -webkit-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
     -moz-box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
     // box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
     box-shadow: 0px 1px 10px -4px rgba(0, 0, 0, 0.75);
     padding: 5px;
+    border: 2px solid #21a1f7;
     border-radius: 10px;
 }
 
@@ -79,4 +70,96 @@
 .selected{
     background-color: #97ce20 !important;
     color: #fff !important;
+    border-radius: 8px;
+}
+
+.Bot-headers {
+    display: flex;
+    align-items: center;
+}
+
+.BotHeading{
+    font-size: 23px;
+    color: black;
+    max-width: 80%;
+    font-weight: bolder;
+}
+
+.details-container {
+    padding:3px;
+}
+
+.bot-details {
+    display: flex;
+    align-items: center;
+}
+
+.description-box {
+    position: absolute;
+    right: -10px;
+    top: 25px;
+    padding: 5px 30px 2px 2px;
+}
+
+.bot-details.selected .description-box {
+    display: block; 
+}
+
+ul.feature-list {
+    padding: 0;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: left;
+    margin-bottom: 5px; 
+}
+
+.feature-list li i {
+    margin-right: 5px; 
+}
+
+.circle-dialog{
+    margin-top: 5px;
+}
+
+.plan-dialog{
+    margin-bottom: 20px;
+}
+
+.toggle-text{
+    font-size: 16px;
+    font-weight: bolder;
+    padding-left: 3px;
+    color: black;
+}
+
+.label-text{
+    font-size: 16px;
+    font-weight: bolder;
+    color: black;
+}
+
+.details-right {
+    position: absolute;
+    bottom: 80px; 
+    right: 20px; 
+}
+
+.view-details-link {
+    color: black;
+    font-size: 16px;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.tiers-mode{
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.proceed-btn {
+    position:absolute;
+    bottom:-30px;
+    right:10px;
 }

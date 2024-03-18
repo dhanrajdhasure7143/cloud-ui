@@ -10,6 +10,8 @@ import { CryptoService } from 'src/app/_services/crypto.service';
 import { switchMap } from 'rxjs/operators';
 import { StripeService } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-subscription',
@@ -22,8 +24,6 @@ export class SubscriptionComponent implements OnInit {
   botPlans : any[] = [];
   countries : any[] = [];
   selectedPlanIndex: number = -1;
-  showArrowRight : boolean = true;
-  showArrowDown : boolean = false;
   countryInfo: any[] = [];
   userEmail : any;
   predefinedPlans:any[]=[];
@@ -40,6 +40,11 @@ export class SubscriptionComponent implements OnInit {
   isRegistered : boolean = false;
   totalAmount : number = 0;
   selectedPlan: string = '';
+  isHovered: boolean[] = [];
+  monthlyToggle: boolean = true;
+  selectedPlanDescription: number;
+  displayModal: boolean[] = new Array(this.botPlans.length).fill(false);
+
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -48,7 +53,7 @@ export class SubscriptionComponent implements OnInit {
               private spinner : NgxSpinnerService,
               private router: Router,
               private crypto: CryptoService,
-              private stripeService: StripeService
+              private stripeService: StripeService,
               ) {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
@@ -118,16 +123,33 @@ export class SubscriptionComponent implements OnInit {
     })
   }
 
+
+toggleMonthlyYearly(monthly: boolean) {
+    this.monthlyToggle = monthly;
+    this.planSelection(this.monthlyToggle ? 'Monthly' : 'Yearly');
+  }
+
+  DisplayPlan(plan: any): boolean {
+    const selectedInterval = this.monthlyToggle ? 'day' : 'year';
+    return plan.priceCollection.some(price => price.recurring.interval === selectedInterval);
+}
+
 showDescription(index: number) {
   this.selectedPlanIndex = index;
-  this.showArrowRight = false;
-  this.showArrowDown = true;
+  this.isHovered[index] = true;
+  // this.showArrowRight = false;
+  // this.showArrowDown = true;
 }
 
 hideDescription() {
   this.selectedPlanIndex = -1;
-  this.showArrowRight = true;
-  this.showArrowDown = false;
+  this.isHovered = new Array(this.botPlans.length).fill(false);
+  // this.showArrowRight = true;
+  // this.showArrowDown = false;
+}
+
+showModalDialog(index: number) {
+  this.displayModal[index] = true;
 }
 
 paymentPlan() {
@@ -251,5 +273,4 @@ readValue(value){
     });
     console.log(this.totalAmount);
   }
-  
 }
