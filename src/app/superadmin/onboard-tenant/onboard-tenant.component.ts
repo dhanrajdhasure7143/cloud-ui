@@ -155,25 +155,24 @@ export class OnboardTenantComponent implements OnInit {
       firstName: this.tenantForm.value.firstName,
       lastName: this.tenantForm.value.lastName,
       designation : this.tenantForm.value.jobTitle,
-      departmemt : this.tenantForm.value.department.departmentId,
+      departmemt : this.tenantForm.value.department,
       company : this.tenantForm.value.company,
       country : this.tenantForm.value.country,
       state : this.tenantForm.value.state,
       city : this.tenantForm.value.city,
       phoneNumber : this.tenantForm.value.phoneNumber,
-      'zipcode': this.tenantForm.value.zipcode,
+      'zipcode': this.tenantForm.value.zipCode,
       'profile_image':null,
       'otp': "",
       'isSubscriptionEnabled': false,
       // password:"Welcome@123"
       // expiryDate : this.datePipe.transform(originalDate, 'EEE MMM dd yyyy'),
   }
+
   if(type == "create"){
     reqObj["password"] = this.tenantForm.value.password;
-    reqObj["expiryDate"] = expiryDate;
+    reqObj["expiresAt"] = expiryDate;
   }
-
-  console.log("reqObj",reqObj);
   // console.log(this.tenantForm.value,"this.tenantForm.value.expiryDate")
   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   // payload.append('expairyData', this.cryptoService.encrypt(JSON.stringify(reqObj)));
