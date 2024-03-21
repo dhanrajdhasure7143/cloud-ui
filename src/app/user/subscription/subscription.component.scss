@@ -28,7 +28,6 @@
     border: 1px solid #098de6;
 }
 .selected-circle{
-    // border: 2px solid #97ce20;
     border: 6px solid #098de6;
 }
 
@@ -48,8 +47,11 @@
     // box-shadow: -5px -3px 39px -9px rgba(0,0,0,0.75);
     box-shadow: 0px 1px 10px -4px rgba(0, 0, 0, 0.75);
     padding: 5px;
-    border: 2px solid #21a1f7;
+    border: 1px solid #21a1f7;
     border-radius: 10px;
+    display: flex;
+    align-items: left;
+    justify-content: left;
 }
 
 .contact:hover{
@@ -62,15 +64,13 @@
     width: 100px;
     height: 50px;
     border: 1px solid #ced4da !important;
-    // padding: 10px 0 0 0;
     border-radius: 2px;
     cursor: pointer;
 }
 
 .selected{
-    background-color: #97ce20 !important;
-    color: #fff !important;
     border-radius: 8px;
+    font-weight: bolder;
 }
 
 .Bot-headers {
@@ -79,6 +79,7 @@
 }
 
 .BotHeading{
+    flex: 1;
     font-size: 23px;
     color: black;
     max-width: 80%;
@@ -86,19 +87,22 @@
 }
 
 .details-container {
-    padding:3px;
+    width:50%;
+    position: relative;
 }
 
 .bot-details {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .description-box {
     position: absolute;
     right: -10px;
-    top: 25px;
-    padding: 5px 30px 2px 2px;
+    top: 20px;
+    padding: 0px 30px 2px 2px;
 }
 
 .bot-details.selected .description-box {
@@ -138,12 +142,7 @@ ul.feature-list {
     font-size: 16px;
     font-weight: bolder;
     color: black;
-}
-
-.details-right {
-    position: absolute;
-    bottom: 80px; 
-    right: 20px; 
+    margin: 0 0 6px 4px;
 }
 
 .view-details-link {
@@ -151,15 +150,49 @@ ul.feature-list {
     font-size: 16px;
     font-weight: bolder;
     text-decoration: none;
+    position: absolute;
+    bottom: 4px; 
+    right: -112%;
+    transform: translateX(-50%);
 }
 
 .tiers-mode{
     font-size: 16px;
     font-weight: bolder;
+    color:black;
 }
 
 .proceed-btn {
     position:absolute;
-    bottom:-30px;
+    bottom:22px;
     right:10px;
+    padding: 6px 30px 6px 30px;
+}
+
+.price-amt {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.planDescript{
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 0 40px;
+}
+
+.items-list {
+    list-style-type:none; 
+    font-size: 15px;
+    font-weight: 500;
+    margin-top:10px;
+}
+
+.price-line {
+    width: 185%;
+    font-size: 17px;
+    margin-top: 30px;
+}
+
+.details-left {
+    margin-left:-9px;
 }

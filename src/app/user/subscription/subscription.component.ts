@@ -29,7 +29,7 @@ export class SubscriptionComponent implements OnInit {
   predefinedPlans:any[]=[];
   selectedPlans:any=[];
   selectedAmount:number=0;
-  planType="Monthly";
+  planType="Yearly";
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
   isDisabled : boolean = true;
@@ -39,10 +39,11 @@ export class SubscriptionComponent implements OnInit {
   log_data:any={}
   isRegistered : boolean = false;
   totalAmount : number = 0;
-  selectedPlan: string = '';
   isHovered: boolean[] = [];
   monthlyToggle: boolean = true;
   selectedPlanDescription: number;
+  selectedPlan: string = 'Yearly';
+  selectedInterval: boolean = true;
   displayModal: boolean[] = new Array(this.botPlans.length).fill(false);
 
 
@@ -123,35 +124,6 @@ export class SubscriptionComponent implements OnInit {
     })
   }
 
-
-toggleMonthlyYearly(monthly: boolean) {
-    this.monthlyToggle = monthly;
-    this.planSelection(this.monthlyToggle ? 'Monthly' : 'Yearly');
-  }
-
-  DisplayPlan(plan: any): boolean {
-    const selectedInterval = this.monthlyToggle ? 'day' : 'year';
-    return plan.priceCollection.some(price => price.recurring.interval === selectedInterval);
-}
-
-showDescription(index: number) {
-  this.selectedPlanIndex = index;
-  this.isHovered[index] = true;
-  // this.showArrowRight = false;
-  // this.showArrowDown = true;
-}
-
-hideDescription() {
-  this.selectedPlanIndex = -1;
-  this.isHovered = new Array(this.botPlans.length).fill(false);
-  // this.showArrowRight = true;
-  // this.showArrowDown = false;
-}
-
-showModalDialog(index: number) {
-  this.displayModal[index] = true;
-}
-
 paymentPlan() {
   let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
@@ -231,6 +203,9 @@ onSelectPredefinedBot(plan, index){
       this.selectedPlans.push(item);
     }
   })
+  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
+  this.isDisabled = this.selectedPlans.length === 0;
+  this.planSelection(this.selectedPlan);
 }
 
 readValue(value){
@@ -273,4 +248,27 @@ readValue(value){
     });
     console.log(this.totalAmount);
   }
+
+  showDescription(index: number) {
+    this.selectedPlanIndex = index;
+    this.isHovered[index] = true;
+  }
+  
+  hideDescription() {
+    this.selectedPlanIndex = -1;
+    this.isHovered = new Array(this.botPlans.length).fill(false);
+  }
+  
+  showModalDialog(index: number) {
+    this.displayModal[index] = true;
+  }
+
+  toggleChanged() {
+    if (this.selectedInterval) {
+      this.planSelection('Yearly');
+    } else {
+      this.planSelection('Monthly');
+    }
+  }
+
 }

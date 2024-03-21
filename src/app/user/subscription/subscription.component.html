@@ -8,111 +8,98 @@
         <!-- <div class="col-md-1"></div> -->
         <div class="col-md-3" style="padding-left: 50px; padding-right: 0px; border-right: 2px solid black;" *ngIf="!isReview_order">
             <div class="col-md-12" style="margin: 10px 0 0 0">
-                    <h4 class="label-control">Enterprise Plan</h4>
+                <h4 class="label-control">Enterprise Plan</h4>
+                <div class="col-md-12" style="margin: 20px 0 0 -50px; padding:2px; font-size: 15px; font-weight: bold;">
+                    <ul style="list-style-type:none;">
+                        <li *ngFor="let item of plans"><i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 4px;"> </i> &nbsp; {{item}}</li>
+                    </ul>
+                </div>
                 <div class="d-flex" style="margin-top: 25px; display: flex !important;">
                     <img src="../../../assets/copilot.svg" width="40px" height="40px" alt="" style="position: relative; top: 5px; left:-5px;">
                     <div for="" class="label-control label-text" style="margin: 0 0 6px 4px;"> New Personalized Enterprise Level Planning? </div>
                 </div>
-                </div>
-                <!-- <div class="col-md-12" style="margin: 20px 0 0 10px;">
-                    <ul style="list-style-type:square;">
-                        <li class="label-control" *ngFor="let item of plans">{{item}}</li>
-                    </ul>
-                </div> -->
-                <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 10px;" (click)="sendEmailEnterPrisePlan()"> Contact Us </button>  
             </div>
+            <div> <button class="btn btn-primary contact" style="margin: 10px 0 0 10px;" (click)="sendEmailEnterPrisePlan()"> Contact Us </button>  
         </div>
-        <div class="col-md-9" style="padding-right: 50px;" *ngIf="!isReview_order">
+    </div>
+    <div class="col-md-9" style="padding-right: 50px;" *ngIf="!isReview_order">
         <div class="col-md-12">
             <div class="Bot-headers">
-                <h4 class="BotHeading" style="flex: 1;">Predefined Bots</h4>
-                <p-inputSwitch [ngModel]="monthlyToggle" (ngModelChange)="toggleMonthlyYearly($event)" class="BotToggle"></p-inputSwitch>
-                <span class="toggle-text">{{ monthlyToggle ? 'Monthly' : 'Annually' }}</span>
+                <h4 class="BotHeading">Predefined Bots</h4>
+                <div class="toggle-container">
+                    <span [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" style="padding:0 10px 0 10px">Monthly</span>
+                    <p-inputSwitch [(ngModel)]="selectedInterval" (onChange)="toggleChanged()" class="BotToggle"></p-inputSwitch>
+                    <span [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" style="padding:0 10px 0 10px">Annually</span>
+                </div>
             </div>
-            <div class="col-md-12" style="height: calc(100vh - 250px) !important; box-sizing: border-box; overflow-y: scroll;overflow-x: hidden;">
+            <div class="col-md-12" style="height: calc(100vh - 200px) !important; box-sizing: border-box; overflow-y: scroll;overflow-x: hidden;">
                 <div class="row">
-                            <ng-container *ngFor="let plan of botPlans; let i = index">
-                                <div class="col-md-6 bot-plans" *ngIf="DisplayPlan(plan)">
+                    <div class="col-md-6 bot-plans" *ngFor="let plan of botPlans; let i = index">
                         <div class="bot-details" (mouseenter)="showDescription(i)" (mouseleave)="hideDescription()">
                             <div class="details-container">
                                 <div class="details-left">
                                     <div class="circle text-center" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
-                                <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
-                            </div>
-        
-                            <div class="text-center label-text"> {{plan.name}} </div>
-                            <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.priceCollection">  
-                                <span style="font-weight: bold; font-size: 22px; color: black;"> $ {{detail.unitAmount}}/<span class="tiers-mode">{{detail.tiersMode}}</span></span>
-                                <!-- <span *ngIf="detail.nickname == 'yearly'"> USD {{detail.unitAmount}} / {{detail.nickname}}</span> -->
-                            </div>
-                            <div class="details-right">
-                                <a *ngIf="isHovered[i]" (click)="showModalDialog(i)" class="view-details-link">View Details</a>
-                                <!-- <p-button *ngIf="isHovered[i]" (click)="showModalDialog(i)" label="View Details"></p-button> -->
-                            </div> 
-                            <p-dialog [(visible)]="displayModal[i]" [modal]="true" [style]="{width: '50vw'}"
-                                 [draggable]="false" [resizable]="false">
-                                 <div class="circle text-center circle-dialog" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
-                                    <img src="../../../assets/MicroBot_New.jpg" alt="" width="40px" height="40px">
+                                    <img src="../../../assets/microbot.png" alt="" width="40px" height="40px">
                                 </div>
-                                <div class="label-control text-center plan-dialog"> {{plan.name}} </div>
-                                <span>{{ plan.description }}</span>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="items-list" style="list-style-type:none;">
-                                            <li *ngFor="let item of plan.features">
-                                                <i class="pi pi-check" style="font-size: 0.3rem; font-weight: 500; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                        <ul class="items-list" style="list-style-type:none;">
-                                            <li *ngFor="let item of plan.features">
-                                                <i class="pi pi-check" style="font-size: 0.3rem; font-weight: 500; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <ul class="items-list" style="list-style-type:none;">
-                                            <li *ngFor="let item of plan.features">
-                                                <i class="pi pi-check" style="font-size: 0.3rem; font-weight: 500; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                        <ul class="items-list" style="list-style-type:none;">
-                                            <li *ngFor="let item of plan.features">
-                                                <i class="pi pi-check" style="font-size: 0.3rem; font-weight: 500; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div class="text-center label-text plan-name"> {{plan.name}} </div>
+                                <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.priceCollection">  
+                                    <span *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly' "><b style="font-size: 1.5rem; color: black;">$ {{detail.unitAmount}}</b>/<span class="tiers-mode"> {{detail.tiersMode}} </span></span>
+                                    <span *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly' "><b style="font-size: 1.5rem; color: black;">$ {{detail.unitAmount}}</b>/<span class="tiers-mode"> {{detail.tiersMode}} </span></span>
+                                    <!-- <span style="font-weight: bold; font-size: 22px; color: black;"> $ {{detail.unitAmount}}/<span class="tiers-mode">{{detail.tiersMode}}</span></span> -->
+                                    <!-- <span *ngIf="detail.nickname == 'yearly'"> USD {{detail.unitAmount}} / {{detail.nickname}}</span> -->
                                 </div>
-                                <!-- <ng-template pTemplate="footer">
-                                    <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
-                                </ng-template> -->
-                            </p-dialog>
-                             
-                        </div>
+                                <div class="details-link">
+                                    <a *ngIf="isHovered[i]" (click)="showModalDialog(i)" class="view-details-link">View Details</a>
+                                </div> 
+                            </div>
+                            </div>
                             <div class="description-box" *ngIf="selectedPlanIndex === i">
-                                <span> {{ plan.description }} </span>
-                                <ul class="items-list" style="list-style-type:none;">
+                                <span class= "planDescript"> {{ plan.description }} </span>
+                                <ul class="items-list">
                                     <li *ngFor="let item of plan.features"> <i class="pi pi-check"  style="font-size: 0.3rem; font-weight: 500; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"> </i> {{ item }} </li>
                                 </ul>
                             </div>
-                        </div> 
-                        
+                            <!-- Plan Name and Description for the Dialog box -->
+                            <p-dialog [(visible)]="displayModal[i]" [modal]="true" [style]="{width: '50vw'}"
+                                 [draggable]="false" [resizable]="false">
+                                 <div class="circle text-center circle-dialog" style="cursor: pointer;" (click)="onSelectPredefinedBot(plan, i)" [ngClass]="plan.isSelected?'selected-circle':'circle-color'"> 
+                                    <img src="../../../assets/microbot.png" alt="" width="40px" height="40px">
+                                </div>
+                                <div class="label-control text-center plan-dialog"> {{plan.name}} </div>
+                                <span class="planDescript">{{ plan.description }}</span>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="items-list">
+                                            <li *ngFor="let item of plan.features">
+                                                <i class="pi pi-check" style="font-size: 0.3rem; font-weight: 500; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
+                                                {{ item }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </p-dialog>                           
+                        </div>
                     </div>
                 </div>
-                </ng-container>
             </div>
-            </div>
-            <div class="col-md-12 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: center;">
-                <!-- <span [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </span> -->
-                <!-- <span [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </span> -->
-                <!-- <button [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </button>
-                <button [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </button> -->
+            <!-- <div class="col-md-12 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: center;">
+                <span [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </span>
+                <span [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </span>
+                <button [disabled]="isDisabled" class="plans-button text-center" [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" (click)="planSelection('Monthly')"> Monthly </button>
+                <button [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </button>
+            </div> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <h5 class="price-line">Your estimated
+                            <span *ngIf="selectedPlan === 'Monthly'">Monthly</span>
+                            <span *ngIf="selectedPlan === 'Yearly'">Annual</span>
+                            price <span class="price-amt"> $ {{totalAmount}}</span>.<span style="font-size: 12px; font-weight: bold;">00 </span><sup style="font-size: x-small;">excl taxes</sup> </h5>
+                    </div>
+                </div>
             </div>
             <div class="col-md-12 p-10 form-group text-end" style="margin-top: 20px; display: inline-flex;justify-content: center;">
-                <button type="button" class="btn btn-primary proceed-btn" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed (USD {{totalAmount}}) </button>
+                <button type="button" class="btn btn-primary proceed-btn" (click)="paymentPlan()" [disabled]="isDisabled"> Proceed  </button>
                 <!-- <button type="button" class="btn btn-primary" style="font-weight: 700;" (click)="paymentPlan()"> Next (<span>{{selectedAmount*(planType=='Monthly'?1:12)}}</span> $) </button> -->
             </div>
         </div>
@@ -122,8 +109,6 @@
         </div>
     </div>
 </div>
-
-
 
 <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
