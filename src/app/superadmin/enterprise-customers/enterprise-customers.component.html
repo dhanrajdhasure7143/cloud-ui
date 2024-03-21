@@ -1,23 +1,17 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      <div class="enterprise-layout">
-      <!-- <p-scrollPanel [style]="{width: '100%', height: '100%'}"> -->
-        <p-table #dt [value]="enterPriseList" [columns]="columnList"  [scrollable]="true" [globalFilterFields]="['userId','userName','department','phoneNumber','country','createdDate']"
-        [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
-        <ng-template pTemplate="caption">
-          <div class="p-d-flex" style="text-align: end;">
-            <button class="btn btn-primary"(click)="openOverlay('onboard','')" style="margin-right: 10px;">Onboard Tenant</button>
-            <span class="p-input-icon-right gridsearch">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
-            </span>  
-            <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt)"></button>
-          </div>
-        </ng-template>
-            <ng-template pTemplate="header" let-columns>
-              <tr>
-                <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
+<p-table [value]="enterPriseList" #dt1 [columns]="newColumnList" dataKey="tenantId" [globalFilterFields]="search_fields" responsiveLayout="scroll" [resizableColumns]="true" [scrollable]="true">
+  <ng-template pTemplate="caption">
+    <div class="p-d-flex" style="text-align: end;">
+      <span class="p-input-icon-right gridsearch">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
+      </span>  
+      <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt)"></button>
+    </div>
+  </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="flex:0.2 1 0;" class="arrowcol"></th>
+          <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
                   <p-columnFilter *ngIf="each.ShowFilter" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
                   [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -27,48 +21,124 @@
                 </ng-template>
               </p-columnFilter>
               <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-                    <tr>
-                        <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top">
-                            <span *ngIf="col.ColumnName!='action'">
-                                <span *ngIf="col.ColumnName!='createdDate'">{{rowData[col.ColumnName]}}</span>
-                                <span *ngIf="col.ColumnName=='createdDate'">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
-                            </span>
-                            <span *ngIf="col.ColumnName=='action'" class="actionmenu">
-                                <a (click)="openOverlay('update',rowData)" pTooltip="Edit" tooltipPosition="top">
-                                    <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
-                                    <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
-                                </a>
-                            </span>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                  <tr>
-                    <td style="justify-content: center;" colspan="8">No Records Found</td>
-                  </tr>
-                </ng-template>
-              </p-table>
-              <!-- </p-scrollPanel> -->
-            </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-data let-columns="columns" let-expanded="expanded" let-i="rowIndex">
+              <tr>
+                <td>
+                  <button type="button" pButton pRipple [pRowToggler]="rowData" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+              </td>
+                  <td *ngFor="let col of columns">
+                      <span *ngIf="col.ColumnName!='action'">
+                          <span *ngIf="col.ColumnName!='enterpriseUserExpiryAt' && col.ColumnName!='createdAt' ">
+                            <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}}</span>
+                          </span>
+                          <span *ngIf="col.ColumnName=='enterpriseUserExpiryAt'|| col.ColumnName=='createdAt' ">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
+                      </span>
+                      <span *ngIf="col.ColumnName=='newAction'" class="actionmenu">
+                          <a (click)="openOffboardOverlay('update', rowData)" pTooltip="Edit" tooltipPosition="top">
+                              <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
+                              <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                          </a>
+                      </span>
+                  </td>
+              </tr>
+          </ng-template>
+  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns" let-i="rowIndex">
+    <tr style="overflow-y: auto;">
+      <td colspan="7">
+        <div class="p-3">
+          <p-table [value]="rowData.usersData" dataKey="id">
+            <ng-template pTemplate="header">
+              <tr>
+                <!-- <th>Id </th> -->
+                <th>User Name</th>
+                <th>User Email</th>
+                <th>Role</th>
+                <th style="width: 4rem"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+              <tr>
+                <!-- <td>{{user.id}}</td> -->
+                <td>{{user.firstName|titlecase}} {{user.lastName|titlecase}}</td>
+                <td>{{user.userId}}</td>
+                <td>{{user.roleName}}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td style="justify-content: center;" colspan="7">No Records Found</td>
+              </tr>
+            </ng-template>
+          </p-table>
         </div>
+      </td>
+    </tr>
+                </ng-template>
+</p-table>
+
+
+<div *ngIf="isOverlay">
+  <app-split-overlay (closeOverlay)="closeOffboardOverlay($event)">
+    <div class="h-100">
+      <div class="create-header">
+        <h3> Update </h3>
+      </div>
+      <div class="createform-overlay">
+        <!-- <h5> Please select the below Options </h5> -->
+      <!-- <label style="margin-right: 20px;">
+        <input type="radio" name="actionType" [(ngModel)]="selectedAction" value="offboard"
+          (change)="toggleActionType()"> Offboard Tenant
+      </label> -->
+      <label>
+        <input type="radio" name="actionType" [(ngModel)]="selectedAction" value="extendTenure"
+          (change)="toggleActionType()"> Extend Tenure
+      </label>
+      <div >
+        <div *ngIf="isOffboarding" style="margin-top: 20px;">
+          <div class="form-group col-md-12 p-0">
+            <label class="label-control">Reason for Offboarding<span class="star">*</span></label>
+            <textarea class="form-control data" placeholder="Enter reason" [(ngModel)]="offboardingReason"></textarea>
+            <span *ngIf="!offboardingReason && offboardingReason.touched" class="errspan required"> Offboarding Reason
+              Required* </span>
+          </div>
+        </div>
+        <div *ngIf="isExtendTenure" style="margin-top: 20px;">
+          <div class="form-group col-md-12 p-0">
+            <label class="label-control">Select Date for Tenure Extension<span class="star">*</span></label>
+            <input type="date" class="form-control data" [(ngModel)]="tenureExtensionDate" />
+            <span *ngIf="!tenureExtensionDate && tenureExtensionDate.touched" class="errspan required"> Tenure Extension
+              Date Required* </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="createform-footer">
+        <button class="btn btn-cancel" (click)="closeOffboardOverlay($event)">Cancel</button>
+        <button *ngIf="selectedAction === 'extendTenure'" class="btn btn-primary btn-update" (click)="performAction()"
+          [disabled]="selectedAction === 'extendTenure' && !tenureExtensionDate">
+          Update
+        </button>
+
+        <!-- <button *ngIf="selectedAction === 'offboard'" class="btn btn-primary btn-update" (click)="performAction()"
+          [disabled]="selectedAction === 'offboard' && !offboardingReason">
+          Offboard Tenant
+        </button> -->
+
+        
+      </div>
+
+      </div>
     </div>
+  </app-split-overlay>
 </div>
 
-<div *ngIf="isDisplayOverlay">
-    <app-split-overlay (closeOverlay)="closeOverlay($event)">
-        <!-- <div class="h-100">
-            <div class="create-header">
-                <h3 >Onboard User</h3>
-            </div>
-        </div> -->
-        <app-onboard-tenant [userData]="userData"></app-onboard-tenant>
-    </app-split-overlay>
-  </div>
+<div class="card flex justify-content-center gap-2">
+  <p-toast></p-toast>
+</div>
 
-  <ngx-spinner bdColor="#bebcbc66" type="">
-    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
-  </ngx-spinner>
+<ngx-spinner bdColor="#bebcbc66" type="">
+  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+</ngx-spinner>

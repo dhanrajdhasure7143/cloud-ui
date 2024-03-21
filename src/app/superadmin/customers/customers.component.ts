@@ -4,12 +4,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from "sweetalert2";
-
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+  styleUrls: ['./customers.component.scss'],
+  providers: [MessageService]
 })
 export class CustomersComponent implements OnInit {
   isCustom: boolean;
@@ -22,6 +23,16 @@ export class CustomersComponent implements OnInit {
   userid: any;
   plans: any = [];
   isDisplayOverlay:boolean = false;
+  activeTabIndex = 0;
+  isOverlay:boolean = false;
+
+  tenureExtensionDate: string = '';
+  isExtendTenure=false;
+  tenantId: string = '';
+  statusValue:boolean =true;
+  showToast: boolean = false;
+  public check_tab = 0;
+
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
     {DisplayName:"Subscribed Plan",ColumnName:"subscribedPlan",ShowFilter: true,sort:true},
@@ -38,6 +49,8 @@ export class CustomersComponent implements OnInit {
     private restapi: UsermanagementService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
+    private api : UsermanagementService,
+    private messageService: MessageService
   ) { 
     
   }
@@ -55,30 +68,13 @@ export class CustomersComponent implements OnInit {
       live_support: [false],
       service_orchestration: [false]
     })
-    this.spinner.show();
-
   }
 
-  openEditOverlay(plan) {
-    this.userid = plan.email
-    document.getElementById("subscrip-edit").classList.remove("slide-right");
-    document.getElementById("subscrip-edit").classList.add("slide-left");
-    
+  show() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }
-  // closeOverlay(){
-  //   document.getElementById("subscrip-edit").style.display = 'none';
-  //   this.subscriptionForm.reset();
-  //   this.subscriptionForm.get("subscriptionplan").setValue("default");
-  //   this.subscriptionForm.get("interval").setValue("default");
-  // }
 
-  slideLeft() {
-    document.getElementById("subscrip-edit").classList.add("slide-right");
-    document.getElementById("subscrip-edit").classList.remove("slide-left");
-    this.subscriptionForm.reset();
-    this.subscriptionForm.get("subscriptionplan").setValue("default");
-    this.subscriptionForm.get("interval").setValue("default");
-  }
+
   onChange(value: string) {
     if (value === "custom") {
       this.isCustom = true;
@@ -129,7 +125,6 @@ export class CustomersComponent implements OnInit {
   getSuperAdminData() {
     this.spinner.show();
     this.firstloginservice.getSuperAdminData().subscribe((res) => {
-      console.log(res,"customers")
       this.plans = res;
       this.spinner.hide();
     });
@@ -166,12 +161,19 @@ export class CustomersComponent implements OnInit {
 
   openOverlay(type,rowData){
     this.isDisplayOverlay = true;
-    console.log(rowData,"rowData")
-    // this.userData= rowData
   }
 
   closeOverlay(event){
     this.isDisplayOverlay = false;
+  }
+  
+  onTabChange(event,tabView){
+    const tab = tabView.tabs[event.index].header;
+    this.activeTabIndex = event.index;
+    this.check_tab = event.index;
+    if(this.activeTabIndex == 1){
+      this.getSuperAdminData();
+    }
   }
 
 }

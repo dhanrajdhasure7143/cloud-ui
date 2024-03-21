@@ -63,6 +63,7 @@ import { OrderPaymentComponent } from './order-payment/order-payment.component';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { NgxStripeModule } from 'ngx-stripe';
+import { environment } from 'src/environments/environment';
 import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
@@ -113,7 +114,7 @@ import {DialogModule} from 'primeng/dialog';
         PasswordModule,
         PrimengCustomModule,
         CdkStepperModule,
-        NgxStripeModule.forRoot('pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq'),
+        NgxStripeModule.forRoot(environment.stripeKey),
         DialogModule
     ],
     exports: [LoginComponent],

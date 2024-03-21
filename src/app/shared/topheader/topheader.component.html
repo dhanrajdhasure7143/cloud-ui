@@ -20,11 +20,14 @@
         {{firstletter|uppercase}}
       </span> 
       <div class="txt-wh">
-        <span class="header-rgttext"> John </span>
+        <span class="header-rgttext"> {{firstname}} {{lastname}} </span>
         <span class="header-userrole"> Platform Admin </span>
       </div> 
-       <span   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" alt="retrievedImage"></span>
-        <span #toogleBtn (click)="myFunction()" class="dropbtn"> <img src="assets/images/arrow_down.svg" alt="arrow_down" style="color: #fff;"></span>
+       <!-- <span   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" alt="retrievedImage"></span> -->
+        <span #toogleBtn (click)="myFunction()" class="dropbtn">
+           <!-- <img src="assets/images/arrow_down.svg" alt="arrow_down"> -->
+          <i class="pi pi-chevron-down" style="font-size: 1rem; color: #fff;"></i>
+        </span>
         <!-- <button type="button" #toogleBtn pButton icon="pi pi-angle-down" (click)="myFunction()"></button>       -->
         <div>     
         <div  id="myDropdown" class="dropdown-content">
