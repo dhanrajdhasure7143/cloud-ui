@@ -10,6 +10,8 @@ import { CryptoService } from 'src/app/_services/crypto.service';
 import { switchMap } from 'rxjs/operators';
 import { StripeService } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-subscription',
@@ -22,14 +24,12 @@ export class SubscriptionComponent implements OnInit {
   botPlans : any[] = [];
   countries : any[] = [];
   selectedPlanIndex: number = -1;
-  showArrowRight : boolean = true;
-  showArrowDown : boolean = false;
   countryInfo: any[] = [];
   userEmail : any;
   predefinedPlans:any[]=[];
   selectedPlans:any=[];
   selectedAmount:number=0;
-  planType="Monthly";
+  planType="Yearly";
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
   isDisabled : boolean = true;
@@ -39,7 +39,13 @@ export class SubscriptionComponent implements OnInit {
   log_data:any={}
   isRegistered : boolean = false;
   totalAmount : number = 0;
-  selectedPlan: string = '';
+  isHovered: boolean[] = [];
+  monthlyToggle: boolean = true;
+  selectedPlanDescription: number;
+  selectedPlan: string = 'Yearly';
+  selectedInterval: boolean = true;
+  displayModal: boolean[] = new Array(this.botPlans.length).fill(false);
+
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -48,7 +54,7 @@ export class SubscriptionComponent implements OnInit {
               private spinner : NgxSpinnerService,
               private router: Router,
               private crypto: CryptoService,
-              private stripeService: StripeService
+              private stripeService: StripeService,
               ) {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
@@ -117,18 +123,6 @@ export class SubscriptionComponent implements OnInit {
     });
     })
   }
-
-showDescription(index: number) {
-  this.selectedPlanIndex = index;
-  this.showArrowRight = false;
-  this.showArrowDown = true;
-}
-
-hideDescription() {
-  this.selectedPlanIndex = -1;
-  this.showArrowRight = true;
-  this.showArrowDown = false;
-}
 
 paymentPlan() {
   this.spinner.show();
@@ -207,8 +201,8 @@ onSelectPredefinedBot(plan, index) {
     if (item.isSelected) {
       this.selectedPlans.push(item);
     }
-  });
-  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "";
+  })
+  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
   this.isDisabled = this.selectedPlans.length === 0;
   this.planSelection(this.selectedPlan);
 }
@@ -253,5 +247,27 @@ readValue(value){
     });
     console.log(this.totalAmount);
   }
+
+  showDescription(index: number) {
+    this.selectedPlanIndex = index;
+    this.isHovered[index] = true;
+  }
   
+  hideDescription() {
+    this.selectedPlanIndex = -1;
+    this.isHovered = new Array(this.botPlans.length).fill(false);
+  }
+  
+  showModalDialog(index: number) {
+    this.displayModal[index] = true;
+  }
+
+  toggleChanged() {
+    if (this.selectedInterval) {
+      this.planSelection('Yearly');
+    } else {
+      this.planSelection('Monthly');
+    }
+  }
+
 }

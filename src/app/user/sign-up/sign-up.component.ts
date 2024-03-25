@@ -269,7 +269,7 @@ export class SignUpComponent implements OnInit {
         // if(data.response.registrationProcess == "basic_details_completed"){
           Swal.fire({
             title: 'Info',
-            text: `User Already exist, please processed sign in!`,
+            text: `User already exists, Please proceed with signing in!`,
             icon: 'info',
             showCancelButton: false,
             allowOutsideClick: true

@@ -64,6 +64,7 @@ import { SuccessPaymentComponent } from './success-payment/success-payment.compo
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
     declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent, SuccessPaymentComponent, FailPaymentComponent],
@@ -113,7 +114,8 @@ import { environment } from 'src/environments/environment';
         PasswordModule,
         PrimengCustomModule,
         CdkStepperModule,
-        NgxStripeModule.forRoot(environment.stripeKey)
+        NgxStripeModule.forRoot(environment.stripeKey),
+        DialogModule
     ],
     exports: [LoginComponent],
     providers: []
