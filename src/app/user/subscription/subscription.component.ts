@@ -45,6 +45,8 @@ export class SubscriptionComponent implements OnInit {
   selectedPlan: string = 'Yearly';
   selectedInterval: boolean = true;
   displayModal: boolean[] = new Array(this.botPlans.length).fill(false);
+  isSpaceOnLeft: boolean = false;
+  showBotInfoFlag: boolean = false;
 
 
   constructor(private service : FirstloginService,
@@ -90,25 +92,28 @@ export class SubscriptionComponent implements OnInit {
   }
 
   loadPredefinedBots(){
-    this.service.loadPredefinedBots().subscribe((response : any) =>{
-      this.spinner.hide()
-      console.log(response)
+    this.service.loadPredefinedBots().subscribe((response: any) =>{
+      this.spinner.hide();
+      console.log(response);
       if(response){
         response.forEach(element => {
-          let obj=element.product
-          obj["priceCollection"] = element.priceCollection
-          let data = element.product.metadata.product_features
-          obj["features"] = JSON.parse(data);
-          this.botPlans.push(obj)
+          let obj = element.product;
+          let image=element.image;
+          obj["priceCollection"] = element.priceCollection;
+          if (element.product.metadata && element.product.metadata.product_features) {
+            let data = element.product.metadata.product_features;
+            obj["features"] = JSON.parse(data);
+          } else {
+            obj["features"] = [];
+          }
+
+          const decodedImage = this.decodeBase64Image(image);
+          obj["image"] = decodedImage;
+          this.botPlans.push(obj);
         });
-        console.log(this.botPlans)
-      // this.botPlans = response;
-      // this.botPlans.forEach(item=>{
-      //   item["isSelected"] = false;
-      //   item["selectedTerm"] = "Monthly"
-      // })
+        console.log(this.botPlans);
       }
-    },err=>{
+    }, err => {
       this.spinner.hide();
       Swal.fire({
         title: 'Error!',
@@ -116,13 +121,13 @@ export class SubscriptionComponent implements OnInit {
         icon: 'error',
         showCancelButton: false,
         allowOutsideClick: true
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['/signup']);
-      }
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['/signup']);
+        }
+      });
     });
-    })
-  }
+  }  
 
 paymentPlan() {
   this.spinner.show();
@@ -268,6 +273,26 @@ readValue(value){
     } else {
       this.planSelection('Monthly');
     }
+  }
+
+  showBotInfo(event: MouseEvent): void {
+    const squareElement = event.currentTarget as HTMLElement;
+    const squarePosition = squareElement.getBoundingClientRect();
+    const squareWidth = squareElement.offsetWidth;
+    const windowWidth = window.innerWidth;
+
+    const botInfoWidth = 450;
+
+    this.isSpaceOnLeft = windowWidth - squarePosition.left >= squareWidth + botInfoWidth;
+    this.showBotInfoFlag = true;
+  }
+
+  hideBotInfo(): void {
+    this.showBotInfoFlag = false;
+  }
+
+  decodeBase64Image(base64Data: string): string {
+    return 'data:image/jpeg;base64,' + base64Data;
   }
 
 }
