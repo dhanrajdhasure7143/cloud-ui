@@ -8,7 +8,7 @@
         <!-- <div class="col-md-1"></div> -->
         <div class="col-md-3 custom-bg-gray" style="margin-left: x; left: 0;" *ngIf="!isReview_order">
             <div class="enterprise-plan-wrapper">
-                <div class="text-center enterprise-plan" style="background-color:#098DE6; color:white">
+                <div class="text-center enterprise-plan" style="background-color:#098de6; color:white">
                     <h4>Enterprise Plan</h4>
                 </div>
             </div>
@@ -17,11 +17,8 @@
                     <h4 style="color: rgba(236, 89, 89, 0.932); text-align: center; font-weight: 600;">Exclusive Pricing</h4>
                 </div>
                 <div class="features">
-                    <ul>
-                        <li>Advanced Process Automation</li>
-                        <li>ROA Process Automation: Automatically generate business cases with tools</li>
-                        <li>Process Intelligence and Analytics</li>
-                        <li>Data Analysis through EZFlow Automation</li>
+                    <ul *ngFor="let plan of enterPrise_plan.features">
+                        <li>{{plan}}</li>
                     </ul>                    
                 </div>
                 <button class="btn btn-primary contact" id="sales-btn" (click)="sendEmailEnterPrisePlan()">CONTACT SALES</button>
@@ -34,7 +31,7 @@
                 <h4 class="BotHeading" style="flex: 1;">Predefined Bots</h4>
                 <div class="toggle-container">
                     <span [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" style="padding:0 10px 0 10px">Monthly</span>
-                    <p-inputSwitch [(ngModel)]="selectedInterval" (onChange)="toggleChanged()" class="BotToggle"></p-inputSwitch>
+                    <p-inputSwitch [(ngModel)]="selectedInterval" (onChange)="toggleChanged()"></p-inputSwitch>
                     <span [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" style="padding:0 10px 0 10px">Annually</span>
                 </div>
             </div>
@@ -46,7 +43,7 @@
                             <div class="container">
                                 <div class="row" style="justify-content: center; align-items: center;">
                                   <div class="col">
-                                    <div class="square" [ngClass]="{'selected-square': plan.isSelected}" (mouseenter)="showBotInfo($event)" (mouseleave)="hideBotInfo()">
+                                    <div class="square" (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)" [ngClass]="{'selected-square': plan.isSelected}" (mouseenter)="showBotInfo($event)" (mouseleave)="hideBotInfo()">
                                       <div class="image-top">
                                         <img [src]="plan.image" class="img-fluid" alt="Top Image">
                                       </div>

@@ -47,6 +47,7 @@ export class SubscriptionComponent implements OnInit {
   displayModal: boolean[] = new Array(this.botPlans.length).fill(false);
   isSpaceOnLeft: boolean = false;
   showBotInfoFlag: boolean = false;
+  enterPrise_plan:any;
 
 
   constructor(private service : FirstloginService,
@@ -96,7 +97,8 @@ export class SubscriptionComponent implements OnInit {
       this.spinner.hide();
       console.log(response);
       if(response){
-        response.forEach(element => {
+
+      response.forEach(element => {
           let obj = element.product;
           let image=element.image;
           obj["priceCollection"] = element.priceCollection;
@@ -111,6 +113,11 @@ export class SubscriptionComponent implements OnInit {
           obj["image"] = decodedImage;
           this.botPlans.push(obj);
         });
+
+       this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
+       console.log(this.enterPrise_plan);
+
+        this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
         console.log(this.botPlans);
       }
     }, err => {
