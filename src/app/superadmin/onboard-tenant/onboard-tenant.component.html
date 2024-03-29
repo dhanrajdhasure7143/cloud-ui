@@ -222,7 +222,7 @@
             <!-- <button type="button" class="btn btn-primary ml-2" id="reset-btn"> Register </button> -->
             <!-- <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()"> Onboard </button> -->
             <button *ngIf="!isCreateAccount" type="button" class="btn btn-primary" id="update-btn" (click)="updateAccount('update')"
-                [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> Update </button>
+                [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> Onboard Tenant </button>
                 <button *ngIf="isCreateAccount" type="button" class="btn btn-primary" id="update-btn" (click)="updateAccount('create')"
                 [disabled]="!(tenantForm.valid && (tenantForm.touched ||  tenantForm.dirty)) || errorMessage"> Onboard Tenant </button>
         </div>
