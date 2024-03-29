@@ -41,7 +41,7 @@ export class CustomersComponent implements OnInit {
     {DisplayName:"Next Billing Date",ColumnName:"dueDate",ShowFilter: true,sort:true},
     {DisplayName:"Mobile",ColumnName:"mobile",ShowFilter: true,sort:true},
     {DisplayName:"Email",ColumnName:"email",ShowFilter: true,sort:true},
-    {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
+    // {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
   ]
 
   constructor(

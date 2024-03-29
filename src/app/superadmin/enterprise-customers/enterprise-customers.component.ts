@@ -57,6 +57,7 @@ export class EnterpriseCustomersComponent implements OnInit {
         this.enterPriseList = response
         this.enterPriseList.map(item=>{
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
             const expiryDate = new Date(item.enterpriseUserExpiryAt);
             if (expiryDate < today) {
               item["status"] = 'Inactive';
