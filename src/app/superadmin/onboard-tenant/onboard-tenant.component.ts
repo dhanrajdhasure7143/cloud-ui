@@ -210,7 +210,7 @@ export class OnboardTenantComponent implements OnInit {
   onBoardEnterPriseTenant(payload){
     const originalDate = new Date(this.tenantForm.value.expiryDate);
     let expiryDate = this.datePipe.transform(originalDate, 'EEE MMM dd yyyy')
-    this.service.registerUser(payload).subscribe((res : any) => {
+    this.service.onboardUserUpdate(payload).subscribe((res : any) => {
       if(res.errorCode == 5019){
           Swal.fire({
           title: 'Error!',
