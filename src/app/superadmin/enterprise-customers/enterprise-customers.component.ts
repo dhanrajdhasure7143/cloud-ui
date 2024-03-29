@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-enterprise-customers',
@@ -13,7 +14,8 @@ import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.serv
 export class EnterpriseCustomersComponent implements OnInit {
   enterPriseList:any=[];
   isOverlay:boolean = false;
-  selectedAction: 'offboard' | 'extendTenure' | null = null;
+  // selectedAction: 'offboard' | 'extendTenure' | null = null;
+  selectedAction = 'extendTenure';
   tenantId: string = '';
   newTabData: any[];
   isOffboarding = false;
@@ -47,7 +49,8 @@ export class EnterpriseCustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.loadData()
+    this.loadData();
+    this.toggleActionType();
   }
 
   loadData(): void {
@@ -69,15 +72,22 @@ export class EnterpriseCustomersComponent implements OnInit {
   }
 
   openOffboardOverlay(actionType: any, row:any){
-    this.isOverlay = true;
-    this.selectedAction = actionType;
-    this.tenantId = row.tenantId;
     console.log('The Result is Here : ',row)
+    this.isOverlay = true;
+    // this.selectedAction = actionType;
+    this.tenantId = row.tenantId;
+    const inputDate = new Date(row.enterpriseUserExpiryAt);
+    inputDate.setDate(inputDate.getDate() + 1);
+    this.tenureExtensionDate = inputDate.toISOString().slice(0, 10);
+    this.toggleActionType();
+    // console.log('The Result is Here : ',row)
   }
 
   toggleActionType() {
-    this.isOffboarding = this.selectedAction === 'offboard';
-    this.isExtendTenure = this.selectedAction === 'extendTenure';
+    // this.isOffboarding = this.selectedAction === 'offboard';
+   
+    this.selectedAction === 'extendTenure';
+    this.isExtendTenure = true;
   }
 
   closeOffboardOverlay(event){
@@ -94,6 +104,15 @@ export class EnterpriseCustomersComponent implements OnInit {
   
   extendTenure(){
     if (this.tenantId && this.tenureExtensionDate) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to update the tenure?',
+        icon: 'warning',
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        // console.log('The Result is Here : ',this.tenureExtensionDate)
       const reqBody = {
         expiresAt: this.tenureExtensionDate
       };
@@ -110,6 +129,8 @@ export class EnterpriseCustomersComponent implements OnInit {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to extend tenure.' });
         }
       );
+    }
+  });
     }
     else{
       console.error('API Error: Unable to handle the Extend Tenure Option.');
