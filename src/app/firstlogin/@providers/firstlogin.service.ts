@@ -22,6 +22,12 @@ export class FirstloginService {
     });
     return this.http.post<any>(`/api/user/registrationcomplete`, payload,{ headers:headers,observe: 'response' });
   }
+  onboardUserUpdate(payload): Observable<any> { 
+    let headers = new HttpHeaders({
+      "repayment": 'true'
+    });
+    return this.http.post<any>(`/api/user/enterprise-tenant-registration`, payload,{ headers:headers,observe: 'response' });
+  }
   verifyToken(token: any): Observable<any> {
     return this.http.get<any>(`/api/user/registrationConfirm?token=${token}`);
   }
