@@ -168,11 +168,10 @@ export class SignUpComponent implements OnInit {
           let obj=element.product
           obj["priceCollection"] = element.priceCollection
           let data = element.product.metadata.product_features
-          obj["features"] = JSON.parse(data);
+          obj["features"] =data?JSON.parse(data):[];
           this.planDetails.push(obj)
         });
       }
-      console.log(this.planDetails)
     })
   }
 
@@ -388,7 +387,6 @@ onChangeCountry(countryValue) {
   this.stateInfo = State.getAllStates();
   if(countryValue){
       const matchingCountry = this.countryInfo.find((item: any) => item.name === countryValue.name);
-      console.log(matchingCountry)
       this.phnCountry = matchingCountry.isoCode.toLowerCase();
       this.stateInfo = this.stateInfo.filter((state: any) => state.countryCode === matchingCountry.isoCode)
       this.errorMessage=""
@@ -483,10 +481,36 @@ if(res.body.message == "User Details Saved Successfully!!") {
 //     });
 //   }
 // });
+  }else if(res.code == 409){
+    this.spinner.hide();
+  Swal.fire({
+    title: 'Error',
+    text: 'User Already Exists. Please proceed with signing in!',
+    icon: 'error',
+    showCancelButton: false,
+    allowOutsideClick: true
+}).then((result) => {
+  if (result.value) {
+    this.router.navigate(['/user']);
+  }
+});
 } else {
   this.spinner.hide();
-  Swal.fire("Error",res.errorMessage,"error")
+  Swal.fire({
+    title: 'Error',
+    text: 'User Already Exists. Please proceed with signing in!',
+    icon: 'error',
+    showCancelButton: false,
+    allowOutsideClick: true
+}).then((result) => {
+  if (result.value) {
+    this.router.navigate(['/user']);
+  }
+});
 }
+},err=>{
+  this.spinner.hide();
+  Swal.fire("Error","Failed to save details","error")
 })
 }
 
