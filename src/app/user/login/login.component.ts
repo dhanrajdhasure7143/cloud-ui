@@ -468,16 +468,6 @@ export class LoginComponent implements OnInit {
 
   requestDemo() {
     this.router.navigate(['/signup'])
-    if(this.config.isNewSignupFlow){
-      console.log("new flow")
-    }else{
-      console.log("old flow")
-    }
-    if(environment.isNewSignupFlow){
-      console.log("new flow-1")
-    }else{
-      console.log("old flow-1")
-    }
 
     // if(this.config.isNewSignupFlow){
       // this.router.navigate(['/signup'])
