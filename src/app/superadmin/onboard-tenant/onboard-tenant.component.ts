@@ -28,7 +28,7 @@ import Swal from 'sweetalert2';
 })
 export class OnboardTenantComponent implements OnInit {
   @Input() userData: any;
-  @Output() valueChange = new EventEmitter();
+  @Output() close_overlay = new EventEmitter();
   tenantForm: FormGroup;
   private spacialSymbolEncryption: string = "->^<-";
   public useremail: any;
@@ -119,6 +119,7 @@ export class OnboardTenantComponent implements OnInit {
         this.tenantForm.get("lastName").setValue(this.userData["lastName"]);
         this.tenantForm.get("jobTitle").setValue(this.userData["designation"]);
         this.tenantForm.get("company").setValue(this.userData["company"]);
+        this.tenantForm.get("zipCode").setValue(this.userData["zipcode"]);
         this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
         const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
         this.tenantForm.get("country").setValue(this.userData["country"]);
@@ -179,7 +180,7 @@ export class OnboardTenantComponent implements OnInit {
   // console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
   console.log(payload)
   if(type != "create"){
-    this.onBoardEnterPriseTenant(payload);
+    this.onBoardEnterPriseTenant(payload,this.tenantForm.value.userId.toLowerCase())
   }else{
     this.createEnterPriseTenant(payload);
   }
@@ -187,11 +188,14 @@ export class OnboardTenantComponent implements OnInit {
   }
 
   createEnterPriseTenant(payload){
+    this.close_overlay.emit(false);
+
     this.service.createEnterPriseUser(payload).subscribe((res : any) => {
       if(res.errorCode == 5019){
           Swal.fire({title: 'Error!',text: res.errorMessage,icon: 'error',showCancelButton: false,allowOutsideClick: true})
       this.spinner.hide();
       } else {
+        this.close_overlay.emit(true);
         Swal.fire({
           title: 'Success!',
           text: `Successfully Created Tenant!`,
@@ -207,7 +211,8 @@ export class OnboardTenantComponent implements OnInit {
     })
   }
 
-  onBoardEnterPriseTenant(payload){
+  onBoardEnterPriseTenant(payload,userId){
+    this.close_overlay.emit(false);
     const originalDate = new Date(this.tenantForm.value.expiryDate);
     let expiryDate = this.datePipe.transform(originalDate, 'EEE MMM dd yyyy')
     this.service.onboardUserUpdate(payload).subscribe((res : any) => {
@@ -227,6 +232,8 @@ export class OnboardTenantComponent implements OnInit {
         }
         this.rest_api.onBoardTenant(reqData).subscribe((response: any) => {
           this.spinner.hide();
+          this.rest_api.convertUserToEnterPrise(userId).subscribe(res=>{});
+          this.close_overlay.emit(true);
           Swal.fire({
             title: 'Success!',
             text: `Successfully Created Tenant!`,
@@ -411,6 +418,10 @@ export class OnboardTenantComponent implements OnInit {
       if(!temp){
        event.preventDefault();
       } 
+  }
+
+  closeOverlay(){
+    this.close_overlay.emit(true)
   }
 }
 

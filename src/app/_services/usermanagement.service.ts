@@ -79,4 +79,9 @@ export class UsermanagementService implements OnInit {
     return this.http.post(url,date);
   }
 
+  convertUserToEnterPrise(userId){
+    let body={}
+    return this.http.post('/api/user/enterprise-user-toggle?userId='+userId+'&status=false',body)
+  }
+
 }

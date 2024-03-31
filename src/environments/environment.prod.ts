@@ -18,7 +18,6 @@ export const environment = {
    asquareproductendpoint: 'https://ezflowasquare.epsoftinc.com',
    isNewDesignEnabled : true,
    isSubscrptionEnabled : false,
-   isNewSignupFlow : false,
    paymentSuccessURL:"https://ezflow.epsoftinc.com/#/success",
    paymentFailuerURL:"https://ezflow.epsoftinc.com/#/fail",
    stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"

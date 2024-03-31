@@ -53,4 +53,11 @@ export class EnterpriseRequestsComponent implements OnInit {
     this.isDisplayOverlay = false;
   }
 
+  readValue(event){
+    if(event == true){
+      this.isDisplayOverlay = false;
+      this.getenterPriseRequestedUsers();
+    }
+  }
+
 }
