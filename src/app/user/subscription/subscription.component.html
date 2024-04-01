@@ -26,15 +26,15 @@
         </div>
         
     <div class="col-md-9" style="padding-right: 50px;" *ngIf="!isReview_order">
-        <div class="col-md-12 custom-bg-gray">
-            <div class="bot-headers">
-                <h4 class="BotHeading" style="flex: 1;">Predefined Bots</h4>
-                <div class="toggle-container">
-                    <span [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" style="padding:0 10px 0 10px">Monthly</span>
-                    <p-inputSwitch [(ngModel)]="selectedInterval" (onChange)="toggleChanged()"></p-inputSwitch>
-                    <span [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" style="padding:0 10px 0 10px">Annually</span>
-                </div>
+        <div class="bot-headers">
+            <h4 class="BotHeading" style="flex: 1;">Predefined Bots</h4>
+            <div class="toggle-container">
+                <span [ngClass]="{ 'selected': selectedPlan === 'Monthly' }" style="padding:0 10px 0 10px">Monthly</span>
+                <p-inputSwitch [(ngModel)]="selectedInterval" (onChange)="toggleChanged()"></p-inputSwitch>
+                <span [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" style="padding:0 10px 0 10px">Annually</span>
             </div>
+        </div>
+        <div class="col-md-12 custom-bg-gray">
             <div class="col-md-12 bots-list">
                 <div class="row">
                     <div class="col-md-6 bot-plans" *ngFor="let plan of botPlans; let i = index">

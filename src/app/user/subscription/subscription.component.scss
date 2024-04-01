@@ -126,8 +126,7 @@
     display: flex;
     background-color: #098de6;
     height: 40px;
-    width: 103%;
-    margin-left: -15px;
+    width: 100%;
 }
 
 .BotHeading{
@@ -473,7 +472,7 @@
 }
 
 .active-plan {
-    color: green;
+    color: white;
 }
 
 .square:hover .bot-info.right {
