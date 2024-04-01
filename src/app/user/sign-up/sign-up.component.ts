@@ -16,6 +16,7 @@ import { MessageService } from 'primeng/api';
 import { Country, State, City } from 'country-state-city';
 import { Location} from '@angular/common'
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -88,6 +89,7 @@ export class SignUpComponent implements OnInit {
   isErrorMessage : boolean = false;
   isValidateOTP : boolean = false;
   isEmailEmptyOrInvalid : boolean = false;
+  isSubscriptionEnabled:boolean=false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -125,9 +127,11 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isSubscriptionEnabled = environment.isSubscrptionEnabled
 
-    this.getPlanDetails();
-    this.spinner.show();
+    if(this.isSubscriptionEnabled){
+      this.getPlanDetails();
+    }
     this.messages = this.messages.map((message, index) => ({
       id: index+1,
       content: message
@@ -159,10 +163,9 @@ export class SignUpComponent implements OnInit {
   }
 
   getPlanDetails() {
-    setTimeout(() => {
-      this.spinner.hide();      
-    }, 1000);
+    this.spinner.show();
     this.service.loadPredefinedBots().subscribe((response: any) => {
+      this.spinner.hide();      
       if(response){
         response.forEach(element => {
           let obj=element.product
@@ -273,11 +276,11 @@ export class SignUpComponent implements OnInit {
             showCancelButton: false,
             allowOutsideClick: true
           }).then((result) => {
-            if (result.value) {
-              this.router.navigate(['/user'],{
-                queryParams: { email : this.userEmail },
-              });
-            }
+            // if (result.value) {
+            //   this.router.navigate(['/user'],{
+            //     queryParams: { email : this.userEmail },
+            //   });
+            // }
           });
         // }
       }
@@ -458,60 +461,72 @@ registrationSave(){
     zipCode : this.userForm.value.zipCode,
     phoneNumber : this.userForm.value.phoneNumber,
     // isSubscriptionEnabled : true
-}
-payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-this.service.registrationContinue(payload).subscribe((res : any) => {
-this.spinner.hide();
-if(res.body.message == "User Details Saved Successfully!!") {
-  let obj = {email : this.userId, password : this.userPsw}
-    this.router.navigate(['/subscription'],{
-      queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
-    });
-//   Swal.fire({
-//     title: 'Success!',
-//     text: 'User details saved successfully. Please processed with subscription!',
-//     icon: 'success',
-//     showCancelButton: false,
-//     allowOutsideClick: true
-// }).then((result) => {
-//   if (result.value) {
-//     let obj = {email : this.userId, password : this.userPsw}
-//     this.router.navigate(['/subscription'],{
-//       queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
-//     });
-//   }
-// });
-  }else if(res.code == 409){
+  }
+  payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+  this.service.registrationContinue(payload).subscribe((res : any) => {
+  this.spinner.hide();
+  if(res.body.message == "User Details Saved Successfully!!") {
+    if(environment.isSubscrptionEnabled){
+    let obj = {email : this.userId, password : this.userPsw}
+      this.router.navigate(['/subscription'],{
+        queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+      });
+    }else{
+      this.sendEmailEnterPrisePlan();
+    }
+    }else if(res.code == 409){
+      this.spinner.hide();
+      Swal.fire({
+        title: 'Error',
+        text: 'User Already Exists. Please proceed with signing in!',
+        icon: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['/user']);
+        }
+      });
+    } else {
+      this.spinner.hide();
+      Swal.fire({
+        title: 'Error',
+        text: 'User Already Exists. Please proceed with signing in!',
+        icon: 'error',
+        showCancelButton: false,
+        allowOutsideClick: true
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['/user']);
+        }
+      });
+    }
+  },err=>{
     this.spinner.hide();
-  Swal.fire({
-    title: 'Error',
-    text: 'User Already Exists. Please proceed with signing in!',
-    icon: 'error',
-    showCancelButton: false,
-    allowOutsideClick: true
-}).then((result) => {
-  if (result.value) {
-    this.router.navigate(['/user']);
-  }
-});
-} else {
-  this.spinner.hide();
-  Swal.fire({
-    title: 'Error',
-    text: 'User Already Exists. Please proceed with signing in!',
-    icon: 'error',
-    showCancelButton: false,
-    allowOutsideClick: true
-}).then((result) => {
-  if (result.value) {
-    this.router.navigate(['/user']);
-  }
-});
+    Swal.fire("Error","Failed to save details","error")
+  })
 }
-},err=>{
-  this.spinner.hide();
-  Swal.fire("Error","Failed to save details","error")
-})
+
+sendEmailEnterPrisePlan(){
+  this.spinner.show();
+  this.service.sendEmailEntrepricePlan(this.userId).subscribe((res : any)=>{
+    if(res.errorMessage !="User not present"){
+    Swal.fire({
+        title: 'Success!',
+        text: `Thank you for choosing, Our team will contact you soon!`,
+        icon: 'success',
+        showCancelButton: false,
+        allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['/user']);
+      }
+    });
+  }
+      this.spinner.hide();
+  },err=>{
+    this.spinner.hide();
+  })
 }
 
 // To reset the error messages generated for country state and city

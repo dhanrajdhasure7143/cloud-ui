@@ -14,20 +14,23 @@
                 <span class="bot-title"> Virtual Marketing Bot </span>
                 <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
             </div> -->
-            <div *ngFor="let plan of planDetails" class="bot-title-header">
-                <div class="bot-details">
-                <p class="planName">{{ plan.name }}</p>
-                <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
-            </div>
-                <div class="feature-details">
-                    <div class="row">
-                        <div class="col-md-6 mb-3 p-10" *ngFor="let feature of plan.features" >
-                            <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
-                            <span style="margin-left: 10px; position: relative; top: 3px"> {{ feature }} </span>
+            <div *ngIf="isSubscriptionEnabled">
+                <div *ngFor="let plan of planDetails" class="bot-title-header" >
+                    <div class="bot-details">
+                    <p class="planName">{{ plan.name }}</p>
+                    <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
+                </div>
+                    <div class="feature-details">
+                        <div class="row">
+                            <div class="col-md-6 mb-3 p-10" *ngFor="let feature of plan.features" >
+                                <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
+                                <span style="margin-left: 10px; position: relative; top: 3px"> {{ feature }} </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         </div>
         <div class="col-md-5" *ngIf="!showUserScreen">
@@ -208,7 +211,10 @@
                         <div class="col-md-12" style="display: flex; justify-content: flex-end; margin-top: 10px;">
                             <!-- <button type="submit" class="btn btn-primary" style="margin-right: 30px;width: 75px;" (click)="backtoSignUp()"> Back </button> -->
                             <button type="button" class="btn btn-primary" style="margin-right: 30px;width: 75px;" (click)="resetForm()"> Reset </button>
-                            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid" (click)="registrationSave()"> Continue </button>
+                            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid" (click)="registrationSave()">
+                                <span *ngIf="isSubscriptionEnabled">Continue</span> 
+                                <span *ngIf="!isSubscriptionEnabled">Contact Sales</span> 
+                            </button>
                         </div>
                     </div>
                 </form>

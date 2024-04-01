@@ -165,9 +165,9 @@ this.getCouponsCountKpi();
   }
 
   getCouponsCount(){
-    this.profileService.listofCuopons().subscribe(count=>{
-      this.couponscount=count
-    })
+    // this.profileService.listofCuopons().subscribe(count=>{
+    //   this.couponscount=count
+    // })
   }
 
   

@@ -466,9 +466,10 @@ this.profileservice.applications().subscribe(resp =>
 
     this.currentUserId = localStorage.getItem("ProfileuserId");
     this.userManagement = [];
-    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
-     
+    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe((resp:any)=>{
+      console.log("resp",resp)
         this.userManagementresponse = resp
+     if(resp.errorCode !=5030 )
            this.userManagementresponse.forEach(elementuser => {
              this.roleArray = [];
              elementuser.userId['applicationIdname']=elementuser.applicationId.name;
@@ -506,9 +507,10 @@ this.profileservice.applications().subscribe(resp =>
   getAlertUsersList(){
     this.currentUserId = localStorage.getItem("ProfileuserId");
     this.userManagementalerts = [];
-    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe(resp=>{
+    this.profileservice.getTenantbasedusersDetails(this.tenantId).subscribe((resp:any)=>{
       
         this.userManagementresponse = resp
+        if(resp.errorCode !=5030 )
            this.userManagementresponse.forEach(elementuser => {
              this.roleArray = [];
              elementuser.userId['applicationIdname']=elementuser.applicationId.name;
@@ -2015,7 +2017,7 @@ permDelYes(permission,index){
 }
 couponDelYes(coupon,index){
   this.profileservice.deleteCoupon(coupon).subscribe(resp=>{
-    this.getListofCoupons();
+    // this.getListofCoupons();
       this.notifier.show({
       type: "success",
       message: "Coupon deleted successfully!!"

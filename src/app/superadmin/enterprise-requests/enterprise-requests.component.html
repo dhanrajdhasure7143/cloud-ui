@@ -65,7 +65,7 @@
                 <h3 >Onboard User</h3>
             </div>
         </div> -->
-        <app-onboard-tenant [userData]="userData"></app-onboard-tenant>
+        <app-onboard-tenant [userData]="userData" (close_overlay)="readValue($event)"></app-onboard-tenant>
     </app-split-overlay>
   </div>
 
