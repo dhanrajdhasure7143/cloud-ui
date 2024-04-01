@@ -65,7 +65,7 @@ export class OnboardTenantComponent implements OnInit {
   showErrorMessage : boolean = false;
   ispublicMail:boolean = false;
   isCreateAccount:boolean = false;
- 
+  orgExsist:boolean;
   constructor(
     private formBuilder: FormBuilder,
     private service: FirstloginService,
@@ -422,6 +422,16 @@ export class OnboardTenantComponent implements OnInit {
 
   closeOverlay(){
     this.close_overlay.emit(true)
+  }
+
+  checkOrganizationName(value) {
+    this.service.organizationCheck(value).subscribe(res => {
+      if (res.message == "Organization Name already Exists") {
+        this.orgExsist = true;
+      } else {
+        this.orgExsist = false;
+      }
+    })
   }
 }
 
