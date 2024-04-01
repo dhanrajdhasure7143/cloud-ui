@@ -288,7 +288,7 @@ readValue(value){
     const squareWidth = squareElement.offsetWidth;
     const windowWidth = window.innerWidth;
 
-    const botInfoWidth = 450;
+    const botInfoWidth = 455;
 
     this.isSpaceOnLeft = windowWidth - squarePosition.left >= squareWidth + botInfoWidth;
     this.showBotInfoFlag = true;

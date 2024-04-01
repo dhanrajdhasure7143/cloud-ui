@@ -14,7 +14,7 @@
             </div>
             <div class="enterprise-content">
                 <div class="exclusive-pricing">
-                    <h4 style="color: rgba(236, 89, 89, 0.932); text-align: center; font-weight: 600;">Exclusive Pricing</h4>
+                    <h4>Exclusive Pricing</h4>
                 </div>
                 <div class="features">
                     <ul *ngFor="let plan of enterPrise_plan.features">
@@ -79,7 +79,7 @@
 
                                       <div class="bot-info" [ngClass]="{'left': isSpaceOnLeft, 'right': !isSpaceOnLeft}" *ngIf="showBotInfoFlag">
                                         <div class="container-one">
-                                            <div class="left-side">
+                                            <!-- <div class="left-side">
                                                 <div class="plan-details">
                                                     <div class="circle text-center" (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)" 
                                                         [ngClass]="{'selected-circle': plan.isSelected, 'circle-color': !plan.isSelected}">
@@ -103,7 +103,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="right-side">
                                                 <div>
                                                     <div class="description-box">
@@ -131,16 +131,17 @@
                 <button [disabled]="isDisabled" class="plans-button text-center ml-2" [ngClass]="{ 'selected': selectedPlan === 'Yearly' }" (click)="planSelection('Yearly')"> Yearly </button>
             </div> -->
             <div class="row">
-                <div class="col-md-6">
-                    <div class="text-center" style="margin: 10px 0 0 0;">
+                <div class="col-md-8 d-flex align-items-center justify-content-center" style="margin: 10px 0 0 50px;">
+                    <div class="text-center" >
                         <h5 class="price-line">Your estimated 
                             <span *ngIf="selectedPlan === 'Monthly'">Monthly</span>
                             <span *ngIf="selectedPlan === 'Yearly'">Annual</span>
-                            price <span class="price-amt"> $ {{totalAmount}}</span>.00 <sup style="font-size: small;">excl taxes</sup> </h5>
+                            price <span class="price-amt"> $ {{totalAmount}}</span>.00 <sup style="font-size: small;">excl taxes</sup> 
+                        </h5>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="text-right" style="margin: 10px 40px 0 0;">
+                <div class="col-md-2 d-flex align-items-center justify-content-end">
+                    <div class="text-right" style="margin: 10px 0px 5px 0;">
                         <button type="button" class="btn btn-primary btn-plan" (click)="paymentPlan()" [disabled]="isDisabled" style="width: 150px;"> Proceed </button>
                     </div>
                 </div>
