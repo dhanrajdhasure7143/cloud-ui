@@ -473,6 +473,11 @@
     margin-top: -20px;
     font-weight: 420 !important;
     font-size: 14px !important;
+    cursor: pointer;
+}
+
+.resend-disable {
+  cursor: no-drop;
 }
 
 .verify{
