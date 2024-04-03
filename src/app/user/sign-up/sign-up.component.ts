@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Inject, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService, UserService } from 'src/app/_services';
@@ -106,7 +106,8 @@ export class SignUpComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private service: FirstloginService,
     public messageService:MessageService,
-    private location : Location
+    private location : Location,
+    private renderer: Renderer2
     //private cookieService:CookieService,
   ) {
     this.route.queryParams.subscribe((res)=>{
@@ -127,6 +128,7 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.renderer.setStyle(document.body, 'overflow', 'hidden');
     this.isSubscriptionEnabled = environment.isSubscrptionEnabled
 
     if(this.isSubscriptionEnabled){
@@ -161,7 +163,9 @@ export class SignUpComponent implements OnInit {
     this.googleLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=google&redirectPath="+this.config.socialLoginRedirectURL
     this.officeLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=azure&redirectPath="+this.config.socialLoginRedirectURL
   }
-
+  ngOnDestroy() {
+    this.renderer.removeStyle(document.body, 'overflow');
+  }
   getPlanDetails() {
     this.spinner.show();
     this.service.loadPredefinedBots().subscribe((response: any) => {

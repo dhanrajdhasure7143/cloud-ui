@@ -316,8 +316,10 @@
 }
 
   .loginblock {
+    padding-top: 30px;
     width: 400px !important;
     margin: 0px auto;
+    height: 100vh;
     // text-align: center; 
   }
   
@@ -614,4 +616,47 @@
 
 :host ::ng-deep .iti {
   width: 100%;
+}
+
+.image-container {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+}
+
+.background-image {
+  display: flex;
+  width: 100%; 
+  height: 100%;
+  // object-fit: cover; 
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px; 
+  z-index: 1; 
+}
+
+.img-box{
+  padding-right: 0;
+}
+
+.container-fluid {
+  padding: 0 15px 0 0;
+}
+
+.bottom-blue{
+  height:  12px;
+  background-color: #098de6;
+  bottom: 0px !important;
+}
+
+.form-div{
+  overflow: scroll !important;
 }

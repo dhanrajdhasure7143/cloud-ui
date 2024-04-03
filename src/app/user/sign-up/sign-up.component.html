@@ -3,18 +3,27 @@
 </ngx-spinner>
 
 <div class="container-fluid">
-        <div class="col-md-12 brand">
+        <!-- <div class="col-md-12 brand"> -->
             <!-- <img style="margin:15px 0 0 45px;" src="assets/images/EZFlow.png" alt="EZFlow"> -->
-            <img class="ezflow-img" src="assets/images/EZFlow.png" alt="EZFlow">
-        </div>
+            <!-- <img class="ezflow-img" src="assets/images/EZFlow.png" alt="EZFlow">
+        </div> -->
     <div class="row">
-        <div class="col-md-7">
-            <div class="bot-plan-details">
-            <!-- <div class="bot-title-header">
+
+        <div class="col-md-7 img-box">
+
+            <div class="image-container" *ngIf="!isSubscriptionEnabled">
+                <img class="background-image" src="../../../assets/sign-up_Screen.png" alt="EZFLow">
+                <!-- <img class="background-image" src="assets/ezflow_image.png" alt="EZFLow"> -->
+                <!-- <img class="background-image" src="./../../../assets/signup/Image_Large.png" alt="EZFLow"> -->
+                <!-- <img class="background-image" src="./../../../assets/signup/SVG_Image.svg" alt="EZFLow"> -->
+            </div>
+
+            <div class="bot-plan-details" *ngIf="isSubscriptionEnabled">
+            <!-- <div class="bot-title-header">src/assets/EZFlow-White-logo.svg
                 <span class="bot-title"> Virtual Marketing Bot </span>
                 <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
             </div> -->
-            <div *ngIf="isSubscriptionEnabled">
+            <div >
                 <div *ngFor="let plan of planDetails" class="bot-title-header" >
                     <div class="bot-details">
                     <p class="planName">{{ plan.name }}</p>
@@ -33,7 +42,7 @@
 
         </div>
         </div>
-        <div class="col-md-5" *ngIf="!showUserScreen">
+        <div class="col-md-5 form-div" *ngIf="!showUserScreen" >
             <div class="loginblock">
                 &nbsp;
                 <div class="create">
@@ -97,12 +106,12 @@
                 &nbsp;
             </div>
         </div>
-        <div class="col-md-5" *ngIf="showUserScreen">
+        <div class="col-md-5 form-div" *ngIf="showUserScreen">
             <div class="col-md-12 text-center" style="display: block; margin-top: 40px;">
                 <span style="font-size: 15px; font-weight: 800; color: black;">Now, Let us know more about you</span>
             </div>
             <!-- <div class="loginblock"> -->
-                <form [formGroup]="userForm" style="margin: 35px 0 0 40px" cdkTrapFocus autocomplete="off">
+                <form [formGroup]="userForm" style="padding: 30px;" cdkTrapFocus autocomplete="off">
                     <!-- <div class="fields"> -->
                         <div class="row">
                             <div class="form-group col-md-6 pl-0">
@@ -221,5 +230,8 @@
             <!-- </div> -->
         </div>
 </div>
-
+<footer>
+    <div class="container-fluid bottom-blue">
+    </div>
+</footer>
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>
