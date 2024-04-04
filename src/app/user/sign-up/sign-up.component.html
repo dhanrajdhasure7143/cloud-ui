@@ -82,7 +82,10 @@
                         <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" pInputText minlength="6" maxlength="6" class="form-control" formControlName="otp" autocomplete="off"
                                 value="" placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)" (keyup)="showValidateButton($event)">
-                                 <span *ngIf="isValidateOTP"> <i (click)="validateOTP()" class="pi pi-check" style="font-size: 0.7rem; border: 1px solid #098de6; padding: 6px; left: 90% important;" id="validate-buttons"></i> </span>
+                                 <span *ngIf="isValidateOTP"> 
+                                    <i *ngIf="signupForm.get('otp').valid" (click)="validateOTP()" class="pi pi-check" style="font-size: 0.7rem; border: 1px solid #098de6; padding: 6px; left: 90% important;" id="validate-buttons"></i> 
+                                    <i *ngIf="signupForm.get('otp').invalid " class="pi pi-check" style="font-size: 0.7rem; border: 1px solid #52585c; padding: 6px; left: 90% important;" id="validate-button-disable"></i> 
+                                </span>
                                 <span *ngIf="isTimeOutshow" class="required" style="margin-left: -20px; font-weight: 600;">{{display}}</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')" > Resend Code </span>
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary" > Resend Code </span>    

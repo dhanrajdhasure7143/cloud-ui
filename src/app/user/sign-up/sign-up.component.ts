@@ -238,6 +238,9 @@ export class SignUpComponent implements OnInit {
     //  }
      this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(),isResend).subscribe((data : any) => {
+      this.signupForm.get("otp").setValidators([Validators.required]);
+      this.signupForm.get("otp").updateValueAndValidity();
+
      if(data.message == "OTP Sent Successfully"){
       Swal.fire({
         title: 'Success!',
@@ -336,6 +339,8 @@ validateOTP(){
    this.authenticationService.validateOTPSignUp(this.signupForm.value.email.toLowerCase(),this.signupForm.value.otp).subscribe((data:any)=>{ 
     if(data.message=="OTP Verified Successfully")
       {
+        this.signupForm.get("otp").clearValidators();
+      this.signupForm.get("otp").updateValueAndValidity();
         this.spinner.hide()
         this.isShowOtp = false;
         this.isValidateOTP = false;
@@ -586,4 +591,8 @@ onKeydown(event){
      event.preventDefault();
     } 
    } 
+
+   showValidateButton(event){
+
+   }
 }
