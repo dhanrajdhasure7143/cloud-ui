@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from 'sweetalert2';
+import { Table } from "primeng/table";
 
 @Component({
   selector: 'app-enterprise-customers',
@@ -24,18 +25,19 @@ export class EnterpriseCustomersComponent implements OnInit {
   isExtendTenure=false;
   statusValue:boolean =true;
   showToast: boolean = false;
-  search_fields:any[]=["tenantId","tenantName","tenantDomain","enterpriseUserExpiryAt","status"]
+  search_fields:any[]=["tenantId","tenantName","tenantDomain","enterpriseUserExpiryAt","status"];
+  searchValue:any;
 
   newColumnList = [
-    { ColumnName: 'tenantId', DisplayName: 'Tenant ID', sort: true, ShowFilter: true },
-    { ColumnName: 'tenantName', DisplayName: 'Tenanat Name', sort: true, ShowFilter: true },
-    { ColumnName: 'tenantDomain', DisplayName: 'Tenant Domain', sort: true, ShowFilter: true },
+    { ColumnName: 'tenantId', DisplayName: 'Tenant ID', sort: true, ShowFilter: true,filterType:'text',showTooltip:false },
+    { ColumnName: 'tenantName', DisplayName: 'Tenanat Name', sort: true, ShowFilter: true,filterType:'text',showTooltip:false },
+    { ColumnName: 'tenantDomain', DisplayName: 'Tenant Domain', sort: true, ShowFilter: true,filterType:'text',showTooltip:false },
     // { ColumnName: 'tenantType', DisplayName: 'Tenant Type', sort: true, ShowFilter: true },
     // { ColumnName: 'isOffboardTenant', DisplayName: 'Status', sort: true, ShowFilter: true },
-    { ColumnName: 'enterpriseUserExpiryAt', DisplayName: 'Expiry Date', sort: false, ShowFilter: false },
-    { ColumnName: 'status', DisplayName: 'Status', sort: true, ShowFilter: false },
-    { ColumnName: 'createdAt', DisplayName: 'Created At', sort: false, ShowFilter: false},
-    { ColumnName: 'newAction', DisplayName: 'Action', sort: false, ShowFilter: false },
+    { ColumnName: 'enterpriseUserExpiryAt', DisplayName: 'Expiry Date', sort: true, ShowFilter: false,filterType:'text',showTooltip:false },
+    { ColumnName: 'status', DisplayName: 'Status', sort: true, ShowFilter: true,filterType:'dropdown',showTooltip:false,dropdownList:["Active","Inactive"] },
+    { ColumnName: 'createdAt', DisplayName: 'Created At', sort: true, ShowFilter: false,filterType:'date',showTooltip:false},
+    { ColumnName: 'newAction', DisplayName: 'Action', sort: false, ShowFilter: false,filterType:'text',showTooltip:false },
   ];
 
   constructor(
@@ -56,6 +58,7 @@ export class EnterpriseCustomersComponent implements OnInit {
   loadData(): void {
     this.api.getEnterpriseList().subscribe((response: any[]) => {
       if (response) {
+        console.log(response)
         this.spinner.hide();
         this.enterPriseList = response
         this.enterPriseList.map(item=>{
@@ -122,12 +125,12 @@ export class EnterpriseCustomersComponent implements OnInit {
         (response:any) => {
           this.closeOffboardOverlay(event);
           this.loadData();
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tenure Extended Succesfully' });
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Tenure updated Succesfully' });
         },
         error => {
           this.spinner.hide();
           console.error('API Expiry error IS HERE :', error);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to extend tenure.' });
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to update tenure.' });
         }
       );
     }
@@ -180,5 +183,11 @@ export class EnterpriseCustomersComponent implements OnInit {
         return '#4BD963';
     }
   }
+
+  clearTableFilters(table: Table) {
+    table.clear();
+    table.filterGlobal("","");
+    this.searchValue=''
+}
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
+import { Table } from "primeng/table";
 
 @Component({
   selector: 'app-enterprise-requests',
@@ -12,14 +13,16 @@ export class EnterpriseRequestsComponent implements OnInit {
   isDisplayOverlay:boolean = false;
   userData:any={};
   columnList=[
-    {DisplayName:"User mail",ColumnName:"userId",ShowFilter: true,sort:true},
-    {DisplayName:"Name",ColumnName:"userName",ShowFilter: true,sort:true},
-    {DisplayName:"Phone Number",ColumnName:"phoneNumber",ShowFilter: true,sort:true},
+    {DisplayName:"User mail",ColumnName:"userId",ShowFilter: true,sort:true,filterType:'text',showTooltip:true},
+    {DisplayName:"Name",ColumnName:"userName",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
+    {DisplayName:"Phone Number",ColumnName:"phoneNumber",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     // {DisplayName:"Department",ColumnName:"department",ShowFilter: true,sort:true},
-    {DisplayName:"Country",ColumnName:"country",ShowFilter: true,sort:true},
-    {DisplayName:"Created Date",ColumnName:"createdDate",ShowFilter: true,sort:true},
-    {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
+    {DisplayName:"Country",ColumnName:"country",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
+    {DisplayName:"Created Date",ColumnName:"createdDate",ShowFilter: true,sort:true,filterType:'date',showTooltip:false},
+    {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false,showTooltip:true},
   ]
+  search_fields=['userId','userName','department','phoneNumber','country','createdDate'];
+  searchValue:any;
   constructor(private rest_api : UsermanagementService,
     private spinner: NgxSpinnerService) { }
 
@@ -59,5 +62,11 @@ export class EnterpriseRequestsComponent implements OnInit {
       this.getenterPriseRequestedUsers();
     }
   }
+
+  clearTableFilters(table: Table) {
+    table.clear();
+    table.filterGlobal("","");
+    this.searchValue=''
+}
 
 }
