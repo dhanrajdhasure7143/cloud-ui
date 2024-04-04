@@ -126,12 +126,11 @@
     display: flex;
     background-color: #098de6;
     height: 40px;
-    width: 103%;
-    margin-left: -15px;
+    width: 100%;
 }
 
 .BotHeading{
-    font-weight: 800;
+    font-weight: 500;
     color: white;
     max-width: 100%;
     padding-left: 20px;
@@ -221,11 +220,22 @@
     font-weight: bold;
   }
   
-  .price-line{
-    padding: 5px 0 5px 0;
+//   .price-line{
+//     padding: 5px 60px 5px 60px;
+
+//     background-color: white;
+//     font-size: 1rem;
+//   }
+
+.price-line {
+    padding: 5px 0;
     background-color: white;
     font-size: 1rem;
-  }
+    display: inline-block;
+    width: 400px;
+
+    white-space: nowrap;
+}
 
   .price-amt{
     color: #000000;
@@ -250,7 +260,7 @@
   }
 
   .gray-background {
-    background-color: rgb(224 224 224);
+    background-color: rgba(224, 224, 224, 0.959);
     border-radius: 10px;
     }
 
@@ -280,7 +290,7 @@
 }
 
 .custom-bg-gray {
-    background-color: lavender; 
+    background-color: #e4e4e4; 
 }
 
 .enterprise-plan-wrapper {
@@ -301,8 +311,8 @@
 }
 
 .enterprise-plan h4 {
-    font-weight: 800;
-    padding-top: 5px;
+    font-weight: 500;
+    padding-top: 7px;
 }
 
 .enterprise-content {
@@ -316,9 +326,10 @@
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 150px;
+    width: 180px;
     color: white;
     font-weight: 600;
+    border-radius: 0%;
 }
 
 // .features ul {
@@ -403,12 +414,14 @@
   .bot-info {
     display: none;
     position: absolute;
-    left: 220px;
+    left: 216px;
     top: 0;
     width: 450px;
     min-height: 200px;
-    justify-content: center;
-    align-items: center;
+    height: 200px;
+    overflow-y: auto;
+    justify-content: left;
+    align-items: left;
     padding: 10px;
     background-color: white;
     border: 1px solid #007bff;
@@ -459,7 +472,7 @@
 }
 
 .active-plan {
-    color: green;
+    color: white;
 }
 
 .square:hover .bot-info.right {
@@ -473,7 +486,10 @@
 }
 
 .btn-plan{
-   background-color: #b6b8b9;
+   margin-left: 100px;
+   background-color: #63add1;
+   border-radius: 0%;
+
 }
 
 .btn-plan:hover {
@@ -490,7 +506,8 @@
 
 .description-box ul{
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
+    padding: 0;
 }
 
 .col {
@@ -509,6 +526,13 @@
 
 ::ng-deep .p-inputswitch.p-inputswitch-checked:hover .p-inputswitch-slider {
     background: green;
+}
+
+.exclusive-pricing h4{
+    color: rgba(233, 106, 106, 0.932);
+    text-align: center;
+    font-size: 22px;
+    font-weight: 500;
 }
 
 @media (min-width: 768px){

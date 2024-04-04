@@ -48,7 +48,7 @@ export class SubscriptionComponent implements OnInit {
   isSpaceOnLeft: boolean = false;
   showBotInfoFlag: boolean = false;
   enterPrise_plan:any;
-
+  predefinedRawBots: any[] = [];
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -84,6 +84,7 @@ export class SubscriptionComponent implements OnInit {
       autoBilling: ['']
     });
 
+    this.getPredefinedRawBots();
     this.loadPredefinedBots();
     this.getCountries();
   }
@@ -92,49 +93,148 @@ export class SubscriptionComponent implements OnInit {
     this.countryInfo = Country.getAllCountries();
   }
 
-  loadPredefinedBots(){
-    this.service.loadPredefinedBots().subscribe((response: any) =>{
-      this.spinner.hide();
-      console.log(response);
-      if(response){
+  // loadPredefinedBots(){
+  //   this.service.loadPredefinedBots().subscribe((response: any) =>{
+  //     this.spinner.hide();
+  //     console.log(response);
+  //     if(response){
 
-      response.forEach(element => {
-          let obj = element.product;
-          let image=element.image;
-          obj["priceCollection"] = element.priceCollection;
-          if (element.product.metadata && element.product.metadata.product_features) {
-            let data = element.product.metadata.product_features;
-            obj["features"] = JSON.parse(data);
-          } else {
-            obj["features"] = [];
-          }
+  //     response.forEach(element => {
+  //         let obj = element.product;
+  //         let image=element.image;
+  //         obj["priceCollection"] = element.priceCollection;
+  //         if (element.product.metadata && element.product.metadata.product_features) {
+  //           let data = element.product.metadata.product_features;
+  //           obj["features"] = JSON.parse(data);
+  //         } else {
+  //           obj["features"] = [];
+  //         }
 
-          const decodedImage = this.decodeBase64Image(image);
-          obj["image"] = decodedImage;
-          this.botPlans.push(obj);
-        });
+  //         const decodedImage = this.decodeBase64Image(image);
+  //         obj["image"] = decodedImage;
+  //         this.botPlans.push(obj);
+  //       });
 
-       this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
-       console.log(this.enterPrise_plan);
+  //      this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
+  //      console.log(this.enterPrise_plan);
 
-        this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
-        console.log(this.botPlans);
+  //       this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
+  //       console.log(this.botPlans);
+  //     }
+  //   }, err => {
+  //     this.spinner.hide();
+  //     Swal.fire({
+  //       title: 'Error!',
+  //       text: 'Failed to load',
+  //       icon: 'error',
+  //       showCancelButton: false,
+  //       allowOutsideClick: true
+  //     }).then((result) => {
+  //       if (result.value) {
+  //         this.router.navigate(['/signup']);
+  //       }
+  //     });
+  //   });
+  // }  
+
+  getPredefinedRawBots(){
+    this.service.getPredifinedRawBots().subscribe((response: any) =>{
+      if(response && response.data){
+        this.predefinedRawBots = response.data;
       }
-    }, err => {
-      this.spinner.hide();
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to load',
-        icon: 'error',
-        showCancelButton: false,
-        allowOutsideClick: true
-      }).then((result) => {
-        if (result.value) {
-          this.router.navigate(['/signup']);
-        }
-      });
+    },err=>{
+      console.log(err,"error for the raw bots");
     });
-  }  
+  }
+
+  loadPredefinedBots() {
+    this.service.loadPredefinedBots().subscribe((response: any) => {
+        this.spinner.hide();
+        console.log(response);
+        // this.getPaymentMethods();
+        if (response) {
+            response.forEach(element => {
+                let obj = element.product;
+                let isSubscribed=false;
+                let isYearlySubscribed=false;
+                let isMonthlySubscribed=false;
+                let image=element.image;
+                obj["priceCollection"] = element.priceCollection;
+                let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
+                if (data.length > 0)
+                    obj["features"] =data?JSON.parse(data):[];
+
+                obj.priceCollection.forEach(price => {
+                    try {
+                      if (Array.isArray(this.predefinedRawBots)) {
+                        price.isPlanSubscribed = this.predefinedRawBots.some(bot => {
+                            return bot.products.some(product => {
+                                if (Array.isArray(product.price_id)) {
+                                    return product.price_id.some(priceId => {
+                                      if (priceId === price.id && bot.term === price.tiersMode) {
+                                        isSubscribed = true;
+                                        if (price.tiersMode === 'year') {
+                                          isYearlySubscribed = true;
+                                        } 
+                                        
+                                        if (price.tiersMode === 'month'){
+                                          isMonthlySubscribed = true; 
+                                        }
+                                      }
+                                        return priceId === price.id && bot.term === price.tiersMode;  
+                                    });
+                                } else {
+                                  if (product.price_id === price.id && bot.term === price.tiersMode) {
+                                    isSubscribed = true;
+                                    if (price.tiersMode === 'year') {
+                                      isYearlySubscribed = true;
+                                    } 
+                                    
+                                    if (price.tiersMode === 'month'){
+                                      isMonthlySubscribed = true; 
+                                    }
+                                  }
+                                  return product.price_id === price.id && bot.term === price.tiersMode;
+                                }
+                            });
+                        });
+                    } 
+                    else {
+                          price.isPlanSubscribed = false;
+                      }
+                    } catch (error) {
+                        price.isPlanSubscribed = false;
+                    }
+                });
+                const decodedImage = this.decodeBase64Image(image);
+                obj["image"] = decodedImage;
+                console.log("image",image)
+                obj["isYearlySubscribed"] = isYearlySubscribed;
+                obj["isMonthlySubscribed"] = isMonthlySubscribed;
+                obj["doPlanDisabled"] = isSubscribed;
+                this.botPlans.push(obj);
+            });
+            this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
+            console.log(this.enterPrise_plan);
+
+            this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
+            console.log(this.botPlans);
+        }
+    }, err => {
+        this.spinner.hide();
+        Swal.fire({
+            title: 'Error!',
+            text: 'Failed to load',
+            icon: 'error',
+            showCancelButton: false,
+            allowOutsideClick: true
+        }).then((result) => {
+            if (result.value) {
+                this.router.navigate(['/signup']);
+            }
+        });
+    });
+}
 
 paymentPlan() {
   this.spinner.show();
@@ -281,7 +381,7 @@ readValue(value){
     const squareWidth = squareElement.offsetWidth;
     const windowWidth = window.innerWidth;
 
-    const botInfoWidth = 450;
+    const botInfoWidth = 455;
 
     this.isSpaceOnLeft = windowWidth - squarePosition.left >= squareWidth + botInfoWidth;
     this.showBotInfoFlag = true;

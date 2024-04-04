@@ -112,5 +112,9 @@ export class FirstloginService {
     });
     return this.http.post<any>(`/api/user/enterprise-tenant-registration`, payload,{ headers:headers,observe: 'response' });
   }
+
+  getPredifinedRawBots(){
+    return this.http.get("/subscriptionservice/v1/subscriptions/subscriptions-raw-response");
+  }
   
 }
