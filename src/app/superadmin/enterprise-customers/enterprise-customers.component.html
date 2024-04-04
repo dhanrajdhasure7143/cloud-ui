@@ -3,22 +3,29 @@
     <div class="p-d-flex" style="text-align: end;">
       <span class="p-input-icon-right gridsearch">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
+        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
       </span>  
-      <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt)"></button>
-    </div>
+      <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt1)"></button>
+  </div>
   </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th style="flex:0.2 1 0;" class="arrowcol"></th>
           <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
-                  <p-columnFilter *ngIf="each.ShowFilter" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+              <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'dropdown'" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
                   [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
-                    optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
-                  </p-dropdown>
+                    <p-dropdown [ngModel]="value" [options]="each.dropdownList" (onChange)="filter($event.value)" placeholder="Select"></p-dropdown>
                 </ng-template>
+              </p-columnFilter>
+              <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" field="{{each.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
+                        [showAddButton]="false" display="menu" matchMode="contains" [showApplyButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"class="p-inputtext" placeholder="Search">
+                    </ng-template>
+              </p-columnFilter>
+              <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'date'"
+                        type="{{each.filterType}}" field="{{each.ColumnName}}" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu">
               </p-columnFilter>
               <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
       </th>
