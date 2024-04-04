@@ -42,7 +42,7 @@
                         <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
                             <span *ngIf="col.ColumnName!='action'">
                                 <span *ngIf="col.ColumnName!='createdDate'">{{rowData[col.ColumnName]}}</span>
-                                <span *ngIf="col.ColumnName=='createdDate'">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
+                                <span *ngIf="col.ColumnName=='createdDate'">{{rowData[col.ColumnName]|date:'MMM dd, y'}}</span>
                             </span>
                             <span *ngIf="col.ColumnName=='action'" class="actionmenu">
                                 <a (click)="openOverlay('update',rowData)" pTooltip="Edit" tooltipPosition="top">

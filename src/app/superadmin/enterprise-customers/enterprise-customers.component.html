@@ -41,7 +41,7 @@
                           <span *ngIf="col.ColumnName!='enterpriseUserExpiryAt' && col.ColumnName!='createdAt' ">
                             <span [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}}</span>
                           </span>
-                          <span *ngIf="col.ColumnName=='enterpriseUserExpiryAt'|| col.ColumnName=='createdAt' ">{{rowData[col.ColumnName]|date:'MMM dd, y HH:mm'}}</span>
+                          <span *ngIf="col.ColumnName=='enterpriseUserExpiryAt'|| col.ColumnName=='createdAt' ">{{rowData[col.ColumnName]|date:'MMM dd, y'}}</span>
                       </span>
                       <span *ngIf="col.ColumnName=='newAction'" class="actionmenu">
                           <a (click)="openOffboardOverlay('update', rowData)" pTooltip="Edit" tooltipPosition="top">

@@ -660,3 +660,14 @@
 .form-div{
   overflow: scroll !important;
 }
+
+#validate-button-disable {
+  position: relative !important;
+  left: 90% !important;
+  bottom: 35px !important;
+  border-radius: 50% !important;
+  color: #52585c;
+  font-size: 0.7rem; 
+  border: 1px solid #52585c; 
+  padding: 6px; 
+}
