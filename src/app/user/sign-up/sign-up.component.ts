@@ -128,11 +128,12 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.renderer.setStyle(document.body, 'overflow', 'hidden');
     this.isSubscriptionEnabled = environment.isSubscrptionEnabled
 
     if(this.isSubscriptionEnabled){
       this.getPlanDetails();
+    }else{
+      this.renderer.setStyle(document.body, 'overflow', 'hidden');
     }
     this.messages = this.messages.map((message, index) => ({
       id: index+1,
