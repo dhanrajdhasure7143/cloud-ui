@@ -238,7 +238,7 @@ export class SubscriptionComponent implements OnInit {
 
 paymentPlan() {
   this.spinner.show();
-  let selectedInterval = (this.selectedPlan === 'Monthly') ? 'day' : 'year';
+  let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
   this.selectedPlans.forEach((element) => {
     element.priceCollection.forEach((price) => {
