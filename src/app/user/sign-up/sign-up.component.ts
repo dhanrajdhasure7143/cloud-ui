@@ -150,7 +150,7 @@ export class SignUpComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       jobTitle: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
       organization: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(30)])],
-      zipCode: ["", Validators.compose([Validators.required, Validators.pattern('^[0-9]+$'), Validators.maxLength(6)])],
+      zipCode: ["", Validators.compose([Validators.required, Validators.pattern('^[0-9]+$'),  Validators.minLength(5), Validators.maxLength(6)])],
       department: ['', Validators.required],
       country: ['', Validators.required],
       state: ['', Validators.required],
@@ -563,8 +563,18 @@ getErrorMessage(controlName: string): string {
       }
       return `${controlName} required`;
     }
-    if (control.errors.minlength) {
-      return "Minimum 2 characters required";
+    if(controlName != "zipCode"){
+      if (control.errors.minlength) {
+        return "Minimum 2 characters required";
+      }
+    }
+    if (controlName == "zipCode") {
+      if (control.errors.minlength) {
+        return "Zip Code must be 5 to 6 characters";
+      }
+      if (control.errors.maxlength) {
+        return "Zip Code cannot be more than 6 characters long";
+      }
     }
     if (control.errors.pattern) {
       return "Space between words are allowed";
