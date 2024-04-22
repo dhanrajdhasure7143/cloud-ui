@@ -121,7 +121,7 @@
                                 <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
                                 <input type="text" pInputText formControlName="jobTitle" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="jobTitle" autocomplete="off"
-                                    (keypress)="lettersOnly($event)" placeholder="Enter job title" maxlength="51" tabindex="1">
+                                    (keypress)="lettersOnly($event)" placeholder="Enter job title" maxlength="51">
                                 <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
                                     class="required">
                                     {{ getErrorMessage('jobTitle') }}
@@ -132,7 +132,7 @@
                                 <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
                                 border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)" autocomplete="off"
                                     (keypress)="lettersOnly($event)" placeholder="Enter organization" maxlength="51"
-                                    minlength="2" tabindex="2">
+                                    minlength="2">
                                 <span *ngIf="orgExsist" class='fa fa-info-circle errspan_info'> Organization already exist</span>
                                 <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
                                     class="required">
@@ -143,7 +143,7 @@
                         <div class="row">
                             <div class="form-group col-md-6 pl-0">
                                 <label for="department" class="label-control">Department <span class="star">*</span> </label>
-                                <p-dropdown formControlName="department" [style]="{'width':'100%'}" tabindex="3" 
+                                <p-dropdown formControlName="department" [style]="{'width':'100%'}"
                                   autocomplete="off" [options]="departments" optionLabel="departmentName" [value]="categoryId" placeholder="Select Department"> 
                                 </p-dropdown>
                                 <div *ngIf="f.department.touched && f.department.errors" class="required">
@@ -152,7 +152,7 @@
                             </div>
                             <div class="form-group col-md-6 pr-0">
                                 <label for="country" class="label-control">Country <span class="star">*</span> </label>
-                                <p-dropdown formControlName="country" [filter]="true" [style]="{'width':'100%'}" tabindex="4" 
+                                <p-dropdown formControlName="country" [filter]="true" [style]="{'width':'100%'}"
                                   autocomplete="off" [options]="countryInfo" optionLabel="name" [value]="name" placeholder="Select Country" (onChange)="onChangeCountry($event.value)"> 
                                 </p-dropdown>
                                 <span *ngIf="f.country.touched && f.country.errors && !isErrorMessage" class="required">
@@ -163,7 +163,7 @@
                         <div class="row">
                             <div class="form-group col-md-6 pl-0">
                                 <label for="state" class="label-control">State <span class="star">*</span> </label>
-                                <p-dropdown formControlName="state" [filter]="true" [style]="{'width':'100%'}" tabindex="5" autocomplete="off" 
+                                <p-dropdown formControlName="state" [filter]="true" [style]="{'width':'100%'}" autocomplete="off" 
                                   [options]="stateInfo" optionLabel="name" [value]="name" placeholder="Select State" (onChange)="onChangeState($event.value)"> 
                                 </p-dropdown>
                                 <span *ngIf="f.state.touched && f.state.errors && !isErrorMessage" class="required">
@@ -172,7 +172,7 @@
                             </div>
                             <div class="form-group col-md-6 pr-0">
                                 <label for="city" class="label-control">City <span class="star">*</span></label>
-                                <p-dropdown formControlName="city" [filter]="true" [style]="{'width':'100%'}" tabindex="6" autocomplete="off" 
+                                <p-dropdown formControlName="city" [filter]="true" [style]="{'width':'100%'}" autocomplete="off" 
                                  [options]="cityInfo" optionLabel="name" [value]="name" placeholder="Select City" (onChange)="onChangeCity($event.value)"> 
                                 </p-dropdown>
                                 <span *ngIf="f.city.touched && f.city.errors && !isErrorMessage" class="required">
@@ -185,7 +185,7 @@
                                 <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
                                 <input type="text" pInputText formControlName="zipCode" style="height: 45px !important;
                                 border-radius: 5px;" class="form-control" id="inputZip" autocomplete="off"
-                                    placeholder="Enter zip code" maxlength="6" tabindex="7" (keydown)="onKeydown($event)" required>
+                                    placeholder="Enter zip code" maxlength="6" (keydown)="onKeydown($event)" required>
                                 <span class="required" *ngIf="getErrorMessage('zipCode') !== ''"> {{ getErrorMessage('zipCode') }} </span>
                             </div>
                             <div *ngIf="isInput"  class="form-group col-md-6 pr-0">
@@ -197,7 +197,7 @@
                                                 class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
                                                 onKeyPress="if(this.value.length==10) return false;" ng2TelInput
                                                 [ng2TelInputOptions]="{initialCountry: phnCountry}"
-                                                pattern="^((\\+91-?)|0)?[0-9]{10}$" tabindex="8" required>
+                                                pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
                                     </div>
                                 <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
                                     <span>Phone Number required </span>
@@ -212,7 +212,7 @@
                                                 class="form-control" id="phone" formControlName="phoneNumber" autocomplete="off"
                                                 onKeyPress="if(this.value.length==10) return false;" ng2TelInput
                                                 [ng2TelInputOptions]="{initialCountry: phnCountry}"
-                                                pattern="^((\\+91-?)|0)?[0-9]{10}$" tabindex="8" required>
+                                                pattern="^((\\+91-?)|0)?[0-9]{10}$" required>
                                     </div>
                                 <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
                                     <span>Phone Number required </span>

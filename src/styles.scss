@@ -18,6 +18,24 @@
 @import '~primeicons/primeicons.css';
 
 // @import '~ngx-toastr/toastr-bs4-alert';
+
+/* Global CSS Variables */
+:root {
+  --main-txtcolor: #232832;
+  --main-fontsize: 14px;
+  --main-fontweight: 400;
+  --main-bluecolor: #098de6;
+  --secondary-bluecolor: #4AB0F5;
+  --main-bgcolor: #f9f9f9;
+  --formfield-bordercolor: #979797;
+  --cards-bordercolor: #D0D0D0;
+  --formlabel-color: #7d7d7d;
+  --main-borderradius: 3px;
+  --high-importance: #ea3d3d;
+  --medium-importance: #E58600;
+  --low-importance: #27AD74;
+}
+
 body {
   height: 100vh;
   width: 100%;
@@ -877,4 +895,27 @@ footer .bottom-blue{
   position: fixed;
   bottom: 0px;
   width: 100%;
+}
+
+.p-dropdown:focus, .p-dropdown.p-dropdown-open {
+  border-color: var(--secondary-bluecolor) !important;
+  background-color: #fff;
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+  border: 1px solid var(--secondary-bluecolor) !important;
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.p-inputtext:enabled:focus{
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #BFDBFE;
+  border-color: var(--secondary-bluecolor) !important;
+}
+
+input.p-inputtext {
+  border: 1px solid var(--formfield-bordercolor) !important;
+  box-shadow: none !important;
 }
