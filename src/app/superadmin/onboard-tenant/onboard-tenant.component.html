@@ -102,7 +102,7 @@
                             minlength="2">
                         <span
                             *ngIf="tenantForm.get('company').invalid && tenantForm.get('company').touched"
-                            class="required"> Company required
+                            class="required"> Organization required
                             <!-- <span *ngIf="tenantForm.controls['company'].hasError('minlength')" class="required">
                                 Minimum 2 characters required
                             </span>
@@ -110,7 +110,7 @@
                                 Maximum of 30 characters
                             </span> -->
                          </span>
-                        <span *ngIf="orgExsist && !tenantForm.controls['company'].hasError('minlength')" class='fa fa-info-circle errspan'> Organization Already Exist</span>
+                        <span *ngIf="orgExsist && !tenantForm.controls['company'].hasError('minlength')" class='fa fa-info-circle errspan_info'> Organization already exist</span>
                         <span
                             *ngIf="tenantForm.get('company').hasError('pattern') && !tenantForm.controls['company'].hasError('maxlength')"
                             class="required">
