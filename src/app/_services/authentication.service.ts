@@ -100,4 +100,8 @@ export class AuthenticationService {
     validateOTPSignUp(username: string, otp: string){
       return this.http.get('/api/login/beta/validateOTP?userId='+username+"&otp="+otp+"&isNewRegistrationFlow="+true,{responseType:'json'});
     }
+
+    getNewAccessToken(): Observable<any[]>{
+      return this.http.get<any[]>('/api/login/beta/newAccessToken',httpOptions);
+    }
 }
