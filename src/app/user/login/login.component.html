@@ -156,3 +156,11 @@
   </div>
 
 </div>
+<p-dialog header="Info" [(visible)]="showWarningPopup" [modal]="true" [style]="{width: '35vw'}" [resizable]="false"
+    [closable]="false">
+    <ng-container>
+      <p>User already registered for the enterprise plan. Please contact <strong>sales@epsoftinc.com</strong> for assistance.</p>
+        <!-- <p>User already registred. Please contact <strong>sales@epsoftinc.com</strong> in order to use the EZFlow product.</p> -->
+    </ng-container>
+    <button class="btn btn-primary" style="float: right;" (click)="showWarningPopup = false">OK</button>
+</p-dialog>
