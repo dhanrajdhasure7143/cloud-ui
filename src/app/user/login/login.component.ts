@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
   inactive:any;
   googleLoginURL:any;
   officeLoginURL:any;
+  showWarningPopup:boolean = false;
+  isSubscriptionEnabled:boolean=false;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -116,6 +118,7 @@ export class LoginComponent implements OnInit {
     // };
     this.googleLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=google&redirectPath="+this.config.socialLoginRedirectURL
     this.officeLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=azure&redirectPath="+this.config.socialLoginRedirectURL
+    this.isSubscriptionEnabled = environment.isSubscrptionEnabled
   }
   
   generateOTP(){
@@ -265,15 +268,23 @@ export class LoginComponent implements OnInit {
       this.spinner.hide();
       if(data.current_registration_screen == "basic_details_completed" ){
         let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login"}
-        this.router.navigate(['/subscription'],{
-          queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
-        });
+        if(!this.isSubscriptionEnabled){
+          this.showWarningPopup = true;
+        }else{
+          this.router.navigate(['/subscription'],{
+            queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+          });
+        }
       }
       if(data.current_registration_screen == "subscription_pending" ){
         let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login", isRegistered : true}
-        this.router.navigate(['/subscription'],{
-          queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
-        });
+        if(this.isSubscriptionEnabled){
+          this.showWarningPopup = true;
+        }else{
+          this.router.navigate(['/subscription'],{
+            queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+          });
+        }
       }
       if(data.current_registration_screen == "drafted_user_credentials" ){
         let obj = {"screen":"2",usermail:this.f.username.value.toLowerCase(),userpassword:this.f.password.value,navigatingFrom:"login"} 
