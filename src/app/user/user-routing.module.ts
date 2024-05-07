@@ -16,6 +16,7 @@ import { SubscriptionComponent } from './subscription/subscription.component';
 import { OrderPaymentComponent } from './order-payment/order-payment.component';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 const routes: Routes = [
   {
@@ -80,6 +81,9 @@ const routes: Routes = [
   {
     path: 'fail',
     component: FailPaymentComponent
+  },
+  {path:'userDetails',
+    component: UserDetailsComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }

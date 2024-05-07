@@ -140,9 +140,10 @@ export class SignUpComponent implements OnInit {
       content: message
     }));
   this.signupForm = this.formBuilder.group({
-    firstName: [ '', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$")])],
-    lastName: [ '', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$")])],
+    firstName: [ '', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$"),Validators.minLength(3), Validators.maxLength(50)])],
+    lastName: [ '', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$"),Validators.minLength(3), Validators.maxLength(50)])],
     email: [ '', [Validators.required,Validators.email]],
+    organization: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(50)])],
     otp:[''],
     password: ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$%])[a-zA-Z0-9@$%]{8,20}$")])],
     });
@@ -304,6 +305,41 @@ export class SignUpComponent implements OnInit {
     });
 
   }
+//   onRegistrationStart() {
+//     // this.showUserScreen = true;
+//     this.spinner.show()
+//     var payload = new FormData();
+//     var reqObj = {}
+//     reqObj = {
+//       'firstName': this.signupForm.value.firstName,
+//       'lastName': this.signupForm.value.lastName,
+//       'organization':this.signupForm.value.organization,
+//       'userId' : this.signupForm.value.email.toLowerCase(),
+//       'password': this.signupForm.value.password,
+//     }
+//     console.log("reQQ",reqObj)
+//     this.userId = this.signupForm.value.email.toLowerCase();
+//     this.userPsw = this.signupForm.value.password
+//     payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
+//     console.log("Encrypt",this.crypto.encrypt(JSON.stringify(reqObj)));
+//       this.service.registrationStart(payload).subscribe((res:any) => {
+//         if(res.code == 200){
+//           this.spinner.hide()
+//           this.showUserScreen = true;
+//           let url=this.router.url.split('?');
+//           let rplaceUrl = {"screen":"2",usermail:this.signupForm.value.email.toLowerCase(),userpassword:this.signupForm.value.password} 
+//           this.location.replaceState(url[0]+'?token='+btoa(JSON.stringify(rplaceUrl)));
+//         }
+//     }, err => {
+//       this.spinner.hide()
+//     Swal.fire({
+//       title: 'Error!',
+//       icon: 'error',
+//       text: `${err.error.message} ! Please check your user name`,
+//       allowOutsideClick: false
+//     });
+//   });
+// }
   onRegistrationStart() {
     // this.showUserScreen = true;
     this.spinner.show()
@@ -312,26 +348,55 @@ export class SignUpComponent implements OnInit {
     reqObj = {
       'firstName': this.signupForm.value.firstName,
       'lastName': this.signupForm.value.lastName,
+      'organization':this.signupForm.value.organization,
       'userId' : this.signupForm.value.email.toLowerCase(),
       'password': this.signupForm.value.password,
     }
     this.userId = this.signupForm.value.email.toLowerCase();
     this.userPsw = this.signupForm.value.password
     payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
-      this.service.registrationStart(payload).subscribe(res => {
-        this.spinner.hide()
-        this.showUserScreen = true;
-        let url=this.router.url.split('?');
-        let rplaceUrl = {"screen":"2",usermail:this.signupForm.value.email.toLowerCase(),userpassword:this.signupForm.value.password} 
-        this.location.replaceState(url[0]+'?token='+btoa(JSON.stringify(rplaceUrl)));
-    }, err => {
-    Swal.fire({
-      title: 'Error!',
-      icon: 'error',
-      text: `${err.error.message} ! Please check your user name`,
-      allowOutsideClick: false
-    });
-  });
+    console.log("Encrypt",this.crypto.encrypt(JSON.stringify(reqObj)));
+      this.service.registrationStart(payload).subscribe((res:any) => {
+        if (res.body.message == "User Details Saved Successfully!!") {
+          if (environment.isSubscrptionEnabled) {
+            let obj = { email: this.userId, password: this.userPsw }
+            this.router.navigate(['/subscription'], {
+              queryParams: { token: this.crypto.encrypt(JSON.stringify(obj)) },
+            });
+          } else {
+            this.sendEmailEnterPrisePlan();
+          }
+        } else if (res.code == 409) {
+          this.spinner.hide();
+          Swal.fire({
+            title: 'Error',
+            text: 'User Already Exists. Please proceed with signing in!',
+            icon: 'error',
+            showCancelButton: false,
+            allowOutsideClick: true
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigate(['/user']);
+            }
+          });
+        } else {
+          this.spinner.hide();
+          Swal.fire({
+            title: 'Error',
+            text: 'User Already Exists. Please proceed with signing in!',
+            icon: 'error',
+            showCancelButton: false,
+            allowOutsideClick: true
+          }).then((result) => {
+            if (result.value) {
+              this.router.navigate(['/user']);
+            }
+          });
+        }
+      }, err => {
+        this.spinner.hide();
+        Swal.fire("Error","Failed to save details","error")
+      });
 }
 
 validateOTP(){
