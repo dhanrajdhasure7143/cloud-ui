@@ -874,7 +874,8 @@ height:10px;
 }
 
 .p-dropdown {
-  border: 1px solid #ced4da !important;
+  // border: 1px solid #ced4da !important;
+  border: 1px solid var(--formfield-bordercolor) !important;
   color: var(--main-txtcolor);
   background: transparent;
   box-shadow: none !important;
