@@ -61,13 +61,32 @@
                             <label class="label-control" for="firstName"> First Name </label>
                             <input type="text" pInputText maxlength="51" minlength="3" class="form-control" formControlName="firstName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter First Name" tabindex="1" autocomplete="off">
-                            <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>    
+                            <!-- <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>     -->
+                            <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched &&!signupForm.get('firstName').hasError('pattern') &&!signupForm.controls['firstName'].hasError('maxlength') &&!signupForm.controls['firstName'].hasError('minlength')" class="required"> First Name Required </span>
+                            <span *ngIf="signupForm.get('firstName').hasError('minlength') && signupForm.get('firstName').touched" class="required"> Minimum length 3 characters </span>
+                            <span *ngIf="signupForm.get('firstName').hasError('maxlength')" class="required"> Maximum of 50 characters </span>
+                            <span *ngIf="signupForm.get('firstName').hasError('pattern')" class="required"> Invalid characters entered </span>
                         </div>
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="lastName"> Last Name </label>
                             <input type="text" pInputText maxlength="51" minlength="3" class="form-control" formControlName="lastName" (keypress)="lettersOnly($event)"
                                 value="" placeholder="Enter Last Name" autocomplete="off" tabindex="2">
-                            <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span>        
+                            <!-- <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span> -->
+                            <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched &&!signupForm.get('lastName').hasError('pattern') &&!signupForm.controls['lastName'].hasError('maxlength') &&!signupForm.controls['lastName'].hasError('minlength')" class="required"> Last Name Required </span>
+                            <span *ngIf="signupForm.get('lastName').hasError('minlength') && signupForm.get('lastName').touched" class="required"> Minimum length 3 characters </span>
+                            <span *ngIf="signupForm.get('lastName').hasError('maxlength')" class="required"> Maximum of 50 characters </span>
+                            <span *ngIf="signupForm.get('lastName').hasError('pattern')" class="required"> Invalid characters entered </span>
+                        </div>
+                        <div class="form-group col-md-12 p-10">
+                            <label for="organization" class="label-control">Organization <span class="star">*</span> </label>
+                            <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
+                                 border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)" autocomplete="off" (keypress)="lettersOnly($event)" placeholder="Enter Organization Name" maxlength="51" minlength="3">
+                            <span *ngIf="orgExsist" class='fa fa-info-circle errspan_info'> Organization already exist</span>
+                            <!-- <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched && !signupForm.get('organization').hasError('pattern') && !signupForm.controls['organization'].hasError('maxlength')" class="required"> Organization required </span> -->
+                            <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched &&!signupForm.get('organization').hasError('pattern') &&!signupForm.controls['organization'].hasError('maxlength') &&!signupForm.controls['organization'].hasError('minlength')" class="required"> Organization Name Required </span>
+                            <span *ngIf="signupForm.get('organization').hasError('minlength') && signupForm.get('organization').touched" class="required"> Minimum length 3 characters </span>
+                            <span *ngIf="signupForm.get('organization').hasError('maxlength')" class="required"> Maximum of 50 characters </span>
+                            <span *ngIf="signupForm.get('organization').hasError('pattern')" class="required"> Invalid characters entered </span>
                         </div>
                     <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="email"> Email </label>

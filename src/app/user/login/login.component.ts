@@ -266,12 +266,24 @@ export class LoginComponent implements OnInit {
      console.log(data)
      if(data.isError == "true"){
       this.spinner.hide();
-      if(data.current_registration_screen == "basic_details_completed" ){
-        let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login"}
+      // Disabling below code for new reuirement (Screen changes)
+
+      // if(data.current_registration_screen == "basic_details_completed" ){
+      //   let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login"}
+      //   if(!this.isSubscriptionEnabled){
+      //     this.showWarningPopup = true;
+      //   }else{
+      //     this.router.navigate(['/subscription'],{
+      //       queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+      //     });
+      //   }
+      // }
+      if(data.current_registration_screen == "predefinedbots_subscription_success" || "enterpriseplan_subscription_success" ){
+        let obj = {userEmail : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login"}
         if(!this.isSubscriptionEnabled){
           this.showWarningPopup = true;
         }else{
-          this.router.navigate(['/subscription'],{
+          this.router.navigate(['/userDetails'],{
             queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
           });
         }
@@ -286,9 +298,22 @@ export class LoginComponent implements OnInit {
           });
         }
       }
+      // Disabling below code for new reuirement (Screen changes)
+      
+      // if(data.current_registration_screen == "drafted_user_credentials" ){
+      //   let obj = {"screen":"2",usermail:this.f.username.value.toLowerCase(),userpassword:this.f.password.value,navigatingFrom:"login"} 
+      //   this.router.navigate(['/signup'],{queryParams: { token: btoa(JSON.stringify(obj))},});
+      // }
+  
       if(data.current_registration_screen == "drafted_user_credentials" ){
-        let obj = {"screen":"2",usermail:this.f.username.value.toLowerCase(),userpassword:this.f.password.value,navigatingFrom:"login"} 
-        this.router.navigate(['/signup'],{queryParams: { token: btoa(JSON.stringify(obj))},});
+        let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login"}
+        if(!this.isSubscriptionEnabled){
+          this.showWarningPopup = true;
+        }else{
+          this.router.navigate(['/subscription'],{
+            queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+          });
+        }
       }
      }
       if(data.errorDetails == "You completed your maximum attempts. Your account is temporarily locked for 3 hours."){

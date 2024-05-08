@@ -100,7 +100,10 @@ export class SuccessPaymentComponent implements OnInit {
       if (this.countdown === 0) {
         // this.router.navigate(['/user']);
         console.log("countDownEnd")
-        this.loginUser(this.userData);
+        this.router.navigate(['/userDetails'],{
+          queryParams: { token: this.crypto.encrypt(JSON.stringify(this.userData))},
+        });
+        // this.loginUser(this.userData);
       }
     });
   }
