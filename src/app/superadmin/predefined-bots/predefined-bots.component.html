@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <p-tabView #tabView styleClass="customer-tabs" [(activeIndex)]="activeTabIndex"
+    (onChange)="onTabChange($event, tabView)">
+    <p-tabPanel header="PB Templates">
+      <ng-template pTemplate="header">
+        <i class="pi pi-users" style="font-size: 1rem;  margin-right: 5px;"></i>
+        <span class="titlelabel">Predefined Bot Templates</span>
+      </ng-template>
+      <div *ngIf="check_tab == 0" class="enterprise-layout">
+        <app-predefined-bots-template></app-predefined-bots-template>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="PB VM-Host">
+      <ng-template pTemplate="header">
+        <i class="pi pi-desktop" style="font-size: 1rem; margin-right: 5px;"></i>
+        <span class="titlelabel">Predefined Bot VM-Host</span>
+      </ng-template>
+      <div *ngIf="check_tab == 1" class="enterprise-layout">
+        <app-vm-configuration-list></app-vm-configuration-list>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>
+
+<div class="card flex justify-content-center gap-2">
+  <p-toast></p-toast>
+</div>
+
+<ngx-spinner bdColor="#bebcbc66" type="">
+  <img src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader" />
+</ngx-spinner>

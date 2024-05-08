@@ -1,0 +1,104 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="enterprise-layout">
+        <!-- <p-scrollPanel [style]="{width: '100%', height: '100%'}"> -->
+        <p-table #dt [value]="configuredVmList" [columns]="columnList" [scrollable]="true"
+          [globalFilterFields]="search_fields" [resizableColumns]="true" responsiveLayout="scroll"
+          [reorderableColumns]="true">
+
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex" style="text-align: end;">
+              <button class="btn btn-primary" (click)="openOverlay('onboard','')" style="margin-right: 10px;">Configure
+                VM</button>
+              <span class="p-input-icon-right gridsearch">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                  [(ngModel)]="searchValue" placeholder="Search" />
+              </span>
+              <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"
+                (click)="clearTableFilters(dt)"></button>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn
+                [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
+                <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" field="{{each.ColumnName}}"
+                  [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu"
+                  matchMode="contains" [showApplyButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext"
+                      placeholder="Search">
+                  </ng-template>
+                </p-columnFilter>
+                <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'dropdown'" [field]="each.ColumnName"
+                  matchMode="equals" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"
+                  display="menu" [showApplyButton]="false" [showClearButton]="true">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)"
+                      optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+                <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top"
+                [tooltipDisabled]="!col.showTooltip">
+
+                <span *ngIf="col.ColumnName === 'password'">
+                  {{ rowData[col.ColumnName] ? '******' : '-' }}
+                </span>
+
+                <span
+                  *ngIf="col.ColumnName !== 'createdAt' && col.ColumnName !== 'modifiedAt' && col.ColumnName !== 'password'">
+                  {{ rowData[col.ColumnName] || '-' }}
+                </span>
+
+                <span *ngIf="col.ColumnName === 'createdAt' || col.ColumnName === 'modifiedAt'">
+                  {{ rowData[col.ColumnName] ? (rowData[col.ColumnName] | date: 'MMM dd, y, h:mm a') : '-' }}
+                </span>
+
+                <span *ngIf="col.ColumnName=='action'" class="actionmenu">
+                  <a (click)="openOverlay('update',rowData)" pTooltip="Edit" tooltipPosition="top">
+                    <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
+                    <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                  </a>
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td style="text-align: center;" colspan="8">No Records Found</td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+        <!-- </p-scrollPanel> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isDisplayOverlay">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="h-100">
+      <div class="create-header">
+        <h3>Configure VM</h3>
+      </div>
+    </div>
+    <!-- <app-vm-configuration-form [userData]="userData" (close_overlay)="readValue($event)"></app-vm-configuration-form> -->
+  </app-split-overlay>
+</div>
+
+<ngx-spinner bdColor="#bebcbc66" type="">
+  <img src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader" />
+</ngx-spinner>
