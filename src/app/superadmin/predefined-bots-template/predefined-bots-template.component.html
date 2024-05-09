@@ -77,6 +77,74 @@
       <div class="create-header">
         <h3>Predefined Bots</h3>
       </div>
+      <div class="createform-overlay">
+        <form [formGroup]="predefinedTemplateForm" (ngSubmit)="savePredefinedTemplateData()" class="col-12 tenant-form">
+          <div class="row form-details">
+
+
+            <div class="form-group col-md-8">
+              <label class="label-control" for="botId">RPA Bot Id<span class="star">*</span></label>
+              <input type="text" id="botId" pInputText formControlName="botId" class="form-control"
+                placeholder="Enter Bot Id" required>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label class="label-control"></label>
+              <button class="btn btn-primary pull-right" type="button" (click)="getBotData()">Submit for RPA Bot</button>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label class="label-control" for="predefinedBotName">Predefined Bot Name<span class="star">*</span></label>
+              <input type="text" id="predefinedBotName" pInputText (keypress)="lettersOnly($event)" formControlName="predefinedBotName" class="form-control"
+                placeholder="Enter Predfined Bot Name" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="executionOrder">Execution Order<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="executionOrder" [style]="{'width':'100%'}" formControlName="executionOrder" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="predefinedBotId">Predefined Bot Id<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="predefinedBotId" [style]="{'width':'100%'}" formControlName="predefinedBotId" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <!-- <div class="form-group col-md-12">
+              <label class="label-control" for="Tasks">Tasks List<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="taskList" placeholder="Select Task" optionLabel="taskName" optionValue="botTId"></p-dropdown>
+            </div> -->
+
+            <div class="form-group col-md-12">
+              <label class="label-control" for="predefinedBotName">Tasks List<span class="star">*</span></label>
+              <textarea rows="5" cols="30" id="task_list" pInputTextarea autoResize="autoResize" formControlName="task_list"></textarea>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label class="label-control" for="predefinedBotName">Tasks Sequence<span class="star">*</span></label>
+              <textarea rows="5" cols="30" id="task_sequence" pInputTextarea autoResize="autoResize" formControlName="task_sequence"></textarea>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label class="label-control" for="task_startStopCoordinate">Tasks Stop and Start Cordinates<span class="star">*</span></label>
+              <textarea rows="5" cols="30" id="task_startStopCoordinate" pInputTextarea 
+                        autoResize="autoResize" 
+                        formControlName="task_startStopCoordinate">
+              </textarea>
+            </div>
+
+          </div>
+          <div class="createform-footer">
+            <button type="button" (click)="onCancel()" class="btn">Cancel</button>
+            <button type="button" [disabled]="!predefinedTemplateForm.valid" class="btn btn-primary" (click)="savePredefinedTemplateData()">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
   </app-split-overlay>
 </div>
@@ -84,3 +152,8 @@
 <ngx-spinner bdColor="#bebcbc66" type="">
   <img src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader" />
 </ngx-spinner>
+
+<div class="card flex justify-content-center gap-2">
+  <p-toast></p-toast>
+</div>
+

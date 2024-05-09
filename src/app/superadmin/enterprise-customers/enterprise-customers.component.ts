@@ -130,7 +130,7 @@ export class EnterpriseCustomersComponent implements OnInit {
         error => {
           this.spinner.hide();
           console.error('API Expiry error IS HERE :', error);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Failed to update tenure.' });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update tenure.' });
         }
       );
     }

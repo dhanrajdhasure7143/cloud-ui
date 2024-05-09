@@ -45,6 +45,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PasswordModule } from "primeng/password";
+import {InputNumberModule} from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [],
@@ -93,7 +94,8 @@ import { PasswordModule } from "primeng/password";
     SkeletonModule,
     InputSwitchModule,
     ProgressSpinnerModule,
-    PasswordModule
+    PasswordModule,
+    InputNumberModule
   ],
   exports: [
     ToastModule,
@@ -141,7 +143,7 @@ import { PasswordModule } from "primeng/password";
     InputSwitchModule,
     ProgressSpinnerModule,
     PasswordModule,
-
+    InputNumberModule
   ],
   providers: [ConfirmationService, MessageService]
 })

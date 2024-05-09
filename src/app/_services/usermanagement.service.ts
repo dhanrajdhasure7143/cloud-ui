@@ -96,4 +96,12 @@ export class UsermanagementService implements OnInit {
     return this.http.post('/rpa-service/predefined/save-predefinedBot-VM-hosts',req)
   }
 
+  getRpaBotData(id){
+    return this.http.get("/rpa-service/get-bot/"+id)
+  }
+
+  savePredefinedTemplate(body){
+    return this.http.post("/rpa-service/predefined/save-predefinedBot-template",body)
+  }
+
 }
