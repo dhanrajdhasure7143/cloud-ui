@@ -92,4 +92,8 @@ export class UsermanagementService implements OnInit {
     return this.http.get('/rpa-service/predefined/getAll-predefined-VM-hosts')
   }
 
+  savePredefinedBotsVMHost(req){
+    return this.http.post('/rpa-service/predefined/save-predefinedBot-VM-hosts',req)
+  }
+
 }

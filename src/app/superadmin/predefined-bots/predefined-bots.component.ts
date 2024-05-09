@@ -29,8 +29,8 @@ export class PredefinedBotsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getPredefinedBotsTemplate();
-    this.getPredefinedBotsVMHost();
+    // this.getPredefinedBotsTemplate();
+    // this.getPredefinedBotsVMHost();
   }
 
   show() {

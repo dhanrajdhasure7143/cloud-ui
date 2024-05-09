@@ -88,14 +88,219 @@
   </div>
 </div>
 
+<!-- <div *ngIf="isDisplayOverlay">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="h-100">
+      <div class="create-header">
+        <h3>Configure VM</h3>
+      </div>
+
+      <div>
+        <form [formGroup]="vmForm" (ngSubmit)="onSubmit()">
+          <div>
+            <label for="environmentName">Environment Name:</label>
+            <input type="text" id="environmentName" formControlName="environmentName">
+          </div>
+  
+          <div>
+            <label for="environmentType">Environment Type:</label>
+            <input type="text" id="environmentType" formControlName="environmentType">
+          </div>
+  
+          <div>
+            <label for="agentPath">Agent Path:</label>
+            <input type="text" id="agentPath" formControlName="agentPath">
+          </div>
+  
+          <div>
+            <label for="hostAddress">Host Address:</label>
+            <input type="text" id="hostAddress" formControlName="hostAddress">
+          </div>
+  
+          <div>
+            <label for="categoryId">Category ID:</label>
+            <input type="number" id="categoryId" formControlName="categoryId">
+          </div>
+  
+          <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" formControlName="username">
+          </div>
+  
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" formControlName="password">
+          </div>
+  
+          <div>
+            <label for="connectionType">Connection Type:</label>
+            <input type="text" id="connectionType" formControlName="connectionType">
+          </div>
+  
+          <div>
+            <label for="portNumber">Port Number:</label>
+            <input type="number" id="portNumber" formControlName="portNumber">
+          </div>
+  
+          <div>
+            <label for="activeStatus">Active Status:</label>
+            <select id="activeStatus" formControlName="activeStatus">
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
+            </select>
+          </div>
+  
+          <div>
+            <label for="tenantId">Tenant ID:</label>
+            <input type="text" id="tenantId" formControlName="tenantId">
+          </div>
+  
+          <div>
+            <label for="status">Status:</label>
+            <input type="text" id="status" formControlName="status">
+          </div>
+  
+          <div>
+            <button type="button" (click)="onCancel()">Cancel</button>
+            <button type="submit" [disabled]="!vmForm.valid">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </app-split-overlay>
+</div> -->
+
 <div *ngIf="isDisplayOverlay">
   <app-split-overlay (closeOverlay)="closeOverlay($event)">
     <div class="h-100">
       <div class="create-header">
         <h3>Configure VM</h3>
       </div>
+      <div class="createform-overlay">
+        <form [formGroup]="vmForm" (ngSubmit)="saveVMData()" class="col-12 tenant-form">
+          <div class="row form-details">
+            <!-- Environment Name -->
+            <div class="form-group col-md-12">
+              <label class="label-control" for="environmentName">Environment Name<span class="star">*</span></label>
+              <input type="text" id="environmentName" pInputText formControlName="environmentName" class="form-control"
+                placeholder="Enter Environment Name" required>
+              <div *ngIf="vmForm.get('environmentName').errors?.required && vmForm.get('environmentName').touched"
+                class="required">
+                Environment Name is required.
+              </div>
+            </div>
+
+            <!-- Environment Type -->
+            <!-- <div class="form-group col-md-6">
+              <label class="label-control"  for="environmentType">Environment Type<span class="star">*</span></label>
+              <select id="environmentType" formControlName="environmentType" class="form-control" required>
+                <option value="">Select Environment Type</option>
+                <option value="Windows">Windows</option>
+                <option value="Mac">Mac</option>
+                <option value="Linux">Linux</option>
+              </select>
+              <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched"
+                class="required">
+                Environment Type is required.
+              </div>
+            </div> -->
+
+            <!-- Environment Type -->
+            <!-- <div class="form-group col-md-12">
+              <label class="label-control" for="environmentType">Environment Type<span class="star">*</span></label>
+              <input type="text" id="environmentType" pInputText formControlName="environmentType" class="form-control"
+                     placeholder="Enter Environment Type" required>
+              <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched"
+                   class="required">
+                  Environment Type is required.
+              </div>
+            </div> -->
+
+            <div class="form-group col-md-12">
+              <label class="label-control" for="environmentType">Environment Type<span class="star">*</span></label>
+              <p-dropdown [options]="environmentOptions" optionLabel="name" placeholder="Select Environment Type"
+                          formControlName="environmentType" inputId="environmentType" [showClear]="true" [filter]="true">
+              </p-dropdown>
+              <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched"
+                   class="required">
+                  Environment Type is required.
+              </div>
+            </div>
+
+            <!-- Agent Path -->
+            <div class="form-group col-md-12">
+              <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
+              <input type="text" id="agentPath" pInputText formControlName="agentPath" class="form-control"
+                placeholder="Enter Agent Path" required>
+              <div *ngIf="vmForm.get('agentPath').errors?.required && vmForm.get('agentPath').touched"
+                class="required">
+                Agent Path is required.
+              </div>
+            </div>
+
+            <!-- Host Address -->
+            <div class="form-group col-md-12">
+              <label class="label-control" for="hostAddress">Host Address<span class="star">*</span></label>
+              <input type="text" id="hostAddress" pInputText formControlName="hostAddress" class="form-control"
+                placeholder="Enter Host Address" required>
+              <div *ngIf="vmForm.get('hostAddress').errors?.required && vmForm.get('hostAddress').touched"
+                class="required">
+                Host Address is required.
+              </div>
+            </div>
+
+            <!-- Port Number -->
+            <div class="form-group col-md-12">
+              <label class="label-control" for="portNumber">Port Number<span class="star">*</span></label>
+              <input type="number" id="portNumber" pInputText formControlName="portNumber" class="form-control"
+                placeholder="Enter Port Number" required>
+              <div *ngIf="vmForm.get('portNumber').errors?.required && vmForm.get('portNumber').touched"
+                class="required">
+                Port Number is required.
+              </div>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group col-md-12">
+              <label class="label-control" for="username">Username<span class="star">*</span></label>
+              <input type="text" id="username" pInputText formControlName="username" class="form-control"
+                placeholder="Enter Username" required>
+              <div *ngIf="vmForm.get('username').errors?.required && vmForm.get('username').touched"
+                class="required">
+                Username is required.
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group col-md-12">
+              <label class="label-control" for="password">Password<span class="star">*</span></label>
+              <input type="password" id="password" pInputText formControlName="password" class="form-control"
+                placeholder="Enter Password" required>
+              <div *ngIf="vmForm.get('password').errors?.required && vmForm.get('password').touched"
+                class="required">
+                Password is required.
+              </div>
+            </div>
+
+            <!-- Connection Type -->
+            <div class="form-group col-md-12">
+              <label class="label-control" for="connectionType">Connection Type<span class="star">*</span></label>
+              <input type="text" id="connectionType" pInputText formControlName="connectionType" class="form-control"
+                placeholder="Enter Connection Type" value="SSH" disabled>
+              <!-- <div *ngIf="vmForm.get('connectionType').errors?.required && vmForm.get('connectionType').touched"
+                class="required" value="SSH" disabled>
+                Connection Type is required.
+              </div> -->
+            </div>
+
+          </div>
+          <div class="createform-footer">
+            <button type="button" (click)="onCancel()" class="btn">Cancel</button>
+            <button type="submit" [disabled]="!vmForm.valid" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <!-- <app-vm-configuration-form [userData]="userData" (close_overlay)="readValue($event)"></app-vm-configuration-form> -->
   </app-split-overlay>
 </div>
 
