@@ -23,10 +23,16 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { EnterpriseRequestsComponent } from './enterprise-requests/enterprise-requests.component';
+import { PredefinedBotsComponent } from './predefined-bots/predefined-bots.component';
+import { PredefinedBotsTemplateComponent } from './predefined-bots-template/predefined-bots-template.component';
+import { VmConfigurationListComponent } from './vm-configuration-list/vm-configuration-list.component';
 @NgModule({
   declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent, 
     OnboardTenantComponent,
-    EnterpriseRequestsComponent
+    EnterpriseRequestsComponent,
+    PredefinedBotsComponent,
+    PredefinedBotsTemplateComponent,
+    VmConfigurationListComponent
   ],
   imports: [
     CommonModule,

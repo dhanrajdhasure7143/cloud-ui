@@ -84,4 +84,24 @@ export class UsermanagementService implements OnInit {
     return this.http.post('/api/user/enterprise-user-toggle?userId='+userId+'&status=false',body)
   }
 
+  getPredefinedBotsTemplate(){
+    return this.http.get('/rpa-service/predefined/getAll-predefined-bot-templates')
+  }
+
+  getPredefinedBotsVMHost(){
+    return this.http.get('/rpa-service/predefined/getAll-predefined-VM-hosts')
+  }
+
+  savePredefinedBotsVMHost(req){
+    return this.http.post('/rpa-service/predefined/save-predefinedBot-VM-hosts',req)
+  }
+
+  getRpaBotData(id){
+    return this.http.get("/rpa-service/get-bot/"+id)
+  }
+
+  savePredefinedTemplate(body){
+    return this.http.post("/rpa-service/predefined/save-predefinedBot-template",body)
+  }
+
 }
