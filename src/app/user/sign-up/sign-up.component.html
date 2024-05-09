@@ -80,7 +80,7 @@
                         <div class="form-group col-md-12 p-10">
                             <label for="organization" class="label-control">Organization <span class="star">*</span> </label>
                             <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
-                                 border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)" autocomplete="off" (keypress)="lettersOnly($event)" placeholder="Enter Organization Name" maxlength="51" minlength="3">
+                                 border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)" autocomplete="off" (keypress)="lettersOnly($event)" placeholder="Enter Organization Name" maxlength="51" minlength="3" tabindex="3">
                             <span *ngIf="orgExsist" class='fa fa-info-circle errspan_info'> Organization already exist</span>
                             <!-- <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched && !signupForm.get('organization').hasError('pattern') && !signupForm.controls['organization'].hasError('maxlength')" class="required"> Organization required </span> -->
                             <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched &&!signupForm.get('organization').hasError('pattern') &&!signupForm.controls['organization'].hasError('maxlength') &&!signupForm.controls['organization'].hasError('minlength')" class="required"> Organization Name Required </span>
@@ -91,7 +91,7 @@
                     <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="email"> Email </label>
                             <input type="text" pInputText maxlength="51" class="form-control" formControlName="email" style="padding-right: 90px;" [attr.disabled]="isEmailDisable ? true : null"
-                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off" (keyup)="showOtp($event); checkEmailValidity()" tabindex="3">
+                                value="" pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off" (keyup)="showOtp($event); checkEmailValidity()" tabindex="4">
                                 <span *ngIf="isGenerate && !isEmailEmptyOrInvalid" (click)="generateOTP('false')" class="verify text-primary"> Verify Email </span>
                                 <span *ngIf="isSuccess"> <i class="pi pi-verified text-success" id="email-buttons"></i></span>
                                 <span *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')" class="required"> Email Required </span>
