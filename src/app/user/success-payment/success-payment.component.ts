@@ -22,7 +22,7 @@ export class SuccessPaymentComponent implements OnInit {
  public countdown: number = 30;
  userEmail:string;
  userData:any;
- http:any
+ http:any;
 
   constructor(
     private route: ActivatedRoute, 
@@ -100,10 +100,10 @@ export class SuccessPaymentComponent implements OnInit {
       if (this.countdown === 0) {
         // this.router.navigate(['/user']);
         console.log("countDownEnd")
-        this.router.navigate(['/userDetails'],{
-          queryParams: { token: this.crypto.encrypt(JSON.stringify(this.userData))},
-        });
-        // this.loginUser(this.userData);
+        // this.router.navigate(['/userDetails'],{
+        //   queryParams: { token: this.crypto.encrypt(JSON.stringify(this.userData))},
+        // });
+        this.loginUser(this.userData);
       }
     });
   }
