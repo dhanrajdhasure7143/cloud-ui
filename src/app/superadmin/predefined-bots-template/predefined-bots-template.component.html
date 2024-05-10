@@ -78,26 +78,32 @@
         <h3>Predefined Bots</h3>
       </div>
       <div class="createform-overlay">
-        <form [formGroup]="predefinedTemplateForm" (ngSubmit)="savePredefinedTemplateData()" class="col-12 tenant-form">
+        <div class="col-12 row">
+          <div class="form-group col-md-6">
+            <label class="label-control" for="botId">RPA Bot Id<span class="star">*</span></label>
+            <input type="text" id="botId" pInputText [(ngModel)]="rpa_botId" class="form-control"
+              placeholder="Enter Bot Id" required>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label class="label-control"></label>
+            <button class="btn btn-primary pull-right" type="button" (click)="getBotData()">Submit for RPA Bot</button>
+          </div>
+        </div>
+        <form [formGroup]="predefinedTemplateForm" (ngSubmit)="savePredefinedTemplateData()" class="col-12 tenant-form" *ngIf="isDisplay">
           <div class="row form-details">
-
-
-            <div class="form-group col-md-8">
-              <label class="label-control" for="botId">RPA Bot Id<span class="star">*</span></label>
-              <input type="text" id="botId" pInputText formControlName="botId" class="form-control"
-                placeholder="Enter Bot Id" required>
-            </div>
-
-            <div class="form-group col-md-4">
-              <label class="label-control"></label>
-              <button class="btn btn-primary pull-right" type="button" (click)="getBotData()">Submit for RPA Bot</button>
-            </div>
-
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
               <label class="label-control" for="predefinedBotName">Predefined Bot Name<span class="star">*</span></label>
               <input type="text" id="predefinedBotName" pInputText (keypress)="lettersOnly($event)" formControlName="predefinedBotName" class="form-control"
                 placeholder="Enter Predfined Bot Name" required>
             </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Predefined Bots<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="predefinedBotsList" placeholder="Select Predefined Bot" optionLabel="predefinedBotName" formControlName="predefinedBotType">
+              </p-dropdown>
+          </div>
+
 
             <div class="form-group col-md-6">
               <label class="label-control" for="executionOrder">Execution Order<span class="star">*</span></label>
@@ -119,24 +125,54 @@
               <label class="label-control" for="Tasks">Tasks List<span class="star">*</span></label>
               <p-dropdown [style]="{'width':'70%'}" [options]="taskList" placeholder="Select Task" optionLabel="taskName" optionValue="botTId"></p-dropdown>
             </div> -->
+            <div class="form-group col-md-12" *ngIf="!isShowTasksEdit">
+              <label class="label-control" for="task_list">Tasks List<span class="star">*</span></label>
+              <input type="text" id="task_list" pInputText formControlName="task_list" class="form-control"
+              placeholder="Enter Predfined Bot Name" disabled required>
+              <button class="btn btn-primary" (click)="onEditTaskList()">Edit</button>
+            </div>
 
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12" *ngIf="isShowTasksEdit">
               <label class="label-control" for="predefinedBotName">Tasks List<span class="star">*</span></label>
               <textarea rows="5" cols="30" id="task_list" pInputTextarea autoResize="autoResize" formControlName="task_list"></textarea>
+              <button class="btn btn-primary" (click)="onEditTaskList()">Cancel</button>
+            
             </div>
 
-            <div class="form-group col-md-12">
-              <label class="label-control" for="predefinedBotName">Tasks Sequence<span class="star">*</span></label>
+            <div class="form-group col-md-12" *ngIf="!isShowSequenceEdit">
+              <label class="label-control" for="task_sequence">Tasks Sequence<span class="star">*</span></label>
+              <input type="text" id="task_sequence" pInputText formControlName="task_sequence" class="form-control"
+              placeholder="Tasks Sequence" disabled required>
+              <button class="btn btn-primary" (click)="isShowSequenceEdit = !isShowSequenceEdit">Edit</button>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="isShowSequenceEdit">
+              <label class="label-control" for="task_sequence">Tasks Sequence<span class="star">*</span></label>
               <textarea rows="5" cols="30" id="task_sequence" pInputTextarea autoResize="autoResize" formControlName="task_sequence"></textarea>
+              <button class="btn btn-primary" (click)="isShowSequenceEdit = !isShowSequenceEdit">Cancel</button>
             </div>
 
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12" *ngIf="!isShowstartStopCoordinateEdit">
+              <label class="label-control" for="task_startStopCoordinate">Tasks Stop and Start Cordinates<span class="star">*</span></label>
+              <input type="text" id="task_startStopCoordinate" pInputText formControlName="task_startStopCoordinate" class="form-control"
+              placeholder="Tasks Stop and Start Cordinates" disabled required>
+              <button class="btn btn-primary" (click)="isShowstartStopCoordinateEdit = !isShowstartStopCoordinateEdit">Edit</button>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="isShowstartStopCoordinateEdit">
               <label class="label-control" for="task_startStopCoordinate">Tasks Stop and Start Cordinates<span class="star">*</span></label>
               <textarea rows="5" cols="30" id="task_startStopCoordinate" pInputTextarea 
                         autoResize="autoResize" 
                         formControlName="task_startStopCoordinate">
               </textarea>
+              <button class="btn btn-primary" (click)="isShowstartStopCoordinateEdit = !isShowstartStopCoordinateEdit">Cancel</button>
+
             </div>
+
+            <!-- <div class="form-group col-md-12">
+              <label class="label-control" for="Tasks">Tasks List<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="taskList" placeholder="Select Task" optionLabel="taskName" optionValue="botTId"></p-dropdown>
+            </div> -->
 
           </div>
           <div class="createform-footer">
@@ -144,6 +180,164 @@
             <button type="button" [disabled]="!predefinedTemplateForm.valid" class="btn btn-primary" (click)="savePredefinedTemplateData()">Submit</button>
           </div>
         </form>
+
+        <form [formGroup]="predefinedAttributesForm" class="col-12 row tenant-form" *ngIf="predefinedTemplateForm.valid">
+          <div class="form-group col-md-12">
+            <p-checkbox [binary]="true" inputId="binary" label="Attributes Required" (onChange)="onChangeAttributesRequired()" formControlName="isAttributesRequired"></p-checkbox>
+          </div>
+          <ng-container *ngIf="predefinedAttributesForm.get('isAttributesRequired').value">
+            <div class="form-group col-md-6">
+                <label class="label-control" for="Tasks">Tasks List<span class="star">*</span></label>
+                <p-dropdown [style]="{'width':'70%'}" [options]="taskList" placeholder="Select Task" optionLabel="taskName" (onChange)="onChangeTaskList($event)">
+                </p-dropdown>
+            </div>
+<!-- 
+            <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Attributes List<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="selectedTask_attributesList" placeholder="Select Task" optionLabel="metaAttrValue" (onChange)="onChangeAttributesList($event)" formControlName="attribute">
+              </p-dropdown>
+            </div> -->
+            <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Attributes List<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="selectedTask_attributesList" placeholder="Select Task" optionLabel="metaAttrValue" formControlName="attribute">
+                  <ng-template let-option pTemplate="item">
+                      <div [pTooltip]="option.metaAttrValue" tooltipPosition="top">
+                          {{option.attrValue}}
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+          </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Input Type<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="inputTypes" placeholder="Select Type" optionLabel="field" optionValue="value" formControlName="attributeType"></p-dropdown>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="attributeOrder">Attribute Order<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="attributeOrder" [style]="{'width':'100%'}" formControlName="attributeOrder" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="attributeLabelName">Attribute Label Name<span class="star">*</span></label>
+              <input type="text" id="attributeLabelName" pInputText (keypress)="lettersOnly_1($event)" formControlName="attributeLabelName" class="form-control"
+                placeholder="Enter Attribute Label Name" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="attributePlaceholder">Attribute Placeholder<span class="star">*</span></label>
+              <input type="text" id="attributePlaceholder" pInputText (keypress)="lettersOnly_1($event)" formControlName="attributePlaceholder" class="form-control"
+                placeholder="Enter Attribute Placeholder" required>
+            </div>
+            
+
+            <div class="form-group col-md-4">
+              <p-checkbox [binary]="true" inputId="binary" label="Mandatory" formControlName="isAttrubuteMandatory"></p-checkbox>
+            </div>
+            <div class="form-group col-md-4">
+              <p-checkbox [binary]="true" inputId="binary" label="Visibility" formControlName="isVisible"></p-checkbox>
+            </div>
+            <div class="form-group col-md-4">
+            <p-checkbox [binary]="true" inputId="binary" label="Duplicate" formControlName="isDuplicate"></p-checkbox>
+            </div>
+
+            <div class="form-group col-md-6" *ngIf="predefinedAttributesForm.get('attributeType').value == 'text'|| predefinedAttributesForm.get('attributeType').value == 'textarea'">
+              <label class="label-control" for="minLength">Min Length<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="minLength" [style]="{'width':'100%'}" formControlName="minLength" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6" *ngIf="predefinedAttributesForm.get('attributeType').value == 'text'|| predefinedAttributesForm.get('attributeType').value == 'textarea'">
+              <label class="label-control" for="maxLength">Max Length<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="maxLength" [style]="{'width':'100%'}" formControlName="maxLength" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <!-- <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value == 'dropdown'">
+              <label class="label-control" for="attribute_options">Options<span class="star">*</span></label>
+
+              <textarea rows="5" cols="20" id="attribute_options" pInputTextarea 
+                        autoResize="autoResize" placeholder=""
+                        formControlName="attribute_options">
+              </textarea>
+            </div> -->
+
+            <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value === 'dropdown'">
+              <label class="label-control" for="attribute_options">Options<span class="star">*</span></label>
+              <div formArrayName="attribute_options">
+                <div *ngFor="let option of attributeOptions.controls; let i = index" [formGroupName]="i" class="form-group row">
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Enter Field Name" formControlName="label">
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Enter Value" formControlName="value">
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-danger" (click)="removeOption(i)">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" (click)="addOption()">Add Option</button>
+            </div>
+            
+
+
+
+            <div class="form-group col-md-12">
+              <button type="button" class="btn btn-primary pull-right" (click)="addAttributesData()">Add</button>
+            </div>
+          </ng-container>
+        </form>
+
+        <div *ngIf="newAttributes_list.length>0" class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Predefined Bot Id</th>
+                <!-- <th>Product Id</th> -->
+                <th>Pre Attribute Type</th>
+                <th>Min Number - Max Number</th>
+                <!-- <th>Max Number</th> -->
+                <th>Pre Attribute Name</th>
+                <th>Pre Attribute Label</th>
+                <th>Placeholder</th>
+                <th>Is Attribute Required</th>
+                <th>Is Visibility</th>
+                <th>Is Duplicate</th>
+                <th>Attribute Order</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let attribute of newAttributes_list; let i = index">
+                <td>{{ attribute.predefinedBotId }}</td>
+                <!-- <td>{{ attribute.productId }}</td> -->
+                <td>{{ attribute.preAttributeType }}</td>
+                <td>{{ attribute.minNumber }} - {{ attribute.maxNumber }}</td>
+                <!-- <td>{{ attribute.maxNumber }}</td> -->
+                <td>{{ attribute.preAttributeName }}</td>
+                <td>{{ attribute.preAttributeLable }}</td>
+                <td>{{ attribute.placeholder }}</td>
+                <td>{{ attribute.attributeRequired }}</td>
+                <td>{{ attribute.visibility }}</td>
+                <td>{{ attribute.duplicate }}</td>
+                <td>{{ attribute.attributeOrderBy }}</td>
+                <td>
+                  <!-- <button (click)="editAttribute(i)">Edit</button> -->
+                  <button class="btn btn-primary" (click)="deleteAttribute(i)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
       </div>
     </div>
   </app-split-overlay>
