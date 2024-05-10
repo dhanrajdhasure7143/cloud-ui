@@ -17,8 +17,8 @@ export class PredefinedBotsTemplateComponent implements OnInit {
   templateList: any = [];
   enterPriseList1: any = [];
   isDisplayOverlay: boolean = false;
-  userData: any = {};
   predefinedTemplateForm: FormGroup
+  predefinedAttributesForm: FormGroup
   columnList = [
     { DisplayName: "Bot ID", ColumnName: "botId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Predefined Bot Name", ColumnName: "botName", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
@@ -34,6 +34,18 @@ export class PredefinedBotsTemplateComponent implements OnInit {
   searchValue: any;
   taskList:any=[];
   rpaBotData:any={}
+  radioOptions=[{}];
+  selectedTask_attributesList:any=[];
+  isShowTasksEdit:boolean = false;
+  inputTypes:any[]=[];
+  selectedTask:any={};
+  newAttributes_list:any[]=[];
+  isShowSequenceEdit:boolean = false
+  isShowstartStopCoordinateEdit:boolean = false;
+  rpa_botId:any;
+  isDisplay:boolean = false;
+  predefinedBotsList:any[]=[];
+
 
   constructor(private rest_api: UsermanagementService,
     private spinner: NgxSpinnerService,
@@ -46,14 +58,36 @@ export class PredefinedBotsTemplateComponent implements OnInit {
     // this.spinner.hide();
 
     this.predefinedTemplateForm=this.fb.group({
-      botId : ['', Validators.required],
+      // botId : ['', Validators.required],
       predefinedBotName : ['', Validators.required],
+      predefinedBotType : ['', Validators.required],
       task_list : ['', Validators.required],
       task_sequence : ['', Validators.required],
       task_startStopCoordinate : ['', Validators.required],
       executionOrder : ['', Validators.required],  
       predefinedBotId : ['', Validators.required],  
     });
+    this.predefinedAttributesForm=this.fb.group({
+        isAttributesRequired : [false], 
+        attributeLabelName : ['', Validators.required], 
+        attributePlaceholder : ['', Validators.required], 
+        attributeOrder : ['', Validators.required], 
+        attributeType : ['', Validators.required], 
+        attribute_options : [''],
+        attribute : [''], 
+        isAttrubuteMandatory : [true], 
+        isVisible : [true],
+        isDuplicate : [false],
+        minLength : [10],
+        maxLength : [1000],
+    });
+    this.inputTypes =[
+      {field:"Text",value:"text"},
+      {field:"Drop Down",value:"dropdown"},
+      {field:"Text Area",value:"textarea"},
+      {field:"File",value:"file"},
+      {field:"Radio Button",value:"radio"},
+    ]
   }
 
   getTemplateList() {
@@ -75,7 +109,8 @@ export class PredefinedBotsTemplateComponent implements OnInit {
   openOverlay(type, rowData) {
     this.isDisplayOverlay = true;
     console.log(rowData, "rowData")
-    this.userData = rowData
+    this.isDisplay = false;
+    this.getAllPredefinedBots();
   }
 
   closeOverlay(event) {
@@ -97,6 +132,19 @@ export class PredefinedBotsTemplateComponent implements OnInit {
 
   lettersOnly(event): boolean {
     
+    var regex = new RegExp("^[a-zA-Z]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+      if ((event.target.selectionStart === 0 && event.code === 'Space')){
+        event.preventDefault();
+      }
+  }
+
+  lettersOnly_1(event): boolean {
+    
     var regex = new RegExp("^[a-zA-Z ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
       if (!regex.test(key)) {
@@ -110,8 +158,9 @@ export class PredefinedBotsTemplateComponent implements OnInit {
 
   getBotData(){
     this.spinner.show();
-    this.rest_api.getRpaBotData(this.predefinedTemplateForm.get("botId").value).subscribe(res=>{
+    this.rest_api.getRpaBotData(this.rpa_botId).subscribe(res=>{
       console.log(res)
+      this.isDisplay = true;
       this.spinner.hide();
       this.rpaBotData = res
       this.taskList = this.rpaBotData.tasks
@@ -166,6 +215,74 @@ this.spinner.show()
 
     })
 
+  }
+
+  onChangeAttributesRequired(){
+    console.log(this.predefinedAttributesForm.get("isAttributesRequired").value)
+    this.selectedTask_attributesList = [];
+    this.selectedTask_attributesList = [];
+    this.newAttributes_list=[]
+    this.selectedTask={};
+    // this.resetFields();
+  }
+
+  onChangeTaskList(event){
+    console.log(event)
+    this.selectedTask = event.value
+    this.selectedTask_attributesList = event.value.attributes
+  }
+
+  onChangeAttributesList(event){
+    console.log(event)
+  }
+
+  onEditTaskList(){
+    this.isShowTasksEdit = !this.isShowTasksEdit;
+  }
+
+  addAttributesData(){
+    console.log("selectedattribute",this.predefinedAttributesForm.get('attribute').value)
+    let obj = {
+      "preAttributeName":this.predefinedTemplateForm.get('predefinedBotName').value+"_"+this.selectedTask.botTId+"_"+this.selectedTask.taskName+"_"+this.predefinedAttributesForm.get('attribute').value.metaAttrValue,
+      "predefinedBotId":this.predefinedTemplateForm.get("predefinedBotId").value,
+      "productId":this.predefinedTemplateForm.get('predefinedBotType').value.productId,
+      "preAttributeType":this.predefinedAttributesForm.get('attributeType').value,
+      "minNumber":this.predefinedAttributesForm.get('minLength').value,
+      "maxNumber":this.predefinedAttributesForm.get('maxLength').value,
+      "preAttributeLabel":this.predefinedAttributesForm.get('attributeLabelName').value,
+      "placeholder":this.predefinedAttributesForm.get('attributePlaceholder').value,
+      "isAttributeRequired":this.predefinedAttributesForm.get('isAttrubuteMandatory').value,
+      "isVisibility":this.predefinedAttributesForm.get('isVisible').value,
+      "attributeOrderBy":this.predefinedAttributesForm.get('attributeOrder').value,
+      "isDuplicate":this.predefinedAttributesForm.get('isDuplicate').value,
+      "options":this.predefinedAttributesForm.get('attribute_options').value,
+    }
+    console.log(this.predefinedAttributesForm.value)
+    console.log("Object",obj);
+    this.predefinedAttributesForm
+    this.newAttributes_list.push(obj)
+    this.resetFields();
+  }
+
+  deleteAttribute(index: number) {
+    // Implement delete logic here
+    this.newAttributes_list.splice(index, 1);
+  }
+
+  resetFields(){
+    this.predefinedAttributesForm.get('attributeType').reset()
+    this.predefinedAttributesForm.get('minLength').reset()
+    this.predefinedAttributesForm.get('maxLength').reset()
+    this.predefinedAttributesForm.get('attributeLabelName').reset()
+    this.predefinedAttributesForm.get('attributeOrder').reset()
+    this.predefinedAttributesForm.get('attributePlaceholder').reset()
+    this.predefinedAttributesForm.get('attribute_options').reset()
+  }
+
+  getAllPredefinedBots(){
+    this.rest_api.getAllPredefinedBotsList().subscribe((res:any)=>{
+        this.predefinedBotsList = res.data
+    })
   }
 
   
