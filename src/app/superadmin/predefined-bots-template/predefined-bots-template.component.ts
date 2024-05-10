@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
@@ -20,15 +20,15 @@ export class PredefinedBotsTemplateComponent implements OnInit {
   predefinedTemplateForm: FormGroup
   predefinedAttributesForm: FormGroup
   columnList = [
-    { DisplayName: "Bot ID", ColumnName: "botId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    // { DisplayName: "Bot ID", ColumnName: "botId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Predefined Bot Name", ColumnName: "botName", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Execution Order Id", ColumnName: "execution_order_id", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Bot Type", ColumnName: "botType", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
-    { DisplayName: "Bot Version", ColumnName: "version", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
-    { DisplayName: "Environment Id", ColumnName: "envId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
-    { DisplayName: "Created By", ColumnName: "createdBy", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    // { DisplayName: "Bot Version", ColumnName: "version", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    // { DisplayName: "Environment Id", ColumnName: "envId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    // { DisplayName: "Created By", ColumnName: "createdBy", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Created At", ColumnName: "createdAt", ShowFilter: true, sort: true, filterType: 'date', showTooltip: false },
-    { DisplayName: "Updated On", ColumnName: "updatedAt", ShowFilter: true, sort: true, filterType: 'date', showTooltip: false },
+    // { DisplayName: "Updated On", ColumnName: "updatedAt", ShowFilter: true, sort: true, filterType: 'date', showTooltip: false },
   ];
   search_fields = ['botId', 'botName', 'botType', 'createdBy', 'status', 'createdDate','version'];
   searchValue: any;
@@ -73,7 +73,8 @@ export class PredefinedBotsTemplateComponent implements OnInit {
         attributePlaceholder : ['', Validators.required], 
         attributeOrder : ['', Validators.required], 
         attributeType : ['', Validators.required], 
-        attribute_options : [''],
+        // attribute_options : [''],
+        attribute_options: this.fb.array([]),
         attribute : [''], 
         isAttrubuteMandatory : [true], 
         isVisible : [true],
@@ -88,6 +89,21 @@ export class PredefinedBotsTemplateComponent implements OnInit {
       {field:"File",value:"file"},
       {field:"Radio Button",value:"radio"},
     ]
+  }
+
+  get attributeOptions(): FormArray {
+    return this.predefinedAttributesForm.get('attribute_options') as FormArray;
+  }
+
+  addOption(): void {
+    this.attributeOptions.push(this.fb.group({
+      label: '',
+      value: ''
+    }));
+  }
+
+  removeOption(index: number): void {
+    this.attributeOptions.removeAt(index);
   }
 
   getTemplateList() {
@@ -205,7 +221,11 @@ this.spinner.show()
 
     this.rest_api.savePredefinedTemplate(req_body).subscribe(res=>{
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
-      console.log(res)
+      let reqObject = {"attributesList":this.newAttributes_list}
+      this.rest_api.savePredefinedAttributes(reqObject).subscribe(res=>{
+        console.log(res)
+        console.log("attributesResponse",res)
+      })
       this.spinner.hide();
       this.isDisplayOverlay = false;
       this.predefinedTemplateForm.reset();
@@ -249,12 +269,12 @@ this.spinner.show()
       "preAttributeType":this.predefinedAttributesForm.get('attributeType').value,
       "minNumber":this.predefinedAttributesForm.get('minLength').value,
       "maxNumber":this.predefinedAttributesForm.get('maxLength').value,
-      "preAttributeLabel":this.predefinedAttributesForm.get('attributeLabelName').value,
+      "preAttributeLable":this.predefinedAttributesForm.get('attributeLabelName').value,
       "placeholder":this.predefinedAttributesForm.get('attributePlaceholder').value,
-      "isAttributeRequired":this.predefinedAttributesForm.get('isAttrubuteMandatory').value,
-      "isVisibility":this.predefinedAttributesForm.get('isVisible').value,
+      "attributeRequired":this.predefinedAttributesForm.get('isAttrubuteMandatory').value,
+      "visibility":this.predefinedAttributesForm.get('isVisible').value,
       "attributeOrderBy":this.predefinedAttributesForm.get('attributeOrder').value,
-      "isDuplicate":this.predefinedAttributesForm.get('isDuplicate').value,
+      "duplicate":this.predefinedAttributesForm.get('isDuplicate').value,
       "options":this.predefinedAttributesForm.get('attribute_options').value,
     }
     console.log(this.predefinedAttributesForm.value)
@@ -285,5 +305,4 @@ this.spinner.show()
     })
   }
 
-  
 }

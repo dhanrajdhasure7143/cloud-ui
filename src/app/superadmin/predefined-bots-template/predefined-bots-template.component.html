@@ -191,12 +191,22 @@
                 <p-dropdown [style]="{'width':'70%'}" [options]="taskList" placeholder="Select Task" optionLabel="taskName" (onChange)="onChangeTaskList($event)">
                 </p-dropdown>
             </div>
-
+<!-- 
             <div class="form-group col-md-6">
               <label class="label-control" for="Tasks">Attributes List<span class="star">*</span></label>
               <p-dropdown [style]="{'width':'70%'}" [options]="selectedTask_attributesList" placeholder="Select Task" optionLabel="metaAttrValue" (onChange)="onChangeAttributesList($event)" formControlName="attribute">
               </p-dropdown>
-            </div>
+            </div> -->
+            <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Attributes List<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="selectedTask_attributesList" placeholder="Select Task" optionLabel="metaAttrValue" formControlName="attribute">
+                  <ng-template let-option pTemplate="item">
+                      <div [pTooltip]="option.metaAttrValue" tooltipPosition="top">
+                          {{option.attrValue}}
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+          </div>
 
             <div class="form-group col-md-6">
               <label class="label-control" for="Tasks">Input Type<span class="star">*</span></label>
@@ -250,13 +260,33 @@
               </div>
             </div>
 
-            <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value == 'dropdown'">
+            <!-- <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value == 'dropdown'">
               <label class="label-control" for="attribute_options">Options<span class="star">*</span></label>
+
               <textarea rows="5" cols="20" id="attribute_options" pInputTextarea 
                         autoResize="autoResize" placeholder=""
                         formControlName="attribute_options">
               </textarea>
+            </div> -->
+
+            <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value === 'dropdown'">
+              <label class="label-control" for="attribute_options">Options<span class="star">*</span></label>
+              <div formArrayName="attribute_options">
+                <div *ngFor="let option of attributeOptions.controls; let i = index" [formGroupName]="i" class="form-group row">
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Enter Field Name" formControlName="label">
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Enter Value" formControlName="value">
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-danger" (click)="removeOption(i)">Remove</button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" (click)="addOption()">Add Option</button>
             </div>
+            
 
 
 
@@ -293,11 +323,11 @@
                 <td>{{ attribute.minNumber }} - {{ attribute.maxNumber }}</td>
                 <!-- <td>{{ attribute.maxNumber }}</td> -->
                 <td>{{ attribute.preAttributeName }}</td>
-                <td>{{ attribute.preAttributeLabel }}</td>
+                <td>{{ attribute.preAttributeLable }}</td>
                 <td>{{ attribute.placeholder }}</td>
-                <td>{{ attribute.isAttributeRequired }}</td>
-                <td>{{ attribute.isVisibility }}</td>
-                <td>{{ attribute.isDuplicate }}</td>
+                <td>{{ attribute.attributeRequired }}</td>
+                <td>{{ attribute.visibility }}</td>
+                <td>{{ attribute.duplicate }}</td>
                 <td>{{ attribute.attributeOrderBy }}</td>
                 <td>
                   <!-- <button (click)="editAttribute(i)">Edit</button> -->

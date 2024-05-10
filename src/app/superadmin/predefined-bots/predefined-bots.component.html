@@ -4,7 +4,7 @@
     <p-tabPanel header="PB Templates">
       <ng-template pTemplate="header">
         <i class="pi pi-users" style="font-size: 1rem;  margin-right: 5px;"></i>
-        <span class="titlelabel">Predefined Bot Templates</span>
+        <span class="titlelabel">Bot Templates</span>
       </ng-template>
       <div *ngIf="check_tab == 0" class="enterprise-layout">
         <app-predefined-bots-template></app-predefined-bots-template>
@@ -13,7 +13,7 @@
     <p-tabPanel header="PB VM-Host">
       <ng-template pTemplate="header">
         <i class="pi pi-desktop" style="font-size: 1rem; margin-right: 5px;"></i>
-        <span class="titlelabel">Predefined Bot VM-Host</span>
+        <span class="titlelabel">VM Configuration</span>
       </ng-template>
       <div *ngIf="check_tab == 1" class="enterprise-layout">
         <app-vm-configuration-list></app-vm-configuration-list>
