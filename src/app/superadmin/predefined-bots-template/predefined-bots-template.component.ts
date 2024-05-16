@@ -305,4 +305,8 @@ this.spinner.show()
     })
   }
 
+  onCancel(){
+    this.isDisplayOverlay=!this.isDisplayOverlay;
+  }
+
 }
