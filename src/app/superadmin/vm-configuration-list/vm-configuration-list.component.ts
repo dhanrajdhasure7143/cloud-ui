@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { MessageService } from 'primeng/api';
+import { CryptoService } from 'src/app/_services/crypto.service';
 
 
 @Component({
@@ -61,7 +62,7 @@ export class VmConfigurationListComponent implements OnInit {
     portNumber: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
   });
 
-  constructor(private rest_api: UsermanagementService,
+  constructor(private rest_api: UsermanagementService,private crypto:CryptoService,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private messageService: MessageService
@@ -115,9 +116,11 @@ export class VmConfigurationListComponent implements OnInit {
   }
 
   saveVMData(): void {
+    const selectedEnvironmentType = this.vmForm.get('environmentType').value;
     const requestData = {
       ...this.vmForm.value,
-      ...{
+        password:  this.crypto.encrypt(this.vmForm.get("password").value,),// this.vmForm.get("password").value,
+        environmentType: selectedEnvironmentType.value,
         activeStatus: 1,
         categoryId: 0,
         createdAt: new Date().toISOString(),
@@ -127,7 +130,6 @@ export class VmConfigurationListComponent implements OnInit {
         modifiedBy: "admin",
         status: "open",
         tenantId: null
-      }
     };
 
     this.spinner.show();
@@ -204,7 +206,7 @@ export class VmConfigurationListComponent implements OnInit {
       hostAddress: data.hostAddress,
       portNumber: data.portNumber,
       username: data.username,
-      password: data.password,
+      password: this.crypto.decrypt(data.password),
       connectionType: data.connectionType
     });
     this.isDisplayOverlay=true;
