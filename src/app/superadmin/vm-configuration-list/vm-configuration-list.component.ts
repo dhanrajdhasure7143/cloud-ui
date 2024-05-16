@@ -119,7 +119,7 @@ export class VmConfigurationListComponent implements OnInit {
     const selectedEnvironmentType = this.vmForm.get('environmentType').value;
     const requestData = {
       ...this.vmForm.value,
-        password:  this.crypto.encrypt(this.vmForm.get("password").value,),// this.vmForm.get("password").value,
+        password:  this.crypto.encrypt(this.vmForm.get("password").value),
         environmentType: selectedEnvironmentType.value,
         activeStatus: 1,
         categoryId: 0,
@@ -231,6 +231,7 @@ export class VmConfigurationListComponent implements OnInit {
     const requestData = {
       ...this.vmForm.value,
       ...{
+        password:  this.crypto.encrypt(this.vmForm.get("password").value),
         id: this.predBotData.id,
         status:this.predBotData.status
       }
