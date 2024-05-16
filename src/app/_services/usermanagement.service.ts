@@ -104,6 +104,14 @@ export class UsermanagementService implements OnInit {
     return this.http.post("/rpa-service/predefined/save-predefinedBot-template",body)
   }
 
+  updatePredefinedBotsVMHost(req){
+    return this.http.put('/rpa-service/predefined/update-predefinedBot-VM-hosts',req)
+  }
+
+  deletePredefinedBotsVMHost(id){
+    let empBody={}
+    return this.http.post(`/rpa-service/predefined/delete-predefinedBot-VM-hosts/${id}`,empBody)
+  }
   getAllPredefinedBotsList(){
     return this.http.get("/rpa-service/predefined/getAll-predefined-bots")
   }

@@ -78,18 +78,18 @@
         <h3>Predefined Bots</h3>
       </div>
       <div class="createform-overlay">
-        <div class="col-12 row">
-          <div class="form-group col-md-6">
+        <!-- <div class="col-12"> -->
+          <div class="form-group col-md-12">
             <label class="label-control" for="botId">RPA Bot Id<span class="star">*</span></label>
             <input type="text" id="botId" pInputText [(ngModel)]="rpa_botId" class="form-control"
               placeholder="Enter Bot Id" required>
-          </div>
+          <!-- </div> -->
 
-          <div class="form-group col-md-4">
+          <!-- <div class="form-group col-md-4"> -->
             <label class="label-control"></label>
-            <button class="btn btn-primary pull-right" type="button" (click)="getBotData()">Submit for RPA Bot</button>
+            <button class="btn btn-primary mt-2" type="button" (click)="getBotData()">Submit for RPA Bot</button>
           </div>
-        </div>
+        <!-- </div> -->
         <form [formGroup]="predefinedTemplateForm" (ngSubmit)="savePredefinedTemplateData()" class="col-12 tenant-form" *ngIf="isDisplay">
           <div class="row form-details">
             <div class="form-group col-md-6">
@@ -108,16 +108,16 @@
             <div class="form-group col-md-6">
               <label class="label-control" for="executionOrder">Execution Order<span class="star">*</span></label>
               <div>
-                <p-inputNumber id="executionOrder" [style]="{'width':'100%'}" formControlName="executionOrder" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
-                </p-inputNumber>
+                <input id="executionOrder" pInputText [style]="{'width':'100%'}" formControlName="executionOrder" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                <!-- </input> -->
               </div>
             </div>
 
             <div class="form-group col-md-6">
               <label class="label-control" for="predefinedBotId">Predefined Bot Id<span class="star">*</span></label>
               <div>
-                <p-inputNumber id="predefinedBotId" [style]="{'width':'100%'}" formControlName="predefinedBotId" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
-                </p-inputNumber>
+                <input id="predefinedBotId" pInputText [style]="{'width':'100%'}" formControlName="predefinedBotId" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                <!-- </input> -->
               </div>
             </div>
 
@@ -129,7 +129,7 @@
               <label class="label-control" for="task_list">Tasks List<span class="star">*</span></label>
               <input type="text" id="task_list" pInputText formControlName="task_list" class="form-control"
               placeholder="Enter Predfined Bot Name" disabled required>
-              <button class="btn btn-primary" (click)="onEditTaskList()">Edit</button>
+              <button class="btn btn-primary mt-2" (click)="onEditTaskList()">Edit</button>
             </div>
 
             <div class="form-group col-md-12" *ngIf="isShowTasksEdit">
@@ -143,7 +143,7 @@
               <label class="label-control" for="task_sequence">Tasks Sequence<span class="star">*</span></label>
               <input type="text" id="task_sequence" pInputText formControlName="task_sequence" class="form-control"
               placeholder="Tasks Sequence" disabled required>
-              <button class="btn btn-primary" (click)="isShowSequenceEdit = !isShowSequenceEdit">Edit</button>
+              <button class="btn btn-primary mt-2" (click)="isShowSequenceEdit = !isShowSequenceEdit">Edit</button>
             </div>
 
             <div class="form-group col-md-12" *ngIf="isShowSequenceEdit">
@@ -156,7 +156,7 @@
               <label class="label-control" for="task_startStopCoordinate">Tasks Stop and Start Cordinates<span class="star">*</span></label>
               <input type="text" id="task_startStopCoordinate" pInputText formControlName="task_startStopCoordinate" class="form-control"
               placeholder="Tasks Stop and Start Cordinates" disabled required>
-              <button class="btn btn-primary" (click)="isShowstartStopCoordinateEdit = !isShowstartStopCoordinateEdit">Edit</button>
+              <button class="btn btn-primary mt-2" (click)="isShowstartStopCoordinateEdit = !isShowstartStopCoordinateEdit">Edit</button>
             </div>
 
             <div class="form-group col-md-12" *ngIf="isShowstartStopCoordinateEdit">

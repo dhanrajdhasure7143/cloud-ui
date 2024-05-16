@@ -4,6 +4,8 @@ import { Table } from 'primeng/table';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
+import Swal from 'sweetalert2';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -30,7 +32,8 @@ export class VmConfigurationListComponent implements OnInit {
     // { DisplayName: "Created At", ColumnName: "createdAt", ShowFilter: true, sort: true, filterType: 'date', showTooltip: false },
     // { DisplayName: "Modified By", ColumnName: "modifiedBy", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     // { DisplayName: "Modified At", ColumnName: "modifiedAt", ShowFilter: true, sort: true, filterType: 'date', showTooltip: false },
-    { DisplayName: "Status", ColumnName: "status", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false }
+    { DisplayName: "Status", ColumnName: "status", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    { DisplayName: "Action", ColumnName: "action" }
   ];
   search_fields = ['environmentName', 'hostAddress', 'username', 'password', 'status', 'createdDate','id','environmentType','portNumber','connectionType','agentPath','tenantId'];
   searchValue: any;
@@ -44,6 +47,8 @@ export class VmConfigurationListComponent implements OnInit {
     { label: 'Linux', value: 'Linux' },
     { label: 'Mac', value: 'Mac' }
   ];
+  mode: 'Create' | 'Update' = 'Create'; 
+  predBotData:any;
 
   vmForm: FormGroup=this.formBuilder.group({
     environmentName: ['', Validators.required],
@@ -58,7 +63,8 @@ export class VmConfigurationListComponent implements OnInit {
 
   constructor(private rest_api: UsermanagementService,
     private spinner: NgxSpinnerService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -91,6 +97,8 @@ export class VmConfigurationListComponent implements OnInit {
 
   closeOverlay(event) {
     this.isDisplayOverlay = false;
+    this.resetForm();
+    this.mode="Create"
   }
 
   readValue(event) {
@@ -104,12 +112,6 @@ export class VmConfigurationListComponent implements OnInit {
     table.clear();
     table.filterGlobal("", "");
     this.searchValue = ''
-  }
-
-  onSubmit() {
-    if (this.vmForm.valid) {
-      console.log('Form data: ',this.vmForm.value);
-    }
   }
 
   saveVMData(): void {
@@ -136,9 +138,11 @@ export class VmConfigurationListComponent implements OnInit {
         this.isDisplayOverlay = false;
         this.getVmList();
         this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'VM Created Succesfully' });
+
       },
       error: (error) => {
-        console.error('Error:', error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create VM.' });
         this.spinner.hide();
       }
     });
@@ -154,4 +158,104 @@ export class VmConfigurationListComponent implements OnInit {
     this.resetForm();
     this.isDisplayOverlay =false;
   }
+
+  deletePredefinedBotsVMHost(id){
+    if (id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to Delete ?',
+        icon: 'warning',
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+      const reqBody = {
+        "id":id
+      };
+      this.spinner.show();
+      this.rest_api.deletePredefinedBotsVMHost(id).subscribe({
+        next: (response) => {
+          this.getVmList();
+          this.spinner.hide();
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'VM Deleted Succesfully' });
+
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete' });
+          this.spinner.hide();
+        }
+      });
+    }
+  });
+    }
+    else{
+      console.error('API Error');
+    }
+  }
+
+  prepareUpdateForm(data: any): void {
+    this.mode = 'Update';
+    this.predBotData=data;
+    this.vmForm.patchValue({
+      environmentName: data.environmentName,
+      environmentType: data.environmentType,
+      agentPath: data.agentPath,
+      hostAddress: data.hostAddress,
+      portNumber: data.portNumber,
+      username: data.username,
+      password: data.password,
+      connectionType: data.connectionType
+    });
+    this.isDisplayOverlay=true;
+  }
+
+  onSubmit() {
+    if (this.vmForm.valid) {
+
+      console.log('Form data: ', this.vmForm.value);
+      if (this.mode === 'Update') {
+        this.updateVmData();
+        this.mode="Create"
+      } else {
+        this.saveVMData();
+      }
+    } else {
+      console.error('Form is invalid');
+    }
+  }
+
+  updateVmData() {
+    const requestData = {
+      ...this.vmForm.value,
+      ...{
+        id: this.predBotData.id,
+        status:this.predBotData.status
+      }
+    };
+
+    this.spinner.show();
+    this.rest_api.updatePredefinedBotsVMHost(requestData).subscribe({
+      next: (response) => {
+        this.isDisplayOverlay = false;
+        this.getVmList();
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Details Updated Succesfully' });
+
+        this.resetForm();
+        
+      },
+      error: (error) => {
+        console.error('Update error:', error);
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update details.' });
+
+      }
+    });
+  }
+
+  onEnvironmentChange(value: string) {
+    this.vmForm.get('environmentType').setValue(value);
+  }
+
 }

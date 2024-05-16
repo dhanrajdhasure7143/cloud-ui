@@ -57,7 +57,7 @@
                 </span>
 
                 <span
-                  *ngIf="col.ColumnName !== 'createdAt' && col.ColumnName !== 'modifiedAt' && col.ColumnName !== 'password'">
+                  *ngIf="col.ColumnName !== 'createdAt' && col.ColumnName!=='action' && col.ColumnName !== 'modifiedAt' && col.ColumnName !== 'password'">
                   {{ rowData[col.ColumnName] || '-' }}
                 </span>
 
@@ -66,10 +66,13 @@
                 </span>
 
                 <span *ngIf="col.ColumnName=='action'" class="actionmenu">
-                  <a (click)="openOverlay('update',rowData)" pTooltip="Edit" tooltipPosition="top">
-                    <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
-                    <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                  <a (click)="deletePredefinedBotsVMHost(rowData.id)" pTooltip="Delete" tooltipPosition="top">
+                    <img src="../../../assets/a_images/delete-default.svg" alt="Edit" class="testplus default-icon">
+                    <!-- <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon"> -->
                   </a>
+                  <a (click)="prepareUpdateForm(rowData)" pTooltip="Update" tooltipPosition="top">
+                    <img src="../../../assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
+                </a>
                 </span>
               </td>
             </tr>
@@ -88,88 +91,6 @@
   </div>
 </div>
 
-<!-- <div *ngIf="isDisplayOverlay">
-  <app-split-overlay (closeOverlay)="closeOverlay($event)">
-    <div class="h-100">
-      <div class="create-header">
-        <h3>Configure VM</h3>
-      </div>
-
-      <div>
-        <form [formGroup]="vmForm" (ngSubmit)="onSubmit()">
-          <div>
-            <label for="environmentName">Environment Name:</label>
-            <input type="text" id="environmentName" formControlName="environmentName">
-          </div>
-  
-          <div>
-            <label for="environmentType">Environment Type:</label>
-            <input type="text" id="environmentType" formControlName="environmentType">
-          </div>
-  
-          <div>
-            <label for="agentPath">Agent Path:</label>
-            <input type="text" id="agentPath" formControlName="agentPath">
-          </div>
-  
-          <div>
-            <label for="hostAddress">Host Address:</label>
-            <input type="text" id="hostAddress" formControlName="hostAddress">
-          </div>
-  
-          <div>
-            <label for="categoryId">Category ID:</label>
-            <input type="number" id="categoryId" formControlName="categoryId">
-          </div>
-  
-          <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" formControlName="username">
-          </div>
-  
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" formControlName="password">
-          </div>
-  
-          <div>
-            <label for="connectionType">Connection Type:</label>
-            <input type="text" id="connectionType" formControlName="connectionType">
-          </div>
-  
-          <div>
-            <label for="portNumber">Port Number:</label>
-            <input type="number" id="portNumber" formControlName="portNumber">
-          </div>
-  
-          <div>
-            <label for="activeStatus">Active Status:</label>
-            <select id="activeStatus" formControlName="activeStatus">
-              <option value="1">Active</option>
-              <option value="0">Inactive</option>
-            </select>
-          </div>
-  
-          <div>
-            <label for="tenantId">Tenant ID:</label>
-            <input type="text" id="tenantId" formControlName="tenantId">
-          </div>
-  
-          <div>
-            <label for="status">Status:</label>
-            <input type="text" id="status" formControlName="status">
-          </div>
-  
-          <div>
-            <button type="button" (click)="onCancel()">Cancel</button>
-            <button type="submit" [disabled]="!vmForm.valid">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </app-split-overlay>
-</div> -->
-
 <div *ngIf="isDisplayOverlay">
   <app-split-overlay (closeOverlay)="closeOverlay($event)">
     <div class="h-100">
@@ -177,7 +98,7 @@
         <h3>Configure VM</h3>
       </div>
       <div class="createform-overlay">
-        <form [formGroup]="vmForm" (ngSubmit)="saveVMData()" class="col-12 tenant-form">
+        <form [formGroup]="vmForm" class="col-12 tenant-form">
           <div class="row form-details">
             <!-- Environment Name -->
             <div class="form-group col-md-12">
@@ -190,40 +111,22 @@
               </div>
             </div>
 
-            <!-- Environment Type -->
-            <!-- <div class="form-group col-md-6">
-              <label class="label-control"  for="environmentType">Environment Type<span class="star">*</span></label>
-              <select id="environmentType" formControlName="environmentType" class="form-control" required>
-                <option value="">Select Environment Type</option>
-                <option value="Windows">Windows</option>
-                <option value="Mac">Mac</option>
-                <option value="Linux">Linux</option>
-              </select>
+            <div class="form-group col-md-12">
+              <label class="label-control" for="environmentType">Environment Type<span class="star">*</span></label>
+              <p-dropdown [ngModel]="vmForm.get('environmentType').value" [options]="environmentOptions"
+                (onChange)="onEnvironmentChange($event.value)" optionLabel="label" optionValue="value"
+                placeholder="Select Environment Type">
+              </p-dropdown>
+              <!-- <p-dropdown [options]="environmentOptions"
+                  formControlName="environmentType"
+                  (onChange)="onEnvironmentChange($event.value)"
+                  optionLabel="label"
+                  placeholder="Select Environment Type"
+                  >
+              </p-dropdown> -->
               <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched"
                 class="required">
                 Environment Type is required.
-              </div>
-            </div> -->
-
-            <!-- Environment Type -->
-            <!-- <div class="form-group col-md-12">
-              <label class="label-control" for="environmentType">Environment Type<span class="star">*</span></label>
-              <input type="text" id="environmentType" pInputText formControlName="environmentType" class="form-control"
-                     placeholder="Enter Environment Type" required>
-              <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched"
-                   class="required">
-                  Environment Type is required.
-              </div>
-            </div> -->
-
-            <div class="form-group col-md-12">
-              <label class="label-control" for="environmentType">Environment Type<span class="star">*</span></label>
-              <p-dropdown [options]="environmentOptions" optionLabel="name" placeholder="Select Environment Type"
-                          formControlName="environmentType" inputId="environmentType" [showClear]="true" [filter]="true">
-              </p-dropdown>
-              <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched"
-                   class="required">
-                  Environment Type is required.
               </div>
             </div>
 
@@ -232,8 +135,7 @@
               <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
               <input type="text" id="agentPath" pInputText formControlName="agentPath" class="form-control"
                 placeholder="Enter Agent Path" required>
-              <div *ngIf="vmForm.get('agentPath').errors?.required && vmForm.get('agentPath').touched"
-                class="required">
+              <div *ngIf="vmForm.get('agentPath').errors?.required && vmForm.get('agentPath').touched" class="required">
                 Agent Path is required.
               </div>
             </div>
@@ -265,8 +167,7 @@
               <label class="label-control" for="username">Username<span class="star">*</span></label>
               <input type="text" id="username" pInputText formControlName="username" class="form-control"
                 placeholder="Enter Username" required>
-              <div *ngIf="vmForm.get('username').errors?.required && vmForm.get('username').touched"
-                class="required">
+              <div *ngIf="vmForm.get('username').errors?.required && vmForm.get('username').touched" class="required">
                 Username is required.
               </div>
             </div>
@@ -296,7 +197,9 @@
           </div>
           <div class="createform-footer">
             <button type="button" (click)="onCancel()" class="btn">Cancel</button>
-            <button type="submit" [disabled]="!vmForm.valid" class="btn btn-primary">Submit</button>
+            <button type="submit" [disabled]="!vmForm.valid" class="btn btn-primary" (click)="onSubmit()">
+              {{ mode === 'Create' ? 'Create' : 'Update' }}
+            </button>
           </div>
         </form>
       </div>
