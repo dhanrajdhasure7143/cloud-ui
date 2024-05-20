@@ -65,7 +65,7 @@ export class PredefinedBotsTemplateComponent implements OnInit {
       task_sequence : ['', Validators.required],
       task_startStopCoordinate : ['', Validators.required],
       executionOrder : ['', Validators.required],  
-      predefinedBotId : ['', Validators.required],  
+      // predefinedBotId : ['', Validators.required],  
     });
     this.predefinedAttributesForm=this.fb.group({
         isAttributesRequired : [false], 
@@ -207,7 +207,8 @@ this.spinner.show()
       "groups": JSON.stringify(this.rpaBotData.groups),
       "id": 0,
       "lastSubmittedBy": this.rpaBotData.lastSubmittedBy,
-      "predefinedBotId": this.predefinedTemplateForm.get("predefinedBotId").value,
+      // "predefinedBotId": this.predefinedTemplateForm.get("predefinedBotId").value,
+      "productId":this.predefinedTemplateForm.get('predefinedBotType').value.productId,
       "scheduler": this.rpaBotData.scheduler,
       "sequences": JSON.parse(this.predefinedTemplateForm.get("task_sequence").value),
       "startStopCoordinate": JSON.parse(this.predefinedTemplateForm.get("task_startStopCoordinate").value),
