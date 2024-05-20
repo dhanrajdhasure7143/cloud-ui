@@ -269,7 +269,7 @@ this.spinner.show()
     console.log("selectedattribute",this.predefinedAttributesForm.get('attribute').value)
     let obj = {
       "preAttributeName":this.predefinedTemplateForm.get('predefinedBotName').value+"_"+this.selectedTask.botTId+"_"+this.selectedTask.taskName+"_"+this.predefinedAttributesForm.get('attribute').value.metaAttrValue,
-      "predefinedBotId":this.predefinedTemplateForm.get("predefinedBotId").value,
+      // "predefinedBotId":this.predefinedTemplateForm.get("predefinedBotId").value,
       "productId":this.predefinedTemplateForm.get('predefinedBotType').value.productId,
       "preAttributeType":this.predefinedAttributesForm.get('attributeType').value,
       "minNumber":this.predefinedAttributesForm.get('minLength').value,
@@ -281,6 +281,7 @@ this.spinner.show()
       "attributeOrderBy":this.predefinedAttributesForm.get('attributeOrder').value,
       "duplicate":this.predefinedAttributesForm.get('isDuplicate').value,
       "options":this.predefinedAttributesForm.get('attribute_options').value,
+      "isEditing": false
     }
     console.log(this.predefinedAttributesForm.value)
     console.log("Object",obj);
@@ -293,6 +294,19 @@ this.spinner.show()
     // Implement delete logic here
     this.newAttributes_list.splice(index, 1);
   }
+
+  editAttribute(index: number) {
+    this.newAttributes_list[index].isEditing = true;
+  }
+
+  cancelEdit(index: number) {
+    this.newAttributes_list[index] = { ...this.newAttributes_list[index].originalValue, isEditing: false };
+  }
+
+  saveAttribute(index: number) {
+    this.newAttributes_list[index].isEditing = false;
+  }
+
 
   resetFields(){
     this.predefinedAttributesForm.get('attributeType').reset()
