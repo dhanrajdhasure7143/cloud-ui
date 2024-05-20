@@ -22,6 +22,7 @@ export class PredefinedBotsTemplateComponent implements OnInit {
   columnList = [
     // { DisplayName: "Bot ID", ColumnName: "botId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Predefined Bot Name", ColumnName: "botName", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    { DisplayName: "Product Id", ColumnName: "predefinedBotType", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Execution Order Id", ColumnName: "execution_order_id", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Bot Type", ColumnName: "botType", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     // { DisplayName: "Bot Version", ColumnName: "version", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
@@ -54,6 +55,7 @@ export class PredefinedBotsTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     // this.spinner.show();
+    this.getAllPredefinedBots();
     this.getTemplateList()
     // this.spinner.hide();
 
@@ -112,6 +114,9 @@ export class PredefinedBotsTemplateComponent implements OnInit {
       next: (res: any) => {
         if (res.code == 4200) {
           this.templateList = res.data
+          this.templateList.map(item=>{
+            item["predefinedBotType"] = this.predefinedBotsList.find(e=>e.productId==item.productId)?this.predefinedBotsList.find(e=>e.productId==item.productId).predefinedBotName:null
+          })
         }
         this.spinner.hide();
       },
@@ -126,7 +131,6 @@ export class PredefinedBotsTemplateComponent implements OnInit {
     this.isDisplayOverlay = true;
     console.log(rowData, "rowData")
     this.isDisplay = false;
-    this.getAllPredefinedBots();
   }
 
   closeOverlay(event) {
