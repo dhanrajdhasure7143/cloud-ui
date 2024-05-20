@@ -263,7 +263,6 @@ export class LoginComponent implements OnInit {
   .pipe(first())
   .subscribe(data => {
      this.errormsg=data;
-     console.log(data)
      if(data.isError == "true"){
 
       if(data.current_registration_screen == "basic_details_completed" || data.current_registration_screen == "drafted_user_credentials" ){

@@ -429,7 +429,7 @@ this.getAllUsersList();
 this.getAlertUsersList();
 
 this.getRoles();
-this.getListofCoupons();
+// this.getListofCoupons();
     // this.profileservice.getAllRoles(2).subscribe(resp => {
     //   this.allRoles = resp,
     //   console.log("resp is",resp)
@@ -2245,7 +2245,7 @@ couponDelYes(coupon,index){
       
 this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
   this.modalRef.hide();
-  this.getListofCoupons();
+  // this.getListofCoupons();
   this.notifier.show({
     type: "success",
     message: "Coupon updated successfully!!"
@@ -2397,7 +2397,7 @@ this.profileservice.modifyCoupon(modifycouponinput).subscribe(resp=>{
           type: "success",
           message: "created coupon successfully!!"
         });}
-           this.getListofCoupons();
+          //  this.getListofCoupons();
             });
 
             
