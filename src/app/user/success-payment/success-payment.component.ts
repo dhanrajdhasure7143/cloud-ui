@@ -80,7 +80,11 @@ export class SuccessPaymentComponent implements OnInit {
                 icon: 'error',
                 showCancelButton: false,
                 allowOutsideClick: false,
-              })
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate((['/user']));
+                  }
+                });
             }
           }, subscriptionError => {
               Swal.fire("Error","Something went wrong, Please contact sales@epsoftinc.com","error")
