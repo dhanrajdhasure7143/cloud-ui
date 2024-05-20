@@ -435,6 +435,7 @@ export class LoginComponent implements OnInit {
       
      }
      else if(this.inactive=="false"){
+      this.spinner.hide();
       this.router.navigate(['user/userinfo'])
      }
      else{
