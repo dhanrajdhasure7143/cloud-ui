@@ -101,7 +101,9 @@ export class AuthenticationService {
       return this.http.get('/api/login/beta/validateOTP?userId='+username+"&otp="+otp+"&isNewRegistrationFlow="+true,{responseType:'json'});
     }
 
-    getNewAccessToken(): Observable<any[]>{
-      return this.http.get<any[]>('/api/login/beta/newAccessToken',httpOptions);
+    getNewAccessToken(tenantId): Observable<any[]>{
+      return this.http.get<any[]>('/api/login/beta/newAccessToken?tenant_id='+tenantId+'&masterTenant='+tenantId,httpOptions);
     }
+
+
 }

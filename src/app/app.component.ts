@@ -77,7 +77,8 @@ export class AppComponent {
     this.userIdle.startWatching();
     this.userIdle.ping$.subscribe(() => {
       if(localStorage.getItem("userName") != null){
-      this.productservice.getNewAccessToken().subscribe(resp=>{
+        let tenantId = localStorage.getItem('tenantName')
+      this.authservice.getNewAccessToken(tenantId).subscribe(resp=>{
         this.newAccessToken=resp
         localStorage.setItem('currentUser', JSON.stringify(this.newAccessToken));
       });

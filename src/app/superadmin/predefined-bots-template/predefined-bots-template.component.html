@@ -113,13 +113,12 @@
               </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
               <label class="label-control" for="predefinedBotId">Predefined Bot Id<span class="star">*</span></label>
               <div>
                 <input id="predefinedBotId" pInputText [style]="{'width':'100%'}" formControlName="predefinedBotId" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
-                <!-- </input> -->
               </div>
-            </div>
+            </div> -->
 
             <!-- <div class="form-group col-md-12">
               <label class="label-control" for="Tasks">Tasks List<span class="star">*</span></label>
@@ -201,8 +200,8 @@
               <label class="label-control" for="Tasks">Attributes List<span class="star">*</span></label>
               <p-dropdown [style]="{'width':'70%'}" [options]="selectedTask_attributesList" placeholder="Select Task" optionLabel="metaAttrValue" formControlName="attribute">
                   <ng-template let-option pTemplate="item">
-                      <div [pTooltip]="option.metaAttrValue" tooltipPosition="top">
-                          {{option.attrValue}}
+                      <div [pTooltip]="option.attrValue" tooltipPosition="top">
+                          {{option.metaAttrValue}}
                       </div>
                   </ng-template>
               </p-dropdown>
@@ -296,15 +295,12 @@
           </ng-container>
         </form>
 
-        <div *ngIf="newAttributes_list.length>0" class="table-container">
+        <div *ngIf="newAttributes_list.length > 0" class="table-container">
           <table class="table">
             <thead>
               <tr>
-                <th>Predefined Bot Id</th>
-                <!-- <th>Product Id</th> -->
                 <th>Pre Attribute Type</th>
                 <th>Min Number - Max Number</th>
-                <!-- <th>Max Number</th> -->
                 <th>Pre Attribute Name</th>
                 <th>Pre Attribute Label</th>
                 <th>Placeholder</th>
@@ -317,27 +313,54 @@
             </thead>
             <tbody>
               <tr *ngFor="let attribute of newAttributes_list; let i = index">
-                <td>{{ attribute.predefinedBotId }}</td>
-                <!-- <td>{{ attribute.productId }}</td> -->
-                <td>{{ attribute.preAttributeType }}</td>
-                <td>{{ attribute.minNumber }} - {{ attribute.maxNumber }}</td>
-                <!-- <td>{{ attribute.maxNumber }}</td> -->
-                <td>{{ attribute.preAttributeName }}</td>
-                <td>{{ attribute.preAttributeLable }}</td>
-                <td>{{ attribute.placeholder }}</td>
-                <td>{{ attribute.attributeRequired }}</td>
-                <td>{{ attribute.visibility }}</td>
-                <td>{{ attribute.duplicate }}</td>
-                <td>{{ attribute.attributeOrderBy }}</td>
+                <td *ngIf="!attribute.isEditing">{{ attribute.preAttributeType }}</td>
+                <td *ngIf="attribute.isEditing"><input [(ngModel)]="attribute.preAttributeType"></td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.minNumber }} - {{ attribute.maxNumber }}</td>
+                <td *ngIf="attribute.isEditing">
+                  <input [(ngModel)]="attribute.minNumber" size="3"> - 
+                  <input [(ngModel)]="attribute.maxNumber" size="3">
+                </td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.preAttributeName }}</td>
+                <td *ngIf="attribute.isEditing"><input [(ngModel)]="attribute.preAttributeName"></td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.preAttributeLable }}</td>
+                <td *ngIf="attribute.isEditing"><input [(ngModel)]="attribute.preAttributeLable"></td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.placeholder }}</td>
+                <td *ngIf="attribute.isEditing"><input [(ngModel)]="attribute.placeholder"></td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.attributeRequired }}</td>
+                <td *ngIf="attribute.isEditing">
+                  <input type="checkbox" [(ngModel)]="attribute.attributeRequired">
+                </td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.visibility }}</td>
+                <td *ngIf="attribute.isEditing">
+                  <input type="checkbox" [(ngModel)]="attribute.visibility">
+                </td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.duplicate }}</td>
+                <td *ngIf="attribute.isEditing">
+                  <input type="checkbox" [(ngModel)]="attribute.duplicate">
+                </td>
+        
+                <td *ngIf="!attribute.isEditing">{{ attribute.attributeOrderBy }}</td>
+                <td *ngIf="attribute.isEditing"><input [(ngModel)]="attribute.attributeOrderBy"></td>
+        
                 <td>
-                  <!-- <button (click)="editAttribute(i)">Edit</button> -->
-                  <button class="btn btn-primary" (click)="deleteAttribute(i)">Delete</button>
+                  <!-- <button class="btn btn-primary" *ngIf="!attribute.isEditing" (click)="editAttribute(i)">Edit</button> -->
+                  <!-- <button class="btn btn-primary" *ngIf="attribute.isEditing" (click)="saveAttribute(i)">Save</button> -->
+                  <!-- <button class="btn btn-secondary" *ngIf="attribute.isEditing" (click)="cancelEdit(i)">Cancel</button> -->
+                  <button class="btn btn-danger" *ngIf="!attribute.isEditing" (click)="deleteAttribute(i)">Delete</button>
                 </td>
               </tr>
             </tbody>
           </table>
-          
         </div>
+        
+        
       </div>
     </div>
   </app-split-overlay>
