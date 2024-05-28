@@ -19,6 +19,6 @@ export const environment = {
    isNewDesignEnabled : true,
    isSubscrptionEnabled : false,
    paymentSuccessURL:"https://ezflow.staging.epsoftinc.com/#/success",
-   paymentFailuerURL:"https://ezflow.staging.epsoftinc.com/#/fail",
+   paymentFailuerURL:"https://ezflow.staging.epsoftinc.com/#/subscription",
    stripeKey:"pk_test_51P0dsYGtSXyupRk8b6KzrZkX2YsNl0HOLhVeZYrL6S12RR4rZd9CGa8O7ckFJLh3kZ3foGrmVdkewcq8cyYTVecj00dG5Dqo2P"
 }

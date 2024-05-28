@@ -266,23 +266,23 @@ export class LoginComponent implements OnInit {
      if(data.isError == "true"){
 
       if(data.current_registration_screen == "basic_details_completed" || data.current_registration_screen == "drafted_user_credentials" ){
-        let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login"}
+        // let obj = {email : this.f.username.value.toLowerCase(),navigatingFrom:"login"}
         if(!this.isSubscriptionEnabled){
           this.showWarningPopup = true;
         }else{
           this.router.navigate(['/subscription'],{
-            queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+            queryParams: { token: this.crypto.encrypt(this.f.username.value.toLowerCase())},
           });
         }
         return
       }
       if(data.current_registration_screen == "subscription_pending" || data.current_registration_screen == "drafted_user_credentials" ){
-        let obj = {email : this.f.username.value.toLowerCase(), password : this.f.password.value,navigatingFrom:"login", isRegistered : true}
+        // let obj = {email : this.f.username.value.toLowerCase(), navigatingFrom:"login", isRegistered : true}
         if(this.isSubscriptionEnabled){
           this.showWarningPopup = true;
         }else{
           this.router.navigate(['/subscription'],{
-            queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+            queryParams: { token: this.crypto.encrypt(this.f.username.value.toLowerCase())},
           });
         }
         return
