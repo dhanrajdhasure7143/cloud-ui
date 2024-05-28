@@ -1,7 +1,6 @@
 import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { error } from 'console';
 import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AppService, AuthenticationService, UserService } from 'src/app/_services';
@@ -47,7 +46,6 @@ export class SuccessPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.subscriptionComplete();
     this.startCountdown();
-    this.saveEmailCredentials();
   }
 
   subscriptionComplete(){
