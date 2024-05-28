@@ -181,7 +181,7 @@
           </div>
         </form>
 
-        <form [formGroup]="predefinedAttributesForm" class="col-12 row tenant-form" *ngIf="predefinedTemplateForm.valid">
+        <form [formGroup]="predefinedAttributesForm" class="col-12 row tenant-form">
           <div class="form-group col-md-12">
             <p-checkbox [binary]="true" inputId="binary" label="Attributes Required" (onChange)="onChangeAttributesRequired()" formControlName="isAttributesRequired"></p-checkbox>
           </div>
@@ -260,16 +260,16 @@
               </div>
             </div>
 
-            <!-- <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value == 'dropdown'">
+            <div class="form-group col-md-12">
               <label class="label-control" for="attribute_options">Options<span class="star">*</span></label>
 
               <textarea rows="5" cols="20" id="attribute_options" pInputTextarea 
                         autoResize="autoResize" placeholder=""
                         formControlName="attribute_options">
               </textarea>
-            </div> -->
+            </div>
 
-            <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value === 'dropdown'">
+            <!-- <div class="form-group col-md-12" *ngIf="predefinedAttributesForm.get('attributeType').value === 'dropdown'">
               <label class="label-control" for="attribute_options">Options<span class="star">*</span></label>
               <div formArrayName="attribute_options">
                 <div *ngFor="let option of attributeOptions.controls; let i = index" [formGroupName]="i" class="form-group row">
@@ -285,7 +285,7 @@
                 </div>
               </div>
               <button type="button" class="btn btn-primary" (click)="addOption()">Add Option</button>
-            </div>
+            </div> -->
             
 
 
