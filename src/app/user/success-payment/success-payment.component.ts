@@ -165,7 +165,7 @@ export class SuccessPaymentComponent implements OnInit {
 
   authenticate() {
     console.log("rolesApi started")
-    this.saveEmailCredentials()
+    // this.saveEmailCredentials()
     this.profileService.getUserRole(2).subscribe(res=>{
       const userRole=res.message;
       localStorage.setItem('userRole',userRole);
