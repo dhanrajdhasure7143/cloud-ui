@@ -1,6 +1,7 @@
 import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { error } from 'console';
 import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AppService, AuthenticationService, UserService } from 'src/app/_services';
@@ -46,6 +47,7 @@ export class SuccessPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.subscriptionComplete();
     this.startCountdown();
+    this.saveEmailCredentials();
   }
 
   subscriptionComplete(){
@@ -165,6 +167,7 @@ export class SuccessPaymentComponent implements OnInit {
 
   authenticate() {
     console.log("rolesApi started")
+    this.saveEmailCredentials()
     this.profileService.getUserRole(2).subscribe(res=>{
       const userRole=res.message;
       localStorage.setItem('userRole',userRole);
@@ -185,4 +188,14 @@ export class SuccessPaymentComponent implements OnInit {
     })
      
   }
+
+
+  saveEmailCredentials() {
+    this.http.saveEmailCredentials().subscribe((response:any)=>{
+      console.log("implemented code" + response);
+    })
+   
+}
+
+
 }
