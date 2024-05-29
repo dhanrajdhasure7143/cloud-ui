@@ -23,7 +23,7 @@ export const environment = {
   isNewDesignEnabled : true,
   isSubscrptionEnabled : true,
   paymentSuccessURL:"http://ezflow.dev.epsoftinc.in/#/success",
-  paymentFailuerURL:"http://ezflow.dev.epsoftinc.in/#/fail",
+  paymentFailuerURL:"http://ezflow.dev.epsoftinc.in/#/subscription",
   stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
 };
 

@@ -359,9 +359,9 @@ export class SignUpComponent implements OnInit {
       this.service.registrationStart(payload).subscribe((res:any) => {
         if (res.body.message == "User Details Saved Successfully!!") {
           if (environment.isSubscrptionEnabled) {
-            let obj = { email: this.userId, password: this.userPsw }
+
             this.router.navigate(['/subscription'], {
-              queryParams: { token: this.crypto.encrypt(JSON.stringify(obj)) },
+              queryParams: { token: this.crypto.encrypt(this.userId) },
             });
           } else {
             this.sendEmailEnterPrisePlan();
@@ -542,9 +542,8 @@ registrationSave(){
   this.spinner.hide();
   if(res.body.message == "User Details Saved Successfully!!") {
     if(environment.isSubscrptionEnabled){
-    let obj = {email : this.userId, password : this.userPsw}
       this.router.navigate(['/subscription'],{
-        queryParams: { token: this.crypto.encrypt(JSON.stringify(obj))},
+        queryParams: { token: this.crypto.encrypt(this.userId)},
       });
     }else{
       this.sendEmailEnterPrisePlan();
