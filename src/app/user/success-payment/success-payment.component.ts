@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./success-payment.component.scss']
 })
 export class SuccessPaymentComponent implements OnInit {
- public countdown: number = 15;
+ public countdown: number = 30;
  userEmail:string;
  userData:any;
  http:any;
