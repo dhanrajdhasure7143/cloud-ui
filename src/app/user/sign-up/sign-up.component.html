@@ -11,18 +11,14 @@
 
         <div class="col-md-7 img-box">
 
-            <div class="image-container" *ngIf="!isSubscriptionEnabled">
+            <div class="image-container">
                 <img class="background-image" src="../../../assets/sign-up_Screen.png" alt="EZFLow">
                 <!-- <img class="background-image" src="assets/ezflow_image.png" alt="EZFLow"> -->
                 <!-- <img class="background-image" src="./../../../assets/signup/Image_Large.png" alt="EZFLow"> -->
                 <!-- <img class="background-image" src="./../../../assets/signup/SVG_Image.svg" alt="EZFLow"> -->
             </div>
 
-            <div class="bot-plan-details" *ngIf="isSubscriptionEnabled">
-            <!-- <div class="bot-title-header">src/assets/EZFlow-White-logo.svg
-                <span class="bot-title"> Virtual Marketing Bot </span>
-                <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
-            </div> -->
+            <!-- <div class="bot-plan-details" *ngIf="isSubscriptionEnabled">
             <div >
                 <div *ngFor="let plan of planDetails" class="bot-title-header" >
                     <div class="bot-details">
@@ -40,7 +36,7 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
         </div>
         <div class="col-md-5 form-div" *ngIf="!showUserScreen" >
             <div class="loginblock">
@@ -252,8 +248,8 @@
             <!-- </div> -->
         </div>
 </div>
-<footer>
+<!-- <footer>
     <div class="container-fluid bottom-blue">
     </div>
-</footer>
+</footer> -->
 <p-toast  [style]="{marginTop: '50px'}" ></p-toast>

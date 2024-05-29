@@ -33,7 +33,6 @@ export class SubscriptionComponent implements OnInit {
   selectedValue:any;
   plans : any[] = ["RPA", "Process Intelligence","Orchestration","Business Process Studio","Projects" ]
   isDisabled : boolean = true;
-  password : any;
   isReview_order:boolean = false;
   selected_plans_list:any;
   log_data:any={}
@@ -47,7 +46,7 @@ export class SubscriptionComponent implements OnInit {
   displayModal: boolean[] = new Array(this.botPlans.length).fill(false);
   isSpaceOnLeft: boolean = false;
   showBotInfoFlag: boolean = false;
-  enterPrise_plan:any;
+  enterPrise_plan:any={};
   predefinedRawBots: any[] = [];
 
   constructor(private service : FirstloginService,
@@ -61,13 +60,11 @@ export class SubscriptionComponent implements OnInit {
               ) {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
-                  let params:any = JSON.parse(this.crypto.decrypt(data.token));
-                  console.log(params)
-                  this.log_data = params
-                this.userEmail = params.email;
-                this.password = params.password;
-                this.isRegistered = params.isRegistered;
-                console.log(this.userEmail,this.password)
+                    console.log("data",data)
+                  // let params:any = JSON.parse(this.crypto.decrypt(data.token));
+                this.userEmail = this.crypto.decrypt(data.token);
+                console.log("this.userEmail",this.userEmail)
+                // this.isRegistered = params.isRegistered;
                   }
                 })
                }
@@ -84,7 +81,7 @@ export class SubscriptionComponent implements OnInit {
       autoBilling: ['']
     });
 
-    this.getPredefinedRawBots();
+    // this.getPredefinedRawBots();
     this.loadPredefinedBots();
     this.getCountries();
   }
@@ -150,7 +147,7 @@ export class SubscriptionComponent implements OnInit {
   loadPredefinedBots() {
     this.service.loadPredefinedBots().subscribe((response: any) => {
         this.spinner.hide();
-        console.log(response);
+        // console.log(response);
         // this.getPaymentMethods();
         if (response) {
             response.forEach(element => {
@@ -208,17 +205,15 @@ export class SubscriptionComponent implements OnInit {
                 });
                 const decodedImage = this.decodeBase64Image(image);
                 obj["image"] = decodedImage;
-                console.log("image",image)
+                // console.log("image",image)
                 obj["isYearlySubscribed"] = isYearlySubscribed;
                 obj["isMonthlySubscribed"] = isMonthlySubscribed;
                 obj["doPlanDisabled"] = isSubscribed;
                 this.botPlans.push(obj);
             });
             this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
-            console.log(this.enterPrise_plan);
 
             this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
-            console.log(this.botPlans);
         }
     }, err => {
         this.spinner.hide();
@@ -248,18 +243,19 @@ paymentPlan() {
     });
   });
 
+  console.log(this.selectedPlans)
+
   if (filteredPriceIds.length === 0) {
     // Handle the case when no price is selected for the chosen interval
     console.error('No price selected for the chosen interval.');
     this.spinner.hide();
     return;
   }
-
   let req_body = {
     "price": filteredPriceIds,
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
-    "cancelUrl": environment.paymentFailuerURL
+    "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
   };
   console.log("PLAN_ID's", req_body);
   
@@ -345,12 +341,10 @@ readValue(value){
         }
       });
     });
-    console.log(plansData, "plansData");
     this.totalAmount = 0;
     plansData.forEach((amount) => {
       this.totalAmount += amount;
     });
-    console.log(this.totalAmount);
   }
 
   showDescription(index: number) {
