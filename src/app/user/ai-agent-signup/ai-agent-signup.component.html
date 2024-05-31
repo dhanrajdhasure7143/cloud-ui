@@ -1,0 +1,317 @@
+<ngx-spinner bdColor="#bebcbc66" type="">
+    <img src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader" />
+</ngx-spinner>
+
+<div class="container-fluid">
+    <!-- <div class="col-md-12 brand"> -->
+    <!-- <img style="margin:15px 0 0 45px;" src="assets/images/EZFlow.png" alt="EZFlow"> -->
+    <!-- <img class="ezflow-img" src="assets/images/EZFlow.png" alt="EZFlow">
+        </div> -->
+    <div class="row">
+
+        <div class="col-md-8 img-box">
+
+            <div class="image-container">
+                <img class="background-image top-banner-signup-left-img" src="../../../assets/ai-agents-signup.png"
+                    alt="EZFLow">
+                <img class="background-image top-banner-signup-left-img" style="object-fit: cover;"
+                    src="../../../assets/Topimage.svg" alt="EZFLow">
+                <img class="background-image" src="../../../assets/landing.svg" alt="EZFLow">
+                <!-- <img class="background-image" src="assets/ezflow_image.png" alt="EZFLow"> -->
+                <!-- <img class="background-image" src="./../../../assets/signup/Image_Large.png" alt="EZFLow"> -->
+                <!-- <img class="background-image" src="./../../../assets/signup/SVG_Image.svg" alt="EZFLow"> -->
+            </div>
+
+            <!-- <div class="bot-plan-details" *ngIf="isSubscriptionEnabled">
+            <div >
+                <div *ngFor="let plan of planDetails" class="bot-title-header" >
+                    <div class="bot-details">
+                    <p class="planName">{{ plan.name }}</p>
+                    <img class="bot-image" src="../../../assets/bot_new.svg" alt="bot">
+                </div>
+                    <div class="feature-details">
+                        <div class="row">
+                            <div class="col-md-6 mb-3 p-10" *ngFor="let feature of plan.features" >
+                                <i class="pi pi-check"  style="font-size: 0.4rem; font-weight: 600; color: #fff; background-color: #098de6; border-radius: 50%; padding: 5px;"></i>
+                                <span style="margin-left: 10px; position: relative; top: 3px"> {{ feature }} </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+        </div>
+        <div class="col-md-4 form-div" style="position: fixed; right: 0; top: 0;" *ngIf="!showUserScreen">
+            <div class="loginblock">
+                &nbsp;
+                <div class="create">
+                    <p class="signup-header"> Create your Account </p>
+                    <!-- <p> Already have an account? <a href="" > Sign in </a> </p> -->
+                    <div class="create-label">
+                        <label class="have_acc">Already have an account&#63;</label>
+                        <a [routerLink]="['/login']" class="signup_styles text-primary"> Sign In </a>
+                    </div>
+                </div>
+                &nbsp;
+                <form autocomplete="off" [formGroup]="signupForm" class="login_form" cdkTrapFocus>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-12 p-10 form-group">
+                            <label class="label-control" for="firstName"> First Name </label>
+                            <input type="text" pInputText maxlength="51" minlength="3" class="form-control"
+                                formControlName="firstName" (keypress)="lettersOnly($event)" value=""
+                                placeholder="Enter First Name" tabindex="1" autocomplete="off">
+                            <!-- <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>     -->
+                            <span
+                                *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched &&!signupForm.get('firstName').hasError('pattern') &&!signupForm.controls['firstName'].hasError('maxlength') &&!signupForm.controls['firstName'].hasError('minlength')"
+                                class="required"> First Name Required </span>
+                            <span
+                                *ngIf="signupForm.get('firstName').hasError('minlength') && signupForm.get('firstName').touched"
+                                class="required"> Minimum length 3 characters </span>
+                            <span *ngIf="signupForm.get('firstName').hasError('maxlength')" class="required"> Maximum of
+                                50 characters </span>
+                            <span *ngIf="signupForm.get('firstName').hasError('pattern')" class="required"> Invalid
+                                characters entered </span>
+                        </div>
+                        <div class="col-md-12 p-10 form-group">
+                            <label class="label-control" for="lastName"> Last Name </label>
+                            <input type="text" pInputText maxlength="51" minlength="3" class="form-control"
+                                formControlName="lastName" (keypress)="lettersOnly($event)" value=""
+                                placeholder="Enter Last Name" autocomplete="off" tabindex="2">
+                            <!-- <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span> -->
+                            <span
+                                *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched &&!signupForm.get('lastName').hasError('pattern') &&!signupForm.controls['lastName'].hasError('maxlength') &&!signupForm.controls['lastName'].hasError('minlength')"
+                                class="required"> Last Name Required </span>
+                            <span
+                                *ngIf="signupForm.get('lastName').hasError('minlength') && signupForm.get('lastName').touched"
+                                class="required"> Minimum length 3 characters </span>
+                            <span *ngIf="signupForm.get('lastName').hasError('maxlength')" class="required"> Maximum of
+                                50 characters </span>
+                            <span *ngIf="signupForm.get('lastName').hasError('pattern')" class="required"> Invalid
+                                characters entered </span>
+                        </div>
+                        <div class="form-group col-md-12 p-10">
+                            <label for="organization" class="label-control">Organization <span class="star">*</span>
+                            </label>
+                            <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
+                                 border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)"
+                                autocomplete="off" (keypress)="lettersOnly($event)"
+                                placeholder="Enter Organization Name" maxlength="51" minlength="3" tabindex="3">
+                            <span *ngIf="orgExsist" class='fa fa-info-circle errspan_info'> Organization already
+                                exist</span>
+                            <!-- <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched && !signupForm.get('organization').hasError('pattern') && !signupForm.controls['organization'].hasError('maxlength')" class="required"> Organization required </span> -->
+                            <span
+                                *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched &&!signupForm.get('organization').hasError('pattern') &&!signupForm.controls['organization'].hasError('maxlength') &&!signupForm.controls['organization'].hasError('minlength')"
+                                class="required"> Organization Name Required </span>
+                            <span
+                                *ngIf="signupForm.get('organization').hasError('minlength') && signupForm.get('organization').touched"
+                                class="required"> Minimum length 3 characters </span>
+                            <span *ngIf="signupForm.get('organization').hasError('maxlength')" class="required"> Maximum
+                                of 50 characters </span>
+                            <span *ngIf="signupForm.get('organization').hasError('pattern')" class="required"> Invalid
+                                characters entered </span>
+                        </div>
+                        <div class="col-md-12 p-10 form-group">
+                            <label class="label-control" for="email"> Email </label>
+                            <input type="text" pInputText maxlength="51" class="form-control" formControlName="email"
+                                style="padding-right: 90px;" [attr.disabled]="isEmailDisable ? true : null" value=""
+                                pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off"
+                                (keyup)="showOtp($event); checkEmailValidity()" tabindex="4">
+                            <span *ngIf="isGenerate && !isEmailEmptyOrInvalid" (click)="generateOTP('false')"
+                                class="verify text-primary"> Verify Email </span>
+                            <span *ngIf="isSuccess"> <i class="pi pi-verified text-success"
+                                    id="email-buttons"></i></span>
+                            <span
+                                *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')"
+                                class="required"> Email Required </span>
+                            <span *ngIf="signupForm.get('email').hasError('pattern') && signupForm.get('email').touched"
+                                class="required"> Enter valid email address </span>
+                            <span *ngIf="ispublicMail" class="required">Only Business Email is allowed</span>
+                        </div>
+                        <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
+                            <input type="text" pInputText minlength="6" maxlength="6" class="form-control"
+                                formControlName="otp" autocomplete="off" value=""
+                                placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)"
+                                (keyup)="showValidateButton($event)">
+                            <span *ngIf="isValidateOTP">
+                                <i *ngIf="signupForm.get('otp').valid" (click)="validateOTP()" class="pi pi-check"
+                                    style="font-size: 0.7rem; border: 1px solid #098de6; padding: 6px; left: 90% important;"
+                                    id="validate-buttons"></i>
+                                <i *ngIf="signupForm.get('otp').invalid " class="pi pi-check"
+                                    style="font-size: 0.7rem; border: 1px solid #52585c; padding: 6px; left: 90% important;"
+                                    id="validate-button-disable"></i>
+                            </span>
+                            <span *ngIf="isTimeOutshow" class="required"
+                                style="margin-left: -20px; font-weight: 600;">{{display}}</span>
+                            <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')">
+                                Resend Code </span>
+                            <span *ngIf="resendEnable" class="resend-disable text-secondary"> Resend Code </span>
+                        </div>
+                        <div class="col-md-12 p-10 form-group d-block">
+                            <label class="label-control" for="password"> Password </label> <br>
+                            <p-password styleClass="password-input" formControlName="password" value="password"
+                                [feedback]="false" [toggleMask]="true" [disabled]="isPasswordDisable ? true : null"
+                                placeholder="Enter Password" tabindex="4" autocomplete="off"></p-password>
+                            <span
+                                *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && !signupForm.get('password').hasError('pattern') && !signupForm.controls['password'].hasError('maxlength')"
+                                class="required"> Password Required </span>
+                            <span class="required"
+                                *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched">
+                                Minimum 8 Characters Required </span>
+                            <span class="required"
+                                *ngIf="signupForm.get('password').hasError('pattern') && signupForm.get('password').touched">
+                                Password must be 8-20 characters and have at least one uppercase letter, one lowercase
+                                letter, one special character(@,$,% are allowed) and one number
+                            </span>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary signup-btn" (click)="onRegistrationStart()"
+                                [disabled]="signupForm.invalid" type="submit" id="btn"> Next </button>
+                        </div>
+                    </div>
+                </form>
+
+                &nbsp;
+            </div>
+        </div>
+        <div class="col-md-5 form-div" style="position: fixed; right: 0; top: 0;" *ngIf="showUserScreen">
+            <div class="col-md-12 text-center" style="display: block; margin-top: 40px;">
+                <span style="font-size: 15px; font-weight: 800; color: black;">Now, Let us know more about you</span>
+            </div>
+            <!-- <div class="loginblock"> -->
+            <form [formGroup]="userForm" style="padding: 30px;" cdkTrapFocus autocomplete="off">
+                <!-- <div class="fields"> -->
+                <div class="row">
+                    <div class="form-group col-md-6 pl-0">
+                        <label class="label-control" for="jobTitle">Job Title <span class="star">*</span> </label>
+                        <input type="text" pInputText formControlName="jobTitle" class="form-control" style="height: 45px !important;
+                                border-radius: 5px;" id="jobTitle" autocomplete="off" (keypress)="lettersOnly($event)"
+                            placeholder="Enter job title" maxlength="51">
+                        <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('jobTitle') !== ''"
+                            class="required">
+                            {{ getErrorMessage('jobTitle') }}
+                        </span>
+                    </div>
+                    <div class="form-group col-md-6 pr-0">
+                        <label for="organization" class="label-control">Organization <span class="star">*</span>
+                        </label>
+                        <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
+                                border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)"
+                            autocomplete="off" (keypress)="lettersOnly($event)" placeholder="Enter organization"
+                            maxlength="51" minlength="2">
+                        <span *ngIf="orgExsist" class='fa fa-info-circle errspan_info'> Organization already
+                            exist</span>
+                        <span class="fa fa-info-circle errspan" *ngIf="getErrorMessage('organization') !== ''"
+                            class="required">
+                            {{ getErrorMessage('organization') }}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 pl-0">
+                        <label for="department" class="label-control">Department <span class="star">*</span> </label>
+                        <p-dropdown formControlName="department" [style]="{'width':'100%'}" autocomplete="off"
+                            [options]="departments" optionLabel="departmentName" [value]="categoryId"
+                            placeholder="Select Department">
+                        </p-dropdown>
+                        <div *ngIf="f.department.touched && f.department.errors" class="required">
+                            <span>Department required </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 pr-0">
+                        <label for="country" class="label-control">Country <span class="star">*</span> </label>
+                        <p-dropdown formControlName="country" [filter]="true" [style]="{'width':'100%'}"
+                            autocomplete="off" [options]="countryInfo" optionLabel="name" [value]="name"
+                            placeholder="Select Country" (onChange)="onChangeCountry($event.value)">
+                        </p-dropdown>
+                        <span *ngIf="f.country.touched && f.country.errors && !isErrorMessage" class="required">
+                            Country required </span>
+                        <span *ngIf="isErrorMessage" class="required">{{errorMessage}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 pl-0">
+                        <label for="state" class="label-control">State <span class="star">*</span> </label>
+                        <p-dropdown formControlName="state" [filter]="true" [style]="{'width':'100%'}"
+                            autocomplete="off" [options]="stateInfo" optionLabel="name" [value]="name"
+                            placeholder="Select State" (onChange)="onChangeState($event.value)">
+                        </p-dropdown>
+                        <span *ngIf="f.state.touched && f.state.errors && !isErrorMessage" class="required">
+                            State required </span>
+                        <span *ngIf="isErrorMessage" class="required">{{errorMessage1}}</span>
+                    </div>
+                    <div class="form-group col-md-6 pr-0">
+                        <label for="city" class="label-control">City <span class="star">*</span></label>
+                        <p-dropdown formControlName="city" [filter]="true" [style]="{'width':'100%'}" autocomplete="off"
+                            [options]="cityInfo" optionLabel="name" [value]="name" placeholder="Select City"
+                            (onChange)="onChangeCity($event.value)">
+                        </p-dropdown>
+                        <span *ngIf="f.city.touched && f.city.errors && !isErrorMessage" class="required">
+                            City required </span>
+                        <span *ngIf="isErrorMessage" class="required">{{errorMessage2}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 pl-0">
+                        <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
+                        <input type="text" pInputText formControlName="zipCode" style="height: 45px !important;
+                                border-radius: 5px;" class="form-control" id="inputZip" autocomplete="off"
+                            placeholder="Enter zip code" maxlength="6" (keydown)="onKeydown($event)" required>
+                        <span class="required" *ngIf="getErrorMessage('zipCode') !== ''"> {{ getErrorMessage('zipCode')
+                            }} </span>
+                    </div>
+                    <div *ngIf="isInput" class="form-group col-md-6 pr-0">
+                        <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
+                        <div class="ng2tel-container">
+                            <span class="ng2tel-flag"></span>
+                            <input type="text" pInputText style="height: 45px !important;
+                                                border-radius: 5px;" (keydown)="onKeydown($event)"
+                                (countryChange)="OnFlagChange($event)" class="form-control" id="phone"
+                                formControlName="phoneNumber" autocomplete="off"
+                                onKeyPress="if(this.value.length==10) return false;" ng2TelInput
+                                [ng2TelInputOptions]="{initialCountry: phnCountry}" pattern="^((\\+91-?)|0)?[0-9]{10}$"
+                                required>
+                        </div>
+                        <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
+                            <span>Phone Number required </span>
+                        </div>
+                    </div>
+                    <div *ngIf="!isInput" class="form-group col-md-6 pr-0">
+                        <label for="phoneNumber" class="label-control">Phone Number <span class="star">*</span></label>
+                        <div class="ng2tel-container">
+                            <span class="ng2tel-flag"></span>
+                            <input type="text" pInputText style="height: 45px !important;
+                                                border-radius: 5px;" (keydown)="onKeydown($event)"
+                                (countryChange)="OnFlagChange($event)" class="form-control" id="phone"
+                                formControlName="phoneNumber" autocomplete="off"
+                                onKeyPress="if(this.value.length==10) return false;" ng2TelInput
+                                [ng2TelInputOptions]="{initialCountry: phnCountry}" pattern="^((\\+91-?)|0)?[0-9]{10}$"
+                                required>
+                        </div>
+                        <div *ngIf="getErrorMessage('phoneNumber') !== ''" class="required">
+                            <span>Phone Number required </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                        <!-- <button type="submit" class="btn btn-primary" style="margin-right: 30px;width: 75px;" (click)="backtoSignUp()"> Back </button> -->
+                        <button type="button" class="btn btn-primary" style="margin-right: 30px;width: 75px;"
+                            (click)="resetForm()"> Reset </button>
+                        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid"
+                            (click)="registrationSave()">
+                            <span *ngIf="isSubscriptionEnabled">Continue</span>
+                            <span *ngIf="!isSubscriptionEnabled">Contact Sales</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- </div> -->
+        </div>
+    </div>
+    <!-- <footer>
+    <div class="container-fluid bottom-blue">
+    </div>
+</footer> -->
+    <p-toast [style]="{marginTop: '50px'}"></p-toast>
