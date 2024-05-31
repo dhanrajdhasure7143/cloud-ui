@@ -17,6 +17,7 @@ import { OrderPaymentComponent } from './order-payment/order-payment.component';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { AiAgentSignupComponent } from './ai-agent-signup/ai-agent-signup.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,9 @@ const routes: Routes = [
   },
   {path:'userDetails',
     component: UserDetailsComponent
+  },
+  {path:'ai-agents/signup',
+    component: AiAgentSignupComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }

@@ -131,7 +131,7 @@ export class SignUpComponent implements OnInit {
     this.isSubscriptionEnabled = environment.isSubscrptionEnabled
 
     if(this.isSubscriptionEnabled){
-      this.getPlanDetails();
+      // this.getPlanDetails();
     }else{
       this.renderer.setStyle(document.body, 'overflow', 'hidden');
     }
