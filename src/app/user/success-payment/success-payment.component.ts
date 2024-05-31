@@ -180,8 +180,7 @@ export class SuccessPaymentComponent implements OnInit {
     var userId= this.crypto.encrypt(JSON.stringify(localStorage.getItem('ProfileuserId')));
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
-    console.log("Navigation.................")
-        // window.location.href=this.config.newproductendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
+        window.location.href=this.config.newproductendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
     },error => {
     })
      
