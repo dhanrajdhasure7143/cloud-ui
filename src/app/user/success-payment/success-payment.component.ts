@@ -165,7 +165,7 @@ export class SuccessPaymentComponent implements OnInit {
 
   authenticate() {
     console.log("rolesApi started")
-    // this.saveEmailCredentials()
+    this.saveEmailCredentials();
     this.profileService.getUserRole(2).subscribe(res=>{
       const userRole=res.message;
       localStorage.setItem('userRole',userRole);
@@ -181,7 +181,7 @@ export class SuccessPaymentComponent implements OnInit {
     var useridBase64 = btoa(userId);
     var userIp=btoa(localStorage.getItem('ipAddress'));
     console.log("Navigation.................")
-        window.location.href=this.config.newproductendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
+        // window.location.href=this.config.newproductendpoint+"/#/pages/home?accessToken="+encryptToken+'&refreshToken='+encryptrefreshToken+'&firstName='+firstName+'&lastName='+lastName+'&ProfileuserId='+ProfileuserId+'&tenantName='+tenantName+'&authKey='+useridBase64+'&userIp='+userIp
     },error => {
     })
      
