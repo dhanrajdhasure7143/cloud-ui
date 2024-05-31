@@ -117,8 +117,8 @@ export class FirstloginService {
     return this.http.get("/subscriptionservice/v1/subscriptions/subscriptions-raw-response");
   }
 
-  saveEmailCredentials(data:any) {
-    return this.http.post('/rpa-service/predefined/save-email-credentials',data);
+  saveEmailCredentials() {
+    return this.http.post('/rpa-service/predefined/save-email-credentials',{});
   }
   
 }

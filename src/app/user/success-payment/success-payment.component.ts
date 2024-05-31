@@ -189,7 +189,7 @@ export class SuccessPaymentComponent implements OnInit {
 
 
   saveEmailCredentials() {
-    this.http.saveEmailCredentials().subscribe((response:any)=>{
+    this.rest_api.saveEmailCredentials().subscribe((response:any)=>{
       console.log("implemented code" + response);
     })
    
