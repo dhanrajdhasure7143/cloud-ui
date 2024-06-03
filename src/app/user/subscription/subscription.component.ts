@@ -48,6 +48,7 @@ export class SubscriptionComponent implements OnInit {
   showBotInfoFlag: boolean = false;
   enterPrise_plan:any={};
   predefinedRawBots: any[] = [];
+  emailToken:any;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -62,6 +63,7 @@ export class SubscriptionComponent implements OnInit {
                   if(data){
                     console.log("data",data)
                   // let params:any = JSON.parse(this.crypto.decrypt(data.token));
+                  this.emailToken = data.token
                 this.userEmail = this.crypto.decrypt(data.token);
                 console.log("this.userEmail",this.userEmail)
                 // this.isRegistered = params.isRegistered;
@@ -255,7 +257,8 @@ paymentPlan() {
     "price": filteredPriceIds,
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
-    "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
+    // "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
+    "cancelUrl": environment.paymentFailuerURL+"?token="+this.emailToken
   };
   console.log("PLAN_ID's", req_body);
   
@@ -279,14 +282,14 @@ sendEmailEnterPrisePlan(){
   this.spinner.show();
   this.service.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
     if(res.errorMessage !="User not present"){
-    Swal.fire({
-        title: 'Success!',
-        text: `Thank you for choosing Enterprise plan, Our team will contact you soon!`,
-        icon: 'success',
-        showCancelButton: false,
-        allowOutsideClick: false
-    })
-  }
+      Swal.fire({
+          title: 'Success!',
+          text: `Thank you for choosing Enterprise plan, Our team will contact you soon!`,
+          icon: 'success',
+          showCancelButton: false,
+          allowOutsideClick: false
+      })
+    }
       this.spinner.hide();
   },err=>{
     Swal.fire("Error","Failed to send","error")
