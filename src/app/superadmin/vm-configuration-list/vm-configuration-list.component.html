@@ -113,19 +113,15 @@
 
             <div class="form-group col-md-12">
               <label class="label-control" for="environmentType">Environment Type<span class="star">*</span></label>
-              <p-dropdown [ngModel]="vmForm.get('environmentType').value" [options]="environmentOptions"
-                (onChange)="onEnvironmentChange($event.value)" optionLabel="label" optionValue="value"
+              <p-dropdown 
+                [options]="environmentOptions" 
+                formControlName="environmentType"
+                (onChange)="onEnvironmentChange($event)" 
+                optionLabel="name" 
+                optionValue="value" 
                 placeholder="Select Environment Type">
               </p-dropdown>
-              <!-- <p-dropdown [options]="environmentOptions"
-                  formControlName="environmentType"
-                  (onChange)="onEnvironmentChange($event.value)"
-                  optionLabel="label"
-                  placeholder="Select Environment Type"
-                  >
-              </p-dropdown> -->
-              <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched"
-                class="required">
+              <div *ngIf="vmForm.get('environmentType').errors?.required && vmForm.get('environmentType').touched" class="required">
                 Environment Type is required.
               </div>
             </div>
@@ -181,6 +177,13 @@
                 class="required">
                 Password is required.
               </div>
+              <div *ngIf="vmForm.get('password').hasError('minlength') && vmForm.get('password').touched" class="required">
+                Password must be at least 8 characters long.
+              </div>
+              <div *ngIf="vmForm.get('password').hasError('pattern') && vmForm.get('password').touched" class="required">
+                Password must include at least one upper-case letter, one lower-case letter, one number, and one special character.
+              </div>
+
             </div>
 
             <!-- Connection Type -->
