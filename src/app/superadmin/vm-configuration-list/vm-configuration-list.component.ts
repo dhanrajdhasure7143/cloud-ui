@@ -3,17 +3,22 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Table } from 'primeng/table';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
+// import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { MessageService } from 'primeng/api';
 import { CryptoService } from 'src/app/_services/crypto.service';
 
+interface SelectItem {
+  name: string;
+  value: string;
+}
 
 @Component({
   selector: 'app-vm-configuration-list',
   templateUrl: './vm-configuration-list.component.html',
   styleUrls: ['./vm-configuration-list.component.scss']
 })
+
 export class VmConfigurationListComponent implements OnInit {
   configuredVmList: any = [];
   isDisplayOverlay: boolean = false;
@@ -43,11 +48,14 @@ export class VmConfigurationListComponent implements OnInit {
     {name: 'Mac'},
     {name: 'Linux'}
   ]
-  environmentOptions: SelectItem[] = [
-    { label: 'Windows', value: 'Windows' },
-    { label: 'Linux', value: 'Linux' },
-    { label: 'Mac', value: 'Mac' }
+
+   environmentOptions: SelectItem[] =[
+    { name: 'Windows', value: 'Windows' },
+    { name: 'Linux', value: 'Linux' },
+    { name: 'Mac', value: 'Mac' }
+
   ];
+
   mode: 'Create' | 'Update' = 'Create'; 
   predBotData:any;
 
@@ -57,7 +65,8 @@ export class VmConfigurationListComponent implements OnInit {
     agentPath: ['', Validators.required],
     hostAddress: ['', Validators.required],
     username: ['', Validators.required],
-    password: ['', Validators.required],
+    password: ['', [Validators.required,
+    Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
     connectionType: ['SSH', Validators.required],
     portNumber: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
   });
@@ -120,7 +129,7 @@ export class VmConfigurationListComponent implements OnInit {
     const requestData = {
       ...this.vmForm.value,
         password:  this.crypto.encrypt(this.vmForm.get("password").value),
-        environmentType: selectedEnvironmentType.value,
+        // environmentType: selectedEnvironmentType.value,
         activeStatus: 1,
         categoryId: 0,
         createdAt: new Date().toISOString(),
@@ -158,6 +167,7 @@ export class VmConfigurationListComponent implements OnInit {
 
   onCancel(){
     this.resetForm();
+    this.mode="Create"
     this.isDisplayOverlay =false;
   }
 
@@ -257,8 +267,8 @@ export class VmConfigurationListComponent implements OnInit {
     });
   }
 
-  onEnvironmentChange(value: string) {
-    this.vmForm.get('environmentType').setValue(value);
+  onEnvironmentChange(event) {
+    this.vmForm.get('environmentType').setValue(event.value);
   }
 
 }
