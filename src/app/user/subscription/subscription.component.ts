@@ -211,6 +211,7 @@ export class SubscriptionComponent implements OnInit {
                 obj["isYearlySubscribed"] = isYearlySubscribed;
                 obj["isMonthlySubscribed"] = isMonthlySubscribed;
                 obj["doPlanDisabled"] = isSubscribed;
+                obj['quantity']=1
                 this.botPlans.push(obj);
             });
             this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
@@ -240,7 +241,10 @@ paymentPlan() {
   this.selectedPlans.forEach((element) => {
     element.priceCollection.forEach((price) => {
       if (price.recurring.interval === selectedInterval) {
-        filteredPriceIds.push(price.id);
+        let obj={}
+        obj["id"]=price.id
+        obj["quantity"]=element.quantity
+        filteredPriceIds.push(obj);
       }
     });
   });
@@ -255,9 +259,9 @@ paymentPlan() {
   }
   let req_body = {
     // "price": filteredPriceIds,
-    "priceData": filteredPriceIds.map(priceId => ({
-      "price": priceId,
-      "quantity": "1"
+    "priceData": filteredPriceIds.map(price => ({
+      "price": price.id,
+      "quantity": price.quantity
     })),
     "customerEmail": this.userEmail,
     "successUrl": environment.paymentSuccessURL,
@@ -344,7 +348,9 @@ readValue(value){
     this.selectedPlans.forEach((item) => {
       item.priceCollection.forEach((price) => {
         if (price.recurring.interval === selectedInterval) {
-          plansData.push(price.unitAmount);
+          // plansData.push(price.unitAmount);
+          plansData.push(price.unitAmount*Number(item.quantity));
+
         }
       });
     });
@@ -394,6 +400,21 @@ readValue(value){
 
   decodeBase64Image(base64Data: string): string {
     return 'data:image/jpeg;base64,' + base64Data;
+  }
+
+  incrementQuantity(plan: any) {
+    plan.quantity++;
+    this.planSelection(this.selectedPlan)
+
+  }
+
+  decrementQuantity(plan: any) {
+
+      if (plan.quantity > 1) {
+          plan.quantity--;
+      this.planSelection(this.selectedPlan)
+
+      }
   }
 
 }
