@@ -68,5 +68,8 @@ export class EnterpriseRequestsComponent implements OnInit {
     table.filterGlobal("","");
     this.searchValue=''
 }
+  enterPriseRequestMethod() {
+    this.getenterPriseRequestedUsers()
+  }
 
 }
