@@ -189,7 +189,7 @@
                         <label for="inputZip" class="label-control">Zip Code <span class="star">*</span></label>
                         <input type="text" pInputText formControlName="zipCode" style="height: 45px !important;
                         border-radius: 5px;" class="form-control" id="inputZip" autocomplete="off"
-                            placeholder="Enter zip code" maxlength="6" tabindex="7" (keydown)="onKeydown($event)" required>
+                            placeholder="Enter zip code" minlength="5" maxlength="6" tabindex="7" (keydown)="onKeydown($event)" required>
                         <span class="required" *ngIf="getErrorMessage('zipCode') !== ''"> {{ getErrorMessage('zipCode') }} </span>
                     </div>
                     
