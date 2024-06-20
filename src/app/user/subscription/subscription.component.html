@@ -56,13 +56,13 @@
                                           <div class="text-center" style="margin: 5px 0 0 0;" *ngFor="let detail of plan.priceCollection">
                                             <div *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly' ">
                                                 <div *ngIf="detail.isPlanSubscribed && detail.tiersMode=== 'month' && selectedPlan === 'Monthly'">
-                                                    <span *ngIf="true" class="active-plan">Active Plan</span>
+                                                    <span class="active-plan">Active Plan</span>
                                                 </div>
                                                 <b style="font-size: 1rem;">$ {{detail.unitAmount}} USD / </b><b>{{detail.tiersMode}}</b>
                                             </div>
                                             <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly' ">
                                                 <div *ngIf="detail.isPlanSubscribed && detail.tiersMode=== 'year' && selectedPlan === 'Yearly'">
-                                                    <span *ngIf="true" class="active-plan">Active Plan</span>
+                                                    <span class="active-plan">Active Plan</span>
                                                 </div>
                                                 <b style="font-size: 1rem;">$ {{detail.unitAmount}} USD / </b><b>{{detail.tiersMode}}</b>
                                             </div>
