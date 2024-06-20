@@ -29,6 +29,7 @@ import Swal from 'sweetalert2';
 export class OnboardTenantComponent implements OnInit {
   @Input() userData: any;
   @Output() close_overlay = new EventEmitter();
+  @Output() callEnterPriceRequest: EventEmitter<void> = new EventEmitter<void>();
   tenantForm: FormGroup;
   private spacialSymbolEncryption: string = "->^<-";
   public useremail: any;
@@ -234,6 +235,7 @@ export class OnboardTenantComponent implements OnInit {
           this.spinner.hide();
           this.rest_api.convertUserToEnterPrise(userId).subscribe(res=>{});
           this.close_overlay.emit(true);
+          this.callEnterPriceRequest.emit();
           Swal.fire({
             title: 'Success!',
             text: `Successfully Created Tenant!`,
@@ -402,7 +404,7 @@ export class OnboardTenantComponent implements OnInit {
         return `${controlName} required`;
       }
       if (control.errors.minlength) {
-        return "Minimum 2 characters required";
+        return "Minimum 5 characters required";
       }
       if (control.errors.pattern) {
         return "Space between words are allowed";
