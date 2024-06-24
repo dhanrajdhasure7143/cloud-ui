@@ -314,7 +314,7 @@ onSelectPredefinedBot(plan, index) {
       this.selectedPlans.push(item);
     }
   })
-  this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
+  // this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
   this.isDisabled = this.selectedPlans.length === 0;
   this.planSelection(this.selectedPlan);
 }
