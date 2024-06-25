@@ -20,7 +20,6 @@ export interface AiotalAppConfig {
   rpaendpoint:String;
   piendpoint:String;
   isNewDesignEnabled : boolean;
-  asquareproductendpoint: String;
 }
 
 export const AppConfig: AiotalAppConfig = {
@@ -43,7 +42,6 @@ export const AppConfig: AiotalAppConfig = {
    isTwoFactorAuthenticationEnabled: environment.isTwoFactorAuthenticationEnabled,
    isSecurityManagerEnabled : environment.isSecurityManagerEnabled,
    isNewDesignEnabled : environment.isNewDesignEnabled,
-   asquareproductendpoint : environment.asquareproductendpoint,
 
   
   // demo

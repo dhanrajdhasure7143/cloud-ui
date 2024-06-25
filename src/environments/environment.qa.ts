@@ -13,7 +13,6 @@ export const environment = {
     socialLoginRedirectURL: 'http://ezflow.qa.epsoftinc.in/#/user',
     rpaendpoint:"http://rpa.qa.epsoftinc.in",
     piendpoint:"http://pi.qa.epsoftinc.in",
-    asquareproductendpoint: 'http://asquare.qa.epsoftinc.in',
     isTwoFactorAuthenticationEnabled: false,
     isSecurityManagerEnabled : false,
     isNewDesignEnabled : true,
