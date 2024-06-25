@@ -9,14 +9,14 @@ networks:
     name: host
 
 services:
-  cloud-ui:
-    image: ${DOCKER_REGISTRY_URL}/cloud-ui:${DOCKER_TAG}
+  cloud-ui-ai-agents:
+    image: ${DOCKER_REGISTRY_URL}/cloud-ui-ai-agents:${DOCKER_TAG}
     deploy:
       replicas: 1
     networks:
       - eps_net
     ports:
-      - 9198:80
+      - 9202:80
     logging:
       options:
         tag: "{{.Name}}"
