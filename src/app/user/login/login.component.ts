@@ -457,7 +457,7 @@ export class LoginComponent implements OnInit {
         this.route.queryParams.subscribe(res=>{
           if(res){
             if(res.redirect_to == "asquare"){
-              productURL = this.config.asquareproductendpoint;
+              // productURL = this.config.asquareproductendpoint;
             }else if(res.redirect_to.includes("localhost")){
               productURL = String("http://"+res.redirect_to)
             }else{

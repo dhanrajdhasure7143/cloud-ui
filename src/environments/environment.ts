@@ -12,18 +12,17 @@ export const environment = {
   socialAndWorkLogin: 'http://ezbotdevapi.aiotal.in',
   notificationsendpoint: 'http://alerts.dev.epsoftinc.in',
   Subscriptionendpoint:'http://subscription.dev.epsoftinc.in',
-  productendpoint: 'http://eziap.dev.epsoftinc.in',
-  newproductendpoint: 'http://eziap.dev.epsoftinc.in',
-  socialLoginRedirectURL: 'http://ezflow.dev.epsoftinc.in/#/user',
+  productendpoint: 'http://epsoftiap.dev.ai',
+  newproductendpoint: 'http://epsoftiap.dev.ai',
+  socialLoginRedirectURL: 'http://epsoft.dev.ai/#/user',
   rpaendpoint:"http://rpa.dev.epsoftinc.in",
   piendpoint:"http://pi.dev.epsoftinc.in",
-  asquareproductendpoint: 'http://asquare.dev.epsoftinc.in',
   isTwoFactorAuthenticationEnabled: false,
   isSecurityManagerEnabled : false,
   isNewDesignEnabled : true,
   isSubscrptionEnabled : true,
-  paymentSuccessURL:"http://ezflow.dev.epsoftinc.in/#/success",
-  paymentFailuerURL:"http://ezflow.dev.epsoftinc.in/#/subscription",
+  paymentSuccessURL:"http://epsoft.dev.ai/#/success",
+  paymentFailuerURL:"http://epsoft.dev.ai/#/subscription",
   stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
 };
 
