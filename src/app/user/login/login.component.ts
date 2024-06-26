@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
   public enteredOTP:boolean = false;
   public otp:any;
   public errormsg: any;
+  public isUserNotFound:boolean=false;
   public hide:any = true;
   inactive:any;
   googleLoginURL:any;
@@ -221,7 +222,6 @@ export class LoginComponent implements OnInit {
       
       this.authenticationService.validateOTP(this.f.username.value.toLowerCase(), this.f.otpNum.value).subscribe(data => {
 
-       
         this.authenticationMeothod();
        
         
@@ -334,7 +334,7 @@ export class LoginComponent implements OnInit {
       
      this.spinner.hide();
       if(this.errormsg==undefined){
-      this.error = "Invalid Credentials. Please try again !!";
+      this.error = this.isUserNotFound==false?"Invalid Credentials. Please try again !!":"User Not Found!!"
       }
       if(error.error.status=='LOCKED'){
          this.error = "Account Locked !! Please try after 3 hrs.";
@@ -540,11 +540,17 @@ onKeydownfeilds(event){
   this.error=""
 }
   onEmailChange(){
+    this.isUserNotFound=false
     this.isOTP=false;
     this.twoFactorAuthConButton = true;
     
     if(this.f.username.valid){
     this.profileService.getTwoFactroConfig(this.f.username.value.toLowerCase()).subscribe(res=>{
+
+ 
+        if (res.message && res.message.toLowerCase() === "user not found") {
+          this.isUserNotFound=true;
+        }
       if(!res.message){
         if(res.twoFactorEnabled == true){
           this.loginForm.addControl('otpNum', this.formBuilder.control('',[Validators.required]))
