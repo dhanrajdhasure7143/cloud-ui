@@ -63,8 +63,9 @@ export class SubscriptionComponent implements OnInit {
                   if(data){
                     console.log("data",data)
                   // let params:any = JSON.parse(this.crypto.decrypt(data.token));
-                  this.emailToken = data.token
-                this.userEmail = this.crypto.decrypt(data.token);
+                    const formattedToken = data.token.replace(/\s+/g, '+');
+                    this.emailToken = formattedToken
+                    this.userEmail = this.crypto.decrypt(formattedToken);
                 console.log("this.userEmail",this.userEmail)
                 // this.isRegistered = params.isRegistered;
                   }
