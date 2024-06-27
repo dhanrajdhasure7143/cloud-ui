@@ -351,6 +351,7 @@ export class SignUpComponent implements OnInit {
       'organization':this.signupForm.value.organization,
       'userId' : this.signupForm.value.email.toLowerCase(),
       'password': this.signupForm.value.password,
+      'userProduct':environment.product
     }
     this.userId = this.signupForm.value.email.toLowerCase();
     this.userPsw = this.signupForm.value.password
