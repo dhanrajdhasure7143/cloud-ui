@@ -47,7 +47,7 @@ export class AppService {
    }
   
 
-  login(username: string, password: string) {
+  login(username: string, password: string, product:string) {
     this.getIP();
   let headers = {};
   let url = `/api/login/beta/accessToken`;
@@ -65,7 +65,7 @@ export class AppService {
   
   if(isSecurityManagerEnabled){url = `/Idm/accessToken`;}
   //headers = { 'content-type': 'application/json, text/plan'}
-  let reqObj = { 'userId' : username, 'password' : password }
+  let reqObj = { 'userId' : username, 'password' : password,"product":product }
   let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(reqObj));
     return this.http.post<any>(url, {"enc":encrypt}, {headers})
         .pipe(map(user => {

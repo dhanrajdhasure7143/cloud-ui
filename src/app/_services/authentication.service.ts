@@ -17,8 +17,8 @@ export class AuthenticationService {
    
     constructor(private http: HttpClient, private appService: AppService) { }
 
-    login(username: string, password: string) {
-      return this.appService.login(username, password);
+    login(username: string, password: string,product:string) {
+      return this.appService.login(username, password,product);
     }
 
     logout() {
