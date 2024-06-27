@@ -17,7 +17,7 @@ export const environment = {
     isTwoFactorAuthenticationEnabled: false,
     isSecurityManagerEnabled : false,
     isNewDesignEnabled : true,
-   isSubscrptionEnabled : true,
+   isSubscrptionEnabled : false,
    paymentSuccessURL:"http://ezflow.qa.epsoftinc.in/#/success",
    paymentFailuerURL:"http://ezflow.qa.epsoftinc.in/#/subscription",
    stripeKey:"pk_test_51MnxmQIGBQXHW84IJAWLNX28SJ2JOgyWYhAfZ5Y8mKQzKOZ7SrfQ1ZNmDEcVRrLT3lJti7Qo5jBBxM5AP6n5xVbQ00b9w1UMfK",
