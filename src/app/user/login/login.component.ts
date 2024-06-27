@@ -259,10 +259,19 @@ export class LoginComponent implements OnInit {
  authenticationMeothod(){
    this.spinner.show();
   this.authenticationService
-  .login(this.f.username.value.toLowerCase(), this.f.password.value)
+  .login(this.f.username.value.toLowerCase(), this.f.password.value,environment.product)
   .pipe(first())
   .subscribe(data => {
      this.errormsg=data;
+     if(data.code == 4014){
+      Swal.fire({
+        icon: 'error',
+        title:"Error",
+        text: "This user does not exist in "+ environment.product+" product, Please try to login with other product."
+      });
+      this.spinner.hide();
+      return
+     }
      if(data.isError == "true"){
 
       if(data.current_registration_screen == "basic_details_completed" || data.current_registration_screen == "drafted_user_credentials" ){
