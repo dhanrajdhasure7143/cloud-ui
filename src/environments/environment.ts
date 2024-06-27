@@ -23,7 +23,8 @@ export const environment = {
   isSubscrptionEnabled : true,
   paymentSuccessURL:"http://epsoft.dev.ai/#/success",
   paymentFailuerURL:"http://epsoft.dev.ai/#/subscription",
-  stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq"
+  stripeKey:"pk_test_51K5EsdSGPu394velvnjppO7wSsy1J1RLBGQ9wsHR2r6MnZvZmOXbP8laJ1vVaAgQFayDJeNJea1qyxwJyyWjrS7f00q4AByMTq",
+  product:"AiAgents"
 };
 
 /*
