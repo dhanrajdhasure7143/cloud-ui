@@ -116,7 +116,10 @@
                         </div>
 
                         <div class="col-sm-12">
-                          <button class="btn btn-primary signup-btn" (click)="onRegistrationStart()"  [disabled]="signupForm.invalid" type="submit" id="btn"> Next </button>
+                          <button class="btn btn-primary signup-btn" (click)="onRegistrationStart()"  [disabled]="signupForm.invalid" type="submit" id="btn"> 
+                            <span *ngIf="isSubscriptionEnabled">Next</span> 
+                            <span *ngIf="!isSubscriptionEnabled">Contact Sales</span> 
+                        </button>
                         </div>
                     </div>
                 </form>
