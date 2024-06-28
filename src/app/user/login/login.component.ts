@@ -277,6 +277,7 @@ export class LoginComponent implements OnInit {
       if(data.current_registration_screen == "basic_details_completed" || data.current_registration_screen == "drafted_user_credentials" ){
         // let obj = {email : this.f.username.value.toLowerCase(),navigatingFrom:"login"}
         if(!this.isSubscriptionEnabled){
+          this.spinner.hide();
           this.showWarningPopup = true;
         }else{
           this.router.navigate(['/subscription'],{
@@ -288,6 +289,7 @@ export class LoginComponent implements OnInit {
       if(data.current_registration_screen == "subscription_pending" || data.current_registration_screen == "drafted_user_credentials" ){
         // let obj = {email : this.f.username.value.toLowerCase(), navigatingFrom:"login", isRegistered : true}
         if(this.isSubscriptionEnabled){
+          this.spinner.hide();
           this.showWarningPopup = true;
         }else{
           this.router.navigate(['/subscription'],{
