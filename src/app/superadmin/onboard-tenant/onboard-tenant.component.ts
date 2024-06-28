@@ -67,6 +67,9 @@ export class OnboardTenantComponent implements OnInit {
   ispublicMail:boolean = false;
   isCreateAccount:boolean = false;
   orgExsist:boolean;
+  // productInfo: any[]=["EZFlow","AiAgents"];
+  productInfo: any[]=["EZFlow"];
+
   constructor(
     private formBuilder: FormBuilder,
     private service: FirstloginService,
@@ -91,6 +94,7 @@ export class OnboardTenantComponent implements OnInit {
       phoneNumber: ["", Validators.required],
       expiryDate: ["", Validators.required],
       zipCode: ["", Validators.required],
+      product: ["", Validators.required]
     });
     // this.datePickerConfig = {
     //   dateInputFormat: 'YYYY-MM-DD',
@@ -105,7 +109,6 @@ export class OnboardTenantComponent implements OnInit {
     this.getAllDepartments();
 }
   ngOnChanges(changes:SimpleChanges){
-    console.log(this.userData, "userData")
     if(this.userData){
     // this.getCountries();
     // this.getAllDepartments();
@@ -145,11 +148,9 @@ export class OnboardTenantComponent implements OnInit {
   }
 
   updateAccount(type) {
-    console.log(this.tenantForm.value.expiryDate,"this.tenantForm.value.expiryDate")
     this.spinner.show();
     var payload = new FormData();
     var reqObj = {}
-    console.log(this.tenantForm.value);
     const originalDate = new Date(this.tenantForm.value.expiryDate);
     let expiryDate = this.datePipe.transform(originalDate, 'EEE MMM dd yyyy')
     reqObj = {
@@ -174,12 +175,13 @@ export class OnboardTenantComponent implements OnInit {
   if(type == "create"){
     reqObj["password"] = this.tenantForm.value.password;
     reqObj["expiresAt"] = expiryDate;
+    reqObj["userProduct"] = this.tenantForm.value.product;
   }
+  console.log(reqObj)
   // console.log(this.tenantForm.value,"this.tenantForm.value.expiryDate")
   payload.append('firstName', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   // payload.append('expairyData', this.cryptoService.encrypt(JSON.stringify(reqObj)));
   // console.log(this.cryptoService.encrypt(JSON.stringify(reqObj)),"superadmin")
-  console.log(payload)
   if(type != "create"){
     this.onBoardEnterPriseTenant(payload,this.tenantForm.value.userId.toLowerCase())
   }else{
@@ -284,7 +286,6 @@ export class OnboardTenantComponent implements OnInit {
     this.cityInfo = City.getAllCities();
     if(stateValue){
       const matchingState = this.stateInfo.find((item: any) => item.name == stateValue);
-      console.log(matchingState,this.stateInfo)
         this.cityInfo = this.cityInfo.filter((city: any) => city.countryCode === matchingState.countryCode && city.stateCode === matchingState.isoCode);
         this.errorMessage1=""
       if (this.cityInfo.length === 0) {
