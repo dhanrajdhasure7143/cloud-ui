@@ -306,7 +306,8 @@ sendEmailEnterPrisePlan(){
   })
 }
 
-onSelectPredefinedBot(plan, index) {
+onSelectPredefinedBot(plan:any, index) {
+  plan.quantity = 1
   this.selectedPlans = [];
   this.botPlans[index].isSelected = !this.botPlans[index].isSelected;
   this.isDisabled = this.botPlans.every(item => !item.isSelected);
