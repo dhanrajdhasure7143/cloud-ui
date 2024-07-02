@@ -227,7 +227,7 @@ this.spinner.show()
     this.rest_api.savePredefinedTemplate(req_body).subscribe(res=>{
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
       let reqObject = {"attributesList":this.newAttributes_list}
-      this.rest_api.savePredefinedAttributes(reqObject).subscribe(res=>{
+      this.rest_api.savePredefinedAttributes(this.newAttributes_list).subscribe(res=>{
         console.log(res)
         console.log("attributesResponse",res)
       })
