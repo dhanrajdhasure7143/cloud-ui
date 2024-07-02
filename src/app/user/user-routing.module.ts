@@ -18,6 +18,7 @@ import { SuccessPaymentComponent } from './success-payment/success-payment.compo
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { AiAgentSignupComponent } from './ai-agent-signup/ai-agent-signup.component';
+import { AiAgentSubscriptionComponent } from './ai-agent-subscription/ai-agent-subscription.component';
 
 const routes: Routes = [
   {
@@ -65,7 +66,8 @@ const routes: Routes = [
   },
   {
     path:'subscription',
-    component: SubscriptionComponent
+    // component: SubscriptionComponent
+    component: AiAgentSubscriptionComponent
   },
   {
     path: 'signup',
@@ -88,6 +90,11 @@ const routes: Routes = [
   },
   {path:'ai-agents/signup',
     component: AiAgentSignupComponent
+  },
+  {
+    path:'agent-subscription',
+    // component: SubscriptionComponent
+    component: AiAgentSubscriptionComponent
   },
   // otherwise redirect to home
   { path: '**', redirectTo: 'user' }
