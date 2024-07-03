@@ -71,6 +71,16 @@ export class AiAgentSubscriptionComponent implements OnInit {
                 console.log("this.userEmail",this.userEmail)
                 // this.isRegistered = params.isRegistered;
                   }
+                  // Check if returning from Stripe
+                  if (data['payment'] === 'success') {
+                    Swal.fire('Success', 'Your payment was successful!', 'success');
+                    // Clear stored plans after successful payment
+                    localStorage.removeItem('selectedPlans');
+                    localStorage.removeItem('selectedInterval');
+                  } else {
+                    // Retrieve stored plans if they exist
+                    this.retrieveStoredPlans();
+                  }
                 })
                }
 
@@ -233,6 +243,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
             this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
 
             this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
+            this.updateUIWithStoredPlans();
         }
     }, err => {
         this.spinner.hide();
@@ -273,6 +284,8 @@ paymentPlan() {
     this.spinner.hide();
     return;
   }
+  localStorage.setItem('selectedPlans', JSON.stringify(this.selectedPlans));
+  localStorage.setItem('selectedInterval', this.selectedPlan);
   let req_body = {
     // "price": filteredPriceIds,
     "priceData": filteredPriceIds.map(price => ({
@@ -372,12 +385,13 @@ readValue(value){
         }
       });
     });
-    this.totalAmount = 0;
-    plansData.forEach((amount) => {
-      this.totalAmount += amount;
-    });
-
-    console.log("scjhwdcbwhjhjebebjehvhjeverhjebc", this.totalAmount)
+    // this.totalAmount = 0;
+    // plansData.forEach((amount) => {
+      //   this.totalAmount += amount;
+      // });
+      
+      // console.log("scjhwdcbwhjhjebebjehvhjeverhjebc", this.totalAmount)
+      this.totalAmount = plansData.reduce((sum, amount) => sum + amount, 0);
   }
 
   showDescription(index: number) {
@@ -471,5 +485,28 @@ readValue(value){
   }
 
   expandedSpecs: { [key: number]: boolean } = {};
+
+  retrieveStoredPlans() {
+  const storedPlans = localStorage.getItem('selectedPlans');
+  const storedInterval = localStorage.getItem('selectedInterval');
+  
+  if (storedPlans && storedInterval) {
+    this.selectedPlans = JSON.parse(storedPlans);
+    this.selectedPlan = storedInterval;
+  }
+}
+  updateUIWithStoredPlans() {
+    if (this.selectedPlans.length > 0) {
+      this.botPlans.forEach(plan => {
+        const selectedPlan = this.selectedPlans.find(sp => sp.id === plan.id);
+        if (selectedPlan) {
+          plan.isSelected = true;
+          plan.quantity = selectedPlan.quantity;
+        }
+      });
+      this.isDisabled = false;
+      this.planSelection(this.selectedPlan);
+    }
+  }
 }
 
