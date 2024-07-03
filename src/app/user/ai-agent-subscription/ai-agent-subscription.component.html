@@ -5,9 +5,19 @@
             <div class="heading-ent">Enterprise Plan</div>
             <div class="plan-details">
                 <span class="exclusive-pricing">Exclusive Pricing</span>
-                <ul class="features-list" *ngFor="let plan of enterPrise_plan.features">
-                    <li>{{plan}}</li>
-                </ul>
+                <div *ngIf="!showSkeleton">
+                    <ul  class="features-list" *ngFor="let plan of enterPrise_plan.features">
+                        <li>{{plan}}</li>
+                    </ul>
+                </div>
+
+                <div *ngIf="showSkeleton">
+                    <ul class="skeleton-list">
+                        <li class="skeleton-list-item" *ngFor="let _ of [1, 2, 3]">
+                            <p-skeleton width="80%" height="1rem"></p-skeleton>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="contact-sales-wrapper">
                 <button disabled class="btn btn-primary contact-sales" (click)="sendEmailEnterPrisePlan()">Contact
@@ -31,8 +41,8 @@
             </div>
 
             <!-- Cards Section -->
-            <div class="cards-container">
-                <div class="inner-cards-container">
+            <div class="cards-container"> 
+                <div class="inner-cards-container" *ngIf="!showSkeleton">
                     <div class="card" *ngFor="let plan of botPlans; let i = index"
                         (click)="!((selectedPlan === 'Monthly' && plan.isMonthlySubscribed) || (selectedPlan === 'Yearly' && plan.isYearlySubscribed)) && onSelectPredefinedBot(plan, i)"
                         [ngClass]="{'selected-square': plan.isSelected}">
@@ -84,14 +94,33 @@
                             <ul class="specs-list" [class.collapsed]="!plan.showAllSpecs">
                                 <li *ngFor="let item of plan.features">{{item}}</li>
                             </ul>
-                            <button *ngIf="plan.features.length >= 3" class="btn btn-link show-more"
+                            <button *ngIf="plan.features.length > 3" class="btn btn-link show-more"
                                 (click)="toggleSpecs(plan) ; $event.stopPropagation()">
                                 {{ plan.showAllSpecs ? 'Show Less' : 'Show More' }}
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- skeleton for Agent's -->
+                <div *ngIf="showSkeleton">
+                        <div class="p-grid p-formgrid skeleton-box">
+                            <div class="p-field skeleton-card-box" *ngFor="let _ of [1, 2, 3, 4]">
+                                <div class="custom-skeleton">
+                                    <div class="skeleton-header">
+                                        <p-skeleton shape="circle" size="4rem" styleClass="circle-skeleton"></p-skeleton>
+                                        <p-skeleton width="13rem" height="1.7rem"></p-skeleton>
+                                    </div>
+                                    <p-skeleton width="100%" height="100px" styleClass="info-skeleton"></p-skeleton>
+                                    <div class="skeleton-footer">
+                                        <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                                        <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>           
+                </div>
 
             <!-- Total Purchase Amount section -->
             <div class="bottom-section">

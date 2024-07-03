@@ -50,6 +50,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   enterPrise_plan:any={};
   predefinedRawBots: any[] = [];
   emailToken:any;
+  showSkeleton:boolean;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -74,6 +75,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
                }
 
   ngOnInit(): void {
+    this.showSkeleton=true
     this.spinner.show();
     this.subscriptionForm = this.formBuilder.group({
       cardNumber: [''],
@@ -151,6 +153,7 @@ export class AiAgentSubscriptionComponent implements OnInit {
   loadPredefinedBots() {
     this.service.loadPredefinedBots().subscribe((response: any) => {
         this.spinner.hide();
+        this.showSkeleton=false
         // console.log(response);
         // this.getPaymentMethods();
         if (response) {
