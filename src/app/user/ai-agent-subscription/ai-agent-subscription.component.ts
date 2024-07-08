@@ -392,6 +392,8 @@ readValue(value){
       
       // console.log("scjhwdcbwhjhjebebjehvhjeverhjebc", this.totalAmount)
       this.totalAmount = plansData.reduce((sum, amount) => sum + amount, 0);
+    localStorage.setItem('selectedPlans', JSON.stringify(this.selectedPlans));
+    localStorage.setItem('selectedInterval', this.selectedPlan);
   }
 
   showDescription(index: number) {
@@ -441,6 +443,10 @@ readValue(value){
 
   incrementQuantity(plan: any) {
     plan.quantity++;
+    const selectedPlan = this.selectedPlans.find(sp => sp.id === plan.id);
+    if (selectedPlan) {
+      selectedPlan.quantity = plan.quantity;
+    }
     this.planSelection(this.selectedPlan)
 
   }
@@ -449,6 +455,10 @@ readValue(value){
 
       if (plan.quantity > 1) {
           plan.quantity--;
+      const selectedPlan = this.selectedPlans.find(sp => sp.id === plan.id);
+      if (selectedPlan) {
+        selectedPlan.quantity = plan.quantity;
+      }
       this.planSelection(this.selectedPlan)
       console.log("QTY", plan.quantity)
 
@@ -495,13 +505,27 @@ readValue(value){
     this.selectedPlan = storedInterval;
   }
 }
+
+  findPriceForInterval(plan: any, interval: string): any {
+    return plan.priceCollection.find(price => price.recurring.interval === interval);
+  }
+
   updateUIWithStoredPlans() {
     if (this.selectedPlans.length > 0) {
+      const selectedInterval = this.selectedPlan === 'Monthly' ? 'month' : 'year';
       this.botPlans.forEach(plan => {
         const selectedPlan = this.selectedPlans.find(sp => sp.id === plan.id);
         if (selectedPlan) {
           plan.isSelected = true;
-          plan.quantity = selectedPlan.quantity;
+          const selectedPrice = this.findPriceForInterval(selectedPlan, selectedInterval);
+          if (selectedPrice) {
+            plan.quantity = selectedPrice.quantity || selectedPlan.quantity || 1;
+          } else {
+            plan.quantity = selectedPlan.quantity || 1;
+          }
+        } else {
+          plan.isSelected = false;
+          plan.quantity = 1;
         }
       });
       this.isDisabled = false;

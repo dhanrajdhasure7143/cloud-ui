@@ -107,6 +107,8 @@ export class SuccessPaymentComponent implements OnInit {
         // this.router.navigate(['/userDetails'],{
         //   queryParams: { token: this.crypto.encrypt(JSON.stringify(this.userData))},
         // });
+        localStorage.removeItem('selectedPlans');
+        localStorage.removeItem('selectedInterval');
         this.loginUser(this.userData);
       }
     });
