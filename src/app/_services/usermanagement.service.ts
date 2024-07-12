@@ -120,4 +120,16 @@ export class UsermanagementService implements OnInit {
     return this.http.post("/rpa-service/predefined/save-predefinedBot-attribtes",body)
   }
 
+  getAllPredefinedAttributes(){ 
+    return this.http.get("/rpa-service/predefined/getAll-aiagents-attributes")
+  }
+
+  deleteAiAgentTemplate(id){
+    return this.http.post("/rpa-service/predefined/delete-aiagent-template/"+id,'');
+  }
+
+  deleteAiAgentAttribute(id){
+    return this.http.post("/rpa-service/predefined/delete-aiagent-attrubutes/"+id,'');
+  }
+
 }
