@@ -21,7 +21,14 @@ export class DashboardComponent implements OnInit {
     private restapi: UsermanagementService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
-  ) {
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+    ) {
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.selected_tab_index = params['active'] || 0;
+        this.check_tab = params['active'] || 0;
+        this.selectedTab = parseInt(this.selected_tab_index);
+      });
 
   }
   selected_tab_index:any;
@@ -36,9 +43,14 @@ export class DashboardComponent implements OnInit {
     }
   }
   
-  onTabChange(event,tabView){
+  onTabChange(event, tabView) {
     const tab = tabView.tabs[event.index].header;
     this.selected_tab_index = event.index;
     this.check_tab = event.index;
+    // Append selected_tab_index to query params
+    this.router.navigate([], {
+      queryParams: { active: this.selected_tab_index },
+      queryParamsHandling: 'merge'
+    });
   }
 }

@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="enterprise-layout">
         <!-- <p-scrollPanel [style]="{width: '100%', height: '100%'}"> -->
-        <p-table #dt [value]="templateList" [columns]="columnList" [scrollable]="true"
+        <!-- <p-table #dt [value]="templateList" [columns]="columnList" [scrollable]="true"
           [globalFilterFields]="search_fields" [resizableColumns]="true" responsiveLayout="scroll"
           [reorderableColumns]="true">
           <ng-template pTemplate="caption">
@@ -64,12 +64,151 @@
               <td style="text-align: center;" colspan="8">No Records Found</td>
             </tr>
           </ng-template>
-        </p-table>
+        </p-table>   -->
         <!-- </p-scrollPanel> -->
+        <p-table [value]="aiagent_templats" dataKey="predefinedBotId" [tableStyle]="{'min-width': '60rem'}">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th style="width: 5rem"></th>
+                  <th pSortableColumn="predefinedBotName">AiAgent Name <p-sortIcon field="predefinedBotName"></p-sortIcon></th>
+                  <th pSortableColumn="productId">AiAgent Id <p-sortIcon field="productId"></p-sortIcon></th>
+                  <th pSortableColumn="predefinedUUID">AiAgent UUID <p-sortIcon field="predefinedUUID"></p-sortIcon></th>
+                  <th pSortableColumn="action">Scheduler</th>
+                  <!-- <th pSortableColumn="action">Actions</th> -->
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product let-expanded="expanded">
+              <tr>
+                  <td>
+                      <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                  </td>
+                  <td>{{product.predefinedBotName || '-'}}</td>
+                  <td>{{product.productId || '-'}}</td>
+                  <td>{{product.predefinedUUID}}</td>
+                  <td>{{product.schedulerRequired? 'Yes' : 'No'}}</td>
+                  <!-- <td>
+                    <a pTooltip="View Attributes" tooltipPosition="top" (click)="onClickViewAttributes(product)">
+                      <img src="../../../assets/a_images/view-hover.svg" alt="View Attributes" class="testplus hover-icon">
+                  </a>
+                  </td> -->
+
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-product>
+              <tr>
+                  <td colspan="7">
+                      <div class="p-3">
+                        <p-tabView>
+                          <p-tabPanel header="Templates">
+                            <div style="text-align: end;">
+                              <button class="btn btn-primary" (click)="openOverlay()" style="margin-right: 10px;">Add Template</button>
+                            </div>
+                            <p-table [value]="product.templates_list" dataKey="id" responsiveLayout="scroll" [responsive]="true">
+                              <ng-template pTemplate="header">
+                                  <tr>
+                                    <th pSortableColumn="botName">Predefined Bot Name <p-sortIcon field="botName"></p-sortIcon></th>
+                                    <th pSortableColumn="predefinedBotType">Product Type <p-sortIcon field="predefinedBotType"></p-sortIcon></th>
+                                    <th pSortableColumn="execution_order_id">Execution Order Id <p-sortIcon field="execution_order_id"></p-sortIcon></th>
+                                    <th pSortableColumn="botType">Bot Type <p-sortIcon field="botType"></p-sortIcon></th>
+                                    <th pSortableColumn="createdAt">Created At <p-sortIcon field="createdAt"></p-sortIcon></th>
+                                    <th pSortableColumn="action">Actions</th>
+                                      <!-- <th pSortableColumn="id">Id <p-sortIcon field="price"></p-sortIcon></th>
+                                      <th pSortableColumn="customer">Customer <p-sortIcon field="customer"></p-sortIcon></th>
+                                      <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                                      <th pSortableColumn="amount">Amount <p-sortIcon field="amount"></p-sortIcon></th>
+                                      <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+                                      <th style="width: 4rem"></th> -->
+                                  </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-order>
+                                  <tr>
+                                      <td>{{order.botName || '-'}}</td>
+                                      <td>{{order.predefinedBotType || '-'}}</td>
+                                      <td>{{order.execution_order_id}}</td>
+                                      <td>{{order.botType}}</td>
+                                      <td>{{order.createdAt| date: 'MMM dd, y, h:mm a'}}</td>
+                                      <td>
+                                        <a pTooltip="Edit" tooltipPosition="top" (click)="onClickEdit(order)">
+                                          <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                      </a>
+                                        <a pTooltip="Delete" tooltipPosition="top" (click)="onDeleteTemplate(order)">
+                                          <img src="../../../assets/a_images/delete-hover.svg" class="testplus hover-icon" alt="delete">
+                                      </a>
+                                      </td>
+                                  </tr>
+                              </ng-template>
+                              <ng-template pTemplate="emptymessage">
+                                  <tr>
+                                      <td colspan="6">There are no order for this product yet.</td>
+                                  </tr>
+                              </ng-template>
+                          </p-table>
+                          </p-tabPanel>
+                          <p-tabPanel header="Attributes">
+                            <div style="text-align: end;">
+                              <button class="btn btn-primary" (click)="openAttributesOverlay(product)" style="margin-right: 10px;">Add Attributes</button>
+                            </div>
+                            <p-table [value]="product.attributes_list" responsiveLayout="scroll" [rows]="5" [responsive]="true">
+                              <ng-template pTemplate="header">
+                                  <tr>
+                                      <th pSortableColumn="preAttributeName">Attribute Name <p-sortIcon field="preAttributeName"></p-sortIcon></th>
+                                      <th pSortableColumn="preAttributeType">Widget Type</th>
+                                      <th pSortableColumn="preAttributeLable">Label</th>
+                                      <th pSortableColumn="visibility">Visibility <p-sortIcon field="visibility"></p-sortIcon></th>
+                                      <!-- <th pSortableColumn="attributeRequired">Required <p-sortIcon field="attributeRequired"></p-sortIcon></th> -->
+                                      <th pSortableColumn="attributeOrderBy">Order <p-sortIcon field="attributeOrderBy"></p-sortIcon></th>
+                                      <!-- <th pSortableColumn="duplicate">Duplicate <p-sortIcon field="duplicate"></p-sortIcon></th> -->
+                                      <th pSortableColumn="options">options</th>
+                                      <th style="width:4em">Actions</th>
+                                  </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-product>
+                                  <tr>
+                                      <td>{{product.preAttributeName}}</td>
+                                      <td>{{product.preAttributeType}}</td>
+                                      <td>{{product.preAttributeLable}}</td>
+                                      <td>{{product.visibility}}</td>
+                                      <!-- <td>{{product.attributeRequired}}</td> -->
+                                      <td>{{product.attributeOrderBy}}</td>
+                                      <!-- <td>{{product.duplicate}}</td> -->
+                                      <td>{{product.options |json}}</td>
+                                      <td>
+                                        <a pTooltip="Edit" tooltipPosition="top" (click)="onClickEditAttribute(product)">
+                                          <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                      </a>
+                                        <a pTooltip="Delete" tooltipPosition="top" (click)="onDeleteAttribute(product)">
+                                          <img src="../../../assets/a_images/delete-hover.svg" class="testplus hover-icon" alt="delete">
+                                      </a>
+                                      </td>
+                                  </tr>
+                              </ng-template>
+                              <ng-template pTemplate="emptymessage">
+                                <tr>
+                                  <td style="text-align: center;" colspan="8">No Records Found</td>
+                                </tr>
+                              </ng-template>
+                          </p-table>
+                          </p-tabPanel>
+                      </p-tabView>
+
+
+                      </div>
+                  </td>
+              </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
 
 <div *ngIf="isDisplayOverlay">
   <app-split-overlay (closeOverlay)="closeOverlay($event)">
@@ -90,7 +229,7 @@
             <button class="btn btn-primary mt-2" type="button" (click)="getBotData()">Submit for RPA Bot</button>
           </div>
         <!-- </div> -->
-        <form [formGroup]="predefinedTemplateForm" (ngSubmit)="savePredefinedTemplateData()" class="col-12 tenant-form" *ngIf="isDisplay">
+        <form [formGroup]="predefinedTemplateForm" (ngSubmit)="savePredefinedTemplateData('create')" class="col-12 tenant-form" *ngIf="isDisplay">
           <div class="row form-details">
             <div class="form-group col-md-6">
               <label class="label-control" for="predefinedBotName">Predefined Bot Name<span class="star">*</span></label>
@@ -177,7 +316,7 @@
           <div class="createform-footer">
             <button type="button" (click)="onCancel()" class="btn">Cancel</button>
             <!-- <button type="button" [disabled]="!predefinedTemplateForm.valid" class="btn btn-primary" (click)="savePredefinedTemplateData()">Submit</button> -->
-            <button type="button" class="btn btn-primary" (click)="savePredefinedTemplateData()">Submit</button>
+            <button type="button" class="btn btn-primary" (click)="savePredefinedTemplateData('create')">Submit</button>
           </div>
         </form>
 
@@ -367,6 +506,245 @@
   </app-split-overlay>
 </div>
 
+
+<div *ngIf="isEdit">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="h-100">
+      <div class="create-header">
+        <h3>Update AIAgent Template</h3>
+      </div>
+      <div class="createform-overlay">
+
+        <form [formGroup]="predefinedTemplateForm" class="col-12 tenant-form">
+          <div class="row form-details">
+            <div class="form-group col-md-6">
+              <label class="label-control" for="predefinedBotName">Predefined Bot Name<span class="star">*</span></label>
+              <input type="text" id="predefinedBotName" pInputText (keypress)="lettersOnly($event)" formControlName="predefinedBotName" class="form-control"
+                placeholder="Enter Predfined Bot Name" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Predefined Bots<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="predefinedBotsList" [disabled]="true" 
+              placeholder="Select Predefined Bot" optionLabel="predefinedBotName" optionValue="productId" 
+              formControlName="predefinedBotType">
+              </p-dropdown>
+          </div>
+            <div class="form-group col-md-6">
+              <label class="label-control" for="executionOrder">Execution Order<span class="star">*</span></label>
+              <div>
+                <input id="executionOrder" pInputText [style]="{'width':'100%'}" formControlName="executionOrder" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+              </div>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="!isShowTasksEdit">
+              <label class="label-control" for="task_list">Tasks List<span class="star">*</span></label>
+              <input type="text" id="task_list" pInputText formControlName="task_list" class="form-control"
+              placeholder="Enter Predfined Bot Name" disabled required>
+              <button class="btn btn-primary mt-2" (click)="onEditTaskList()">Edit</button>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="isShowTasksEdit">
+              <label class="label-control" for="predefinedBotName">Tasks List<span class="star">*</span></label>
+              <textarea rows="5" cols="30" id="task_list" pInputTextarea autoResize="autoResize" formControlName="task_list"></textarea>
+              <button class="btn btn-primary" (click)="onEditTaskList()">Cancel</button>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="!isShowSequenceEdit">
+              <label class="label-control" for="task_sequence">Tasks Sequence<span class="star">*</span></label>
+              <input type="text" id="task_sequence" pInputText formControlName="task_sequence" class="form-control"
+              placeholder="Tasks Sequence" disabled required>
+              <button class="btn btn-primary mt-2" (click)="isShowSequenceEdit = !isShowSequenceEdit">Edit</button>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="isShowSequenceEdit">
+              <label class="label-control" for="task_sequence">Tasks Sequence<span class="star">*</span></label>
+              <textarea rows="5" cols="30" id="task_sequence" pInputTextarea autoResize="autoResize" formControlName="task_sequence"></textarea>
+              <button class="btn btn-primary" (click)="isShowSequenceEdit = !isShowSequenceEdit">Cancel</button>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="!isShowstartStopCoordinateEdit">
+              <label class="label-control" for="task_startStopCoordinate">Tasks Stop and Start Cordinates<span class="star">*</span></label>
+              <input type="text" id="task_startStopCoordinate" pInputText formControlName="task_startStopCoordinate" class="form-control"
+              placeholder="Tasks Stop and Start Cordinates" disabled required>
+              <button class="btn btn-primary mt-2" (click)="isShowstartStopCoordinateEdit = !isShowstartStopCoordinateEdit">Edit</button>
+            </div>
+
+            <div class="form-group col-md-12" *ngIf="isShowstartStopCoordinateEdit">
+              <label class="label-control" for="task_startStopCoordinate">Tasks Stop and Start Cordinates<span class="star">*</span></label>
+              <textarea rows="5" cols="30" id="task_startStopCoordinate" pInputTextarea 
+                        autoResize="autoResize" 
+                        formControlName="task_startStopCoordinate">
+              </textarea>
+              <button class="btn btn-primary" (click)="isShowstartStopCoordinateEdit = !isShowstartStopCoordinateEdit">Cancel</button>
+            </div>
+
+          </div>
+          <div class="createform-footer">
+            <button type="button" (click)="onCancel()" class="btn">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="savePredefinedTemplateData('update')" [disabled]="!predefinedTemplateForm.valid">Update</button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </app-split-overlay>
+</div>
+
+
+
+<p-dialog header="Template Attribute List" [(visible)]="displayAttributesOverLay" [modal]="true" [style]="{width: '80vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false">
+    <p-table [value]="selectedAttributes" responsiveLayout="scroll" [paginator]="true" [rows]="5" [responsive]="true">
+      <ng-template pTemplate="header">
+          <tr>
+              <th pSortableColumn="preAttributeName">Attribute Name <p-sortIcon field="preAttributeName"></p-sortIcon></th>
+              <th pSortableColumn="preAttributeType">Widget Type</th>
+              <th pSortableColumn="preAttributeLable">Label</th>
+              <th pSortableColumn="visibility">Visibility <p-sortIcon field="visibility"></p-sortIcon></th>
+              <th pSortableColumn="attributeRequired">Required <p-sortIcon field="attributeRequired"></p-sortIcon></th>
+              <th pSortableColumn="attributeOrderBy">Order <p-sortIcon field="attributeOrderBy"></p-sortIcon></th>
+              <th pSortableColumn="duplicate">Duplicate <p-sortIcon field="duplicate"></p-sortIcon></th>
+              <th pSortableColumn="options">options</th>
+              <th style="width:4em">Actions</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+          <tr>
+              <td>{{product.preAttributeName}}</td>
+              <td>{{product.preAttributeType}}</td>
+              <td>{{product.preAttributeLable}}</td>
+              <td>{{product.visibility}}</td>
+              <td>{{product.attributeRequired}}</td>
+              <td>{{product.attributeOrderBy}}</td>
+              <td>{{product.duplicate}}</td>
+              <td>{{product.options |json}}</td>
+              <td>
+                <a pTooltip="Edit" tooltipPosition="top" (click)="onClickEditAttribute(product)">
+                  <img src="../../../assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+              </a>
+                <a pTooltip="Delete" tooltipPosition="top" (click)="onDeleteAttribute(product)">
+                  <img src="../../../assets/a_images/delete-hover.svg" class="testplus hover-icon" alt="delete">
+              </a>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+</p-dialog>
+
+<div *ngIf="isEditAttribute_form">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="h-100">
+      <div class="create-header">
+        <h3>AIAgent Attributes</h3>
+      </div>
+      <div class="createform-overlay">
+        <form [formGroup]="agentAttributesFormUpdate" class="col-12 row tenant-form">
+          <ng-container>
+            <div class="form-group col-md-6">
+              <label class="label-control" for="attributeLabelName">Attribute Name<span class="star">*</span></label>
+              <input type="text" id="attributeLabelName" pInputText formControlName="preAttributeName" class="form-control"
+                placeholder="Enter Attribute Label Name" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="label-control" for="attributeLabelName">Attribute Label Name<span class="star">*</span></label>
+              <input type="text" id="attributeLabelName" pInputText formControlName="preAttributeLable" class="form-control"
+                placeholder="Enter Attribute Label Name" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="label-control" for="attributeLabelName">Placeholder<span class="star">*</span></label>
+              <input type="text" id="attributeLabelName" pInputText formControlName="placeholder" class="form-control"
+                placeholder="Enter Attribute Label Name" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="label-control" for="attributeOrder">Attribute Order<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="attributeOrder" [style]="{'width':'100%'}" formControlName="attributeOrderBy" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Input Type<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="inputTypes" placeholder="Select Type" optionLabel="field" optionValue="value" 
+              formControlName="preAttributeType"></p-dropdown>
+            </div>
+
+            <div class="form-group col-md-6">
+            </div>
+            <!-- <div class="form-group col-md-6">
+                <label class="label-control" for="Tasks">Tasks List<span class="star">*</span></label>
+                <p-dropdown [style]="{'width':'70%'}" [options]="taskList" placeholder="Select Task" optionLabel="taskName" (onChange)="onChangeTaskList($event)">
+                </p-dropdown>
+            </div> -->
+            <!-- <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Attributes List<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="selectedTask_attributesList" placeholder="Select Task" optionLabel="metaAttrValue" formControlName="attribute">
+                  <ng-template let-option pTemplate="item">
+                      <div [pTooltip]="option.attrValue" tooltipPosition="top">
+                          {{option.metaAttrValue}}
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+          </div> -->
+
+
+            <!-- <div class="form-group col-md-6">
+              <label class="label-control" for="attributePlaceholder">Attribute Placeholder<span class="star">*</span></label>
+              <input type="text" id="attributePlaceholder" pInputText (keypress)="lettersOnly_1($event)" formControlName="attributePlaceholder" class="form-control"
+                placeholder="Enter Attribute Placeholder" required>
+            </div> -->
+            
+            <div class="form-group col-md-4">
+              <p-checkbox [binary]="true" inputId="binary" label="Mandatory" formControlName="attributeRequired"></p-checkbox>
+            </div>
+            <div class="form-group col-md-4">
+              <p-checkbox [binary]="true" inputId="binary" label="Visibility" formControlName="visibility"></p-checkbox>
+            </div>
+            <div class="form-group col-md-4">
+            <p-checkbox [binary]="true" inputId="binary" label="Duplicate" formControlName="duplicate"></p-checkbox>
+            </div>
+
+            <div class="form-group col-md-6" *ngIf="agentAttributesFormUpdate.get('preAttributeType').value == 'text'|| agentAttributesFormUpdate.get('preAttributeType').value == 'textarea'">
+              <label class="label-control" for="minLength">Min Length<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="minLength" [style]="{'width':'100%'}" formControlName="minNumber" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6" *ngIf="agentAttributesFormUpdate.get('preAttributeType').value == 'text'|| agentAttributesFormUpdate.get('preAttributeType').value == 'textarea'">
+              <label class="label-control" for="maxLength">Max Length<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="maxLength" [style]="{'width':'100%'}" formControlName="maxNumber" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label class="label-control" for="attribute_options">Options<span class="star">*</span></label>
+
+              <textarea rows="5" cols="20" id="attribute_options" pInputTextarea 
+                        autoResize="autoResize" placeholder=""
+                        formControlName="options">
+              </textarea>
+            </div>
+            <!-- <div class="form-group col-md-12">
+              <button type="button" class="btn btn-primary pull-right" (click)="addAttributesData()">Add</button>
+            </div> -->
+            <div class="createform-footer">
+              <button type="button" (click)="onCancelAttributes()" class="btn">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="updateAgentAttributeData()" [disabled]="!agentAttributesFormUpdate.valid">Submit</button>
+            </div>
+          </ng-container>
+        </form>
+
+        
+      </div>
+    </div>
+  </app-split-overlay>
+</div>
+
+
 <ngx-spinner bdColor="#bebcbc66" type="">
   <img src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader" />
 </ngx-spinner>
@@ -374,4 +752,7 @@
 <div class="card flex justify-content-center gap-2">
   <p-toast></p-toast>
 </div>
+
+<p-confirmDialog  [style]="{width: '30vw'}"  position="center" [baseZIndex]="10000" [closable]="false">
+</p-confirmDialog>
 

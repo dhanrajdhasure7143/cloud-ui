@@ -6,6 +6,7 @@ import { UsermanagementService } from 'src/app/_services/usermanagement.service'
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from 'sweetalert2';
 import { Table } from "primeng/table";
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-predefined-bots-template',
@@ -18,7 +19,8 @@ export class PredefinedBotsTemplateComponent implements OnInit {
   enterPriseList1: any = [];
   isDisplayOverlay: boolean = false;
   predefinedTemplateForm: FormGroup
-  predefinedAttributesForm: FormGroup
+  predefinedAttributesForm: FormGroup;
+  agentAttributesFormUpdate: FormGroup;
   columnList = [
     // { DisplayName: "Bot ID", ColumnName: "botId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Predefined Bot Name", ColumnName: "botName", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
@@ -46,14 +48,34 @@ export class PredefinedBotsTemplateComponent implements OnInit {
   rpa_botId:any;
   isDisplay:boolean = false;
   predefinedBotsList:any[]=[];
-
+  products: any[]=[];
+  isEdit:boolean = false;
+  aiagent_templats:any[]=[];
+  aiagents_attributesList:any[] = []; 
+  displayAttributesOverLay:boolean = false;
+  selectedAttributes:any[]=[];
+  isEditAttribute_form:boolean = false;
+  attributeRow_data:any={};
+  selectedAttributeProduct:any
 
   constructor(private rest_api: UsermanagementService,
     private spinner: NgxSpinnerService,
     private  fb: FormBuilder,
-    private messageService : MessageService) { }
+    private messageService : MessageService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
+    this.products =[
+      {name:"RPA",productId:1,rating:4.5, status:"Active"},
+      {name:"OCR",productId:2,rating:4.5, status:"Active"},
+      {name:"NLP",productId:3,rating:4.5, status:"Active"},
+      {name:"Chatbot",productId:4,rating:3, status:"Active"},
+      {name:"Voicebot",productId:5,rating:2, status:"Active"},
+      {name:"Emailbot",productId:6,rating:4.5, status:"Active"},
+      {name:"Documentbot",productId:7,rating:4.5, status:"Active"},
+      {name:"Data Extraction",productId:8,rating:4.5, status:"In-Active"},
+      {name:"Data Entry",productId:9,rating:4.5, status:"Active"},
+    ]
     // this.spinner.show();
     this.getAllPredefinedBots();
     this.getTemplateList()
@@ -75,8 +97,8 @@ export class PredefinedBotsTemplateComponent implements OnInit {
         attributePlaceholder : ['', Validators.required], 
         attributeOrder : ['', Validators.required], 
         attributeType : ['', Validators.required], 
-        // attribute_options : [''],
-        attribute_options: this.fb.array([]),
+        attribute_options : [''],
+        // attribute_options: this.fb.array([]),
         attribute : [''], 
         isAttrubuteMandatory : [true], 
         isVisible : [true],
@@ -84,6 +106,19 @@ export class PredefinedBotsTemplateComponent implements OnInit {
         minLength : [10],
         maxLength : [1000],
     });
+    this.agentAttributesFormUpdate=this.fb.group({
+      preAttributeName : ['', Validators.required], 
+      preAttributeLable : ['', Validators.required], 
+      placeholder : ['', Validators.required], 
+      attributeOrderBy : ['', Validators.required], 
+      preAttributeType : ['', Validators.required], 
+      options : [''], 
+      attributeRequired : [true], 
+      visibility : [true],
+      duplicate : [false],
+      minNumber : [1],
+      maxNumber : [1000],
+  });
     this.inputTypes =[
       {field:"Text",value:"text"},
       {field:"Drop Down",value:"dropdown"},
@@ -118,7 +153,8 @@ export class PredefinedBotsTemplateComponent implements OnInit {
             item["predefinedBotType"] = this.predefinedBotsList.find(e=>e.productId==item.productId)?this.predefinedBotsList.find(e=>e.productId==item.productId).predefinedBotName:null
           })
         }
-        this.spinner.hide();
+        this.getAllAttributes();
+        // this.spinner.hide();
       },
       error: (err) => {
         console.error('Error fetching Template list:', err);
@@ -127,14 +163,15 @@ export class PredefinedBotsTemplateComponent implements OnInit {
     });
   }
 
-  openOverlay(type, rowData) {
+  openOverlay() {
     this.isDisplayOverlay = true;
-    console.log(rowData, "rowData")
     this.isDisplay = false;
   }
 
   closeOverlay(event) {
     this.isDisplayOverlay = false;
+    this.isEdit = false;
+    this.isEditAttribute_form = false;
   }
 
   readValue(event) {
@@ -194,7 +231,7 @@ export class PredefinedBotsTemplateComponent implements OnInit {
     });
   }
 
-  savePredefinedTemplateData(){
+  savePredefinedTemplateData(type){
 this.spinner.show()
    let req_body = {
       "botCompleted": true,
@@ -223,16 +260,20 @@ this.spinner.show()
       "versionNew": this.rpaBotData.versionNew,
       "versionType": this.rpaBotData.versionType?this.rpaBotData.versionType:null
     }
+    if(type == "update"){
+      req_body["id"] = this.rpaBotData.id
+    }
 
     this.rest_api.savePredefinedTemplate(req_body).subscribe(res=>{
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
       let reqObject = {"attributesList":this.newAttributes_list}
       this.rest_api.savePredefinedAttributes(this.newAttributes_list).subscribe(res=>{
         console.log(res)
-        console.log("attributesResponse",res)
+        console.log("attributesResponse",res);
       })
       this.spinner.hide();
       this.isDisplayOverlay = false;
+      this.isEdit=false;
       this.predefinedTemplateForm.reset();
     },err=>{
       this.spinner.hide();
@@ -280,7 +321,7 @@ this.spinner.show()
       "visibility":this.predefinedAttributesForm.get('isVisible').value,
       "attributeOrderBy":this.predefinedAttributesForm.get('attributeOrder').value,
       "duplicate":this.predefinedAttributesForm.get('isDuplicate').value,
-      "options":this.predefinedAttributesForm.get('attribute_options').value,
+      "options":JSON.parse(this.predefinedAttributesForm.get('attribute_options').value),
       "isEditing": false
     }
     console.log(this.predefinedAttributesForm.value)
@@ -321,11 +362,141 @@ this.spinner.show()
   getAllPredefinedBots(){
     this.rest_api.getAllPredefinedBotsList().subscribe((res:any)=>{
         this.predefinedBotsList = res.data
+        this.aiagent_templats = [...this.predefinedBotsList];
     })
   }
 
   onCancel(){
     this.isDisplayOverlay=!this.isDisplayOverlay;
+    this.isEditAttribute_form   = false;
+    this.isEdit = false;
+  }
+
+  getAllAttributes(){
+ 
+    this.rest_api.getAllPredefinedAttributes().subscribe((res:any)=>{
+      this.aiagents_attributesList = res.data
+      this.aiagent_templats.forEach(element => {
+            element["templates_list"] = this.templateList.filter(e=>e.productId == element.productId)
+            element["attributes_list"] = this.aiagents_attributesList.filter(e=>e.productId == element.productId)
+      });
+      this.spinner.hide()
+      console.log(this.aiagent_templats)
+    })
+  }
+
+  onClickEdit(row){
+    this.rpaBotData = row;
+    this.taskList = row.tasks;
+    this.isEdit = true;
+    this.predefinedTemplateForm.get("predefinedBotName").setValue(row.botName)
+    this.predefinedTemplateForm.get("predefinedBotType").setValue(row.productId)
+    this.predefinedTemplateForm.get("executionOrder").setValue(JSON.stringify(row.execution_order_id))
+    this.predefinedTemplateForm.get("task_list").setValue(JSON.stringify(this.taskList))
+    this.predefinedTemplateForm.get("task_sequence").setValue(JSON.stringify(row.sequences))
+    this.predefinedTemplateForm.get("task_startStopCoordinate").setValue(JSON.stringify(row.startStopCoordinate))
+    console.log("onClickEdit row",row,this.predefinedTemplateForm);
+
+  }
+
+  onClickViewAttributes(row){
+    console.log("onClickView",row);
+    this.displayAttributesOverLay = true;
+    this.selectedAttributes = row.attributes_list;
+  }
+
+  onDeleteTemplate(row) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this template?',
+      accept: () => {
+        this.rest_api.deleteAiAgentTemplate(row.id).subscribe(res => {
+          console.log(res)
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted successfully.' });
+          this.getTemplateList();
+        }, err => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete.' });
+        });
+      }
+    });
+  }
+
+  openAttributesOverlay(product){
+    this.isEditAttribute_form = true;
+    this.selectedAttributeProduct = product;
+    this.agentAttributesFormUpdate.reset();
+    this.agentAttributesFormUpdate.get("attributeRequired").setValue(true)
+    this.agentAttributesFormUpdate.get("visibility").setValue(true)
+    this.agentAttributesFormUpdate.get("duplicate").setValue(false)
+  }
+
+  onClickEditAttribute(row){
+    console.log("onClickEditAttribute",row);
+    this.isEditAttribute_form = true;
+    this.attributeRow_data = row;
+    this.agentAttributesFormUpdate.get("preAttributeName").setValue(row.preAttributeName)
+    this.agentAttributesFormUpdate.get("preAttributeLable").setValue(row.preAttributeLable)
+    this.agentAttributesFormUpdate.get("placeholder").setValue(row.placeholder)
+    this.agentAttributesFormUpdate.get("attributeOrderBy").setValue(row.attributeOrderBy)
+    this.agentAttributesFormUpdate.get("preAttributeType").setValue(row.preAttributeType)
+    this.agentAttributesFormUpdate.get("options").setValue(JSON.stringify(row.options))
+
+    this.agentAttributesFormUpdate.get("attributeRequired").setValue(row.attributeRequired)
+    this.agentAttributesFormUpdate.get("visibility").setValue(row.visibility)
+    this.agentAttributesFormUpdate.get("duplicate").setValue(row.duplicate)
+    this.agentAttributesFormUpdate.get("minNumber").setValue(row.minNumber)
+    this.agentAttributesFormUpdate.get("maxNumber").setValue(row.maxNumber)
+
+
+  }
+
+  onDeleteAttribute(row){
+    console.log("onDeleteAttribute",row)
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this template?',
+      accept: () => {
+        this.spinner.show();
+        this.rest_api.deleteAiAgentAttribute(row.id).subscribe(res => {
+          console.log(res)
+          this.spinner.hide();
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deleted successfully.' });
+          this.getTemplateList();
+        }, err => {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete.' });
+        });
+      }
+    });
+  }
+
+  updateAgentAttributeData(){
+
+this.spinner.show();
+console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
+    let reqObject = this.agentAttributesFormUpdate.value;
+    reqObject["options"]=(JSON.parse(this.agentAttributesFormUpdate.value.options))
+    if(this.attributeRow_data.id){
+    reqObject["id"] = this.attributeRow_data.id;
+    reqObject["productId"] = this.attributeRow_data.productId;
+    }else{
+      reqObject["productId"] = this.selectedAttributeProduct.productId;
+    }
+    console.log("reqObject",reqObject)
+    this.rest_api.savePredefinedAttributes([reqObject]).subscribe(res=>{
+      console.log(res)
+      // this.spinner.hide();
+      this.getTemplateList();
+    this.isEditAttribute_form = false;
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
+      console.log("attributesResponse",res);
+    },error=>{
+      this.spinner.hide();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to save.' });
+    })
+
+  }
+
+  onCancelAttributes(){
+    this.isEditAttribute_form = false
   }
 
 }
