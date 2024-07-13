@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PredefinedBotsComponent } from './predefined-bots.component';
+import { AiAgentsTabsComponent } from './ai-agents-tabs.component';
 
-describe('PredefinedBotsComponent', () => {
-  let component: PredefinedBotsComponent;
-  let fixture: ComponentFixture<PredefinedBotsComponent>;
+describe('AiAgentsTabsComponent', () => {
+  let component: AiAgentsTabsComponent;
+  let fixture: ComponentFixture<AiAgentsTabsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PredefinedBotsComponent ]
+      declarations: [ AiAgentsTabsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PredefinedBotsComponent);
+    fixture = TestBed.createComponent(AiAgentsTabsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

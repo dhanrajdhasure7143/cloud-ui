@@ -7,7 +7,7 @@
         <span class="titlelabel">Bot Templates</span>
       </ng-template>
       <div *ngIf="check_tab == 0" class="enterprise-layout">
-        <app-predefined-bots-template></app-predefined-bots-template>
+        <app-ai-agents-template></app-ai-agents-template>
       </div>
     </p-tabPanel>
     <p-tabPanel header="PB VM-Host">
@@ -16,7 +16,7 @@
         <span class="titlelabel">VM Configuration</span>
       </ng-template>
       <div *ngIf="check_tab == 1" class="enterprise-layout">
-        <app-vm-configuration-list></app-vm-configuration-list>
+        <app-ai-agents-vm-configuration></app-ai-agents-vm-configuration>
       </div>
     </p-tabPanel>
   </p-tabView>
