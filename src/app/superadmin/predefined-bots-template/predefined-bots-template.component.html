@@ -641,10 +641,10 @@
       <div class="createform-overlay">
         <form [formGroup]="agentAttributesFormUpdate" class="col-12 row tenant-form">
           <ng-container>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
               <label class="label-control" for="attributeLabelName">Attribute Name<span class="star">*</span></label>
               <input type="text" id="attributeLabelName" pInputText formControlName="preAttributeName" class="form-control"
-                placeholder="Enter Attribute Label Name" required>
+                placeholder="Botname_Task Id_Task Name_Field Name" required>
             </div>
             <div class="form-group col-md-6">
               <label class="label-control" for="attributeLabelName">Attribute Label Name<span class="star">*</span></label>
@@ -657,20 +657,36 @@
                 placeholder="Enter Attribute Label Name" required>
             </div>
             <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">Input Type<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="inputTypes" placeholder="Select Type" optionLabel="field" optionValue="value" 
+              formControlName="preAttributeType"></p-dropdown>
+            </div>
+            <div class="form-group col-md-6">
               <label class="label-control" for="attributeOrder">Attribute Order<span class="star">*</span></label>
               <div>
                 <p-inputNumber id="attributeOrder" [style]="{'width':'100%'}" formControlName="attributeOrderBy" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
                 </p-inputNumber>
               </div>
             </div>
-            <div class="form-group col-md-6">
-              <label class="label-control" for="Tasks">Input Type<span class="star">*</span></label>
-              <p-dropdown [style]="{'width':'70%'}" [options]="inputTypes" placeholder="Select Type" optionLabel="field" optionValue="value" 
-              formControlName="preAttributeType"></p-dropdown>
+
+            <div class="form-group col-md-6" *ngIf="agentAttributesFormUpdate.get('preAttributeType').value == 'text'|| agentAttributesFormUpdate.get('preAttributeType').value == 'textarea'">
+              <label class="label-control" for="minLength">Min Length<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="minLength" [style]="{'width':'100%'}" formControlName="minNumber" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6" *ngIf="agentAttributesFormUpdate.get('preAttributeType').value == 'text'|| agentAttributesFormUpdate.get('preAttributeType').value == 'textarea'">
+              <label class="label-control" for="maxLength">Max Length<span class="star">*</span></label>
+              <div>
+                <p-inputNumber id="maxLength" [style]="{'width':'100%'}" formControlName="maxNumber" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+                </p-inputNumber>
+              </div>
             </div>
+
+            <!-- <div class="form-group col-md-6">
+            </div> -->
             <!-- <div class="form-group col-md-6">
                 <label class="label-control" for="Tasks">Tasks List<span class="star">*</span></label>
                 <p-dropdown [style]="{'width':'70%'}" [options]="taskList" placeholder="Select Task" optionLabel="taskName" (onChange)="onChangeTaskList($event)">
@@ -702,22 +718,6 @@
             </div>
             <div class="form-group col-md-4">
             <p-checkbox [binary]="true" inputId="binary" label="Duplicate" formControlName="duplicate"></p-checkbox>
-            </div>
-
-            <div class="form-group col-md-6" *ngIf="agentAttributesFormUpdate.get('preAttributeType').value == 'text'|| agentAttributesFormUpdate.get('preAttributeType').value == 'textarea'">
-              <label class="label-control" for="minLength">Min Length<span class="star">*</span></label>
-              <div>
-                <p-inputNumber id="minLength" [style]="{'width':'100%'}" formControlName="minNumber" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
-                </p-inputNumber>
-              </div>
-            </div>
-
-            <div class="form-group col-md-6" *ngIf="agentAttributesFormUpdate.get('preAttributeType').value == 'text'|| agentAttributesFormUpdate.get('preAttributeType').value == 'textarea'">
-              <label class="label-control" for="maxLength">Max Length<span class="star">*</span></label>
-              <div>
-                <p-inputNumber id="maxLength" [style]="{'width':'100%'}" formControlName="maxNumber" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
-                </p-inputNumber>
-              </div>
             </div>
 
             <div class="form-group col-md-12">
