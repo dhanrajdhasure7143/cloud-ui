@@ -125,6 +125,7 @@ export class PredefinedBotsTemplateComponent implements OnInit {
       {field:"Text Area",value:"textarea"},
       {field:"File",value:"file"},
       {field:"Radio Button",value:"radio"},
+      {field:"Check Box",value:"checkbox"},
     ]
   }
 
@@ -428,6 +429,7 @@ this.spinner.show()
     this.agentAttributesFormUpdate.get("attributeRequired").setValue(true)
     this.agentAttributesFormUpdate.get("visibility").setValue(true)
     this.agentAttributesFormUpdate.get("duplicate").setValue(false)
+    this.agentAttributesFormUpdate.get("attributeOrderBy").setValue(0)
   }
 
   onClickEditAttribute(row){
@@ -484,6 +486,7 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
     console.log("reqObject",reqObject)
     this.rest_api.savePredefinedAttributes([reqObject]).subscribe(res=>{
       console.log(res)
+      this.attributeRow_data = undefined;
       // this.spinner.hide();
       this.getTemplateList();
     this.isEditAttribute_form = false;
