@@ -261,7 +261,8 @@ this.spinner.show()
       "versionType": this.rpaBotData.versionType?this.rpaBotData.versionType:null
     }
     if(type == "update"){
-      req_body["id"] = this.rpaBotData.id
+      req_body["id"] = this.rpaBotData.id;
+      req_body["productId"] = this.rpaBotData.productId;
     }
 
     this.rest_api.savePredefinedTemplate(req_body).subscribe(res=>{
