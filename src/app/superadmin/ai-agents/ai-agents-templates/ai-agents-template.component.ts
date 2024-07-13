@@ -9,11 +9,11 @@ import { Table } from "primeng/table";
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
-  selector: 'app-predefined-bots-template',
-  templateUrl: './predefined-bots-template.component.html',
-  styleUrls: ['./predefined-bots-template.component.scss']
+  selector: 'app-ai-agents-template',
+  templateUrl: './ai-agents-template.component.html',
+  styleUrls: ['./ai-agents-template.component.scss']
 })
-export class PredefinedBotsTemplateComponent implements OnInit {
+export class AiAgentsTemplateComponent implements OnInit {
 
   templateList: any = [];
   enterPriseList1: any = [];

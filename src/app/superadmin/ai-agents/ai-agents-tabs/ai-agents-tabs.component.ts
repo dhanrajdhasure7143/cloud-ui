@@ -7,12 +7,12 @@ import Swal from "sweetalert2";
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-predefined-bots',
-  templateUrl: './predefined-bots.component.html',
-  styleUrls: ['./predefined-bots.component.scss'],
+  selector: 'app-ai-agents-tabs',
+  templateUrl: './ai-agents-tabs.component.html',
+  styleUrls: ['./ai-agents-tabs.component.scss'],
   providers: [MessageService]
 })
-export class PredefinedBotsComponent implements OnInit {
+export class AiAgentsTabsComponent implements OnInit {
   searchdashboard: any;
   public errorMessage: any;
   public subscriptionForm: FormGroup;

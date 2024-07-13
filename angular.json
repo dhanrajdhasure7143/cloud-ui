@@ -23,7 +23,8 @@
               "lodash",
               "raf",
               "@babel/runtime",
-              "chart.js"
+              "chart.js",
+              "sweetalert2"
             ],
             "outputPath": "dist/aiotal",
             "index": "src/index.html",

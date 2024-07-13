@@ -23,16 +23,18 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { EnterpriseRequestsComponent } from './enterprise-requests/enterprise-requests.component';
-import { PredefinedBotsComponent } from './predefined-bots/predefined-bots.component';
-import { PredefinedBotsTemplateComponent } from './predefined-bots-template/predefined-bots-template.component';
-import { VmConfigurationListComponent } from './vm-configuration-list/vm-configuration-list.component';
+import { AiAgentsTabsComponent } from './ai-agents/ai-agents-tabs/ai-agents-tabs.component';
+import { AiAgentsTemplateComponent } from './ai-agents/ai-agents-templates/ai-agents-template.component';
+import { AiAgentsVmConfigurationComponent } from './ai-agents/ai-agents-vm-configuration/ai-agents-vm-configuration.component';
+import { AiAgentsAttributesComponent } from './ai-agents/ai-agents-attributes/ai-agents-attributes.component';
 @NgModule({
   declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent, 
     OnboardTenantComponent,
     EnterpriseRequestsComponent,
-    PredefinedBotsComponent,
-    PredefinedBotsTemplateComponent,
-    VmConfigurationListComponent
+    AiAgentsTabsComponent,
+    AiAgentsTemplateComponent,
+    AiAgentsVmConfigurationComponent,
+    AiAgentsAttributesComponent
   ],
   imports: [
     CommonModule,

@@ -14,12 +14,12 @@ interface SelectItem {
 }
 
 @Component({
-  selector: 'app-vm-configuration-list',
-  templateUrl: './vm-configuration-list.component.html',
-  styleUrls: ['./vm-configuration-list.component.scss']
+  selector: 'app-ai-agents-vm-configuration',
+  templateUrl: './ai-agents-vm-configuration.component.html',
+  styleUrls: ['./ai-agents-vm-configuration.component.scss']
 })
 
-export class VmConfigurationListComponent implements OnInit {
+export class AiAgentsVmConfigurationComponent implements OnInit {
   configuredVmList: any = [];
   isDisplayOverlay: boolean = false;
   userData: any = {};
