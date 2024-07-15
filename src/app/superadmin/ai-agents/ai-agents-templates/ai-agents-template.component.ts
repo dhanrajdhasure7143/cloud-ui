@@ -384,6 +384,9 @@ this.spinner.show()
       });
       this.spinner.hide()
       console.log(this.aiagent_templats)
+    },err=>{
+      this.spinner.hide()
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to get attributes.' });
     })
   }
 
@@ -455,7 +458,7 @@ this.spinner.show()
   onDeleteAttribute(row){
     console.log("onDeleteAttribute",row)
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this template?',
+      message: 'Are you sure you want to delete this Attribute?',
       accept: () => {
         this.spinner.show();
         this.rest_api.deleteAiAgentAttribute(row.id).subscribe(res => {
@@ -485,7 +488,6 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
     }
     console.log("reqObject",reqObject)
     this.rest_api.savePredefinedAttributes([reqObject]).subscribe(res=>{
-      console.log(res)
       this.attributeRow_data = undefined;
       // this.spinner.hide();
       this.getTemplateList();
