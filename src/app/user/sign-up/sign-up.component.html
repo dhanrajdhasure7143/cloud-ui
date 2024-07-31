@@ -161,12 +161,12 @@
                                   <span *ngIf="isValidatingOtp">
                                     <i class="fa fa-circle-o-notch fa-spin" style="font-size:12px;color:#098de6"></i> &nbsp;<b style="font-size:11px;color:#098de6">Validating Code</b>
                                   </span>
-                                <span *ngIf="showInvalidMessage" class="invalid-message">
+                                <span *ngIf="showInvalidMessage && !isValidatingOtp" class="invalid-message">
                                     <img style="height: 12px; margin-bottom: 2px" src="../../../assets/images/close-red.svg" alt="">&nbsp; Code Invalid
                                 </span>
                             </div>
                             <span>
-                                <span *ngIf="isTimeOutshow" class="required" style="margin-left: 160px; font-weight: 600; position: relative;">{{display}} Sec to</span>
+                                <span *ngIf="isTimeOutshow" class="required" style="margin-left: 160px; font-weight: 600;">{{display}} Sec to</span>
                                 <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')">Resend Code</span>
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary">Resend Code</span>
                             </span>
