@@ -445,7 +445,7 @@ export class SignUpComponent implements OnInit {
       this.isValidatingOtp = false;
       setTimeout(() => this.otpAttempted = true, 50);
       this.isOtpVerified = false;
-      Swal.fire("Error", "Unable to register data", "error");
+      Swal.fire("Error", "Error occured, Please try again.", "error");
     })
     }, 1200);
   }
