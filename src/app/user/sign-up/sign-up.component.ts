@@ -94,6 +94,7 @@ export class SignUpComponent implements OnInit {
   otpAttempted = false;
   showSuccessMessage = false;
   showInvalidMessage: boolean = false;
+  isValidatingOtp :boolean = false
   constructor(
     @Inject(APP_CONFIG) private config,
     private formBuilder: FormBuilder,
@@ -405,9 +406,12 @@ export class SignUpComponent implements OnInit {
 
   validateOTP(otp: string): void {
     console.log('OTP Value:', otp);
-    this.spinner.show();
+    // this.spinner.show();
+    this.isValidatingOtp = true
+    setTimeout(() => {
     this.authenticationService.validateOTPSignUp(this.signupForm.value.email.toLowerCase(), otp).subscribe((data: any) => {
       this.spinner.hide();
+      this.isValidatingOtp = false;
       this.otpAttempted = true;
       if (data.message == "OTP Verified Successfully") {
         this.isOtpVerified = true;
@@ -438,10 +442,12 @@ export class SignUpComponent implements OnInit {
     }, err => {
       console.log(err)
       this.spinner.hide()
+      this.isValidatingOtp = false;
       setTimeout(() => this.otpAttempted = true, 50);
       this.isOtpVerified = false;
       Swal.fire("Error", "Unable to register data", "error");
     })
+    }, 1200);
   }
 
   lettersOnly(event): boolean {
