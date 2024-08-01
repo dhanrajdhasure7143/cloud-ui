@@ -112,15 +112,18 @@
                                 characters entered </span>
                         </div>
                         <div class="col-md-12 p-10 form-group">
-                            <label class="label-control" for="email"> Email </label>
+                            <label class="label-control" for="email"> Email <span class="star">*</span> </label>
                             <input type="text" pInputText maxlength="51" class="form-control" formControlName="email"
                                 style="padding-right: 90px;" [attr.disabled]="isEmailDisable ? true : null" value=""
                                 pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off"
                                 (keyup)="showOtp($event); checkEmailValidity()" tabindex="4">
                             <span *ngIf="isGenerate && !isEmailEmptyOrInvalid" (click)="generateOTP('false')"
-                                class="verify text-primary"> Verify Email </span>
-                            <span *ngIf="isSuccess"> <i class="pi pi-verified text-success"
-                                    id="email-buttons"></i></span>
+                                class="verify"> Verify Email </span>
+                                <div *ngIf="showSuccessMessage" class="success-message">
+                                    <img style="height: 12px; margin-bottom: 2px;" src="../../../assets/images/Green Tick.svg" alt="">&nbsp; Code Verified
+                                </div>
+                            <!-- <span *ngIf="isSuccess"> <i class="pi pi-verified text-success"
+                                    id="email-buttons"></i></span> -->
                             <span
                                 *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')"
                                 class="required"> Email Required </span>
@@ -128,7 +131,7 @@
                                 class="required"> Enter valid email address </span>
                             <span *ngIf="ispublicMail" class="required">Only Business Email is allowed</span>
                         </div>
-                        <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
+                        <!-- <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
                             <input type="text" pInputText minlength="6" maxlength="6" class="form-control"
                                 formControlName="otp" autocomplete="off" value=""
                                 placeholder="Enter Email Verification Code" (keydown)="onKeydown($event)"
@@ -146,6 +149,27 @@
                             <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')">
                                 Resend Code </span>
                             <span *ngIf="resendEnable" class="resend-disable text-secondary"> Resend Code </span>
+                        </div> -->
+
+                        <div class="col-md-12 p-10 form-group" id="otp-message" *ngIf="isShowOtp">
+                            <label class="label-control" for="otp">Enter Code <span class="star">*</span></label> <br>
+                            <span style="font-size: 11px;">We've sent a code to <b style="color: #098de6">{{ signupForm.get('email').value }}</b></span>
+                            <div class="otp-inputs">
+                                <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{length: 6}" [ngClass]="{'otp-success': isOtpVerified, 'otp-error': !isOtpVerified && otpAttempted}"></ng-otp-input>
+                            </div>
+                            <div>
+                                  <span *ngIf="isValidatingOtp">
+                                    <i class="fa fa-circle-o-notch fa-spin" style="font-size:12px;color:#098de6"></i> &nbsp;<b style="font-size:11px;color:#098de6">Validating Code</b>
+                                  </span>
+                                <span *ngIf="showInvalidMessage && !isValidatingOtp" class="">
+                                    <img style="height: 12px; margin-bottom: -1px" src="../../../assets/images/close-red.svg" alt="">&nbsp; <span style="font-weight: bold; margin-top: 10px;font-size: 11px; ">Code Invalid</span>
+                                </span>
+                            </div>
+                            <span>
+                                <span *ngIf="isTimeOutshow" class="required1" style="margin-left: 160px; font-weight: 600; color: #fa7e39;">{{display}} Sec to</span>
+                                <span *ngIf="!resendEnable" class="resend text-primary" (click)="generateOTP('true')">Resend Code</span>
+                                <span *ngIf="resendEnable" class="resend-disable text-secondary">Resend Code</span>
+                            </span>
                         </div>
                         <div class="col-md-12 p-10 form-group d-block">
                             <label class="label-control" for="password"> Password </label> <br>

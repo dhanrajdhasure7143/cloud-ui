@@ -90,7 +90,11 @@ export class SignUpComponent implements OnInit {
   isValidateOTP: boolean = false;
   isEmailEmptyOrInvalid: boolean = false;
   isSubscriptionEnabled: boolean = false;
-
+  isOtpVerified = false;
+  otpAttempted = false;
+  showSuccessMessage = false;
+  showInvalidMessage: boolean = false;
+  isValidatingOtp :boolean = false
   constructor(
     @Inject(APP_CONFIG) private config,
     private formBuilder: FormBuilder,
@@ -237,19 +241,19 @@ export class SignUpComponent implements OnInit {
     //  } else {
     //    this.ispublicMail=false;
     //  }
-    this.spinner.show();
+    // this.spinner.show();
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(), isResend).subscribe((data: any) => {
       this.signupForm.get("otp").setValidators([Validators.required]);
       this.signupForm.get("otp").updateValueAndValidity();
 
       if (data.message == "OTP Sent Successfully") {
-        Swal.fire({
-          title: 'Success!',
-          text: `OTP has been sent to your registered Email!`,
-          icon: 'success',
-          showCancelButton: false,
-          allowOutsideClick: true
-        })
+        // Swal.fire({
+        //   title: 'Success!',
+        //   text: `OTP has been sent to your registered Email!`,
+        //   icon: 'success',
+        //   showCancelButton: false,
+        //   allowOutsideClick: true
+        // })
         this.isTimeOutshow = true;
         this.timer(2)
         this.isGenerate = false;
@@ -400,37 +404,50 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  validateOTP() {
-    this.spinner.show()
-    this.authenticationService.validateOTPSignUp(this.signupForm.value.email.toLowerCase(), this.signupForm.value.otp).subscribe((data: any) => {
+  validateOTP(otp: string): void {
+    console.log('OTP Value:', otp);
+    // this.spinner.show();
+    this.isValidatingOtp = true
+    setTimeout(() => {
+    this.authenticationService.validateOTPSignUp(this.signupForm.value.email.toLowerCase(), otp).subscribe((data: any) => {
+      this.spinner.hide();
+      this.isValidatingOtp = false;
+      this.otpAttempted = true;
       if (data.message == "OTP Verified Successfully") {
+        this.isOtpVerified = true;
         this.signupForm.get("otp").clearValidators();
         this.signupForm.get("otp").updateValueAndValidity();
-        this.spinner.hide()
         this.isShowOtp = false;
         this.isValidateOTP = false;
         this.isValidate = false;
         this.isSuccess = true;
         this.isGenerate = false;
-        this.isPasswordDisable = false
-        Swal.fire({
-          title: 'Success!',
-          text: `OTP Verified Successfully!`,
-          icon: 'success',
-          showCancelButton: false,
-          allowOutsideClick: true
-        })
+        this.isPasswordDisable = false          
+        this.showSuccessMessage = true;
+        // Swal.fire({
+        //   title: 'Success!',
+        //   text: `OTP Verified Successfully!`,
+        //   icon: 'success',
+        //   showCancelButton: false,
+        //   allowOutsideClick: true
+        // });
         // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Verified Successfully.' });
       } else {
         this.spinner.hide()
-        Swal.fire("Error", data.message, "error")
-        // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'data.message' });
+        this.isOtpVerified = false;
+        this.showInvalidMessage = true;
+        setTimeout(() => this.otpAttempted = true, 50);
+        // Swal.fire("Error", data.message, "error");
       }
     }, err => {
       console.log(err)
       this.spinner.hide()
-      Swal.fire("Error", "Unable to register data", "error")
+      this.isValidatingOtp = false;
+      setTimeout(() => this.otpAttempted = true, 50);
+      this.isOtpVerified = false;
+      Swal.fire("Error", "Error occured, Please try again.", "error");
     })
+    }, 1200);
   }
 
   lettersOnly(event): boolean {
@@ -667,5 +684,15 @@ export class SignUpComponent implements OnInit {
 
   showValidateButton(event) {
 
+  }
+
+  onOtpChange(otp: string): void {
+    if (otp.length === 6) {
+      this.validateOTP(otp);
+    } else {
+      this.otpAttempted = false;
+      this.isOtpVerified = false;
+      this.showInvalidMessage = false;
+    }
   }
 }

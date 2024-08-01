@@ -68,6 +68,7 @@ import {DialogModule} from 'primeng/dialog';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { AiAgentSignupComponent } from './ai-agent-signup/ai-agent-signup.component';
 import { AiAgentSubscriptionComponent } from './ai-agent-subscription/ai-agent-subscription.component';
+import { NgOtpInputModule } from  'ng-otp-input';
 
 @NgModule({
     declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent, SuccessPaymentComponent, FailPaymentComponent, UserDetailsComponent, AiAgentSignupComponent, AiAgentSubscriptionComponent],
@@ -117,6 +118,7 @@ import { AiAgentSubscriptionComponent } from './ai-agent-subscription/ai-agent-s
         PasswordModule,
         PrimengCustomModule,
         CdkStepperModule,
+        NgOtpInputModule,
         NgxStripeModule.forRoot(environment.stripeKey),
         DialogModule
     ],
