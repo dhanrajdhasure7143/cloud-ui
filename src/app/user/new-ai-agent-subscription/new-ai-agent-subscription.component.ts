@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { Country, State, City } from 'country-state-city';
@@ -53,6 +53,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   expandedSpecs: { [key: number]: boolean } = {};
   isPopupVisible = false;
   billingCycle = 'monthly';
+  isOpenEnterprice = false;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -107,50 +108,6 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   getCountries() {
     this.countryInfo = Country.getAllCountries();
   }
-
-  // loadPredefinedBots(){
-  //   this.service.loadPredefinedBots().subscribe((response: any) =>{
-  //     this.spinner.hide();
-  //     console.log(response);
-  //     if(response){
-
-  //     response.forEach(element => {
-  //         let obj = element.product;
-  //         let image=element.image;
-  //         obj["priceCollection"] = element.priceCollection;
-  //         if (element.product.metadata && element.product.metadata.product_features) {
-  //           let data = element.product.metadata.product_features;
-  //           obj["features"] = JSON.parse(data);
-  //         } else {
-  //           obj["features"] = [];
-  //         }
-
-  //         const decodedImage = this.decodeBase64Image(image);
-  //         obj["image"] = decodedImage;
-  //         this.botPlans.push(obj);
-  //       });
-
-  //      this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
-  //      console.log(this.enterPrise_plan);
-
-  //       this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
-  //       console.log(this.botPlans);
-  //     }
-  //   }, err => {
-  //     this.spinner.hide();
-  //     Swal.fire({
-  //       title: 'Error!',
-  //       text: 'Failed to load',
-  //       icon: 'error',
-  //       showCancelButton: false,
-  //       allowOutsideClick: true
-  //     }).then((result) => {
-  //       if (result.value) {
-  //         this.router.navigate(['/signup']);
-  //       }
-  //     });
-  //   });
-  // }  
 
   getPredefinedRawBots(){
     this.service.getPredifinedRawBots().subscribe((response: any) =>{
@@ -245,6 +202,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
             this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
 
             this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
+            // this.botPlans=[...this.botPlans, ...this.botPlans];
             this.updateUIWithStoredPlans();
         }
     }, err => {
@@ -584,5 +542,17 @@ readValue(value){
     this.isPopupVisible = false;
   }
 
+  showEnterpriceModel(){
+    this.isOpenEnterprice = true
+  }
+
+  closePopup()
+  {
+    this.isOpenEnterprice = false;
+  }
+
+  changePlan(plan) {
+    console.log(`Selected plan: ${plan}`);
+  }
 
 }

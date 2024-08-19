@@ -1,58 +1,34 @@
 <div class="container-fluid main-container">
     <div class="row sub-box">
-        <!-- Enterprise Plan Div -->
-        <div class="col-md-3 enterprise-plan" *ngIf="!isReview_order">
-            <div class="heading-ent">Enterprise Plan</div>
-            <div class="plan-details">
-                <span class="exclusive-pricing">Exclusive Pricing</span>
-                <div *ngIf="!showSkeleton">
-                    <ul  class="features-list" >
-                        <li class="position-relative exclusive-list-child" *ngFor="let plan of enterPrise_plan.features">{{plan}}</li>
-                    </ul>
-                </div>
-
-                <div *ngIf="showSkeleton">
-                    <ul class="skeleton-list">
-                        <li class="skeleton-list-item" *ngFor="let _ of [1, 2, 3, 4]">
-                            <p-skeleton width="80%" height="1rem"></p-skeleton>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="contact-sales-wrapper">
-                <button disabled class="btn btn-primary contact-sales" (click)="sendEmailEnterPrisePlan()">
-                    <img src="../../../assets/ai-agent/ai-icon.svg" alt="ai-image">
-                    Contact Sales
-                </button>
-                <span class="plan-section">For Personalized Enterprise Level Pricing</span>
-            </div>
-        </div>
-
         <!-- AI Agents Div -->
-        <div class="col-md-9 ai-agents" *ngIf="!isReview_order">
-            <!-- Header -->
+        <div class="col-md-12 ai-agents" *ngIf="!isReview_order">
             <div class="d-flex justify-content-between heading-section">
-                <div class="agent-title">AI Agents</div>
+                <div class="agent-title">Subscribe to AI Agents</div>
                 <div class="toggle-buttons">
-                    <div class="montly-toggler-switch d-flex align-items-center gap-4">
-                        <div class="left-monthly-part">
-                            <button (click)="toggleChanged('Monthly')">Monthly</button>
-                        </div>
-                        <div class="middle-toggle-button">
-                            <button class="outer-toggle-btn" (click)="togglePlan()">
-                                <div class="toggle-bg-sec" [ngClass]="selectedPlan === 'Yearly' ? 'activeYear' : 'activeMonth'" style="margin-top: 5px;">
-                                    <div class="toggle-mover"></div>
-                                </div>
-                            </button>
-                        </div>
-                        <div class="right-yearly-part">
-                            <button (click)="toggleChanged('Yearly')">Yearly</button>
+                    <div class="d-inline-block mr-4 order-det" *ngIf="totalAmount >0" (mouseenter)="showPopup()" (mouseleave)="hidePopup()">Order details
+                        <div class="popup" [ngClass]="{'show': isPopupVisible}">
+                              <div *ngFor="let plan of botPlans" class="popup-plan-sec">
+                                <ng-container *ngIf="plan.quantity>=1">
+                                    <p>{{ plan.name }}: {{ plan.quantity }} 
+                                        <span *ngFor="let price of plan.priceCollection">
+                                            <span *ngIf="price.tiersMode === 'year' && selectedPlan === 'Yearly'">
+                                                <span class="amount">$ {{ price.unitAmount * plan.quantity }}.00</span>
+                                            </span>
+                                            <span *ngIf="price.tiersMode === 'month' && selectedPlan === 'Monthly'">
+                                                <span class="amount">$ {{ price.unitAmount * plan.quantity }}.00</span>
+                                            </span>
+                                        </span>
+                                    </p>
+                                </ng-container>
+                              </div>
+                              <hr>
+                              <span class="popup-total">Total <span class="total-amount">$ {{ totalAmount }}.00</span></span>
                         </div>
                     </div>
+                    <button class="btn btn-primary proceed-btn" (click)="paymentPlan()" [disabled]="totalAmount <=0">Proceed to Pay: $ {{ totalAmount?? "00" }}.00</button>
                 </div>
             </div>
 
-            <!-- Cards Section  && onSelectPredefinedBot(plan, i) [ngClass]="{'selected-square': plan.isSelected}"-->
             <div class="cards-container"> 
                 <div class="inner-cards-container" *ngIf="!showSkeleton">
                     <div class="card" *ngFor="let plan of botPlans; let i = index"
@@ -64,12 +40,33 @@
                                         <img src="../../../assets/ai-agent/bot-image.svg" alt="Agent Image" height="30px" width="30px">
                                     </div>
                                     <div class="agent-names" style="margin-left: 10px;">
-                                        <h5 class="card-title-new">{{plan.name}}</h5>
+                                        <span class="card-title-new">{{plan.name}}</span>
                                     </div>
                                 </div>
-                                <div class="view-more d-flex align-items-center" style="color:#098DE6;">
-                                    <i class="pi pi-info-circle"></i>
-                                    <div class="view-details-link">View details</div>
+                                <div class="view-more d-flex align-items-center">
+                                    <ng-container *ngFor="let detail of plan.priceCollection">
+                                        <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly'" class="price-item-block">
+                                            <div class="box-outer">
+                                                <span class="text-design" *ngIf="plan.quantity <=0">Select no of Agents</span>
+                                                <div class="square-controls" *ngIf="!detail.isPlanSubscribed" (click)="$event.stopPropagation()">
+                                                    <div class="square-btn-left decrease" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 0">-</div>
+                                                    <span class="square-quantity">{{plan.quantity}}</span>
+                                                    <div class="square-btn-right increase" (click)="incrementQuantity(plan,i)">+</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly'" class="price-item-block">
+                                            <div class="box-outer">
+                                                <span class="text-design" *ngIf="plan.quantity <=0">Select no of Agents</span>
+                                                <div class="square-controls" *ngIf="!detail.isPlanSubscribed" (click)="$event.stopPropagation()">
+                                                    <div class="square-btn-left decrease" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 0">-</div>
+                                                    <span class="square-quantity">{{plan.quantity}}</span>
+                                                    <div class="square-btn-right increase" (click)="incrementQuantity(plan,i)">+</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center price-section"
@@ -77,12 +74,24 @@
 
                                 <!-- Showing Plan Amount -->
                                 <div *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly' ">
-                                    <b><span class="price skyblue">$ {{detail.unitAmount}}</span> /
-                                    </b>{{detail.tiersMode}} <span> (Single Agent)</span>
+                                    <div class="price-container">
+                                        <div class="price-label">
+                                            <b><span class="price skyblue">$ {{detail.unitAmount}}</span> / </b>{{detail.tiersMode}} <span> (Single Agent)</span>
+                                        </div>
+                                        <div class="price-amt-gr price-selection price-amount" *ngIf="detail.unitAmount * plan.quantity > 0">
+                                            $ {{ detail.unitAmount * plan.quantity | number:'1.2-2' }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly' ">
-                                    <b><span class="price skyblue">$ {{detail.unitAmount}}</span> /
-                                    </b> {{detail.tiersMode}}  <span>(Single Agent)</span>
+                                    <div class="price-container">
+                                        <div class="price-label">
+                                            <b><span class="price skyblue">$ {{detail.unitAmount}}</span> / </b>{{detail.tiersMode}} <span> (Single Agent)</span>
+                                        </div>
+                                        <div class="price-amt-gr price-selection price-amount" *ngIf="detail.unitAmount * plan.quantity > 0">
+                                            $ {{ detail.unitAmount * plan.quantity | number:'1.2-2' }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -90,45 +99,33 @@
                             <div class="frame">
                                 <p class="text-design">{{formatFeatures(plan.features)}}</p>
                             </div>
-
-                            <!-- Showing QTY Toggle Button -->
-                            <ng-container *ngFor="let detail of plan.priceCollection">
-                                <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly'" class="price-item-block">
-                                    <div class="box-outer">
-                                        <div class="square-controls" *ngIf="!detail.isPlanSubscribed" (click)="$event.stopPropagation()">
-                                            <div class="square-btn-left decrease" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 0">-</div>
-                                            <span class="square-quantity">{{plan.quantity}}</span>
-                                            <div class="square-btn-right increase" (click)="incrementQuantity(plan,i)">+</div>
-                                        </div>
-                                        <span class="text-design">Select no of Agents</span>
-                                    </div>
-                                    <div class="price-amt-gr price-green" *ngIf="detail.unitAmount * plan.quantity > 0">
-                                        $ {{ detail.unitAmount * plan.quantity | number:'1.2-2' }}
-                                    </div>
-                                </div>
-                                
-                                <div *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly'" class="price-item-block">
-                                    <div class="box-outer">
-                                        <div class="square-controls" *ngIf="!detail.isPlanSubscribed" (click)="$event.stopPropagation()">
-                                            <div class="square-btn-left decrease" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 0">-</div>
-                                            <span class="square-quantity">{{plan.quantity}}</span>
-                                            <div class="square-btn-right increase" (click)="incrementQuantity(plan,i)">+</div>
-                                        </div>
-                                        <span class="text-design">Select no of Agents</span>
-                                    </div>
-                                    <div class="price-amt-gr price-green" *ngIf="detail.unitAmount * plan.quantity > 0">
-                                        $ {{ detail.unitAmount * plan.quantity | number:'1.2-2' }}
-                                    </div>
-                                </div>
-                            </ng-container>                                                                     
+                            
+                            <!-- Agent plan toggle monthly or yearly -->
+                            <div class="plan-selector">
+                                <label>
+                                <input type="radio" name="plan-{{plan.name}}" value="monthly" (change)="changePlan('monthly')" [checked]="selectedPlan === 'Monthly'">
+                                <span class="custom-radio"></span>
+                                Monthly
+                                </label>
+                                <label>
+                                <input type="radio" name="plan-{{plan.name}}" value="yearly" (change)="changePlan('yearly')" [checked]="selectedPlan === 'Yearly'">
+                                <span class="custom-radio"></span>
+                                Yearly
+                                </label>
+                            </div>
+                              
                         </div>
                     </div>
+                </div>
+
+                <div class="enterprise-plan-bottom" (click)="showEnterpriceModel()">
+                    <p>Enterprise Plan</p>
                 </div>
 
                 <!-- skeleton for Agent's -->
                 <div *ngIf="showSkeleton">
                         <div class="p-grid p-formgrid skeleton-box">
-                            <div class="p-field skeleton-card-box" *ngFor="let _ of [1, 2, 3, 4]">
+                            <div class="p-field skeleton-card-box" *ngFor="let _ of [1, 2, 3, 4, 5, 6]">
                                 <div class="custom-skeleton">
                                     <div class="skeleton-header">
                                         <p-skeleton shape="circle" size="4rem" styleClass="circle-skeleton"></p-skeleton>
@@ -144,54 +141,48 @@
                         </div>
                     </div>           
                 </div>
-
-            <!-- Total Purchase Amount section -->
-            <div class="bottom-section">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="price-details">
-                        <span [ngClass]="{'price-green': totalAmount > 0, 'price-gray': totalAmount === 0}"> $ {{totalAmount}}.00</span><br>
-                        <span *ngIf="totalAmount >0">
-                            <span class="text-design-total" >Total <span *ngIf="selectedPlan === 'Monthly'">Monthly</span>
-                            <span *ngIf="selectedPlan === 'Yearly'">Annual</span> price estimates excl taxes</span>
-                        </span>
-
-                        <span *ngIf="totalAmount <=0">
-                            <span class="text-design-total">Select no of agents to display pricing</span>
-                        </span>
-                    </div>
-                    
-                    <!-- view details popup screen -->
-                    <div class="tab-view">
-                        <span class="d-inline-block mr-4 order-det" *ngIf="totalAmount >0" (mouseenter)="showPopup()" (mouseleave)="hidePopup()">Order details
-                          <div class="popup" [ngClass]="{'show': isPopupVisible}">
-                                <div *ngFor="let plan of botPlans">
-                                <ng-container *ngIf="plan.quantity>=1">
-                                    <p>{{ plan.name }}: {{ plan.quantity }} 
-                                        <span *ngFor="let price of plan.priceCollection">
-                                            <span *ngIf="price.tiersMode === 'year' && selectedPlan === 'Yearly'">
-                                                <span class="amount">$ {{ price.unitAmount * plan.quantity }}.00</span>
-                                            </span>
-                                            <span *ngIf="price.tiersMode === 'month' && selectedPlan === 'Monthly'">
-                                                <span class="amount">$ {{ price.unitAmount * plan.quantity }}.00</span>
-                                            </span>
-                                        </span>
-                                    </p>
-                                </ng-container>
-                                </div>
-                                <hr>
-                                <span class="popup-total">Total <span class="total-amount">$ {{ totalAmount }}.00</span></span>
-                          </div>
-                        </span>
-                        <button class="btn btn-success proceed-btn" (click)="paymentPlan()" [disabled]="totalAmount <=0">Proceed to Pay</button>
-                    </div>                      
-                </div>
-            </div>
         </div>
+        
         <div *ngIf="isReview_order">
             <app-order-payment [planDetails]="selected_plans_list" (backtoScreen)="readValue($event)" [log_data]="log_data" [isRegistered] = "isRegistered"></app-order-payment>
         </div>
     </div>
 </div>
+
+<div class="modal-backdrop" *ngIf="isOpenEnterprice">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Enterprise Plan <a href="#" class="exclusive-pricing">Exclusive Pricing</a></h2>
+
+        <div (click)="closePopup()" style="font-size: 20px; font-weight:600; cursor: pointer;">X</div>
+      </div>
+      <div class="modal-body d-flex justify-content-between">
+        <div class="modal-image">
+          <img src="../../../assets/ai-agent/ent_plan_svg.svg" alt="Enterprise Plan">
+        </div>
+        <div class="fetures-ent-plan">
+            <ul class="modal-features">
+                <li>✔ Resource Optimization</li>
+                <li>✔ Parallel Processing</li>
+                <li>✔ User Role Based Access Control</li>
+                <li>✔ Load Balancing</li>
+                <li>✔ Fault Tolerance</li>
+                <li>✔ Performance Monitoring</li>
+                <li>✔ Compliance Management</li>
+            </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="slogan">
+          For Personalized Enterprise Level Pricing
+        </div>
+        <div class="button-group">
+          <button class="btn btn-secondary" (click)="closePopup()">May be Later</button>
+          <button class="btn btn-primary"><i class="pi pi-slack" style="font-size: 18px"></i>&nbsp;Contact Sales</button>
+        </div>
+      </div>      
+    </div>
+</div>  
 
 <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
