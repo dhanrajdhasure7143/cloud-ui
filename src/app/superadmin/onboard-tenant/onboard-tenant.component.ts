@@ -67,8 +67,8 @@ export class OnboardTenantComponent implements OnInit {
   ispublicMail:boolean = false;
   isCreateAccount:boolean = false;
   orgExsist:boolean;
-  // productInfo: any[]=["EZFlow","AiAgents"];
-  productInfo: any[]=["EZFlow"];
+  productInfo: any[]=["EZFlow","AiAgents"];
+  // productInfo: any[]=["EZFlow"];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -127,6 +127,7 @@ export class OnboardTenantComponent implements OnInit {
         this.tenantForm.get("phoneNumber").setValue(this.userData["phoneNumber"]);
         const matchingCountry = this.countryInfo.find((item: any) => item.name === this.userData["country"]);
         this.tenantForm.get("country").setValue(this.userData["country"]);
+        this.tenantForm.get("product").setValue(this.userData["userProduct"]);
         this.onChangeCountry(this.userData["country"],"update");
       }else{
         this.isCreateAccount = true;
