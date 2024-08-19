@@ -1,6 +1,6 @@
 .main-container {
     width: 100%;
-    padding: 10px;
+    // padding: 10px;
     height: 100% !important;
 }
 
@@ -684,7 +684,6 @@ ul.features-list .exclusive-list-child::after {
   .modal-body {
     display: flex;
     justify-content: space-between;
-    align-items: center;
   }
   
   .modal-image img {
@@ -738,7 +737,6 @@ ul.features-list .exclusive-list-child::after {
   .modal-body {
     display: flex;
     justify-content: space-between;
-    align-items: center;
   }
   
   .modal-features li {
@@ -954,7 +952,6 @@ ul.features-list .exclusive-list-child::after {
 .modal-body {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 20px;
 }
 
@@ -982,4 +979,9 @@ ul.features-list .exclusive-list-child::after {
 .button-group {
     display: flex;
     gap: 10px;
+}
+
+.contact-sales-button{
+    font-size: 18px;
+    border-radius: 48px !important;
 }

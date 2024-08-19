@@ -161,14 +161,8 @@
           <img src="../../../assets/ai-agent/ent_plan_svg.svg" alt="Enterprise Plan">
         </div>
         <div class="fetures-ent-plan">
-            <ul class="modal-features">
-                <li>✔ Resource Optimization</li>
-                <li>✔ Parallel Processing</li>
-                <li>✔ User Role Based Access Control</li>
-                <li>✔ Load Balancing</li>
-                <li>✔ Fault Tolerance</li>
-                <li>✔ Performance Monitoring</li>
-                <li>✔ Compliance Management</li>
+            <ul class="modal-features" *ngFor="let plan of enterPrise_plan.features">
+                <li>✔ {{plan}}</li>
             </ul>
         </div>
       </div>
@@ -178,7 +172,7 @@
         </div>
         <div class="button-group">
           <button class="btn btn-secondary" (click)="closePopup()">May be Later</button>
-          <button class="btn btn-primary"><i class="pi pi-slack" style="font-size: 18px"></i>&nbsp;Contact Sales</button>
+          <button class="btn btn-primary contact-sales-button" (click)="sendEmailEnterPrisePlan()"><i class="pi pi-slack" style="font-size: 18px; border-radius: 48px !important;"></i>&nbsp;Contact Sales</button>
         </div>
       </div>      
     </div>
