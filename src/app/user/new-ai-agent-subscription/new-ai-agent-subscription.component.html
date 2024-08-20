@@ -11,10 +11,10 @@
                                 <ng-container *ngIf="plan.quantity>=1">
                                     <p>{{ plan.name }}: {{ plan.quantity }} 
                                         <span *ngFor="let price of plan.priceCollection">
-                                            <span *ngIf="price.tiersMode === 'year' && selectedPlan === 'Yearly'">
+                                            <span *ngIf="price.tiersMode === 'year' && plan.selectedTire === 'Yearly'">
                                                 <span class="amount">$ {{ price.unitAmount * plan.quantity }}.00</span>
                                             </span>
-                                            <span *ngIf="price.tiersMode === 'month' && selectedPlan === 'Monthly'">
+                                            <span *ngIf="price.tiersMode === 'month' && plan.selectedTire === 'Monthly'">
                                                 <span class="amount">$ {{ price.unitAmount * plan.quantity }}.00</span>
                                             </span>
                                         </span>
@@ -73,7 +73,7 @@
                                 *ngFor="let detail of plan.priceCollection">
 
                                 <!-- Showing Plan Amount -->
-                                <div *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly' ">
+                                <div *ngIf="detail.tiersMode === 'month' && plan.selectedTire === 'Monthly' ">
                                     <div class="price-container">
                                         <div class="price-label">
                                             <b><span class="price skyblue">$ {{detail.unitAmount}}</span> / </b>{{detail.tiersMode}} <span> (Single Agent)</span>
@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly' ">
+                                <div *ngIf="detail.tiersMode === 'year' && plan.selectedTire === 'Yearly' ">
                                     <div class="price-container">
                                         <div class="price-label">
                                             <b><span class="price skyblue">$ {{detail.unitAmount}}</span> / </b>{{detail.tiersMode}} <span> (Single Agent)</span>
@@ -103,12 +103,12 @@
                             <!-- Agent plan toggle monthly or yearly -->
                             <div class="plan-selector">
                                 <label>
-                                <input type="radio" name="plan-{{plan.name}}" value="monthly" (change)="changePlan('monthly')" [checked]="selectedPlan === 'Monthly'">
+                                <input type="radio" name="plan-{{plan.name}}" value="monthly" (change)="changePlan('monthly',plan)" [checked]="selectedPlan === 'Monthly'">
                                 <span class="custom-radio"></span>
                                 Monthly
                                 </label>
                                 <label>
-                                <input type="radio" name="plan-{{plan.name}}" value="yearly" (change)="changePlan('yearly')" [checked]="selectedPlan === 'Yearly'">
+                                <input type="radio" name="plan-{{plan.name}}" value="yearly" (change)="changePlan('yearly',plan)" [checked]="selectedPlan === 'Yearly'">
                                 <span class="custom-radio"></span>
                                 Yearly
                                 </label>
@@ -143,9 +143,9 @@
                 </div>
         </div>
         
-        <div *ngIf="isReview_order">
+        <!-- <div *ngIf="isReview_order">
             <app-order-payment [planDetails]="selected_plans_list" (backtoScreen)="readValue($event)" [log_data]="log_data" [isRegistered] = "isRegistered"></app-order-payment>
-        </div>
+        </div> -->
     </div>
 </div>
 

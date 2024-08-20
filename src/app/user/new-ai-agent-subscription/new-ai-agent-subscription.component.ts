@@ -197,11 +197,13 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
                 obj["doPlanDisabled"] = isSubscribed;
                 obj['quantity']=0
                 obj['showAllSpecs']=false
+                obj['selectedTire']='Yearly'
                 this.botPlans.push(obj);
             });
             this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
 
             this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
+            console.log(this.botPlans,"this.botPlans")
             // this.botPlans=[...this.botPlans, ...this.botPlans];
             this.updateUIWithStoredPlans();
         }
@@ -349,10 +351,12 @@ readValue(value){
 // }
 
   planSelection(interval: string) {
-    this.selectedPlan = interval;
+    // this.selectedPlan = interval;
+
     let plansData = [];
-    let selectedInterval = (interval === 'Monthly') ? 'month' : 'year';
     this.selectedPlans.forEach((item) => {
+    let selectedInterval = (item.selectedTire === 'Monthly') ? 'month' : 'year';
+
       item.priceCollection.forEach((price) => {
         if (price.recurring.interval === selectedInterval) {
           // plansData.push(price.unitAmount);
@@ -361,6 +365,8 @@ readValue(value){
         }
       });
     });
+
+    console.log(plansData)
     // this.totalAmount = 0;
     // plansData.forEach((amount) => {
       //   this.totalAmount += amount;
@@ -426,8 +432,8 @@ readValue(value){
     if (selectedPlan) {
       selectedPlan.quantity = plan.quantity;
     }
-    
-    this.planSelection(this.selectedPlan)
+    console.log("selectedPlan",this.selectedPlan)
+    this.planSelection(plan.selectedTire)
   }
 
   decrementQuantity(plan: any, index) {
@@ -551,8 +557,18 @@ readValue(value){
     this.isOpenEnterprice = false;
   }
 
-  changePlan(plan) {
-    console.log(`Selected plan: ${plan}`);
+  changePlan(tire,plan) {
+    console.log(`Selected plan: ${tire}`,plan);
+
+  // this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
+  plan.selectedTire= tire=='monthly' ? "Monthly" : "Yearly";
+  // let selectedInterval = (tire === 'monthly') ? 'Monthly' : 'Yearly';
+  this.planSelection(plan.selectedTire)
+
+  console.log(this.selectedPlans)
+
+
+
   }
 
 }
