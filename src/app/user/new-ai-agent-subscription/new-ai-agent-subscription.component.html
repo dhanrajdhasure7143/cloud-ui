@@ -25,7 +25,8 @@
                               <span class="popup-total">Total <span class="total-amount">$ {{ totalAmount }}.00</span></span>
                         </div>
                     </div>
-                    <button class="btn btn-primary proceed-btn" (click)="paymentPlan()" [disabled]="totalAmount <=0">Proceed to Pay: $ {{ totalAmount?? "00" }}.00</button>
+                    <!-- <button class="btn btn-primary proceed-btn" (click)="paymentPlan()" [disabled]="totalAmount <=0">Proceed to Pay: $ {{ totalAmount?? "00" }}.00</button> -->
+                    <button class="btn btn-primary proceed-btn" (click)="paymentPlan()" [disabled]="totalAmount <=0">Proceed to Pay</button>
                 </div>
             </div>
 
@@ -47,7 +48,7 @@
                                     <ng-container *ngFor="let detail of plan.priceCollection">
                                         <div *ngIf="detail.tiersMode === 'year' && selectedPlan === 'Yearly'" class="price-item-block">
                                             <div class="box-outer">
-                                                <span class="text-design" *ngIf="plan.quantity <=0">Select no of Agents</span>
+                                                <span class="text-design qty-text-size" *ngIf="plan.quantity <=0">Select no of Agents</span>
                                                 <div class="square-controls" *ngIf="!detail.isPlanSubscribed" (click)="$event.stopPropagation()">
                                                     <div class="square-btn-left decrease" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 0">-</div>
                                                     <span class="square-quantity">{{plan.quantity}}</span>
@@ -58,7 +59,7 @@
                                         
                                         <div *ngIf="detail.tiersMode === 'month' && selectedPlan === 'Monthly'" class="price-item-block">
                                             <div class="box-outer">
-                                                <span class="text-design" *ngIf="plan.quantity <=0">Select no of Agents</span>
+                                                <span class="text-design qty-text-size" *ngIf="plan.quantity <=0">Select no of Agents</span>
                                                 <div class="square-controls" *ngIf="!detail.isPlanSubscribed" (click)="$event.stopPropagation()">
                                                     <div class="square-btn-left decrease" (click)="decrementQuantity(plan)" [disabled]="plan.quantity <= 0">-</div>
                                                     <span class="square-quantity">{{plan.quantity}}</span>
@@ -170,7 +171,7 @@
         <div class="slogan">
           For Personalized Enterprise Level Pricing
         </div>
-        <div class="button-group">
+        <div class="button-group ent-plan-btns">
           <button class="btn btn-secondary" (click)="closePopup()">May be Later</button>
           <button class="btn btn-primary contact-sales-button" (click)="sendEmailEnterPrisePlan()"><i class="pi pi-slack" style="font-size: 18px; border-radius: 48px !important;"></i>&nbsp;Contact Sales</button>
         </div>

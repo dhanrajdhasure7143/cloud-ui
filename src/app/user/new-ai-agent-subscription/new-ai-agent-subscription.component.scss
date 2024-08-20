@@ -277,7 +277,7 @@ ul.features-list .exclusive-list-child::after {
 
 .toggle-buttons {
     // text-align: right;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -313,7 +313,7 @@ ul.features-list .exclusive-list-child::after {
 }
 
 .heading-section{
-    margin: 10px 25px 0px 25px;
+    margin: 20px 25px 20px 25px;
 }
 
 .agent-title{
@@ -540,7 +540,8 @@ ul.features-list .exclusive-list-child::after {
 }
 
 .text-design{
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .text-design-total{
@@ -751,7 +752,7 @@ ul.features-list .exclusive-list-child::after {
   
   .btn-primary, .btn-secondary {
     padding: 8px 16px; 
-    font-size: 14px;
+    font-size: 15px !important;
   }
   
   .btn-primary {
@@ -847,7 +848,7 @@ ul.features-list .exclusive-list-child::after {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: gray;
+    // background-color: gray;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -984,4 +985,12 @@ ul.features-list .exclusive-list-child::after {
 .contact-sales-button{
     font-size: 18px;
     border-radius: 48px !important;
+}
+
+.qty-text-size{
+    font-size: 12px !important;
+}
+
+.ent-plan-btns button{
+    font-size: 24px !important;
 }
