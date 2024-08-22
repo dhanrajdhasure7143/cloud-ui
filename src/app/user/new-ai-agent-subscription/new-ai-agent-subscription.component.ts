@@ -297,7 +297,7 @@ paymentPlan() {
 sendEmailEnterPrisePlan(){
   this.spinner.show();
   this.service.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
-    if(res.errorMessage !="User not present"){
+    if(res.errorMessage !="User not present" || res.code==4200){
       // Swal.fire({
       //     title: 'Success!',
       //     text: `Thank you for choosing Enterprise plan, Our team will contact you soon!`,
@@ -305,6 +305,7 @@ sendEmailEnterPrisePlan(){
       //     showCancelButton: false,
       //     allowOutsideClick: false
       // })
+      this.isOpenEnterprice = false;
       this.isOpensuccessDialog = true;
     }
       this.spinner.hide();

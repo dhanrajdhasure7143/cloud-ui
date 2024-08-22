@@ -121,7 +121,7 @@
                 </div>
 
                 <div class="enterprise-plan-bottom" (click)="showEnterpriceModel()">
-                    <p>Enterprise Plan</p>
+                    <p class="mt-0"> <img src="../../../assets/ai-agent/ent-plan.svg" alt=""> Enterprise Plan</p>
                 </div>
 
                 <!-- skeleton for Agent's -->
@@ -153,21 +153,20 @@
 
 <div class="modal-backdrop" *ngIf="isOpensuccessDialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>Thankyou for contacting us</h2>
-
-        <div (click)="closePopup()" style="font-size: 20px; font-weight:600; cursor: pointer;">X</div>
-      </div>
-      <div class="modal-body d-flex justify-content-between">
-        <div class="modal-image">
+      <!-- <div class="modal-header mb-0 justify-content-end"> isOpensuccessDialog -->
+        <div (click)="closePopup()" class="model-heading-text">X</div>
+      <!-- </div> -->
+      <div class="modal-body d-flex justify-content-center pt-0">
+        <div class="modal-image fw-bold">
+            <span style="font-size: 30px; font-weight: 600;">Thankyou for contacting us</span>
           <img src="../../../assets/ai-agent/enterprise-email.png" alt="Enterprise Plan">
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer justify-content-center">
         <div class="success-dialog-slogan">We've sent you a mail</div>
         <div class="success-dialog-slogan">our team will get back to you shortly</div>
-        <div class="button-group ent-plan-btns">
-          <button class="btn btn-primary contact-sales-button" (click)="closePopup()">Okay, Lets go</button>
+        <div class="button-group ent-plan-btns justify-content-center mt-10">
+          <button class="btn btn-primary contact-sales-button btn-lets-go" (click)="closePopup()">Okay, Lets go</button>
         </div>
       </div>      
     </div>
@@ -191,12 +190,15 @@
         </div>
       </div>
       <div class="modal-footer">
-        <div class="slogan">
-          For Personalized Enterprise Level Pricing
+        <div class="bottom-bar d-flex justify-content-between">
+            <span></span>
+            <div class="slogan">
+                For Personalized Enterprise Level Pricing
+            </div>
         </div>
         <div class="button-group ent-plan-btns">
           <button class="btn btn-secondary" (click)="closePopup()">May be Later</button>
-          <button class="btn btn-primary contact-sales-button" (click)="sendEmailEnterPrisePlan()"><i class="pi pi-slack" style="font-size: 18px; border-radius: 48px !important;"></i>&nbsp;Contact Sales</button>
+          <button class="btn btn-primary contact-sales-button" (click)="sendEmailEnterPrisePlan()"> <img src="../../../assets/ai-agent/star-icon.svg" height="30px" width="30px" alt=""> &nbsp;Contact Sales</button>
         </div>
       </div>      
     </div>

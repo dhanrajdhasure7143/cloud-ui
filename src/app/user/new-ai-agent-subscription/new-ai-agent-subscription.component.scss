@@ -611,12 +611,20 @@ ul.features-list .exclusive-list-child::after {
 
 .enterprise-plan-bottom{
     margin: 0px 20px;
+    display: flex;
+    justify-content: end;
+    position: sticky;
+    bottom: 5px;
 }
 
 .enterprise-plan-bottom p{
-    font-weight: 600;
-    color: #098DE6;
+    background: #3199FF;
+    padding: 5px 25px 5px 15px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 25px;
     cursor: pointer;
+    color: #fff !important;
 }
 
 .price-container {
@@ -654,6 +662,7 @@ ul.features-list .exclusive-list-child::after {
     justify-content: center;
     align-items: center;
     z-index: 1050;
+    transition-duration: 0.5s !important;
   }
   
   .modal-content {
@@ -663,6 +672,7 @@ ul.features-list .exclusive-list-child::after {
     max-width: 700px;
     width: 100%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition-duration: 0.5s;
   }
   
   .modal-header {
@@ -680,6 +690,8 @@ ul.features-list .exclusive-list-child::after {
     color: #3498db;
     text-decoration: none;
     margin-left: 10px;
+    font-size: 23px;
+    font-weight: 500;
   }
   
   .modal-body {
@@ -780,7 +792,7 @@ ul.features-list .exclusive-list-child::after {
 
 .success-dialog-slogan{
   font-size: 22px;
-  color: #2C2C2C;
+  color: #000000;
 }
 
 .button-group {
@@ -935,7 +947,7 @@ ul.features-list .exclusive-list-child::after {
 
 .modal-content {
     background: white;
-    border-radius: 8px;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 80%; /* Adjust width as needed */
     max-width: 800px; /* Set a maximum width */
@@ -979,7 +991,9 @@ ul.features-list .exclusive-list-child::after {
 }
 
 .slogan {
-    font-style: italic;
+    // font-style: italic;
+    font-weight: 400;
+    color: rgba(44, 44, 44, 1) !important;
 }
 
 .button-group {
@@ -990,6 +1004,7 @@ ul.features-list .exclusive-list-child::after {
 .contact-sales-button{
     font-size: 18px;
     border-radius: 48px !important;
+    background: linear-gradient(90deg, #3199FF 0%, #2ED0FD 83.46%) !important;
 }
 
 .qty-text-size{
@@ -998,4 +1013,20 @@ ul.features-list .exclusive-list-child::after {
 
 .ent-plan-btns button{
     font-size: 24px !important;
+    font-weight: 500;
 }
+
+.model-heading-text{
+    padding: 5px 10px;
+    display: flex !important;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    justify-content: end !important;
+}
+
+.btn-lets-go {
+    width: calc(35% - 15px) !important;
+    color: black;
+    font-size: 24px;
+  }
