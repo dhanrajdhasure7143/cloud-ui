@@ -54,6 +54,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   isPopupVisible = false;
   billingCycle = 'monthly';
   isOpenEnterprice = false;
+  isOpensuccessDialog:boolean = false;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -297,13 +298,14 @@ sendEmailEnterPrisePlan(){
   this.spinner.show();
   this.service.sendEmailEntrepricePlan(this.userEmail).subscribe((res : any)=>{
     if(res.errorMessage !="User not present"){
-      Swal.fire({
-          title: 'Success!',
-          text: `Thank you for choosing Enterprise plan, Our team will contact you soon!`,
-          icon: 'success',
-          showCancelButton: false,
-          allowOutsideClick: false
-      })
+      // Swal.fire({
+      //     title: 'Success!',
+      //     text: `Thank you for choosing Enterprise plan, Our team will contact you soon!`,
+      //     icon: 'success',
+      //     showCancelButton: false,
+      //     allowOutsideClick: false
+      // })
+      this.isOpensuccessDialog = true;
     }
       this.spinner.hide();
   },err=>{
@@ -552,9 +554,9 @@ readValue(value){
     this.isOpenEnterprice = true
   }
 
-  closePopup()
-  {
+  closePopup(){
     this.isOpenEnterprice = false;
+    this.isOpensuccessDialog = false;
   }
 
   changePlan(tire,plan) {
