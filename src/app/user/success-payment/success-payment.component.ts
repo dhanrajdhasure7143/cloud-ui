@@ -46,6 +46,8 @@ export class SuccessPaymentComponent implements OnInit {
   ngOnInit(): void {
     this.subscriptionComplete();
     this.startCountdown();
+    localStorage.removeItem('selectedPlans');
+    localStorage.removeItem('selectedInterval');
   }
 
   subscriptionComplete(){

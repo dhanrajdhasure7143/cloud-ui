@@ -12,6 +12,7 @@ import { StripeService } from 'ngx-stripe';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-ai-agent-subscription',
@@ -64,6 +65,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
               private router: Router,
               private crypto: CryptoService,
               private stripeService: StripeService,
+              private messageService: MessageService
               )  {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
@@ -240,13 +242,28 @@ paymentPlan() {
   // });
 
   let validPlans = this.selectedPlans.filter(plan => plan.quantity > 0);
+  console.log("selectedPlans",validPlans)
+  
+  // Extract the selectedTire values
+let tireTypes = validPlans.map(plan => plan.selectedTire);
 
-  let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
+// Check if both "Monthly" and "Yearly" are present
+let hasMonthly = tireTypes.includes("Monthly");
+let hasYearly = tireTypes.includes("Yearly");
+
+if (hasMonthly && hasYearly) {
+  this.messageService.add({severity:'error', summary:'Error', detail:'Please select either Monthly or Yearly for all selected plans.'});
+  this.spinner.hide();
+  return;
+}
+
+  // let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
   let filteredPriceIds = [];
 
   validPlans.forEach((element) => {
+    let selectedTire =element.selectedTire=== 'Monthly' ? 'month' : 'year'
     element.priceCollection.forEach((price) => {
-      if (price.recurring.interval === selectedInterval) {
+      if (price.recurring.interval === selectedTire) {
         let obj = {};
         obj["id"] = price.id;
         obj["quantity"] = element.quantity;
@@ -255,7 +272,6 @@ paymentPlan() {
     });
   });
 
-  console.log(this.selectedPlans)
 
   if (filteredPriceIds.length === 0) {
     // Handle the case when no price is selected for the chosen interval
@@ -561,17 +577,11 @@ readValue(value){
   }
 
   changePlan(tire,plan) {
-    console.log(`Selected plan: ${tire}`,plan);
-
   // this.selectedPlan = this.selectedPlans.length > 0 ? this.selectedPlan || "Monthly" : "Yearly";
   plan.selectedTire= tire=='monthly' ? "Monthly" : "Yearly";
   // let selectedInterval = (tire === 'monthly') ? 'Monthly' : 'Yearly';
   this.planSelection(plan.selectedTire)
-
-  console.log(this.selectedPlans)
-
-
-
+    this.selectedPlans.find(sp => sp.id === plan.id).selectedTire = tire=='monthly' ? "Monthly" : "Yearly";
   }
 
 }
