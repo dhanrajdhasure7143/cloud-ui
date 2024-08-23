@@ -69,12 +69,12 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
               )  {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
-                    console.log("data",data)
+                    // console.log("data",data)
                   // let params:any = JSON.parse(this.crypto.decrypt(data.token));
                     const formattedToken = data.token.replace(/\s+/g, '+');
                     this.emailToken = formattedToken
                     this.userEmail = this.crypto.decrypt(formattedToken);
-                console.log("this.userEmail",this.userEmail)
+                // console.log("this.userEmail",this.userEmail)
                 // this.isRegistered = params.isRegistered;
                   }
                   // Check if returning from Stripe
@@ -146,7 +146,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
                     obj["features"] =data?JSON.parse(data):[];
                 }
                 
-                console.log(features,"Gravwqghvs hgvhdd ")
+                // console.log(features,"Gravwqghvs hgvhdd ")
                   
                     
 
@@ -206,7 +206,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
             this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});       
 
             this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
-            console.log(this.botPlans,"this.botPlans")
+            // console.log(this.botPlans,"this.botPlans")
             // this.botPlans=[...this.botPlans, ...this.botPlans];
             this.updateUIWithStoredPlans();
         }
@@ -275,7 +275,7 @@ if (hasMonthly && hasYearly) {
 
   if (filteredPriceIds.length === 0) {
     // Handle the case when no price is selected for the chosen interval
-    console.error('No price selected for the chosen interval.');
+    // console.error('No price selected for the chosen interval.');
     this.spinner.hide();
     return;
   }
@@ -292,7 +292,7 @@ if (hasMonthly && hasYearly) {
     // "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
     "cancelUrl": environment.paymentFailuerURL+"?token="+this.emailToken
   };
-  console.log("PLAN_ID's", req_body);
+  // console.log("PLAN_ID's", req_body);
   
   this.service.getCheckoutScreen(req_body).pipe(
       switchMap((session: any) => {
@@ -333,7 +333,7 @@ sendEmailEnterPrisePlan(){
 
 onSelectPredefinedBot(plan:any, index) {
   plan.quantity = 1
-  console.log("Selected Plan:", plan)
+  // console.log("Selected Plan:", plan)
   this.selectedPlans = [];
   this.botPlans[index].isSelected = !this.botPlans[index].isSelected;
   this.isDisabled = this.botPlans.every(item => !item.isSelected);
@@ -385,7 +385,7 @@ readValue(value){
       });
     });
 
-    console.log(plansData)
+    // console.log(plansData)
     // this.totalAmount = 0;
     // plansData.forEach((amount) => {
       //   this.totalAmount += amount;
@@ -451,7 +451,7 @@ readValue(value){
     if (selectedPlan) {
       selectedPlan.quantity = plan.quantity;
     }
-    console.log("selectedPlan",this.selectedPlan)
+    // console.log("selectedPlan",this.selectedPlan)
     this.planSelection(plan.selectedTire)
   }
 
@@ -484,7 +484,7 @@ readValue(value){
   toggleSpecs(card: any) {
     card.showAllSpecs = !card.showAllSpecs;
 
-    console.log("cardwjfwefjw",card.showAllSpecs  )
+    // console.log("cardwjfwefjw",card.showAllSpecs  )
   }
   
   setBillingPeriod(period: string) {
