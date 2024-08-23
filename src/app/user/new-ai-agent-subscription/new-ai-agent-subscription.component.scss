@@ -615,6 +615,8 @@ ul.features-list .exclusive-list-child::after {
     justify-content: end;
     position: sticky;
     bottom: 5px;
+    width: auto;
+    pointer-events: none;
 }
 
 .enterprise-plan-bottom p{
@@ -625,6 +627,7 @@ ul.features-list .exclusive-list-child::after {
     border-radius: 25px;
     cursor: pointer;
     color: #fff !important;
+    pointer-events: auto;
 }
 
 .price-container {
