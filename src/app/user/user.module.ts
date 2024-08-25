@@ -68,10 +68,33 @@ import {DialogModule} from 'primeng/dialog';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { AiAgentSignupComponent } from './ai-agent-signup/ai-agent-signup.component';
 import { AiAgentSubscriptionComponent } from './ai-agent-subscription/ai-agent-subscription.component';
+import { NewAiAgentSubscriptionComponent } from './new-ai-agent-subscription/new-ai-agent-subscription.component';
 import { NgOtpInputModule } from  'ng-otp-input';
+import { RecruitmentAiSalesPageComponent } from './agent-pages/recruitment-ai-sales-page';
+import { DevAiSalesPageComponent } from './agent-pages/dev-ai-sales-page';
+import { TestingAiSalesPageComponent } from './agent-pages/testing-ai-sales-page';
+import { CustomerBotAiSalesPageComponent } from './agent-pages/customer-bot-ai-sales-page';
+import { RfpAiSalesPageComponent } from './agent-pages/rfp-ai-sales-page';
+import { MarketingAiSalesPageComponent } from './agent-pages/marketing-ai-sales-page';
 
 @NgModule({
-    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, RedirectsignoutComponent, UserInfoComponent, ActiveComponent, UserPageComponent,SignUpComponent, SubscriptionComponent, OrderPaymentComponent, SuccessPaymentComponent, FailPaymentComponent, UserDetailsComponent, AiAgentSignupComponent, AiAgentSubscriptionComponent],
+    declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, 
+        RedirectsignoutComponent, 
+        UserInfoComponent, 
+        ActiveComponent, 
+        UserPageComponent,SignUpComponent, 
+        SubscriptionComponent, OrderPaymentComponent, 
+        SuccessPaymentComponent, FailPaymentComponent, 
+        UserDetailsComponent, AiAgentSignupComponent, 
+        AiAgentSubscriptionComponent, 
+        NewAiAgentSubscriptionComponent,
+        RecruitmentAiSalesPageComponent,
+        DevAiSalesPageComponent,
+        TestingAiSalesPageComponent,
+        CustomerBotAiSalesPageComponent,
+        RfpAiSalesPageComponent,
+        MarketingAiSalesPageComponent
+    ],
     imports: [
         CommonModule,
         UserRoutingModule,
@@ -120,8 +143,7 @@ import { NgOtpInputModule } from  'ng-otp-input';
         CdkStepperModule,
         NgOtpInputModule,
         NgxStripeModule.forRoot(environment.stripeKey),
-        DialogModule
-    ],
+        DialogModule    ],
     exports: [LoginComponent],
     providers: []
 })
