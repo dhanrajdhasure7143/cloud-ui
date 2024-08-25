@@ -601,6 +601,9 @@ readValue(value){
     if(plan.name =="Customer Bot"){
       this.router.navigate(['/subscription/chatbot'], { queryParams: { token: this.emailToken,id:plan.id } });
     }
+    if(plan.name =="Marketing"){
+      this.router.navigate(['/subscription/marketing'], { queryParams: { token: this.emailToken,id:plan.id } });
+    }
     // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
   }
 
