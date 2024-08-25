@@ -60,7 +60,6 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
               private route:ActivatedRoute,
-              private profileservice : ProfileService,
               private spinner : NgxSpinnerService,
               private router: Router,
               private crypto: CryptoService,
@@ -581,7 +580,28 @@ readValue(value){
   plan.selectedTire= tire=='monthly' ? "Monthly" : "Yearly";
   // let selectedInterval = (tire === 'monthly') ? 'Monthly' : 'Yearly';
   this.planSelection(plan.selectedTire)
-    this.selectedPlans.find(sp => sp.id === plan.id).selectedTire = tire=='monthly' ? "Monthly" : "Yearly";
+  console.log(plan)
+    // this.selectedPlans.find(sp => sp.id === plan.id).selectedTire = tire=='monthly' ? "Monthly" : "Yearly";
+  }
+
+  navigateToPurchaseAgent(plan){
+    console.log("plan",plan)
+    if(plan.name =="Testing Agent"){
+    this.router.navigate(['/subscription/testing'], { queryParams: { token: this.emailToken,id:plan.id } });
+    }
+    if(plan.name =="RFP"){
+      this.router.navigate(['/subscription/rfp'], { queryParams: { token: this.emailToken,id:plan.id } });
+      }
+    if(plan.name =="Developer Agent"){
+      this.router.navigate(['/subscription/dev'], { queryParams: { token: this.emailToken,id:plan.id } });
+    }
+    if(plan.name =="Recruitment"){
+      this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
+    }
+    if(plan.name =="Customer Bot"){
+      this.router.navigate(['/subscription/chatbot'], { queryParams: { token: this.emailToken,id:plan.id } });
+    }
+    // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
   }
 
 }

@@ -20,6 +20,11 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { AiAgentSignupComponent } from './ai-agent-signup/ai-agent-signup.component';
 import { AiAgentSubscriptionComponent } from './ai-agent-subscription/ai-agent-subscription.component';
 import { NewAiAgentSubscriptionComponent } from './new-ai-agent-subscription/new-ai-agent-subscription.component';
+import { RecruitmentAiSalesPageComponent } from './agent-pages/recruitment-ai-sales-page';
+import { RfpAiSalesPageComponent } from './agent-pages/rfp-ai-sales-page';
+import { DevAiSalesPageComponent } from './agent-pages/dev-ai-sales-page';
+import { TestingAiSalesPageComponent } from './agent-pages/testing-ai-sales-page';
+import { CustomerBotAiSalesPageComponent } from './agent-pages/customer-bot-ai-sales-page';
 
 const routes: Routes = [
   {
@@ -90,9 +95,12 @@ const routes: Routes = [
   {path:'userDetails',
     component: UserDetailsComponent
   },
-  {path:'ai-agents/signup',
-    component: AiAgentSignupComponent
-  },
+  {path:'ai-agents/signup',component: AiAgentSignupComponent},
+  {path:'subscription/recruitment',component: RecruitmentAiSalesPageComponent},
+  {path:'subscription/rfp',component: RfpAiSalesPageComponent},
+  {path:'subscription/dev',component: DevAiSalesPageComponent},
+  {path:'subscription/testing',component: TestingAiSalesPageComponent},
+  {path:'subscription/chatbot',component: CustomerBotAiSalesPageComponent},
   {
     path:'agent-subscription',
     // component: SubscriptionComponent
