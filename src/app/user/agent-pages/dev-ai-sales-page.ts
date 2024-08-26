@@ -133,6 +133,61 @@ import Swal from 'sweetalert2';
       color: white;
       padding: 70px 0;
     }
+    .agents {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-left: 6px;
+    }
+
+    .agents label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: white;
+      font-size: 14px;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      background-color: #f0f0f0;
+      width: fit-content;
+      border-radius: 5px;
+    }
+    .counter button {
+      background-color: #B1BBC6;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    .counter button:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    .counter button:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    .counter button:active {
+      background-color: #b0b0b0;
+    }
+    .counter span {
+      font-size: 16px;
+      color: #333;
+      margin: 0 15px;
+      min-width: 20px;
+      text-align: center;
+    }
+    :host ::ng-deep.active {
+      background-color: transparent !important;
+    }
     .hero-content {
       display: flex;
       justify-content: space-between;
@@ -188,30 +243,10 @@ import Swal from 'sweetalert2';
       margin-bottom: 0.5rem;
       color: white;
     }
-    .counter {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-      padding: 0.5rem;
-    }
-    .counter button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-    .counter span {
-      font-size: 1.2rem;
-      color: white;
-    }
     .billing-cycle {
       display: flex;
-      justify-content: center;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
     .billing-cycle span {
       color: white;
@@ -235,7 +270,7 @@ import Swal from 'sweetalert2';
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #ccc;
+      background-color: #f0f0f0;
       transition: .4s;
       border-radius: 24px;
     }
@@ -246,28 +281,26 @@ import Swal from 'sweetalert2';
       width: 16px;
       left: 4px;
       bottom: 4px;
-      background-color: white;
+      background-color: #3199ff;
       transition: .4s;
       border-radius: 50%;
     }
-    input:checked + .slider {
-      background-color: #3199ff;
-    }
+   
     input:checked + .slider:before {
       transform: translateX(26px);
     }
     .btn {
       background-color: #3199ff;
       color: white;
-      padding: 12px 24px;
+    padding: 5px 13px;
       text-decoration: none;
       border-radius: 5px;
       font-weight: bold;
       display: inline-block;
-      font-size: 17px;
+      font-size: 15px;
+      margin-left: 5px;
     }
     .pay-button {
-      width: 100%;
       text-align: center;
     }
     .section {
@@ -352,13 +385,13 @@ import Swal from 'sweetalert2';
       max-height: 100%;
     }
     .benefits {
-      background-image: url('/assets/ai-agent/sales/benfits.png');
+      background-image: url('/assets/images/agent/sales/benfits.png');
       background-size: cover;
       background-position: center;
       padding: 80px 0;
     }
     .cta {
-      background-image: url('/assets/ai-agent/sales/get-started.png');
+      background-image: url('/assets/images/agent/sales/get-started.png');
       background-size: cover;
       background-position: center;
       color: white;
