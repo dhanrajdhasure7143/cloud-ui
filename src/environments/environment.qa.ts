@@ -17,8 +17,8 @@ export const environment = {
     isSecurityManagerEnabled : false,
     isNewDesignEnabled : true,
    isSubscrptionEnabled : true,
-   paymentSuccessURL:"http://ezflow.qa.epsoftinc.in/#/success",
-   paymentFailuerURL:"http://ezflow.qa.epsoftinc.in/#/",
+   paymentSuccessURL:"http://epsoft.internalqa.ai/#/success",
+   paymentFailuerURL:"http://epsoft.internalqa.ai/#/",
    stripeKey:"pk_test_51MnxmQIGBQXHW84IJAWLNX28SJ2JOgyWYhAfZ5Y8mKQzKOZ7SrfQ1ZNmDEcVRrLT3lJti7Qo5jBBxM5AP6n5xVbQ00b9w1UMfK",
    product:"AiAgents"
   };
