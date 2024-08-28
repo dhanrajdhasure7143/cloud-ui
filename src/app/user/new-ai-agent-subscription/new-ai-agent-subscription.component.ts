@@ -603,6 +603,8 @@ readValue(value){
     }
     if(plan.name =="Marketing"){
       this.router.navigate(['/subscription/marketing'], { queryParams: { token: this.emailToken,id:plan.id } });
+    }else{
+      this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
     }
     // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
   }
