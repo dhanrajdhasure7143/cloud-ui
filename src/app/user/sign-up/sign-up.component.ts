@@ -242,7 +242,9 @@ export class SignUpComponent implements OnInit {
     //    this.ispublicMail=false;
     //  }
     // this.spinner.show();
-    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(), isResend).subscribe((data: any) => {
+    let isaiAgentsproduct = environment.product == "AiAgents" ? true : false;
+
+    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(), isResend,isaiAgentsproduct).subscribe((data: any) => {
       this.signupForm.get("otp").setValidators([Validators.required]);
       this.signupForm.get("otp").updateValueAndValidity();
 

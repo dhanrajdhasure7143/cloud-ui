@@ -93,8 +93,8 @@ export class AuthenticationService {
 
     }
 
-    generateOTPSignUp(username: string,isResend) {
-      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+true+"&isResendOTP="+isResend,{responseType:'json'});
+    generateOTPSignUp(username: string,isResend,isaiAgentsproduct) {
+      return this.http.get('/api/login/beta/generateOTP?userId='+username+"&isNewRegistrationFlow="+true+"&isResendOTP="+isResend+"&aiAgents="+isaiAgentsproduct,{responseType:'json'});
     }
 
     validateOTPSignUp(username: string, otp: string){

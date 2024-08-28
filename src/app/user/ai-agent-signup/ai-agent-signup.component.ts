@@ -238,8 +238,9 @@ export class AiAgentSignupComponent implements OnInit {
     //  } else {
     //    this.ispublicMail=false;
     //  }
+    let isaiAgentsproduct = environment.product == "AiAgents" ? true : false;
     this.spinner.show();
-    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(), isResend).subscribe((data: any) => {
+    this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(), isResend,isaiAgentsproduct).subscribe((data: any) => {
       this.signupForm.get("otp").setValidators([Validators.required]);
       this.signupForm.get("otp").updateValueAndValidity();
 
