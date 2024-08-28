@@ -97,8 +97,7 @@
                                  border-radius: 5px;" id="organization" (keyup)="checkOrganizationName($event)"
                                 autocomplete="off" (keypress)="lettersOnly($event)"
                                 placeholder="Enter Organization" maxlength="51" minlength="3" tabindex="3">
-                            <span *ngIf="orgExsist" class='fa fa-info-circle errspan_info'> Organization already
-                                exist</span>
+                            <span *ngIf="orgExsist" class='required'> Organization already exist</span>
                             <!-- <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched && !signupForm.get('organization').hasError('pattern') && !signupForm.controls['organization'].hasError('maxlength')" class="required"> Organization required </span> -->
                             <span
                                 *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched &&!signupForm.get('organization').hasError('pattern') &&!signupForm.controls['organization'].hasError('maxlength') &&!signupForm.controls['organization'].hasError('minlength')"
@@ -191,7 +190,7 @@
 
                         <div class="col-sm-12">
                             <button class="btn btn-primary signup-btn" (click)="onRegistrationStart()"
-                                [disabled]="signupForm.invalid" type="submit" id="btn"> Next </button>
+                                [disabled]="signupForm.invalid || orgExsist" type="submit" id="btn"> Next </button>
                         </div>
                     </div>
                 </form>
