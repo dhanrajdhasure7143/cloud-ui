@@ -4,6 +4,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 
 
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -18,6 +19,7 @@ export class ForgotpasswordService {
     constructor(private http: HttpClient) { }
 
     forgotPassword(data: any): Observable<any> {
-      return this.http.get<any>('/api/user/passwordResetMail?emailId='+ data.email);
+      let isAiAgents= environment.product =='AiAgents' ? true : false;
+      return this.http.get<any>('/api/user/passwordResetMail?aiAgent='+isAiAgents+'&emailId='+ data.email);
     }
 }

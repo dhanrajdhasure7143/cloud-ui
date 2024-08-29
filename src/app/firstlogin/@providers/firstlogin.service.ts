@@ -6,6 +6,7 @@ import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ContentfulService } from './../../contentful/services/contentful.service';
 import { User } from './../../_models/user';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -87,7 +88,8 @@ export class FirstloginService {
   
   sendEmailEntrepricePlan(userId:string){
     let headers = new HttpHeaders({});
-    return this.http.post<any>('/api/user/enterprisePlan/'+userId,{ headers:headers,observe: 'response' })
+    let isAiAgents= environment.product =='AiAgents' ? true : false;
+    return this.http.post<any>('/api/user/enterprisePlan/'+userId+'?aiAgent='+isAiAgents,{ headers:headers,observe: 'response' })
   }
 
   getPlanDetails(): Observable<any>{
@@ -99,7 +101,8 @@ export class FirstloginService {
   }
 
   registrationComplete(id:any){
-    return this.http.post('/api/user/complete_user_registration/'+id,{});
+    let isAiAgents= environment.product =='AiAgents' ? true : false;
+    return this.http.post('/api/user/complete_user_registration/'+id+'?aiAgent='+isAiAgents,{});
   }
 
   insertCustomerSubscription(userEmail: string, tenantId: string) {

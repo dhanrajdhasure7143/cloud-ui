@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders,HttpParams, HttpEvent } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
   const httpOptions = {
     headers: new HttpHeaders({
@@ -149,7 +150,8 @@ deleteAlert(alertId):Observable<any>{
   return this.http.delete<any>('/notificationservice/api/v1/deleteAlert?alertId='+alertId,{responseType:"json"})
 }
 changePassword(pswdbody:any): Observable<any>{
-  return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
+  let isAiAgents= environment.product =='AiAgents' ? true : false;
+  return this.http.post<any>('/api/user/passwordChange?aiAgent='+isAiAgents, pswdbody,httpOptions)
 }
 modifyUserRole(data:any): Observable<any>{
   return this.http.put<any>('/authorizationservice/api/v1/user/role/applications/', data,httpOptions)
