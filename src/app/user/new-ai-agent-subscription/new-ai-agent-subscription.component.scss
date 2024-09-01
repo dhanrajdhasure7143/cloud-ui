@@ -613,10 +613,12 @@ ul.features-list .exclusive-list-child::after {
     margin: 0px 20px;
     display: flex;
     justify-content: end;
-    position: sticky;
+    position: fixed;
     bottom: 5px;
+    right: 10px;
     width: auto;
     pointer-events: none;
+    z-index: 10000;
 }
 
 .enterprise-plan-bottom p{
