@@ -47,10 +47,10 @@
                   <input [type]="hide ?  'text': 'password'" formControlName="oldPassword"  matInput 
                   placeholder="Enter Current Password"  maxlength="21"  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
                   <span class="password-btn ml-auto" matSuffix *ngIf="!hide" (click)="hide = true">
-                    <img src='./../../assets/images/eye-show.svg' alt="eye" />
+                    <img src='assets/images/eye-show.svg' alt="eye" />
                   </span>
                   <span class="password-btn ml-auto" matSuffix *ngIf="hide" (click)="hide = false">
-                    <img src='./../../assets/images/eye-hide.svg' alt="eye"/>
+                    <img src='assets/images/eye-hide.svg' alt="eye"/>
                   </span>
               </mat-form-field>
               <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('oldPassword').hasError('required') && userForm.get('oldPassword').touched">
@@ -66,10 +66,10 @@
                   <input [type]="hideOne ?  'text': 'password'" formControlName="password"  matInput 
                   placeholder="Enter New Password"  maxlength="21"  [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
                   <span class="password-btn ml-auto" matSuffix *ngIf="!hideOne" (click)="hideOne = true">
-                    <img src='./../../assets/images/eye-show.svg' alt="eye" />
+                    <img src='assets/images/eye-show.svg' alt="eye" />
                   </span>
                   <span class="password-btn ml-auto" matSuffix *ngIf="hideOne" (click)="hideOne = false">
-                    <img src='./../../assets/images/eye-hide.svg' alt="eye"/>
+                    <img src='assets/images/eye-hide.svg' alt="eye"/>
                   </span>
               </mat-form-field>
               <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('password').hasError('required') && userForm.get('password').touched">
@@ -85,10 +85,10 @@
                   <input [type]="hideTwo ?  'text': 'password'" formControlName="confirmPassword"  matInput 
                   placeholder="Confirm Password"  maxlength="21" [compare]="'password'" (keyup)="passwordValid($event)" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
                   <span class="password-btn ml-auto" matSuffix *ngIf="!hideTwo" (click)="hideTwo = true" >
-                    <img src='./../../assets/images/eye-show.svg' alt="eye" />
+                    <img src='assets/images/eye-show.svg' alt="eye" />
                   </span>
                   <span class="password-btn ml-auto" matSuffix *ngIf="hideTwo" (click)="hideTwo = false">
-                    <img src='./../../assets/images/eye-hide.svg' alt="eye"/>
+                    <img src='assets/images/eye-hide.svg' alt="eye"/>
                   </span>
               </mat-form-field>
               <mat-error class="fa fa-info-circle errspan" *ngIf="userForm.get('confirmPassword').hasError('required') && userForm.get('confirmPassword').touched">
@@ -111,5 +111,5 @@
 </div>
 
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/> 
+  <img  src='.assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/> 
 </ngx-spinner>

@@ -106,7 +106,7 @@ import Swal from 'sweetalert2';
       </div>
     </div>
     <ngx-spinner bdColor="#bebcbc66" type="">
-    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+    <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
   </ngx-spinner>
   `,
   styles: [`
@@ -420,22 +420,22 @@ export class DevAiSalesPageComponent {
 
   keyFeatures = [
     {
-      image:"../../../assets/ai-agent/sales/content 1.png",
+      image:"assets/ai-agent/sales/content 1.png",
       title: 'Accurate Job Descriptions',
       description: 'Automatically refine job descriptions to ensure clarity, reducing errors and improving candidate quality.'
     },
     {
-      image:"../../../assets/ai-agent/sales/content 2.png",
+      image:"assets/ai-agent/sales/content 2.png",
       title: 'Candidate Sourcing',
       description: 'The AI scans job portals to find and summarize resumes that match your JDs, saving manual effort.'
     },
     {
-      image:"../../../assets/ai-agent/sales/content 3.png",
+      image:"assets/ai-agent/sales/content 3.png",
       title: 'Matching Percentage',
       description: 'Assigns a matching score to resumes, helping prioritize candidates and streamline shortlisting.'
     },
     {
-      image:"../../../assets/ai-agent/sales/content 4.png",
+      image:"assets/ai-agent/sales/content 4.png",
       title: 'Automated Job Posting',
       description: 'Uses RPA to post JDs across job portals, maximizing reach and applicant numbers.'
     }
@@ -443,22 +443,22 @@ export class DevAiSalesPageComponent {
 
   benefits = [
     {
-      icon: '../../../assets/ai-agent/sales/time-efficiency.svg',
+      icon: 'assets/ai-agent/sales/time-efficiency.svg',
       title: 'Time Efficiency',
       description: ' Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring. This speeds up onboarding and reduces vacancy periods.'
     },
     {
-      icon: '../../../assets/ai-agent/sales/improved-qulity.svg',
+      icon: 'assets/ai-agent/sales/improved-qulity.svg',
       title: 'Improved Quality',
       description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations and attract candidates who closely match the job requirements.'
     },
     {
-      icon: '../../../assets/ai-agent/sales/decision-making.svg',
+      icon: 'assets/ai-agent/sales/decision-making.svg',
       title: 'Enhanced Decision-Making',
       description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates. This supports data-driven decisions, making the recruitment process more objective.'
     },
     {
-      icon: '../../../assets/ai-agent/sales/streamline-process.svg',
+      icon: 'assets/ai-agent/sales/streamline-process.svg',
       title: 'Streamlined Processes',
       description: 'Automates job posting and profile summarization, making recruitment more efficient and less labor-intensive. Automation reduces human error and ensures consistency.'
     }
@@ -466,17 +466,17 @@ export class DevAiSalesPageComponent {
 
   workingSteps = [
     {
-      icon: '../../../assets/ai-agent/sales/bell-icon.svg',
+      icon: 'assets/ai-agent/sales/bell-icon.svg',
       title: 'Subscribe Easily',
       description: 'Start with a simple subscription process — no hidden fees or complexities.'
     },
     {
-      icon: '../../../assets/ai-agent/sales/preferences.svg',
+      icon: 'assets/ai-agent/sales/preferences.svg',
       title: 'Set Your Preferences',
       description: 'Customize how the AI Agent interacts, screens and communicates based on your specific requirements.'
     },
     {
-      icon: '../../../assets/ai-agent/sales/automate.svg',
+      icon: 'assets/ai-agent/sales/automate.svg',
       title: 'Automate',
       description: 'Sit back as our AI Agent autonomously manages the recruitment pipeline.'
     }
