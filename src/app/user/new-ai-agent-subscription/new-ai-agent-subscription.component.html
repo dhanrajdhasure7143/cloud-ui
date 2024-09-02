@@ -38,7 +38,7 @@
                             <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 10px;">
                                 <div class="d-flex align-items-center">
                                     <div class="bot-image">
-                                        <img src="../../../assets/ai-agent/bot-image.svg" alt="Agent Image" height="30px" width="30px">
+                                        <img src="assets/ai-agent/bot-image.svg" alt="Agent Image" height="30px" width="30px">
                                     </div>
                                     <div class="agent-names" style="margin-left: 10px;">
                                         <span class="card-title-new">{{plan.name}}</span>
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="enterprise-plan-bottom">
-                    <p class="mt-0" (click)="showEnterpriceModel()"> <img src="../../../assets/ai-agent/ent-plan.svg" alt=""> Enterprise Plan</p>
+                    <p class="mt-0" (click)="showEnterpriceModel()"> <img src="assets/ai-agent/ent-plan.svg" alt=""> Enterprise Plan</p>
                 </div>
 
                 <!-- skeleton for Agent's -->
@@ -161,7 +161,7 @@
       <div class="modal-body d-flex justify-content-center pt-0">
         <div class="modal-image fw-bold">
             <span style="font-size: 30px; font-weight: 600;">Thankyou for contacting us</span>
-          <img src="../../../assets/ai-agent/enterprise-email.png" alt="Enterprise Plan">
+          <img src="assets/ai-agent/enterprise-email.png" alt="Enterprise Plan">
         </div>
       </div>
       <div class="modal-footer justify-content-center">
@@ -183,7 +183,7 @@
       </div>
       <div class="modal-body d-flex justify-content-between">
         <div class="modal-image">
-          <img src="../../../assets/ai-agent/ent_plan_svg.svg" alt="Enterprise Plan">
+          <img src="assets/ai-agent/ent_plan_svg.svg" alt="Enterprise Plan">
         </div>
         <div class="fetures-ent-plan">
             <ul class="modal-features" *ngFor="let plan of enterPrise_plan.features">
@@ -200,12 +200,12 @@
         </div>
         <div class="button-group ent-plan-btns">
           <button class="btn btn-secondary" (click)="closePopup()">May be Later</button>
-          <button class="btn btn-primary contact-sales-button" (click)="sendEmailEnterPrisePlan()"> <img src="../../../assets/ai-agent/star-icon.svg" height="30px" width="30px" alt=""> &nbsp;Contact Sales</button>
+          <button class="btn btn-primary contact-sales-button" (click)="sendEmailEnterPrisePlan()"> <img src="assets/ai-agent/star-icon.svg" height="30px" width="30px" alt=""> &nbsp;Contact Sales</button>
         </div>
       </div>      
     </div>
 </div>  
 
 <ngx-spinner bdColor="#bebcbc66" type="">
-    <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+    <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
   </ngx-spinner>

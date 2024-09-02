@@ -1,5 +1,5 @@
 <ngx-spinner bdColor="#bebcbc66" type="">
-  <img  src='../../../assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+  <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
 </ngx-spinner>
 <div class="container-fluid">
   <div class="row">
@@ -53,10 +53,10 @@
                         <input [type]="hide ?  'password': 'text'" matInput formControlName="password" #password minlength="8"  placeholder="Enter Password" (keydown)="onKeydownfeilds($event)"
                         [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
                         <span class="password-btn ml-auto" matSuffix *ngIf="hide==true" (click)="hide = false">
-                          <img src='../../../assets/images/eye-show.svg' alt="eye-show" />
+                          <img src='assets/images/eye-show.svg' alt="eye-show" />
                         </span>
                         <span class="password-btn ml-auto" matSuffix *ngIf="hide==false" (click)="hide = true">
-                          <img src='../../../assets/images/eye-hide.svg' alt="eye-hide"/>
+                          <img src='assets/images/eye-hide.svg' alt="eye-hide"/>
                         </span>
                       </mat-form-field>
 

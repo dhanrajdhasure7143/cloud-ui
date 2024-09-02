@@ -136,19 +136,15 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
                 let image=element.image;
                 obj["priceCollection"] = element.priceCollection;
                 let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
-                let features = data ? JSON.parse(data) : [];
-
-                if (features.length > 0) {
-                    // Add two more features
-                    features.push("New Feature 1");
-                    features.push("New Feature 2");
-                    obj["features"] =data?JSON.parse(data):[];
+                let features =[]
+                if(!Array.isArray(data)){
+                  features = JSON.parse(data);
+                }else{
+                  features = data;
                 }
+                  obj["features"] =features;
                 
                 // console.log(features,"Gravwqghvs hgvhdd ")
-                  
-                    
-
                 obj.priceCollection.forEach(price => {
                     try {
                       if (Array.isArray(this.predefinedRawBots)) {
