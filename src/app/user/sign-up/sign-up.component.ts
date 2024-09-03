@@ -17,6 +17,7 @@ import { Country, State, City } from 'country-state-city';
 import { Location } from '@angular/common'
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { environment } from 'src/environments/environment';
+import { NgOtpInputComponent } from 'ng-otp-input';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -24,7 +25,7 @@ import { environment } from 'src/environments/environment';
   providers: [MessageService]
 })
 export class SignUpComponent implements OnInit {
-
+  @ViewChild(NgOtpInputComponent, { static: false }) otpInput: NgOtpInputComponent;
   @ViewChild('password') password: ElementRef;
   @ViewChild('rememberme') checkbox: ElementRef;
   signupForm: FormGroup;
@@ -242,6 +243,9 @@ export class SignUpComponent implements OnInit {
     //    this.ispublicMail=false;
     //  }
     // this.spinner.show();
+    if (isResend === 'true') {
+      this.resetOtp();
+    }
     let isaiAgentsproduct = environment.product == "AiAgents" ? true : false;
 
     this.authenticationService.generateOTPSignUp(this.signupForm.value.email.toLowerCase(), isResend,isaiAgentsproduct).subscribe((data: any) => {
@@ -696,5 +700,14 @@ export class SignUpComponent implements OnInit {
       this.isOtpVerified = false;
       this.showInvalidMessage = false;
     }
+  }
+  resetOtp(): void {
+    if (this.otpInput) {
+      this.otpInput.setValue('');
+    }
+    this.isOtpVerified = false;
+    this.otpAttempted = false;
+    this.showInvalidMessage = false;
+    this.isValidatingOtp = false;
   }
 }
