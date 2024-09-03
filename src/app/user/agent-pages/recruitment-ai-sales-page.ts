@@ -25,15 +25,6 @@ import Swal from 'sweetalert2';
             </div>
             <div class="hero-pricing">
               <div class="pricing-controls">
-                <div class="agents">
-                  <label>Select no of Agents</label>
-                  <div class="counter">
-                    <button (click)="decrementAgents()">-</button>
-                    <span>{{ agentsQuantity }}</span>
-                    <button (click)="incrementAgents()">+</button>
-                  </div>
-                </div>
-                
                 <div class="billing-cycle">
                   <span [class.active]="!isYearly">Monthly</span>
                   <label class="switch">
@@ -43,8 +34,17 @@ import Swal from 'sweetalert2';
                   <span [class.active]="isYearly">Yearly</span>
                 </div>
               </div>
+
+                <div class="agents">
+                  <label>Select no of Agents</label>
+                  <div class="counter">
+                    <button (click)="decrementAgents()">-</button>
+                    <span>{{ agentsQuantity }}</span>
+                    <button (click)="incrementAgents()">+</button>
+                  </div>
+                </div>
               
-              <button class="btn pay-button" (click)="proceedToPay()">Proceed To Pay</button>
+              <button class="btn pay-button rounded-pill" (click)="proceedToPay()">Proceed To Pay</button>
             </div>
           </div>
         </div>
@@ -127,14 +127,13 @@ import Swal from 'sweetalert2';
       padding: 0 20px;
     }
     .hero {
-      background-image: url('/assets/ai-agent/sales/Rectangle 2667.png');
+      background-image: url('/assets/images/agent/sales/Rectangle 2667.png');
       background-size: cover;
       background-position: center;
       color: white;
       padding: 70px 0;
     }
     .agents {
-        display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-left: 6px;
@@ -227,10 +226,10 @@ import Swal from 'sweetalert2';
       margin-right: 10px;
     }
     .hero-pricing {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #FFFFFF33;
       padding: 1.5rem;
       border-radius: 10px;
-      width: 300px;
+      width: 375px;
     }
     .pricing-controls {
       margin-bottom: 1rem;
@@ -246,7 +245,7 @@ import Swal from 'sweetalert2';
     .billing-cycle {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .billing-cycle span {
       color: white;
@@ -302,6 +301,7 @@ import Swal from 'sweetalert2';
     }
     .pay-button {
       text-align: center;
+      float: right;
     }
     .section {
       padding: 100px 0;
@@ -357,6 +357,7 @@ import Swal from 'sweetalert2';
       border-bottom: 1px solid #b5b3b3;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
+      min-height: 171px
     }
     .card h3 {
       margin-bottom: 10px;
@@ -408,7 +409,7 @@ export class RecruitmentAiSalesPageComponent {
     email:any;
     selectedAgent:any;
     agentsQuantity: number = 1;
-    isYearly: boolean = false;
+    isYearly: boolean = true;
     selectedAgentId:any;
 
   heroFeatures = [
@@ -420,22 +421,22 @@ export class RecruitmentAiSalesPageComponent {
 
   keyFeatures = [
     {
-      image:"assets/ai-agent/sales/content 1.png",
+      image:"assets/images/agent/sales/content 1.png",
       title: 'Accurate Job Descriptions',
       description: 'Automatically refine job descriptions to ensure clarity, reducing errors and improving candidate quality.'
     },
     {
-      image:"assets/ai-agent/sales/content 2.png",
+      image:"assets/images/agent/sales/content 2.png",
       title: 'Candidate Sourcing',
       description: 'The AI scans job portals to find and summarize resumes that match your JDs, saving manual effort.'
     },
     {
-      image:"assets/ai-agent/sales/content 3.png",
+      image:"assets/images/agent/sales/content 3.png",
       title: 'Matching Percentage',
       description: 'Assigns a matching score to resumes, helping prioritize candidates and streamline shortlisting.'
     },
     {
-      image:"assets/ai-agent/sales/content 4.png",
+      image:"assets/images/agent/sales/content 4.png",
       title: 'Automated Job Posting',
       description: 'Uses RPA to post JDs across job portals, maximizing reach and applicant numbers.'
     }
@@ -443,22 +444,22 @@ export class RecruitmentAiSalesPageComponent {
 
   benefits = [
     {
-      icon: 'assets/ai-agent/sales/time-efficiency.svg',
+      icon: 'assets/images/agent/sales/time-efficiency.svg',
       title: 'Time Efficiency',
       description: ' Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring. This speeds up onboarding and reduces vacancy periods.'
     },
     {
-      icon: 'assets/ai-agent/sales/improved-qulity.svg',
+      icon: 'assets/images/agent/sales/improved-qulity.svg',
       title: 'Improved Quality',
       description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations and attract candidates who closely match the job requirements.'
     },
     {
-      icon: 'assets/ai-agent/sales/decision-making.svg',
+      icon: 'assets/images/agent/sales/decision-making.svg',
       title: 'Enhanced Decision-Making',
       description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates. This supports data-driven decisions, making the recruitment process more objective.'
     },
     {
-      icon: 'assets/ai-agent/sales/streamline-process.svg',
+      icon: 'assets/images/agent/sales/streamline-process.svg',
       title: 'Streamlined Processes',
       description: 'Automates job posting and profile summarization, making recruitment more efficient and less labor-intensive. Automation reduces human error and ensures consistency.'
     }
@@ -466,17 +467,17 @@ export class RecruitmentAiSalesPageComponent {
 
   workingSteps = [
     {
-      icon: 'assets/ai-agent/sales/bell-icon.svg',
+      icon: 'assets/images/agent/sales/bell-icon.svg',
       title: 'Subscribe Easily',
       description: 'Start with a simple subscription process — no hidden fees or complexities.'
     },
     {
-      icon: 'assets/ai-agent/sales/preferences.svg',
+      icon: 'assets/images/agent/sales/preferences.svg',
       title: 'Set Your Preferences',
       description: 'Customize how the AI Agent interacts, screens and communicates based on your specific requirements.'
     },
     {
-      icon: 'assets/ai-agent/sales/automate.svg',
+      icon: 'assets/images/agent/sales/automate.svg',
       title: 'Automate',
       description: 'Sit back as our AI Agent autonomously manages the recruitment pipeline.'
     }
