@@ -17,24 +17,15 @@ import Swal from 'sweetalert2';
         <div class="container">
           <div class="hero-content">
             <div class="hero-text">
-              <h1>Source Smarter To Hire Faster</h1>
-              <p>Match the right talent 5X faster, automate outreach and collaborate on candidates</p>
+              <h1>Elevate Your Customer Support with AI Automation</h1>
+              <p>Boost your Support Efficiency By 5x</p>
               <ul>
                 <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
               </ul>
             </div>
             <div class="hero-pricing">
               <div class="pricing-controls">
-                <div class="agents">
-                  <label>Select no of Agents</label>
-                  <div class="counter">
-                    <button (click)="decrementAgents()">-</button>
-                    <span>{{ agentsQuantity }}</span>
-                    <button (click)="incrementAgents()">+</button>
-                  </div>
-                </div>
-                
-                <div class="billing-cycle">
+              <div class="billing-cycle">
                   <span [class.active]="!isYearly">Monthly</span>
                   <label class="switch">
                     <input type="checkbox" [(ngModel)]="isYearly">
@@ -42,9 +33,24 @@ import Swal from 'sweetalert2';
                   </label>
                   <span [class.active]="isYearly">Yearly</span>
                 </div>
+
+                <div class="agents">
+                  <label>Select no of Agents</label>
+                  <div class='d-flex'>
+                    <div class="counter">
+                      <button (click)="decrementAgents()">-</button>
+                      <span>{{ agentsQuantity }}</span>
+                      <button (click)="incrementAgents()">+</button>
+                    </div> 
+                    <div class='prc-btn'>
+                      <button class="btn pay-button rounded-pill" (click)="proceedToPay()">Proceed To Pay</button>
+                    </div>
+                  </div>
+
+                </div>
+                
               </div>
               
-              <button class="btn pay-button" (click)="proceedToPay()">Proceed To Pay</button>
             </div>
           </div>
         </div>
@@ -53,7 +59,7 @@ import Swal from 'sweetalert2';
       <div class="section">
         <div class="container">
           <h2 class="section-title">Key Features</h2>
-          <p class="section-description">The Recruitment AI Agent is designed to revolutionize the hiring process by automating and enhancing various recruitment tasks. This intelligent tool ensures that you find the perfect candidates quickly and efficiently, transforming the way you manage recruitment.</p>
+          <p class="section-description">The Customer Support AI Agent enhances your support operations by  automating query handling and leveraging RPA for efficient task  completion. Trained on your company's content, it delivers accurate,  24/7 customer support, significantly reducing team workload. Boost  customer satisfaction and free your team to tackle more complex issues.</p>
           <div class="grid">
             <div class="card" *ngFor="let feature of keyFeatures">
               <div class="card-image">
@@ -71,7 +77,7 @@ import Swal from 'sweetalert2';
       <div class="section benefits">
         <div class="container">
           <h2 class="section-title1">Benefits</h2>
-          <div class="grid">
+          <div class="grid-benefits">
             <div class="card icon-card" *ngFor="let benefit of benefits">
               <div class="icon-placeholder">
                 <img [src]="benefit.icon" [alt]="benefit.title">
@@ -127,14 +133,13 @@ import Swal from 'sweetalert2';
       padding: 0 20px;
     }
     .hero {
-      background-image: url('/assets/ai-agent/sales/Rectangle 2667.png');
+      background-image: url('/assets/images/agent/sales/CS-head.png');
       background-size: cover;
       background-position: center;
       color: white;
       padding: 70px 0;
     }
     .agents {
-        display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-left: 6px;
@@ -227,10 +232,10 @@ import Swal from 'sweetalert2';
       margin-right: 10px;
     }
     .hero-pricing {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #FFFFFF33;
       padding: 1.5rem;
       border-radius: 10px;
-      width: 300px;
+      width: 375px;
     }
     .pricing-controls {
       margin-bottom: 1rem;
@@ -246,7 +251,7 @@ import Swal from 'sweetalert2';
     .billing-cycle {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .billing-cycle span {
       color: white;
@@ -302,6 +307,7 @@ import Swal from 'sweetalert2';
     }
     .pay-button {
       text-align: center;
+      float: right;
     }
     .section {
       padding: 100px 0;
@@ -336,6 +342,12 @@ import Swal from 'sweetalert2';
       gap: 20px;
       margin-bottom: -45px;
     }
+    .grid-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: -45px;
+    }
     .card {
       background-color: white;
       border-radius: 14px;
@@ -357,6 +369,7 @@ import Swal from 'sweetalert2';
       border-bottom: 1px solid #b5b3b3;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
+      min-height: 171px;
     }
     .card h3 {
       margin-bottom: 10px;
@@ -402,83 +415,91 @@ import Swal from 'sweetalert2';
       font-size: 2.5em;
       margin-bottom: 30px;
     }
+    .prc-btn{
+    margin-left: 15%
+    }
   `]
 })
 export class CustomerBotAiSalesPageComponent {
     email:any;
     selectedAgent:any;
     agentsQuantity: number = 1;
-    isYearly: boolean = false;
+    isYearly: boolean = true;
     selectedAgentId:any;
 
   heroFeatures = [
-    'Automated Candidate Sourcing',
-    'Smart Resume Screening',
-    'AI Powered Candidate Matching',
-    'Seamless Integration with HR Systems'
+    'Instant Customer Assistance',
+    'Predictive Issue Resolution',
+    'Tailored Customer Interactions',
+    'Custom AI for Your Support'
   ];
 
   keyFeatures = [
     {
-      image:"assets/ai-agent/sales/content 1.png",
-      title: 'Accurate Job Descriptions',
-      description: 'Automatically refine job descriptions to ensure clarity, reducing errors and improving candidate quality.'
+      image:"assets/images/agent/sales/CS-content 1.png",
+      title: 'Automated Query Handling',
+      description: 'The AI interacts with customers via chat, gathering information and providing prompt, accurate responses to enhance their experience.'
     },
     {
-      image:"assets/ai-agent/sales/content 2.png",
-      title: 'Candidate Sourcing',
-      description: 'The AI scans job portals to find and summarize resumes that match your JDs, saving manual effort.'
+      image:"assets/images/agent/sales/CS-content 2.png",
+      title: 'RPA Integration',
+      description: 'Automate tasks like onboarding and troubleshooting with minimal intervention, reducing support team workload and boosting efficiency.'
     },
     {
-      image:"assets/ai-agent/sales/content 3.png",
-      title: 'Matching Percentage',
-      description: 'Assigns a matching score to resumes, helping prioritize candidates and streamline shortlisting.'
+      image:"assets/images/agent/sales/CS-content 3.png",
+      title: '24/7 Support',
+      description: 'Offer continuous customer support, improving satisfaction and loyalty across time zones.'
     },
     {
-      image:"assets/ai-agent/sales/content 4.png",
-      title: 'Automated Job Posting',
-      description: 'Uses RPA to post JDs across job portals, maximizing reach and applicant numbers.'
+      image:"assets/images/agent/sales/CS-content 4.png",
+      title: 'Scalability',
+      description: 'Efficiently manage growing support demands without needing more staff, maintaining high support quality.'
     }
   ];
 
   benefits = [
     {
-      icon: 'assets/ai-agent/sales/time-efficiency.svg',
-      title: 'Time Efficiency',
-      description: ' Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring. This speeds up onboarding and reduces vacancy periods.'
+      icon: 'assets/images/agent/sales/CS-reduces.svg',
+      title: 'Reduced Workload',
+      description: 'Automates routine queries and tasks, allowing your team to focus on complex and high-priority issues.'
     },
     {
-      icon: 'assets/ai-agent/sales/improved-qulity.svg',
-      title: 'Improved Quality',
-      description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations and attract candidates who closely match the job requirements.'
+      icon: 'assets/images/agent/sales/CS-efficiency.svg',
+      title: 'Efficiency',
+      description: 'Speeds up processes like customer onboarding, reducing time and effort, improving satisfaction, and accelerating the customer journey.'
     },
     {
-      icon: 'assets/ai-agent/sales/decision-making.svg',
-      title: 'Enhanced Decision-Making',
-      description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates. This supports data-driven decisions, making the recruitment process more objective.'
+      icon: 'assets/images/agent/sales/CS-accuracy.svg',
+      title: 'Accuracy',
+      description: 'Ensures consistent and accurate responses to customer inquiries, enhancing the customer experience and building trust.'
     },
     {
-      icon: 'assets/ai-agent/sales/streamline-process.svg',
-      title: 'Streamlined Processes',
-      description: 'Automates job posting and profile summarization, making recruitment more efficient and less labor-intensive. Automation reduces human error and ensures consistency.'
+      icon: 'assets/images/agent/sales/CS-scal.svg',
+      title: 'Scalability',
+      description: 'Manages growing support demands efficiently without additional staffing costs, handling peak times and growth effectively.'
+    },
+    {
+      icon: 'assets/images/agent/sales/CS-satisfaction.svg',
+      title: 'Customer Satisfaction',
+      description: 'Improves satisfaction and loyalty by providing timely and accurate support, encouraging repeat customers and brand advocacy.'
     }
   ];
 
   workingSteps = [
     {
-      icon: 'assets/ai-agent/sales/bell-icon.svg',
+      icon: 'assets/images/agent/sales/bell-icon.svg',
       title: 'Subscribe Easily',
-      description: 'Start with a simple subscription process — no hidden fees or complexities.'
+      description: 'Begin with a straightforward subscription—no hidden fees or complications.'
     },
     {
-      icon: 'assets/ai-agent/sales/preferences.svg',
+      icon: 'assets/images/agent/sales/preferences.svg',
       title: 'Set Your Preferences',
-      description: 'Customize how the AI Agent interacts, screens and communicates based on your specific requirements.'
+      description: 'Customize the AI Agent’s interactions, optimizations, and communications to match your specific needs.'
     },
     {
-      icon: 'assets/ai-agent/sales/automate.svg',
+      icon: 'assets/images/agent/sales/automate.svg',
       title: 'Automate',
-      description: 'Sit back as our AI Agent autonomously manages the recruitment pipeline.'
+      description: 'Relax as our AI Agent autonomously handles your manual customer support activities pipeline.'
     }
   ];
 

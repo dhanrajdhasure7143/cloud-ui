@@ -11,30 +11,22 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recruitment-ai-sales-page',
-  template: `
-    <div class="sales-page-container">
+  template: `<div class="sales-page-container">
       <div class="hero">
         <div class="container">
           <div class="hero-content">
             <div class="hero-text">
-              <h1>Source Smarter To Hire Faster</h1>
-              <p>Match the right talent 5X faster, automate outreach and collaborate on candidates</p>
+              <h1>Revolutionize Your RFP Process With AI Automation</h1>
+              <p>Enhance your RFP efficiency by 5X automate document generation, streamline collaboration, and empower your team to excel.</p>
               <ul>
                 <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
               </ul>
             </div>
+
             <div class="hero-pricing">
               <div class="pricing-controls">
-                <div class="agents">
-                  <label>Select no of Agents</label>
-                  <div class="counter">
-                    <button (click)="decrementAgents()">-</button>
-                    <span>{{ agentsQuantity }}</span>
-                    <button (click)="incrementAgents()">+</button>
-                  </div>
-                </div>
-                
-                <div class="billing-cycle">
+
+              <div class="billing-cycle">
                   <span [class.active]="!isYearly">Monthly</span>
                   <label class="switch">
                     <input type="checkbox" [(ngModel)]="isYearly">
@@ -43,9 +35,24 @@ import Swal from 'sweetalert2';
                   <span [class.active]="isYearly">Yearly</span>
                 </div>
               </div>
-              
-              <button class="btn pay-button" (click)="proceedToPay()">Proceed To Pay</button>
+
+                <div class="agents">
+                  <label>Select no of Agents</label>
+                  <div class='d-flex'>
+                    <div class="counter">
+                      <button (click)="decrementAgents()">-</button>
+                      <span>{{ agentsQuantity }}</span>
+                      <button (click)="incrementAgents()">+</button>
+                    </div> 
+                    <div class='prc-btn'>
+                      <button class="btn pay-button rounded-pill" (click)="proceedToPay()">Proceed To Pay</button>
+                    </div>
+                  </div>
+
+                </div>
+                
             </div>
+
           </div>
         </div>
       </div>
@@ -53,7 +60,7 @@ import Swal from 'sweetalert2';
       <div class="section">
         <div class="container">
           <h2 class="section-title">Key Features</h2>
-          <p class="section-description">The Recruitment AI Agent is designed to revolutionize the hiring process by automating and enhancing various recruitment tasks. This intelligent tool ensures that you find the perfect candidates quickly and efficiently, transforming the way you manage recruitment.</p>
+          <p class="section-description">The RFP AI Agent is designed to simplify and expedite the response  process to Requests for Proposals (RFPs). This advanced tool improves  the quality of your submissions and enhances your chances of winning  proposals by automating key aspects of the RFP response process.</p>
           <div class="grid">
             <div class="card" *ngFor="let feature of keyFeatures">
               <div class="card-image">
@@ -107,8 +114,7 @@ import Swal from 'sweetalert2';
     </div>
     <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
-  </ngx-spinner>
-  `,
+  </ngx-spinner>`,
   styles: [`
     * {
       margin: 0;
@@ -127,14 +133,13 @@ import Swal from 'sweetalert2';
       padding: 0 20px;
     }
     .hero {
-      background-image: url('/assets/ai-agent/sales/Rectangle 2667.png');
+      background-image: url('/assets/images/agent/sales/RFP-head.png');
       background-size: cover;
       background-position: center;
       color: white;
       padding: 70px 0;
     }
     .agents {
-        display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-left: 6px;
@@ -227,10 +232,10 @@ import Swal from 'sweetalert2';
       margin-right: 10px;
     }
     .hero-pricing {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #FFFFFF33;
       padding: 1.5rem;
       border-radius: 10px;
-      width: 300px;
+      width: 375px;
     }
     .pricing-controls {
       margin-bottom: 1rem;
@@ -246,7 +251,7 @@ import Swal from 'sweetalert2';
     .billing-cycle {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .billing-cycle span {
       color: white;
@@ -302,6 +307,7 @@ import Swal from 'sweetalert2';
     }
     .pay-button {
       text-align: center;
+      float: right;
     }
     .section {
       padding: 100px 0;
@@ -336,6 +342,12 @@ import Swal from 'sweetalert2';
       gap: 20px;
       margin-bottom: -45px;
     }
+    .grid-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: -45px;
+    }
     .card {
       background-color: white;
       border-radius: 14px;
@@ -357,6 +369,7 @@ import Swal from 'sweetalert2';
       border-bottom: 1px solid #b5b3b3;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
+      min-height: 171px;
     }
     .card h3 {
       margin-bottom: 10px;
@@ -380,6 +393,9 @@ import Swal from 'sweetalert2';
       justify-content: center;
       margin: 0 auto 20px;
     }
+    .icon-placeholder-benefits{
+      margin: 0 auto 0px !important;
+      }
     .icon-placeholder img {
       max-width: 100%;
       max-height: 100%;
@@ -402,83 +418,86 @@ import Swal from 'sweetalert2';
       font-size: 2.5em;
       margin-bottom: 30px;
     }
+    .prc-btn{
+      margin-left: 15%
+    }
   `]
 })
 export class RfpAiSalesPageComponent {
     email:any;
     selectedAgent:any;
     agentsQuantity: number = 1;
-    isYearly: boolean = false;
+    isYearly: boolean = true;
     selectedAgentId:any;
 
   heroFeatures = [
-    'Automated Candidate Sourcing',
-    'Smart Resume Screening',
-    'AI Powered Candidate Matching',
-    'Seamless Integration with HR Systems'
+    'Smart RFP Management',
+    'Instant Analysis',
+    'Customized RFP Solutions',
+    'Effortless Integration'
   ];
 
   keyFeatures = [
     {
-      image:"assets/ai-agent/sales/content 1.png",
-      title: 'Accurate Job Descriptions',
-      description: 'Automatically refine job descriptions to ensure clarity, reducing errors and improving candidate quality.'
+      image:"assets/images/agent/sales/rfp-content 1.png",
+      title: 'Concise Summaries',
+      description: 'Upload your RFP and previous responses for concise summaries, ensuring no key information is missed and saving time by summarizing extensive RFPs.'
     },
     {
-      image:"assets/ai-agent/sales/content 2.png",
-      title: 'Candidate Sourcing',
-      description: 'The AI scans job portals to find and summarize resumes that match your JDs, saving manual effort.'
+      image:"assets/images/agent/sales/rfp-content 2.png",
+      title: 'Comprehensive Responses',
+      description: 'Generate detailed responses based on your uploaded documents, maintaining a high standard in your proposal submissions.'
     },
     {
-      image:"assets/ai-agent/sales/content 3.png",
-      title: 'Matching Percentage',
-      description: 'Assigns a matching score to resumes, helping prioritize candidates and streamline shortlisting.'
+      image:"assets/images/agent/sales/rfp-content 3.png",
+      title: 'Template Customization',
+      description: 'Customize the response templates to match your company’s branding and  formatting guidelines, ensuring a professional appearance.'
     },
     {
-      image:"assets/ai-agent/sales/content 4.png",
-      title: 'Automated Job Posting',
-      description: 'Uses RPA to post JDs across job portals, maximizing reach and applicant numbers.'
+      image:"assets/images/agent/sales/rfp-content 4.png",
+      title: 'Automated Workflow',
+      description: 'The AI Agent automates the entire process of RFP response creation, from  summarization to final response generation.'
     }
   ];
 
   benefits = [
     {
-      icon: 'assets/ai-agent/sales/time-efficiency.svg',
-      title: 'Time Efficiency',
-      description: ' Reduces time spent on sourcing and shortlisting candidates, allowing recruiters to focus on interviewing and hiring. This speeds up onboarding and reduces vacancy periods.'
+      icon: 'assets/images/agent/sales/time-efficiency.svg',
+      title: 'Time Savings',
+      description: 'Significantly reduce the time required to read & respond to  RFPs, allowing your team to focus on strategic activities.'
     },
     {
-      icon: 'assets/ai-agent/sales/improved-qulity.svg',
+      icon: 'assets/images/agent/sales/improved-qulity.svg',
       title: 'Improved Quality',
-      description: 'Enhances the accuracy and completeness of JDs to attract the right talent. Well-crafted JDs set clear expectations and attract candidates who closely match the job requirements.'
+      description: 'Enhance the quality and accuracy of your RFP responses, ensuring they  are thorough and professionally presented.'
     },
     {
-      icon: 'assets/ai-agent/sales/decision-making.svg',
-      title: 'Enhanced Decision-Making',
-      description: 'Provides a matching percentage for each resume, helping recruiters quickly identify top candidates. This supports data-driven decisions, making the recruitment process more objective.'
+      icon: 'assets/images/agent/sales/decision-making.svg',
+      title: 'Timely Submissions',
+      description: 'Ensure timely submissions by automating the response creation  process.'
     },
     {
-      icon: 'assets/ai-agent/sales/streamline-process.svg',
-      title: 'Streamlined Processes',
-      description: 'Automates job posting and profile summarization, making recruitment more efficient and less labor-intensive. Automation reduces human error and ensures consistency.'
+      icon: 'assets/images/agent/sales/marketing-effeiciency.svg',
+      title: 'Efficiency',
+      description: 'Streamline your RFP response workflow, making it more efficient and  less labor-intensive.'
     }
   ];
 
   workingSteps = [
     {
-      icon: 'assets/ai-agent/sales/bell-icon.svg',
+      icon: 'assets/images/agent/sales/bell-icon.svg',
       title: 'Subscribe Easily',
       description: 'Start with a simple subscription process — no hidden fees or complexities.'
     },
     {
-      icon: 'assets/ai-agent/sales/preferences.svg',
+      icon: 'assets/images/agent/sales/preferences.svg',
       title: 'Set Your Preferences',
-      description: 'Customize how the AI Agent interacts, screens and communicates based on your specific requirements.'
+      description: 'Customize the AI Agent’s functionalities, optimizations, and communications to suit your specific requirements.'
     },
     {
-      icon: 'assets/ai-agent/sales/automate.svg',
+      icon: 'assets/images/agent/sales/automate.svg',
       title: 'Automate',
-      description: 'Sit back as our AI Agent autonomously manages the recruitment pipeline.'
+      description: 'Sit back as our AI Agent autonomously manages your RFP activities, from start to finish.'
     }
   ];
 

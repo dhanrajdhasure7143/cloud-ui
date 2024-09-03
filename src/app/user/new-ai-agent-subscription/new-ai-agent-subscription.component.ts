@@ -584,24 +584,30 @@ readValue(value){
     console.log("plan",plan)
     if(plan.name =="Testing Agent"){
     this.router.navigate(['/subscription/testing'], { queryParams: { token: this.emailToken,id:plan.id } });
+    return;
     }
     if(plan.name =="RFP"){
       this.router.navigate(['/subscription/rfp'], { queryParams: { token: this.emailToken,id:plan.id } });
+      return;
       }
     if(plan.name =="Developer Agent"){
       this.router.navigate(['/subscription/dev'], { queryParams: { token: this.emailToken,id:plan.id } });
+      return;
     }
     if(plan.name =="Recruitment"){
       this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
+      return;
     }
-    if(plan.name =="Customer Bot"){
+    if(plan.name =="Customer Support"){
       this.router.navigate(['/subscription/chatbot'], { queryParams: { token: this.emailToken,id:plan.id } });
+      return;
     }
     if(plan.name =="Marketing"){
       this.router.navigate(['/subscription/marketing'], { queryParams: { token: this.emailToken,id:plan.id } });
-    }else{
-      this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
+      return;
     }
+    this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
+
     // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
   }
 
