@@ -924,3 +924,15 @@ input.p-inputtext {
   border: 1px solid var(--formfield-bordercolor) !important;
   box-shadow: none !important;
 }
+
+/* 
+  Edge Hack: 
+  This CSS rule hides the default password reveal icon in Microsoft Edge.
+  Edge uses the ::-ms-reveal pseudo-element to display a built-in eye icon in password fields, 
+  which causes two eye icons to appear when a custom icon is used.
+  To ensure only the custom eye icon is visible across all browsers, we apply this hack.
+*/
+input[type="password"]::-ms-reveal, 
+input[type="password"]::-ms-clear {
+    display: none !important;
+}
