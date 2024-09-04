@@ -16,4 +16,11 @@ export class AiAgentService {
   getAllPredefinedBotsList(){
     return this.http.get("/rpa-service/predefined/getAll-predefined-bots")
   }
+
+  savePredefinedBots(body:any){
+    return this.http.post("/rpa-service/predefined/save-predefined-bots-for-prodect-id",body)
+  }
+  deletePredefinedBots(id:any){
+    return this.http.delete("/rpa-service/predefined/delete-predefined-bot-product/"+id)
+  }
 }

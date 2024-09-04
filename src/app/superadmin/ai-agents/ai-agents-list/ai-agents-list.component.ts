@@ -30,7 +30,14 @@ export class AiAgentsListComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) { 
     this.agentForm = this.formBuilder.group({
-      agentName: ["", [Validators.required, Validators.email]],
+      id: [""],
+      agentName: ["", [Validators.required, Validators.required]],
+      agentStripeId: ["", [Validators.required, Validators.required]],
+      agentUUID: ["", [Validators.required, Validators.required]],
+      formType: ["", [Validators.required, Validators.required]],
+      isSchedule: ["", [Validators.required, Validators.required]],
+      description:[""],
+      subscribed:[""],
 
     });
   }
@@ -50,10 +57,33 @@ export class AiAgentsListComponent implements OnInit {
     });
     
   }
-
-  addAgents(){
-    console.log('Add Agents');
+  addAgentsForm(){
     this.addAgentsOverLay = true;
+  }
+  addAgent(type:any){
+    console.log('Add Agents' + type);
+    console.log(this.agentForm);
+    let predifindId = 0;
+    if(type != "create"){
+      predifindId = this.agentForm.value.id
+    }
+    this.agentForm
+    let body = {
+      predefinedBotId:predifindId,
+      predefinedBotName:this.agentForm.value.agentName,
+      predefinedUUID:this.agentForm.value.agentUUID,
+      productId:this.agentForm.value.agentStripeId,
+      formType:this.agentForm.value.formType,
+      schedulerRequired:this.agentForm.value.isSchedule,
+      description:"",
+      subscribed:false
+    }
+    this.rest_api.savePredefinedBots(body).subscribe((res:any)=>{
+      console.log(res);
+      this.addAgentsOverLay = false;
+    },(error)=>{
+      console.log(error);
+    })
   }
 
   closeOverlay(event){
@@ -62,6 +92,31 @@ export class AiAgentsListComponent implements OnInit {
 
   resetForm(){
     this.agentForm.reset();
+  }
+  
+  openOverlay(type:any,agentFormData){
+    this.addAgentsOverLay = true
+    this.agentForm.patchValue({
+      id: agentFormData.predefinedBotId,
+      agentName: agentFormData.predefinedBotName,
+      agentUUID: agentFormData.predefinedUUID,
+      agentStripeId: agentFormData.productId,
+      formType: agentFormData.formType,
+      isSchedule: agentFormData.schedulerRequired,
+      subscribed: agentFormData.subscribed,
+      description:agentFormData.description
+        });
+  }
+
+  deleteAiAgentProdect(agentFormData:any){
+    console.log(agentFormData);
+    this.rest_api.deletePredefinedBots(agentFormData.predefinedBotId).subscribe((res:any)=>{
+      debugger
+      console.log(res);
+    },(error)=>{
+      console.log(error);
+    })
+
   }
 
 }
