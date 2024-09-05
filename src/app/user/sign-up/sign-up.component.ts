@@ -148,7 +148,7 @@ export class SignUpComponent implements OnInit {
       firstName: ['', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$"), Validators.minLength(3), Validators.maxLength(50)])],
       lastName: ['', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z_]+(\\s[a-zA-Z]+)*$"), Validators.minLength(3), Validators.maxLength(50)])],
       email: ['', [Validators.required, Validators.email]],
-      organization: ["", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(50)])],
+      // organization: [this.generateExtendedRandomCombination(40), Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z]+(\\s[a-zA-Z]+)*$'), Validators.minLength(2), Validators.maxLength(50)])],
       otp: [''],
       password: ['', Validators.compose([Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$%])[a-zA-Z0-9@$%]{8,20}$")])],
     });
@@ -358,11 +358,13 @@ export class SignUpComponent implements OnInit {
     reqObj = {
       'firstName': this.signupForm.value.firstName,
       'lastName': this.signupForm.value.lastName,
-      'organization': this.signupForm.value.organization,
+      // 'organization': this.signupForm.value.organization,
+      'organization': this.generateRandomAlphanumericWithDate(40),
       'userId': this.signupForm.value.email.toLowerCase(),
       'password': this.signupForm.value.password,
       'userProduct': environment.product
     }
+    console.log("reQQ", reqObj)
     this.userId = this.signupForm.value.email.toLowerCase();
     this.userPsw = this.signupForm.value.password
     payload.append('firstName', this.crypto.encrypt(JSON.stringify(reqObj)));
@@ -709,5 +711,23 @@ export class SignUpComponent implements OnInit {
     this.otpAttempted = false;
     this.showInvalidMessage = false;
     this.isValidatingOtp = false;
+  }
+
+  generateRandomAlphanumericWithDate(length: number): string {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+  
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+  
+    // Append local date, month, and year
+    const now = new Date();
+    const date = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-indexed
+    const year = now.getFullYear().toString();
+  
+    return result + date + month + year;
   }
 }
