@@ -1,5 +1,5 @@
 import { NewpasswordService } from './../_services/newpassword.service';
-import { FormBuilder, FormGroup, Validators, FormsModule, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { APP_CONFIG } from './../../app.config';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
@@ -7,13 +7,12 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CryptoService } from '../../_services/crypto.service';
 
-
 @Component({
-  selector: 'app-newpassword',
-  templateUrl: './newpassword.component.html',
-  styleUrls: ['./newpassword.component.scss']
+  selector: 'app-newpasswordold',
+  templateUrl: './newpasswordold.component.html',
+  styleUrls: ['./newpasswordold.component.scss']
 })
-export class NewpasswordComponent implements OnInit {
+export class NewpasswordoldComponent implements OnInit {
   passwordForm: FormGroup;
  
   newPwd: any;
@@ -23,14 +22,12 @@ export class NewpasswordComponent implements OnInit {
   error:any;
   public hide:boolean = false;
   public hide1:boolean = false;
-  formGroup: FormGroup;
 
   constructor(private router: Router, 
               private route: ActivatedRoute, 
               private newpasswordServ: NewpasswordService,
               private spinner:NgxSpinnerService,
-              private cryptoService: CryptoService,
-              private fb: FormBuilder) { }
+              private cryptoService: CryptoService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -44,25 +41,7 @@ export class NewpasswordComponent implements OnInit {
           });
     });
    
-    this.formGroup = this.fb.group({
-      password: ['', [
-        Validators.required, 
-        Validators.pattern('((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})')
-      ]],
-      pwConfirm: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
     
-  }
-
-  passwordMatchValidator(control: AbstractControl) {
-    const password = control.get('password');
-    const confirmPassword = control.get('pwConfirm');
-
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ mismatch: true });
-    } else {
-      confirmPassword.setErrors(null);
-    }
   }
 
   onSuccessOfVerifyToken(response: any) {
@@ -85,36 +64,23 @@ export class NewpasswordComponent implements OnInit {
      
     }
     
-    onSubmit() {
-      if (this.formGroup.invalid) {
-          return;
-      }
-  
-      this.spinner.show();
-  
-      this.route.queryParams.subscribe(params => {
-          const resetToken = params['token'];
-          const password = this.formGroup.get('password').value;
-  
-          this.userData = {
-              tkn: resetToken,
-              pwd: this.cryptoService.encrypt(password)
-          };
-          
-          this.newpasswordServ.newPassword({ user: this.userData }).subscribe(
-              res => {
-                  this.onSuccessOfResetPassword(res);
-                  this.spinner.hide();
-              },
-              err => {
-                 this.formGroup.reset()
-                  this.router.navigate(['/user']);
-                  this.spinner.hide();
-              }
-          );
-      });
-  }
-  
+  onSubmit() {
+    this.spinner.show();
+    this.route.queryParams.subscribe(params => {
+      let resetToken = params['token']
+      this.userData = {
+        tkn: resetToken,
+        pwd: this.cryptoService.encrypt(this.newPwd)
+      };
+      
+      this.newpasswordServ.newPassword({user: this.userData}).subscribe(res => {
+        this.onSuccessOfResetPassword(res)},err=>{
+          this.router.navigate(['/user']);
+        
+          });
+    });
+   
+}
   onSuccessOfResetPassword(res: any) {
     this.spinner.hide();
     if(res){
@@ -136,8 +102,7 @@ export class NewpasswordComponent implements OnInit {
           title: "Error",
           text: res.errorMessage+' !',
          });
-         this.formGroup.reset()
-        this.router.navigate(['/user']);
+        //this.router.navigate(['/user']);
       }
     }
   }

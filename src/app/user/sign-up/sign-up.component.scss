@@ -349,9 +349,10 @@ h6 span {
 .loginblock {
   // padding-top: 30px;
   // width: 400px !important;
-  margin: 0px auto;
+  // margin: 0px !important;
   // height: 100vh;
   height: 98vh;
+  // padding: 10px 15px;
   // text-align: center; 
 }
 
@@ -480,9 +481,11 @@ input .form-control {
   font-size: 0.7rem;
 }
 
-.label-control {
-  margin-bottom: 5px;
-  font-weight: 500;
+.label-control{
+  font-size: 16px !important;
+  color: #000000 !important;
+  font-weight: 500 !important;
+  margin-bottom: 2px !important;
 }
 
 .form-control {
@@ -806,4 +809,14 @@ input .form-control {
 
 .otp-inputs{
   margin-top: 10px !important;
+}
+
+.login-btn{
+  /*margin-left: 45%;*/
+  // margin-left:0%;
+  width: 100% !important;
+  border-radius: 6px;
+  font-size: 16px;
+  height: 40px;
+  margin-top: 10px;
 }
