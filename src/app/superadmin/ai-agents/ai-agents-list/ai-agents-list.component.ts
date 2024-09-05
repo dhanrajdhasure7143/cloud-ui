@@ -38,9 +38,9 @@ export class AiAgentsListComponent implements OnInit {
       agentStripeId: ["", [Validators.required, Validators.required]],
       agentUUID: ["", [Validators.required, Validators.required]],
       formType: ["", [Validators.required, Validators.required]],
-      isSchedule: ["", [Validators.required, Validators.required]],
+      isSchedule: [false],
       description:[""],
-      subscribed:[""],
+      subscribed:[false],
 
     });
   }
@@ -52,7 +52,6 @@ export class AiAgentsListComponent implements OnInit {
   getListOfAgents(){
     this.spinner.show();
     this.rest_api.getAllPredefinedBotsList().subscribe((res:any)=>{
-      console.log(res);
       this.agentsList = res.data
       this.spinner.hide();
     } , (error)=>{
@@ -61,6 +60,7 @@ export class AiAgentsListComponent implements OnInit {
     
   }
   addAgentsForm(){
+    this.agentForm.reset();
     this.addAgentsOverLay = true;
   }
   addAgent(type:any){
@@ -75,17 +75,19 @@ export class AiAgentsListComponent implements OnInit {
       description: this.apiType === "update" ? this.agentForm.value.description : ""
     }
     this.rest_api.savePredefinedBots(body).subscribe((res:any)=>{
-      console.log(res);
       if(res.code === 200){
-        this.messageService.add({severity:'success', summary:'Success', detail:'Successfully'+this.apiType});
+        this.messageService.add({severity:'success', summary:'Success', detail:'Successfully '+this.apiType});
         this.addAgentsOverLay = false;
+        this.apiType = type ;
+        this.getListOfAgents();
       }else{
         this.messageService.add({severity:'error', summary:'Error', detail:'Unable to '+this.apiType});
+        this.apiType = type ;
       }
     },(error)=>{
       this.messageService.add({severity:'error', summary:'Error', detail:'Unable to '+this.apiType});
+      this.apiType = type ;
     })
-    this.apiType = type ;
   }
 
   closeOverlay(event){
@@ -112,11 +114,10 @@ export class AiAgentsListComponent implements OnInit {
   }
 
   deleteAiAgentProdect(agentFormData:any){
-    console.log(agentFormData);
     this.rest_api.deletePredefinedBots(agentFormData.predefinedBotId).subscribe((res:any)=>{
-      debugger
       if(res.code === 200){
         this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Deleted'});
+        this.getListOfAgents();
       }else{
         this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
       }

@@ -125,18 +125,9 @@
                     class="required">
                     Only space between words are allowed,numbers & special characters are not allowed.
                 </span>
+                <label class="label-control" for="agentStripeId" id="label-name">Is Schedule  </label>
+                <input type="checkbox" formControlName="isSchedule" [checked]="agentForm.value.isSchedule">
 
-                <label class="label-control" for="isSchedule" id="label-name">Is Schedule<span class="star">*</span></label>
-                <input type="text" pInputText formControlName="isSchedule" class="form-control" id="isSchedule" style="height: 45px !important;
-                border-radius: 5px;"
-                placeholder="Enter Agent name" maxlength="30"
-                minlength="2">
-            <span *ngIf="agentForm.get('isSchedule').invalid && agentForm.get('isSchedule').touched && !agentForm.get('isSchedule').hasError('pattern') && !agentForm.controls['isSchedule'].hasError('maxlength')" class="required"> Agent Required </span>    
-            <span
-                *ngIf="agentForm.get('isSchedule').hasError('pattern') && !agentForm.controls['isSchedule'].hasError('maxlength')"
-                class="required">
-                Only space between words are allowed,numbers & special characters are not allowed.
-            </span>
                             </div>
                         </div>
                 </form>
