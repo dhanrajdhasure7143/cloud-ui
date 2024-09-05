@@ -140,11 +140,11 @@
                             </div>
                         </div>
                 </form>
-                <div class="createform-footer">
+                <!-- <div class="createform-footer"> -->
                     <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()">Reset</button>
         
                         <button type="button" class="btn btn-primary" id="update-btn" (click)="addAgent('create')" [disabled]="!(agentForm.valid && (agentForm.touched ||  agentForm.dirty)) || errorMessage"> Submit </button>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </app-split-overlay>

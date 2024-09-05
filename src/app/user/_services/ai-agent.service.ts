@@ -21,6 +21,6 @@ export class AiAgentService {
     return this.http.post("/rpa-service/predefined/save-predefined-bots-for-prodect-id",body)
   }
   deletePredefinedBots(id:any){
-    return this.http.delete("/rpa-service/predefined/delete-predefined-bot-product/"+id)
+    return this.http.post("/rpa-service/predefined/delete-predefined-bot-product/"+id,null)
   }
 }

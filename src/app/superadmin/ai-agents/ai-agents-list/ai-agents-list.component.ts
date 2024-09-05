@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AiAgentService } from 'src/app/user/_services/ai-agent.service';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-ai-agents-list',
@@ -23,11 +24,13 @@ export class AiAgentsListComponent implements OnInit {
     {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false,showTooltip:true},
   ]
   search_fields=['predefinedBotName','productId','predefinedUUID','formType'];
+  apiType:string="create";
 
   constructor(
     private rest_api: AiAgentService,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
+    private messageService: MessageService,
   ) { 
     this.agentForm = this.formBuilder.group({
       id: [""],
@@ -61,29 +64,28 @@ export class AiAgentsListComponent implements OnInit {
     this.addAgentsOverLay = true;
   }
   addAgent(type:any){
-    console.log('Add Agents' + type);
-    console.log(this.agentForm);
-    let predifindId = 0;
-    if(type != "create"){
-      predifindId = this.agentForm.value.id
-    }
-    this.agentForm
     let body = {
-      predefinedBotId:predifindId,
       predefinedBotName:this.agentForm.value.agentName,
       predefinedUUID:this.agentForm.value.agentUUID,
       productId:this.agentForm.value.agentStripeId,
       formType:this.agentForm.value.formType,
       schedulerRequired:this.agentForm.value.isSchedule,
-      description:"",
-      subscribed:false
+      subscribed:false,
+      predefinedBotId: this.apiType === "update" ? this.agentForm.value.id : 0, 
+      description: this.apiType === "update" ? this.agentForm.value.description : ""
     }
     this.rest_api.savePredefinedBots(body).subscribe((res:any)=>{
       console.log(res);
-      this.addAgentsOverLay = false;
+      if(res.code === 200){
+        this.messageService.add({severity:'success', summary:'Success', detail:'Successfully'+this.apiType});
+        this.addAgentsOverLay = false;
+      }else{
+        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to '+this.apiType});
+      }
     },(error)=>{
-      console.log(error);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to '+this.apiType});
     })
+    this.apiType = type ;
   }
 
   closeOverlay(event){
@@ -95,6 +97,7 @@ export class AiAgentsListComponent implements OnInit {
   }
   
   openOverlay(type:any,agentFormData){
+    this.apiType = type;
     this.addAgentsOverLay = true
     this.agentForm.patchValue({
       id: agentFormData.predefinedBotId,
@@ -112,9 +115,13 @@ export class AiAgentsListComponent implements OnInit {
     console.log(agentFormData);
     this.rest_api.deletePredefinedBots(agentFormData.predefinedBotId).subscribe((res:any)=>{
       debugger
-      console.log(res);
+      if(res.code === 200){
+        this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Deleted'});
+      }else{
+        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
+      }
     },(error)=>{
-      console.log(error);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
     })
 
   }
