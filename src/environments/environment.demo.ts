@@ -16,7 +16,7 @@ export const environment = {
    rpaendpoint:"https://ezflow.demo.epsoftinc.com/wfrpa",
    piendpoint:"https://ezflow.demo.epsoftinc.com/prcintel",
    isNewDesignEnabled : true,
-   isSubscrptionEnabled : false,
+   isSubscrptionEnabled : true,
    paymentSuccessURL:"https://ezflow.demo.epsoftinc.com/#/success",
    paymentFailuerURL:"https://ezflow.demo.epsoftinc.com/#/subscription",
    stripeKey:"pk_test_51P0drWCJ3cQHk3CPJR9AeA28nQfYeKOIThMG6OGneyWSbbyQ0r61OHtZqkI2mssJrSRbgXDP1urCMu0GPSLewiZu00Usd94Uob",
