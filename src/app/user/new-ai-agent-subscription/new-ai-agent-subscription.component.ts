@@ -58,6 +58,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   isOpensuccessDialog:boolean = false;
   showContactUs: boolean = false;
   contactForm: FormGroup;
+  messageTooShort: boolean = true;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -109,9 +110,9 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
     this.loadPredefinedBots();
     this.getCountries();
     this.contactForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userEmail: ['', [Validators.required]],
+      firstName: [''],
+      lastName: [''],
+      userEmail: [''],
       message: ['', Validators.required]
     });
   }
@@ -628,6 +629,14 @@ readValue(value){
   }
   contactUs() {
     this.spinner.show();
+    const firstName = localStorage.getItem('firstName');
+    const lastName = localStorage.getItem('lastName');
+    const userEmail = localStorage.getItem('ProfileuserId');
+    this.contactForm.patchValue({
+      firstName: firstName,
+      lastName: lastName,
+      userEmail: userEmail
+    });
     const payload = this.contactForm.value;
     this.service.contactUs(payload).subscribe((response: any) => {
       this.spinner.hide();
@@ -643,4 +652,8 @@ readValue(value){
     });
   }
 
+  onMessageInput() {
+    const message = this.contactForm.get('message').value || '';
+    this.messageTooShort = message.length < 150;
+  }
 }
