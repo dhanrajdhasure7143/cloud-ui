@@ -91,7 +91,7 @@
                             <span *ngIf="signupForm.get('lastName').hasError('pattern')" class="required"> Invalid
                                 characters entered </span>
                         </div>
-                        <div class="form-group col-md-12 p-10">
+                        <!-- <div class="form-group col-md-12 p-10">
                             <label for="organization" class="label-control">Organization <span class="star">*</span>
                             </label>
                             <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
@@ -99,7 +99,6 @@
                                 autocomplete="off" (keypress)="lettersOnly($event)"
                                 placeholder="Enter Organization" maxlength="51" minlength="3" tabindex="3">
                             <span *ngIf="orgExsist" class='required'> Organization already exist</span>
-                            <!-- <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched && !signupForm.get('organization').hasError('pattern') && !signupForm.controls['organization'].hasError('maxlength')" class="required"> Organization required </span> -->
                             <span
                                 *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched &&!signupForm.get('organization').hasError('pattern') &&!signupForm.controls['organization'].hasError('maxlength') &&!signupForm.controls['organization'].hasError('minlength')"
                                 class="required"> Organization Required </span>
@@ -110,7 +109,7 @@
                                 of 50 characters </span>
                             <span *ngIf="signupForm.get('organization').hasError('pattern')" class="required"> Invalid
                                 characters entered </span>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 p-10 form-group">
                             <label class="label-control" for="email"> Email <span class="star">*</span> </label>
                             <input type="text" pInputText maxlength="51" class="form-control" formControlName="email"
