@@ -124,4 +124,7 @@ export class FirstloginService {
     return this.http.post('/rpa-service/predefined/save-email-credentials',{});
   }
   
+  contactUs(body){
+    return this.http.post('/api/user/support-team-mail',body)
+  }
 }

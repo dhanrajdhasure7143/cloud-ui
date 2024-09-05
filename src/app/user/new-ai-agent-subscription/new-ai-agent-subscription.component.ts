@@ -56,6 +56,8 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   billingCycle = 'monthly';
   isOpenEnterprice = false;
   isOpensuccessDialog:boolean = false;
+  showContactUs: boolean = false;
+  contactForm: FormGroup;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -64,7 +66,8 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
               private router: Router,
               private crypto: CryptoService,
               private stripeService: StripeService,
-              private messageService: MessageService
+              private messageService: MessageService,
+              private fb:FormBuilder,
               )  {
                 this.route.queryParams.subscribe((data)=>{
                   if(data){
@@ -105,6 +108,12 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
     // this.getPredefinedRawBots();
     this.loadPredefinedBots();
     this.getCountries();
+    this.contactForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userEmail: ['', [Validators.required]],
+      message: ['', Validators.required]
+    });
   }
 
   getCountries() {
@@ -609,6 +618,29 @@ readValue(value){
     this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
 
     // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
+  }
+
+  showDialog() {
+    this.showContactUs = true;
+  }
+  resetForm(){
+    this.contactForm.reset()
+  }
+  contactUs() {
+    this.spinner.show();
+    const payload = this.contactForm.value;
+    this.service.contactUs(payload).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.code == 4200) {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Your query has been submitted successfully!' });
+        this.showContactUs = false;
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to submit your query. Please try again later.' });
+      }
+    }, error => {
+      this.spinner.hide();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occured, Please try again.' });
+    });
   }
 
 }
