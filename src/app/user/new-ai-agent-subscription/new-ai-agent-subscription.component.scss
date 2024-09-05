@@ -195,11 +195,11 @@ ul.features-list .exclusive-list-child::after {
   }
 
 .skyblue {
-    color: #098DE6;
+    color: #3199FF;
 }
 
 .price-green {
-    color: #098DE6;
+    color: #3199FF;
     font-size: 30px;
     font-weight: 700;
 }
@@ -242,7 +242,7 @@ ul.features-list .exclusive-list-child::after {
 .quantity-controls {
     display: flex;
     align-items: center;
-    border: 2px solid #098DE6;
+    border: 2px solid #3199FF;
     border-radius: 20px;
     overflow: hidden;
     padding: 1px;
@@ -266,7 +266,7 @@ ul.features-list .exclusive-list-child::after {
 }
 
 .btn-increase {
-    background-color: #098DE6;
+    background-color: #3199FF;
     color: white;
 }
 
@@ -334,11 +334,11 @@ ul.features-list .exclusive-list-child::after {
 }
 
 .specs-list li::marker {
-    color: #098DE6;
+    color: #3199FF;
 }
 
 .selected-square {
-    border: 3px solid #098de6;
+    border: 3px solid #3199FF;
 }
 
 .agent-names{
@@ -434,7 +434,7 @@ ul.features-list .exclusive-list-child::after {
 }
 
 .toggle-bg-sec.activeYear {
-    background-color:#098DE6;
+    background-color:#3199FF;
 }
 
 .toggle-mover {
@@ -609,28 +609,7 @@ ul.features-list .exclusive-list-child::after {
     font-weight: 600;
 }
 
-.enterprise-plan-bottom{
-    margin: 0px 20px;
-    display: flex;
-    justify-content: end;
-    position: fixed;
-    bottom: 5px;
-    right: 10px;
-    width: auto;
-    pointer-events: none;
-    z-index: 10000;
-}
 
-.enterprise-plan-bottom p{
-    background: #3199FF;
-    padding: 5px 25px 5px 15px;
-    font-size: 18px;
-    font-weight: 500;
-    border-radius: 25px;
-    cursor: pointer;
-    color: #fff !important;
-    pointer-events: auto;
-}
 
 .price-container {
     display: flex;
@@ -768,6 +747,8 @@ ul.features-list .exclusive-list-child::after {
   }
   .purchase-btn{
     font-size: 12px;
+    background-color: #3199FF !important;
+    border-color: transparent !important;
     // font-weight: 500;
   }
   
@@ -876,12 +857,12 @@ ul.features-list .exclusive-list-child::after {
   }
   
   input[type="radio"]:checked + .custom-radio {
-    background-color: #098DE6;
-    border-color: #098DE6;
+    background-color: #3199FF;
+    border-color: #3199FF;
   }
   
   input[type="radio"]:checked + .custom-radio::before {
-    background-color: #098DE6; 
+    background-color: #3199FF; 
   }
   
   input[type="radio"]:checked + .custom-radio::after {
@@ -1031,4 +1012,44 @@ ul.features-list .exclusive-list-child::after {
     width: calc(35% - 15px) !important;
     color: black;
     font-size: 24px;
+  }
+
+  .button-common {
+    border: none;
+    background: #3199FF;
+    border-radius: 300px;
+    padding: 8px 15px !important;
+    position: fixed;
+    bottom: 25px;
+  }
+  
+  .button-common p {
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .left-button {
+    left: 25px;
+  }
+  
+  .right-button {
+    right: 30px;
+  }
+  
+  .p-field-container {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .p-field {
+    flex: 1;
+    margin-top: 8px;
+  }
+
+  :host ::ng-deep .p-dialog .p-dialog-content{
+    border-radius: 0px 0px 3px 3px;
+  }
+  
+  :host ::ng-deep  .p-dialog .p-dialog-header {
+    border-bottom: 1px solid lightgray;
   }
