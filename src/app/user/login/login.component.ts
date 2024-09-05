@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { CryptoService } from 'src/app/_services/crypto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
+import { ForgotpasswordService } from '../_services/forgotpassword.service';
 //import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -57,7 +58,8 @@ export class LoginComponent implements OnInit {
     public userService: UserService,
     private profileService:ProfileService,
     private crypto:CryptoService,
-    private spinner:NgxSpinnerService
+    private spinner:NgxSpinnerService,
+    private forgotpasswordser: ForgotpasswordService,
     //private cookieService:CookieService,
     
   ) {
@@ -120,6 +122,10 @@ export class LoginComponent implements OnInit {
     this.googleLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=google&redirectPath="+this.config.socialLoginRedirectURL
     this.officeLoginURL = this.config.tokenendpoint+"/api/socialLogin?authProvider=azure&redirectPath="+this.config.socialLoginRedirectURL
     this.isSubscriptionEnabled = environment.isSubscrptionEnabled
+
+    this.emailForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+  });
   }
   
   generateOTP(){
@@ -578,6 +584,51 @@ onKeydownfeilds(event){
       }       
     });
   }
+  }
+
+  showForgotPasswordPopup: boolean = false;
+  emailForm: FormGroup;
+  
+  openForgotPasswordPopup(){
+    this.showForgotPasswordPopup= !this.showForgotPasswordPopup
+  }
+
+  get ff() { return this.emailForm.controls; }  
+
+  onSubmitForgotPassword() {
+    this.spinner.show();
+    // this.submitted = true;
+    if (this.emailForm.invalid) {
+      this.spinner.hide();
+      return;
+      this.spinner.hide();
+    }
+    this.forgotpasswordser.forgotPassword({ email: this.ff.email.value.toLowerCase() }).subscribe(res => {
+      this.openForgotPasswordPopup()
+      this.spinner.hide();
+      if (res.message === 'Password reset mail sent successfully') {
+        
+        Swal.fire({
+          title: 'Success',
+          text: `Reset password link has been sent to your email successfully!`,
+          icon: 'success',
+        }).then(() => {
+          // this.router.navigate(['/user'])
+          
+        })
+      } else {
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'error',
+          title: "Error",
+          text: "User Not Found!!"
+
+
+        });
+      }
+
+      this.emailForm.reset()
+    });
   }
       
 }
