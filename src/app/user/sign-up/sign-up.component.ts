@@ -371,14 +371,12 @@ export class SignUpComponent implements OnInit {
     console.log("Encrypt", this.crypto.encrypt(JSON.stringify(reqObj)));
     this.service.registrationStart(payload).subscribe((res: any) => {
       if (res.body.message == "User Details Saved Successfully!!") {
-        if (environment.isSubscrptionEnabled) {
+        
 
           this.router.navigate(['/subscription'], {
             queryParams: { token: this.crypto.encrypt(this.userId) },
           });
-        } else {
-          this.sendEmailEnterPrisePlan();
-        }
+
       } else if (res.code == 409) {
         this.spinner.hide();
         Swal.fire({
