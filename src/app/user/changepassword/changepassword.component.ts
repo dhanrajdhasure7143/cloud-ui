@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/_services/profile.service';
-import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormsModule, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
@@ -25,31 +25,95 @@ export class ChangepasswordComponent implements OnInit {
   public hide:boolean = false;
   public hide1:boolean = false;
   public hide2:boolean = false;
+  resetPasswordForm: FormGroup;
+
   constructor(
     private router: Router, 
               private route: ActivatedRoute, 
               private profileservice: ProfileService,
               private appser: AppService, 
-              private cryptoService :CryptoService
+              private cryptoService :CryptoService,
+              private fb: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.localstorageuserid = localStorage.getItem("Passwordvalidite");  
+    this.resetPasswordForm = this.fb.group({
+      currentPassword: ['', [
+        Validators.required,
+        Validators.pattern('((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})')
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.pattern('((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})')
+      ]],
+      pwConfirm: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator });
   }
 
-  onSubmit(form:NgForm){
+  // onSubmit(form:NgForm){
     
-    let pswdbody = {
-      "confirmPassword": this.cryptoService.encrypt(this.newPwd),
-      "currentPassword": this.cryptoService.encrypt(this.curtPass),
-      "newPassword": this.cryptoService.encrypt(this.newPwd),
-      "userId": this.localstorageuserid
-    }
-    this.profileservice.changePassword(pswdbody).subscribe(res => {
-      // this.pswdmodel = {};
+  //   let pswdbody = {
+  //     "confirmPassword": this.cryptoService.encrypt(this.newPwd),
+  //     "currentPassword": this.cryptoService.encrypt(this.curtPass),
+  //     "newPassword": this.cryptoService.encrypt(this.newPwd),
+  //     "userId": this.localstorageuserid
+  //   }
+  //   this.profileservice.changePassword(pswdbody).subscribe(res => {
+  //     // this.pswdmodel = {};
       
    
-        if(res.errorMessage == undefined){
+  //       if(res.errorMessage == undefined){
+  //         Swal.fire({
+  //           width: "400px",
+  //           position: 'center',
+  //           icon: "success",
+  //           title: res.message,
+  //           showConfirmButton: false,
+  //           timer: 2000
+  //         })
+  //         //document.getElementById('changepassword1').style.display = "none";
+  //         form.resetForm();
+  //           localStorage.clear();
+  //           sessionStorage.clear();
+  //             this.router.navigate(['/']);      
+  //           this.appser.logout();
+  //         }else{
+  //           Swal.fire({
+  //             width:"400px",
+  //             icon: 'error',
+  //             text: res.errorMessage,
+  //            });
+  //         }
+  //       }, err =>{
+  //           Swal.fire({
+  //             title: 'Error',
+  //             text: `Password cannot be same as your last 5 passwords!!`,
+  //             icon: 'error',
+  //             showCancelButton: false,
+  //             allowOutsideClick: true
+  //           });
+  //         });
+      
+  //       }
+
+  onSubmit(): void {
+    if (this.resetPasswordForm.invalid) {
+      return;
+    }
+    
+    const currentPassword = this.resetPasswordForm.get('currentPassword')?.value;
+    const newPassword = this.resetPasswordForm.get('password')?.value;
+  
+    const pswdbody = {
+      confirmPassword: this.cryptoService.encrypt(newPassword),
+      currentPassword: this.cryptoService.encrypt(currentPassword),
+      newPassword: this.cryptoService.encrypt(newPassword),
+      userId: this.localstorageuserid
+    };
+  
+    this.profileservice.changePassword(pswdbody).subscribe({
+      next: (res) => {
+        if (!res.errorMessage) {
           Swal.fire({
             width: "400px",
             position: 'center',
@@ -57,31 +121,33 @@ export class ChangepasswordComponent implements OnInit {
             title: res.message,
             showConfirmButton: false,
             timer: 2000
-          })
-          //document.getElementById('changepassword1').style.display = "none";
-          form.resetForm();
+          }).then(() => {
+            this.resetPasswordForm.reset(); // Reset the form after success
             localStorage.clear();
             sessionStorage.clear();
-              this.router.navigate(['/']);      
+            this.router.navigate(['/']);      
             this.appser.logout();
-          }else{
-            Swal.fire({
-              width:"400px",
-              icon: 'error',
-              text: res.errorMessage,
-             });
-          }
-        }, err =>{
-            Swal.fire({
-              title: 'Error',
-              text: `Password cannot be same as your last 5 passwords!!`,
-              icon: 'error',
-              showCancelButton: false,
-              allowOutsideClick: true
-            });
           });
-      
+        } else {
+          Swal.fire({
+            width: "400px",
+            icon: 'error',
+            text: res.errorMessage,
+          });
         }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error',
+          text: `Password cannot be the same as your last 5 passwords!`,
+          icon: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+        });
+      }
+    });
+  }
+  
   toggle() {
     this.show = !this.show;
   }
@@ -91,5 +157,11 @@ export class ChangepasswordComponent implements OnInit {
   currentoggle() {
     this.eyeshow = !this.eyeshow;
   }
+
+  passwordMatchValidator: ValidatorFn = (formGroup: AbstractControl): { [key: string]: boolean } | null => {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('pwConfirm')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  };
 
 }

@@ -77,6 +77,8 @@ import { CustomerBotAiSalesPageComponent } from './agent-pages/customer-bot-ai-s
 import { RfpAiSalesPageComponent } from './agent-pages/rfp-ai-sales-page';
 import { MarketingAiSalesPageComponent } from './agent-pages/marketing-ai-sales-page';
 import { LoginOldComponent } from './login-old/login-old.component';
+import { ChangepasswordoldComponent } from './changepasswordold/changepasswordold.component';
+import { NewpasswordoldComponent } from './newpasswordold/newpasswordold.component';
 
 @NgModule({
     declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, 
@@ -95,7 +97,9 @@ import { LoginOldComponent } from './login-old/login-old.component';
         CustomerBotAiSalesPageComponent,
         RfpAiSalesPageComponent,
         MarketingAiSalesPageComponent,
-        LoginOldComponent
+        LoginOldComponent,
+        ChangepasswordoldComponent,
+        NewpasswordoldComponent
     ],
     imports: [
         CommonModule,
