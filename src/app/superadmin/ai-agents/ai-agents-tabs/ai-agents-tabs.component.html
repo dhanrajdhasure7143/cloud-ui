@@ -19,6 +19,15 @@
         <app-ai-agents-vm-configuration></app-ai-agents-vm-configuration>
       </div>
     </p-tabPanel>
+    <p-tabPanel header="AI Agents">
+      <ng-template pTemplate="header">
+        <i class="pi pi-desktop" style="font-size: 1rem; margin-right: 5px;"></i>
+        <span class="titlelabel">AI Agents</span>
+      </ng-template>
+      <div *ngIf="check_tab == 2" class="enterprise-layout">
+        <app-ai-agents-list></app-ai-agents-list>
+      </div>
+    </p-tabPanel>
   </p-tabView>
 </div>
 

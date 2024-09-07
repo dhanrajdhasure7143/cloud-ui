@@ -1,0 +1,150 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="enterprise-layout">
+        <!-- <p-scrollPanel [style]="{width: '100%', height: '100%'}"> -->
+          <p-table #dt [value]="agentsList" [columns]="columnList"  [scrollable]="true" [globalFilterFields]="search_fields"
+          [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex" style="text-align: end;">
+              <button class="btn btn-primary"(click)="addAgentsForm()" style="margin-right: 10px;">Add Agent</button>
+              <span class="p-input-icon-right gridsearch">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
+              </span>  
+              <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt)"></button>
+            </div>
+          </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn  [pSortableColumnDisabled]="!each.sort">{{each.DisplayName}}
+                    <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'"
+                           field="{{each.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
+                          [showAddButton]="false" display="menu" matchMode="contains" [showApplyButton]="false">
+                              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                  <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)"class="p-inputtext" placeholder="Search">
+                              </ng-template>
+                      </p-columnFilter>
+                    <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'dropdown'" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                    [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown [ngModel]="value" [options]="categaoriesList" (onChange)="filter($event.value)" 
+                      optionLabel="categoryName" optionValue="categoryName" placeholder="Select">
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+                <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
+                      <tr>
+                          <td *ngFor="let col of columns" [pTooltip]="rowData[col.ColumnName]" tooltipPosition="top" [tooltipDisabled]="!col.showTooltip">
+                              <span *ngIf="col.ColumnName!='action'">
+                                  <span *ngIf="col.ColumnName!='createdDate'">{{rowData[col.ColumnName]}}</span>
+                                  <span *ngIf="col.ColumnName=='createdDate'">{{rowData[col.ColumnName]|date:'MMM dd, y'}}</span>
+                              </span>
+                              <span *ngIf="col.ColumnName=='action'" class="actionmenu">
+                                <a (click)="deleteAiAgentProdect(rowData)" pTooltip="Delete" tooltipPosition="top">
+                                  <img src="assets/a_images/delete-default.svg" alt="Delete" class="testplus default-icon">
+                                  <img src="assets/a_images/delete-hover.svg" class="testplus hover-icon" alt="Delete">
+                                    </a>
+                                  <a (click)="openOverlay('update',rowData)" pTooltip="Edit" tooltipPosition="top">
+                                      <img src="assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
+                                      <img src="assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
+                                  </a>
+                              </span>
+                          </td>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td style="justify-content: center;" colspan="8">No Records Found</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+                <!-- </p-scrollPanel> -->
+              </div>
+          </div>
+      </div>
+  </div>
+
+  
+<div *ngIf="addAgentsOverLay">
+    <app-split-overlay (closeOverlay)="closeOverlay($event)">
+        <div class="h-100">
+            <div class="create-header">
+                <h3>Add Agent </h3>
+            </div>
+            <div class="createform-overlay">
+                <form [formGroup]="agentForm" autocomplete="off"  class="tenant-form" class="col-12" tenant-form>
+                        <div class="row form-details">
+        
+                            <div class="form-group col-md-6 pl-0"> 
+                                <label class="label-control" for="agentName" id="label-name">Agent Name<span class="star">*</span></label>
+                                <input type="text" pInputText formControlName="agentName" class="form-control" id="agentName" style="height: 45px !important;
+                                border-radius: 5px;"
+                                placeholder="Enter Agent name" maxlength="30"
+                                minlength="2">
+                            <span *ngIf="agentForm.get('agentName').invalid && agentForm.get('agentName').touched && !agentForm.get('agentName').hasError('pattern') && !agentForm.controls['agentName'].hasError('maxlength')" class="required"> Agent Required </span>    
+                            <span
+                                *ngIf="agentForm.get('agentName').hasError('pattern') && !agentForm.controls['agentName'].hasError('maxlength')"
+                                class="required">
+                                Only space between words are allowed,numbers & special characters are not allowed.
+                            </span>
+                            <label class="label-control" for="agentStripeId" id="label-name">Agent Stripe ID<span class="star">*</span></label>
+                            <input type="text" pInputText formControlName="agentStripeId" class="form-control" id="agentStripeId" style="height: 45px !important;
+                            border-radius: 5px;"
+                            placeholder="Enter Agent Stripe ID" maxlength="30"
+                            minlength="2">
+                        <span *ngIf="agentForm.get('agentStripeId').invalid && agentForm.get('agentStripeId').touched && !agentForm.get('agentStripeId').hasError('pattern') && !agentForm.controls['agentStripeId'].hasError('maxlength')" class="required"> Agent Required </span>    
+                        <span
+                            *ngIf="agentForm.get('agentStripeId').hasError('pattern') && !agentForm.controls['agentStripeId'].hasError('maxlength')"
+                            class="required">
+                            Only space between words are allowed,numbers & special characters are not allowed.
+                        </span>
+                        <label class="label-control" for="agentUUID" id="label-name">Agent UUID<span class="star">*</span></label>
+                        <input type="text" pInputText formControlName="agentUUID" class="form-control" id="agentUUID" style="height: 45px !important;
+                        border-radius: 5px;"
+                        placeholder="Enter Agent UUID" maxlength="30"
+                        minlength="2">
+                    <span *ngIf="agentForm.get('agentUUID').invalid && agentForm.get('agentUUID').touched && !agentForm.get('agentUUID').hasError('pattern') && !agentForm.controls['agentUUID'].hasError('maxlength')" class="required"> Agent Required </span>    
+                    <span
+                        *ngIf="agentForm.get('agentUUID').hasError('pattern') && !agentForm.controls['agentUUID'].hasError('maxlength')"
+                        class="required">
+                        Only space between words are allowed,numbers & special characters are not allowed.
+                    </span>
+                    <label class="label-control" for="formType" id="label-name">Form Type<span class="star">*</span></label>
+                    <input type="text" pInputText formControlName="formType" class="form-control" id="formType" style="height: 45px !important;
+                    border-radius: 5px;"
+                    placeholder="Enter Form Type" maxlength="30"
+                    minlength="2">
+                <span *ngIf="agentForm.get('formType').invalid && agentForm.get('formType').touched && !agentForm.get('formType').hasError('pattern') && !agentForm.controls['formType'].hasError('maxlength')" class="required"> Agent Required </span>    
+                <span
+                    *ngIf="agentForm.get('formType').hasError('pattern') && !agentForm.controls['formType'].hasError('maxlength')"
+                    class="required">
+                    Only space between words are allowed,numbers & special characters are not allowed.
+                </span>
+                <label class="label-control" for="agentStripeId" id="label-name">Is Schedule  </label>
+                <input type="checkbox" formControlName="isSchedule" [checked]="agentForm.value.isSchedule">
+
+                            </div>
+                        </div>
+                </form>
+                <!-- <div class="createform-footer"> -->
+                    <button type="button" class="btn btn-primary ml-2" id="reset-btn" (click)="resetForm()">Reset</button>
+        
+                        <button type="button" class="btn btn-primary" id="update-btn" (click)="addAgent('create')" [disabled]="!(agentForm.valid && (agentForm.touched ||  agentForm.dirty)) || errorMessage"> Submit </button>
+                <!-- </div> -->
+            </div>
+        </div>
+    </app-split-overlay>
+  </div>
+
+
+  <ngx-spinner bdColor="#bebcbc66" type="">
+    <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
+  </ngx-spinner>
+
+  <p-confirmDialog  [style]="{width: '30vw'}"  position="center" [baseZIndex]="10000" [closable]="false">
+  </p-confirmDialog>

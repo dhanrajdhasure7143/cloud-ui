@@ -27,6 +27,7 @@ import { AiAgentsTabsComponent } from './ai-agents/ai-agents-tabs/ai-agents-tabs
 import { AiAgentsTemplateComponent } from './ai-agents/ai-agents-templates/ai-agents-template.component';
 import { AiAgentsVmConfigurationComponent } from './ai-agents/ai-agents-vm-configuration/ai-agents-vm-configuration.component';
 import { AiAgentsAttributesComponent } from './ai-agents/ai-agents-attributes/ai-agents-attributes.component';
+import { AiAgentsListComponent } from './ai-agents/ai-agents-list/ai-agents-list.component';
 @NgModule({
   declarations: [DashboardComponent,SuperadminComponent,SearchPipe, SuperadminmetricsComponent, CustomersComponent, EnterpriseCustomersComponent, 
     OnboardTenantComponent,
@@ -34,7 +35,8 @@ import { AiAgentsAttributesComponent } from './ai-agents/ai-agents-attributes/ai
     AiAgentsTabsComponent,
     AiAgentsTemplateComponent,
     AiAgentsVmConfigurationComponent,
-    AiAgentsAttributesComponent
+    AiAgentsAttributesComponent,
+    AiAgentsListComponent
   ],
   imports: [
     CommonModule,
