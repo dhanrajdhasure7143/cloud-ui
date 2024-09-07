@@ -122,8 +122,17 @@
                     </div>
                 </div>
 
-                <div class="enterprise-plan-bottom">
+                <!-- <div class="enterprise-plan-bottom">
                     <p class="mt-0" (click)="showEnterpriceModel()"> <img src="assets/ai-agent/ent-plan.svg" alt=""> Enterprise Plan</p>
+                </div> -->
+                <div class="button-container">
+                    <!-- If we need contact us button please enable below  -->
+                    <!-- <button type='button' class="button-common left-button" (click)="showDialog()">
+                        <p class="mb-0"> <i class="pi pi-envelope"> </i> &nbsp; Contact Us</p>
+                    </button> -->
+                    <button type='button' class="button-common right-button" (click)="showEnterpriceModel()">
+                        <p class="mb-0"> <img src="assets/ai-agent/ent-plan.svg" alt=""> Enterprise Plan</p>
+                    </button>
                 </div>
 
                 <!-- skeleton for Agent's -->
@@ -205,6 +214,39 @@
       </div>      
     </div>
 </div>  
+
+<p-dialog header="Contact Us" [(visible)]="showContactUs" [modal]="true" [closable]="true" [style]="{width: '40vw'}" (onHide)="resetForm()">
+    <form [formGroup]="contactForm" (ngSubmit)="contactUs()">
+        <div class="p-fluid">
+            <!-- <div class="p-field-container">
+                <div class="p-field">
+                    <label for="firstName">First Name</label>
+                    <input pInputText id="firstName" formControlName="firstName">
+                </div>
+                <div class="p-field">
+                    <label for="lastName">Last Name</label>
+                    <input pInputText id="lastName" formControlName="lastName">
+                </div>
+            </div> -->
+            <!-- <div class="p-field">
+                <label for="userEmail">Email</label>
+                <input pInputText id="userEmail" formControlName="userEmail">
+            </div> -->
+            <b>If you have any questions or concerns? Send us a message, and our team will assist you with your needs.</b>
+            <div class="p-field">
+                <label for="message">What can we help you with?</label>
+                <textarea pInputTextarea id="message" (input)="onMessageInput()" formControlName="message" rows="6"></textarea>
+            </div>
+        </div>
+            
+        <div class="submit-button">
+            <div *ngIf="messageTooShort" class="error-message">
+                Please enter at least 150 characters to ask your query.
+            </div>
+            <button class="btn btn-primary" style="margin-right: 0px !important;" icon="pi pi-check" [disabled]="contactForm.invalid || messageTooShort">Submit</button>
+        </div>
+    </form>
+</p-dialog>
 
 <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>

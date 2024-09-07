@@ -9,7 +9,7 @@
         </div> -->
     <div class="row">
 
-        <div class="col-md-8 img-box">
+        <div class="col-md-8 p-0">
 
             <div class="image-container">
                 <img class="background-image top-banner-signup-left-img" src="assets/ai-agents-signup.png"
@@ -43,8 +43,8 @@
 
         </div> -->
         </div>
-        <div class="col-md-4 form-div" style="position: fixed; right: 0; top: 0;" *ngIf="!showUserScreen">
-            <div class="loginblock">
+        <div class="col-md-4 " style="position: fixed; right: 0; top: 0;" *ngIf="!showUserScreen">
+            <div class="form-div loginblock">
                 &nbsp;
                 <div class="create">
                     <p class="signup-header"> Create your Account </p>
@@ -57,7 +57,7 @@
                 &nbsp;
                 <form autocomplete="off" [formGroup]="signupForm" class="login_form" cdkTrapFocus>
                     <div class="form-group col-md-12">
-                        <div class="col-md-12 p-10 form-group">
+                        <div class="col-md-12 p-10 form-group pb-2">
                             <label class="label-control" for="firstName"> First Name </label>
                             <input type="text" pInputText maxlength="51" minlength="3" class="form-control"
                                 formControlName="firstName" (keypress)="lettersOnly($event)" value=""
@@ -74,7 +74,7 @@
                             <span *ngIf="signupForm.get('firstName').hasError('pattern')" class="required"> Invalid
                                 characters entered </span>
                         </div>
-                        <div class="col-md-12 p-10 form-group">
+                        <div class="col-md-12 p-10 form-group pb-2">
                             <label class="label-control" for="lastName"> Last Name </label>
                             <input type="text" pInputText maxlength="51" minlength="3" class="form-control"
                                 formControlName="lastName" (keypress)="lettersOnly($event)" value=""
@@ -91,7 +91,7 @@
                             <span *ngIf="signupForm.get('lastName').hasError('pattern')" class="required"> Invalid
                                 characters entered </span>
                         </div>
-                        <div class="form-group col-md-12 p-10">
+                        <!-- <div class="form-group col-md-12 p-10">
                             <label for="organization" class="label-control">Organization <span class="star">*</span>
                             </label>
                             <input type="text" pInputText formControlName="organization" class="form-control" style="height: 45px !important;
@@ -99,7 +99,6 @@
                                 autocomplete="off" (keypress)="lettersOnly($event)"
                                 placeholder="Enter Organization" maxlength="51" minlength="3" tabindex="3">
                             <span *ngIf="orgExsist" class='required'> Organization already exist</span>
-                            <!-- <span *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched && !signupForm.get('organization').hasError('pattern') && !signupForm.controls['organization'].hasError('maxlength')" class="required"> Organization required </span> -->
                             <span
                                 *ngIf="signupForm.get('organization').invalid && signupForm.get('organization').touched &&!signupForm.get('organization').hasError('pattern') &&!signupForm.controls['organization'].hasError('maxlength') &&!signupForm.controls['organization'].hasError('minlength')"
                                 class="required"> Organization Required </span>
@@ -110,8 +109,8 @@
                                 of 50 characters </span>
                             <span *ngIf="signupForm.get('organization').hasError('pattern')" class="required"> Invalid
                                 characters entered </span>
-                        </div>
-                        <div class="col-md-12 p-10 form-group">
+                        </div> -->
+                        <div class="col-md-12 p-10 form-group pb-2">
                             <label class="label-control" for="email"> Email <span class="star">*</span> </label>
                             <input type="text" pInputText maxlength="51" class="form-control" formControlName="email"
                                 style="padding-right: 90px;" [attr.disabled]="isEmailDisable ? true : null" value=""
@@ -171,7 +170,7 @@
                                 <span *ngIf="resendEnable" class="resend-disable text-secondary">Resend Code</span>
                             </span>
                         </div>
-                        <div class="col-md-12 p-10 form-group d-block">
+                        <div class="col-md-12 p-10 form-group d-block pb-2">
                             <label class="label-control" for="password"> Password </label> <br>
                             <p-password styleClass="password-input" formControlName="password" value="password"
                                 [feedback]="false" [toggleMask]="true" [disabled]="isPasswordDisable ? true : null"
@@ -190,7 +189,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <button class="btn btn-primary signup-btn" (click)="onRegistrationStart()"
+                            <button class="btn btn-primary login-btn" (click)="onRegistrationStart()"
                                 [disabled]="signupForm.invalid || orgExsist" type="submit" id="btn"> Next </button>
                         </div>
                     </div>
