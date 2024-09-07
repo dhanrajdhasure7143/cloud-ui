@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AiAgentService } from 'src/app/user/_services/ai-agent.service';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-ai-agents-list',
@@ -31,6 +31,7 @@ export class AiAgentsListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) { 
     this.agentForm = this.formBuilder.group({
       id: [""],
@@ -114,17 +115,29 @@ export class AiAgentsListComponent implements OnInit {
   }
 
   deleteAiAgentProdect(agentFormData:any){
-    this.rest_api.deletePredefinedBots(agentFormData.predefinedBotId).subscribe((res:any)=>{
-      if(res.code === 200){
-        this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Deleted'});
-        this.getListOfAgents();
-      }else{
-        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete this Agent?",
+      header: "Delete Confirmation",
+      acceptLabel: "Let's Do It!",
+      rejectLabel: "Not Now",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+        this.rest_api.deletePredefinedBots(agentFormData.predefinedBotId).subscribe((res:any)=>{
+          if(res.code === 200){
+            this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Deleted'});
+            this.getListOfAgents();
+          }else{
+            this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
+          }
+        },(error)=>{
+          this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
+        })
       }
-    },(error)=>{
-      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
-    })
-
+    });
   }
 
 }
