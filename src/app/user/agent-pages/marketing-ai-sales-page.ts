@@ -600,7 +600,7 @@ loadPredefinedBots() {
       return;
     }
     
-
+    let filteredUrls = this.router.url.split('&');
     let req_body = {
       // "price": filteredPriceIds,
       "priceData": filteredPriceIds.map(price => ({
@@ -611,7 +611,8 @@ loadPredefinedBots() {
       "successUrl": environment.paymentSuccessURL,
       // "cancelUrl": environment.paymentFailuerURL+"?token="+this.crypto.encrypt(this.userEmail)
     //   "cancelUrl": environment.paymentFailuerURL+"?token="+this.email+"&id="+this.selectedAgentId+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
-      "cancelUrl": environment.paymentFailuerURL+this.router.url+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
+    "cancelUrl": environment.paymentFailuerURL+filteredUrls[0]+'&'+filteredUrls[1]+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
+
     };
     // console.log("PLAN_ID's", req_body);
     
