@@ -573,7 +573,7 @@ loadPredefinedBots() {
   proceedToPay() {
     // console.log(`Proceeding to pay for ${this.agentsQuantity} agents on ${this.isYearly ? 'yearly' : 'monthly'} plan`);
     // Implement payment logic here
-    // this.spinner.show();
+    this.spinner.show();
   
     // let selectedInterval = (this.selectedPlan === 'Monthly') ? 'month' : 'year';
     let filteredPriceIds = [];
@@ -610,9 +610,8 @@ loadPredefinedBots() {
     //   "cancelUrl": environment.paymentFailuerURL+"?token="+this.email+"&id="+this.selectedAgentId+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
       "cancelUrl": environment.paymentFailuerURL+filteredUrls[0]+'&'+filteredUrls[1]+"&quantity="+this.agentsQuantity+"&isYearly="+this.isYearly
     };
-    console.log("PLAN_ID's", req_body);
+    // console.log("PLAN_ID's", req_body);
 
-    return
     
     this.service.getCheckoutScreen(req_body).pipe(
         switchMap((session: any) => {
