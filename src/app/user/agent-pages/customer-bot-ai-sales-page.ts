@@ -519,7 +519,7 @@ export class CustomerBotAiSalesPageComponent {
         console.log("Invalid token");
         }
         if (data && data.id) this.selectedAgentId = data.id;
-        if (data && data.quantity) this.agentsQuantity = data.quantity;
+        if (data && data.quantity) this.agentsQuantity = Number(data.quantity);
         if (data && data.isYearly) this.isYearly = data.isYearly === 'true';
         console.log("selectedAgent",this.selectedAgentId);
         console.log("email",this.email);
