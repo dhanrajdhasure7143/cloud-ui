@@ -58,7 +58,7 @@
                 <form autocomplete="off" [formGroup]="signupForm" class="login_form" cdkTrapFocus>
                     <div class="form-group col-md-12">
                         <div class="col-md-12 p-10 form-group pb-2">
-                            <label class="label-control" for="firstName"> First Name </label>
+                            <label class="label-control" for="firstName"> First Name <span class="required">*</span></label>
                             <input type="text" pInputText maxlength="51" minlength="3" class="form-control"
                                 formControlName="firstName" (keypress)="lettersOnly($event)" value=""
                                 placeholder="Enter First Name" tabindex="1" autocomplete="off">
@@ -75,7 +75,7 @@
                                 characters entered </span>
                         </div>
                         <div class="col-md-12 p-10 form-group pb-2">
-                            <label class="label-control" for="lastName"> Last Name </label>
+                            <label class="label-control" for="lastName"> Last Name <span class="required">*</span></label>
                             <input type="text" pInputText maxlength="51" minlength="3" class="form-control"
                                 formControlName="lastName" (keypress)="lettersOnly($event)" value=""
                                 placeholder="Enter Last Name" autocomplete="off" tabindex="2">
@@ -171,7 +171,7 @@
                             </span>
                         </div>
                         <div class="col-md-12 p-10 form-group d-block pb-2">
-                            <label class="label-control" for="password"> Password </label> <br>
+                            <label class="label-control" for="password"> Password <span class="required">*</span></label> <br>
                             <p-password styleClass="password-input" formControlName="password" value="password"
                                 [feedback]="false" [toggleMask]="true" [disabled]="isPasswordDisable ? true : null"
                                 placeholder="Enter Password" tabindex="4" autocomplete="off"></p-password>
