@@ -117,7 +117,7 @@
                                 style="padding-right: 90px;" [attr.disabled]="isEmailDisable ? true : null" value=""
                                 pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="Enter Email" autocomplete="off"
                                 (keyup)="showOtp($event); checkEmailValidity()" tabindex="4">
-                            <span *ngIf="isGenerate && !isEmailEmptyOrInvalid" (click)="generateOTP('false')"
+                                <span *ngIf="isGenerate && !isEmailEmptyOrInvalid && !signupForm.get('email').invalid" (click)="generateOTP('false')"
                                 class="verify"> Verify Email </span>
                                 <div *ngIf="showSuccessMessage" class="success-message">
                                     <img style="height: 12px; margin-bottom: 2px;" src="assets/images/Green Tick.svg" alt="">&nbsp; Code Verified
