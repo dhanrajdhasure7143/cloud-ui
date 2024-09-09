@@ -110,11 +110,12 @@
                             <span *ngIf="signupForm.get('organization').hasError('pattern')" class="required"> Invalid
                                 characters entered </span>
                         </div> -->
+                        <!-- pattern="^[\w\.-]+@[\w\-]+\.\w+$" -->
                         <div class="col-md-12 p-10 form-group pb-2">
                             <label class="label-control" for="email"> Email <span class="star">*</span> </label>
                             <input type="text" pInputText maxlength="51" class="form-control" formControlName="email"
                                 style="padding-right: 90px;" [attr.disabled]="isEmailDisable ? true : null" value=""
-                                pattern="^[\w\.-]+@[\w\-]+\.\w+$" placeholder="Enter Email" autocomplete="off"
+                                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="Enter Email" autocomplete="off"
                                 (keyup)="showOtp($event); checkEmailValidity()" tabindex="4">
                             <span *ngIf="isGenerate && !isEmailEmptyOrInvalid" (click)="generateOTP('false')"
                                 class="verify"> Verify Email </span>

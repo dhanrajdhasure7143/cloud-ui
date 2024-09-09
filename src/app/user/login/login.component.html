@@ -155,10 +155,15 @@
   <form [formGroup]="emailForm" (ngSubmit)="onSubmitForgotPassword()">
     <div class="form-group">
       <label for="email" class="label-control">Enter Email <span class="text-danger">*</span></label>
-      <input type="email" id="email" formControlName="email" placeholder="Enter Email" class="form-control">
-      <span *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched" class="required">
+      <input type="email" id="email" formControlName="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+      maxlength="51" placeholder="Enter Email" class="form-control">
+      <!-- <span *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched" class="required">
         Email required.
-      </span>
+      </span> -->
+      <span *ngIf="emailForm.get('email').invalid && emailForm.get('email').touched && !emailForm.get('email').hasError('pattern') && !emailForm.controls['email'].hasError('maxlength')"
+              class="required"> Email Required </span>
+      <span *ngIf="emailForm.get('email').hasError('pattern') && emailForm.get('email').touched"
+              class="required"> Enter valid email address </span>
     </div>
     <button type="submit" class="btn btn-primary btn-block mt-5 mb-3 login-btn" [disabled]="emailForm.invalid">Submit</button>
   </form>

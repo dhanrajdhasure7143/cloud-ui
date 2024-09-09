@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit {
   officeLoginURL:any;
   showWarningPopup:boolean = false;
   isSubscriptionEnabled:boolean=false;
+  showForgotPasswordPopup: boolean = false;
+  emailForm: FormGroup;
 
   constructor(
     @Inject(APP_CONFIG) private config,
@@ -585,12 +587,10 @@ onKeydownfeilds(event){
     });
   }
   }
-
-  showForgotPasswordPopup: boolean = false;
-  emailForm: FormGroup;
   
   openForgotPasswordPopup(){
     this.showForgotPasswordPopup= !this.showForgotPasswordPopup
+    this.emailForm.reset();
   }
 
   get ff() { return this.emailForm.controls; }  
