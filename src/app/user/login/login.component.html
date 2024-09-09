@@ -40,7 +40,7 @@
                 <span
                   *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched && !loginForm.get('username').hasError('pattern')"
                   class="required">
-                  Email is Required
+                  Email Required
                 </span>
                 <span *ngIf="loginForm.get('username').hasError('pattern') && loginForm.get('username').touched" class="required">
                   Enter a valid email address
@@ -48,7 +48,7 @@
               </div>
               
               <div class="col-md-12 form-group p-10">
-                <label class="label-control" for="password">Enter Password</label> <br>
+                <label class="label-control" for="password">Enter Password <span class="required">*</span></label> <br>
                 <p-password styleClass="password-input" formControlName="password" [feedback]="false" [toggleMask]="true"
                   placeholder="Enter Password" autocomplete="off" minlength="8" (keydown)="onKeydownfeilds($event)">
                 </p-password>
