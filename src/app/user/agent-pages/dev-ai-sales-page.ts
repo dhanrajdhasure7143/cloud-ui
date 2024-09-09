@@ -160,7 +160,7 @@ import Swal from 'sweetalert2';
       color: #fff;
       font-size: 18px;
       width: 30px;
-      height: 30px;
+      height: 34px;
       cursor: pointer;
       display: flex;
       align-items: center;
