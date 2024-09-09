@@ -196,6 +196,9 @@ export class SignUpComponent implements OnInit {
 
   showOtp(event) {
     if (event.target.value.includes('@') && this.signupForm.get('email').valid) {
+      this.isGenerate = true;
+        this.ispublicMail = false;
+        return
       if (event.target.value.endsWith('@gmail.com') || event.target.value.endsWith('@yahoo.com') ||
         event.target.value.endsWith('@hotmail.com') || event.target.value.endsWith('@rediffmail.com')) {
         this.ispublicMail = true;
