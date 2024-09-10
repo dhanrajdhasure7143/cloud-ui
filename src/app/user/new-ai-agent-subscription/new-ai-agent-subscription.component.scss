@@ -1021,6 +1021,7 @@ ul.features-list .exclusive-list-child::after {
     padding: 8px 15px !important;
     position: fixed;
     bottom: 25px;
+    z-index: 1 !important;
   }
   
   .button-common p {
