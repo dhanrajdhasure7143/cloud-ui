@@ -21,6 +21,7 @@ export class AiAgentsListComponent implements OnInit {
     {DisplayName:"Agent UUID",ColumnName:"predefinedUUID",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Form Type",ColumnName:"formType",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Is Schedule",ColumnName:"schedulerRequired",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
+    {DisplayName:"Description",ColumnName:"description",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false,showTooltip:true},
   ]
   search_fields=['predefinedBotName','productId','predefinedUUID','formType'];
@@ -40,7 +41,7 @@ export class AiAgentsListComponent implements OnInit {
       agentUUID: ["", [Validators.required, Validators.required]],
       formType: ["", [Validators.required, Validators.required]],
       isSchedule: [false],
-      description:[""],
+      description:["", [Validators.required, Validators.required]],
       subscribed:[false],
 
     });
@@ -73,7 +74,7 @@ export class AiAgentsListComponent implements OnInit {
       schedulerRequired:this.agentForm.value.isSchedule,
       subscribed:false,
       predefinedBotId: this.apiType === "update" ? this.agentForm.value.id : 0, 
-      description: this.apiType === "update" ? this.agentForm.value.description : ""
+      description: this.agentForm.value.description
     }
     this.rest_api.savePredefinedBots(body).subscribe((res:any)=>{
       if(res.code === 200){
