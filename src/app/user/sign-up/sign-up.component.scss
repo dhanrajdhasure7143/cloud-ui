@@ -717,6 +717,10 @@ input .form-control {
   overflow: scroll !important;
 }
 
+.form-div::-webkit-scrollbar{
+  display: none !important; 
+}
+
 #validate-button-disable {
   position: relative !important;
   left: 90% !important;
