@@ -132,4 +132,8 @@ export class UsermanagementService implements OnInit {
     return this.http.post("/rpa-service/predefined/delete-aiagent-attrubutes/"+id,'');
   }
 
+  deployJarToVmHost(req){
+    return this.http.post("/rpa-service/predefined/superadmin-environment-deploy",req)
+  }
+
 }
