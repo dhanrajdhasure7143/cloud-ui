@@ -73,6 +73,9 @@
                   <a (click)="prepareUpdateForm(rowData)" pTooltip="Update" tooltipPosition="top">
                     <img src="assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
                 </a>
+                <span pTooltip="Deploy" tooltipPosition="top" (click)="onDeployJar(rowData)">
+                  <i class="pi pi-arrow-circle-up"></i>
+                </span>
                 </span>
               </td>
             </tr>

@@ -271,4 +271,24 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
     this.vmForm.get('environmentType').setValue(event.value);
   }
 
+  onDeployJar(row){
+    console.log(row);
+    this.spinner.show();
+    let req = [row.id];
+    this.rest_api.deployJarToVmHost(req).subscribe({
+      next: (response) => {
+        console.log('Deployed Jar:', response);
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Deployed Succesfully' });
+
+      },
+      error: (error) => {
+        console.error('Deploy Jar Error:', error);
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to deploy jar.' });
+
+      }
+    });
+  }
+
 }
