@@ -293,7 +293,8 @@ export class SignUpComponent implements OnInit {
               // if(data.response.registrationProcess == "basic_details_completed"){
               Swal.fire({
                 title: 'Info',
-                text: `User already exists, Please proceed with signing in!`,
+                // text: `User already exists, Please proceed with signing in!`,
+                text: `Dear User, It looks like there’s already an account associated with this email address. Please click on 'Sign In' to login to your account.`,
                 icon: 'info',
                 showCancelButton: false,
                 allowOutsideClick: true
