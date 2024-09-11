@@ -56,7 +56,11 @@ export class AiAgentsTemplateComponent implements OnInit {
   selectedAttributes:any[]=[];
   isEditAttribute_form:boolean = false;
   attributeRow_data:any={};
-  selectedAttributeProduct:any
+  selectedAttributeProduct:any;
+  inputTypes1 =[
+    {field:"Generic",value:"GENERIC"},
+    {field:"Specific",value:"SPECIFIC"},
+  ]
 
   constructor(private rest_api: UsermanagementService,
     private spinner: NgxSpinnerService,
@@ -112,6 +116,7 @@ export class AiAgentsTemplateComponent implements OnInit {
       placeholder : ['', Validators.required], 
       attributeOrderBy : ['', Validators.required], 
       preAttributeType : ['', Validators.required], 
+      specification : ['', Validators.required], 
       options : [''], 
       attributeRequired : [true], 
       visibility : [true],
@@ -315,6 +320,7 @@ this.spinner.show()
       // "predefinedBotId":this.predefinedTemplateForm.get("predefinedBotId").value,
       "productId":this.predefinedTemplateForm.get('predefinedBotType').value.productId,
       "preAttributeType":this.predefinedAttributesForm.get('attributeType').value,
+      "specification":this.predefinedAttributesForm.get('specification').value,
       "minNumber":this.predefinedAttributesForm.get('minLength').value,
       "maxNumber":this.predefinedAttributesForm.get('maxLength').value,
       "preAttributeLable":this.predefinedAttributesForm.get('attributeLabelName').value,
@@ -328,7 +334,7 @@ this.spinner.show()
     }
     console.log(this.predefinedAttributesForm.value)
     console.log("Object",obj);
-    this.predefinedAttributesForm
+
     this.newAttributes_list.push(obj)
     this.resetFields();
   }
@@ -444,6 +450,7 @@ this.spinner.show()
     this.agentAttributesFormUpdate.get("placeholder").setValue(row.placeholder)
     this.agentAttributesFormUpdate.get("attributeOrderBy").setValue(row.attributeOrderBy)
     this.agentAttributesFormUpdate.get("preAttributeType").setValue(row.preAttributeType)
+    this.agentAttributesFormUpdate.get("specification").setValue(row.specification)
     this.agentAttributesFormUpdate.get("options").setValue(JSON.stringify(row.options))
 
     this.agentAttributesFormUpdate.get("attributeRequired").setValue(row.attributeRequired)

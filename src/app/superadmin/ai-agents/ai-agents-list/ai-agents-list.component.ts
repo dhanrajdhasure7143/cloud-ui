@@ -26,6 +26,10 @@ export class AiAgentsListComponent implements OnInit {
   ]
   search_fields=['predefinedBotName','productId','predefinedUUID','formType'];
   apiType:string="create";
+  inputTypes1 =[
+    {field:"Common",value:"common"},
+    {field:"Specific",value:"specific"},
+  ]
 
   constructor(
     private rest_api: AiAgentService,
