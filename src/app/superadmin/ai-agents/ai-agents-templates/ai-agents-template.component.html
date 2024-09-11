@@ -662,6 +662,11 @@
               formControlName="preAttributeType"></p-dropdown>
             </div>
             <div class="form-group col-md-6">
+              <label class="label-control" for="Tasks">FieldType<span class="star">*</span></label>
+              <p-dropdown [style]="{'width':'70%'}" [options]="inputTypes1" placeholder="Select Type" optionLabel="field" optionValue="value" 
+              formControlName="specification"></p-dropdown>
+            </div>
+            <div class="form-group col-md-6">
               <label class="label-control" for="attributeOrder">Attribute Order<span class="star">*</span></label>
               <div>
                 <p-inputNumber id="attributeOrder" [style]="{'width':'100%'}" formControlName="attributeOrderBy" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
