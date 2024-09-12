@@ -126,6 +126,7 @@ export class AiAgentsTemplateComponent implements OnInit {
   });
     this.inputTypes =[
       {field:"Text",value:"text"},
+      {field:"Email",value:"email"},
       {field:"Drop Down",value:"dropdown"},
       {field:"Text Area",value:"textarea"},
       {field:"File",value:"file"},
