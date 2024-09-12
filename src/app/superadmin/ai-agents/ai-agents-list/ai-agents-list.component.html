@@ -138,10 +138,14 @@
              
               <div class="form-group col-md-6 pl-0">
                 <label class="label-control" for="description" id="label-name">Description<span class="star">*</span></label>
-                        <input type="text" pInputText formControlName="description" class="form-control" id="description" style="height: 45px !important;
+                        <!-- <input type="text" pInputText formControlName="description" class="form-control" id="description" style="height: 45px !important;
                         border-radius: 5px;"
                         placeholder="Enter Description" maxlength="30"
-                        minlength="2">
+                        minlength="2"> -->
+                      <textarea rows="5" cols="20" id="description" pInputTextarea 
+                        autoResize="autoResize" placeholder=""
+                        formControlName="description">
+                        </textarea>
                     <span *ngIf="agentForm.get('description').invalid && agentForm.get('description').touched && !agentForm.get('description').hasError('pattern') && !agentForm.controls['description'].hasError('maxlength')" class="required"> Agent Required </span>    
                     <span
                         *ngIf="agentForm.get('description').hasError('pattern') && !agentForm.controls['description'].hasError('maxlength')"

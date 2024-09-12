@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-recruitment-ai-sales-page',
   template: `
   <div class="sales-page-container">
-  <div class="hero">
+  <div class="hero" [ngStyle]="{'background-image': 'url(' + imagePath + ')'}">
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
@@ -98,7 +98,6 @@ import { Component } from '@angular/core';
       padding: 0 20px;
     }
     .hero {
-      background-image: url('src/assets/images/agent/sales/RFP-head.png');
       background-size: cover;
       background-position: center;
       color: white;
@@ -355,7 +354,11 @@ export class RfpAiSalesPageComponent {
     }
   ];
 
-  constructor() { }
+    imagePath:any;
+
+    constructor() { 
+      this.imagePath = `${document.getElementsByTagName('base')[0].href}assets/images/agent/sales/RFP-head.png`;
+    }
 
 
   ngOnInit() {
