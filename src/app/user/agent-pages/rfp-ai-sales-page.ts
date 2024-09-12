@@ -98,6 +98,7 @@ import { Component } from '@angular/core';
       padding: 0 20px;
     }
     .hero {
+      background-image: url('src/assets/images/agent/sales/RFPhead.png');
       background-size: cover;
       background-position: center;
       color: white;
