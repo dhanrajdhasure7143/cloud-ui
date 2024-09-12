@@ -25,7 +25,6 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   botPlans : any[] = [];
   countries : any[] = [];
   selectedPlanIndex: number = -1;
-  countryInfo: any[] = [];
   userEmail : any;
   predefinedPlans:any[]=[];
   selectedPlans:any=[];
@@ -59,6 +58,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   showContactUs: boolean = false;
   contactForm: FormGroup;
   messageTooShort: boolean = true;
+  enterpriseFeatures:any=[];
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -80,35 +80,14 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
                 // console.log("this.userEmail",this.userEmail)
                 // this.isRegistered = params.isRegistered;
                   }
-                  // Check if returning from Stripe
-                  if (data['payment'] === 'success') {
-                    Swal.fire('Success', 'Your payment was successful!', 'success');
-                    // Clear stored plans after successful payment
-                    localStorage.removeItem('selectedPlans');
-                    localStorage.removeItem('selectedInterval');
-                  } else {
-                    // Retrieve stored plans if they exist
-                    this.retrieveStoredPlans();
-                  }
                 })
                }
 
   ngOnInit(): void {
     this.showSkeleton=true
     this.spinner.show();
-    this.subscriptionForm = this.formBuilder.group({
-      cardNumber: [''],
-      monthYear: [''],
-      cvv: [''],
-      lastName: [''],
-      userName: [''],
-      country: [''],
-      autoBilling: ['']
-    });
-
-    // this.getPredefinedRawBots();
-    this.loadPredefinedBots();
-    this.getCountries();
+    // this.loadPredefinedBots();
+    this.loadAiAgentBots();
     this.contactForm = this.fb.group({
       firstName: [''],
       lastName: [''],
@@ -117,9 +96,6 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
     });
   }
 
-  getCountries() {
-    this.countryInfo = Country.getAllCountries();
-  }
 
   getPredefinedRawBots(){
     this.service.getPredifinedRawBots().subscribe((response: any) =>{
@@ -130,6 +106,49 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
       console.log(err,"error for the raw bots");
     });
   }
+
+  loadAiAgentBots() {
+    this.service.loadPredefinedBots().subscribe((response: any) => {
+        this.spinner.hide();
+        if (response) {
+            response.forEach(element => {
+                let obj = element.product;
+                let isSubscribed=false;
+                let isYearlySubscribed=false;
+                let isMonthlySubscribed=false;
+                obj["priceCollection"] = element.priceCollection;
+                let data = element.product.metadata?.product_features ? element.product.metadata.product_features : [];
+                // let features = data ? JSON.parse(data) : [];
+                obj["isYearlySubscribed"] = isYearlySubscribed;
+                obj["isMonthlySubscribed"] = isMonthlySubscribed;
+                obj["doPlanDisabled"] = isSubscribed;
+                obj['quantity'] = 0
+                obj['showAllSpecs']=false
+                obj['selectedTire']='Yearly'
+                this.botPlans.push(obj);
+            });
+            this.showSkeleton=false;
+
+            this.enterPrise_plan= this.botPlans.find((element) => { return element.name == "Enterprise"});
+            this.botPlans = this.botPlans.filter((element) => element.name != "Enterprise");
+            this.enterpriseFeatures = JSON.parse(this.enterPrise_plan.metadata.product_features);
+
+        }
+    },  err => {
+      this.spinner.hide();
+      Swal.fire({
+          title: 'Error!',
+          text: 'Failed to load',
+          icon: 'error',
+          showCancelButton: false,
+          allowOutsideClick: true
+      }).then((result) => {
+          if (result.value) {
+              this.router.navigate(['/signup']);
+          }
+      });
+  });
+}
 
   loadPredefinedBots() {
     this.service.loadPredefinedBots().subscribe((response: any) => {
