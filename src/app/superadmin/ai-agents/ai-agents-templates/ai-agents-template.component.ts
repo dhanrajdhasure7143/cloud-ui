@@ -117,6 +117,7 @@ export class AiAgentsTemplateComponent implements OnInit {
       attributeOrderBy : ['', Validators.required], 
       preAttributeType : ['', Validators.required], 
       specification : ['', Validators.required], 
+      information : ['', Validators.required], 
       options : [''], 
       attributeRequired : [true], 
       visibility : [true],
@@ -322,6 +323,7 @@ this.spinner.show()
       "productId":this.predefinedTemplateForm.get('predefinedBotType').value.productId,
       "preAttributeType":this.predefinedAttributesForm.get('attributeType').value,
       "specification":this.predefinedAttributesForm.get('specification').value,
+      "information":this.predefinedAttributesForm.get('information').value,
       "minNumber":this.predefinedAttributesForm.get('minLength').value,
       "maxNumber":this.predefinedAttributesForm.get('maxLength').value,
       "preAttributeLable":this.predefinedAttributesForm.get('attributeLabelName').value,
@@ -452,6 +454,7 @@ this.spinner.show()
     this.agentAttributesFormUpdate.get("attributeOrderBy").setValue(row.attributeOrderBy)
     this.agentAttributesFormUpdate.get("preAttributeType").setValue(row.preAttributeType)
     this.agentAttributesFormUpdate.get("specification").setValue(row.specification)
+    this.agentAttributesFormUpdate.get("information").setValue(row.information)
     this.agentAttributesFormUpdate.get("options").setValue(JSON.stringify(row.options))
 
     this.agentAttributesFormUpdate.get("attributeRequired").setValue(row.attributeRequired)
