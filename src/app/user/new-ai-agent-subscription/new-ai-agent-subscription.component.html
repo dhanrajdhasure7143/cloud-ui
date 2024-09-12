@@ -186,7 +186,8 @@
 <div class="modal-backdrop" *ngIf="isOpenEnterprice">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Enterprise Plan <a href="" class="exclusive-pricing">Exclusive Pricing</a></h2>
+        <h2>Enterprise Plan </h2>
+        <!-- <a href="" class="exclusive-pricing">Exclusive Pricing</a> -->
 
         <div (click)="closePopup()" style="font-size: 20px; font-weight:600; cursor: pointer;">X</div>
       </div>
@@ -195,7 +196,7 @@
           <img src="assets/ai-agent/ent_plan_svg.svg" alt="Enterprise Plan">
         </div>
         <div class="fetures-ent-plan">
-            <ul class="modal-features" *ngFor="let plan of enterPrise_plan.features">
+            <ul class="modal-features" *ngFor="let plan of enterpriseFeatures">
                 <li>✔ {{plan}}</li>
             </ul>
         </div>
