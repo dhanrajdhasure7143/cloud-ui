@@ -65,7 +65,7 @@
                             <!-- <span *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched && !signupForm.get('firstName').hasError('pattern') && !signupForm.controls['firstName'].hasError('maxlength')" class="required"> First Name Required </span>     -->
                             <span
                                 *ngIf="signupForm.get('firstName').invalid && signupForm.get('firstName').touched &&!signupForm.get('firstName').hasError('pattern') &&!signupForm.controls['firstName'].hasError('maxlength') &&!signupForm.controls['firstName'].hasError('minlength')"
-                                class="required"> First Name Required </span>
+                                class="required"> First Name required </span>
                             <span
                                 *ngIf="signupForm.get('firstName').hasError('minlength') && signupForm.get('firstName').touched"
                                 class="required"> Minimum length 3 characters </span>
@@ -82,7 +82,7 @@
                             <!-- <span *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched && !signupForm.get('lastName').hasError('pattern') && !signupForm.controls['lastName'].hasError('maxlength')" class="required"> Last Name Required </span> -->
                             <span
                                 *ngIf="signupForm.get('lastName').invalid && signupForm.get('lastName').touched &&!signupForm.get('lastName').hasError('pattern') &&!signupForm.controls['lastName'].hasError('maxlength') &&!signupForm.controls['lastName'].hasError('minlength')"
-                                class="required"> Last Name Required </span>
+                                class="required"> Last Name required </span>
                             <span
                                 *ngIf="signupForm.get('lastName').hasError('minlength') && signupForm.get('lastName').touched"
                                 class="required"> Minimum length 3 characters </span>
@@ -126,7 +126,7 @@
                                     id="email-buttons"></i></span> -->
                             <span
                                 *ngIf="!ispublicMail && signupForm.get('email').invalid && signupForm.get('email').touched && !signupForm.get('email').hasError('pattern') && !signupForm.controls['email'].hasError('maxlength')"
-                                class="required"> Email Required </span>
+                                class="required"> Email required </span>
                             <span *ngIf="signupForm.get('email').hasError('pattern') && signupForm.get('email').touched"
                                 class="required"> Enter valid email address </span>
                             <span *ngIf="ispublicMail" class="required">Only Business Email is allowed</span>
@@ -179,10 +179,10 @@
                                 placeholder="Enter Password" tabindex="4" autocomplete="off"></p-password>
                             <span
                                 *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched && !signupForm.get('password').hasError('pattern') && !signupForm.controls['password'].hasError('maxlength')"
-                                class="required"> Password Required </span>
+                                class="required"> Password required </span>
                             <span class="required"
                                 *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched">
-                                Minimum 8 Characters Required </span>
+                                Minimum 8 Characters required </span>
                             <span class="required"
                                 *ngIf="signupForm.get('password').hasError('pattern') && signupForm.get('password').touched">
                                 Password must be 8-20 characters and have at least one uppercase letter, one lowercase
