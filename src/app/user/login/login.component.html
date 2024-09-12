@@ -56,7 +56,7 @@
                 <span
                   *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched && !loginForm.get('password').hasError('minlength')"
                   class="required">
-                  Password is Required
+                  Password Required
                 </span>
                 <span class="required" *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched">
                   Minimum 8 Characters Required
