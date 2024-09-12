@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-recruitment-ai-sales-page',
   template: `
   <div class="sales-page-container">
-  <div class="hero" [ngStyle]="{'background-image': 'url(' + imagePath + ')'}">
+  <div class="hero">
     <div class="container">
       <div class="hero-content">
         <div class="hero-text">
@@ -355,10 +355,8 @@ export class RfpAiSalesPageComponent {
     }
   ];
 
-    imagePath:any;
 
     constructor() { 
-      this.imagePath = `${document.getElementsByTagName('base')[0].href}assets/images/agent/sales/RFP-head.png`;
     }
 
 
