@@ -164,11 +164,9 @@ export class AiAgentsListComponent implements OnInit {
     // for (const file of this.selectedFiles) {
     //   formData.append('files[]', file);
     // }
-    let filePath ="predefined/instructions/"+this.selectedAgent.productId;
+    let filePath ="predefined/instructions";
     formData.append('file', this._onSelectedFile);
     formData.append('filePath',filePath);
-    // formData.append('type',"DOC");
-    return console.log("formData",formData);
     this.rest_api.uploadFile(formData).subscribe(res=>{
       this.uploadOverlay = false;
       this._onSelectedFile = undefined;  

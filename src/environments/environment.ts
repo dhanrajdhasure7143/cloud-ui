@@ -17,6 +17,7 @@ export const environment = {
   socialLoginRedirectURL: 'http://epsoft.internaldev.ai/#/user',
   rpaendpoint:"http://rpa.dev.epsoftinc.in",
   piendpoint:"http://pi.dev.epsoftinc.in",
+  projectendpoint_url: "http://pcs.dev.epsoftinc.in",
   isTwoFactorAuthenticationEnabled: false,
   isSecurityManagerEnabled : false,
   isNewDesignEnabled : true,
