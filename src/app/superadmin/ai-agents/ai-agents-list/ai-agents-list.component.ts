@@ -171,7 +171,8 @@ export class AiAgentsListComponent implements OnInit {
       this.uploadOverlay = false;
       this._onSelectedFile = undefined;  
       this.uploadFile = undefined;
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
+      this.spinner.show();
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Uploaded successfully.' });
       console.log("attributesResponse",res);
     },error=>{
       this.spinner.hide();
