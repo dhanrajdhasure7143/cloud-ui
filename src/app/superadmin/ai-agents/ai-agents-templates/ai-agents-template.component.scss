@@ -46,4 +46,17 @@ img.testplus {
   .table tbody tr:hover {
     background-color: #ddd;
   }
+  .confirmation-footer{
+    margin-top: 20px;
+    float: right;
+  }
+  // .confirmation-footer button{
+  //   margin-left: 10px;
+  // }
+  .confirmation-footer button:last-child{
+    margin-left: 20px;
+  }
+  .confirmation-text{
+    padding: 20px;
+  }
   

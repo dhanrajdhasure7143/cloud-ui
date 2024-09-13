@@ -30,6 +30,10 @@ export class AiAgentsListComponent implements OnInit {
     {field:"Common",value:"common"},
     {field:"Specific",value:"specific"},
   ]
+  uploadOverlay:boolean=false;
+  uploadFile:any;
+  _onSelectedFile:any;
+  selectedAgent:any;
 
   constructor(
     private rest_api: AiAgentService,
@@ -45,6 +49,7 @@ export class AiAgentsListComponent implements OnInit {
       agentUUID: ["", [Validators.required, Validators.required]],
       formType: ["", [Validators.required, Validators.required]],
       isSchedule: [false],
+      outputRequired: [false],
       description:["", [Validators.required, Validators.required]],
       subscribed:[false],
 
@@ -76,6 +81,7 @@ export class AiAgentsListComponent implements OnInit {
       productId:this.agentForm.value.agentStripeId,
       formType:this.agentForm.value.formType,
       schedulerRequired:this.agentForm.value.isSchedule,
+      outputRequired:this.agentForm.value.outputRequired,
       subscribed:false,
       predefinedBotId: this.apiType === "update" ? this.agentForm.value.id : 0, 
       description: this.agentForm.value.description
@@ -114,6 +120,7 @@ export class AiAgentsListComponent implements OnInit {
       agentStripeId: agentFormData.productId,
       formType: agentFormData.formType,
       isSchedule: agentFormData.schedulerRequired,
+      outputRequired: agentFormData.outputRequired,
       subscribed: agentFormData.subscribed,
       description:agentFormData.description
         });
@@ -144,5 +151,47 @@ export class AiAgentsListComponent implements OnInit {
       }
     });
   }
+
+  uploadAttributes(row){
+    this.uploadOverlay = true;
+    this.selectedAgent = row;
+    console.log("uploadAttributes",row)
+  }
+
+  onConfirmUpload(){
+    this.spinner.show();
+    const formData = new FormData();
+    // for (const file of this.selectedFiles) {
+    //   formData.append('files[]', file);
+    // }
+    let filePath ="predefined/instructions/"+this.selectedAgent.productId;
+    formData.append('file', this._onSelectedFile);
+    formData.append('filePath',filePath);
+    // formData.append('type',"DOC");
+    return console.log("formData",formData);
+    this.rest_api.uploadFile(formData).subscribe(res=>{
+      this.uploadOverlay = false;
+      this._onSelectedFile = undefined;  
+      this.uploadFile = undefined;
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
+      console.log("attributesResponse",res);
+    },error=>{
+      this.spinner.hide();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to save.' });
+    });
+  }
+
+  onRejectUpload(){
+    this.uploadOverlay = false;
+    this._onSelectedFile = undefined;  
+      this.uploadFile = undefined;
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    this._onSelectedFile = file
+    console.log("file",file);
+  }
+
 
 }

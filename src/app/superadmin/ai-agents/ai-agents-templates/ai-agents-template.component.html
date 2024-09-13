@@ -80,7 +80,8 @@
           <ng-template pTemplate="body" let-product let-expanded="expanded">
               <tr>
                   <td>
-                      <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                      <button type="button" pButton pRipple [pRowToggler]="product"
+                       class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
                   </td>
                   <td>{{product.predefinedBotName || '-'}}</td>
                   <td>{{product.productId || '-'}}</td>
@@ -146,6 +147,8 @@
                           </p-tabPanel>
                           <p-tabPanel header="Attributes">
                             <div style="text-align: end;">
+                              <button class="btn btn-primary" (click)="downloadAgentAttributes(product)" style="margin-right: 10px;">Download</button>
+                              <button class="btn btn-primary" (click)="uploadAttributes(product)" style="margin-right: 10px;">Upload</button>
                               <button class="btn btn-primary" (click)="openAttributesOverlay(product)" style="margin-right: 10px;">Add Attributes</button>
                             </div>
                             <p-table [value]="product.attributes_list" responsiveLayout="scroll" [rows]="5" [responsive]="true">
@@ -772,3 +775,20 @@
 <p-confirmDialog  [style]="{width: '30vw'}"  position="center" [baseZIndex]="10000" [closable]="false">
 </p-confirmDialog>
 
+<p-dialog header="Confirmation" [(visible)]="uploadOverlay" [modal]="true" [style]="{width: '40vw'}"
+    [draggable]="false">
+    <ng-template pTemplate="header">
+      <div class="dialog-header">
+        <h4>Upload Attributes</h4>
+      </div>
+    </ng-template>
+    <div class="confirmation-content">
+        <div class="confirmation-text">
+          <input class="form-control" [(ngModel)]="uploadFile" type="file" (change)="onFileSelected($event)" accept=".json" />
+        </div>
+        <div class="confirmation-footer">
+            <button type="button" class="btn btn-secondary" (click)="onRejectUpload()" >Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="onConfirmUpload()" > Upload</button>
+        </div>
+    </div>
+</p-dialog>
