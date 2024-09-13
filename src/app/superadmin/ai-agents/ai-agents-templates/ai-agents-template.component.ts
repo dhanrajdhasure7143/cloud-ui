@@ -60,7 +60,11 @@ export class AiAgentsTemplateComponent implements OnInit {
   inputTypes1 =[
     {field:"Generic",value:"GENERIC"},
     {field:"Specific",value:"SPECIFIC"},
-  ]
+  ];
+  uploadOverlay:boolean = false;
+  jsonData: any;
+  expandedAgent: any;
+  uploadFile:any;
 
   constructor(private rest_api: UsermanagementService,
     private spinner: NgxSpinnerService,
@@ -101,6 +105,8 @@ export class AiAgentsTemplateComponent implements OnInit {
         attributePlaceholder : ['', Validators.required], 
         attributeOrder : ['', Validators.required], 
         attributeType : ['', Validators.required], 
+        specification : ['', Validators.required], 
+        information : ['', Validators.required],
         attribute_options : [''],
         // attribute_options: this.fb.array([]),
         attribute : [''], 
@@ -322,8 +328,8 @@ this.spinner.show()
       // "predefinedBotId":this.predefinedTemplateForm.get("predefinedBotId").value,
       "productId":this.predefinedTemplateForm.get('predefinedBotType').value.productId,
       "preAttributeType":this.predefinedAttributesForm.get('attributeType').value,
-      "specification":this.predefinedAttributesForm.get('specification').value,
-      "information":this.predefinedAttributesForm.get('information').value,
+      "specification":this.predefinedAttributesForm.get('specification').value?this.predefinedAttributesForm.get('specification').value:null,
+      "information":this.predefinedAttributesForm.get('information').value?this.predefinedAttributesForm.get('information').value:null,
       "minNumber":this.predefinedAttributesForm.get('minLength').value,
       "maxNumber":this.predefinedAttributesForm.get('maxLength').value,
       "preAttributeLable":this.predefinedAttributesForm.get('attributeLabelName').value,
@@ -514,6 +520,80 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
 
   onCancelAttributes(){
     this.isEditAttribute_form = false
+  }
+
+  downloadAgentAttributes(row){
+    console.log("getAgentAttributes",row)
+
+    const dataStr = JSON.stringify(row.attributes_list  , null, 2); // Convert data to JSON string
+    const blob = new Blob([dataStr], { type: 'application/json' }); // Create a Blob with JSON data
+
+    // Create a link element and trigger download
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = row.predefinedBotName+'_Attributes.json'; // Set the file name for the download
+    a.click(); // Programmatically click the link to trigger download
+
+    // Clean up by revoking the object URL
+    window.URL.revokeObjectURL(url);
+  }
+
+  uploadAttributes(row){
+    this.uploadOverlay = true;
+    this.expandedAgent = row;
+    console.log("uploadAttributes",row)
+  }
+
+  onConfirmUpload(){
+    this.spinner.show();
+    this.jsonData.forEach(element => {
+      element["id"] = '';
+      element["productId"] = this.expandedAgent.productId;
+    });
+    this.rest_api.savePredefinedAttributes(this.jsonData).subscribe(res=>{
+      this.attributeRow_data = undefined;
+      this.uploadOverlay = false;
+      this.jsonData = undefined;  
+      this.uploadFile = undefined;
+      // this.spinner.hide();
+      this.getTemplateList();
+    this.isEditAttribute_form = false;
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
+      console.log("attributesResponse",res);
+    },error=>{
+      this.spinner.hide();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to save.' });
+    })
+  }
+
+  onRejectUpload(){
+    this.uploadOverlay = false;
+    this.jsonData = undefined;  
+      this.uploadFile = undefined;
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+
+    if (file && file.type === 'application/json') {
+      const reader = new FileReader();
+
+      // When the file is successfully read
+      reader.onload = (e: any) => {
+        try {
+          this.jsonData = JSON.parse(e.target.result); // Parse the JSON content
+          console.log(this.jsonData); // You can now use the JSON data
+        } catch (error) {
+          console.error('Error parsing JSON', error);
+        }
+      };
+
+      // Read the file as text
+      reader.readAsText(file);
+    } else {
+      console.error('Please upload a valid JSON file.');
+    }
   }
 
 }

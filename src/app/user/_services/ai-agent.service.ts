@@ -23,4 +23,8 @@ export class AiAgentService {
   deletePredefinedBots(id:any){
     return this.http.post("/rpa-service/predefined/delete-predefined-bot-product/"+id,null)
   }
+
+  uploadFile(body){
+    return this.http.post("/rpa-service/predefined/save-predefinedBot-attribtes",body)
+  }
 }

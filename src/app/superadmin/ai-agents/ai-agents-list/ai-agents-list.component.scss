@@ -19,3 +19,10 @@ img.testplus {
     overflow: auto;
     height: calc(100vh - 160px);
 }
+
+.confirmation-footer button:last-child{
+    margin-left: 20px;
+  }
+  .confirmation-text{
+    padding: 20px;
+  }
