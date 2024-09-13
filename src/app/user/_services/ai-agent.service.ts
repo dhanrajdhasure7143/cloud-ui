@@ -25,6 +25,6 @@ export class AiAgentService {
   }
 
   uploadFile(body){
-    return this.http.post("/rpa-service/predefined/save-predefinedBot-attribtes",body)
+    return this.http.post("/platform-service/document/uploadStaticAIAgentFiles",body)
   }
 }

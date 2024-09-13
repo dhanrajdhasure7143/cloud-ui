@@ -15,6 +15,7 @@ export const environment = {
    isTwoFactorAuthenticationEnabled: false,
    rpaendpoint:"https://ezflow.demo.epsoftinc.com/wfrpa",
    piendpoint:"https://ezflow.demo.epsoftinc.com/prcintel",
+   projectendpoint_url: "https://ezflow.demo.epsoftinc.com/pcs",
    isNewDesignEnabled : true,
    isSubscrptionEnabled : true,
    paymentSuccessURL:"https://ezflow.demo.epsoftinc.com/#/success",

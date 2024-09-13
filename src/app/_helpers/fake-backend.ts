@@ -22,6 +22,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
       let notificationsendpoint = this.config.notificationsendpoint;
       let Subscriptionendpoint=this.config.Subscriptionendpoint;
       let rpaendpoint=this.config.rpaendpoint;
+      let pcsendpoint=this.config.projectendpoint_url;
       let piendpoint=this.config.piendpoint;
       let isSecurityManagerEnabled = this.config.isSecurityManagerEnabled;
       let proxyTokenendpoint = this.config.proxyTokenendpoint;
@@ -39,9 +40,11 @@ export class BackendURLInterceptor implements HttpInterceptor {
         Subscriptionendpoint=Subscriptionendpoint+'/';
         rpaendpoint=rpaendpoint+'/';
         piendpoint=piendpoint+'/';
+        pcsendpoint=pcsendpoint+'/';
       }
 
-      if (((isSecurityManagerEnabled == true && req.url !== '/Idm/accessToken') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/accessToken')) && ((isSecurityManagerEnabled == true && req.url !== '/Idm/token') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/token')) && req.url !== '/api/login/beta/newAccessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('generateOTP') < 0 && req.url.indexOf('validateOTP') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0 && req.url.indexOf('mailService') < 0 && req.url.indexOf('rpa-service') < 0 && req.url.indexOf('processintelligence') < 0 && req.url.indexOf('alertConfigurationService') < 0 && req.url.indexOf('https://api.ipify.org') < 0 ) {
+      if (((isSecurityManagerEnabled == true && req.url !== '/Idm/accessToken') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/accessToken')) && ((isSecurityManagerEnabled == true && req.url !== '/Idm/token') || (isSecurityManagerEnabled == false && req.url !== '/api/login/beta/token')) && req.url !== '/api/login/beta/newAccessToken' && req.url.indexOf('authorizationservice') < 0 && req.url.indexOf('generateOTP') < 0 && req.url.indexOf('validateOTP') < 0 && req.url.indexOf('CrudService') < 0 && req.url.indexOf('ezBotStudio') < 0 && req.url.indexOf('subscriptionservice') < 0 && req.url.indexOf('notificationservice') < 0 && req.url.indexOf('mailService') < 0 && req.url.indexOf('rpa-service') < 0 && req.url.indexOf('processintelligence') < 0 && req.url.indexOf('alertConfigurationService') < 0 && req.url.indexOf('https://api.ipify.org') < 0 
+      && req.url.indexOf('platform-service') < 0 ) {
         req = req.clone({
          url: apiendpoint + req.url,
           body: req.body,
@@ -100,6 +103,14 @@ export class BackendURLInterceptor implements HttpInterceptor {
        headers: req.headers
         });
         }
+        else if(req.url.indexOf('platform-service') > -1){  
+          req = req.clone({
+          //url : url + req.url,
+          url:  pcsendpoint + req.url,
+          body: req.body,
+           headers: req.headers
+            });
+            }
         else if(req.url.indexOf('processintelligence') > -1){  
           req = req.clone({
           //url : url + req.url,
