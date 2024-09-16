@@ -27,4 +27,14 @@ export class AiAgentService {
   uploadFile(body){
     return this.http.post("/platform-service/document/uploadStaticAIAgentFiles",body)
   }
+  getAllInstructionsDocuments(body){
+    return this.http.post("/platform-service/document/getStaticAIAgentFiles",body)
+  }
+  deleteDocument(body){
+    return this.http.post("/platform-service/document/deleteStaticAIAgentFiles",body)
+  }
+
+  downloadFiles(body){
+    return this.http.post(`/platform-service/document/downloadFile`,body)
+  }
 }
