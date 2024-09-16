@@ -679,7 +679,7 @@ input .form-control {
   position: relative;
   overflow: auto;
   width: 100%;
-  // height: 100vh;
+  height: 100vh;
 }
 
 .background-image {
@@ -739,9 +739,9 @@ input .form-control {
   letter-spacing: 0.2px;
 }
 
-.top-banner-signup-left-img {
-  max-height: 550px !important;
-}
+// .top-banner-signup-left-img {
+//   max-height: 550px !important;
+// }
 
 
 ::ng-deep .ng-otp-input-wrapper {
