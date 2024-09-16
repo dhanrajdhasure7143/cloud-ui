@@ -34,6 +34,12 @@ export class AiAgentsListComponent implements OnInit {
   uploadFile:any;
   _onSelectedFile:any;
   selectedAgent:any;
+  instructionOverlay:boolean =  false;
+  instructionsDocList=[];
+  deleteFilePath:string;
+  deletOverlay:boolean = false;
+  uploadFilePath = "predefined/instructions";
+  fileNameToDelete:string;
 
   constructor(
     private rest_api: AiAgentService,
@@ -75,6 +81,7 @@ export class AiAgentsListComponent implements OnInit {
     this.addAgentsOverLay = true;
   }
   addAgent(type:any){
+    this.spinner.show();
     let body = {
       predefinedBotName:this.agentForm.value.agentName,
       predefinedUUID:this.agentForm.value.agentUUID,
@@ -87,6 +94,7 @@ export class AiAgentsListComponent implements OnInit {
       description: this.agentForm.value.description
     }
     this.rest_api.savePredefinedBots(body).subscribe((res:any)=>{
+      this.spinner.hide();
       if(res.code === 200){
         this.messageService.add({severity:'success', summary:'Success', detail:'Successfully '+this.apiType});
         this.addAgentsOverLay = false;
@@ -97,6 +105,7 @@ export class AiAgentsListComponent implements OnInit {
         this.apiType = type ;
       }
     },(error)=>{
+      this.spinner.hide();
       this.messageService.add({severity:'error', summary:'Error', detail:'Unable to '+this.apiType});
       this.apiType = type ;
     })
@@ -152,10 +161,10 @@ export class AiAgentsListComponent implements OnInit {
     });
   }
 
-  uploadAttributes(row){
+  uploadAttributes(){
     this.uploadOverlay = true;
-    this.selectedAgent = row;
-    console.log("uploadAttributes",row)
+    // this.selectedAgent = row;
+    // console.log("uploadAttributes",row)
   }
 
   onConfirmUpload(){
@@ -164,14 +173,14 @@ export class AiAgentsListComponent implements OnInit {
     // for (const file of this.selectedFiles) {
     //   formData.append('files[]', file);
     // }
-    let filePath ="predefined/instructions";
     formData.append('file', this._onSelectedFile);
-    formData.append('filePath',filePath);
+    formData.append('filePath',this.uploadFilePath);
     this.rest_api.uploadFile(formData).subscribe(res=>{
       this.uploadOverlay = false;
       this._onSelectedFile = undefined;  
       this.uploadFile = undefined;
-      this.spinner.show();
+      this.spinner.hide();
+      this.getInstructionDocsList();
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Uploaded successfully.' });
       console.log("attributesResponse",res);
     },error=>{
@@ -184,12 +193,105 @@ export class AiAgentsListComponent implements OnInit {
     this.uploadOverlay = false;
     this._onSelectedFile = undefined;  
       this.uploadFile = undefined;
+      this.deletOverlay = false;
   }
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     this._onSelectedFile = file
     console.log("file",file);
+  }
+
+  
+
+  getInstructionDocsList(){
+    this.instructionOverlay = true;
+    this.spinner.show();
+
+    let body = {"filePath" : "predefined/instructions"}
+    this.rest_api.getAllInstructionsDocuments(body).subscribe((res:any)=>{
+      console.log("res",res);
+      // this.instructionsDocList = res.data
+      if(res.code === 200){
+      this.instructionsDocList = res.data;
+    }
+      this.spinner.hide();
+    } , (error)=>{
+      console.log(error);
+      this.spinner.hide();
+    });
+  }
+
+  onClickDelete(item,type){
+    console.log("item",item);
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete this Document?",
+      header: "Delete Confirmation",
+      acceptLabel: "Let's Do It!",
+      rejectLabel: "Cancel",
+      rejectButtonStyleClass: 'btn reset-btn',
+      acceptButtonStyleClass: 'btn bluebg-button',
+      defaultFocus: 'none',
+      rejectIcon: 'null',
+      acceptIcon: 'null',
+      accept: () => {
+    this.spinner.show();
+        let body = []
+        if(type === "list"){
+          body = [{"filePath" : "predefined/instructions", "originalFileName" : item}]
+        }else{
+          body = [{"filePath" : item,"originalFileName" : this.fileNameToDelete}]
+        }
+        this.deletOverlay = false;
+        this.rest_api.deleteDocument(body).subscribe((res:any)=>{
+          this.getInstructionDocsList();
+          this.deleteFilePath = "";
+          this.fileNameToDelete = "";
+          this.spinner.hide();
+          if(res.code === 4200){
+            this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Deleted'});
+          }else{
+            this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
+          }
+        },(error)=>{
+          this.spinner.hide();
+          this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Deleted'});
+        })
+      }
+    });
+  }
+
+  downloadFile(attachment:any){
+    this.spinner.show();
+    let req_body =[this.uploadFilePath+"/"+attachment]
+
+    this.rest_api.downloadFiles(req_body).subscribe((res: any) => {
+      console.log("res",res);
+      this.spinner.hide();
+      if(res && res.length > 0){
+        this.downloadDocument(res,attachment);
+      }
+      this.spinner.hide();
+    },err=>{
+      this.spinner.hide();
+      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to download'});
+    })
+
+  }
+
+  downloadDocument(res,fileName){
+    // const fileName = attachment.originalFileName;
+    console.log("fileName",fileName)
+    const fileData = res[0];
+    const link = document.createElement("a");
+    const extension = fileName;
+    link.download = fileName;
+    link.href =
+        extension === "png" || extension === "jpg" || extension === "svg" || extension === "gif"
+            ? `data:image/${extension};base64,${fileData}`
+            : `data:application/${extension};base64,${fileData}`;
+
+    link.click();
   }
 
 
