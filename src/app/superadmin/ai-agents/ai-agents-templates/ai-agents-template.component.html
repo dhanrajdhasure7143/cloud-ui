@@ -102,6 +102,8 @@
                         <p-tabView>
                           <p-tabPanel header="Templates">
                             <div style="text-align: end;">
+                              <!-- <button class="btn btn-primary" (click)="downloadAgent(product,'template')" style="margin-right: 10px;">Download</button> -->
+                              <button class="btn btn-primary" (click)="uploadTemplate(product)" style="margin-right: 10px;">Upload</button>
                               <button class="btn btn-primary" (click)="openOverlay()" style="margin-right: 10px;">Add Template</button>
                             </div>
                             <p-table [value]="product.templates_list" dataKey="id" responsiveLayout="scroll" [responsive]="true">
@@ -135,6 +137,7 @@
                                         <a pTooltip="Delete" tooltipPosition="top" (click)="onDeleteTemplate(order)">
                                           <img src="assets/a_images/delete-hover.svg" class="testplus hover-icon" alt="delete">
                                       </a>
+                                      <span  pTooltip="Download" tooltipPosition="top" (click)="downloadAgent(order,'template')"><i class="fa fa-download"></i></span>
                                       </td>
                                   </tr>
                               </ng-template>
@@ -147,7 +150,7 @@
                           </p-tabPanel>
                           <p-tabPanel header="Attributes">
                             <div style="text-align: end;">
-                              <button class="btn btn-primary" (click)="downloadAgentAttributes(product)" style="margin-right: 10px;">Download</button>
+                              <button class="btn btn-primary" (click)="downloadAgent(product,'attributes_list')" style="margin-right: 10px;">Download</button>
                               <button class="btn btn-primary" (click)="uploadAttributes(product)" style="margin-right: 10px;">Upload</button>
                               <button class="btn btn-primary" (click)="openAttributesOverlay(product)" style="margin-right: 10px;">Add Attributes</button>
                             </div>
@@ -670,7 +673,7 @@
               formControlName="specification"></p-dropdown>
             </div>
             <div class="form-group col-md-12">
-              <label class="label-control" for="information">Information<span class="star">*</span></label>
+              <label class="label-control" for="information">Information</label>
               <!-- <input type="text" id="information" pInputText formControlName="information" class="form-control"
                 placeholder="Enter Information" required> -->
                 <textarea rows="2" cols="2" id="information" pInputTextarea 
@@ -784,11 +787,32 @@
     </ng-template>
     <div class="confirmation-content">
         <div class="confirmation-text">
-          <input class="form-control" [(ngModel)]="uploadFile" type="file" (change)="onFileSelected($event)" accept=".json" />
+          <input class="form-control" [(ngModel)]="uploadFile" type="file" (change)="onFileSelected($event,'attributes')" accept=".json" />
         </div>
         <div class="confirmation-footer">
             <button type="button" class="btn btn-secondary" (click)="onRejectUpload()" >Cancel</button>
             <button type="button" class="btn btn-primary" (click)="onConfirmUpload()" > Upload</button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Confirmation" [(visible)]="uploadTemplateOverlay" [modal]="true" [style]="{width: '40vw'}"
+    [draggable]="false">
+    <ng-template pTemplate="header">
+      <div class="dialog-header">
+        <h4>Upload Template</h4>
+      </div>
+    </ng-template>
+    <div class="confirmation-content">
+        <div class="confirmation-text">
+          <label for="">Product Id</label>
+          <input class="form-control" [(ngModel)]="productId_template" type="text"   />
+          <label for="">File</label>
+          <input class="form-control" [(ngModel)]="uploadFile_template" type="file" (change)="onFileSelected($event,'template')" accept=".json" />
+        </div>
+        <div class="confirmation-footer">
+            <button type="button" class="btn btn-secondary" (click)="onRejectUpload()" >Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="onConfirmUploadTemplate()" > Upload</button>
         </div>
     </div>
 </p-dialog>

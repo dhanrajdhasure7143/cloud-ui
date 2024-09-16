@@ -62,9 +62,13 @@ export class AiAgentsTemplateComponent implements OnInit {
     {field:"Specific",value:"SPECIFIC"},
   ];
   uploadOverlay:boolean = false;
-  jsonData: any;
+  jsonData_template: any;
+  jsonData_attribute: any;
   expandedAgent: any;
   uploadFile:any;
+  productId_template:any;
+  uploadTemplateOverlay:boolean = false;
+  uploadFile_template:any;
 
   constructor(private rest_api: UsermanagementService,
     private spinner: NgxSpinnerService,
@@ -106,7 +110,7 @@ export class AiAgentsTemplateComponent implements OnInit {
         attributeOrder : ['', Validators.required], 
         attributeType : ['', Validators.required], 
         specification : ['', Validators.required], 
-        information : ['', Validators.required],
+        information : [''],
         attribute_options : [''],
         // attribute_options: this.fb.array([]),
         attribute : [''], 
@@ -123,7 +127,7 @@ export class AiAgentsTemplateComponent implements OnInit {
       attributeOrderBy : ['', Validators.required], 
       preAttributeType : ['', Validators.required], 
       specification : ['', Validators.required], 
-      information : ['', Validators.required], 
+      information : [''], 
       options : [''], 
       attributeRequired : [true], 
       visibility : [true],
@@ -278,7 +282,11 @@ this.spinner.show()
       req_body["id"] = this.rpaBotData.id;
       req_body["productId"] = this.rpaBotData.productId;
     }
+    this.templateApi(req_body);
 
+  }
+
+  templateApi(req_body){
     this.rest_api.savePredefinedTemplate(req_body).subscribe(res=>{
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved successfully.' });
       let reqObject = {"attributesList":this.newAttributes_list}
@@ -290,12 +298,14 @@ this.spinner.show()
       this.isDisplayOverlay = false;
       this.isEdit=false;
       this.predefinedTemplateForm.reset();
+      this.uploadFile_template  = undefined;
+      this.uploadTemplateOverlay = false;
+      this.getTemplateList();
     },err=>{
       this.spinner.hide();
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to save.' });
 
     })
-
   }
 
   onChangeAttributesRequired(){
@@ -380,6 +390,9 @@ this.spinner.show()
     this.rest_api.getAllPredefinedBotsList().subscribe((res:any)=>{
         this.predefinedBotsList = res.data
         this.aiagent_templats = [...this.predefinedBotsList];
+        // this.aiagent_templats.forEach(element => {
+        //   element.attributes_list.sort((a, b) => Number(a.attributeOrderBy) - Number(b.attributeOrderBy));
+        // });
     })
   }
 
@@ -522,17 +535,25 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
     this.isEditAttribute_form = false
   }
 
-  downloadAgentAttributes(row){
-    console.log("getAgentAttributes",row)
-
-    const dataStr = JSON.stringify(row.attributes_list  , null, 2); // Convert data to JSON string
+  downloadAgent(row,type){
+    console.log("getAgentAttributes",row,type)
+    // return
+    let data = {}
+    if(type == "template"){
+      data = row
+      delete data["attributes_list"]
+    }else{
+      data = row.attributes_list
+    }
+    const dataStr = JSON.stringify(data  , null, 2); // Convert data to JSON string
     const blob = new Blob([dataStr], { type: 'application/json' }); // Create a Blob with JSON data
 
     // Create a link element and trigger download
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = row.predefinedBotName+'_Attributes.json'; // Set the file name for the download
+    let fileName = type == "template"?row.botName+'_Template.json':row.predefinedBotName+'_Attributes.json';
+    a.download = fileName; // Set the file name for the download
     a.click(); // Programmatically click the link to trigger download
 
     // Clean up by revoking the object URL
@@ -547,14 +568,14 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
 
   onConfirmUpload(){
     this.spinner.show();
-    this.jsonData.forEach(element => {
+    this.jsonData_attribute.forEach(element => {
       element["id"] = '';
       element["productId"] = this.expandedAgent.productId;
     });
-    this.rest_api.savePredefinedAttributes(this.jsonData).subscribe(res=>{
+    this.rest_api.savePredefinedAttributes(this.jsonData_attribute).subscribe(res=>{
       this.attributeRow_data = undefined;
       this.uploadOverlay = false;
-      this.jsonData = undefined;  
+      this.jsonData_attribute = undefined;  
       this.uploadFile = undefined;
       // this.spinner.hide();
       this.getTemplateList();
@@ -569,11 +590,12 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
 
   onRejectUpload(){
     this.uploadOverlay = false;
-    this.jsonData = undefined;  
+    this.jsonData_attribute = undefined;  
       this.uploadFile = undefined;
+      this.uploadTemplateOverlay = false;
   }
 
-  onFileSelected(event: any): void {
+  onFileSelected(event: any,type): void {
     const file: File = event.target.files[0];
 
     if (file && file.type === 'application/json') {
@@ -582,8 +604,13 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
       // When the file is successfully read
       reader.onload = (e: any) => {
         try {
-          this.jsonData = JSON.parse(e.target.result); // Parse the JSON content
-          console.log(this.jsonData); // You can now use the JSON data
+          if(type == "template"){
+            this.jsonData_template = JSON.parse(e.target.result);
+          }else{
+          this.jsonData_attribute = JSON.parse(e.target.result);
+          }
+           // Parse the JSON content
+          console.log(this.jsonData_template); // You can now use the JSON data
         } catch (error) {
           console.error('Error parsing JSON', error);
         }
@@ -594,6 +621,46 @@ console.log("agentAttributesFormUpdate",this.agentAttributesFormUpdate.value)
     } else {
       console.error('Please upload a valid JSON file.');
     }
+  }
+  
+  uploadTemplate(row){
+    console.log("uploadTemplate",row)
+    this.uploadTemplateOverlay = true;
+    this.productId_template = row.productId;
+  }
+
+  onConfirmUploadTemplate(){
+    // this.spinner.show()
+    console.log("json_data",this.jsonData_template)
+
+   let req_body = {
+      "botCompleted": true,
+      "botId": this.jsonData_template.botId,
+      "botName": this.jsonData_template.botName,
+      "botType": Number(this.jsonData_template.botType),
+      "botmainEntitySchedulerEntity": this.jsonData_template.botMainSchedulerEntity?this.jsonData_template.botMainSchedulerEntity:null,
+      "comments": this.jsonData_template.comments?this.jsonData_template.comments:null,
+      "createdAt": this.jsonData_template.createdAt,
+      "createdBy": this.jsonData_template.createdBy,
+      "envId": 0,
+      "executionMode": this.jsonData_template.executionMode,
+      "execution_order_id": this.jsonData_template.execution_order_id,
+      "groups": JSON.stringify([]),
+      "lastSubmittedBy": this.jsonData_template.lastSubmittedBy,
+      "productId":this.productId_template,
+      "scheduler": this.jsonData_template.scheduler,
+      "sequences": this.jsonData_template.sequences,
+      "startStopCoordinate": this.jsonData_template.startStopCoordinate,
+      "svg": "",
+      "id":0,
+      "tasks": this.jsonData_template.tasks,
+      "updatedAt": this.jsonData_template.updatedAt,
+      "version": this.jsonData_template.version,
+      "versionNew": this.jsonData_template.versionNew,
+      "versionType": this.jsonData_template.versionType?this.jsonData_template.versionType:null
+    }
+    console.log("req_body",req_body)
+    this.templateApi(req_body);
   }
 
 }

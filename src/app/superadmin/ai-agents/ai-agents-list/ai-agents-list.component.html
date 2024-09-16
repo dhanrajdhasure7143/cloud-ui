@@ -7,6 +7,7 @@
           [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
           <ng-template pTemplate="caption">
             <div class="p-d-flex" style="text-align: end;">
+              <button class="btn btn-primary"(click)="getInstructionDocsList()" style="margin-right: 10px;">Instruction Documents</button>
               <button class="btn btn-primary"(click)="addAgentsForm()" style="margin-right: 10px;">Add Agent</button>
               <span class="p-input-icon-right gridsearch">
                 <i class="pi pi-search"></i>
@@ -53,9 +54,9 @@
                                       <img src="assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
                                       <img src="assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon">
                                   </a>
-                                  <span (click)="uploadAttributes(rowData)">
+                                  <!-- <span (click)="uploadAttributes(rowData)">
                                     <i class="pi pi-arrow-circle-up" style="font-size:14px"></i>
-                                  </span>
+                                  </span> -->
                               </span>
                           </td>
                       </tr>
@@ -164,9 +165,7 @@
                         class="required">
                         Only space between words are allowed,numbers & special characters are not allowed.
                     </span>
-              </div>
-
-                            
+              </div>                            
                         </div>
                       <div class="createform-footer">
                           <button type="button" class="btn btn-secondary ml-2" id="reset-btn" (click)="resetForm()">Reset</button>
@@ -196,11 +195,76 @@
     </ng-template>
     <div class="confirmation-content">
         <div class="confirmation-text">
+          <label for="">Path</label>
+          <input class="form-control" [(ngModel)]="uploadFilePath" type="text" placeholder="predefined/instructions"/>
+          <label for="">File</label>
           <input class="form-control" [(ngModel)]="uploadFile" type="file" (change)="onFileSelected($event)"/>
         </div>
         <div class="confirmation-footer">
             <button type="button" class="btn btn-secondary" (click)="onRejectUpload()" >Cancel</button>
             <button type="button" class="btn btn-primary" (click)="onConfirmUpload()" > Upload</button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog  [showHeader]="true" class="custom-dialog" [(visible)]="instructionOverlay" [style]="{width: '50vw'}" [modal]="true">
+    <ng-template pTemplate="header">
+        <div class="dialog-header">
+          <h3>Instruction Documents</h3>
+        </div>
+    </ng-template>
+      <div class="h-100">
+              <ng-container >
+                <div class="upload-btn">
+                  <button class="btn btn-primary pi pi-arrow-circle-up" (click)="uploadAttributes()" style="margin-right: 10px;">Upload</button>
+                  <button class="btn btn-primary pi pi-trash" (click)="deletOverlay=true" style="margin-right: 10px;">Delete</button>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">S.No</th>
+                      <th scope="col">File Name</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of instructionsDocList; let i = index">
+                      <th scope="row">{{i+1}}</th>
+                      <td>{{item}}</td>
+                      <td>
+                        <span (click)="onClickDelete(item,'list')"><i class="pi pi-trash" ></i></span>
+                        <span (click)="downloadFile(item)"><i class="fa fa-download"></i></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </ng-container>
+              <ng-template #noItems>
+                  <div class="no-data-found no-items">
+                      <img src="assets/images/agent/no-data-found.svg" alt="">
+                      No data found
+                  </div>
+              </ng-template>
+    </div>
+</p-dialog>
+
+<p-dialog header="Confirmation" [(visible)]="deletOverlay" [modal]="true" [style]="{width: '40vw'}"
+    [draggable]="false">
+    <ng-template pTemplate="header">
+      <div class="dialog-header">
+        <h4>Delete File</h4>
+      </div>
+    </ng-template>
+    <div class="confirmation-content">
+        <div class="confirmation-text">
+          <label for="">File Name</label>
+          <input class="form-control" [(ngModel)]="fileNameToDelete" type="text" placeholder="sample.pdf"/>
+          <label for="">File Path</label>
+          <input class="form-control" [(ngModel)]="deleteFilePath" type="text" placeholder="predefined/instructions"/>
+        </div>
+        <div class="confirmation-footer">
+            <button type="button" class="btn btn-secondary" (click)="onRejectUpload()" >Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="onClickDelete(deleteFilePath,'single')" > Delete</button>
         </div>
     </div>
 </p-dialog>
