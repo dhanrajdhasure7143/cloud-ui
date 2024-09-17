@@ -139,7 +139,19 @@
                     class="required">
                     Only space between words are allowed,numbers & special characters are not allowed.
                 </span> -->
-
+                <div class="form-group col-md-12 pl-0">
+                  <label class="label-control" for="averageTimeAgentExecution" id="label-name">Average Time Agent Execution<span class="star">*</span></label>
+                  <input type="text" pInputText formControlName="averageTimeAgentExecution" class="form-control" id="averageTimeAgentExecution" style="height: 45px !important;
+                  border-radius: 5px;"
+                  placeholder="Enter Average Time Agent Execution" maxlength="100"
+                  minlength="2">
+              <span *ngIf="agentForm.get('averageTimeAgentExecution').invalid && agentForm.get('averageTimeAgentExecution').touched && !agentForm.get('averageTimeAgentExecution').hasError('pattern') && !agentForm.controls['averageTimeAgentExecution'].hasError('maxlength')" class="required"> Agent Required </span>    
+              <span
+                  *ngIf="agentForm.get('averageTimeAgentExecution').hasError('pattern') && !agentForm.controls['averageTimeAgentExecution'].hasError('maxlength')"
+                  class="required">
+                  Only space between words are allowed,numbers & special characters are not allowed.
+              </span>
+                </div>
                 <div class="form-group col-md-6 pl-0">
                   <input type="checkbox" formControlName="isSchedule" [checked]="agentForm.value.isSchedule">
                   <label class="label-control" for="agentStripeId" id="label-name">Is Schedule  </label>
