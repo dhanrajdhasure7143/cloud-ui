@@ -21,6 +21,7 @@ export class AiAgentsListComponent implements OnInit {
     {DisplayName:"Agent UUID",ColumnName:"predefinedUUID",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Form Type",ColumnName:"formType",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Is Schedule",ColumnName:"schedulerRequired",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
+    {DisplayName:"Average Agent Execution Time",ColumnName:"averageTimeAgentExecution",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Description",ColumnName:"description",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false,showTooltip:true},
   ]
@@ -53,6 +54,7 @@ export class AiAgentsListComponent implements OnInit {
       agentName: ["", [Validators.required, Validators.required]],
       agentStripeId: ["", [Validators.required, Validators.required]],
       agentUUID: ["", [Validators.required, Validators.required]],
+      averageTimeAgentExecution: ["", [Validators.required, Validators.required]],
       formType: ["", [Validators.required, Validators.required]],
       isSchedule: [false],
       outputRequired: [false],
@@ -85,6 +87,7 @@ export class AiAgentsListComponent implements OnInit {
     let body = {
       predefinedBotName:this.agentForm.value.agentName,
       predefinedUUID:this.agentForm.value.agentUUID,
+      averageTimeAgentExecution:this.agentForm.value.averageTimeAgentExecution,
       productId:this.agentForm.value.agentStripeId,
       formType:this.agentForm.value.formType,
       schedulerRequired:this.agentForm.value.isSchedule,
@@ -126,6 +129,7 @@ export class AiAgentsListComponent implements OnInit {
       id: agentFormData.predefinedBotId,
       agentName: agentFormData.predefinedBotName,
       agentUUID: agentFormData.predefinedUUID,
+      averageTimeAgentExecution: agentFormData.averageTimeAgentExecution,
       agentStripeId: agentFormData.productId,
       formType: agentFormData.formType,
       isSchedule: agentFormData.schedulerRequired,
