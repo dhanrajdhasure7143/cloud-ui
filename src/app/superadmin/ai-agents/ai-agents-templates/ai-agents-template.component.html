@@ -688,6 +688,11 @@
                 </p-inputNumber>
               </div>
             </div>
+            <div class="form-group col-md-6">
+              <label class="label-control" for="pattern">Pattern<span class="star">*</span></label>
+              <input type="text" id="pattern" pInputText formControlName="pattern" class="form-control"
+                placeholder="Enter Pattern">
+            </div>
 
             <div class="form-group col-md-6" *ngIf="agentAttributesFormUpdate.get('preAttributeType').value == 'text'|| agentAttributesFormUpdate.get('preAttributeType').value == 'textarea'">
               <label class="label-control" for="minLength">Min Length<span class="star">*</span></label>

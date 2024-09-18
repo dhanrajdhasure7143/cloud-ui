@@ -111,6 +111,7 @@ export class AiAgentsTemplateComponent implements OnInit {
         attributeType : ['', Validators.required], 
         specification : ['', Validators.required], 
         information : [''],
+        pattern : [''],
         attribute_options : [''],
         // attribute_options: this.fb.array([]),
         attribute : [''], 
@@ -127,7 +128,8 @@ export class AiAgentsTemplateComponent implements OnInit {
       attributeOrderBy : ['', Validators.required], 
       preAttributeType : ['', Validators.required], 
       specification : ['', Validators.required], 
-      information : [''], 
+      information : [''],
+      pattern : [''],
       options : [''], 
       attributeRequired : [true], 
       visibility : [true],
@@ -340,6 +342,7 @@ this.spinner.show()
       "preAttributeType":this.predefinedAttributesForm.get('attributeType').value,
       "specification":this.predefinedAttributesForm.get('specification').value?this.predefinedAttributesForm.get('specification').value:null,
       "information":this.predefinedAttributesForm.get('information').value?this.predefinedAttributesForm.get('information').value:null,
+      "pattern":this.predefinedAttributesForm.get('pattern').value?this.predefinedAttributesForm.get('pattern').value:null,
       "minNumber":this.predefinedAttributesForm.get('minLength').value,
       "maxNumber":this.predefinedAttributesForm.get('maxLength').value,
       "preAttributeLable":this.predefinedAttributesForm.get('attributeLabelName').value,
@@ -473,6 +476,7 @@ this.spinner.show()
     this.agentAttributesFormUpdate.get("attributeOrderBy").setValue(row.attributeOrderBy)
     this.agentAttributesFormUpdate.get("preAttributeType").setValue(row.preAttributeType)
     this.agentAttributesFormUpdate.get("specification").setValue(row.specification)
+    this.agentAttributesFormUpdate.get("pattern").setValue(row.pattern)
     this.agentAttributesFormUpdate.get("information").setValue(row.information)
     this.agentAttributesFormUpdate.get("options").setValue(JSON.stringify(row.options))
 
