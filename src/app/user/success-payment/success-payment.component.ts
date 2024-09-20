@@ -12,6 +12,7 @@ import { APP_CONFIG } from 'src/app/app.config';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { AiAgentService } from '../_services/ai-agent.service';
 
 @Component({
   selector: 'app-success-payment',
@@ -37,15 +38,20 @@ export class SuccessPaymentComponent implements OnInit {
     private crypto:CryptoService,
     @Inject(APP_CONFIG) private config,
     private appService: AppService,
-    private httpBackend:HttpBackend
+    private httpBackend:HttpBackend,
+    private rest_service: AiAgentService
     ) {
     this.http=new HttpClient(this.httpBackend);
 
      }
 
   ngOnInit(): void {
-    this.subscriptionComplete();
-    this.startCountdown();
+    if(environment.isWebhookEnabled){
+      this.startCountdown();
+    }else{
+      this.subscriptionComplete();
+      this.startCountdown();
+    }
     localStorage.removeItem('selectedPlans');
     localStorage.removeItem('selectedInterval');
   }
@@ -98,20 +104,18 @@ export class SuccessPaymentComponent implements OnInit {
     });
   }
 
+
   startCountdown(){
     interval(1000).pipe(
       take(this.countdown)
     ).subscribe(() => {
       this.countdown--;
       if (this.countdown === 0) {
-        // this.router.navigate(['/user']);
-        console.log("countDownEnd")
-        // this.router.navigate(['/userDetails'],{
-        //   queryParams: { token: this.crypto.encrypt(JSON.stringify(this.userData))},
-        // });
-        localStorage.removeItem('selectedPlans');
-        localStorage.removeItem('selectedInterval');
-        this.loginUser(this.userData);
+        if(environment.isWebhookEnabled){
+          this.getTenantInfoWebhook();
+        }else{
+          this.loginUser(this.userData);
+        }
       }
     });
   }
@@ -195,8 +199,46 @@ export class SuccessPaymentComponent implements OnInit {
     this.rest_api.saveEmailCredentials().subscribe((response:any)=>{
       console.log("implemented code" + response);
     })
-   
-}
+  }
+
+  getTenantInfoWebhook(){
+    this.route.queryParams.subscribe(data => {
+      this.userEmail = data.id
+      if (this.userEmail) {
+        this.rest_service.getTenantInfoWebhook(this.userEmail).subscribe((response:any) => {
+          console.log("getTenantInfoWebhook-response", response)
+          if(response.code == 4200){
+            this.getUserInfo();
+            localStorage.setItem('currentUser', JSON.stringify(response.token));
+          }else{
+            Swal.fire({
+              title: 'Error!',
+              text: response.message,
+              icon: 'error',
+              showCancelButton: false,
+              allowOutsideClick: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  this.router.navigate((['/user']));
+                }
+              });
+          }
+        }, error => {
+            Swal.fire("Error","Something went wrong, Please contact")
+        })
+      }
+    })
+  }
+
+  getUserInfo(){
+    this.appService.getIP(); 
+      localStorage.setItem('ProfileuserId',this.userEmail)
+      this.authservice.userDetails(this.userEmail).subscribe(data => {
+        this.checkSuccessCallback(data)
+        this.session.startWatching();
+      }
+    );
+  }
 
 
 }
