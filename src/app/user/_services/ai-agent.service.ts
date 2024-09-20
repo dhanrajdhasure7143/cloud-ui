@@ -37,4 +37,8 @@ export class AiAgentService {
   downloadFiles(body){
     return this.http.post(`/platform-service/document/downloadFile`,body)
   }
+
+  increaseExecutionLimit(body){
+    return this.http.put(`/rpa-service/predefined/update-agent-quantity/${body.subAgentId}?quantity=${body.quantity}&tenantId=${body.tenantId}`,body,{ responseType: 'text' })
+  }
 }
