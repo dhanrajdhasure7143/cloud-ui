@@ -211,9 +211,31 @@ export class SuccessPaymentComponent implements OnInit {
             this.getUserInfo();
             localStorage.setItem('currentUser', JSON.stringify(response.token));
           }else{
+                let errorMessage = '';
+                switch (response.code) {
+                  case 4201:
+                    errorMessage = 'We couldn\'t create the tenant account for the provided customer email. This could be due to a network issue or incorrect information. Please contact customer support for assistance..';
+                    break;
+                  case 4202:
+                    errorMessage = 'There was a problem processing your billing information. Please check your payment details or contact customer support for assistance.';
+                    break;
+                  case 4203:
+                    errorMessage = 'We encountered an issue with your subscription. Please review your subscription details or reach out to support for help.';
+                    break;
+                  case 4204:
+                    errorMessage = 'There was an issue with managing the agents under your subscription. Please try again or contact support for further assistance.';
+                    break;
+                  default:
+                    errorMessage = 'An unexpected error occurred. Please contact support if the issue persists.';
+                    break;
+                }
             Swal.fire({
-              title: 'Error!',
-              text: response.message,
+              title: 'Oops!',
+              text: response.code && response.message,
+              html: `<div>
+                      <strong>Error Code:</strong> ${response.code} <br>
+                      <strong></strong> ${errorMessage}
+                    </div>`,
               icon: 'error',
               showCancelButton: false,
               allowOutsideClick: false,
