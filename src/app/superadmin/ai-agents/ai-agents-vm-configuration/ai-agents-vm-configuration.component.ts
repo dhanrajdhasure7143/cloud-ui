@@ -291,4 +291,24 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
     });
   }
 
+  testConnection() {
+    const requestData = {
+      ...this.vmForm.value,
+      password: this.crypto.encrypt(this.vmForm.get("password")?.value),
+    };
+    this.spinner.show();
+    this.rest_api.testVmConfiguration(requestData).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status === "Sucessfully Connected") {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'VM connected successfully' });
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'VM connection failed.' });
+      }
+    }, (error: any) => {
+      this.spinner.hide();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'An error occurred while connecting to VM.' });
+    }
+    );
+  }
+  
 }

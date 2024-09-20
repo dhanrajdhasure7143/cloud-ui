@@ -205,7 +205,8 @@
             <button type="button" (click)="onCancel()" class="btn">Cancel</button>
             <button type="submit" [disabled]="!vmForm.valid" class="btn btn-primary" (click)="onSubmit()">
               {{ mode === 'Create' ? 'Create' : 'Update' }}
-            </button>
+            </button> &nbsp;
+            <button type="button" [disabled]="!vmForm.valid" (click)="testConnection()" class="btn" class="btn btn-primary">Test Connection</button>
           </div>
         </form>
       </div>
