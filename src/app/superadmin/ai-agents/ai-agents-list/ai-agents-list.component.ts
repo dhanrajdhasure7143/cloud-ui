@@ -41,6 +41,8 @@ export class AiAgentsListComponent implements OnInit {
   deletOverlay:boolean = false;
   uploadFilePath = "predefined/instructions";
   fileNameToDelete:string;
+  quantityOverlay:boolean = false;
+  execution_quantity_form:FormGroup;
 
   constructor(
     private rest_api: AiAgentService,
@@ -61,6 +63,11 @@ export class AiAgentsListComponent implements OnInit {
       description:["", [Validators.required, Validators.required]],
       subscribed:[false],
 
+    });
+    this.execution_quantity_form = this.formBuilder.group({
+      quantity: [1, [Validators.required, Validators.required]],
+      subAgentId: ["", [Validators.required, Validators.required]],
+      tenantId: ["", [Validators.required, Validators.required]],
     });
   }
 
@@ -198,6 +205,7 @@ export class AiAgentsListComponent implements OnInit {
     this._onSelectedFile = undefined;  
       this.uploadFile = undefined;
       this.deletOverlay = false;
+      this.quantityOverlay = false;
   }
 
   onFileSelected(event: any): void {
@@ -296,6 +304,27 @@ export class AiAgentsListComponent implements OnInit {
             : `data:application/${extension};base64,${fileData}`;
 
     link.click();
+  }
+
+  increaseQuantityOverlay(){
+    console.log("increaseQuantityOverlay",this.execution_quantity_form.value);
+    this.spinner.show();
+    this.rest_api.increaseExecutionLimit(this.execution_quantity_form).subscribe((res:any)=>{
+      this.spinner.hide();
+      console.log("res",res);
+      this.execution_quantity_form.reset();
+      if(res.code === 200){
+        this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Updated'});
+        this.quantityOverlay = false;
+      }else{
+        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Updated'});
+      }
+    },(error)=>{
+      console.log("error",error);
+      this.spinner.hide();
+      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Updated'});
+    })
+
   }
 
 

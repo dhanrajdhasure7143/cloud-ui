@@ -7,7 +7,8 @@
           [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
           <ng-template pTemplate="caption">
             <div class="p-d-flex" style="text-align: end;">
-              <button class="btn btn-primary"(click)="getInstructionDocsList()" style="margin-right: 10px;">Instruction Documents</button>
+              <button class="btn btn-primary"(click)="quantityOverlay = true" style="margin-right: 10px;">Execution Quantity</button>
+              <button class="btn btn-primary"(click)="getInstructionDocsList()" style="margin-right: 10px;">Documents</button>
               <button class="btn btn-primary"(click)="addAgentsForm()" style="margin-right: 10px;">Add Agent</button>
               <span class="p-input-icon-right gridsearch">
                 <i class="pi pi-search"></i>
@@ -280,3 +281,46 @@
         </div>
     </div>
 </p-dialog>
+
+  <p-dialog header="Confirmation" [(visible)]="quantityOverlay" [modal]="true" [style]="{width: '40vw'}"
+  [draggable]="false">
+    <ng-template pTemplate="header">
+      <div class="dialog-header">
+        <h4>Increase Exection Quantity</h4>
+      </div>
+    </ng-template>
+    
+      <div class="confirmation-content">
+        <form [formGroup]="execution_quantity_form" autocomplete="off"  class="tenant-form" class="col-12" tenant-form>
+          <div class="row form-details">
+            <div class="form-group col-md-12 pl-0">
+              <label class="label-control" for="quantity" id="label-name">Execution Quantity<span class="star">*</span></label>
+              <input type="text" formControlName="quantity" class="form-control" id="quantity" style="height: 45px !important;
+                border-radius: 5px;" placeholder="Enter Execution Quantity">
+                <span *ngIf="execution_quantity_form.get('quantity').invalid && execution_quantity_form.get('quantity').touched"  
+                class="required"> Quantity Required </span>    
+            </div>
+            <div class="form-group col-md-12 pl-0">
+                <label class="label-control" for="subAgentId" id="label-name">Sub Agent ID<span class="star">*</span></label>
+                <input type="text" formControlName="subAgentId" class="form-control" id="subAgentId" style="height: 45px !important;
+                  border-radius: 5px;"
+                placeholder="Enter Sub Agent Id">
+              <span *ngIf="execution_quantity_form.get('subAgentId').invalid && execution_quantity_form.get('subAgentId').touched"  
+              class="required"> Sub Agent Id Required </span>    
+            </div>
+            <div class="form-group col-md-12 pl-0">
+              <label class="label-control" for="tenantId" id="label-name">Tenant ID<span class="star">*</span></label>
+              <input type="text" formControlName="tenantId" class="form-control" id="tenantId" style="height: 45px !important;
+                border-radius: 5px;"
+              placeholder="Enter Sub Agent Id">
+              <span *ngIf="execution_quantity_form.get('tenantId').invalid && execution_quantity_form.get('tenantId').touched"  
+              class="required"> TenantId Id Required </span>    
+            </div>
+            <div class="confirmation-footer">
+                <button type="button" class="btn btn-secondary" (click)="onRejectUpload()" >Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="increaseQuantityOverlay()" [disabled]="!execution_quantity_form.valid"> Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+  </p-dialog>
