@@ -97,13 +97,6 @@ import Swal from 'sweetalert2';
           </div>
         </div>
       </div>
-
-      <div class="cta">
-        <div class="container">
-          <h2>Unlock Exceptional Talent with Unmatched AI Precision</h2>
-          <a href="#" class="btn">Get Started</a>
-        </div>
-      </div>
     </div>
     <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>
@@ -389,18 +382,6 @@ import Swal from 'sweetalert2';
       background-size: cover;
       background-position: center;
       padding: 80px 0;
-    }
-    .cta {
-      background-image: url('/assets/images/agent/sales/get-started.png');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 80px 0;
-    }
-    .cta h2 {
-      font-size: 2.5em;
-      margin-bottom: 30px;
     }
   `]
 })

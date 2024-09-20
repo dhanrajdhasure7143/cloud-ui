@@ -68,13 +68,6 @@ import { Component } from '@angular/core';
       </div>
     </div>
   </div>
-
-  <div class="cta">
-    <div class="container">
-      <h2>Unlock Exceptional Talent with Unmatched AI Precision</h2>
-      <a href="" class="btn">Get Started</a>
-    </div>
-  </div>
 </div>
   `,
   styles: [`
@@ -251,18 +244,6 @@ import { Component } from '@angular/core';
       background-size: cover;
       background-position: center;
       padding: 80px 0;
-    }
-    .cta {
-      background-image: url('src/assets/images/agent/sales/get-started.png');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      text-align: center;
-      padding: 80px 0;
-    }
-    .cta h2 {
-      font-size: 2.5em;
-      margin-bottom: 30px;
     }
   `]
 })
