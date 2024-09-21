@@ -25,7 +25,8 @@ export const environment = {
   paymentSuccessURL:"http://epsoft.internaldev.ai/#/success",
   paymentFailuerURL:"http://epsoft.internaldev.ai/#/",
   stripeKey:"pk_test_51PjIMqJZCEXZ8Zrct2ntJVGOgqwWLvEBFV7DUJwm7nLEwoNpKClC2GuDs3CPUUedXpv5m0pDTHLJwJKrFQC9fg1I00zKCS3psO",
-  product:"AiAgents"
+  product:"AiAgents",
+  isWebhookEnabled: false,
 };
 
 /*

@@ -21,5 +21,6 @@ export const environment = {
    paymentSuccessURL:"https://ezflow.epsoftinc.com/#/success",
    paymentFailuerURL:"https://ezflow.epsoftinc.com/#/",
    stripeKey:"pk_test_51P0dtDEOiwtmEOoZ8Gxk01D1Lk5WhvdU6YgegYEiUHrmjLqfGLouxVbhwYgjWDylLK8kZ7LLaiDeKqKs15DAfIpB00KPmGpaAo",
-   product:"AiAgents"
+   product:"AiAgents",
+   isWebhookEnabled: false
 };

@@ -136,4 +136,7 @@ export class UsermanagementService implements OnInit {
     return this.http.post("/rpa-service/predefined/superadmin-environment-deploy",req)
   }
 
+  testVmConfiguration(body:any){
+    return this.http.post("/rpa-service/predefined/superadmin_test-connection",body)
+  }
 }

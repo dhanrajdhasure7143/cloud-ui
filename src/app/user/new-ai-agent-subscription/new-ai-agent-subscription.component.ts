@@ -636,6 +636,10 @@ readValue(value){
       this.router.navigate(['/subscription/marketing'], { queryParams: { token: this.emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return;
     }
+    if(plan.name == "offboarding"){
+      this.router.navigate(['/subscription/productOwner'], { queryParams: { token: this.emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
+      return;
+    }
     this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
 
     // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });

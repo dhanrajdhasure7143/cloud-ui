@@ -265,7 +265,7 @@ this.spinner.show()
       "envId": 0,
       "executionMode": this.rpaBotData.executionMode,
       "execution_order_id": this.predefinedTemplateForm.get("executionOrder").value,
-      "groups": JSON.stringify(this.rpaBotData.groups),
+      "groups": JSON.stringify([]),
       "id": 0,
       "lastSubmittedBy": this.rpaBotData.lastSubmittedBy,
       // "predefinedBotId": this.predefinedTemplateForm.get("predefinedBotId").value,

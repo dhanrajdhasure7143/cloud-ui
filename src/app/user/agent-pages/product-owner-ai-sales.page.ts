@@ -1,71 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-recruitment-ai-sales-page',
+  selector: 'app-product-owner-ai-sales-page',
   template: `
     <div class="sales-page-container">
-  <div class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1>Source Smarter To Hire Faster</h1>
-          <p>Match the right talent 5X faster, automate outreach and collaborate on candidates</p>
-          <ul>
-            <li *ngFor="let feature of heroFeatures">{{ feature }}</li>
-          </ul>
-        </div>
-        <div class="hero-pricing">
-          <app-payment-collection></app-payment-collection>
-        </div>
-      </div>
+  <div class="">
+    <div class="">
+    <div>
+    <img  style="width:100%" src="../../../assets/ai-agent/Product Owner AI Agent.png" alt="">
     </div>
-  </div>
-
-  <div class="section">
-    <div class="container">
-      <h2 class="section-title">Key Features</h2>
-      <p class="section-description">The Recruitment AI Agent is designed to revolutionize the hiring process by automating and enhancing various recruitment tasks. This intelligent tool ensures that you find the perfect candidates quickly and efficiently, transforming the way you manage recruitment.</p>
-      <div class="grid">
-        <div class="card" *ngFor="let feature of keyFeatures">
-          <div class="card-image">
-            <img [src]="feature.image" [alt]="feature.title">
-          </div>
-          <div class="card-content">
-            <h3>{{ feature.title }}</h3>
-            <p>{{ feature.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section benefits">
-    <div class="container">
-      <h2 class="section-title1">Benefits</h2>
-      <div class="grid">
-        <div class="card icon-card" *ngFor="let benefit of benefits">
-          <div class="icon-placeholder">
-            <img [src]="benefit.icon" [alt]="benefit.title">
-          </div>
-          <h3>{{ benefit.title }}</h3>
-          <p>{{ benefit.description }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section how-it-works">
-    <div class="container">
-      <h2 class="section-title">How Does Our Recruitment AI Agent Work?</h2>
-      <div class="grid">
-        <div class="card icon-card" *ngFor="let step of workingSteps">
-          <div class="icon-placeholder">
-            <img [src]="step.icon" [alt]="step.title">
-          </div>
-          <h3>{{ step.title }}</h3>
-          <p>{{ step.description }}</p>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -245,9 +188,21 @@ import { Component } from '@angular/core';
       background-position: center;
       padding: 80px 0;
     }
+    .cta {
+      background-image: url('src/assets/images/agent/sales/get-started.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 80px 0;
+    }
+    .cta h2 {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+    }
   `]
 })
-export class RecruitmentAiSalesPageComponent {
+export class ProductOwnerAiSalesPageComponent {
     email:any;
     selectedAgent:any;
     agentsQuantity: number = 1;
