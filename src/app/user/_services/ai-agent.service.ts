@@ -39,7 +39,7 @@ export class AiAgentService {
   }
 
   increaseExecutionLimit(body){
-    return this.http.put(`/rpa-service/predefined/update-agent-quantity/${body.subAgentId}?quantity=${body.quantity}&tenantId=${body.tenantId}`,body,{ responseType: 'text' })
+    return this.http.put(`/rpa-service/predefined/update-agent-quantity/${body.subAgentId}?quantity=${body.quantity}&tenantId=${body.tenantId}`,'')
   }
 
   getTenantInfoWebhook(email){

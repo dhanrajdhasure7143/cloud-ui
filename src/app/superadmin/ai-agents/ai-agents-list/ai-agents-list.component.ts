@@ -309,11 +309,11 @@ export class AiAgentsListComponent implements OnInit {
   increaseQuantityOverlay(){
     console.log("increaseQuantityOverlay",this.execution_quantity_form.value);
     this.spinner.show();
-    this.rest_api.increaseExecutionLimit(this.execution_quantity_form).subscribe((res:any)=>{
+    this.rest_api.increaseExecutionLimit(this.execution_quantity_form.value).subscribe((res:any)=>{
       this.spinner.hide();
       console.log("res",res);
       this.execution_quantity_form.reset();
-      if(res.code === 200){
+      if(res.code === 4200){
         this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Updated'});
         this.quantityOverlay = false;
       }else{
