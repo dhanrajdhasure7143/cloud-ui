@@ -212,9 +212,10 @@ export class SuccessPaymentComponent implements OnInit {
             localStorage.setItem('currentUser', JSON.stringify(response.token));
           }else{
                 let errorMessage = '';
+                let supporMail = 'support@epsoftinc.com'
                 switch (response.code) {
                   case 4201:
-                    errorMessage = 'We couldn\'t create the tenant account for the provided customer email. This could be due to a network issue or incorrect information. Please contact customer support for assistance..';
+                    errorMessage = 'We encountered an issue with your subscription. This could be due to a network issue or incorrect information. Please contact customer support for assistance.';
                     break;
                   case 4202:
                     errorMessage = 'There was a problem processing your billing information. Please check your payment details or contact customer support for assistance.';
@@ -234,7 +235,8 @@ export class SuccessPaymentComponent implements OnInit {
               text: response.code && response.message,
               html: `<div>
                       <strong>Error Code:</strong> ${response.code} <br>
-                      <strong></strong> ${errorMessage}
+                       ${errorMessage}
+                       <strong>${supporMail}</strong>
                     </div>`,
               icon: 'error',
               showCancelButton: false,
