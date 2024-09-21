@@ -1065,3 +1065,26 @@ ul.features-list .exclusive-list-child::after {
   .btn {
     margin-left: auto;
   }
+
+  .bot-description {
+    text-align: left;
+    width: 100%;
+    /* ellipsis styles */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    line-clamp: 3;
+}
+
+  .see-more {
+    position: absolute;
+    bottom: -3px;
+    right: 0;
+    background-color: #fff;
+    color: #007bff;
+    cursor: pointer;
+    padding-left: 10px;
+  }

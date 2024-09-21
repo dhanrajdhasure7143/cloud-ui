@@ -101,7 +101,23 @@
                             <!-- Agent Features -->
                             <div class="frame">
                                 <!-- <p class="text-design">{{formatFeatures(plan.features)}}</p> -->
-                                <p class="text-design">{{plan.description}}</p>
+                                <!-- <p class="text-design">{{plan.description}}</p> -->
+                            </div>
+                            
+                            <div class="bot-details-wrapper">
+                                <p #content class="bot-description">
+                                    {{ plan.description }}
+                                    <span *ngIf="isOverflowing(content)">
+                                        <i [pTooltip]="isOverflowing(content) ? plan.description : null" 
+                                           tooltipPosition="top" 
+                                           [tooltipStyleClass]="'custom-bot-tooltip'" 
+                                           class="pi pi-ellipsis-h see-more" 
+                                           style="font-size: 22px;"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div *ngIf="showFullDetails" class="full-details">
+                                {{ plan.description }}
                             </div>
                             
                             <!-- Agent plan toggle monthly or yearly -->
