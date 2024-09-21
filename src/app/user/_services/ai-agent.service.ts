@@ -41,4 +41,8 @@ export class AiAgentService {
   increaseExecutionLimit(body){
     return this.http.put(`/rpa-service/predefined/update-agent-quantity/${body.subAgentId}?quantity=${body.quantity}&tenantId=${body.tenantId}`,'')
   }
+
+  getTenantInfoWebhook(email){
+    return this.http.get(`/subscriptionservice/v1/stripe/subscription-success-failure/${email}`)
+  }
 }
