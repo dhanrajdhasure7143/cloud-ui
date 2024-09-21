@@ -215,19 +215,19 @@ export class SuccessPaymentComponent implements OnInit {
                 let supporMail = 'support@epsoftinc.com'
                 switch (response.code) {
                   case 4201:
-                    errorMessage = 'We encountered an issue with your subscription. This could be due to a network issue or incorrect information. Please contact customer support for assistance.';
+                    errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
                     break;
                   case 4202:
-                    errorMessage = 'There was a problem processing your billing information. Please check your payment details or contact customer support for assistance.';
+                    errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
                     break;
                   case 4203:
-                    errorMessage = 'We encountered an issue with your subscription. Please review your subscription details or reach out to support for help.';
+                    errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
                     break;
                   case 4204:
-                    errorMessage = 'There was an issue with managing the agents under your subscription. Please try again or contact support for further assistance.';
+                    errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
                     break;
                   default:
-                    errorMessage = 'An unexpected error occurred. Please contact support if the issue persists.';
+                    errorMessage = 'We’re experiencing an issue with your subscription, which may be due to a network error or payment processing issue. Please contact customer support at ';
                     break;
                 }
             Swal.fire({
@@ -235,10 +235,9 @@ export class SuccessPaymentComponent implements OnInit {
               text: response.code && response.message,
               html: `<div>
                       <strong>Error Code:</strong> ${response.code} <br>
-                       ${errorMessage}
-                       <strong>${supporMail}</strong>
+                       ${errorMessage}<strong>${supporMail}</strong> for help.
                     </div>`,
-              icon: 'error',
+              icon: 'info',
               showCancelButton: false,
               allowOutsideClick: false,
             }).then((result) => {
