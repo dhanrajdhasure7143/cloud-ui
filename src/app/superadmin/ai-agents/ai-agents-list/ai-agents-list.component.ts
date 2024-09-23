@@ -43,6 +43,7 @@ export class AiAgentsListComponent implements OnInit {
   fileNameToDelete:string;
   quantityOverlay:boolean = false;
   execution_quantity_form:FormGroup;
+  isSubAgentRequired:boolean = true;
 
   constructor(
     private rest_api: AiAgentService,
@@ -66,8 +67,9 @@ export class AiAgentsListComponent implements OnInit {
     });
     this.execution_quantity_form = this.formBuilder.group({
       quantity: [1, [Validators.required, Validators.required]],
-      subAgentId: ["", [Validators.required, Validators.required]],
+      subAgentId: [""],
       tenantId: ["", [Validators.required, Validators.required]],
+      type: ["oneSubAgent", [Validators.required, Validators.required]],
     });
   }
 
@@ -316,6 +318,7 @@ export class AiAgentsListComponent implements OnInit {
       if(res.code === 4200){
         this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Updated'});
         this.quantityOverlay = false;
+        this.execution_quantity_form.reset();
       }else{
         this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Updated'});
       }
@@ -325,6 +328,30 @@ export class AiAgentsListComponent implements OnInit {
       this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Updated'});
     })
 
+  }
+
+  onRadioChange(event: Event): void {
+    const selectedValue = (event.target as HTMLInputElement).value;
+    if (selectedValue === 'oneSubAgent') {
+      this.isSubAgentRequired = true;
+      this.execution_quantity_form.get('subAgentId')?.reset();
+      this.execution_quantity_form.get('subAgentId')?.setValidators([Validators.required]);
+      this.execution_quantity_form.get('subAgentId')?.updateValueAndValidity();
+    } else if (selectedValue === 'all') {
+      this.isSubAgentRequired = false;
+      this.execution_quantity_form.get('subAgentId')?.reset();
+      this.execution_quantity_form.get('subAgentId')?.clearValidators();
+      this.execution_quantity_form.get('subAgentId')?.updateValueAndValidity();
+    }
+  }
+
+  numbersOnly(event): boolean {
+    var regex = new RegExp("^[0-9]+$"); 
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+      event.preventDefault();
+      return false;
+    }
   }
 
 
