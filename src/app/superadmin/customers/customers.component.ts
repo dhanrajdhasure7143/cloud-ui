@@ -254,15 +254,22 @@ onRowExpand(event: any) {
 }
 
 getChildTable(tenant: any) {
-  // this.rest_api.getDataForTenant(tenant.id).subscribe(
-  //   (response) => {
-  //     console.log('Child table data:', response);
-  //     // Handle the response here (e.g., update the table with child data)
-  //   },
-  //   (error) => {
-  //     console.error('Error fetching child table data:', error);
-  //   }
-  // );
+  this.spinner.show();
+  this.rest_api.getCustomerAgentDetails(tenant.customerEmailId, tenant.tenantId).subscribe(
+    (response:any) => {
+      if (response.code === 4200) {
+        tenant.agentData = response.data;
+      } else {
+        tenant.agentData = [];
+      }
+      this.spinner.hide();
+    },
+    (error) => {
+      console.error('Error fetching child table data:', error);
+      tenant.agentData = [];
+      this.spinner.hide();
+    }
+  );
 }
 
 }

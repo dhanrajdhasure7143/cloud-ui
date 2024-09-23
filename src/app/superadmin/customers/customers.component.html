@@ -137,12 +137,12 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-user>
                                         <tr>
-                                            <td>{{user.MainAgentName}}</td>
+                                            <td>{{user.mainAgentName}}</td>
                                             <td>{{user.productId}}</td>
                                             <td>{{user.noOfActiveAgents}}</td>
-                                            <td>{{user.billingDate}}</td>
-                                            <td>{{user.expiresOn}}</td>
-                                        </tr>
+                                            <td>{{user.billingDate | date:'MMM dd, y' }}</td>
+                                            <td>{{user.nextBillEstimate}}</td>
+                                            <td>{{ user.expiresOn ? (user.expiresOn | date:'MMM dd, y') : "-" }}</td>                                        </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">
                                         <tr>
