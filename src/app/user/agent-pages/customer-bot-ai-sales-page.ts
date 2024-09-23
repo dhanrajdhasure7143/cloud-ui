@@ -204,10 +204,10 @@ export class CustomerBotAiSalesPageComponent {
     selectedAgentId:any;
 
   heroFeatures = [
-    'Instant Customer Assistance',
-    'Predictive Issue Resolution',
-    'Tailored Customer Interactions',
-    'Custom AI for Your Support'
+    'Easy to setup',
+    'Easy to train',
+    'Trains on Websites and Document',
+    'Tailored Customer interaction'
   ];
 
   keyFeatures = [
@@ -229,7 +229,7 @@ export class CustomerBotAiSalesPageComponent {
     {
       image:"assets/images/agent/sales/CS-content 4.png",
       title: 'Scalability',
-      description: 'Efficiently manage growing support demands without needing more staff, maintaining high support quality.'
+      description: 'Effortlessly train the agent to stay updated with the latest information, eliminating the need for additional staff.'
     }
   ];
 
