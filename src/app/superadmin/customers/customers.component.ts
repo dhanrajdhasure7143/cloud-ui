@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UsermanagementService } from 'src/app/_services/usermanagement.service';
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from "sweetalert2";
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AiAgentService } from 'src/app/user/_services/ai-agent.service';
 import { ForgotpasswordService } from 'src/app/user/_services/forgotpassword.service';
 import { Table } from 'primeng/table';
@@ -67,7 +67,8 @@ export class CustomersComponent implements OnInit {
     private api : UsermanagementService,
     private messageService: MessageService,
     private rest_api: AiAgentService,
-    private forgotPswdService: ForgotpasswordService
+    private forgotPswdService: ForgotpasswordService,
+    private confirmationService: ConfirmationService
   ) { 
     
   }
@@ -210,27 +211,51 @@ export class CustomersComponent implements OnInit {
     });
 }
 
-  resetPassword(tenant: any) {
-    const tenantEmail = tenant.customerEmailId
-    this.spinner.show();
-    this.forgotPswdService.forgotPassword({ email: tenantEmail.toLowerCase() }).subscribe(res => {
-      this.spinner.hide();
-      if (res.message === 'Password reset mail sent successfully') {
-        Swal.fire({
-          title: 'Success',
-          text: `Reset password link has been sent to your email successfully!`,
-          icon: 'success',
-        })
-      } else {
-        this.spinner.hide();
-        Swal.fire({
-          icon: 'error',
-          title: "Error",
-          text: "User Not Found!!"
-        });
-      }
-    });
-  }
+resetPassword(tenant: any) {
+  this.confirmationService.confirm({
+    message: "Are you sure you want to send the password reset link for this Customer?",
+    header: "Reset Password",
+    acceptLabel: "Yes",
+    rejectLabel: "Cancel",
+    rejectButtonStyleClass: 'btn reset-btn',
+    acceptButtonStyleClass: 'btn bluebg-button',
+    defaultFocus: 'none',
+    rejectIcon: 'null',
+    acceptIcon: 'null',
+    accept: () => {
+      const tenantEmail = tenant.customerEmailId;
+      this.spinner.show();
+      this.forgotPswdService.forgotPassword({ email: tenantEmail.toLowerCase() }).subscribe(
+        res => {
+          this.spinner.hide();
+          if (res.message === 'Password reset mail sent successfully') {
+            Swal.fire({
+              title: 'Success',
+              text: `Reset password link has been sent to your email successfully!`,
+              icon: 'success',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: "Error",
+              text: "User Not Found!!"
+            });
+          }
+        },
+        err => {
+          this.spinner.hide();
+          Swal.fire({
+            icon: 'error',
+            title: "Error",
+            text: "An unexpected error occurred. Please try again later."
+          });
+        }
+      );
+    },
+    reject: () => {
+    }
+  });
+}
 
   getColor(customerStatus) {
     switch (customerStatus) {
