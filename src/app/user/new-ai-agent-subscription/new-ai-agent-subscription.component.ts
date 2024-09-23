@@ -611,7 +611,7 @@ readValue(value){
   }
 
   navigateToPurchaseAgent(plan){
-    console.log("plan",plan)
+    console.log("plan clicked: ",plan)
     if(plan.name =="Testing Agent"){
     this.router.navigate(['/subscription/testing'], { queryParams: { token: this.emailToken, id:plan.id,isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
     return;
@@ -640,6 +640,11 @@ readValue(value){
       this.router.navigate(['/subscription/productOwner'], { queryParams: { token: this.emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
       return;
     }
+    if(plan.name == "Product Owner"){
+      this.router.navigate(['/subscription/productOwner'], { queryParams: { token: this.emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
+      return;
+    }
+
     this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken, id:plan.id, isYearly:plan.selectedTire =='Monthly'?'false':'true' } });
 
     // this.router.navigate(['/subscription/recruitment'], { queryParams: { token: this.emailToken,id:plan.id } });
