@@ -308,26 +308,29 @@ export class AiAgentsListComponent implements OnInit {
     link.click();
   }
 
-  increaseQuantityOverlay(){
-    console.log("increaseQuantityOverlay",this.execution_quantity_form.value);
+  increaseQuantityOverlay() {
+    console.log("increaseQuantityOverlay", this.execution_quantity_form.value);
     this.spinner.show();
-    this.rest_api.increaseExecutionLimit(this.execution_quantity_form.value).subscribe((res:any)=>{
+    const apiCall = this.execution_quantity_form.value.type === "oneSubAgent" ? 
+      this.rest_api.increaseExecutionLimit(this.execution_quantity_form.value) :
+      this.rest_api.increaseExecutionLimitTenant(this.execution_quantity_form.value);
+
+    apiCall.subscribe((res: any) => {
       this.spinner.hide();
-      console.log("res",res);
+      console.log("res", res);
       this.execution_quantity_form.reset();
-      if(res.code === 4200){
-        this.messageService.add({severity:'success', summary:'Success', detail:'Successfully Updated'});
+      if (res.code === 4200) {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Successfully Updated' });
         this.quantityOverlay = false;
         this.execution_quantity_form.reset();
-      }else{
-        this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Updated'});
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Unable to Updated' });
       }
-    },(error)=>{
-      console.log("error",error);
+    }, (error) => {
+      console.log("error", error);
       this.spinner.hide();
-      this.messageService.add({severity:'error', summary:'Error', detail:'Unable to  Updated'});
-    })
-
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Unable to Updated' });
+    });
   }
 
   onRadioChange(event: Event): void {
