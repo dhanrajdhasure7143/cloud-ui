@@ -80,6 +80,7 @@ import { LoginOldComponent } from './login-old/login-old.component';
 import { ChangepasswordoldComponent } from './changepasswordold/changepasswordold.component';
 import { NewpasswordoldComponent } from './newpasswordold/newpasswordold.component';
 import { PaymentCollectionComponent } from './agent-pages/payment-collection/payment-collection.component';
+import { ProductOwnerAiSalesPageComponent } from './agent-pages/product-owner-ai-sales.page'
 
 @NgModule({
     declarations: [LoginComponent, RegisterComponent, ForgotpasswordComponent, NewpasswordComponent, CompareValidatorDirective, SocialLoginComponent, CreataccountComponent, ChangepasswordComponent, 
@@ -101,7 +102,8 @@ import { PaymentCollectionComponent } from './agent-pages/payment-collection/pay
         LoginOldComponent,
         ChangepasswordoldComponent,
         NewpasswordoldComponent,
-        PaymentCollectionComponent
+        PaymentCollectionComponent,
+        ProductOwnerAiSalesPageComponent
     ],
     imports: [
         CommonModule,
