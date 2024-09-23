@@ -59,6 +59,7 @@ export class NewAiAgentSubscriptionComponent implements OnInit {
   contactForm: FormGroup;
   messageTooShort: boolean = true;
   enterpriseFeatures:any=[];
+  showFullDetails = false;
 
   constructor(private service : FirstloginService,
               private formBuilder: FormBuilder,
@@ -678,5 +679,10 @@ readValue(value){
   onMessageInput() {
     const message = this.contactForm.get('message').value || '';
     this.messageTooShort = message.length < 150;
+  }
+
+  isOverflowing(element: HTMLElement): boolean {
+    const lineHeight = parseInt(window.getComputedStyle(element).lineHeight);
+    return element.scrollHeight > lineHeight * 3;
   }
 }

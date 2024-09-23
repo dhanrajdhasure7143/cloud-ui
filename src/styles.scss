@@ -925,6 +925,16 @@ input.p-inputtext {
   box-shadow: none !important;
 }
 
+/* Prime Tooltip Custom Styles Start */
+.p-tooltip .p-tooltip-text {
+  background-color: #001c47 !important;
+  font-size: 12px !important;
+}
+.p-tooltip .p-tooltip-arrow {
+  border-top-color: #001c47 !important;
+}
+/* Prime Tooltip Custom Styles End */
+
 /* 
   Edge Hack: 
   This CSS rule hides the default password reveal icon in Microsoft Edge.

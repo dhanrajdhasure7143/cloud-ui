@@ -45,4 +45,8 @@ export class AiAgentService {
   getCutomerDetails(){
     return this.http.get('/subscriptionservice/v1/subscriptions/subscribed-customers-main-details')
   }
+  
+  getTenantInfoWebhook(email){
+    return this.http.get(`/subscriptionservice/v1/stripe/subscription-success-failure/${email}`)
+  }
 }
