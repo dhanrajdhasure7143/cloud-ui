@@ -18,7 +18,7 @@
         <div class="row" *ngIf="check_tab == 1">
           <div class="col-12">
             <div class="enterprise-layout">
-              <p-table #dt *ngIf="activeTabIndex === 1" [value]="plans" [columns]="columnList"  [scrollable]="true" [globalFilterFields]="['userId','userName','department','phoneNumber','country','createdDate']"
+              <!-- <p-table #dt *ngIf="activeTabIndex === 1" [value]="plans" [columns]="columnList"  [scrollable]="true" [globalFilterFields]="['userId','userName','department','phoneNumber','country','createdDate']"
               [resizableColumns]="true" responsiveLayout="scroll" [reorderableColumns]="true">
               <ng-template pTemplate="caption">
                 <div class="p-d-flex" style="text-align: end;">
@@ -65,7 +65,96 @@
                           <td style="justify-content: center;" colspan="8">No Records Found</td>
                         </tr>
                       </ng-template>
-                    </p-table>
+                    </p-table> -->
+
+              <p-table [filter]="filter" *ngIf="activeTabIndex === 1"  #dt1  [value]="tenants" (onRowExpand)="onRowExpand($event)" [globalFilterFields]="search_fields" [columns]="newColumnList" dataKey="tenantId" [tableStyle]="{'min-width': '60rem'}" [resizableColumns]="true">
+                <ng-template pTemplate="caption">
+                  <div class="p-d-flex" style="text-align: end;">
+                    <span class="p-input-icon-right gridsearch">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" [(ngModel)]="searchValue" placeholder="Search" />
+                    </span>  
+                    <button pButton label="Clear" class="p-button-outlined only_clearbtn" style="margin-left: 10px;"  (click)="clearTableFilters(dt1)"></button>
+                </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th style="flex:0.2 1 0;" class="arrowcol"></th>
+                    <th *ngFor="let each of columns" pSortableColumn="{{each.ColumnName}}" pReorderableColumn pResizableColumn [pSortableColumnDisabled]="!each.sort">
+                      {{each.DisplayName}}
+                      <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'dropdown'" [field]="each.ColumnName" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                                      [showAddButton]="false" display="menu" [showApplyButton]="false" [showClearButton]="true">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-dropdown [ngModel]="value" [options]="each.dropdownList" (onChange)="filter($event.value)" placeholder="Select"></p-dropdown>
+                        </ng-template>
+                      </p-columnFilter>
+                      <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'text'" field="{{each.ColumnName}}" [showMatchModes]="false" [showOperator]="false"
+                                      [showAddButton]="false" display="menu" matchMode="contains" [showApplyButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext" placeholder="Search">
+                        </ng-template>
+                      </p-columnFilter>
+                      <p-columnFilter *ngIf="each.ShowFilter && each.filterType == 'date'"
+                                      type="{{each.filterType}}" field="{{each.ColumnName}}" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu">
+                      </p-columnFilter>
+                      <p-sortIcon *ngIf="each.sort" [field]="each.ColumnName"></p-sortIcon>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tenant let-expanded="expanded">
+                  <tr *ngIf="tenant.customerStatus"> <!-- Display row only if tenant data is valid -->
+                    <td>
+                      <button type="button" pButton pRipple [pRowToggler]="tenant" class="p-button-text p-button-rounded p-button-plain"
+                              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                    </td>
+                    <td *ngFor="let col of newColumnList">
+                        <span *ngIf="col.ColumnName!='newAction'">
+                            <span *ngIf="col.ColumnName!='customerCreatedDate'">
+                              <span [ngStyle]="{'color':getColor(tenant[col.ColumnName])}">{{tenant[col.ColumnName]}}</span>
+                            </span>
+                            <span *ngIf="col.ColumnName=='customerCreatedDate'">{{tenant[col.ColumnName]|date:'MMM dd, y'}}</span>
+                        </span>
+                        <span *ngIf="col.ColumnName=='newAction'" class="actionmenu">
+                          <img style="height: 22px; cursor: pointer;" (click)="resetPassword(tenant)" src="assets/ai-agent/reset-password.png" alt="" pTooltip="Reset Password">
+                        </span>
+                </ng-template>
+            
+                <!-- Expanded row for agentData (child rows) -->
+                <ng-template pTemplate="rowexpansion" let-tenant>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3">
+                                <p-table [value]="tenant.agentData" dataKey="id">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="MainAgentName">Agent Name <p-sortIcon field="MainAgentName"></p-sortIcon></th>
+                                            <th pSortableColumn="productId">Product ID <p-sortIcon field="productId"></p-sortIcon></th>
+                                            <th pSortableColumn="noOfActiveAgents">No of Agents <p-sortIcon field="noOfActiveAgents"></p-sortIcon></th>
+                                            <th pSortableColumn="billingDate">Billing Date <p-sortIcon field="billingDate"></p-sortIcon></th>
+                                            <th pSortableColumn="nextBillEstimate">Billing Estimate <p-sortIcon field="nextBillEstimate"></p-sortIcon></th>
+                                            <th pSortableColumn="expiresOn">Expires on <p-sortIcon field="expiresOn"></p-sortIcon></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-user>
+                                        <tr>
+                                            <td>{{user.mainAgentName}}</td>
+                                            <td>{{user.productId}}</td>
+                                            <td>{{user.noOfActiveAgents}}</td>
+                                            <td>{{user.billingDate | date:'MMM dd, y' }}</td>
+                                            <td>{{user.nextBillEstimate}}</td>
+                                            <td>{{ user.expiresOn ? (user.expiresOn | date:'MMM dd, y') : "-" }}</td>                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td style="text-align: center;" colspan="5">No Agents found for this tenant.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
                     <!-- </p-scrollPanel> -->
                   </div>
               </div>

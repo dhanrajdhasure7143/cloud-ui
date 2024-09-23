@@ -43,7 +43,15 @@ export class AiAgentService {
     return this.http.put(`/rpa-service/predefined/update-agent-quantity/${body.tenantId}?agentUUID=${body.subAgentId}&quantity=${body.quantity}`,'')
   }
 
+  getCutomerDetails(){
+    return this.http.get('/subscriptionservice/v1/subscriptions/subscribed-customers-main-details')
+  }
+  
   getTenantInfoWebhook(email){
     return this.http.get(`/subscriptionservice/v1/stripe/subscription-success-failure/${email}`)
+  }
+
+  getCustomerAgentDetails(email,tenant_id){
+    return this.http.get(`/subscriptionservice/v1/subscriptions/subscribed-customer-sub-details/${email}/${tenant_id}`)
   }
 }
