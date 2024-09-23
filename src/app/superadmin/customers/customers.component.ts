@@ -5,6 +5,9 @@ import { UsermanagementService } from 'src/app/_services/usermanagement.service'
 import { FirstloginService } from 'src/app/firstlogin/@providers/firstlogin.service';
 import Swal from "sweetalert2";
 import { MessageService } from 'primeng/api';
+import { AiAgentService } from 'src/app/user/_services/ai-agent.service';
+import { ForgotpasswordService } from 'src/app/user/_services/forgotpassword.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-customers',
@@ -32,6 +35,9 @@ export class CustomersComponent implements OnInit {
   statusValue:boolean =true;
   showToast: boolean = false;
   public check_tab = 0;
+  tenants: any[] = []; 
+  searchValue:any;
+  search_fields:any[]=["customerEmailId","tenantId","customerId","customerCreatedDate","customerStatus"];
 
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
@@ -44,13 +50,24 @@ export class CustomersComponent implements OnInit {
     // {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false},
   ]
 
+  newColumnList = [
+    { ColumnName: 'customerEmailId', DisplayName: 'Email ID', sort: true, ShowFilter: true, filterType: 'text', showTooltip: false },
+    { ColumnName: 'tenantId', DisplayName: 'Tenant ID', sort: true, ShowFilter: true, filterType: 'text', showTooltip: false },
+    { ColumnName: 'customerId', DisplayName: 'Customer ID', sort: true, ShowFilter: true, filterType: 'text', showTooltip: false },
+    { ColumnName: 'customerCreatedDate', DisplayName: 'Created Date', sort: true, ShowFilter: false, filterType: 'text', showTooltip: false },
+    { ColumnName: 'customerStatus', DisplayName: 'Status', sort: true, ShowFilter: true, filterType: 'dropdown', showTooltip: false, dropdownList: ['Active', 'Inactive'] },
+    { ColumnName: 'newAction', DisplayName: 'Action', sort: false, ShowFilter: false, filterType: 'text', showTooltip: false },
+  ];
+
   constructor(
     private firstloginservice: FirstloginService,
     private restapi: UsermanagementService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
     private api : UsermanagementService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private rest_api: AiAgentService,
+    private forgotPswdService: ForgotpasswordService
   ) { 
     
   }
@@ -167,13 +184,85 @@ export class CustomersComponent implements OnInit {
     this.isDisplayOverlay = false;
   }
   
-  onTabChange(event,tabView){
+  onTabChange(event,tabView){    
     const tab = tabView.tabs[event.index].header;
     this.activeTabIndex = event.index;
     this.check_tab = event.index;
     if(this.activeTabIndex == 1){
-      this.getSuperAdminData();
+      // this.getSuperAdminData();
+      this.getTenants();
     }
   }
+
+  getTenants() {
+    this.spinner.show();
+    this.rest_api.getCutomerDetails().subscribe((response: any) => {
+      this.spinner.hide();
+        if (response && response.data && Array.isArray(response.data)) {
+            this.tenants = response.data;
+            console.log("tenants data:", this.tenants);
+        } else {
+          this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to fetch tenant data. Please try again later.'});
+        }
+    }, (error: any) => {
+        this.spinner.hide();
+        this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to fetch tenant data. Please try again later.'});
+    });
+}
+
+  resetPassword(tenant: any) {
+    const tenantEmail = tenant.customerEmailId
+    this.spinner.show();
+    this.forgotPswdService.forgotPassword({ email: tenantEmail.toLowerCase() }).subscribe(res => {
+      this.spinner.hide();
+      if (res.message === 'Password reset mail sent successfully') {
+        Swal.fire({
+          title: 'Success',
+          text: `Reset password link has been sent to your email successfully!`,
+          icon: 'success',
+        })
+      } else {
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'error',
+          title: "Error",
+          text: "User Not Found!!"
+        });
+      }
+    });
+  }
+
+  getColor(customerStatus) {
+    switch (customerStatus) {
+      case 'inactive':
+        return '#B91C1C';
+      case 'active':
+        return '#4BD963';
+    }
+  }
+
+  clearTableFilters(table: Table) {
+    table.clear();
+    table.filterGlobal("","");
+    this.searchValue=''
+}
+
+onRowExpand(event: any) {
+  const tenant = event.data;
+  console.log(`Row onRowExpand for tenant: ${tenant.customerId}`);
+  this.getChildTable(tenant);
+}
+
+getChildTable(tenant: any) {
+  // this.rest_api.getDataForTenant(tenant.id).subscribe(
+  //   (response) => {
+  //     console.log('Child table data:', response);
+  //     // Handle the response here (e.g., update the table with child data)
+  //   },
+  //   (error) => {
+  //     console.error('Error fetching child table data:', error);
+  //   }
+  // );
+}
 
 }
