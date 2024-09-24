@@ -122,10 +122,11 @@ import { Component } from '@angular/core';
     margin-bottom: -45px;
   }
   .grid-benefits {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     margin-bottom: -45px;
+    justify-content: center !important;
   }
   .card {
     background-color: white;
@@ -149,6 +150,7 @@ import { Component } from '@angular/core';
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
     min-height: 171px;
+    height: 100%;
   }
   .card h3 {
     margin-bottom: 10px;
@@ -160,6 +162,15 @@ import { Component } from '@angular/core';
     padding: 12px 10px;
     border: 1px solid #b5b3b3;
   }
+
+  .icon-card-benefits{
+    text-align: center;
+    padding: 12px 10px;
+    border: 1px solid #b5b3b3;
+    flex: 1 1 300px;
+    max-width: 33.33%;
+  }
+
   .how-it-works .card h3 {
     color: #3199ff;
   }

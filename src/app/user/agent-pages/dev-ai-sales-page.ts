@@ -350,6 +350,7 @@ import Swal from 'sweetalert2';
       border-bottom: 1px solid #b5b3b3;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
+      height: 100%;
     }
     .card h3 {
       margin-bottom: 10px;

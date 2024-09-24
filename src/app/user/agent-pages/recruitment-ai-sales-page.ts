@@ -211,7 +211,8 @@ import { Component } from '@angular/core';
       border-bottom: 1px solid #b5b3b3;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
-      min-height: 171px
+      min-height: 171px;
+      height: 100%;
     }
     .card h3 {
       margin-bottom: 10px;

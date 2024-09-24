@@ -217,6 +217,7 @@ import { Component } from '@angular/core';
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
       min-height: 171px;
+      height: 100%;
     }
     .card h3 {
       margin-bottom: 10px;
