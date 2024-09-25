@@ -67,7 +67,9 @@
                       </ng-template>
                     </p-table> -->
 
-              <p-table [filter]="filter" *ngIf="activeTabIndex === 1"  #dt1  [value]="tenants" (onRowExpand)="onRowExpand($event)" [globalFilterFields]="search_fields" [columns]="newColumnList" dataKey="tenantId" [tableStyle]="{'min-width': '60rem'}" [resizableColumns]="true">
+              <p-table [filter]="filter" *ngIf="activeTabIndex === 1"  #dt1  [value]="tenants" (onRowExpand)="onRowExpand($event)" [globalFilterFields]="search_fields" [columns]="newColumnList" dataKey="tenantId" [tableStyle]="{'min-width': '60rem'}" [resizableColumns]="true"
+              [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="isLoadingCustomers"
+              [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
                 <ng-template pTemplate="caption">
                   <div class="p-d-flex" style="text-align: end;">
                     <span class="p-input-icon-right gridsearch">
@@ -114,8 +116,10 @@
                             </span>
                             <span *ngIf="col.ColumnName=='customerCreatedDate'">{{tenant[col.ColumnName]|date:'MMM dd, y'}}</span>
                         </span>
-                        <span *ngIf="col.ColumnName=='newAction'" class="actionmenu">
+                        <span *ngIf="col.ColumnName=='newAction'" class="actionmenu"  style="display: flex; gap: 15px; align-items: center;">
+
                           <img style="height: 22px; cursor: pointer;" (click)="resetPassword(tenant)" src="assets/ai-agent/reset-password.png" alt="" pTooltip="Reset Password">
+                          <i class="pi pi-user-edit" style="font-size: 22px; cursor: pointer;" pTooltip="User Details" (click)="editUserDetails(tenant)" ></i>
                         </span>
                 </ng-template>
             
@@ -450,6 +454,40 @@
       </div>
     </div>
   </div> -->
+
+  <div *ngIf="isEditUser">
+    <app-split-overlay (closeOverlay)="closeEditUserDetailsOverlay()">
+      <div class="h-100">
+        <div class="create-header">
+          <h3> Update User Details </h3>
+        </div>
+        <div class="createform-overlay">
+          <form [formGroup]="userForm">
+            <div class="col-md-12 m-0 p-0">
+              <div class="form-group col-md-12 p-0">
+                <label class="label-control">Email<span class="star">*</span></label>
+                <input class="form-control data" placeholder="Enter Email" type="email" formControlName="email">
+                <span *ngIf="userForm.get('email').invalid && userForm.get('email').touched && userForm.get('email').hasError('email')"
+                  class="errspan required">
+                  Please enter a valid email
+                </span>
+              </div>
+            </div>
+            <h3>
+              <!-- {{data_of_the_user}} -->
+            </h3>
+          </form>
+          <div class="createform-footer">
+            <button class="btn btn-cancel" (click)="closeEditUserDetailsOverlay()">Cancel</button>
+            <button class="btn btn-primary btn-update" (click)="updateUserEmail()" [disabled]="userForm.invalid">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </app-split-overlay>
+  </div>
+  
 
   <ngx-spinner bdColor="#bebcbc66" type="">
     <img  src='assets/images/EZFlow_Loader.gif' class="ezflow-loader" alt="EZFlow_Loader"/>

@@ -8,6 +8,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AiAgentService } from 'src/app/user/_services/ai-agent.service';
 import { ForgotpasswordService } from 'src/app/user/_services/forgotpassword.service';
 import { Table } from 'primeng/table';
+import { ProfileService } from  'src/app/_services/profile.service';
+import { AuthenticationService } from 'src/app/_services';
+
 
 @Component({
   selector: 'app-customers',
@@ -38,6 +41,10 @@ export class CustomersComponent implements OnInit {
   tenants: any[] = []; 
   searchValue:any;
   search_fields:any[]=["customerEmailId","tenantId","customerId","customerCreatedDate","customerStatus"];
+  isLoadingCustomers: boolean = false;
+  userForm: FormGroup;
+  currentEmail: string = '';
+  isEditUser:boolean=false;
 
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
@@ -68,7 +75,10 @@ export class CustomersComponent implements OnInit {
     private messageService: MessageService,
     private rest_api: AiAgentService,
     private forgotPswdService: ForgotpasswordService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private profileService:ProfileService,
+    private authenticationService:AuthenticationService,
+    
   ) { 
     
   }
@@ -86,6 +96,10 @@ export class CustomersComponent implements OnInit {
       live_support: [false],
       service_orchestration: [false]
     })
+
+    this.userForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
   show() {
@@ -196,17 +210,23 @@ export class CustomersComponent implements OnInit {
   }
 
   getTenants() {
-    this.spinner.show();
+    // this.spinner.show();
+    this.isLoadingCustomers=true
     this.rest_api.getCutomerDetails().subscribe((response: any) => {
-      this.spinner.hide();
+      // this.spinner.hide();
+      this.isLoadingCustomers=false
         if (response && response.data && Array.isArray(response.data)) {
             this.tenants = response.data;
+            this.tenants = response.data.filter((tenant: any) => {
+              return !tenant.customerId.includes("not present in database");
+            });
             console.log("tenants data:", this.tenants);
         } else {
           this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to fetch tenant data. Please try again later.'});
         }
     }, (error: any) => {
-        this.spinner.hide();
+        // this.spinner.hide();
+        this.isLoadingCustomers=false
         this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to fetch tenant data. Please try again later.'});
     });
 }
@@ -259,9 +279,9 @@ resetPassword(tenant: any) {
 
   getColor(customerStatus) {
     switch (customerStatus) {
-      case 'inactive':
+      case 'Inactive':
         return '#B91C1C';
-      case 'active':
+      case 'Active':
         return '#4BD963';
     }
   }
@@ -296,5 +316,50 @@ getChildTable(tenant: any) {
     }
   );
 }
+
+  editUserDetails(tenant:any){
+    this.isEditUser = true;
+    console.log('Agent email: ', tenant.customerEmailId);
+    // this.getUserDetails(tenant.customerEmailId);
+    this.userForm.patchValue({
+      email: tenant.customerEmailId
+    });
+  }
+
+   updateUserEmail() {
+    if (this.userForm.valid) {
+      const updatedEmail = this.userForm.get('email')?.value;
+      console.log('Updated Email: ', updatedEmail);
+      this.closeEditUserDetailsOverlay(); 
+    }
+  }
+
+  closeEditUserDetailsOverlay(){
+    this.isEditUser = false;
+  }
+
+  data_of_the_user:any
+
+  getUserDetails(email_id){
+    this.spinner.show()
+    // this.profileService.getUserDetails(email_id).subscribe(
+
+    // this.rest_api.getUserDetails(email_id).subscribe(
+    this.authenticationService.userDetails(email_id).subscribe(
+      (response:any) => {
+        // if (response.code === 4200) {
+        // } else {
+        // }
+
+        console.log('The Output data for response: ', response);
+        this.data_of_the_user=response;
+        this.spinner.hide();
+        
+      },
+      (error) => {
+        this.spinner.hide();
+      }
+    );
+  }
 
 }

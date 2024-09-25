@@ -58,4 +58,8 @@ export class AiAgentService {
   getCustomerAgentDetails(email,tenant_id){
     return this.http.get(`/subscriptionservice/v1/subscriptions/subscribed-customer-sub-details/${email}/${tenant_id}`)
   }
+
+  getUserDetails(email){
+    return this.http.get(`/api/user/details?userId=${email}`)
+  }
 }
