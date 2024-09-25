@@ -65,6 +65,8 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
     agentPath: ['', Validators.required],
     hostAddress: ['', Validators.required],
     username: ['', Validators.required],
+    // password: ['', [Validators.required,
+    // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
     password: ['', [Validators.required]],
     connectionType: ['SSH', Validators.required],
     portNumber: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
