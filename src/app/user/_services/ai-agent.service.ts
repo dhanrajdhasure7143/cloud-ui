@@ -59,7 +59,15 @@ export class AiAgentService {
     return this.http.get(`/subscriptionservice/v1/subscriptions/subscribed-customer-sub-details/${email}/${tenant_id}`)
   }
 
-  getUserDetails(email){
-    return this.http.get(`/api/user/details?userId=${email}`)
+  getUserDetailsNew(email){
+    return this.http.get(`/api/user/user-details?userId=${email}`)
+  }
+
+  updateUser(user: any): Observable<any> {
+    return this.http.post<any>(`/api/user/updateUserDetails`, user);
+  }
+
+  getAgentTransaction(email,tenant_id){
+    return this.http.get(`/subscriptionservice/v1/subscriptions/detail-view?userId=${email}&tenantId=${tenant_id}`)
   }
 }

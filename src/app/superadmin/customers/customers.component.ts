@@ -45,6 +45,13 @@ export class CustomersComponent implements OnInit {
   userForm: FormGroup;
   currentEmail: string = '';
   isEditUser:boolean=false;
+  countryInfo: any[] = []; 
+  phnCountryCode: String ; 
+  userDetailsData: any = {};
+  user_email:any;
+  displayTransactionDialog: boolean = false;
+  customerEmailId: string = '';
+  subscriptionHistory: any[] = [];
 
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
@@ -98,7 +105,12 @@ export class CustomersComponent implements OnInit {
     })
 
     this.userForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: [{ value: '', disabled: true }],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      country: [{ value: '', disabled: true }],
+      // timezone: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]*$/),Validators.minLength(10),]]
     });
   }
 
@@ -208,7 +220,7 @@ export class CustomersComponent implements OnInit {
       this.getTenants();
     }
   }
-
+ 
   getTenants() {
     // this.spinner.show();
     this.isLoadingCustomers=true
@@ -320,10 +332,7 @@ getChildTable(tenant: any) {
   editUserDetails(tenant:any){
     this.isEditUser = true;
     console.log('Agent email: ', tenant.customerEmailId);
-    // this.getUserDetails(tenant.customerEmailId);
-    this.userForm.patchValue({
-      email: tenant.customerEmailId
-    });
+    this.getUserDetails(tenant.customerEmailId);
   }
 
    updateUserEmail() {
@@ -338,28 +347,75 @@ getChildTable(tenant: any) {
     this.isEditUser = false;
   }
 
-  data_of_the_user:any
-
-  getUserDetails(email_id){
-    this.spinner.show()
-    // this.profileService.getUserDetails(email_id).subscribe(
-
-    // this.rest_api.getUserDetails(email_id).subscribe(
-    this.authenticationService.userDetails(email_id).subscribe(
-      (response:any) => {
-        // if (response.code === 4200) {
-        // } else {
-        // }
-
-        console.log('The Output data for response: ', response);
-        this.data_of_the_user=response;
+  getUserDetails(email_id) {
+    this.spinner.show();
+    this.rest_api.getUserDetailsNew(email_id).subscribe(
+      (response: any) => {
         this.spinner.hide();
-        
+        console.log('The Output data for response: and the user details:', response);
+        this.user_email = response.data.userId;
+        this.userForm.patchValue({
+          email: response.data.userId,
+          firstName: response.data.firstName || '',
+          lastName: response.data.lastName || '',
+          country: response.data.country || '',
+          // timezone: response.data.timezone || '',
+          phoneNumber: response.data.phoneNumber || ''
+        });
+        if (response.data.country) {
+          this.userForm.patchValue({ phoneNumber: this.phnCountryCode + response.data.phoneNumber });
+        }
       },
       (error) => {
         this.spinner.hide();
       }
     );
+  }
+
+
+  openTransactionDialog(tenant) {
+    this.subscriptionHistory=[]
+    this.displayTransactionDialog = true;
+    this.customerEmailId = tenant.customerEmailId;
+    this.spinner.show();
+    this.rest_api.getAgentTransaction(tenant.customerEmailId, tenant.tenantId).subscribe(
+      (res:any) => {
+        this.spinner.hide();
+        this.subscriptionHistory = res.data.subscriptionHistory;
+      },
+      error => {
+        this.spinner.hide();
+      }
+    );
+  }
+
+  closeTransactionTable(){
+    this.displayTransactionDialog = false;
+  }
+
+  updateAccount() {
+    if (this.userForm.valid) {
+      const updatedData = {
+        userId: this.user_email,
+        firstName: this.userForm.value.firstName,
+        lastName: this.userForm.value.lastName,
+        // phoneNumber: this.userForm.value.phoneNumber,
+        // country: this.userForm.value.country,
+      };
+
+      console.log('The Output data for : ',this.userForm.value.country );
+
+      this.spinner.show();
+      this.rest_api.updateUser(updatedData).subscribe(
+        () => {
+          this.spinner.hide();
+          this.getUserDetails(this.user_email);
+        },
+        error => {
+          this.spinner.hide();
+        }
+      );
+    }
   }
 
 }
