@@ -45,6 +45,13 @@ export class CustomersComponent implements OnInit {
   userForm: FormGroup;
   currentEmail: string = '';
   isEditUser:boolean=false;
+  countryInfo: any[] = []; 
+  phnCountryCode: String ; 
+  userDetailsData: any = {};
+  user_email:any;
+  displayTransactionDialog: boolean = false;
+  customerEmailId: string = '';
+  subscriptionHistory: any[] = [];
 
   columnList=[
     {DisplayName:"Admin",ColumnName:"tenantAdminName",ShowFilter: true,sort:true},
@@ -98,7 +105,12 @@ export class CustomersComponent implements OnInit {
     })
 
     this.userForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: [{ value: '', disabled: true }],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      country: [{ value: '', disabled: true }],
+      // timezone: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]*$/),Validators.minLength(10),]]
     });
   }
 
@@ -205,9 +217,34 @@ export class CustomersComponent implements OnInit {
     this.check_tab = event.index;
     if(this.activeTabIndex == 1){
       // this.getSuperAdminData();
-      this.getTenants();
+      // this.getTenants();
+      this.tenants = this.data_is;
     }
   }
+
+  data_is=[
+    {
+        "customerStatus": "active",
+        "customerEmailId": "ahzir.xyan@frontads.org",
+        "tenantId": "cadbbbbf-2bac-446c-8da1-365006c7e400",
+        "customerId": "cus_QugjELq4TUygdM",
+        "customerCreatedDate": "2024-09-25T09:18:10Z"
+    },
+    {
+        "customerStatus": "active",
+        "customerEmailId": "meraho6578@rinseart.com",
+        "tenantId": "51c744d7-88de-4c2a-95b1-9b787ddfa118",
+        "customerId": "cus_QufdcYoMQW810c",
+        "customerCreatedDate": "2024-09-25T08:10:09Z"
+    },
+    {
+        "customerStatus": "active",
+        "customerEmailId": "nancy.dev@qacmjeq.com",
+        "tenantId": "40ba645c-b388-4c43-864f-311ab3939b54",
+        "customerId": "cus_QuQoMmZCmq55Ks",
+        "customerCreatedDate": "2024-09-24T16:50:35Z"
+    }
+  ];
 
   getTenants() {
     // this.spinner.show();
@@ -320,10 +357,7 @@ getChildTable(tenant: any) {
   editUserDetails(tenant:any){
     this.isEditUser = true;
     console.log('Agent email: ', tenant.customerEmailId);
-    // this.getUserDetails(tenant.customerEmailId);
-    this.userForm.patchValue({
-      email: tenant.customerEmailId
-    });
+    this.getUserDetails(tenant.customerEmailId);
   }
 
    updateUserEmail() {
@@ -338,28 +372,80 @@ getChildTable(tenant: any) {
     this.isEditUser = false;
   }
 
-  data_of_the_user:any
-
-  getUserDetails(email_id){
-    this.spinner.show()
-    // this.profileService.getUserDetails(email_id).subscribe(
-
-    // this.rest_api.getUserDetails(email_id).subscribe(
-    this.authenticationService.userDetails(email_id).subscribe(
-      (response:any) => {
-        // if (response.code === 4200) {
-        // } else {
-        // }
-
-        console.log('The Output data for response: ', response);
-        this.data_of_the_user=response;
+  getUserDetails(email_id) {
+    this.spinner.show();
+    this.rest_api.getUserDetailsNew(email_id).subscribe(
+      (response: any) => {
         this.spinner.hide();
-        
+        console.log('The Output data for response: and the user details:', response);
+        this.user_email = response.data.userId;
+        this.userForm.patchValue({
+          email: response.data.userId,
+          firstName: response.data.firstName || '',
+          lastName: response.data.lastName || '',
+          country: response.data.country || '',
+          // timezone: response.data.timezone || '',
+          phoneNumber: response.data.phoneNumber || ''
+        });
+        if (response.data.country) {
+          this.userForm.patchValue({ phoneNumber: this.phnCountryCode + response.data.phoneNumber });
+        }
       },
       (error) => {
         this.spinner.hide();
       }
     );
+  }
+
+
+  openTransactionDialog(tenant) {
+    this.displayTransactionDialog = true;
+    this.customerEmailId = tenant.customerEmailId;
+
+    this.subscriptionHistory = [
+      {
+        "date": "2023-09-25",
+        "event": "User subscribed for the X plan"
+      },
+      {
+        "date": "2023-10-26",
+        "event": "User has cancelled the X Plan"
+      }
+    ];
+
+    // // API call to get transaction history
+    // this.http.get<any>(`/api/customer-subscription/${this.tenantData.customerId}`)
+    //   .subscribe(response => {
+    //     if (response.status === 'success') {
+    //       this.subscriptionHistory = response.data.subscriptionHistory;
+    //     }
+    //   });
+  }
+
+  closeTransactionTable(){
+    this.displayTransactionDialog = false;
+  }
+
+  updateAccount() {
+    if (this.userForm.valid) {
+      const updatedData = {
+        userId: this.user_email,
+        firstName: this.userForm.value.firstName,
+        lastName: this.userForm.value.lastName,
+        phoneNumber: this.userForm.value.phoneNumber,
+      };
+
+      this.spinner.show();
+      this.rest_api.updateUser(updatedData).subscribe(
+        () => {
+          this.spinner.hide();
+          this.getUserDetails(this.user_email);
+        },
+        error => {
+          this.spinner.hide();
+        }
+      );
+    }
   }
 
 }
