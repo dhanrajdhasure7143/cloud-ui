@@ -374,27 +374,19 @@ getChildTable(tenant: any) {
 
 
   openTransactionDialog(tenant) {
+    this.subscriptionHistory=[]
     this.displayTransactionDialog = true;
     this.customerEmailId = tenant.customerEmailId;
-
-    this.subscriptionHistory = [
-      {
-        "date": "2023-09-25",
-        "event": "User subscribed for the X plan"
+    this.spinner.show();
+    this.rest_api.getAgentTransaction(tenant.customerEmailId, tenant.tenantId).subscribe(
+      (res:any) => {
+        this.spinner.hide();
+        this.subscriptionHistory = res.data.subscriptionHistory;
       },
-      {
-        "date": "2023-10-26",
-        "event": "User has cancelled the X Plan"
+      error => {
+        this.spinner.hide();
       }
-    ];
-
-    // // API call to get transaction history
-    // this.http.get<any>(`/api/customer-subscription/${this.tenantData.customerId}`)
-    //   .subscribe(response => {
-    //     if (response.status === 'success') {
-    //       this.subscriptionHistory = response.data.subscriptionHistory;
-    //     }
-    //   });
+    );
   }
 
   closeTransactionTable(){
