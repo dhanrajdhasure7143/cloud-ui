@@ -24,7 +24,7 @@ export const environment = {
   isSubscrptionEnabled : true,
   paymentSuccessURL:"http://epsoft.internaldev.ai/#/success",
   paymentFailuerURL:"http://epsoft.internaldev.ai/#/",
-  stripeKey:"pk_test_51PjIMqJZCEXZ8Zrct2ntJVGOgqwWLvEBFV7DUJwm7nLEwoNpKClC2GuDs3CPUUedXpv5m0pDTHLJwJKrFQC9fg1I00zKCS3psO",
+  stripeKey:"pk_test_51Q0n8DRvIuDE09bYUTJnNOV5RPgHvGxNjuT1MLilaJUObc6ot82f7APP2ht3SJhpCWykkvf9Pl2pG8ptKlnjcjVA001C5iK2RP",
   product:"AiAgents",
   isWebhookEnabled: false,
 };
