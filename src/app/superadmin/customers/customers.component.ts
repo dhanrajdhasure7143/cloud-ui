@@ -363,7 +363,7 @@ getChildTable(tenant: any) {
           phoneNumber: response.data.phoneNumber || ''
         });
         if (response.data.country) {
-          this.userForm.patchValue({ phoneNumber: this.phnCountryCode + response.data.phoneNumber });
+          this.userForm.patchValue({ phoneNumber: response.data.phoneNumber });
         }
       },
       (error) => {
@@ -399,14 +399,14 @@ getChildTable(tenant: any) {
         userId: this.user_email,
         firstName: this.userForm.value.firstName,
         lastName: this.userForm.value.lastName,
-        // phoneNumber: this.userForm.value.phoneNumber,
+        phoneNumber: this.userForm.value.phoneNumber,
         // country: this.userForm.value.country,
       };
 
       console.log('The Output data for : ',this.userForm.value.country );
 
       this.spinner.show();
-      this.rest_api.updateUser(updatedData).subscribe(
+      this.rest_api.updateUserInfo(updatedData).subscribe(
         () => {
           this.spinner.hide();
           this.getUserDetails(this.user_email);
