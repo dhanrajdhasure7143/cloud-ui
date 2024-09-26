@@ -70,4 +70,8 @@ export class AiAgentService {
   getAgentTransaction(email,tenant_id){
     return this.http.get(`/subscriptionservice/v1/subscriptions/detail-view?userId=${email}&tenantId=${tenant_id}`)
   }
+
+  updateUserInfo(user:any): Observable<any> {
+    return this.http.post<any>(`/api/user/updateDetails`, user);
+  }
 }
