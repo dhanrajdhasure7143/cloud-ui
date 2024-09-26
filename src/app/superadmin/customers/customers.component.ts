@@ -217,35 +217,10 @@ export class CustomersComponent implements OnInit {
     this.check_tab = event.index;
     if(this.activeTabIndex == 1){
       // this.getSuperAdminData();
-      // this.getTenants();
-      this.tenants = this.data_is;
+      this.getTenants();
     }
   }
-
-  data_is=[
-    {
-        "customerStatus": "active",
-        "customerEmailId": "ahzir.xyan@frontads.org",
-        "tenantId": "cadbbbbf-2bac-446c-8da1-365006c7e400",
-        "customerId": "cus_QugjELq4TUygdM",
-        "customerCreatedDate": "2024-09-25T09:18:10Z"
-    },
-    {
-        "customerStatus": "active",
-        "customerEmailId": "meraho6578@rinseart.com",
-        "tenantId": "51c744d7-88de-4c2a-95b1-9b787ddfa118",
-        "customerId": "cus_QufdcYoMQW810c",
-        "customerCreatedDate": "2024-09-25T08:10:09Z"
-    },
-    {
-        "customerStatus": "active",
-        "customerEmailId": "nancy.dev@qacmjeq.com",
-        "tenantId": "40ba645c-b388-4c43-864f-311ab3939b54",
-        "customerId": "cus_QuQoMmZCmq55Ks",
-        "customerCreatedDate": "2024-09-24T16:50:35Z"
-    }
-  ];
-
+ 
   getTenants() {
     // this.spinner.show();
     this.isLoadingCustomers=true
@@ -432,8 +407,11 @@ getChildTable(tenant: any) {
         userId: this.user_email,
         firstName: this.userForm.value.firstName,
         lastName: this.userForm.value.lastName,
-        phoneNumber: this.userForm.value.phoneNumber,
+        // phoneNumber: this.userForm.value.phoneNumber,
+        // country: this.userForm.value.country,
       };
+
+      console.log('The Output data for : ',this.userForm.value.country );
 
       this.spinner.show();
       this.rest_api.updateUser(updatedData).subscribe(
