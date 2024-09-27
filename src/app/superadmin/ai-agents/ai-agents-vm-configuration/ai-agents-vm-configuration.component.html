@@ -55,9 +55,14 @@
                 <span *ngIf="col.ColumnName === 'password'">
                   {{ rowData[col.ColumnName] ? '******' : '-' }}
                 </span>
+                <span *ngIf="col.ColumnName === 'active'">
+                  <span [ngClass]="{ 'active-class': rowData[col.ColumnName] == 'Active', 'inactive-class': rowData[col.ColumnName] !== 'Active' }">
+                    {{ rowData[col.ColumnName] }}
+                  </span>
+                </span>
 
                 <span
-                  *ngIf="col.ColumnName !== 'createdAt' && col.ColumnName!=='action' && col.ColumnName !== 'modifiedAt' && col.ColumnName !== 'password'">
+                  *ngIf="col.ColumnName !== 'createdAt' && col.ColumnName!=='action' && col.ColumnName !== 'modifiedAt' && col.ColumnName !== 'password' && col.ColumnName != 'active'">
                   {{ rowData[col.ColumnName] || '-' }}
                 </span>
 
@@ -66,16 +71,16 @@
                 </span>
 
                 <span *ngIf="col.ColumnName=='action'" class="actionmenu">
+                  <a pTooltip="Deploy" tooltipPosition="top" (click)="onDeployJar(rowData)">
+                    <i class="pi pi-arrow-circle-up"></i>
+                  </a>
+                  <a (click)="prepareUpdateForm(rowData)" pTooltip="Update" tooltipPosition="top">
+                    <img src="assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
+                  </a>
                   <a (click)="deletePredefinedBotsVMHost(rowData.id)" pTooltip="Delete" tooltipPosition="top">
                     <img src="assets/a_images/delete-default.svg" alt="Edit" class="testplus default-icon">
                     <!-- <img src="assets/a_images/edit-hover.svg" alt="Edit" class="testplus hover-icon"> -->
                   </a>
-                  <a (click)="prepareUpdateForm(rowData)" pTooltip="Update" tooltipPosition="top">
-                    <img src="assets/a_images/edit-default.svg" alt="Edit" class="testplus default-icon">
-                </a>
-                <span pTooltip="Deploy" tooltipPosition="top" (click)="onDeployJar(rowData)">
-                  <i class="pi pi-arrow-circle-up"></i>
-                </span>
                 </span>
               </td>
             </tr>
@@ -198,6 +203,11 @@
                 class="required" value="SSH" disabled>
                 Connection Type is required.
               </div> -->
+            </div>
+
+            <div class="form-group col-md-12">
+                <p-checkbox formControlName="is_active" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">Active</label>
             </div>
 
           </div>
