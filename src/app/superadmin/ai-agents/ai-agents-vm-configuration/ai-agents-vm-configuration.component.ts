@@ -24,21 +24,22 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
   isDisplayOverlay: boolean = false;
   userData: any = {};
   columnList = [
-    { DisplayName: "Environment Id", ColumnName: "id", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    // { DisplayName: "Environment Id", ColumnName: "id", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Environment Name", ColumnName: "environmentName", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Environment Type", ColumnName: "environmentType", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Host/IP", ColumnName: "hostAddress", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Port", ColumnName: "portNumber", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Connection Type", ColumnName: "connectionType", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Agent Path", ColumnName: "agentPath", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
-    { DisplayName: "Tenant Id", ColumnName: "tenantId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    // { DisplayName: "Tenant Id", ColumnName: "tenantId", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "User Name", ColumnName: "username", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
-    { DisplayName: "Password", ColumnName: "password", ShowFilter: false, sort: false, showTooltip: false },
+    // { DisplayName: "Password", ColumnName: "password", ShowFilter: false, sort: false, showTooltip: false },
     // { DisplayName: "Created By", ColumnName: "createdBy", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     // { DisplayName: "Created At", ColumnName: "createdAt", ShowFilter: true, sort: true, filterType: 'date', showTooltip: false },
     // { DisplayName: "Modified By", ColumnName: "modifiedBy", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     // { DisplayName: "Modified At", ColumnName: "modifiedAt", ShowFilter: true, sort: true, filterType: 'date', showTooltip: false },
-    { DisplayName: "Status", ColumnName: "status", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    // { DisplayName: "Status", ColumnName: "status", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
+    { DisplayName: "Status", ColumnName: "active", ShowFilter: true, sort: true, filterType: 'text', showTooltip: false },
     { DisplayName: "Action", ColumnName: "action" }
   ];
   search_fields = ['environmentName', 'hostAddress', 'username', 'password', 'status', 'createdDate','id','environmentType','portNumber','connectionType','agentPath','tenantId'];
@@ -70,6 +71,7 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
     password: ['', [Validators.required]],
     connectionType: ['SSH', Validators.required],
     portNumber: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    is_active:[true, Validators.required],
   });
 
   constructor(private rest_api: UsermanagementService,private crypto:CryptoService,
@@ -86,10 +88,13 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
     this.spinner.show();
     this.rest_api.getPredefinedBotsVMHost().subscribe({
       next: (res: any) => {
-        console.log("getConfigureVmList", res);
+        // console.log("getConfigureVmList", res);
         if (res.code == 4200) {
           this.spinner.hide();
           this.configuredVmList = res.data
+          this.configuredVmList.forEach(element => {
+            element["active"] = element.is_active ? "Active":"Inactive"
+          });
         }
         this.spinner.hide();
       },
@@ -218,7 +223,8 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
       portNumber: data.portNumber,
       username: data.username,
       password: this.crypto.decrypt(data.password),
-      connectionType: data.connectionType
+      connectionType: data.connectionType,
+      is_active:data.is_active
     });
     this.isDisplayOverlay=true;
   }
@@ -249,7 +255,8 @@ export class AiAgentsVmConfigurationComponent implements OnInit {
     };
 
     this.spinner.show();
-    this.rest_api.updatePredefinedBotsVMHost(requestData).subscribe({
+    // this.rest_api.updatePredefinedBotsVMHost(requestData).subscribe({
+    this.rest_api.savePredefinedBotsVMHost(requestData).subscribe({
       next: (response) => {
         this.isDisplayOverlay = false;
         this.getVmList();
