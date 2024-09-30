@@ -109,7 +109,7 @@ export class CustomersComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       country: [{ value: '', disabled: true }],
-      // timezone: ['', Validators.required],
+      timezone: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]*$/),Validators.minLength(10),]]
     });
   }
@@ -359,7 +359,7 @@ getChildTable(tenant: any) {
           firstName: response.data.firstName || '',
           lastName: response.data.lastName || '',
           country: response.data.country || '',
-          // timezone: response.data.timezone || '',
+          timezone: response.data.timezone || '',
           phoneNumber: response.data.phoneNumber || ''
         });
         if (response.data.country) {
@@ -400,7 +400,7 @@ getChildTable(tenant: any) {
         firstName: this.userForm.value.firstName,
         lastName: this.userForm.value.lastName,
         phoneNumber: this.userForm.value.phoneNumber,
-        // country: this.userForm.value.country,
+        timezone: this.userForm.value.timezone,
       };
 
       console.log('The Output data for : ',this.userForm.value.country );
