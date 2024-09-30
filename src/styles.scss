@@ -946,3 +946,17 @@ input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
     display: none !important;
 }
+
+//  Added styles to change the layout height and width of the P-tabs
+.p-tabview .p-tabview-nav li .p-tabview-nav-link{
+  padding: 10px !important;
+}
+
+.p-datatable .p-datatable-header{
+  padding: 0.5rem 0.5rem !important;
+}
+
+.p-datatable-resizable-table>.p-datatable-tbody>tr>td{
+  max-width: 300px !important;
+  text-overflow: ellipsis !important;
+}

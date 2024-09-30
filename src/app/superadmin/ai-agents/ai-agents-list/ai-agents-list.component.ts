@@ -21,8 +21,8 @@ export class AiAgentsListComponent implements OnInit {
     {DisplayName:"Agent UUID",ColumnName:"predefinedUUID",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Form Type",ColumnName:"formType",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
     {DisplayName:"Is Schedule",ColumnName:"schedulerRequired",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
-    {DisplayName:"Average Agent Execution Time",ColumnName:"averageTimeAgentExecution",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
-    {DisplayName:"Description",ColumnName:"description",ShowFilter: true,sort:true,filterType:'text',showTooltip:false},
+    {DisplayName:"Average Agent Execution Time",ColumnName:"averageTimeAgentExecution",ShowFilter: true,sort:true,filterType:'text',showTooltip:true},
+    {DisplayName:"Description",ColumnName:"description",ShowFilter: true,sort:true,filterType:'text',showTooltip:true},
     {DisplayName:"Action",ColumnName:"action",ShowFilter: false,sort:false,showTooltip:true},
   ]
   search_fields=['predefinedBotName','productId','predefinedUUID','formType'];
